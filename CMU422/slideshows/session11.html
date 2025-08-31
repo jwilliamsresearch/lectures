@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 11: Advanced Topics and Future Trends</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+                <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        
+        .reveal .slides section.center {
+            text-align: center;
+        }
+        
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+        
+        .reveal .slides section ul, .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+        
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+        
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+        
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+            
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+            
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+            
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+            
+            .task-box, .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+        
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+            <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+                ← Back to Module
+            </a>
+        </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>Advanced Topics and Future Trends</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 11</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Exploring modern web development</p>
+                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Explore modern web development frameworks</li>
+                    <li>Understand Progressive Web Apps (PWAs)</li>
+                    <li>Learn about Web Components</li>
+                    <li>Discover future web technologies</li>
+                    <li>Prepare for industry trends</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: Modern Frameworks -->
+            <section>
+                <h2>Modern Web Frameworks</h2>
+                <div class="highlight">
+                    <strong>Frameworks</strong> provide structure and tools for building complex applications
+                </div>
+                <ul>
+                    <li>React - Component-based UI library</li>
+                    <li>Vue.js - Progressive framework</li>
+                    <li>Angular - Full-featured framework</li>
+                    <li>Svelte - Compiler-based framework</li>
+                </ul>
+                <div class="code-example">
+                    // React component example<br>
+                    function Welcome(props) {<br>
+                    &nbsp;&nbsp;return &lt;h1&gt;Hello, {props.name}!&lt;/h1&gt;;<br>
+                    }<br><br>
+                    // Vue component example<br>
+                    &lt;template&gt;<br>
+                    &nbsp;&nbsp;&lt;h1&gt;Hello {{ name }}!&lt;/h1&gt;<br>
+                    &lt;/template&gt;
+                </div>
+            </section>
+
+            <!-- Slide 4: Progressive Web Apps -->
+            <section>
+                <h2>Progressive Web Apps (PWAs)</h2>
+                <div class="code-example">
+                    // Service Worker registration<br>
+                    if ('serviceWorker' in navigator) {<br>
+                    &nbsp;&nbsp;navigator.serviceWorker.register('/sw.js')<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;.then(registration => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('SW registered');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                    }<br><br>
+                    // Web App Manifest<br>
+                    {<br>
+                    &nbsp;&nbsp;"name": "My PWA",<br>
+                    &nbsp;&nbsp;"short_name": "PWA",<br>
+                    &nbsp;&nbsp;"start_url": "/",<br>
+                    &nbsp;&nbsp;"display": "standalone"<br>
+                    }
+                </div>
+                <ul>
+                    <li>Work offline with service workers</li>
+                    <li>Installable like native apps</li>
+                    <li>Push notifications</li>
+                    <li>Fast loading and responsive</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: Web Components -->
+            <section>
+                <h2>Web Components</h2>
+                <div class="code-example">
+                    // Custom element definition<br>
+                    class MyElement extends HTMLElement {<br>
+                    &nbsp;&nbsp;constructor() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;super();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.attachShadow({mode: 'open'});<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;connectedCallback() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.shadowRoot.innerHTML = `<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;style&gt;h1 { color: blue; }&lt;/style&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Hello from Web Component!&lt;/h1&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;`;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    customElements.define('my-element', MyElement);
+                </div>
+                <ul>
+                    <li>Custom elements</li>
+                    <li>Shadow DOM for encapsulation</li>
+                    <li>HTML templates</li>
+                    <li>Reusable components</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: TypeScript -->
+            <section>
+                <h2>TypeScript</h2>
+                <div class="code-example">
+                    // TypeScript example<br>
+                    interface User {<br>
+                    &nbsp;&nbsp;id: number;<br>
+                    &nbsp;&nbsp;name: string;<br>
+                    &nbsp;&nbsp;email: string;<br>
+                    }<br><br>
+                    function createUser(userData: User): User {<br>
+                    &nbsp;&nbsp;return {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;id: userData.id,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;name: userData.name,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;email: userData.email<br>
+                    &nbsp;&nbsp;};<br>
+                    }<br><br>
+                    const user = createUser({<br>
+                    &nbsp;&nbsp;id: 1,<br>
+                    &nbsp;&nbsp;name: "John",<br>
+                    &nbsp;&nbsp;email: "john@example.com"<br>
+                    });
+                </div>
+                <ul>
+                    <li>Static typing for JavaScript</li>
+                    <li>Better IDE support</li>
+                    <li>Early error detection</li>
+                    <li>Enhanced refactoring</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: CSS-in-JS -->
+            <section>
+                <h2>CSS-in-JS</h2>
+                <div class="code-example">
+                    // Styled Components example<br>
+                    const Button = styled.button`<br>
+                    &nbsp;&nbsp;background: ${props => props.primary ? 'blue' : 'white'};<br>
+                    &nbsp;&nbsp;color: ${props => props.primary ? 'white' : 'black'};<br>
+                    &nbsp;&nbsp;padding: 10px 20px;<br>
+                    &nbsp;&nbsp;border: 2px solid blue;<br>
+                    &nbsp;&nbsp;border-radius: 5px;<br>
+                    `;<br><br>
+                    // Usage<br>
+                    &lt;Button primary&gt;Primary Button&lt;/Button&gt;<br>
+                    &lt;Button&gt;Secondary Button&lt;/Button&gt;
+                </div>
+                <ul>
+                    <li>Dynamic styling</li>
+                    <li>Component-scoped styles</li>
+                    <li>Theme support</li>
+                    <li>Better developer experience</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: State Management -->
+            <section>
+                <h2>State Management</h2>
+                <div class="code-example">
+                    // Redux example<br>
+                    const initialState = {<br>
+                    &nbsp;&nbsp;count: 0<br>
+                    };<br><br>
+                    function counterReducer(state = initialState, action) {<br>
+                    &nbsp;&nbsp;switch (action.type) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;case 'INCREMENT':<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return { count: state.count + 1 };<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;case 'DECREMENT':<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return { count: state.count - 1 };<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;default:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return state;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <ul>
+                    <li>Centralized state management</li>
+                    <li>Predictable state updates</li>
+                    <li>Debugging tools</li>
+                    <li>Scalable architecture</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Modern Build Tools -->
+            <section>
+                <h2>Modern Build Tools</h2>
+                <div class="code-example">
+                    // Webpack configuration<br>
+                    module.exports = {<br>
+                    &nbsp;&nbsp;entry: './src/index.js',<br>
+                    &nbsp;&nbsp;output: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;path: path.resolve(__dirname, 'dist'),<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;filename: 'bundle.js'<br>
+                    &nbsp;&nbsp;},<br>
+                    &nbsp;&nbsp;module: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;rules: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ test: /\.js$/, use: 'babel-loader' },<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ test: /\.css$/, use: ['style-loader', 'css-loader'] }<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;]<br>
+                    &nbsp;&nbsp;}<br>
+                    };
+                </div>
+                <ul>
+                    <li>Webpack for bundling</li>
+                    <li>Babel for transpilation</li>
+                    <li>ESLint for linting</li>
+                    <li>Prettier for formatting</li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Future Web Technologies -->
+            <section>
+                <h2>Future Web Technologies</h2>
+                <ul>
+                    <li>WebAssembly (WASM)</li>
+                    <li>WebGPU for graphics</li>
+                    <li>WebRTC for real-time communication</li>
+                    <li>Web APIs for device features</li>
+                </ul>
+                <div class="code-example">
+                    // WebAssembly example<br>
+                    WebAssembly.instantiateStreaming(<br>
+                    &nbsp;&nbsp;fetch('module.wasm')<br>
+                    ).then(obj => {<br>
+                    &nbsp;&nbsp;const result = obj.instance.exports.add(1, 2);<br>
+                    &nbsp;&nbsp;console.log(result); // 3<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 11: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Modern Framework Exploration</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Choose one modern framework (React, Vue, or Angular)</li>
+                        <li>Create a simple application using the framework</li>
+                        <li>Implement features:</li>
+                        <ul>
+                            <li>Component-based architecture</li>
+                            <li>State management</li>
+                            <li>Routing (if applicable)</li>
+                            <li>API integration</li>
+                        </ul>
+                        <li>Compare with vanilla JavaScript</li>
+                        <li>Document your findings</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand modern frameworks</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Performance Optimization -->
+            <section>
+                <h2>Advanced Performance Optimization</h2>
+                <ul>
+                    <li>Code splitting and lazy loading</li>
+                    <li>Tree shaking</li>
+                    <li>Service worker caching</li>
+                    <li>Image optimization</li>
+                </ul>
+                <div class="code-example">
+                    // Code splitting<br>
+                    const LazyComponent = React.lazy(() => import('./LazyComponent'));<br><br>
+                    // Service worker caching<br>
+                    self.addEventListener('fetch', event => {<br>
+                    &nbsp;&nbsp;event.respondWith(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;caches.match(event.request)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(response => response || fetch(event.request))<br>
+                    &nbsp;&nbsp;);<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 14: Security Best Practices -->
+            <section>
+                <h2>Advanced Security</h2>
+                <ul>
+                    <li>Content Security Policy (CSP)</li>
+                    <li>Subresource Integrity (SRI)</li>
+                    <li>HTTPS enforcement</li>
+                    <li>Input sanitization</li>
+                </ul>
+                <div class="code-example">
+                    // CSP header<br>
+                    Content-Security-Policy: default-src 'self'; script-src 'self'<br><br>
+                    // SRI example<br>
+                    &lt;script src="https://example.com/script.js"<br>
+                    &nbsp;&nbsp;integrity="sha384-..."<br>
+                    &nbsp;&nbsp;crossorigin="anonymous"&gt;&lt;/script&gt;
+                </div>
+            </section>
+
+            <!-- Slide 15: Testing Strategies -->
+            <section>
+                <h2>Advanced Testing</h2>
+                <ul>
+                    <li>Unit testing with Jest</li>
+                    <li>Integration testing</li>
+                    <li>End-to-end testing with Cypress</li>
+                    <li>Visual regression testing</li>
+                </ul>
+                <div class="code-example">
+                    // Jest test example<br>
+                    test('renders user name', () => {<br>
+                    &nbsp;&nbsp;render(&lt;UserProfile name="John" /&gt;);<br>
+                    &nbsp;&nbsp;expect(screen.getByText('John')).toBeInTheDocument();<br>
+                    });<br><br>
+                    // Cypress test<br>
+                    it('should login successfully', () => {<br>
+                    &nbsp;&nbsp;cy.visit('/login');<br>
+                    &nbsp;&nbsp;cy.get('[data-testid=email]').type('user@example.com');<br>
+                    &nbsp;&nbsp;cy.get('[data-testid=password]').type('password');<br>
+                    &nbsp;&nbsp;cy.get('[data-testid=submit]').click();<br>
+                    &nbsp;&nbsp;cy.url().should('include', '/dashboard');<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 16: Deployment Strategies -->
+            <section>
+                <h2>Modern Deployment</h2>
+                <ul>
+                    <li>Continuous Integration/Deployment</li>
+                    <li>Docker containers</li>
+                    <li>Serverless functions</li>
+                    <li>CDN optimization</li>
+                </ul>
+                <div class="code-example">
+                    // GitHub Actions workflow<br>
+                    name: Deploy to Production<br>
+                    on:<br>
+                    &nbsp;&nbsp;push:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;branches: [main]<br>
+                    jobs:<br>
+                    &nbsp;&nbsp;deploy:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;steps:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v2<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: npm run deploy
+                </div>
+            </section>
+
+            <!-- Slide 17: Accessibility Advanced -->
+            <section>
+                <h2>Advanced Accessibility</h2>
+                <ul>
+                    <li>ARIA live regions</li>
+                    <li>Focus management</li>
+                    <li>Screen reader optimization</li>
+                    <li>Keyboard navigation</li>
+                </ul>
+                <div class="code-example">
+                    // ARIA live region<br>
+                    &lt;div aria-live="polite" aria-atomic="true"&gt;<br>
+                    &nbsp;&nbsp;Status updates appear here<br>
+                    &lt;/div&gt;<br><br>
+                    // Focus management<br>
+                    function trapFocus(element) {<br>
+                    &nbsp;&nbsp;const focusableElements = element.querySelectorAll(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'<br>
+                    &nbsp;&nbsp;);<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 18: Internationalization -->
+            <section>
+                <h2>Internationalization (i18n)</h2>
+                <ul>
+                    <li>Multi-language support</li>
+                    <li>RTL layout support</li>
+                    <li>Date and number formatting</li>
+                    <li>Cultural considerations</li>
+                </ul>
+                <div class="code-example">
+                    // i18n example<br>
+                    const messages = {<br>
+                    &nbsp;&nbsp;en: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;welcome: 'Welcome'<br>
+                    &nbsp;&nbsp;},<br>
+                    &nbsp;&nbsp;es: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;welcome: 'Bienvenido'<br>
+                    &nbsp;&nbsp;}<br>
+                    };<br><br>
+                    // Date formatting<br>
+                    const date = new Date().toLocaleDateString('es-ES');
+                </div>
+            </section>
+
+            <!-- Slide 19: Micro Frontends -->
+            <section>
+                <h2>Micro Frontends</h2>
+                <ul>
+                    <li>Independent deployment</li>
+                    <li>Team autonomy</li>
+                    <li>Technology diversity</li>
+                    <li>Scalable architecture</li>
+                </ul>
+                <div class="code-example">
+                    // Module Federation<br>
+                    new ModuleFederationPlugin({<br>
+                    &nbsp;&nbsp;name: 'host',<br>
+                    &nbsp;&nbsp;remotes: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;remote: 'remote@http://localhost:3001/remoteEntry.js'<br>
+                    &nbsp;&nbsp;}<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 20: Web3 and Blockchain -->
+            <section>
+                <h2>Web3 and Blockchain</h2>
+                <ul>
+                    <li>Decentralized applications (dApps)</li>
+                    <li>Smart contracts</li>
+                    <li>Cryptocurrency integration</li>
+                    <li>Web3.js library</li>
+                </ul>
+                <div class="code-example">
+                    // Web3.js example<br>
+                    const web3 = new Web3(Web3.givenProvider);<br><br>
+                    // Connect to wallet<br>
+                    async function connectWallet() {<br>
+                    &nbsp;&nbsp;const accounts = await ethereum.request({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;method: 'eth_requestAccounts'<br>
+                    &nbsp;&nbsp;});<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 21: AI and Machine Learning -->
+            <section>
+                <h2>AI and Machine Learning</h2>
+                <ul>
+                    <li>TensorFlow.js</li>
+                    <li>Natural language processing</li>
+                    <li>Computer vision</li>
+                    <li>Recommendation systems</li>
+                </ul>
+                <div class="code-example">
+                    // TensorFlow.js example<br>
+                    const model = tf.sequential({<br>
+                    &nbsp;&nbsp;layers: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;tf.layers.dense({units: 1, inputShape: [1]})<br>
+                    &nbsp;&nbsp;]<br>
+                    });<br><br>
+                    model.compile({<br>
+                    &nbsp;&nbsp;loss: 'meanSquaredError',<br>
+                    &nbsp;&nbsp;optimizer: 'sgd'<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 22: Voice and Speech -->
+            <section>
+                <h2>Voice and Speech APIs</h2>
+                <ul>
+                    <li>Web Speech API</li>
+                    <li>Speech recognition</li>
+                    <li>Speech synthesis</li>
+                    <li>Voice commands</li>
+                </ul>
+                <div class="code-example">
+                    // Speech recognition<br>
+                    const recognition = new webkitSpeechRecognition();<br>
+                    recognition.continuous = true;<br>
+                    recognition.onresult = function(event) {<br>
+                    &nbsp;&nbsp;const transcript = event.results[0][0].transcript;<br>
+                    &nbsp;&nbsp;console.log('Heard:', transcript);<br>
+                    };<br><br>
+                    // Speech synthesis<br>
+                    const utterance = new SpeechSynthesisUtterance('Hello World');<br>
+                    speechSynthesis.speak(utterance);
+                </div>
+            </section>
+
+            <!-- Slide 23: Virtual and Augmented Reality -->
+            <section>
+                <h2>WebXR and AR/VR</h2>
+                <ul>
+                    <li>WebXR Device API</li>
+                    <li>Three.js for 3D graphics</li>
+                    <li>AR.js for augmented reality</li>
+                    <li>VR experiences</li>
+                </ul>
+                <div class="code-example">
+                    // WebXR example<br>
+                    navigator.xr.isSessionSupported('immersive-vr')<br>
+                    &nbsp;&nbsp;.then(supported => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (supported) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('VR supported');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;});<br><br>
+                    // Three.js scene<br>
+                    const scene = new THREE.Scene();<br>
+                    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Future Technology Implementation</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Choose one advanced technology to implement</li>
+                        <li>Options:</li>
+                        <ul>
+                            <li><strong>PWA:</strong> Convert existing app to PWA with offline functionality</li>
+                            <li><strong>Web Components:</strong> Create reusable custom elements</li>
+                            <li><strong>Web3:</strong> Integrate cryptocurrency wallet</li>
+                            <li><strong>AI/ML:</strong> Add machine learning features</li>
+                            <li><strong>Voice:</strong> Implement speech recognition/synthesis</li>
+                        </ul>
+                        <li>Research and implement the technology</li>
+                        <li>Document the implementation process</li>
+                        <li>Create a presentation showcasing your work</li>
+                        <li>Discuss potential use cases and limitations</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you explore cutting-edge web technologies</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Modern frameworks provide powerful development tools</li>
+                    <li>PWAs bridge the gap between web and native apps</li>
+                    <li>Web Components enable reusable, encapsulated code</li>
+                    <li>Future technologies open new possibilities</li>
+                    <li>Continuous learning is essential in web development</li>
+                    <li>Stay updated with industry trends</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>Final Project and Assessment - Bringing it all together</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+        <script>
+                Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+    </script>
+</body>
+</html>

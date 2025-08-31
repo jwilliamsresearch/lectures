@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Williams - Teaching Portfolio | Birmingham Newman University</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 3em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header .subtitle {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header .department {
+            font-size: 1.1em;
+            opacity: 0.8;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header .website-link {
+            font-size: 1em;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header .website-link a {
+            color: #4ecdc4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .header .website-link a:hover {
+            color: #45b7aa;
+            text-decoration: underline;
+        }
+        
+        .semester-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .semester-info h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.3em;
+        }
+        
+        .semester-info p {
+            margin: 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .modules-section {
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .semester-section {
+            padding: 40px;
+            background: #fff;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .semester-section h2 {
+            text-align: center;
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .semester-section .semester-description {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .modules-section h2 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        
+        .coming-soon {
+            text-align: center;
+            padding: 60px 40px;
+            background: #f8f9fa;
+            color: #666;
+        }
+        
+        .coming-soon h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .coming-soon p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .module-card {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 40px;
+            border: 3px solid transparent;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* CMU422 - Web Design Theme */
+        .module-card.cmu422 {
+            border-color: #667eea;
+        }
+        
+        .module-card.cmu422::before {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .module-card.cmu422 .module-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        /* CMU529 - Advanced Web Development Theme */
+        .module-card.cmu529 {
+            border-color: #ff6b6b;
+        }
+        
+        .module-card.cmu529::before {
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+        }
+        
+        .module-card.cmu529 .module-number {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+        
+        /* CMU540 - Cyber Security Theme */
+        .module-card.cmu540 {
+            border-color: #2ecc71;
+        }
+        
+        .module-card.cmu540::before {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+        }
+        
+        .module-card.cmu540 .module-number {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
+        .module-number {
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .module-title {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            line-height: 1.3;
+        }
+        
+        .module-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        
+        .module-details {
+            font-size: 1em;
+            color: #888;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .module-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .module-features li {
+            padding: 8px 0;
+            color: #555;
+            font-size: 0.95em;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .module-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .module-card.cmu529 .module-features li::before {
+            color: #ff6b6b;
+        }
+        
+        .module-card.cmu540 .module-features li::before {
+            color: #2ecc71;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer p {
+            margin: 0;
+            font-size: 1em;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .header .subtitle {
+                font-size: 1.2em;
+            }
+            
+            .modules-section {
+                padding: 30px 20px;
+            }
+            
+            .modules-section h2 {
+                font-size: 2em;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .module-card {
+                padding: 30px;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        body::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background: #1a1a2e;
+            border-radius: 5px;
+        }
+        
+        body::-webkit-scrollbar-thumb:hover {
+            background: #16213e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>James Williams</h1>
+            <div class="subtitle">Lecturer in Computer Science</div>
+            <div class="department">School of Business and Law</div>
+            <div class="website-link">Personal Website: <a href="https://jwilliams.science" target="_blank">jwilliams.science</a></div>
+            
+            <div class="semester-info">
+                <h3>2025 Teaching Portfolio</h3>
+                <p>Welcome to my teaching portfolio for 2025. Here you'll find comprehensive resources for modules across multiple semesters in web development and cyber security. Each module includes interactive slideshows, assessments, quizzes, and further reading materials.</p>
+            </div>
+        </div>
+        
+        <div class="semester-section">
+            <h2>Semester 1</h2>
+            <div class="semester-description">
+                <p>Three comprehensive modules covering the fundamentals of web design, advanced web development techniques, and cyber security principles. Each module is designed to provide hands-on experience with real-world applications.</p>
+            </div>
+        </div>
+        
+        <div class="modules-section">
+            <h2>Module Portfolio</h2>
+            
+            <div class="modules-grid">
+                <a href="CMU422/index.html" class="module-card cmu422">
+                    <div class="module-number">422</div>
+                    <div class="module-title">CMU422: Fundamentals of Web Design</div>
+                    <div class="module-description">A comprehensive introduction to web design fundamentals, covering HTML5, CSS3, and JavaScript. Students develop responsive websites for real clients.</div>
+                    <div class="module-details">20 credits • Undergraduate • Front-end Focus</div>
+                    <ul class="module-features">
+                        <li>12 interactive slideshows</li>
+                        <li>Hands-on coding exercises</li>
+                        <li>Client website project</li>
+                        <li>Comprehensive assessment</li>
+                    </ul>
+                </a>
+                
+                <a href="CMU529/index.html" class="module-card cmu529">
+                    <div class="module-number">529</div>
+                    <div class="module-title">CMU529: Advanced Web Development</div>
+                    <div class="module-description">Advanced web development techniques including modern frameworks, APIs, and full-stack development. Building sophisticated web applications.</div>
+                    <div class="module-details">20 credits • Undergraduate • Full-stack Focus</div>
+                    <ul class="module-features">
+                        <li>Modern frameworks & libraries</li>
+                        <li>API development & integration</li>
+                        <li>Database design & management</li>
+                        <li>Advanced project work</li>
+                    </ul>
+                </a>
+                
+                <a href="CMU540/index.html" class="module-card cmu540">
+                    <div class="module-number">540</div>
+                    <div class="module-title">CMU540: Cyber Security</div>
+                    <div class="module-description">Comprehensive cyber security principles, threat analysis, and defensive strategies. Understanding modern security challenges and solutions.</div>
+                    <div class="module-details">20 credits • Undergraduate • Security Focus</div>
+                    <ul class="module-features">
+                        <li>Security fundamentals</li>
+                        <li>Threat analysis & prevention</li>
+                        <li>Practical security tools</li>
+                        <li>Ethical hacking concepts</li>
+                    </ul>
+                </a>
+            </div>
+        </div>
+        
+        <div class="coming-soon">
+            <h3>Semester 2</h3>
+            <p>Additional modules for Semester 2 will be available here soon. These will include advanced topics in software engineering, data science, and emerging technologies.</p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 James Williams | Birmingham Newman University | School of Business and Law</p>
+        </div>
+    </div>
+</body>
+</html>

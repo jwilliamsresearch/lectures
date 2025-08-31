@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 8: Session Management & User Authentication</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        .reveal .slides section.center { text-align: center; }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        
+        /* Custom scrollbar styling */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            display: inline-block;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" 
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>Session Management & User Authentication</h1>
+                <h3>CMU529: Advanced Web Development - Session 8</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>User registration, login systems, session handling, and security</p>
+                <p><small>3-hour session • 22 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Implement user registration and login systems</li>
+                    <li>Manage user sessions securely</li>
+                    <li>Create authentication and authorization</li>
+                    <li>Handle password security and recovery</li>
+                    <li>Build protected user areas</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: Session Basics -->
+            <section>
+                <h2>Session Basics</h2>
+                <div class="code-example">
+                    Starting Sessions:<br><br>
+                    
+                    &lt;?php<br>
+                    // Start session at beginning of script<br>
+                    session_start();<br><br>
+                    
+                    // Store data in session<br>
+                    $_SESSION['user_id'] = 123;<br>
+                    $_SESSION['username'] = 'john_doe';<br>
+                    $_SESSION['logged_in'] = true;<br><br>
+                    
+                    // Access session data<br>
+                    echo "Welcome " . $_SESSION['username'];<br>
+                    ?&gt;
+                </div>
+                <ul>
+                    <li>Sessions store data on server</li>
+                    <li>Session ID stored in browser cookie</li>
+                    <li>Data persists across page requests</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: User Registration -->
+            <section>
+                <h2>User Registration</h2>
+                <div class="code-example">
+                    Registration Process:<br><br>
+                    
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {<br>
+                    &nbsp;&nbsp;$username = trim($_POST['username']);<br>
+                    &nbsp;&nbsp;$email = trim($_POST['email']);<br>
+                    &nbsp;&nbsp;$password = $_POST['password'];<br><br>
+                    
+                    &nbsp;&nbsp;// Hash password<br>
+                    &nbsp;&nbsp;$hashedPassword = password_hash($password, PASSWORD_DEFAULT);<br><br>
+                    
+                    &nbsp;&nbsp;// Insert user into database<br>
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");<br>
+                    &nbsp;&nbsp;$stmt->execute([$username, $email, $hashedPassword]);<br><br>
+                    
+                    &nbsp;&nbsp;echo "Registration successful!";<br>
+                    }
+                </div>
+                <ul>
+                    <li>Always hash passwords</li>
+                    <li>Validate input data</li>
+                    <li>Check for duplicate emails</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: User Login -->
+            <section>
+                <h2>User Login</h2>
+                <div class="code-example">
+                    Login Verification:<br><br>
+                    
+                    function authenticateUser($email, $password) {<br>
+                    &nbsp;&nbsp;global $pdo;<br><br>
+                    
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT id, username, password FROM users WHERE email = ?");<br>
+                    &nbsp;&nbsp;$stmt->execute([$email]);<br>
+                    &nbsp;&nbsp;$user = $stmt->fetch();<br><br>
+                    
+                    &nbsp;&nbsp;if ($user && password_verify($password, $user['password'])) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['user_id'] = $user['id'];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['username'] = $user['username'];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['logged_in'] = true;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return true;<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;return false;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Use password_verify() for comparison</li>
+                    <li>Store user data in session</li>
+                    <li>Return boolean for success/failure</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Session Management -->
+            <section>
+                <h2>Session Management</h2>
+                <div class="code-example">
+                    Session Functions:<br><br>
+                    
+                    // Check if user is logged in<br>
+                    function isLoggedIn() {<br>
+                    &nbsp;&nbsp;return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;<br>
+                    }<br><br>
+                    
+                    // Logout function<br>
+                    function logout() {<br>
+                    &nbsp;&nbsp;session_start();<br>
+                    &nbsp;&nbsp;session_destroy();<br>
+                    &nbsp;&nbsp;header("Location: login.php");<br>
+                    &nbsp;&nbsp;exit();<br>
+                    }<br><br>
+                    
+                    // Protect pages<br>
+                    if (!isLoggedIn()) {<br>
+                    &nbsp;&nbsp;header("Location: login.php");<br>
+                    &nbsp;&nbsp;exit();<br>
+                    }
+                </div>
+                <ul>
+                    <li>Check login status on protected pages</li>
+                    <li>Destroy session on logout</li>
+                    <li>Redirect unauthorized users</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Password Security -->
+            <section>
+                <h2>Password Security</h2>
+                <div class="code-example">
+                    Password Validation:<br><br>
+                    
+                    function validatePassword($password) {<br>
+                    &nbsp;&nbsp;$errors = [];<br><br>
+                    
+                    &nbsp;&nbsp;if (strlen($password) < 8) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "Password must be at least 8 characters";<br>
+                    &nbsp;&nbsp;}<br><br>
+                    
+                    &nbsp;&nbsp;if (!preg_match("/[A-Z]/", $password)) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "Password must contain uppercase letter";<br>
+                    &nbsp;&nbsp;}<br><br>
+                    
+                    &nbsp;&nbsp;if (!preg_match("/[0-9]/", $password)) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "Password must contain number";<br>
+                    &nbsp;&nbsp;}<br><br>
+                    
+                    &nbsp;&nbsp;return $errors;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Enforce strong password requirements</li>
+                    <li>Use regex for pattern matching</li>
+                    <li>Return array of validation errors</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Password Reset -->
+            <section>
+                <h2>Password Reset</h2>
+                <div class="code-example">
+                    Reset Token System:<br><br>
+                    
+                    // Generate reset token<br>
+                    $token = bin2hex(random_bytes(32));<br>
+                    $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));<br><br>
+                    
+                    // Store token in database<br>
+                    $stmt = $pdo->prepare("INSERT INTO password_resets (email, token, expires) VALUES (?, ?, ?)");<br>
+                    $stmt->execute([$email, $token, $expires]);<br><br>
+                    
+                    // Send email with reset link<br>
+                    $resetLink = "https://example.com/reset.php?token=" . $token;<br>
+                    mail($email, "Password Reset", "Click here to reset: " . $resetLink);<br><br>
+                    
+                    // Verify token<br>
+                    $stmt = $pdo->prepare("SELECT * FROM password_resets WHERE token = ? AND expires > NOW()");<br>
+                    $stmt->execute([$token]);<br>
+                    $reset = $stmt->fetch();
+                </div>
+                <ul>
+                    <li>Generate secure random tokens</li>
+                    <li>Set expiration times</li>
+                    <li>Send reset links via email</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: User Profiles -->
+            <section>
+                <h2>User Profiles</h2>
+                <div class="code-example">
+                    Profile Management:<br><br>
+                    
+                    // Get user profile<br>
+                    $userId = $_SESSION['user_id'];<br>
+                    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");<br>
+                    $stmt->execute([$userId]);<br>
+                    $user = $stmt->fetch();<br><br>
+                    
+                    // Update profile<br>
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {<br>
+                    &nbsp;&nbsp;$firstName = trim($_POST['first_name']);<br>
+                    &nbsp;&nbsp;$lastName = trim($_POST['last_name']);<br>
+                    &nbsp;&nbsp;$phone = trim($_POST['phone']);<br><br>
+                    
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE users SET first_name = ?, last_name = ?, phone = ? WHERE id = ?");<br>
+                    &nbsp;&nbsp;$stmt->execute([$firstName, $lastName, $phone, $userId]);<br><br>
+                    
+                    &nbsp;&nbsp;echo "Profile updated successfully";<br>
+                    }
+                </div>
+                <ul>
+                    <li>Display user information</li>
+                    <li>Allow profile updates</li>
+                    <li>Validate input data</li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Authorization -->
+            <section>
+                <h2>Authorization</h2>
+                <div class="code-example">
+                    Role-Based Access:<br><br>
+                    
+                    // Check user role<br>
+                    function hasRole($role) {<br>
+                    &nbsp;&nbsp;global $pdo;<br>
+                    &nbsp;&nbsp;$userId = $_SESSION['user_id'];<br><br>
+                    
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT role FROM users WHERE id = ?");<br>
+                    &nbsp;&nbsp;$stmt->execute([$userId]);<br>
+                    &nbsp;&nbsp;$user = $stmt->fetch();<br><br>
+                    
+                    &nbsp;&nbsp;return $user['role'] === $role;<br>
+                    }<br><br>
+                    
+                    // Protect admin pages<br>
+                    if (!hasRole('admin')) {<br>
+                    &nbsp;&nbsp;header("Location: access-denied.php");<br>
+                    &nbsp;&nbsp;exit();<br>
+                    }
+                </div>
+                <ul>
+                    <li>Check user permissions</li>
+                    <li>Restrict access to features</li>
+                    <li>Redirect unauthorized users</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: User Authentication System</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a complete user authentication system with:</li>
+                        <ul>
+                            <li>User registration form with validation</li>
+                            <li>Login form with authentication</li>
+                            <li>Session management and security</li>
+                            <li>Password reset functionality</li>
+                            <li>User profile management</li>
+                        </ul>
+                        <li>Implement password security measures</li>
+                        <li>Add CSRF protection</li>
+                        <li>Create protected user areas</li>
+                        <li>Test all authentication flows</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you master user authentication and session management</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Remember Me -->
+            <section>
+                <h2>Remember Me Functionality</h2>
+                <div class="code-example">
+                    Persistent Login:<br><br>
+                    
+                    // Set remember me cookie<br>
+                    if (isset($_POST['remember_me'])) {<br>
+                    &nbsp;&nbsp;$token = bin2hex(random_bytes(32));<br>
+                    &nbsp;&nbsp;$expires = time() + (30 * 24 * 60 * 60); // 30 days<br><br>
+                    
+                    &nbsp;&nbsp;// Store token in database<br>
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO remember_tokens (user_id, token, expires) VALUES (?, ?, ?)");<br>
+                    &nbsp;&nbsp;$stmt->execute([$userId, $token, date('Y-m-d H:i:s', $expires)]);<br><br>
+                    
+                    &nbsp;&nbsp;// Set cookie<br>
+                    &nbsp;&nbsp;setcookie('remember_token', $token, $expires, '/', '', true, true);<br>
+                    }<br><br>
+                    
+                    // Check remember me token<br>
+                    if (isset($_COOKIE['remember_token'])) {<br>
+                    &nbsp;&nbsp;$token = $_COOKIE['remember_token'];<br>
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT user_id FROM remember_tokens WHERE token = ? AND expires > NOW()");<br>
+                    &nbsp;&nbsp;$stmt->execute([$token]);<br>
+                    &nbsp;&nbsp;$result = $stmt->fetch();<br><br>
+                    
+                    &nbsp;&nbsp;if ($result) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['user_id'] = $result['user_id'];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['logged_in'] = true;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 14: Session Security -->
+            <section>
+                <h2>Session Security</h2>
+                <div class="code-example">
+                    Security Measures:<br><br>
+                    
+                    // Secure session configuration<br>
+                    ini_set('session.cookie_httponly', 1);<br>
+                    ini_set('session.cookie_secure', 1);<br>
+                    ini_set('session.use_strict_mode', 1);<br><br>
+                    
+                    // Regenerate session ID<br>
+                    if (!isset($_SESSION['initialized'])) {<br>
+                    &nbsp;&nbsp;session_regenerate_id(true);<br>
+                    &nbsp;&nbsp;$_SESSION['initialized'] = true;<br>
+                    }<br><br>
+                    
+                    // Check session timeout<br>
+                    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {<br>
+                    &nbsp;&nbsp;session_unset();<br>
+                    &nbsp;&nbsp;session_destroy();<br>
+                    &nbsp;&nbsp;header("Location: login.php");<br>
+                    &nbsp;&nbsp;exit();<br>
+                    }<br>
+                    $_SESSION['last_activity'] = time();
+                </div>
+            </section>
+
+            <!-- Slide 15: Two-Factor Authentication -->
+            <section>
+                <h2>Two-Factor Authentication</h2>
+                <div class="code-example">
+                    SMS Verification:<br><br>
+                    
+                    // Generate verification code<br>
+                    $verificationCode = sprintf("%06d", mt_rand(0, 999999));<br>
+                    $_SESSION['verification_code'] = $verificationCode;<br>
+                    $_SESSION['verification_time'] = time();<br><br>
+                    
+                    // Send SMS (mock implementation)<br>
+                    $message = "Your verification code is: " . $verificationCode;<br>
+                    // sendSMS($phone, $message);<br><br>
+                    
+                    // Verify code<br>
+                    if (isset($_POST['verification_code'])) {<br>
+                    &nbsp;&nbsp;$inputCode = $_POST['verification_code'];<br>
+                    &nbsp;&nbsp;$storedCode = $_SESSION['verification_code'];<br>
+                    &nbsp;&nbsp;$verificationTime = $_SESSION['verification_time'];<br><br>
+                    
+                    &nbsp;&nbsp;if ($inputCode === $storedCode && (time() - $verificationTime) < 300) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['two_factor_verified'] = true;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Verification successful";<br>
+                    &nbsp;&nbsp;} else {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Invalid or expired code";<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 16: Account Lockout -->
+            <section>
+                <h2>Account Lockout</h2>
+                <div class="code-example">
+                    Failed Login Protection:<br><br>
+                    
+                    // Track failed login attempts<br>
+                    function recordFailedLogin($email) {<br>
+                    &nbsp;&nbsp;global $pdo;<br>
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO failed_logins (email, ip_address, timestamp) VALUES (?, ?, NOW())");<br>
+                    &nbsp;&nbsp;$stmt->execute([$email, $_SERVER['REMOTE_ADDR']]);<br>
+                    }<br><br>
+                    
+                    // Check if account is locked<br>
+                    function isAccountLocked($email) {<br>
+                    &nbsp;&nbsp;global $pdo;<br>
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT COUNT(*) FROM failed_logins WHERE email = ? AND timestamp > DATE_SUB(NOW(), INTERVAL 15 MINUTE)");<br>
+                    &nbsp;&nbsp;$stmt->execute([$email]);<br>
+                    &nbsp;&nbsp;$failedAttempts = $stmt->fetchColumn();<br><br>
+                    
+                    &nbsp;&nbsp;return $failedAttempts >= 5;<br>
+                    }<br><br>
+                    
+                    // Check before login<br>
+                    if (isAccountLocked($email)) {<br>
+                    &nbsp;&nbsp;echo "Account temporarily locked. Try again in 15 minutes.";<br>
+                    &nbsp;&nbsp;exit();<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 17: User Activity Logging -->
+            <section>
+                <h2>User Activity Logging</h2>
+                <div class="code-example">
+                    Activity Tracking:<br><br>
+                    
+                    function logUserActivity($userId, $action, $details = '') {<br>
+                    &nbsp;&nbsp;global $pdo;<br>
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO user_activity (user_id, action, details, ip_address, timestamp) VALUES (?, ?, ?, ?, NOW())");<br>
+                    &nbsp;&nbsp;$stmt->execute([$userId, $action, $details, $_SERVER['REMOTE_ADDR']]);<br>
+                    }<br><br>
+                    
+                    // Log login<br>
+                    logUserActivity($userId, 'login', 'User logged in successfully');<br><br>
+                    
+                    // Log profile update<br>
+                    logUserActivity($userId, 'profile_update', 'Updated personal information');<br><br>
+                    
+                    // Log password change<br>
+                    logUserActivity($userId, 'password_change', 'Password changed successfully');<br><br>
+                    
+                    // Get user activity<br>
+                    $stmt = $pdo->prepare("SELECT * FROM user_activity WHERE user_id = ? ORDER BY timestamp DESC LIMIT 10");<br>
+                    $stmt->execute([$userId]);<br>
+                    $activities = $stmt->fetchAll();
+                </div>
+            </section>
+
+            <!-- Slide 18: Social Login -->
+            <section>
+                <h2>Social Login Integration</h2>
+                <div class="code-example">
+                    OAuth Implementation:<br><br>
+                    
+                    // Google OAuth callback<br>
+                    if (isset($_GET['code'])) {<br>
+                    &nbsp;&nbsp;$code = $_GET['code'];<br>
+                    &nbsp;&nbsp;$clientId = 'your_google_client_id';<br>
+                    &nbsp;&nbsp;$clientSecret = 'your_google_client_secret';<br><br>
+                    
+                    &nbsp;&nbsp;// Exchange code for token<br>
+                    &nbsp;&nbsp;$tokenUrl = 'https://oauth2.googleapis.com/token';<br>
+                    &nbsp;&nbsp;$data = [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'code' => $code,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'client_id' => $clientId,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'client_secret' => $clientSecret,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'redirect_uri' => 'https://yoursite.com/callback.php',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'grant_type' => 'authorization_code'<br>
+                    &nbsp;&nbsp;];<br><br>
+                    
+                    &nbsp;&nbsp;// Get user info from Google<br>
+                    &nbsp;&nbsp;$userInfo = getUserInfoFromGoogle($accessToken);<br><br>
+                    
+                    &nbsp;&nbsp;// Create or login user<br>
+                    &nbsp;&nbsp;handleSocialLogin($userInfo);<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 19: Email Verification -->
+            <section>
+                <h2>Email Verification</h2>
+                <div class="code-example">
+                    Email Confirmation:<br><br>
+                    
+                    // Generate verification token<br>
+                    $verificationToken = bin2hex(random_bytes(32));<br>
+                    $stmt = $pdo->prepare("UPDATE users SET email_verified = 0, verification_token = ? WHERE id = ?");<br>
+                    $stmt->execute([$verificationToken, $userId]);<br><br>
+                    
+                    // Send verification email<br>
+                    $verificationLink = "https://example.com/verify.php?token=" . $verificationToken;<br>
+                    $to = $email;<br>
+                    $subject = "Verify Your Email Address";<br>
+                    $message = "Click the following link to verify your email: " . $verificationLink;<br>
+                    $headers = "From: noreply@example.com";<br><br>
+                    
+                    mail($to, $subject, $message, $headers);<br><br>
+                    
+                    // Verify email<br>
+                    if (isset($_GET['token'])) {<br>
+                    &nbsp;&nbsp;$token = $_GET['token'];<br>
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE users SET email_verified = 1, verification_token = NULL WHERE verification_token = ?");<br>
+                    &nbsp;&nbsp;$stmt->execute([$token]);<br><br>
+                    &nbsp;&nbsp;if ($stmt->rowCount() > 0) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Email verified successfully";<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 20: Session Hijacking Protection -->
+            <section>
+                <h2>Session Hijacking Protection</h2>
+                <div class="code-example">
+                    Security Measures:<br><br>
+                    
+                    // Store user agent in session<br>
+                    if (!isset($_SESSION['user_agent'])) {<br>
+                    &nbsp;&nbsp;$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];<br>
+                    }<br><br>
+                    
+                    // Check for session hijacking<br>
+                    if ($_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {<br>
+                    &nbsp;&nbsp;session_unset();<br>
+                    &nbsp;&nbsp;session_destroy();<br>
+                    &nbsp;&nbsp;header("Location: login.php?error=hijacking");<br>
+                    &nbsp;&nbsp;exit();<br>
+                    }<br><br>
+                    
+                    // Store IP address<br>
+                    if (!isset($_SESSION['ip_address'])) {<br>
+                    &nbsp;&nbsp;$_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];<br>
+                    }<br><br>
+                    
+                    // Check IP changes<br>
+                    if ($_SESSION['ip_address'] !== $_SERVER['REMOTE_ADDR']) {<br>
+                    &nbsp;&nbsp;session_unset();<br>
+                    &nbsp;&nbsp;session_destroy();<br>
+                    &nbsp;&nbsp;header("Location: login.php?error=ip_change");<br>
+                    &nbsp;&nbsp;exit();<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 21: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Advanced Authentication System</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Build an advanced authentication system with:</li>
+                        <ul>
+                            <li>Two-factor authentication (SMS/Email)</li>
+                            <li>Remember me functionality</li>
+                            <li>Account lockout protection</li>
+                            <li>User activity logging</li>
+                            <li>Email verification system</li>
+                            <li>Social login integration</li>
+                        </ul>
+                        <li>Implement session security measures</li>
+                        <li>Add comprehensive error handling</li>
+                        <li>Create admin user management</li>
+                        <li>Test all security features</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you build a professional authentication system</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 22: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>User authentication is essential for web applications</li>
+                    <li>Session management maintains user state</li>
+                    <li>Password security protects user accounts</li>
+                    <li>Two-factor authentication adds extra security</li>
+                    <li>Account lockout prevents brute force attacks</li>
+                    <li>Activity logging helps monitor user behavior</li>
+                    <li>Email verification ensures valid user accounts</li>
+                    <li>Social login provides convenient authentication</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>E-commerce Core Features - Product catalogues, shopping cart, and order management</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            fitToParent: true,
+            responsive: true,
+            scrollBeyondOnePage: true
+        });
+    </script>
+</body>
+</html>

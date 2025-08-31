@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 12: Final Project Development</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        .reveal .slides section.center { text-align: center; }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .work-session {
+            background: #e8f5e8;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .checklist {
+            background: #f0f8ff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        
+        /* Custom scrollbar styling */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            display: inline-block;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" 
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>Final Project Development</h1>
+                <h3>CMU529: Advanced Web Development - Session 12</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>E-commerce Application Development</p>
+                <p><small>3-hour session • 20 slides • Dedicated project work time</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Project overview & requirements</li>
+                        <li>60 min: Project planning & consultation</li>
+                        <li>15 min: Break</li>
+                        <li>90 min: Dedicated project work time</li>
+                        <li>Remaining: Individual consultation & support</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Assessment Overview -->
+            <section>
+                <h2>Assessment Overview</h2>
+                <div class="highlight">
+                    <h4>CMU529: Advanced Web Development</h4>
+                    <p><strong>Project Type:</strong> Individual full-stack e-commerce application</p>
+                    <p><strong>Weighting:</strong> 100% of module grade</p>
+                    <p><strong>Technology Stack:</strong> PHP, MySQL, HTML5, CSS3, JavaScript, Bootstrap</p>
+                    <p><strong>Due:</strong> End of module (consultation with tutor required)</p>
+                </div>
+                <ul>
+                    <li>Complete online store with product catalogue</li>
+                    <li>Shopping cart functionality</li>
+                    <li>User accounts and authentication</li>
+                    <li>Payment system integration</li>
+                    <li>Admin panel for management</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: Project Requirements -->
+            <section>
+                <h2>Project Requirements</h2>
+                <div class="checklist">
+                    <h4>Example Requirements:</h4>
+                    <ul>
+                        <li><strong>Front-end Framework:</strong> E.g., Bootstrap 5 for responsive design</li>
+                        <li><strong>Back-end Development:</strong> E.g., PHP for server-side logic</li>
+                        <li><strong>Database:</strong> MySQL for data storage and management</li>
+                        <li><strong>Product Catalogue:</strong> Complete product management system</li>
+                        <li><strong>Shopping Cart:</strong> Session-based cart functionality</li>
+                        <li><strong>User Accounts:</strong> Registration, login, and profiles</li>
+                        <li><strong>Documentation:</strong> Comprehensive code comments</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 4: Learning Outcomes -->
+            <section>
+                <h2>Learning Outcomes Assessed</h2>
+                <div class="highlight">
+                    <h4>This project will assess your ability to:</h4>
+                    <ul>
+                        <li>Plan and design contemporary web-based interfaces using digital tools and techniques</li>
+                        <li>Design usable interfaces for web-based environments across mobile, tablet, and desktop browsers</li>
+                        <li>Examine and interpret how interactive and responsive websites are designed, organised, and managed through contemporary code and frameworks</li>
+                        <li>Write and manipulate efficient code to problem solve, develop interactive technologies, and manage digital web-based content</li>
+                        <li>Have an awareness of the process by which front-end webpages are delivered to users</li>
+                        <li>Reflect on the professional, moral, legal and ethical issues associated with a computer science professional working within the field of web application development</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 5: Project Structure -->
+            <section>
+                <h2>Example Project Structure</h2>
+                <div class="code-example">
+                    ecommerce-project/<br>
+                    ├── assets/<br>
+                    │&nbsp;&nbsp;├── css/<br>
+                    │&nbsp;&nbsp;├── js/<br>
+                    │&nbsp;&nbsp;└── images/<br>
+                    ├── includes/<br>
+                    │&nbsp;&nbsp;├── config.php<br>
+                    │&nbsp;&nbsp;├── database.php<br>
+                    │&nbsp;&nbsp;├── functions.php<br>
+                    │&nbsp;&nbsp;└── auth.php<br>
+                    ├── admin/<br>
+                    │&nbsp;&nbsp;├── dashboard.php<br>
+                    │&nbsp;&nbsp;├── products.php<br>
+                    │&nbsp;&nbsp;└── orders.php<br>
+                    ├── uploads/<br>
+                    │&nbsp;&nbsp;└── products/<br>
+                    ├── index.php<br>
+                    ├── products.php<br>
+                    ├── cart.php<br>
+                    ├── checkout.php<br>
+                    ├── login.php<br>
+                    ├── register.php<br>
+                    └── README.md
+                </div>
+            </section>
+
+            <!-- Slide 6: Database Schema -->
+            <section>
+                <h2>Database Schema</h2>
+                <div class="code-example">
+                    -- Users table<br>
+                    CREATE TABLE users (<br>
+                    &nbsp;&nbsp;id INT AUTO_INCREMENT PRIMARY KEY,<br>
+                    &nbsp;&nbsp;username VARCHAR(50) UNIQUE NOT NULL,<br>
+                    &nbsp;&nbsp;email VARCHAR(100) UNIQUE NOT NULL,<br>
+                    &nbsp;&nbsp;password VARCHAR(255) NOT NULL,<br>
+                    &nbsp;&nbsp;role ENUM('user', 'admin') DEFAULT 'user',<br>
+                    &nbsp;&nbsp;created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP<br>
+                    );<br><br>
+                    
+                    -- Products table<br>
+                    CREATE TABLE products (<br>
+                    &nbsp;&nbsp;id INT AUTO_INCREMENT PRIMARY KEY,<br>
+                    &nbsp;&nbsp;name VARCHAR(255) NOT NULL,<br>
+                    &nbsp;&nbsp;description TEXT,<br>
+                    &nbsp;&nbsp;price DECIMAL(10,2) NOT NULL,<br>
+                    &nbsp;&nbsp;stock INT DEFAULT 0,<br>
+                    &nbsp;&nbsp;image VARCHAR(255),<br>
+                    &nbsp;&nbsp;category_id INT,<br>
+                    &nbsp;&nbsp;created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP<br>
+                    );<br><br>
+                    
+                    -- Orders table<br>
+                    CREATE TABLE orders (<br>
+                    &nbsp;&nbsp;id INT AUTO_INCREMENT PRIMARY KEY,<br>
+                    &nbsp;&nbsp;user_id INT,<br>
+                    &nbsp;&nbsp;total DECIMAL(10,2),<br>
+                    &nbsp;&nbsp;status ENUM('pending', 'processing', 'shipped', 'delivered'),<br>
+                    &nbsp;&nbsp;created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP<br>
+                    );
+                </div>
+            </section>
+
+            <!-- Slide 8: Essential Features Checklist -->
+            <section>
+                <h2>Example Features</h2>
+                <div class="checklist">
+                    <h4>Front-end Features:</h4>
+                    <ul>
+                        <li>✓ Responsive Bootstrap 5 design</li>
+                        <li>✓ Product listing with search and filters</li>
+                        <li>✓ Product detail pages</li>
+                        <li>✓ Shopping cart with add/remove items</li>
+                        <li>✓ User registration and login forms</li>
+                        <li>✓ Checkout process</li>
+                        <li>✓ Order confirmation pages</li>
+                    </ul>
+                    
+                    <h4>Back-end Features:</h4>
+                    <ul>
+                        <li>✓ User authentication and session management</li>
+                        <li>✓ Product CRUD operations</li>
+                        <li>✓ Shopping cart session handling</li>
+                        <li>✓ Order processing and storage</li>
+                        <li>✓ Admin panel for product/order management</li>
+                        <li>✓ Input validation and security measures</li>
+                        <li>✓ Database operations with prepared statements</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 9: Security Requirements -->
+            <section>
+                <h2>Security Considerations</h2>
+                <div class="highlight">
+                    <h4>Example Security Measures:</h4>
+                    <ul>
+                        <li><strong>Input Validation:</strong> Validate all user inputs</li>
+                        <li><strong>SQL Injection Prevention:</strong> Use prepared statements</li>
+                        <li><strong>XSS Protection:</strong> Escape all output with htmlspecialchars()</li>
+                        <li><strong>CSRF Protection:</strong> Implement CSRF tokens</li>
+                        <li><strong>Password Security:</strong> Hash passwords with password_hash()</li>
+                        <li><strong>Session Security:</strong> Secure session management</li>
+                        <li><strong>File Upload Security:</strong> Validate file uploads</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    // Example: Secure password hashing<br>
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);<br><br>
+                    
+                    // Example: Prepared statement<br>
+                    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");<br>
+                    $stmt->execute([$email]);<br><br>
+                    
+                    // Example: Output escaping<br>
+                    echo htmlspecialchars($userInput, ENT_QUOTES, 'UTF-8');
+                </div>
+            </section>
+
+            <!-- Slide 10: Documentation Requirements -->
+            <section>
+                <h2>Documentation Requirements</h2>
+                <div class="highlight">
+                    <h4>Code Documentation Standards:</h4>
+                    <ul>
+                        <li><strong>Harvard Newman Format:</strong> All code comments must use Harvard Newman format references</li>
+                        <li><strong>Function Documentation:</strong> Document all functions with purpose, parameters, and return values</li>
+                        <li><strong>File Headers:</strong> Include file purpose and author information</li>
+                        <li><strong>Complex Logic:</strong> Comment complex algorithms and business logic</li>
+                        <li><strong>Database Schema:</strong> Document table structures and relationships</li>
+                        <li><strong>README File:</strong> Comprehensive project documentation</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    /**<br>
+                    * User authentication function<br>
+                    * Validates user credentials and creates session<br>
+                    * @param string $email User email address<br>
+                    * @param string $password User password<br>
+                    * @return array|false User data or false on failure<br>
+                    * Reference: Harvard Newman Format (2024)<br>
+                    */<br>
+                    function authenticateUser($email, $password) {<br>
+                    &nbsp;&nbsp;// Implementation here<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 11: WORK SESSION 1 - Project Planning -->
+            <section class="center">
+                <h2>Work Session 1</h2>
+                <div class="work-session">
+                    <h3>60 Minutes - Project Planning & Consultation</h3>
+                    <p><em>Use this time to work on your project thoroughly and get guidance from your tutor</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Development Resources -->
+            <section>
+                <h2>Development Resources</h2>
+                <div class="highlight">
+                    <h4>Essential Resources:</h4>
+                    <ul>
+                        <li><strong>Bootstrap 5:</strong> https://getbootstrap.com/docs/5.0/</li>
+                        <li><strong>PHP Documentation:</strong> https://www.php.net/manual/</li>
+                        <li><strong>MySQL Documentation:</strong> https://dev.mysql.com/doc/</li>
+                        <li><strong>W3Schools:</strong> https://www.w3schools.com/</li>
+                        <li><strong>Stack Overflow:</strong> https://stackoverflow.com/</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    // Useful PHP functions for e-commerce<br>
+                    session_start(); // Session management<br>
+                    password_hash(); // Password hashing<br>
+                    password_verify(); // Password verification<br>
+                    htmlspecialchars(); // Output escaping<br>
+                    filter_var(); // Input validation<br>
+                    PDO::prepare(); // Prepared statements<br>
+                    move_uploaded_file(); // File uploads
+                </div>
+            </section>
+
+            <!-- Slide 13: Common Challenges -->
+            <section>
+                <h2>Common Challenges & Solutions</h2>
+                <div class="highlight">
+                    <h4>Frequently Encountered Issues:</h4>
+                    <ul>
+                        <li><strong>Session Management:</strong> Ensure proper session handling across pages</li>
+                        <li><strong>Cart Persistence:</strong> Use sessions or database to maintain cart state</li>
+                        <li><strong>File Uploads:</strong> Validate file types and sizes before processing</li>
+                        <li><strong>Database Connections:</strong> Use PDO with proper error handling</li>
+                        <li><strong>Responsive Design:</strong> Test on multiple screen sizes</li>
+                        <li><strong>Security:</strong> Always validate and sanitize user input</li>
+                        <li><strong>Error Handling:</strong> Implement proper error logging and user feedback</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    // Example: Proper error handling<br>
+                    try {<br>
+                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO products (name, price) VALUES (?, ?)");<br>
+                    &nbsp;&nbsp;$stmt->execute([$name, $price]);<br>
+                    &nbsp;&nbsp;echo "Product added successfully";<br>
+                    } catch(PDOException $e) {<br>
+                    &nbsp;&nbsp;error_log("Database error: " . $e->getMessage());<br>
+                    &nbsp;&nbsp;echo "An error occurred. Please try again.";<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 14: Testing Checklist -->
+            <section>
+                <h2>Testing Checklist</h2>
+                <div class="checklist">
+                    <h4>Functionality Testing:</h4>
+                    <ul>
+                        <li>✓ User registration and login</li>
+                        <li>✓ Product browsing and search</li>
+                        <li>✓ Shopping cart operations</li>
+                        <li>✓ Checkout process</li>
+                        <li>✓ Order placement and confirmation</li>
+                        <li>✓ Admin panel functionality</li>
+                        <li>✓ File upload for product images</li>
+                    </ul>
+                    
+                    <h4>Security Testing:</h4>
+                    <ul>
+                        <li>✓ SQL injection attempts</li>
+                        <li>✓ XSS attack prevention</li>
+                        <li>✓ CSRF token validation</li>
+                        <li>✓ Input validation</li>
+                        <li>✓ File upload security</li>
+                        <li>✓ Session security</li>
+                    </ul>
+                    
+                    <h4>Responsive Testing:</h4>
+                    <ul>
+                        <li>✓ Desktop browser compatibility</li>
+                        <li>✓ Tablet responsiveness</li>
+                        <li>✓ Mobile device compatibility</li>
+                        <li>✓ Cross-browser testing</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 15: WORK SESSION 2 - Development -->
+            <section class="center">
+                <h2>Work Session 2: Project Development</h2>
+                <div class="work-session">
+                    <h3>90 Minutes - Dedicated Project Work Time</h3>
+                    <p><em>Focus on building a solid foundation for your e-commerce application</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Submission Requirements -->
+            <section>
+                <h2>Submission Requirements</h2>
+                <div class="highlight">
+                    <h4>Check Moodle for the exact requirements:</h4>
+                    <ul>
+                        <li><strong>Complete Source Code:</strong> All PHP, HTML, CSS, and JavaScript files</li>
+                        <li><strong>Database Schema:</strong> SQL file with table creation scripts</li>
+                        <li><strong>README File:</strong> Comprehensive project documentation</li>
+                        <li><strong>Installation Instructions:</strong> Step-by-step setup guide</li>
+                        <li><strong>Code Comments:</strong> Harvard Newman format references throughout</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    README.md should include:<br>
+                    - Project overview and features<br>
+                    - Technology stack used<br>
+                    - Installation instructions<br>
+                    - Database setup guide<br>
+                    - References and resources used
+                </div>
+            </section>
+
+            <!-- Slide 18: Individual Consultation -->
+            <section class="center">
+                <h2>Individual Consultation Time</h2>
+                <div class="work-session">
+                    <h3>Remaining Time - Individual Support</h3>
+                    <p><strong>Use this time for:</strong></p>
+                    <ul>
+                        <li>One-on-one consultation with your tutor</li>
+                        <li>Technical problem-solving</li>
+                        <li>Code review and feedback</li>
+                    </ul>
+                    <p><em>Don't hesitate to ask questions and seek guidance!</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Next Steps -->
+            <section>
+                <h2>Next Steps</h2>
+                <div class="highlight">
+                    <h4>After This Session:</h4>
+                    <ul>
+                        <li><strong>Continue Development:</strong> Work on your project outside of class</li>
+                        <li><strong>Regular Check-ins:</strong> Schedule consultations with your tutor</li>
+                        <li><strong>Testing:</strong> Thoroughly test all features</li>
+                        <li><strong>Documentation:</strong> Complete all required documentation</li>
+                        <li><strong>Final Review:</strong> Review your code and make improvements</li>
+                        <li><strong>Submission:</strong> Prepare final submission package</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    Recommended Timeline:<br>
+                    Week 1: Foundation and basic features<br>
+                    Week 2: Core e-commerce functionality<br>
+                    Week 3: Advanced features and security<br>
+                    Week 4: Testing, documentation, and final review<br>
+                    <br>
+                    Remember: Start early and test frequently!
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            fitToParent: true,
+            responsive: true,
+            scrollBeyondOnePage: true
+        });
+    </script>
+</body>
+</html>

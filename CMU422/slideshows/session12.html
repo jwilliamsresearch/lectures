@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 12: Final Project and Assessment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+                <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        
+        .reveal .slides section.center {
+            text-align: center;
+        }
+        
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+        
+        .reveal .slides section ul, .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+        
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+        
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+        
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+            
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+            
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+            
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+            
+            .task-box, .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+        
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+            <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+                ← Back to Module
+            </a>
+        </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>Final Project and Assessment</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 12</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Bringing it all together</p>
+                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Apply all learned concepts in a comprehensive project</li>
+                    <li>Demonstrate mastery of web development skills</li>
+                    <li>Present and defend your work</li>
+                    <li>Receive feedback and assessment</li>
+                    <li>Plan for future development</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: Final Project Overview -->
+            <section>
+                <h2>Final Project Overview</h2>
+                <div class="highlight">
+                    <strong>Final Project</strong> demonstrates your mastery of web development concepts
+                </div>
+                <ul>
+                    <li>Comprehensive web application</li>
+                    <li>All learned technologies integrated</li>
+                    <li>Professional presentation</li>
+                    <li>Code review and feedback</li>
+                    <li>Assessment and evaluation</li>
+                </ul>
+                <div class="code-example">
+                    // Project requirements<br>
+                    - HTML5 semantic structure<br>
+                    - CSS3 with responsive design<br>
+                    - JavaScript with modern features<br>
+                    - External APIs integration<br>
+                    - Accessibility compliance<br>
+                    - Performance optimization
+                </div>
+            </section>
+
+            <!-- Slide 4: Project Requirements -->
+            <section>
+                <h2>Project Requirements</h2>
+                <div class="code-example">
+                    // Technical Requirements<br>
+                    ✓ HTML5 semantic markup<br>
+                    ✓ CSS3 with Flexbox/Grid<br>
+                    ✓ JavaScript ES6+ features<br>
+                    ✓ Responsive design<br>
+                    ✓ Cross-browser compatibility<br>
+                    ✓ Accessibility (WCAG 2.1)<br>
+                    ✓ Performance optimization<br>
+                    ✓ External API integration<br>
+                    ✓ Form validation<br>
+                    ✓ Error handling<br><br>
+                    // Documentation Requirements<br>
+                    ✓ README.md with setup instructions<br>
+                    ✓ Code comments and documentation<br>
+                    ✓ Project presentation<br>
+                    ✓ Live demo
+                </div>
+            </section>
+
+            <!-- Slide 5: Assessment Criteria -->
+            <section>
+                <h2>Assessment Criteria</h2>
+                <ul>
+                    <li><strong>Technical Implementation (40%)</strong></li>
+                    <ul>
+                        <li>Code quality and structure</li>
+                        <li>Feature implementation</li>
+                        <li>Best practices adherence</li>
+                    </ul>
+                    <li><strong>Design and UX (25%)</strong></li>
+                    <ul>
+                        <li>Visual design quality</li>
+                        <li>User experience</li>
+                        <li>Responsive design</li>
+                    </ul>
+                    <li><strong>Documentation (15%)</strong></li>
+                    <ul>
+                        <li>README and comments</li>
+                        <li>Code documentation</li>
+                    </ul>
+                    <li><strong>Presentation (20%)</strong></li>
+                    <ul>
+                        <li>Live demonstration</li>
+                        <li>Technical explanation</li>
+                        <li>Q&A responses</li>
+                    </ul>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Project Ideas -->
+            <section>
+                <h2>Project Ideas</h2>
+                <div class="code-example">
+                    // E-commerce Platform<br>
+                    - Product catalog with search/filter<br>
+                    - Shopping cart and checkout<br>
+                    - User authentication<br>
+                    - Payment integration<br>
+                    - Order management<br><br>
+                    // Social Media Dashboard<br>
+                    - Multiple platform integration<br>
+                    - Analytics and reporting<br>
+                    - Content scheduling<br>
+                    - User management<br><br>
+                    // Task Management App<br>
+                    - Project organization<br>
+                    - Team collaboration<br>
+                    - Progress tracking<br>
+                    - File sharing
+                </div>
+            </section>
+
+            <!-- Slide 7: Development Process -->
+            <section>
+                <h2>Development Process</h2>
+                <div class="code-example">
+                    // Phase 1: Planning (Week 1)<br>
+                    - Requirements gathering<br>
+                    - Wireframing and mockups<br>
+                    - Technology stack selection<br>
+                    - Project structure setup<br><br>
+                    // Phase 2: Development (Week 2-3)<br>
+                    - Core functionality<br>
+                    - UI/UX implementation<br>
+                    - API integration<br>
+                    - Testing and debugging<br><br>
+                    // Phase 3: Polish (Week 4)<br>
+                    - Performance optimization<br>
+                    - Accessibility improvements<br>
+                    - Documentation<br>
+                    - Presentation preparation
+                </div>
+            </section>
+
+            <!-- Slide 8: Code Quality Standards -->
+            <section>
+                <h2>Code Quality Standards</h2>
+                <ul>
+                    <li>Clean, readable code</li>
+                    <li>Consistent naming conventions</li>
+                    <li>Proper indentation and formatting</li>
+                    <li>Modular and reusable components</li>
+                    <li>Error handling and validation</li>
+                </ul>
+                <div class="code-example">
+                    // Good code example<br>
+                    function calculateTotal(items) {<br>
+                    &nbsp;&nbsp;if (!Array.isArray(items)) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Items must be an array');<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;return items.reduce((total, item) => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return total + (item.price * item.quantity);<br>
+                    &nbsp;&nbsp;}, 0);<br>
+                    }<br><br>
+                    // Consistent naming<br>
+                    const userProfile = {};<br>
+                    const getUserData = () => {};<br>
+                    const isAuthenticated = true;
+                </div>
+            </section>
+
+            <!-- Slide 9: Testing Strategy -->
+            <section>
+                <h2>Testing Strategy</h2>
+                <div class="code-example">
+                    // Unit testing<br>
+                    describe('Calculator', () => {<br>
+                    &nbsp;&nbsp;test('adds two numbers', () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(2, 3)).toBe(5);<br>
+                    &nbsp;&nbsp;});<br>
+                    });<br><br>
+                    // Integration testing<br>
+                    test('user registration flow', async () => {<br>
+                    &nbsp;&nbsp;const user = await registerUser(testData);<br>
+                    &nbsp;&nbsp;expect(user.email).toBe(testData.email);<br>
+                    });<br><br>
+                    // Manual testing checklist<br>
+                    ✓ All features work as expected<br>
+                    ✓ Responsive design on different devices<br>
+                    ✓ Cross-browser compatibility<br>
+                    ✓ Accessibility testing
+                </div>
+            </section>
+
+            <!-- Slide 10: Performance Optimization -->
+            <section>
+                <h2>Performance Optimization</h2>
+                <ul>
+                    <li>Image optimization and lazy loading</li>
+                    <li>CSS and JavaScript minification</li>
+                    <li>Code splitting and bundling</li>
+                    <li>Caching strategies</li>
+                    <li>CDN usage</li>
+                </ul>
+                <div class="code-example">
+                    // Image optimization<br>
+                    &lt;img src="image.jpg" loading="lazy" alt="Description"&gt;<br><br>
+                    // CSS optimization<br>
+                    /* Minified CSS */<br>
+                    .header{background:#fff;padding:20px}<br><br>
+                    // JavaScript optimization<br>
+                    &lt;script src="app.js" defer&gt;&lt;/script&gt;<br><br>
+                    // Performance monitoring<br>
+                    performance.mark('app-start');<br>
+                    performance.measure('app-load', 'app-start');
+                </div>
+            </section>
+
+            <!-- Slide 11: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Final Project Development</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Complete your final project development</li>
+                        <li>Ensure all requirements are met:</li>
+                        <ul>
+                            <li>All technical features implemented</li>
+                            <li>Responsive design working</li>
+                            <li>Accessibility compliance</li>
+                            <li>Performance optimization</li>
+                            <li>Error handling</li>
+                        </ul>
+                        <li>Final testing and debugging</li>
+                        <li>Documentation completion</li>
+                        <li>Deployment to hosting platform</li>
+                        <li>Prepare for presentation</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you complete your final project</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Presentation Guidelines -->
+            <section>
+                <h2>Presentation Guidelines</h2>
+                <ul>
+                    <li><strong>Structure (5-10 minutes)</strong></li>
+                    <ul>
+                        <li>Project overview and goals</li>
+                        <li>Technical implementation</li>
+                        <li>Key features demonstration</li>
+                        <li>Challenges and solutions</li>
+                        <li>Future improvements</li>
+                    </ul>
+                    <li><strong>Live Demo</strong></li>
+                    <ul>
+                        <li>Walk through main features</li>
+                        <li>Show responsive design</li>
+                        <li>Demonstrate functionality</li>
+                    </ul>
+                    <li><strong>Q&A Session</strong></li>
+                    <ul>
+                        <li>Technical questions</li>
+                        <li>Design decisions</li>
+                        <li>Implementation details</li>
+                    </ul>
+                </ul>
+            </section>
+
+            <!-- Slide 14: Code Review Process -->
+            <section>
+                <h2>Code Review Process</h2>
+                <div class="code-example">
+                    // Code review checklist<br>
+                    ✓ Code follows style guidelines<br>
+                    ✓ Functions are well-documented<br>
+                    ✓ Error handling is implemented<br>
+                    ✓ Security best practices followed<br>
+                    ✓ Performance considerations addressed<br>
+                    ✓ Accessibility requirements met<br>
+                    ✓ Cross-browser compatibility<br>
+                    ✓ Mobile responsiveness<br><br>
+                    // Review feedback format<br>
+                    **Positive:** Good use of semantic HTML<br>
+                    **Improvement:** Add input validation<br>
+                    **Question:** Why this approach?<br>
+                    **Suggestion:** Consider using...
+                </div>
+            </section>
+
+            <!-- Slide 15: Portfolio Development -->
+            <section>
+                <h2>Portfolio Development</h2>
+                <ul>
+                    <li>Showcase your best work</li>
+                    <li>Include project descriptions</li>
+                    <li>Highlight technical skills</li>
+                    <li>Provide live demos</li>
+                    <li>Include GitHub links</li>
+                </ul>
+                <div class="code-example">
+                    // Portfolio structure<br>
+                    - Personal introduction<br>
+                    - Skills and technologies<br>
+                    - Project showcase<br>
+                    - Contact information<br>
+                    - GitHub profile<br>
+                    - LinkedIn profile<br><br>
+                    // Project showcase format<br>
+                    **Project Name**<br>
+                    Description of the project<br>
+                    Technologies used: HTML, CSS, JavaScript<br>
+                    Live demo: [link]<br>
+                    GitHub: [link]
+                </div>
+            </section>
+
+            <!-- Slide 16: Career Preparation -->
+            <section>
+                <h2>Career Preparation</h2>
+                <ul>
+                    <li><strong>Technical Skills</strong></li>
+                    <ul>
+                        <li>Master core technologies</li>
+                        <li>Learn modern frameworks</li>
+                        <li>Stay updated with trends</li>
+                    </ul>
+                    <li><strong>Soft Skills</strong></li>
+                    <ul>
+                        <li>Communication</li>
+                        <li>Problem solving</li>
+                        <li>Team collaboration</li>
+                    </ul>
+                    <li><strong>Professional Development</strong></li>
+                    <ul>
+                        <li>Build a strong portfolio</li>
+                        <li>Network with professionals</li>
+                        <li>Attend industry events</li>
+                    </ul>
+                </ul>
+            </section>
+
+            <!-- Slide 17: Industry Trends -->
+            <section>
+                <h2>Industry Trends</h2>
+                <div class="code-example">
+                    // Current trends<br>
+                    - Progressive Web Apps (PWAs)<br>
+                    - Serverless architecture<br>
+                    - Micro frontends<br>
+                    - AI/ML integration<br>
+                    - Web3 and blockchain<br>
+                    - Voice interfaces<br>
+                    - AR/VR experiences<br><br>
+                    // Skills in demand<br>
+                    - React, Vue, Angular<br>
+                    - Node.js and Express<br>
+                    - TypeScript<br>
+                    - Cloud platforms (AWS, Azure)<br>
+                    - DevOps practices
+                </div>
+            </section>
+
+            <!-- Slide 18: Learning Resources -->
+            <section>
+                <h2>Learning Resources</h2>
+                <ul>
+                    <li><strong>Online Platforms</strong></li>
+                    <ul>
+                        <li>MDN Web Docs</li>
+                        <li>freeCodeCamp</li>
+                        <li>The Odin Project</li>
+                        <li>Frontend Mentor</li>
+                    </ul>
+                    <li><strong>Documentation</strong></li>
+                    <ul>
+                        <li>Official framework docs</li>
+                        <li>API documentation</li>
+                        <li>Browser developer tools</li>
+                    </ul>
+                    <li><strong>Communities</strong></li>
+                    <ul>
+                        <li>Stack Overflow</li>
+                        <li>GitHub</li>
+                        <li>Reddit (r/webdev)</li>
+                        <li>Discord communities</li>
+                    </ul>
+                </ul>
+            </section>
+
+            <!-- Slide 19: Assessment Feedback -->
+            <section>
+                <h2>Assessment Feedback</h2>
+                <div class="code-example">
+                    // Feedback categories<br>
+                    **Technical Excellence**<br>
+                    - Code quality and structure<br>
+                    - Feature implementation<br>
+                    - Best practices<br><br>
+                    **Design and UX**<br>
+                    - Visual appeal<br>
+                    - User experience<br>
+                    - Responsive design<br><br>
+                    **Documentation**<br>
+                    - README quality<br>
+                    - Code comments<br>
+                    - Project documentation<br><br>
+                    **Presentation**<br>
+                    - Communication skills<br>
+                    - Technical explanation<br>
+                    - Demo quality
+                </div>
+            </section>
+
+            <!-- Slide 20: Future Learning Path -->
+            <section>
+                <h2>Future Learning Path</h2>
+                <ul>
+                    <li><strong>Immediate (Next 3 months)</strong></li>
+                    <ul>
+                        <li>Master a modern framework</li>
+                        <li>Learn backend development</li>
+                        <li>Build more complex projects</li>
+                    </ul>
+                    <li><strong>Short-term (6-12 months)</strong></li>
+                    <ul>
+                        <li>Full-stack development</li>
+                        <li>Database design</li>
+                        <li>DevOps and deployment</li>
+                    </ul>
+                    <li><strong>Long-term (1+ years)</strong></li>
+                    <ul>
+                        <li>Specialization (frontend/backend)</li>
+                        <li>Architecture design</li>
+                        <li>Team leadership</li>
+                    </ul>
+                </ul>
+            </section>
+
+            <!-- Slide 21: Industry Certifications -->
+            <section>
+                <h2>Industry Certifications</h2>
+                <div class="code-example">
+                    // Web Development Certifications<br>
+                    - Google Web Developer Certification<br>
+                    - Microsoft MTA: Web Development<br>
+                    - AWS Certified Developer<br>
+                    - MongoDB Developer Certification<br><br>
+                    // Framework-specific<br>
+                    - React Developer Certification<br>
+                    - Vue.js Certification<br>
+                    - Angular Certification<br><br>
+                    // General Programming<br>
+                    - JavaScript Algorithms and Data Structures<br>
+                    - Responsive Web Design<br>
+                    - Front End Libraries
+                </div>
+            </section>
+
+            <!-- Slide 22: Networking and Community -->
+            <section>
+                <h2>Networking and Community</h2>
+                <ul>
+                    <li><strong>Local Meetups</strong></li>
+                    <ul>
+                        <li>Web development groups</li>
+                        <li>Tech conferences</li>
+                        <li>Hackathons</li>
+                    </ul>
+                    <li><strong>Online Communities</strong></li>
+                    <ul>
+                        <li>GitHub contributions</li>
+                        <li>Open source projects</li>
+                        <li>Technical blogs</li>
+                    </ul>
+                    <li><strong>Professional Networks</strong></li>
+                    <ul>
+                        <li>LinkedIn connections</li>
+                        <li>Industry events</li>
+                        <li>Mentorship programs</li>
+                    </ul>
+                </ul>
+            </section>
+
+            <!-- Slide 23: Job Search Strategies -->
+            <section>
+                <h2>Job Search Strategies</h2>
+                <div class="code-example">
+                    // Portfolio optimization<br>
+                    - Showcase best projects<br>
+                    - Include live demos<br>
+                    - Write case studies<br>
+                    - Highlight technical skills<br><br>
+                    // Application materials<br>
+                    - Tailored resume<br>
+                    - Cover letter template<br>
+                    - Technical interview prep<br>
+                    - Code challenge practice<br><br>
+                    // Interview preparation<br>
+                    - Common questions<br>
+                    - Technical problems<br>
+                    - System design<br>
+                    - Behavioral questions
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Project Presentation and Assessment</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Present your final project to the class</li>
+                        <li>Include in your presentation:</li>
+                        <ul>
+                            <li>Project overview and objectives</li>
+                            <li>Technical implementation details</li>
+                            <li>Key features demonstration</li>
+                            <li>Challenges faced and solutions</li>
+                            <li>Future improvements planned</li>
+                        </ul>
+                        <li>Provide live demonstration</li>
+                        <li>Answer technical questions</li>
+                        <li>Receive feedback and assessment</li>
+                        <li>Participate in peer review</li>
+                        <li>Reflect on learning journey</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you present and assess your final project</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Final projects demonstrate comprehensive skills</li>
+                    <li>Presentation skills are crucial for career success</li>
+                    <li>Continuous learning is essential in web development</li>
+                    <li>Portfolio development helps showcase abilities</li>
+                    <li>Networking and community involvement are valuable</li>
+                    <li>Stay updated with industry trends and technologies</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Congratulations!</h3>
+                    <p>You have completed the CMU422: Fundamentals of Web Design</p>
+                    <p>Continue learning and building amazing web applications!</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+        <script>
+                Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+    </script>
+</body>
+</html>
