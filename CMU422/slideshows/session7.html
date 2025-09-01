@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 7: JavaScript Events and Interactivity</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-                <style>
+    <style>
         /* Global slide styling */
         .reveal .slides section {
             text-align: left;
@@ -15,43 +16,44 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        
+
         .reveal .slides section.center {
             text-align: center;
         }
-        
+
         /* Ensure content fits within viewport */
         .reveal .slides section h1 {
             font-size: 2.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h2 {
             font-size: 2em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h3 {
             font-size: 1.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section p {
             font-size: 1.1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
-        .reveal .slides section ul, .reveal .slides section ol {
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
             font-size: 1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
+
         .reveal .slides section li {
             margin-bottom: 0.3em;
         }
-        
+
         /* Task box styling */
         .task-box {
             background: #e3f2fd;
@@ -62,7 +64,7 @@
             max-height: 60vh;
             overflow-y: auto;
         }
-        
+
         /* Code example styling */
         .code-example {
             background: #f5f5f5;
@@ -76,7 +78,7 @@
             max-height: 40vh;
             overflow-y: auto;
         }
-        
+
         /* Highlight styling */
         .highlight {
             background: #fff3cd;
@@ -85,7 +87,7 @@
             border-left: 4px solid #ffc107;
             margin: 10px 0;
         }
-        
+
         /* Timeline info styling */
         .timeline-info {
             background: #f8f9fa;
@@ -95,71 +97,214 @@
             margin: 20px 0;
             font-size: 0.9em;
         }
-        
+
         .timeline-info ul {
             margin: 10px 0;
             padding-left: 20px;
         }
-        
+
         .timeline-info li {
             margin-bottom: 0.2em;
         }
-        
+
         /* Responsive design */
         @media (max-width: 768px) {
             .reveal .slides section {
                 padding: 15px;
             }
-            
+
             .reveal .slides section h1 {
                 font-size: 2em;
             }
-            
+
             .reveal .slides section h2 {
                 font-size: 1.6em;
             }
-            
+
             .reveal .slides section h3 {
                 font-size: 1.3em;
             }
-            
-            .task-box, .code-example {
+
+            .task-box,
+            .code-example {
                 font-size: 0.9em;
                 padding: 15px;
             }
         }
-        
+
         /* Custom scrollbar for better UX */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
         .code-example::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
         .code-example::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
         .code-example::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
         .code-example::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dom-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dom-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .dom-button {
+            padding: 10px 15px;
+            font-size: 1em;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dom-button:hover {
+            background-color: #1976d2;
+        }
+
+        .dom-button.danger {
+            background-color: #f44336;
+        }
+
+        .dom-button.danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .dom-button.success {
+            background-color: #4caf50;
+        }
+
+        .dom-button.success:hover {
+            background-color: #45a049;
+        }
+
+        .dom-display {
+            min-height: 100px;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dom-item {
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .dom-item:hover {
+            background-color: #bbdefb;
+            transform: scale(1.05);
+        }
+
+        .dom-item.highlighted {
+            background-color: #ffeb3b;
+            border-color: #fbc02d;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.2);
+        }
+
+        .color-option.selected {
+            border-width: 4px;
+            transform: scale(1.3);
+        }
     </style>
 </head>
+
 <body>
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-            <a href="../index.html" style="
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
                 padding: 12px 20px;
@@ -170,11 +315,12 @@
                 box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
                 transition: all 0.3s ease;
                 display: inline-block;
-            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-                ← Back to Module
-            </a>
-        </div>
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
@@ -272,6 +418,44 @@
                     <li>Allows multiple event listeners</li>
                     <li>Better control over event handling</li>
                 </ul>
+
+                <!-- Interactive DOM Manipulation Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Interactive DOM Manipulation</h3>
+                    <div class="demo-container">
+                        <div class="dom-demo">
+                            <div class="dom-controls">
+                                <button class="dom-button" onclick="addElement()">Add
+                                    Element</button>
+                                <button class="dom-button danger" onclick="removeElement()">Remove
+                                    Element</button>
+                                <button class="dom-button success"
+                                    onclick="highlightElements()">Highlight All</button>
+                                <button class="dom-button" onclick="clearHighlights()">Clear
+                                    Highlights</button>
+                            </div>
+
+                            <div class="color-picker">
+                                <span>Change color:</span>
+                                <div class="color-option" style="background-color: #e3f2fd;"
+                                    onclick="changeColor('#e3f2fd')"></div>
+                                <div class="color-option" style="background-color: #f3e5f5;"
+                                    onclick="changeColor('#f3e5f5')"></div>
+                                <div class="color-option" style="background-color: #e8f5e8;"
+                                    onclick="changeColor('#e8f5e8')"></div>
+                                <div class="color-option" style="background-color: #fff3e0;"
+                                    onclick="changeColor('#fff3e0')"></div>
+                            </div>
+
+                            <div id="dom-display" class="dom-display">
+                                <div class="dom-item">Click the buttons to manipulate me!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        This demo shows DOM manipulation, event handling, and dynamic styling!
+                    </p>
+                </div>
             </section>
 
             <!-- Slide 6: Event Object -->
@@ -279,12 +463,12 @@
                 <h2>The Event Object</h2>
                 <div class="code-example">
                     element.addEventListener('click', function(event) {<br>
-                    &nbsp;&nbsp;console.log(event.type);        // 'click'<br>
-                    &nbsp;&nbsp;console.log(event.target);       // Element that was clicked<br>
-                    &nbsp;&nbsp;console.log(event.clientX);     // Mouse X position<br>
-                    &nbsp;&nbsp;console.log(event.clientY);     // Mouse Y position<br>
-                    &nbsp;&nbsp;event.preventDefault();         // Prevent default behavior<br>
-                    &nbsp;&nbsp;event.stopPropagation();        // Stop event bubbling<br>
+                    &nbsp;&nbsp;console.log(event.type); // 'click'<br>
+                    &nbsp;&nbsp;console.log(event.target); // Element that was clicked<br>
+                    &nbsp;&nbsp;console.log(event.clientX); // Mouse X position<br>
+                    &nbsp;&nbsp;console.log(event.clientY); // Mouse Y position<br>
+                    &nbsp;&nbsp;event.preventDefault(); // Prevent default behavior<br>
+                    &nbsp;&nbsp;event.stopPropagation(); // Stop event bubbling<br>
                     });
                 </div>
                 <ul>
@@ -404,7 +588,8 @@
                     const list = document.querySelector('ul');<br><br>
                     list.addEventListener('click', function(event) {<br>
                     &nbsp;&nbsp;if (event.target.tagName === 'LI') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('List item clicked:', event.target.textContent);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('List item clicked:',
+                    event.target.textContent);<br>
                     &nbsp;&nbsp;}<br>
                     });<br><br>
                     // Works for dynamically added items too
@@ -430,12 +615,13 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;return;<br>
                     &nbsp;&nbsp;}<br><br>
                     &nbsp;&nbsp;if (password.length < 8) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;showError('Password must be at least 8 characters');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;// Form is valid, submit it<br>
-                    &nbsp;&nbsp;this.submit();<br>
-                    });
+                        &nbsp;&nbsp;&nbsp;&nbsp;showError('Password must be at least 8
+                        characters');<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+                        &nbsp;&nbsp;}<br><br>
+                        &nbsp;&nbsp;// Form is valid, submit it<br>
+                        &nbsp;&nbsp;this.submit();<br>
+                        });
                 </div>
                 <ul>
                     <li>Validate before form submission</li>
@@ -513,11 +699,11 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;const progress = Math.min(elapsed / duration, 1);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;element.style.opacity = progress;<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;if (progress < 1) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestAnimationFrame(update);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;requestAnimationFrame(update);<br>
-                    }
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestAnimationFrame(update);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;requestAnimationFrame(update);<br>
+                        }
                 </div>
                 <ul>
                     <li>CSS transitions for simple animations</li>
@@ -569,7 +755,8 @@
                     fetch('/api/data')<br>
                     &nbsp;&nbsp;.then(response => {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Network response was not ok');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Network response was not
+                    ok');<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;}<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;return response.json();<br>
                     &nbsp;&nbsp;})<br>
@@ -698,7 +885,8 @@
                     const originalAddEventListener = EventTarget.prototype.addEventListener;<br>
                     EventTarget.prototype.addEventListener = function(type, listener, options) {<br>
                     &nbsp;&nbsp;console.log('Adding listener:', type, 'to', this);<br>
-                    &nbsp;&nbsp;return originalAddEventListener.call(this, type, listener, options);<br>
+                    &nbsp;&nbsp;return originalAddEventListener.call(this, type, listener,
+                    options);<br>
                     };
                 </div>
             </section>
@@ -737,12 +925,16 @@
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
-                        <li>Create a new HTML file called <code>interactive-dashboard.html</code></li>
+                        <li>Create a new HTML file called <code>interactive-dashboard.html</code>
+                        </li>
                         <li>Build an interactive dashboard with:</li>
                         <ul>
-                            <li><strong>Navigation:</strong> Tabbed interface with smooth transitions</li>
-                            <li><strong>Widgets:</strong> Collapsible panels with toggle functionality</li>
-                            <li><strong>Charts:</strong> Simple data visualization (use CSS or basic canvas)</li>
+                            <li><strong>Navigation:</strong> Tabbed interface with smooth
+                                transitions</li>
+                            <li><strong>Widgets:</strong> Collapsible panels with toggle
+                                functionality</li>
+                            <li><strong>Charts:</strong> Simple data visualization (use CSS or basic
+                                canvas)</li>
                             <li><strong>Search:</strong> Real-time search with debouncing</li>
                             <li><strong>Settings:</strong> Theme toggle and preferences</li>
                         </ul>
@@ -757,7 +949,8 @@
                         <li>Make it responsive for mobile devices</li>
                     </ol>
                     <p><strong>Time:</strong> 45 minutes</p>
-                    <p><em>This task will help you understand complex event handling and UI interactions</em></p>
+                    <p><em>This task will help you understand complex event handling and UI
+                            interactions</em></p>
                 </div>
             </section>
 
@@ -781,8 +974,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
-        <script>
-                Reveal.initialize({
+    <script>
+        Reveal.initialize({
             hash: true,
             transition: 'slide',
             transitionSpeed: 'default',
@@ -829,6 +1022,66 @@
             // Allow content to scroll within slides
             scrollBeyondOnePage: true
         });
+
+        // DOM Manipulation Demo Functions
+        let elementCounter = 1;
+
+        function addElement() {
+            const display = document.getElementById('dom-display');
+            const newElement = document.createElement('div');
+            newElement.className = 'dom-item';
+            newElement.textContent = `New Element ${elementCounter++}`;
+            newElement.onclick = function () {
+                this.style.transform = 'rotate(5deg)';
+                setTimeout(() => {
+                    this.style.transform = 'rotate(0deg)';
+                }, 200);
+            };
+            display.appendChild(newElement);
+        }
+
+        function removeElement() {
+            const display = document.getElementById('dom-display');
+            const items = display.querySelectorAll('.dom-item');
+            if (items.length > 1) {
+                const lastItem = items[items.length - 1];
+                lastItem.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    display.removeChild(lastItem);
+                }, 300);
+            }
+        }
+
+        function highlightElements() {
+            const items = document.querySelectorAll('.dom-item');
+            items.forEach(item => {
+                item.classList.add('highlighted');
+            });
+        }
+
+        function clearHighlights() {
+            const items = document.querySelectorAll('.dom-item');
+            items.forEach(item => {
+                item.classList.remove('highlighted');
+            });
+        }
+
+        function changeColor(color) {
+            const items = document.querySelectorAll('.dom-item');
+            items.forEach(item => {
+                item.style.backgroundColor = color;
+            });
+
+            // Update selected color indicator
+            const colorOptions = document.querySelectorAll('.color-option');
+            colorOptions.forEach(option => {
+                option.classList.remove('selected');
+                if (option.style.backgroundColor === color) {
+                    option.classList.add('selected');
+                }
+            });
+        }
     </script>
 </body>
+
 </html>

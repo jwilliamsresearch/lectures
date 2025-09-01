@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 4: CSS Layout and Box Model</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-                <style>
+    <style>
         /* Global slide styling */
         .reveal .slides section {
             text-align: left;
@@ -15,43 +16,44 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        
+
         .reveal .slides section.center {
             text-align: center;
         }
-        
+
         /* Ensure content fits within viewport */
         .reveal .slides section h1 {
             font-size: 2.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h2 {
             font-size: 2em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h3 {
             font-size: 1.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section p {
             font-size: 1.1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
-        .reveal .slides section ul, .reveal .slides section ol {
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
             font-size: 1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
+
         .reveal .slides section li {
             margin-bottom: 0.3em;
         }
-        
+
         /* Task box styling */
         .task-box {
             background: #e3f2fd;
@@ -62,7 +64,7 @@
             max-height: 60vh;
             overflow-y: auto;
         }
-        
+
         /* Code example styling */
         .code-example {
             background: #f5f5f5;
@@ -76,7 +78,7 @@
             max-height: 40vh;
             overflow-y: auto;
         }
-        
+
         /* Highlight styling */
         .highlight {
             background: #fff3cd;
@@ -85,7 +87,7 @@
             border-left: 4px solid #ffc107;
             margin: 10px 0;
         }
-        
+
         /* Timeline info styling */
         .timeline-info {
             background: #f8f9fa;
@@ -95,71 +97,206 @@
             margin: 20px 0;
             font-size: 0.9em;
         }
-        
+
         .timeline-info ul {
             margin: 10px 0;
             padding-left: 20px;
         }
-        
+
         .timeline-info li {
             margin-bottom: 0.2em;
         }
-        
+
         /* Responsive design */
         @media (max-width: 768px) {
             .reveal .slides section {
                 padding: 15px;
             }
-            
+
             .reveal .slides section h1 {
                 font-size: 2em;
             }
-            
+
             .reveal .slides section h2 {
                 font-size: 1.6em;
             }
-            
+
             .reveal .slides section h3 {
                 font-size: 1.3em;
             }
-            
-            .task-box, .code-example {
+
+            .task-box,
+            .code-example {
                 font-size: 0.9em;
                 padding: 15px;
             }
         }
-        
+
         /* Custom scrollbar for better UX */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
         .code-example::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
         .code-example::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
         .code-example::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
         .code-example::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .box-model-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .box-model-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .control-group input {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .box-model-display {
+            position: relative;
+            background: #f0f0f0;
+            border: 2px dashed #999;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .box-model-element {
+            background: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border: 3px solid #2e7d32;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .box-model-labels {
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .box-model-labels::before {
+            content: "margin";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff9800;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+        }
+
+        .box-model-labels::after {
+            content: "border";
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2196f3;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+        }
+
+        .box-model-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .box-model-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+
+        .box-model-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
     </style>
 </head>
+
 <body>
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-            <a href="../index.html" style="
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
                 padding: 12px 20px;
@@ -170,11 +307,12 @@
                 box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
                 transition: all 0.3s ease;
                 display: inline-block;
-            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-                ← Back to Module
-            </a>
-        </div>
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
@@ -227,9 +365,58 @@
                     }
                 </div>
                 <div class="layout-demo">
-                    <div style="width: 200px; height: 100px; padding: 20px; border: 2px solid black; margin: 10px; background: #e7f3ff;">
+                    <div
+                        style="width: 200px; height: 100px; padding: 20px; border: 2px solid black; margin: 10px; background: #e7f3ff;">
                         Content Area
                     </div>
+                </div>
+
+                <!-- Interactive Box Model Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Interactive Box Model</h3>
+                    <div class="demo-container">
+                        <div class="box-model-demo">
+                            <div class="box-model-controls">
+                                <div class="control-group">
+                                    <label>Margin</label>
+                                    <input type="range" id="margin-slider" min="0" max="50"
+                                        value="10" oninput="updateBoxModel()">
+                                    <span id="margin-value">10px</span>
+                                </div>
+                                <div class="control-group">
+                                    <label>Border</label>
+                                    <input type="range" id="border-slider" min="0" max="20"
+                                        value="3" oninput="updateBoxModel()">
+                                    <span id="border-value">3px</span>
+                                </div>
+                                <div class="control-group">
+                                    <label>Padding</label>
+                                    <input type="range" id="padding-slider" min="0" max="50"
+                                        value="20" oninput="updateBoxModel()">
+                                    <span id="padding-value">20px</span>
+                                </div>
+                            </div>
+
+                            <div class="box-model-display">
+                                <div id="box-model-element" class="box-model-element">
+                                    Content
+                                </div>
+                            </div>
+
+                            <div class="box-model-info">
+                                <h4>Current Box Model Values:</h4>
+                                <p><strong>Margin:</strong> <span id="info-margin">10px</span></p>
+                                <p><strong>Border:</strong> <span id="info-border">3px solid</span>
+                                </p>
+                                <p><strong>Padding:</strong> <span id="info-padding">20px</span></p>
+                                <p><strong>Content:</strong> 200px × 100px</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Drag the sliders to see how margin, border, and padding affect the box
+                        model!
+                    </p>
                 </div>
             </section>
 
@@ -278,10 +465,18 @@
             <section>
                 <h2>Block vs Inline Elements</h2>
                 <div class="layout-demo">
-                    <div style="display: block; background: #ffc107; padding: 10px; margin: 5px; border: 1px solid #333;">Block Element 1</div>
-                    <div style="display: block; background: #28a745; padding: 10px; margin: 5px; border: 1px solid #333;">Block Element 2</div>
-                    <span style="display: inline; background: #dc3545; padding: 10px; margin: 5px; border: 1px solid #333;">Inline Element 1</span>
-                    <span style="display: inline; background: #6f42c1; padding: 10px; margin: 5px; border: 1px solid #333;">Inline Element 2</span>
+                    <div
+                        style="display: block; background: #ffc107; padding: 10px; margin: 5px; border: 1px solid #333;">
+                        Block Element 1</div>
+                    <div
+                        style="display: block; background: #28a745; padding: 10px; margin: 5px; border: 1px solid #333;">
+                        Block Element 2</div>
+                    <span
+                        style="display: inline; background: #dc3545; padding: 10px; margin: 5px; border: 1px solid #333;">Inline
+                        Element 1</span>
+                    <span
+                        style="display: inline; background: #6f42c1; padding: 10px; margin: 5px; border: 1px solid #333;">Inline
+                        Element 2</span>
                 </div>
                 <ul>
                     <li><strong>Block:</strong> Full width, starts on new line</li>
@@ -321,7 +516,8 @@
                     }
                 </div>
                 <div class="layout-demo">
-                    <div style="position: relative; top: 20px; left: 30px; background: #e7f3ff; border: 2px solid #007bff; padding: 15px; width: 200px;">
+                    <div
+                        style="position: relative; top: 20px; left: 30px; background: #e7f3ff; border: 2px solid #007bff; padding: 15px; width: 200px;">
                         Relative positioned element
                     </div>
                 </div>
@@ -350,8 +546,10 @@
                     }
                 </div>
                 <div class="layout-demo">
-                    <div style="position: relative; height: 200px; border: 2px solid #333; background: #f8f9fa;">
-                        <div style="position: absolute; top: 20px; right: 20px; background: #ffc107; padding: 10px;">
+                    <div
+                        style="position: relative; height: 200px; border: 2px solid #333; background: #f8f9fa;">
+                        <div
+                            style="position: absolute; top: 20px; right: 20px; background: #ffc107; padding: 10px;">
                             Absolute positioned
                         </div>
                     </div>
@@ -535,8 +733,10 @@
                         <li>Create a new HTML file called <code>layout-practice.html</code></li>
                         <li>Build a layout with the following elements:</li>
                         <ul>
-                            <li><strong>Header:</strong> Fixed at top, full width, dark background</li>
-                            <li><strong>Sidebar:</strong> Fixed width (200px), positioned on left</li>
+                            <li><strong>Header:</strong> Fixed at top, full width, dark background
+                            </li>
+                            <li><strong>Sidebar:</strong> Fixed width (200px), positioned on left
+                            </li>
                             <li><strong>Main content:</strong> Takes remaining width</li>
                             <li><strong>Footer:</strong> At bottom, full width</li>
                         </ul>
@@ -680,7 +880,8 @@
                         <li>Add smooth transitions between breakpoints</li>
                     </ol>
                     <p><strong>Time:</strong> 45 minutes</p>
-                    <p><em>This task will help you understand responsive design and media queries</em></p>
+                    <p><em>This task will help you understand responsive design and media
+                            queries</em></p>
                 </div>
             </section>
 
@@ -710,7 +911,8 @@
             <section>
                 <h2>Common Layout Issues</h2>
                 <ul>
-                    <li><strong>Elements not positioning correctly:</strong> Check positioning context</li>
+                    <li><strong>Elements not positioning correctly:</strong> Check positioning
+                        context</li>
                     <li><strong>Layout breaking on mobile:</strong> Add viewport meta tag</li>
                     <li><strong>Floats not clearing:</strong> Use clearfix or clear property</li>
                     <li><strong>Z-index not working:</strong> Ensure element is positioned</li>
@@ -738,8 +940,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
-        <script>
-                Reveal.initialize({
+    <script>
+        Reveal.initialize({
             hash: true,
             transition: 'slide',
             transitionSpeed: 'default',
@@ -786,6 +988,34 @@
             // Allow content to scroll within slides
             scrollBeyondOnePage: true
         });
+
+        // Box Model Demo Functions
+        function updateBoxModel() {
+            const marginSlider = document.getElementById('margin-slider');
+            const borderSlider = document.getElementById('border-slider');
+            const paddingSlider = document.getElementById('padding-slider');
+
+            const marginValue = marginSlider.value;
+            const borderValue = borderSlider.value;
+            const paddingValue = paddingSlider.value;
+
+            // Update display values
+            document.getElementById('margin-value').textContent = marginValue + 'px';
+            document.getElementById('border-value').textContent = borderValue + 'px';
+            document.getElementById('padding-value').textContent = paddingValue + 'px';
+
+            // Update info panel
+            document.getElementById('info-margin').textContent = marginValue + 'px';
+            document.getElementById('info-border').textContent = borderValue + 'px solid';
+            document.getElementById('info-padding').textContent = paddingValue + 'px';
+
+            // Apply styles to the element
+            const element = document.getElementById('box-model-element');
+            element.style.margin = marginValue + 'px';
+            element.style.borderWidth = borderValue + 'px';
+            element.style.padding = paddingValue + 'px';
+        }
     </script>
 </body>
+
 </html>

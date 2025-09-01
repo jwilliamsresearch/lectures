@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 8: JavaScript Advanced Concepts</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-                <style>
+    <style>
         /* Global slide styling */
         .reveal .slides section {
             text-align: left;
@@ -15,43 +16,44 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        
+
         .reveal .slides section.center {
             text-align: center;
         }
-        
+
         /* Ensure content fits within viewport */
         .reveal .slides section h1 {
             font-size: 2.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h2 {
             font-size: 2em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h3 {
             font-size: 1.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section p {
             font-size: 1.1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
-        .reveal .slides section ul, .reveal .slides section ol {
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
             font-size: 1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
+
         .reveal .slides section li {
             margin-bottom: 0.3em;
         }
-        
+
         /* Task box styling */
         .task-box {
             background: #e3f2fd;
@@ -62,7 +64,7 @@
             max-height: 60vh;
             overflow-y: auto;
         }
-        
+
         /* Code example styling */
         .code-example {
             background: #f5f5f5;
@@ -76,7 +78,7 @@
             max-height: 40vh;
             overflow-y: auto;
         }
-        
+
         /* Highlight styling */
         .highlight {
             background: #fff3cd;
@@ -85,7 +87,7 @@
             border-left: 4px solid #ffc107;
             margin: 10px 0;
         }
-        
+
         /* Timeline info styling */
         .timeline-info {
             background: #f8f9fa;
@@ -95,71 +97,216 @@
             margin: 20px 0;
             font-size: 0.9em;
         }
-        
+
         .timeline-info ul {
             margin: 10px 0;
             padding-left: 20px;
         }
-        
+
         .timeline-info li {
             margin-bottom: 0.2em;
         }
-        
+
         /* Responsive design */
         @media (max-width: 768px) {
             .reveal .slides section {
                 padding: 15px;
             }
-            
+
             .reveal .slides section h1 {
                 font-size: 2em;
             }
-            
+
             .reveal .slides section h2 {
                 font-size: 1.6em;
             }
-            
+
             .reveal .slides section h3 {
                 font-size: 1.3em;
             }
-            
-            .task-box, .code-example {
+
+            .task-box,
+            .code-example {
                 font-size: 0.9em;
                 padding: 15px;
             }
         }
-        
+
         /* Custom scrollbar for better UX */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
         .code-example::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
         .code-example::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
         .code-example::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
         .code-example::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .js-concepts-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .concept-tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .concept-tab {
+            padding: 10px 20px;
+            border: 2px solid #2196f3;
+            background: white;
+            color: #2196f3;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .concept-tab.active {
+            background: #2196f3;
+            color: white;
+        }
+
+        .concept-content {
+            min-height: 200px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f9f9f9;
+            margin: 20px 0;
+        }
+
+        .concept-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .demo-button {
+            padding: 10px 15px;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .demo-button:hover {
+            background-color: #1976d2;
+        }
+
+        .demo-output {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            min-height: 100px;
+            width: 100%;
+            max-width: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .demo-output .log-entry {
+            margin: 5px 0;
+            padding: 2px 0;
+        }
+
+        .demo-output .log-entry.info {
+            color: #63b3ed;
+        }
+
+        .demo-output .log-entry.success {
+            color: #68d391;
+        }
+
+        .demo-output .log-entry.error {
+            color: #fc8181;
+        }
+
+        .demo-output .log-entry.warning {
+            color: #f6e05e;
+        }
+
+        .concept-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .concept-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+
+        .concept-info code {
+            background: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
     </style>
 </head>
+
 <body>
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-            <a href="../index.html" style="
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
                 padding: 12px 20px;
@@ -170,11 +317,12 @@
                 box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
                 transition: all 0.3s ease;
                 display: inline-block;
-            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-                ← Back to Module
-            </a>
-        </div>
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
@@ -260,6 +408,89 @@
                     <li>Enable functional programming patterns</li>
                     <li>Create reusable and composable code</li>
                 </ul>
+
+                <!-- Interactive Advanced JavaScript Concepts Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Advanced JavaScript Concepts</h3>
+                    <div class="demo-container">
+                        <div class="js-concepts-demo">
+                            <div class="concept-tabs">
+                                <button class="concept-tab active"
+                                    onclick="switchConcept('closures')">Closures</button>
+                                <button class="concept-tab"
+                                    onclick="switchConcept('promises')">Promises</button>
+                                <button class="concept-tab"
+                                    onclick="switchConcept('async')">Async/Await</button>
+                            </div>
+
+                            <div class="concept-content">
+                                <div id="closures-demo" class="concept-demo">
+                                    <h4>Closure Demo</h4>
+                                    <div class="demo-controls">
+                                        <button class="demo-button" onclick="createCounter()">Create
+                                            Counter</button>
+                                        <button class="demo-button"
+                                            onclick="incrementCounter()">Increment</button>
+                                        <button class="demo-button" onclick="createWallet()">Create
+                                            Wallet</button>
+                                        <button class="demo-button" onclick="depositMoney()">Deposit
+                                            $10</button>
+                                        <button class="demo-button"
+                                            onclick="withdrawMoney()">Withdraw $5</button>
+                                    </div>
+                                    <div id="demo-output" class="demo-output">
+                                        <div class="log-entry info">Click buttons to see closures in
+                                            action!</div>
+                                    </div>
+                                </div>
+
+                                <div id="promises-demo" class="concept-demo" style="display: none;">
+                                    <h4>Promise Demo</h4>
+                                    <div class="demo-controls">
+                                        <button class="demo-button"
+                                            onclick="simulateAsyncTask()">Start Async Task</button>
+                                        <button class="demo-button"
+                                            onclick="simulatePromiseChain()">Promise Chain</button>
+                                        <button class="demo-button"
+                                            onclick="simulatePromiseAll()">Promise.all()</button>
+                                    </div>
+                                    <div id="promise-output" class="demo-output">
+                                        <div class="log-entry info">Click buttons to see promises in
+                                            action!</div>
+                                    </div>
+                                </div>
+
+                                <div id="async-demo" class="concept-demo" style="display: none;">
+                                    <h4>Async/Await Demo</h4>
+                                    <div class="demo-controls">
+                                        <button class="demo-button"
+                                            onclick="simulateAsyncFunction()">Async
+                                            Function</button>
+                                        <button class="demo-button"
+                                            onclick="simulateAsyncError()">Error Handling</button>
+                                        <button class="demo-button"
+                                            onclick="simulateAsyncParallel()">Parallel
+                                            Execution</button>
+                                    </div>
+                                    <div id="async-output" class="demo-output">
+                                        <div class="log-entry info">Click buttons to see async/await
+                                            in action!</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="concept-info">
+                                <h4>Current Concept:</h4>
+                                <p id="concept-description">Closures allow functions to access
+                                    variables from their outer scope even after the outer function
+                                    has returned.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Explore advanced JavaScript concepts with interactive examples!
+                    </p>
+                </div>
             </section>
 
             <!-- Slide 5: Closures -->
@@ -285,13 +516,13 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;deposit: (amount) => { balance += amount; },<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;withdraw: (amount) => {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (amount <= balance) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;balance -= amount;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;};<br>
-                    }
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;balance -= amount;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;};<br>
+                        }
                 </div>
                 <ul>
                     <li>Functions that remember their lexical scope</li>
@@ -438,7 +669,8 @@
                     // Async function<br>
                     async function fetchUserData(userId) {<br>
                     &nbsp;&nbsp;try {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(`/api/users/${userId}`);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await
+                    fetch(`/api/users/${userId}`);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('User not found');<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;}<br>
@@ -569,15 +801,18 @@
                     async function processData(data) {<br>
                     &nbsp;&nbsp;try {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;if (!data) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ValidationError('Data is required', 'data');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ValidationError('Data is
+                    required', 'data');<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
                     &nbsp;&nbsp;&nbsp;&nbsp;const result = await validateAndProcess(data);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
                     &nbsp;&nbsp;} catch (error) {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;if (error instanceof ValidationError) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(`Validation error in ${error.field}:`, error.message);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(`Validation error in
+                    ${error.field}:`, error.message);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('Unexpected error:', error);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('Unexpected error:',
+                    error);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;}<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;throw error;<br>
                     &nbsp;&nbsp;}<br>
@@ -694,13 +929,18 @@
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
-                        <li>Create a new JavaScript file called <code>advanced-library.js</code></li>
+                        <li>Create a new JavaScript file called <code>advanced-library.js</code>
+                        </li>
                         <li>Build a utility library with:</li>
                         <ul>
-                            <li><strong>Math utilities:</strong> Advanced mathematical functions</li>
-                            <li><strong>Array utilities:</strong> Custom array manipulation methods</li>
-                            <li><strong>Object utilities:</strong> Deep cloning, merging, validation</li>
-                            <li><strong>Async utilities:</strong> Promise helpers and async operations</li>
+                            <li><strong>Math utilities:</strong> Advanced mathematical functions
+                            </li>
+                            <li><strong>Array utilities:</strong> Custom array manipulation methods
+                            </li>
+                            <li><strong>Object utilities:</strong> Deep cloning, merging, validation
+                            </li>
+                            <li><strong>Async utilities:</strong> Promise helpers and async
+                                operations</li>
                         </ul>
                         <li>Use modern JavaScript features:</li>
                         <ul>
@@ -714,7 +954,8 @@
                         <li>Create unit tests for your functions</li>
                     </ol>
                     <p><strong>Time:</strong> 45 minutes</p>
-                    <p><em>This task will help you understand advanced JavaScript concepts and patterns</em></p>
+                    <p><em>This task will help you understand advanced JavaScript concepts and
+                            patterns</em></p>
                 </div>
             </section>
 
@@ -752,8 +993,10 @@
                     class UserFactory {<br>
                     &nbsp;&nbsp;createUser(type, data) {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;switch(type) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'admin': return new AdminUser(data);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'regular': return new RegularUser(data);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'admin': return new
+                    AdminUser(data);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'regular': return new
+                    RegularUser(data);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;}<br>
                     &nbsp;&nbsp;}<br>
                     }
@@ -783,7 +1026,8 @@
                     &nbsp;&nbsp;removeListener(element) {<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;const listener = this.listeners.get(element);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;if (listener) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;element.removeEventListener(listener.event, listener.handler);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;element.removeEventListener(listener.event,
+                    listener.handler);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.listeners.delete(element);<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;}<br>
                     &nbsp;&nbsp;}<br><br>
@@ -813,13 +1057,14 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Input must be a string');<br>
                     &nbsp;&nbsp;}<br>
                     &nbsp;&nbsp;return input.replace(/[<>]/g, ''); // Basic XSS prevention<br>
-                    }<br><br>
-                    // Secure object property access<br>
-                    const safeGet = (obj, path) => {<br>
-                    &nbsp;&nbsp;return path.split('.').reduce((current, key) => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return current && current[key] !== undefined ? current[key] : null;<br>
-                    &nbsp;&nbsp;}, obj);<br>
-                    };
+                        }<br><br>
+                        // Secure object property access<br>
+                        const safeGet = (obj, path) => {<br>
+                        &nbsp;&nbsp;return path.split('.').reduce((current, key) => {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return current && current[key] !== undefined ?
+                        current[key] : null;<br>
+                        &nbsp;&nbsp;}, obj);<br>
+                        };
                 </div>
             </section>
 
@@ -836,20 +1081,21 @@
                 <div class="code-example">
                     // JSDoc documentation<br>
                     /**<br>
-                     * Calculates the factorial of a number<br>
-                     * @param {number} n - The number to calculate factorial for<br>
-                     * @returns {number} The factorial of n<br>
-                     * @throws {Error} If n is negative<br>
-                     */<br>
+                    * Calculates the factorial of a number<br>
+                    * @param {number} n - The number to calculate factorial for<br>
+                    * @returns {number} The factorial of n<br>
+                    * @throws {Error} If n is negative<br>
+                    */<br>
                     function factorial(n) {<br>
                     &nbsp;&nbsp;if (n < 0) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Factorial is not defined for negative numbers');<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;if (n === 0 || n === 1) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;return n * factorial(n - 1);<br>
-                    }
+                        &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Factorial is not defined for
+                        negative numbers');<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;if (n === 0 || n === 1) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;return n * factorial(n - 1);<br>
+                        }
                 </div>
             </section>
 
@@ -863,10 +1109,14 @@
                         <li>Build a task management app with:</li>
                         <ul>
                             <li><strong>Architecture:</strong> Modular design with ES6 modules</li>
-                            <li><strong>Data Management:</strong> Local storage with CRUD operations</li>
-                            <li><strong>UI Components:</strong> Reusable components using classes</li>
-                            <li><strong>Async Operations:</strong> Simulated API calls with promises</li>
-                            <li><strong>Event Handling:</strong> Advanced event delegation and custom events</li>
+                            <li><strong>Data Management:</strong> Local storage with CRUD operations
+                            </li>
+                            <li><strong>UI Components:</strong> Reusable components using classes
+                            </li>
+                            <li><strong>Async Operations:</strong> Simulated API calls with promises
+                            </li>
+                            <li><strong>Event Handling:</strong> Advanced event delegation and
+                                custom events</li>
                         </ul>
                         <li>Implement advanced features:</li>
                         <ul>
@@ -881,7 +1131,8 @@
                         <li>Include unit tests for core functionality</li>
                     </ol>
                     <p><strong>Time:</strong> 45 minutes</p>
-                    <p><em>This task will help you understand full-stack JavaScript development</em></p>
+                    <p><em>This task will help you understand full-stack JavaScript development</em>
+                    </p>
                 </div>
             </section>
 
@@ -932,8 +1183,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
-        <script>
-                Reveal.initialize({
+    <script>
+        Reveal.initialize({
             hash: true,
             transition: 'slide',
             transitionSpeed: 'default',
@@ -980,6 +1231,190 @@
             // Allow content to scroll within slides
             scrollBeyondOnePage: true
         });
+
+        // Advanced JavaScript Concepts Demo Functions
+        let counter = null;
+        let wallet = null;
+
+        function switchConcept(concept) {
+            // Update tab states
+            document.querySelectorAll('.concept-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide demos
+            document.querySelectorAll('.concept-demo').forEach(demo => demo.style.display = 'none');
+            document.getElementById(concept + '-demo').style.display = 'flex';
+
+            // Update description
+            const descriptions = {
+                closures: 'Closures allow functions to access variables from their outer scope even after the outer function has returned.',
+                promises: 'Promises represent the eventual completion (or failure) of an asynchronous operation.',
+                async: 'Async/await provides a cleaner way to work with promises and asynchronous code.'
+            };
+            document.getElementById('concept-description').textContent = descriptions[concept];
+        }
+
+        function logToOutput(outputId, message, type = 'info') {
+            const output = document.getElementById(outputId);
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            output.appendChild(logEntry);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Closure functions
+        function createCounter() {
+            counter = (() => {
+                let count = 0;
+                return () => {
+                    count++;
+                    return count;
+                };
+            })();
+            logToOutput('demo-output', 'Counter created!', 'success');
+        }
+
+        function incrementCounter() {
+            if (counter) {
+                const result = counter();
+                logToOutput('demo-output', `Counter incremented: ${result}`, 'success');
+            } else {
+                logToOutput('demo-output', 'Please create a counter first!', 'error');
+            }
+        }
+
+        function createWallet() {
+            wallet = (() => {
+                let balance = 0;
+                return {
+                    getBalance: () => balance,
+                    deposit: (amount) => {
+                        balance += amount;
+                        return balance;
+                    },
+                    withdraw: (amount) => {
+                        if (amount <= balance) {
+                            balance -= amount;
+                            return balance;
+                        }
+                        return false;
+                    }
+                };
+            })();
+            logToOutput('demo-output', 'Wallet created with $0 balance!', 'success');
+        }
+
+        function depositMoney() {
+            if (wallet) {
+                const newBalance = wallet.deposit(10);
+                logToOutput('demo-output', `Deposited $10. New balance: $${newBalance}`, 'success');
+            } else {
+                logToOutput('demo-output', 'Please create a wallet first!', 'error');
+            }
+        }
+
+        function withdrawMoney() {
+            if (wallet) {
+                const result = wallet.withdraw(5);
+                if (result !== false) {
+                    logToOutput('demo-output', `Withdrew $5. New balance: $${result}`, 'success');
+                } else {
+                    logToOutput('demo-output', 'Insufficient funds!', 'error');
+                }
+            } else {
+                logToOutput('demo-output', 'Please create a wallet first!', 'error');
+            }
+        }
+
+        // Promise functions
+        function simulateAsyncTask() {
+            logToOutput('promise-output', 'Starting async task...', 'info');
+
+            new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve('Task completed!');
+                }, 2000);
+            }).then(result => {
+                logToOutput('promise-output', result, 'success');
+            });
+        }
+
+        function simulatePromiseChain() {
+            logToOutput('promise-output', 'Starting promise chain...', 'info');
+
+            Promise.resolve(1)
+                .then(value => {
+                    logToOutput('promise-output', `Step 1: ${value}`, 'info');
+                    return value * 2;
+                })
+                .then(value => {
+                    logToOutput('promise-output', `Step 2: ${value}`, 'info');
+                    return value + 3;
+                })
+                .then(value => {
+                    logToOutput('promise-output', `Final result: ${value}`, 'success');
+                });
+        }
+
+        function simulatePromiseAll() {
+            logToOutput('promise-output', 'Starting Promise.all...', 'info');
+
+            const promises = [
+                new Promise(resolve => setTimeout(() => resolve('Task 1'), 1000)),
+                new Promise(resolve => setTimeout(() => resolve('Task 2'), 1500)),
+                new Promise(resolve => setTimeout(() => resolve('Task 3'), 800))
+            ];
+
+            Promise.all(promises).then(results => {
+                logToOutput('promise-output', `All tasks completed: ${results.join(', ')}`, 'success');
+            });
+        }
+
+        // Async/await functions
+        async function simulateAsyncFunction() {
+            logToOutput('async-output', 'Starting async function...', 'info');
+
+            try {
+                const result = await new Promise(resolve => {
+                    setTimeout(() => resolve('Async operation completed!'), 2000);
+                });
+                logToOutput('async-output', result, 'success');
+            } catch (error) {
+                logToOutput('async-output', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function simulateAsyncError() {
+            logToOutput('async-output', 'Testing error handling...', 'info');
+
+            try {
+                await new Promise((resolve, reject) => {
+                    setTimeout(() => reject(new Error('Something went wrong!')), 1500);
+                });
+            } catch (error) {
+                logToOutput('async-output', `Caught error: ${error.message}`, 'error');
+            }
+        }
+
+        async function simulateAsyncParallel() {
+            logToOutput('async-output', 'Starting parallel async operations...', 'info');
+
+            const startTime = Date.now();
+
+            const [result1, result2, result3] = await Promise.all([
+                new Promise(resolve => setTimeout(() => resolve('Operation 1'), 1000)),
+                new Promise(resolve => setTimeout(() => resolve('Operation 2'), 1200)),
+                new Promise(resolve => setTimeout(() => resolve('Operation 3'), 800))
+            ]);
+
+            const endTime = Date.now();
+            const duration = endTime - startTime;
+
+            logToOutput('async-output', `Parallel results: ${result1}, ${result2}, ${result3}`, 'success');
+            logToOutput('async-output', `Total time: ${duration}ms (vs ~3000ms sequential)`, 'info');
+        }
     </script>
 </body>
+
 </html>

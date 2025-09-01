@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 3: CSS Fundamentals</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-                <style>
+    <style>
         /* Global slide styling */
         .reveal .slides section {
             text-align: left;
@@ -15,43 +16,44 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        
+
         .reveal .slides section.center {
             text-align: center;
         }
-        
+
         /* Ensure content fits within viewport */
         .reveal .slides section h1 {
             font-size: 2.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h2 {
             font-size: 2em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h3 {
             font-size: 1.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section p {
             font-size: 1.1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
-        .reveal .slides section ul, .reveal .slides section ol {
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
             font-size: 1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
+
         .reveal .slides section li {
             margin-bottom: 0.3em;
         }
-        
+
         /* Task box styling */
         .task-box {
             background: #e3f2fd;
@@ -62,7 +64,7 @@
             max-height: 60vh;
             overflow-y: auto;
         }
-        
+
         /* Code example styling */
         .code-example {
             background: #f5f5f5;
@@ -76,7 +78,7 @@
             max-height: 40vh;
             overflow-y: auto;
         }
-        
+
         /* Highlight styling */
         .highlight {
             background: #fff3cd;
@@ -85,7 +87,7 @@
             border-left: 4px solid #ffc107;
             margin: 10px 0;
         }
-        
+
         /* Timeline info styling */
         .timeline-info {
             background: #f8f9fa;
@@ -95,71 +97,109 @@
             margin: 20px 0;
             font-size: 0.9em;
         }
-        
+
         .timeline-info ul {
             margin: 10px 0;
             padding-left: 20px;
         }
-        
+
         .timeline-info li {
             margin-bottom: 0.2em;
         }
-        
+
         /* Responsive design */
         @media (max-width: 768px) {
             .reveal .slides section {
                 padding: 15px;
             }
-            
+
             .reveal .slides section h1 {
                 font-size: 2em;
             }
-            
+
             .reveal .slides section h2 {
                 font-size: 1.6em;
             }
-            
+
             .reveal .slides section h3 {
                 font-size: 1.3em;
             }
-            
-            .task-box, .code-example {
+
+            .task-box,
+            .code-example {
                 font-size: 0.9em;
                 padding: 15px;
             }
         }
-        
+
         /* Custom scrollbar for better UX */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
         .code-example::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
         .code-example::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
         .code-example::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
         .code-example::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
     </style>
 </head>
+
 <body>
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-            <a href="../index.html" style="
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
                 padding: 12px 20px;
@@ -170,11 +210,12 @@
                 box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
                 transition: all 0.3s ease;
                 display: inline-block;
-            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-                ← Back to Module
-            </a>
-        </div>
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
@@ -229,6 +270,22 @@
                     &nbsp;&nbsp;font-size: 24px;<br>
                     &nbsp;&nbsp;text-align: center;<br>
                     }
+                </div>
+
+                <!-- YouTube Video: CSS in 90 Seconds -->
+                <div class="interactive-content">
+                    <h3>Watch: CSS in 90 Seconds</h3>
+                    <div class="video-container">
+                        <iframe width="100%" height="315"
+                            src="https://www.youtube.com/embed/1Rs2ND1ryYc"
+                            title="CSS in 90 Seconds" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="interactive-description">
+                        Quick introduction to CSS - the styling language for web pages
+                    </p>
                 </div>
             </section>
 
@@ -327,7 +384,9 @@
                     }
                 </div>
                 <div class="css-demo">
-                    <h3 style="color: #333; font-family: Arial; font-size: 20px; font-weight: bold; text-align: center; text-decoration: underline;">Sample Styled Text</h3>
+                    <h3
+                        style="color: #333; font-family: Arial; font-size: 20px; font-weight: bold; text-align: center; text-decoration: underline;">
+                        Sample Styled Text</h3>
                 </div>
             </section>
 
@@ -385,7 +444,8 @@
                     }
                 </div>
                 <div class="css-demo">
-                    <div style="width: 200px; height: 100px; padding: 20px; border: 2px solid black; margin: 10px; background: #e7f3ff;">
+                    <div
+                        style="width: 200px; height: 100px; padding: 20px; border: 2px solid black; margin: 10px; background: #e7f3ff;">
                         Content Area
                     </div>
                 </div>
@@ -409,7 +469,8 @@
                     }
                 </div>
                 <div class="css-demo">
-                    <div style="border: 3px solid #007bff; border-radius: 10px; padding: 15px; margin: 10px;">
+                    <div
+                        style="border: 3px solid #007bff; border-radius: 10px; padding: 15px; margin: 10px;">
                         Rounded border example
                     </div>
                     <div style="border: 2px dashed #28a745; padding: 15px; margin: 10px;">
@@ -432,9 +493,13 @@
                     .hidden { display: none; }
                 </div>
                 <div class="css-demo">
-                    <div style="display: block; background: #ffc107; padding: 10px; margin: 5px;">Block Element</div>
-                    <span style="display: inline; background: #28a745; padding: 10px; margin: 5px;">Inline Element</span>
-                    <span style="display: inline-block; background: #dc3545; padding: 10px; margin: 5px;">Inline-Block</span>
+                    <div style="display: block; background: #ffc107; padding: 10px; margin: 5px;">
+                        Block Element</div>
+                    <span
+                        style="display: inline; background: #28a745; padding: 10px; margin: 5px;">Inline
+                        Element</span>
+                    <span
+                        style="display: inline-block; background: #dc3545; padding: 10px; margin: 5px;">Inline-Block</span>
                 </div>
             </section>
 
@@ -452,8 +517,11 @@
                     .fixed { position: fixed; bottom: 20px; right: 20px; }
                 </div>
                 <div class="css-demo">
-                    <div style="position: relative; height: 100px; border: 1px solid #ccc; background: #f8f9fa;">
-                        <div style="position: absolute; top: 10px; right: 10px; background: #007bff; color: white; padding: 5px;">Absolute</div>
+                    <div
+                        style="position: relative; height: 100px; border: 1px solid #ccc; background: #f8f9fa;">
+                        <div
+                            style="position: absolute; top: 10px; right: 10px; background: #007bff; color: white; padding: 5px;">
+                            Absolute</div>
                     </div>
                 </div>
             </section>
@@ -650,7 +718,8 @@
                         <li>Create a new HTML file called <code>layout-demo.html</code></li>
                         <li>Build a simple webpage layout with:</li>
                         <ul>
-                            <li><strong>Header:</strong> Fixed at top, full width, dark background</li>
+                            <li><strong>Header:</strong> Fixed at top, full width, dark background
+                            </li>
                             <li><strong>Navigation:</strong> Horizontal menu with hover effects</li>
                             <li><strong>Main content:</strong> Two-column layout with sidebar</li>
                             <li><strong>Footer:</strong> Fixed at bottom, centered text</li>
@@ -697,8 +766,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
-        <script>
-                Reveal.initialize({
+    <script>
+        Reveal.initialize({
             hash: true,
             transition: 'slide',
             transitionSpeed: 'default',
@@ -747,4 +816,5 @@
         });
     </script>
 </body>
+
 </html>

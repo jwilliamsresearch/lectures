@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 6: JavaScript Basics</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-                <style>
+    <style>
         /* Global slide styling */
         .reveal .slides section {
             text-align: left;
@@ -15,43 +16,44 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        
+
         .reveal .slides section.center {
             text-align: center;
         }
-        
+
         /* Ensure content fits within viewport */
         .reveal .slides section h1 {
             font-size: 2.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h2 {
             font-size: 2em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h3 {
             font-size: 1.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section p {
             font-size: 1.1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
-        .reveal .slides section ul, .reveal .slides section ol {
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
             font-size: 1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
+
         .reveal .slides section li {
             margin-bottom: 0.3em;
         }
-        
+
         /* Task box styling */
         .task-box {
             background: #e3f2fd;
@@ -62,7 +64,7 @@
             max-height: 60vh;
             overflow-y: auto;
         }
-        
+
         /* Code example styling */
         .code-example {
             background: #f5f5f5;
@@ -76,7 +78,7 @@
             max-height: 40vh;
             overflow-y: auto;
         }
-        
+
         /* Highlight styling */
         .highlight {
             background: #fff3cd;
@@ -85,7 +87,7 @@
             border-left: 4px solid #ffc107;
             margin: 10px 0;
         }
-        
+
         /* Timeline info styling */
         .timeline-info {
             background: #f8f9fa;
@@ -95,71 +97,238 @@
             margin: 20px 0;
             font-size: 0.9em;
         }
-        
+
         .timeline-info ul {
             margin: 10px 0;
             padding-left: 20px;
         }
-        
+
         .timeline-info li {
             margin-bottom: 0.2em;
         }
-        
+
         /* Responsive design */
         @media (max-width: 768px) {
             .reveal .slides section {
                 padding: 15px;
             }
-            
+
             .reveal .slides section h1 {
                 font-size: 2em;
             }
-            
+
             .reveal .slides section h2 {
                 font-size: 1.6em;
             }
-            
+
             .reveal .slides section h3 {
                 font-size: 1.3em;
             }
-            
-            .task-box, .code-example {
+
+            .task-box,
+            .code-example {
                 font-size: 0.9em;
                 padding: 15px;
             }
         }
-        
+
         /* Custom scrollbar for better UX */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
         .code-example::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
         .code-example::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
         .code-example::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
         .code-example::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .calculator input {
+            grid-column: 1 / -1;
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: right;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .calculator button {
+            padding: 15px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .calculator button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .calculator .operator {
+            background-color: #2196f3;
+            color: white;
+        }
+
+        .calculator .operator:hover {
+            background-color: #1976d2;
+        }
+
+        .calculator .equals {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .calculator .equals:hover {
+            background-color: #45a049;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-input {
+            padding: 10px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            width: 200px;
+        }
+
+        .game-button {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .game-button:hover {
+            background-color: #1976d2;
+        }
+
+        .game-feedback {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .game-feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .game-feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .game-feedback.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
     </style>
 </head>
+
 <body>
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-            <a href="../index.html" style="
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
                 padding: 12px 20px;
@@ -170,11 +339,12 @@
                 box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
                 transition: all 0.3s ease;
                 display: inline-block;
-            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-                ← Back to Module
-            </a>
-        </div>
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
@@ -215,7 +385,8 @@
             <section>
                 <h2>What is JavaScript?</h2>
                 <div class="highlight">
-                    <strong>JavaScript</strong> is a programming language that adds interactivity to web pages
+                    <strong>JavaScript</strong> is a programming language that adds interactivity to
+                    web pages
                 </div>
                 <ul>
                     <li>Makes web pages dynamic and interactive</li>
@@ -227,6 +398,23 @@
                     // Simple JavaScript example<br>
                     console.log("Hello, World!");<br>
                     alert("Welcome to our website!");
+                </div>
+
+                <!-- YouTube Video: JavaScript Fundamentals Explained -->
+                <div class="interactive-content">
+                    <h3>Watch: JavaScript Fundamentals Explained</h3>
+                    <div class="video-container">
+                        <iframe width="100%" height="315"
+                            src="https://www.youtube-nocookie.com/embed/W6NZfCO5SIk"
+                            title="JavaScript Fundamentals Explained" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="interactive-description">
+                        Comprehensive introduction to JavaScript - the programming language of the
+                        web
+                    </p>
                 </div>
             </section>
 
@@ -327,16 +515,49 @@
                 <h2>JavaScript Operators</h2>
                 <div class="code-example">
                     // Arithmetic operators<br>
-                    let sum = 5 + 3;        // 8<br>
-                    let diff = 10 - 4;      // 6<br>
-                    let product = 6 * 7;     // 42<br>
-                    let quotient = 15 / 3;  // 5<br>
+                    let sum = 5 + 3; // 8<br>
+                    let diff = 10 - 4; // 6<br>
+                    let product = 6 * 7; // 42<br>
+                    let quotient = 15 / 3; // 5<br>
                     let remainder = 17 % 5; // 2<br><br>
                     // Assignment operators<br>
                     let x = 10;<br>
-                    x += 5;  // Same as x = x + 5<br>
-                    x -= 3;  // Same as x = x - 3<br>
-                    x *= 2;  // Same as x = x * 2
+                    x += 5; // Same as x = x + 5<br>
+                    x -= 3; // Same as x = x - 3<br>
+                    x *= 2; // Same as x = x * 2
+                </div>
+
+                <!-- Interactive Calculator Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Interactive Calculator</h3>
+                    <div class="demo-container">
+                        <div class="calculator">
+                            <input type="text" id="calc-display" value="0" readonly>
+                            <button onclick="clearCalc()">C</button>
+                            <button onclick="deleteLast()">⌫</button>
+                            <button class="operator" onclick="appendToDisplay('/')">/</button>
+                            <button class="operator" onclick="appendToDisplay('*')">×</button>
+                            <button onclick="appendToDisplay('7')">7</button>
+                            <button onclick="appendToDisplay('8')">8</button>
+                            <button onclick="appendToDisplay('9')">9</button>
+                            <button class="operator" onclick="appendToDisplay('-')">-</button>
+                            <button onclick="appendToDisplay('4')">4</button>
+                            <button onclick="appendToDisplay('5')">5</button>
+                            <button onclick="appendToDisplay('6')">6</button>
+                            <button class="operator" onclick="appendToDisplay('+')">+</button>
+                            <button onclick="appendToDisplay('1')">1</button>
+                            <button onclick="appendToDisplay('2')">2</button>
+                            <button onclick="appendToDisplay('3')">3</button>
+                            <button class="equals" onclick="calculateResult()"
+                                rowspan="2">=</button>
+                            <button onclick="appendToDisplay('0')"
+                                style="grid-column: 1 / 3;">0</button>
+                            <button onclick="appendToDisplay('.')">.</button>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Click the buttons to perform calculations using JavaScript operators!
+                    </p>
                 </div>
             </section>
 
@@ -347,20 +568,20 @@
                     // Comparison operators<br>
                     let a = 5;<br>
                     let b = "5";<br><br>
-                    a == b;   // true (loose equality)<br>
-                    a === b;  // false (strict equality)<br>
-                    a != b;   // false<br>
-                    a !== b;  // true<br><br>
-                    a > 3;    // true<br>
-                    a >= 5;   // true<br>
-                    a < 10;   // true<br>
-                    a <= 5;   // true
-                </div>
-                <ul>
-                    <li><code>==</code>: Loose equality (converts types)</li>
-                    <li><code>===</code>: Strict equality (no type conversion)</li>
-                    <li>Always use <code>===</code> and <code>!==</code> when possible</li>
-                </ul>
+                    a == b; // true (loose equality)<br>
+                    a === b; // false (strict equality)<br>
+                    a != b; // false<br>
+                    a !== b; // true<br><br>
+                    a > 3; // true<br>
+                    a >= 5; // true<br>
+                    a < 10; // true<br>
+                        a <= 5; // true </div>
+                            <ul>
+                                <li><code>==</code>: Loose equality (converts types)</li>
+                                <li><code>===</code>: Strict equality (no type conversion)</li>
+                                <li>Always use <code>===</code> and <code>!==</code> when possible
+                                </li>
+                            </ul>
             </section>
 
             <!-- Slide 10: Logical Operators -->
@@ -370,12 +591,12 @@
                     // Logical operators<br>
                     let isLoggedIn = true;<br>
                     let hasPermission = false;<br><br>
-                    isLoggedIn && hasPermission;  // false (AND)<br>
-                    isLoggedIn || hasPermission;   // true (OR)<br>
-                    !isLoggedIn;                   // false (NOT)<br><br>
+                    isLoggedIn && hasPermission; // false (AND)<br>
+                    isLoggedIn || hasPermission; // true (OR)<br>
+                    !isLoggedIn; // false (NOT)<br><br>
                     // Short-circuit evaluation<br>
-                    let name = "John" || "Guest";  // "John"<br>
-                    let age = 0 || 25;            // 25
+                    let name = "John" || "Guest"; // "John"<br>
+                    let age = 0 || 25; // 25
                 </div>
                 <ul>
                     <li><code>&&</code>: AND (both must be true)</li>
@@ -396,9 +617,9 @@
                     let greeting = `Hello, ${firstName}!`;<br><br>
                     // String methods<br>
                     let message = "Hello World";<br>
-                    message.length;           // 11<br>
-                    message.toUpperCase();    // "HELLO WORLD"<br>
-                    message.toLowerCase();    // "hello world"<br>
+                    message.length; // 11<br>
+                    message.toUpperCase(); // "HELLO WORLD"<br>
+                    message.toLowerCase(); // "hello world"<br>
                     message.indexOf("World"); // 6
                 </div>
             </section>
@@ -412,13 +633,13 @@
                     let numbers = [1, 2, 3, 4, 5];<br>
                     let mixed = ["text", 42, true];<br><br>
                     // Accessing elements<br>
-                    fruits[0];  // "Apple"<br>
-                    fruits[1];  // "Banana"<br><br>
+                    fruits[0]; // "Apple"<br>
+                    fruits[1]; // "Banana"<br><br>
                     // Array methods<br>
-                    fruits.push("Grape");     // Add to end<br>
-                    fruits.pop();             // Remove from end<br>
-                    fruits.unshift("Lemon");  // Add to beginning<br>
-                    fruits.shift();           // Remove from beginning
+                    fruits.push("Grape"); // Add to end<br>
+                    fruits.pop(); // Remove from end<br>
+                    fruits.unshift("Lemon"); // Add to beginning<br>
+                    fruits.shift(); // Remove from beginning
                 </div>
             </section>
 
@@ -437,9 +658,31 @@
                     // Arrow function (ES6)<br>
                     let divide = (a, b) => a / b;<br><br>
                     // Calling functions<br>
-                    greet("John");        // "Hello, John!"<br>
-                    multiply(5, 3);      // 15<br>
-                    divide(10, 2);       // 5
+                    greet("John"); // "Hello, John!"<br>
+                    multiply(5, 3); // 15<br>
+                    divide(10, 2); // 5
+                </div>
+
+                <!-- Interactive Number Guessing Game -->
+                <div class="interactive-demo">
+                    <h3>Try It: Number Guessing Game</h3>
+                    <div class="game-container">
+                        <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+                        <input type="number" id="guess-input" class="game-input"
+                            placeholder="Enter your guess" min="1" max="100">
+                        <br>
+                        <button class="game-button" onclick="makeGuess()">Guess</button>
+                        <button class="game-button" onclick="startNewGame()">New Game</button>
+                        <div id="game-feedback" class="game-feedback info">
+                            Enter a number and click Guess to start!
+                        </div>
+                        <div id="game-stats">
+                            <p>Guesses: <span id="guess-count">0</span></p>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        This game uses functions to handle game logic, validation, and feedback!
+                    </p>
                 </div>
             </section>
 
@@ -472,19 +715,19 @@
                 <div class="code-example">
                     // For loop<br>
                     for (let i = 0; i < 5; i++) {<br>
-                    &nbsp;&nbsp;console.log(i);<br>
-                    }<br><br>
-                    // While loop<br>
-                    let count = 0;<br>
-                    while (count < 3) {<br>
-                    &nbsp;&nbsp;console.log(count);<br>
-                    &nbsp;&nbsp;count++;<br>
-                    }<br><br>
-                    // For...of loop (arrays)<br>
-                    let fruits = ["Apple", "Banana", "Orange"];<br>
-                    for (let fruit of fruits) {<br>
-                    &nbsp;&nbsp;console.log(fruit);<br>
-                    }
+                        &nbsp;&nbsp;console.log(i);<br>
+                        }<br><br>
+                        // While loop<br>
+                        let count = 0;<br>
+                        while (count < 3) {<br>
+                            &nbsp;&nbsp;console.log(count);<br>
+                            &nbsp;&nbsp;count++;<br>
+                            }<br><br>
+                            // For...of loop (arrays)<br>
+                            let fruits = ["Apple", "Banana", "Orange"];<br>
+                            for (let fruit of fruits) {<br>
+                            &nbsp;&nbsp;console.log(fruit);<br>
+                            }
                 </div>
             </section>
 
@@ -551,7 +794,8 @@
                         <li>Use console.log() to see your output</li>
                     </ol>
                     <p><strong>Time:</strong> 45 minutes</p>
-                    <p><em>This task will help you understand basic JavaScript syntax and concepts</em></p>
+                    <p><em>This task will help you understand basic JavaScript syntax and
+                            concepts</em></p>
                 </div>
             </section>
 
@@ -598,13 +842,13 @@
                     &nbsp;&nbsp;// Local scope<br>
                     &nbsp;&nbsp;let localVar = "I'm local";<br>
                     &nbsp;&nbsp;console.log(globalVar); // Can access global<br>
-                    &nbsp;&nbsp;console.log(localVar);  // Can access local<br>
+                    &nbsp;&nbsp;console.log(localVar); // Can access local<br>
                     }<br><br>
                     // Hoisting example<br>
                     console.log(x); // undefined (not an error)<br>
-                    var x = 5;      // var is hoisted<br>
+                    var x = 5; // var is hoisted<br>
                     console.log(y); // ReferenceError<br>
-                    let y = 10;     // let is not hoisted
+                    let y = 10; // let is not hoisted
                 </div>
             </section>
 
@@ -622,9 +866,9 @@
                     &nbsp;&nbsp;}<br>
                     };<br><br>
                     // Accessing properties<br>
-                    person.name;           // "John"<br>
-                    person["age"];          // 30<br>
-                    person.greet();        // "Hello, I'm John"<br><br>
+                    person.name; // "John"<br>
+                    person["age"]; // 30<br>
+                    person.greet(); // "Hello, I'm John"<br><br>
                     // Adding properties<br>
                     person.email = "john@example.com";
                 </div>
@@ -683,18 +927,22 @@
                         <li>Create a new HTML file called <code>interactive-page.html</code></li>
                         <li>Build an interactive page with:</li>
                         <ul>
-                            <li><strong>Form:</strong> Input fields for name, age, and favorite color</li>
+                            <li><strong>Form:</strong> Input fields for name, age, and favorite
+                                color</li>
                             <li><strong>Button:</strong> Submit button that collects form data</li>
-                            <li><strong>Display:</strong> Show collected data in a formatted way</li>
+                            <li><strong>Display:</strong> Show collected data in a formatted way
+                            </li>
                             <li><strong>Validation:</strong> Check if fields are filled</li>
-                            <li><strong>Styling:</strong> Change page colors based on favorite color</li>
+                            <li><strong>Styling:</strong> Change page colors based on favorite color
+                            </li>
                         </ul>
                         <li>Use DOM manipulation to update the page</li>
                         <li>Add event listeners for user interactions</li>
                         <li>Include error handling for invalid inputs</li>
                     </ol>
                     <p><strong>Time:</strong> 45 minutes</p>
-                    <p><em>This task will help you understand DOM manipulation and event handling</em></p>
+                    <p><em>This task will help you understand DOM manipulation and event
+                            handling</em></p>
                 </div>
             </section>
 
@@ -717,8 +965,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
-        <script>
-                Reveal.initialize({
+    <script>
+        Reveal.initialize({
             hash: true,
             transition: 'slide',
             transitionSpeed: 'default',
@@ -765,6 +1013,139 @@
             // Allow content to scroll within slides
             scrollBeyondOnePage: true
         });
+
+        // Calculator Functions
+        let currentInput = '';
+        let operator = '';
+        let previousInput = '';
+        let shouldResetDisplay = false;
+
+        function updateDisplay(value) {
+            const display = document.getElementById('calc-display');
+            display.value = value;
+        }
+
+        function appendToDisplay(value) {
+            const display = document.getElementById('calc-display');
+
+            if (shouldResetDisplay) {
+                display.value = '';
+                shouldResetDisplay = false;
+            }
+
+            if (value === '.' && display.value.includes('.')) {
+                return; // Prevent multiple decimal points
+            }
+
+            if (display.value === '0' && value !== '.') {
+                display.value = value;
+            } else {
+                display.value += value;
+            }
+        }
+
+        function clearCalc() {
+            updateDisplay('0');
+            currentInput = '';
+            operator = '';
+            previousInput = '';
+        }
+
+        function deleteLast() {
+            const display = document.getElementById('calc-display');
+            if (display.value.length > 1) {
+                display.value = display.value.slice(0, -1);
+            } else {
+                display.value = '0';
+            }
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('calc-display');
+            const currentValue = parseFloat(display.value);
+
+            if (operator && previousInput !== '') {
+                let result;
+                switch (operator) {
+                    case '+':
+                        result = previousInput + currentValue;
+                        break;
+                    case '-':
+                        result = previousInput - currentValue;
+                        break;
+                    case '*':
+                        result = previousInput * currentValue;
+                        break;
+                    case '/':
+                        result = currentValue !== 0 ? previousInput / currentValue : 'Error';
+                        break;
+                    default:
+                        return;
+                }
+
+                updateDisplay(result.toString());
+                operator = '';
+                previousInput = '';
+                shouldResetDisplay = true;
+            }
+        }
+
+        // Number Guessing Game Functions
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let guessCount = 0;
+
+        function startNewGame() {
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            guessCount = 0;
+            document.getElementById('guess-count').textContent = '0';
+            document.getElementById('guess-input').value = '';
+            document.getElementById('game-feedback').textContent = 'New game started! Guess a number between 1 and 100.';
+            document.getElementById('game-feedback').className = 'game-feedback info';
+        }
+
+        function makeGuess() {
+            const guessInput = document.getElementById('guess-input');
+            const feedback = document.getElementById('game-feedback');
+            const guessCountElement = document.getElementById('guess-count');
+
+            const guess = parseInt(guessInput.value);
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                feedback.textContent = 'Please enter a valid number between 1 and 100.';
+                feedback.className = 'game-feedback error';
+                return;
+            }
+
+            guessCount++;
+            guessCountElement.textContent = guessCount;
+
+            if (guess === secretNumber) {
+                feedback.textContent = `🎉 Congratulations! You guessed it in ${guessCount} tries!`;
+                feedback.className = 'game-feedback success';
+                guessInput.disabled = true;
+            } else if (guess < secretNumber) {
+                feedback.textContent = 'Too low! Try a higher number.';
+                feedback.className = 'game-feedback info';
+            } else {
+                feedback.textContent = 'Too high! Try a lower number.';
+                feedback.className = 'game-feedback info';
+            }
+
+            guessInput.value = '';
+        }
+
+        // Allow Enter key to submit guess
+        document.addEventListener('DOMContentLoaded', function () {
+            const guessInput = document.getElementById('guess-input');
+            if (guessInput) {
+                guessInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        makeGuess();
+                    }
+                });
+            }
+        });
     </script>
 </body>
+
 </html>

@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 2: Bootstrap Framework Fundamentals</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+    <!-- Bootswatch Themes -->
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/cerulean/bootstrap.min.css"
+        rel="stylesheet" id="bootswatch-theme">
     <style>
         /* Global slide styling */
         .reveal .slides section {
@@ -15,43 +22,44 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        
+
         .reveal .slides section.center {
             text-align: center;
         }
-        
+
         /* Ensure content fits within viewport */
         .reveal .slides section h1 {
             font-size: 2.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h2 {
             font-size: 2em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section h3 {
             font-size: 1.5em;
             margin-bottom: 0.5em;
         }
-        
+
         .reveal .slides section p {
             font-size: 1.1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
-        .reveal .slides section ul, .reveal .slides section ol {
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
             font-size: 1em;
             line-height: 1.4;
             margin-bottom: 0.8em;
         }
-        
+
         .reveal .slides section li {
             margin-bottom: 0.3em;
         }
-        
+
         /* Task box styling */
         .task-box {
             background: #fff5f5;
@@ -62,7 +70,7 @@
             max-height: 60vh;
             overflow-y: auto;
         }
-        
+
         /* Code example styling */
         .code-example {
             background: #f5f5f5;
@@ -76,7 +84,7 @@
             max-height: 40vh;
             overflow-y: auto;
         }
-        
+
         /* Highlight styling */
         .highlight {
             background: #fff3cd;
@@ -85,7 +93,7 @@
             border-left: 4px solid #ffc107;
             margin: 10px 0;
         }
-        
+
         /* Timeline info styling */
         .timeline-info {
             background: #f8f9fa;
@@ -95,16 +103,16 @@
             margin: 20px 0;
             font-size: 0.9em;
         }
-        
+
         .timeline-info ul {
             margin: 10px 0;
             padding-left: 20px;
         }
-        
+
         .timeline-info li {
             margin-bottom: 0.2em;
         }
-        
+
         /* Diagram styling */
         .diagram {
             background: #f8f9fa;
@@ -114,59 +122,160 @@
             margin: 20px 0;
             text-align: center;
         }
-        
+
         /* Responsive design */
         @media (max-width: 768px) {
             .reveal .slides section {
                 padding: 15px;
             }
-            
+
             .reveal .slides section h1 {
                 font-size: 2em;
             }
-            
+
             .reveal .slides section h2 {
                 font-size: 1.6em;
             }
-            
+
             .reveal .slides section h3 {
                 font-size: 1.3em;
             }
-            
-            .task-box, .code-example {
+
+            .task-box,
+            .code-example {
                 font-size: 0.9em;
                 padding: 15px;
             }
         }
-        
+
         /* Custom scrollbar for better UX */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
         .code-example::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
         .code-example::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
         .code-example::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 4px;
         }
-        
+
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
         .code-example::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Bootstrap Customization Demo Styling */
+        .bootstrap-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .theme-button {
+            padding: 8px 16px;
+            border: 2px solid #007bff;
+            background: white;
+            color: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .theme-button:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        .theme-button.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .demo-container {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background: white;
+            margin: 20px 0;
+        }
+
+        .demo-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .demo-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+
+        .demo-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
     </style>
 </head>
+
 <body>
     <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
         <a href="../index.html" style="
@@ -180,8 +289,8 @@
             box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
             transition: all 0.3s ease;
             display: inline-block;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" 
-           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
             ← Back to Module
         </a>
     </div>
@@ -194,7 +303,7 @@
                 <p><strong>Birmingham Newman University</strong></p>
                 <p><em>Lecturer: James Williams</em></p>
                 <p>Building responsive user interfaces with Bootstrap 5</p>
-                <p><small>3-hour session • 28 slides • 2 interactive tasks</small></p>
+                <p><small>3-hour session • 31 slides • 2 interactive tasks</small></p>
                 <div class="timeline-info">
                     <p><strong>Session Timeline:</strong></p>
                     <ul>
@@ -202,7 +311,7 @@
                         <li>20 min: Opening slides</li>
                         <li>45 min: Task 1</li>
                         <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
+                        <li>25 min: Secondary slides</li>
                         <li>45 min: Task 2</li>
                         <li>Remaining: Self-study</li>
                     </ul>
@@ -226,7 +335,8 @@
             <section>
                 <h2>What is Bootstrap?</h2>
                 <div class="highlight">
-                    <strong>Bootstrap</strong> is a free, open-source CSS framework for creating responsive, mobile-first websites
+                    <strong>Bootstrap</strong> is a free, open-source CSS framework for creating
+                    responsive, mobile-first websites
                 </div>
                 <ul>
                     <li>Developed by Twitter (now Meta)</li>
@@ -242,14 +352,30 @@
                     <p><strong>Responsive:</strong> Mobile-first responsive design</p>
                     <p><strong>Customizable:</strong> Easy to customize and extend</p>
                 </div>
+
+                <!-- YouTube Video: Bootstrap Fundamentals Explained -->
+                <div class="interactive-content">
+                    <h3>Watch: Bootstrap Fundamentals Explained</h3>
+                    <div class="video-container">
+                        <iframe width="100%" height="315"
+                            src="https://www.youtube-nocookie.com/embed/4sosXZsdy-s"
+                            title="Bootstrap Fundamentals Explained" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="interactive-description">
+                        Comprehensive introduction to Bootstrap - the popular CSS framework
+                    </p>
+                </div>
             </section>
 
-            <!-- Slide 4: Bootstrap 5 Features -->
+            <!-- Slide 6: Bootstrap 5 Features -->
             <section>
                 <h2>Bootstrap 5 Features</h2>
                 <div class="code-example">
                     Bootstrap 5 Key Features:<br><br>
-                    
+
                     ✓ CSS Grid System (12 columns)<br>
                     ✓ Responsive Breakpoints<br>
                     ✓ Pre-built Components<br>
@@ -267,7 +393,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 5: Including Bootstrap -->
+            <!-- Slide 7: Including Bootstrap -->
             <section>
                 <h2>Including Bootstrap in Your Project</h2>
                 <div class="code-example">
@@ -275,15 +401,19 @@
                     &lt;html lang="en"&gt;<br>
                     &lt;head&gt;<br>
                     &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
-                    &nbsp;&nbsp;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br>
+                    &nbsp;&nbsp;&lt;meta name="viewport" content="width=device-width,
+                    initial-scale=1.0"&gt;<br>
                     &nbsp;&nbsp;&lt;title&gt;Bootstrap Page&lt;/title&gt;<br>
                     &nbsp;&nbsp;&lt;!-- Bootstrap CSS --&gt;<br>
-                    &nbsp;&nbsp;&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"&gt;<br>
+                    &nbsp;&nbsp;&lt;link
+                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+                    rel="stylesheet"&gt;<br>
                     &lt;/head&gt;<br>
                     &lt;body&gt;<br>
                     &nbsp;&nbsp;&lt;!-- Your content here --&gt;<br>
                     &nbsp;&nbsp;&lt;!-- Bootstrap JS --&gt;<br>
-                    &nbsp;&nbsp;&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;<br>
+                    &nbsp;&nbsp;&lt;script
+                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;<br>
                     &lt;/body&gt;<br>
                     &lt;/html&gt;
                 </div>
@@ -292,19 +422,19 @@
                 </div>
             </section>
 
-            <!-- Slide 6: Bootstrap Grid System -->
+            <!-- Slide 8: Bootstrap Grid System -->
             <section>
                 <h2>Bootstrap Grid System</h2>
                 <div class="code-example">
                     Bootstrap Grid Classes:<br><br>
-                    
+
                     .col-* (Extra small: &lt;576px)<br>
                     .col-sm-* (Small: ≥576px)<br>
                     .col-md-* (Medium: ≥768px)<br>
                     .col-lg-* (Large: ≥992px)<br>
                     .col-xl-* (Extra large: ≥1200px)<br>
                     .col-xxl-* (Extra extra large: ≥1400px)<br><br>
-                    
+
                     * = number of columns (1-12)
                 </div>
                 <ul>
@@ -315,7 +445,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 7: Basic Grid Example -->
+            <!-- Slide 9: Basic Grid Example -->
             <section>
                 <h2>Basic Grid Example</h2>
                 <div class="code-example">
@@ -337,7 +467,7 @@
                 </div>
             </section>
 
-            <!-- Slide 8: Responsive Grid Layouts -->
+            <!-- Slide 10: Responsive Grid Layouts -->
             <section>
                 <h2>Responsive Grid Layouts</h2>
                 <div class="code-example">
@@ -360,34 +490,36 @@
                 </div>
             </section>
 
-            <!-- Slide 9: Bootstrap Containers -->
+            <!-- Slide 11: Bootstrap Containers -->
             <section>
                 <h2>Bootstrap Containers</h2>
                 <div class="code-example">
                     Container Types:<br><br>
-                    
+
                     &lt;div class="container"&gt;...&lt;/div&gt;<br>
                     &lt;!-- Responsive with max-width --&gt;<br><br>
-                    
+
                     &lt;div class="container-fluid"&gt;...&lt;/div&gt;<br>
                     &lt;!-- Full width, no max-width --&gt;<br><br>
-                    
+
                     &lt;div class="container-sm"&gt;...&lt;/div&gt;<br>
                     &lt;!-- Responsive at small breakpoint --&gt;
                 </div>
                 <ul>
-                    <li><strong>.container:</strong> Responsive with max-width at each breakpoint</li>
+                    <li><strong>.container:</strong> Responsive with max-width at each breakpoint
+                    </li>
                     <li><strong>.container-fluid:</strong> Full width across all screen sizes</li>
-                    <li><strong>.container-{breakpoint}:</strong> Responsive at specific breakpoint</li>
+                    <li><strong>.container-{breakpoint}:</strong> Responsive at specific breakpoint
+                    </li>
                 </ul>
             </section>
 
-            <!-- Slide 10: Bootstrap Components -->
+            <!-- Slide 12: Bootstrap Components -->
             <section>
                 <h2>Bootstrap Components</h2>
                 <div class="code-example">
                     Common Bootstrap Components:<br><br>
-                    
+
                     Navigation & Navbar<br>
                     Buttons & Button Groups<br>
                     Cards & Card Groups<br>
@@ -405,12 +537,12 @@
                 </ul>
             </section>
 
-            <!-- Slide 11: Bootstrap Buttons -->
+            <!-- Slide 13: Bootstrap Buttons -->
             <section>
                 <h2>Bootstrap Buttons</h2>
                 <div class="code-example">
                     Button Classes:<br><br>
-                    
+
                     &lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;<br>
                     &lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;<br>
                     &lt;button class="btn btn-success"&gt;Success&lt;/button&gt;<br>
@@ -428,7 +560,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 12: Bootstrap Cards -->
+            <!-- Slide 14: Bootstrap Cards -->
             <section>
                 <h2>Bootstrap Cards</h2>
                 <div class="code-example">
@@ -436,8 +568,10 @@
                     &nbsp;&nbsp;&lt;img src="product.jpg" class="card-img-top" alt="Product"&gt;<br>
                     &nbsp;&nbsp;&lt;div class="card-body"&gt;<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;Product Name&lt;/h5&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="card-text"&gt;Product description...&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#" class="btn btn-primary"&gt;Add to Cart&lt;/a&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="card-text"&gt;Product
+                    description...&lt;/p&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#" class="btn btn-primary"&gt;Add to
+                    Cart&lt;/a&gt;<br>
                     &nbsp;&nbsp;&lt;/div&gt;<br>
                     &lt;/div&gt;
                 </div>
@@ -449,20 +583,26 @@
                 </ul>
             </section>
 
-            <!-- Slide 13: Bootstrap Navigation -->
+            <!-- Slide 15: Bootstrap Navigation -->
             <section>
                 <h2>Bootstrap Navigation</h2>
                 <div class="code-example">
                     &lt;nav class="navbar navbar-expand-lg navbar-light bg-light"&gt;<br>
                     &nbsp;&nbsp;&lt;div class="container"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;a class="navbar-brand" href="#"&gt;E-Commerce&lt;/a&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;a class="navbar-brand"
+                    href="#"&gt;E-Commerce&lt;/a&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span
+                    class="navbar-toggler-icon"&gt;&lt;/span&gt;<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="collapse navbar-collapse" id="navbarNav"&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="collapse navbar-collapse"
+                    id="navbarNav"&gt;<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul class="navbar-nav"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;Products&lt;/a&gt;&lt;/li&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;&lt;a
+                    class="nav-link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;&lt;a
+                    class="nav-link" href="#"&gt;Products&lt;/a&gt;&lt;/li&gt;<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
                     &nbsp;&nbsp;&lt;/div&gt;<br>
@@ -476,20 +616,25 @@
                 </ul>
             </section>
 
-            <!-- Slide 14: Bootstrap Forms -->
+            <!-- Slide 16: Bootstrap Forms -->
             <section>
                 <h2>Bootstrap Forms</h2>
                 <div class="code-example">
                     &lt;form&gt;<br>
                     &nbsp;&nbsp;&lt;div class="mb-3"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email" class="form-label"&gt;Email address&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email" class="form-control" id="email"&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email" class="form-label"&gt;Email
+                    address&lt;/label&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email" class="form-control"
+                    id="email"&gt;<br>
                     &nbsp;&nbsp;&lt;/div&gt;<br>
                     &nbsp;&nbsp;&lt;div class="mb-3"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="password" class="form-label"&gt;Password&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="password" class="form-control" id="password"&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="password"
+                    class="form-label"&gt;Password&lt;/label&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="password" class="form-control"
+                    id="password"&gt;<br>
                     &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;button type="submit" class="btn btn-primary"&gt;Submit&lt;/button&gt;<br>
+                    &nbsp;&nbsp;&lt;button type="submit" class="btn
+                    btn-primary"&gt;Submit&lt;/button&gt;<br>
                     &lt;/form&gt;
                 </div>
                 <ul>
@@ -500,12 +645,12 @@
                 </ul>
             </section>
 
-            <!-- Slide 15: Bootstrap Utilities -->
+            <!-- Slide 17: Bootstrap Utilities -->
             <section>
                 <h2>Bootstrap Utilities</h2>
                 <div class="code-example">
                     Utility Classes:<br><br>
-                    
+
                     Spacing: m-*, p-*, mt-*, mb-*, etc.<br>
                     Colors: text-primary, bg-success, etc.<br>
                     Typography: text-center, fw-bold, etc.<br>
@@ -522,15 +667,16 @@
                 </ul>
             </section>
 
-            <!-- Slide 16: E-commerce Layout Structure -->
+            <!-- Slide 18: E-commerce Layout Structure -->
             <section>
                 <h2>E-commerce Layout Structure</h2>
                 <div class="code-example">
                     E-commerce Page Structure:<br><br>
-                    
+
                     &lt;!-- Header/Navigation --&gt;<br>
-                    &lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;...&lt;/nav&gt;<br><br>
-                    
+                    &lt;nav class="navbar navbar-expand-lg navbar-dark
+                    bg-dark"&gt;...&lt;/nav&gt;<br><br>
+
                     &lt;!-- Main Content --&gt;<br>
                     &lt;div class="container mt-4"&gt;<br>
                     &nbsp;&nbsp;&lt;div class="row"&gt;<br>
@@ -540,29 +686,34 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-md-9"&gt;Product Grid&lt;/div&gt;<br>
                     &nbsp;&nbsp;&lt;/div&gt;<br>
                     &lt;/div&gt;<br><br>
-                    
+
                     &lt;!-- Footer --&gt;<br>
                     &lt;footer class="bg-light mt-5"&gt;...&lt;/footer&gt;
                 </div>
             </section>
 
-            <!-- Slide 17: Responsive Design Best Practices -->
+            <!-- Slide 19: Responsive Design Best Practices -->
             <section>
                 <h2>Responsive Design Best Practices</h2>
                 <ul>
-                    <li><strong>Mobile-First:</strong> Design for mobile first, then enhance for larger screens</li>
-                    <li><strong>Breakpoint Strategy:</strong> Use Bootstrap's predefined breakpoints</li>
-                    <li><strong>Content Priority:</strong> Most important content first on mobile</li>
-                    <li><strong>Touch-Friendly:</strong> Ensure buttons and links are large enough to tap</li>
+                    <li><strong>Mobile-First:</strong> Design for mobile first, then enhance for
+                        larger screens</li>
+                    <li><strong>Breakpoint Strategy:</strong> Use Bootstrap's predefined breakpoints
+                    </li>
+                    <li><strong>Content Priority:</strong> Most important content first on mobile
+                    </li>
+                    <li><strong>Touch-Friendly:</strong> Ensure buttons and links are large enough
+                        to tap</li>
                     <li><strong>Performance:</strong> Optimize images and assets for mobile</li>
-                    <li><strong>Testing:</strong> Test on real devices, not just browser resizing</li>
+                    <li><strong>Testing:</strong> Test on real devices, not just browser resizing
+                    </li>
                 </ul>
                 <div class="highlight">
                     <strong>Remember:</strong> Mobile users expect fast, easy-to-use interfaces
                 </div>
             </section>
 
-            <!-- Slide 18: TASK 1 - Halfway Point -->
+            <!-- Slide 20: TASK 1 - Halfway Point -->
             <section class="center">
                 <h2>Task 1: Bootstrap Grid Layout</h2>
                 <div class="task-box">
@@ -581,11 +732,12 @@
                         <li>Test the layout on different screen sizes</li>
                     </ol>
                     <p><strong>Time:</strong> 45 minutes</p>
-                    <p><em>This task will help you understand Bootstrap's grid system and responsive design</em></p>
+                    <p><em>This task will help you understand Bootstrap's grid system and responsive
+                            design</em></p>
                 </div>
             </section>
 
-            <!-- Slide 19: Break/Catch Up -->
+            <!-- Slide 21: Break/Catch Up -->
             <section class="center">
                 <h2>Break Time</h2>
                 <div class="highlight">
@@ -595,7 +747,7 @@
                 </div>
             </section>
 
-            <!-- Slide 20: Bootstrap Customization -->
+            <!-- Slide 22: Bootstrap Customization -->
             <section>
                 <h2>Bootstrap Customization</h2>
                 <ul>
@@ -611,7 +763,7 @@
                     &nbsp;&nbsp;--bs-primary: #ff6b6b;<br>
                     &nbsp;&nbsp;--bs-secondary: #ee5a24;<br>
                     }<br><br>
-                    
+
                     .btn-custom {<br>
                     &nbsp;&nbsp;background-color: var(--bs-primary);<br>
                     &nbsp;&nbsp;border-color: var(--bs-primary);<br>
@@ -619,12 +771,128 @@
                 </div>
             </section>
 
-            <!-- Slide 21: Bootstrap JavaScript Components -->
+            <!-- Slide 23: Bootstrap Theme Customization -->
+            <section>
+                <h2>Bootstrap Theme Customization</h2>
+                <div class="highlight">
+                    <strong>Bootswatch</strong> provides free themes for Bootstrap that you can
+                    easily customize
+                </div>
+
+                <!-- Interactive Bootstrap Customization Demo -->
+                <div class="interactive-content">
+                    <h3>Try It: Bootstrap Theme Switcher</h3>
+                    <div class="demo-container">
+                        <div class="bootstrap-demo">
+                            <div class="theme-selector">
+                                <button class="theme-button active"
+                                    onclick="changeTheme('cerulean')">Cerulean</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('cosmo')">Cosmo</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('cyborg')">Cyborg</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('darkly')">Darkly</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('flatly')">Flatly</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('journal')">Journal</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('litera')">Litera</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('lumen')">Lumen</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('minty')">Minty</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('morph')">Morph</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('pulse')">Pulse</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('quartz')">Quartz</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('sandstone')">Sandstone</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('simplex')">Simplex</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('sketchy')">Sketchy</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('slate')">Slate</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('solar')">Solar</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('spacelab')">Spacelab</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('superhero')">Superhero</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('united')">United</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('vapor')">Vapor</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('yeti')">Yeti</button>
+                                <button class="theme-button"
+                                    onclick="changeTheme('zephyr')">Zephyr</button>
+                            </div>
+
+                            <div class="demo-preview">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Sample Card</h5>
+                                                    <p class="card-text">This card demonstrates how
+                                                        Bootstrap components look with different
+                                                        themes.</p>
+                                                    <button class="btn btn-primary">Primary
+                                                        Button</button>
+                                                    <button class="btn btn-secondary">Secondary
+                                                        Button</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="alert alert-success">
+                                                <strong>Success!</strong> This alert shows theme
+                                                colors.
+                                            </div>
+                                            <div class="alert alert-warning">
+                                                <strong>Warning!</strong> Different themes have
+                                                different color schemes.
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar"
+                                                    style="width: 75%">75%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="demo-info">
+                                <h4>Bootswatch Themes:</h4>
+                                <p><strong>Free Themes:</strong> 30+ professionally designed
+                                    Bootstrap themes</p>
+                                <p><strong>Easy Integration:</strong> Just replace the Bootstrap CSS
+                                    link</p>
+                                <p><strong>Customizable:</strong> Modify colors, fonts, and spacing
+                                </p>
+                                <p><strong>Responsive:</strong> All themes work on all devices</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Click the theme buttons to see how Bootstrap components change with
+                        different themes!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 24: Bootstrap JavaScript Components -->
             <section>
                 <h2>Bootstrap JavaScript Components</h2>
                 <div class="code-example">
                     JavaScript Components:<br><br>
-                    
+
                     Modals & Dialogs<br>
                     Dropdown Menus<br>
                     Collapse & Accordion<br>
@@ -642,23 +910,25 @@
                 </ul>
             </section>
 
-            <!-- Slide 22: Bootstrap Accessibility -->
+            <!-- Slide 25: Bootstrap Accessibility -->
             <section>
                 <h2>Bootstrap Accessibility Features</h2>
                 <ul>
                     <li><strong>ARIA Attributes:</strong> Built-in accessibility support</li>
-                    <li><strong>Keyboard Navigation:</strong> All components keyboard accessible</li>
+                    <li><strong>Keyboard Navigation:</strong> All components keyboard accessible
+                    </li>
                     <li><strong>Screen Reader Support:</strong> Proper semantic markup</li>
                     <li><strong>Focus Management:</strong> Clear focus indicators</li>
                     <li><strong>Color Contrast:</strong> WCAG compliant color combinations</li>
                     <li><strong>Semantic HTML:</strong> Proper HTML structure</li>
                 </ul>
                 <div class="highlight">
-                    <strong>Accessibility First:</strong> Bootstrap components are accessible by default
+                    <strong>Accessibility First:</strong> Bootstrap components are accessible by
+                    default
                 </div>
             </section>
 
-            <!-- Slide 23: Bootstrap Performance -->
+            <!-- Slide 26: Bootstrap Performance -->
             <section>
                 <h2>Bootstrap Performance Optimization</h2>
                 <ul>
@@ -678,19 +948,20 @@
                 </div>
             </section>
 
-            <!-- Slide 24: Common Bootstrap Patterns -->
+            <!-- Slide 27: Common Bootstrap Patterns -->
             <section>
                 <h2>Common Bootstrap Patterns</h2>
                 <div class="code-example">
                     E-commerce Patterns:<br><br>
-                    
+
                     Product Cards:<br>
                     &lt;div class="card h-100"&gt;<br>
                     &nbsp;&nbsp;&lt;img class="card-img-top"&gt;<br>
                     &nbsp;&nbsp;&lt;div class="card-body d-flex flex-column"&gt;<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;&lt;/h5&gt;<br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="card-text flex-grow-1"&gt;&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="btn btn-primary mt-auto"&gt;Add to Cart&lt;/button&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="btn btn-primary mt-auto"&gt;Add to
+                    Cart&lt;/button&gt;<br>
                     &nbsp;&nbsp;&lt;/div&gt;<br>
                     &lt;/div&gt;
                 </div>
@@ -702,7 +973,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 25: Bootstrap Troubleshooting -->
+            <!-- Slide 28: Bootstrap Troubleshooting -->
             <section>
                 <h2>Common Bootstrap Issues</h2>
                 <ul>
@@ -714,11 +985,12 @@
                     <li><strong>Performance:</strong> Remove unused components</li>
                 </ul>
                 <div class="highlight">
-                    <strong>Debugging Tip:</strong> Use browser developer tools to inspect Bootstrap classes
+                    <strong>Debugging Tip:</strong> Use browser developer tools to inspect Bootstrap
+                    classes
                 </div>
             </section>
 
-            <!-- Slide 26: Bootstrap Resources -->
+            <!-- Slide 29: Bootstrap Resources -->
             <section>
                 <h2>Bootstrap Resources</h2>
                 <ul>
@@ -738,7 +1010,7 @@
                 </div>
             </section>
 
-            <!-- Slide 27: TASK 2 - Final Task -->
+            <!-- Slide 30: TASK 2 - Final Task -->
             <section class="center">
                 <h2>Task 2: E-commerce Product Page</h2>
                 <div class="task-box">
@@ -759,11 +1031,12 @@
                         <li>Test on multiple screen sizes</li>
                     </ol>
                     <p><strong>Time:</strong> 45 minutes</p>
-                    <p><em>This task will help you build a complete responsive e-commerce interface</em></p>
+                    <p><em>This task will help you build a complete responsive e-commerce
+                            interface</em></p>
                 </div>
             </section>
 
-            <!-- Slide 28: Summary -->
+            <!-- Slide 31: Summary -->
             <section class="center">
                 <h2>Session Summary</h2>
                 <ul>
@@ -776,13 +1049,17 @@
                 </ul>
                 <div class="highlight">
                     <h3>Next Session:</h3>
-                    <p>Bootstrap Components & Customization - Advanced styling and component usage</p>
+                    <p>Bootstrap Components & Customization - Advanced styling and component usage
+                    </p>
                 </div>
             </section>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <!-- Bootstrap JS -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
@@ -831,6 +1108,27 @@
             // Allow content to scroll within slides
             scrollBeyondOnePage: true
         });
+
+        // Bootstrap Theme Switcher Functions
+        function changeTheme(themeName) {
+            // Update active button
+            document.querySelectorAll('.theme-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Change the theme
+            const themeLink = document.getElementById('bootswatch-theme');
+            themeLink.href = `https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/${themeName}/bootstrap.min.css`;
+
+            // Add a small animation to show the change
+            const demoPreview = document.querySelector('.demo-preview');
+            demoPreview.style.opacity = '0.7';
+            setTimeout(() => {
+                demoPreview.style.opacity = '1';
+            }, 200);
+        }
     </script>
 </body>
+
 </html>
