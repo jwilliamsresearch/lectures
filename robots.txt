@@ -1,0 +1,63 @@
+# Robots.txt for James Williams Teaching Portfolio
+# https://jwilliams.science/lectures/
+
+User-agent: *
+Allow: /
+
+# Allow access to all course content
+Allow: /CMU422/
+Allow: /CMU529/
+Allow: /CMU540/
+Allow: /slideshows/
+Allow: /quizzes/
+
+# Disallow access to sensitive files
+Disallow: /.git/
+Disallow: /.htaccess
+Disallow: /config/
+Disallow: /logs/
+Disallow: /temp/
+Disallow: /cache/
+
+# Allow access to important files
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://jwilliams.science/lectures/sitemap.xml
+
+# Additional directives for specific bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2

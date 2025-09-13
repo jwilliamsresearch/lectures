@@ -3,7 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Development Module - Birmingham Newman University</title>
+    <title>CMU422: Fundamentals of Web Design | James Williams | Birmingham Newman University</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="CMU422 Fundamentals of Web Design course by James Williams at Birmingham Newman University. Learn HTML5, CSS3, JavaScript with 12 interactive slideshows, hands-on exercises, and client website projects.">
+    <meta name="keywords" content="CMU422, web design, HTML5, CSS3, JavaScript, James Williams, Birmingham Newman University, front-end development, responsive design, web development course">
+    <meta name="author" content="James Williams">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jwilliams.science/lectures/CMU422/">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="CMU422: Fundamentals of Web Design | James Williams | Birmingham Newman University">
+    <meta property="og:description" content="Learn web design fundamentals with HTML5, CSS3, and JavaScript. Interactive slideshows, hands-on exercises, and client website projects.">
+    <meta property="og:url" content="https://jwilliams.science/lectures/CMU422/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="James Williams Teaching Portfolio">
+    <meta property="og:locale" content="en_GB">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CMU422: Fundamentals of Web Design | James Williams | Birmingham Newman University">
+    <meta name="twitter:description" content="Learn web design fundamentals with HTML5, CSS3, and JavaScript. Interactive slideshows, hands-on exercises, and client website projects.">
+    <meta name="twitter:url" content="https://jwilliams.science/lectures/CMU422/">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-TileColor" content="#667eea">
+    <meta name="application-name" content="CMU422 Web Design Course">
+    
+    <!-- Performance Optimization -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.newman.ac.uk" crossorigin>
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//developer.mozilla.org">
+    <link rel="dns-prefetch" href="//html.spec.whatwg.org">
+    <link rel="dns-prefetch" href="//css-tricks.com">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "CMU422: Fundamentals of Web Design",
+        "description": "A comprehensive introduction to web design fundamentals, covering HTML5, CSS3, and JavaScript. Students develop responsive websites for real clients.",
+        "provider": {
+            "@type": "EducationalOrganization",
+            "name": "Birmingham Newman University",
+            "url": "https://www.newman.ac.uk"
+        },
+        "instructor": {
+            "@type": "Person",
+            "name": "James Williams",
+            "jobTitle": "Lecturer in Computer Science"
+        },
+        "courseCode": "CMU422",
+        "educationalLevel": "Undergraduate",
+        "credits": "20",
+        "url": "https://jwilliams.science/lectures/CMU422/",
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "blended",
+            "courseWorkload": "PT36H"
+        },
+        "teaches": [
+            "HTML5",
+            "CSS3", 
+            "JavaScript",
+            "Responsive Web Design",
+            "Front-end Development"
+        ]
+    }
+    </script>
     <style>
         * {
             box-sizing: border-box;
@@ -394,7 +477,7 @@
     </style>
 </head>
 <body>
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <nav style="position: fixed; top: 20px; left: 20px; z-index: 1000;" role="navigation" aria-label="Main navigation">
             <a href="../index.html" style="
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
@@ -407,38 +490,42 @@
                 transition: all 0.3s ease;
                 display: inline-block;
             " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'"
+               aria-label="Return to teaching portfolio homepage">
                 ← Back to Teaching Portfolio
             </a>
-        </div>
+        </nav>
     <div class="container">
-                       <div class="header">
-                   <h1>CMU422: Fundamentals of Web Design</h1>
-                   <div class="subtitle">Birmingham Newman University | Lecturer: James Williams</div>
-               </div>
+        <header class="header" role="banner">
+            <h1>CMU422: Fundamentals of Web Design</h1>
+            <div class="subtitle">Birmingham Newman University | Lecturer: James Williams</div>
+        </header>
         
-                 <div class="tabs">
-             <button class="tab active" onclick="showTab('slides')">Slides</button>
-             <button class="tab" onclick="showTab('assessment')">Assessment</button>
-             <button class="tab" onclick="showTab('quizzes')">Quizzes</button>
-             <button class="tab" onclick="showTab('further-reading')">Further Reading</button>
-         </div>
+        <nav class="tabs" role="tablist" aria-label="Course content navigation">
+            <button class="tab active" onclick="showTab('slides')" role="tab" aria-selected="true" aria-controls="slides" id="tab-slides">Slides</button>
+            <button class="tab" onclick="showTab('assessment')" role="tab" aria-selected="false" aria-controls="assessment" id="tab-assessment">Assessment</button>
+            <button class="tab" onclick="showTab('quizzes')" role="tab" aria-selected="false" aria-controls="quizzes" id="tab-quizzes">Quizzes</button>
+            <button class="tab" onclick="showTab('further-reading')" role="tab" aria-selected="false" aria-controls="further-reading" id="tab-further-reading">Further Reading</button>
+        </nav>
         
-        <!-- Slides Tab -->
-        <div id="slides" class="tab-content active">
-                               <div class="module-info">
-                       <h2>Module Overview</h2>
-                       <p><strong>Credits:</strong> 20 credits | <strong>Level:</strong> Undergraduate | <strong>Focus:</strong> Front-end Web Design</p>
-                       <p>This module covers the fundamentals of web design with a focus on HTML5, CSS3, and JavaScript. Students will develop a responsive website for a client as their main assessment. Each slideshow is designed for a 3-hour session with interactive tasks.</p>
-                   </div>
+        <main role="main">
+            <!-- Slides Tab -->
+            <section id="slides" class="tab-content active" role="tabpanel" aria-labelledby="tab-slides">
+                <div class="module-info">
+                    <h2>Module Overview</h2>
+                    <p><strong>Credits:</strong> 20 credits | <strong>Level:</strong> Undergraduate | <strong>Focus:</strong> Front-end Web Design</p>
+                    <p>This module covers the fundamentals of web design with a focus on HTML5, CSS3, and JavaScript. Students will develop a responsive website for a client as their main assessment. Each slideshow is designed for a 3-hour session with interactive tasks.</p>
+                </div>
 
-            <div class="slideshow-grid">
-                <a href="slideshows/session1.html" class="slideshow-card">
-                    <div class="slideshow-number">1</div>
-                    <div class="slideshow-title">Introduction to HTML</div>
-                    <div class="slideshow-description">Basic HTML structure, elements, and semantic markup</div>
-                    <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
-                </a>
+                <div class="slideshow-grid" role="list">
+                    <article class="slideshow-card" role="listitem">
+                        <a href="slideshows/session1.html" aria-label="Session 1: Introduction to HTML - Basic HTML structure, elements, and semantic markup">
+                            <div class="slideshow-number" aria-hidden="true">1</div>
+                            <h3 class="slideshow-title">Introduction to HTML</h3>
+                            <p class="slideshow-description">Basic HTML structure, elements, and semantic markup</p>
+                            <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                        </a>
+                    </article>
 
                 <a href="slideshows/session2.html" class="slideshow-card">
                     <div class="slideshow-number">2</div>
