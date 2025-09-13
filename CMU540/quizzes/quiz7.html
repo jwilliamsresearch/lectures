@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 7: WEB-XSS-01 - Cross-Site Scripting - Birmingham Newman University</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .quiz-content {
+            padding: 40px;
+        }
+        
+        .quiz-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
+            display: none;
+        }
+        
+        .question.active {
+            display: block;
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+        
+        .question h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .option.selected {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+        
+        .option.correct {
+            border-color: #4caf50;
+            background: #e8f5e8;
+        }
+        
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .feedback {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .explanation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+            }
+            
+            .quiz-content {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .timer {
+                position: static;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Quiz 7: WEB-XSS-01 - Cross-Site Scripting</h1>
+            <div class="subtitle">Birmingham Newman University | Cyber Security Module</div>
+        </div>
+        
+        <div class="quiz-content">
+            <div class="quiz-info">
+                <h3>Quiz Instructions</h3>
+                <p><strong>Questions:</strong> 15 | <strong>Time Limit:</strong> 20 minutes | <strong>Passing Score:</strong> 70%</p>
+                <p>Test your understanding of Cross-Site Scripting (XSS) vulnerabilities and OWASP A03. Select the best answer for each question.</p>
+            </div>
+            
+            <div class="timer" id="timer">Time: 20:00</div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            
+            <div id="questions-container">
+                <!-- Questions will be populated by JavaScript -->
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+        
+        <div class="results" id="results">
+            <div class="score-display" id="scoreDisplay"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="btn btn-primary" onclick="restartQuiz()">Take Quiz Again</button>
+            <button class="btn btn-secondary" onclick="window.location.href='../index.html'">Back to Module</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is Cross-Site Scripting (XSS)?",
+                options: [
+                    "A type of SQL injection",
+                    "Injecting malicious scripts into web pages",
+                    "A type of authentication bypass",
+                    "A network security protocol"
+                ],
+                correct: 1,
+                explanation: "XSS is a vulnerability that allows attackers to inject malicious scripts into web pages viewed by other users."
+            },
+            {
+                question: "What is stored XSS?",
+                options: [
+                    "A type of XSS that is stored in the database",
+                    "A type of XSS that is stored in cookies",
+                    "A type of XSS that is stored in session storage",
+                    "A type of XSS that is stored in local storage"
+                ],
+                correct: 0,
+                explanation: "Stored XSS is a type of XSS where malicious scripts are stored in the database and executed when the page is loaded."
+            },
+            {
+                question: "What is reflected XSS?",
+                options: [
+                    "A type of XSS that is stored in the database",
+                    "A type of XSS that is reflected in the response",
+                    "A type of XSS that is reflected in the request",
+                    "A type of XSS that is reflected in the URL"
+                ],
+                correct: 1,
+                explanation: "Reflected XSS is a type of XSS where malicious scripts are reflected in the response without being stored."
+            },
+            {
+                question: "What is DOM-based XSS?",
+                options: [
+                    "A type of XSS that is stored in the database",
+                    "A type of XSS that is reflected in the response",
+                    "A type of XSS that occurs in the DOM",
+                    "A type of XSS that occurs in the server"
+                ],
+                correct: 2,
+                explanation: "DOM-based XSS is a type of XSS that occurs in the DOM when client-side scripts modify the page structure."
+            },
+            {
+                question: "What is the primary defense against XSS?",
+                options: [
+                    "Input validation",
+                    "Output encoding",
+                    "Parameterized queries",
+                    "Session management"
+                ],
+                correct: 1,
+                explanation: "Output encoding is the primary defense against XSS attacks by properly encoding user input."
+            },
+            {
+                question: "What is Content Security Policy (CSP)?",
+                options: [
+                    "A type of XSS attack",
+                    "A security feature that prevents XSS",
+                    "A type of SQL injection",
+                    "A type of authentication bypass"
+                ],
+                correct: 1,
+                explanation: "CSP is a security feature that helps prevent XSS by controlling which resources can be loaded."
+            },
+            {
+                question: "What is input sanitization?",
+                options: [
+                    "A type of XSS attack",
+                    "Cleaning user input to remove malicious content",
+                    "A type of SQL injection",
+                    "A type of authentication bypass"
+                ],
+                correct: 1,
+                explanation: "Input sanitization is the process of cleaning user input to remove malicious content."
+            },
+            {
+                question: "What is output encoding?",
+                options: [
+                    "A type of XSS attack",
+                    "Converting data to a safe format for output",
+                    "A type of SQL injection",
+                    "A type of authentication bypass"
+                ],
+                correct: 1,
+                explanation: "Output encoding converts data to a safe format for output to prevent injection attacks."
+            },
+            {
+                question: "What is the difference between XSS and CSRF?",
+                options: [
+                    "XSS is client-side, CSRF is server-side",
+                    "XSS is server-side, CSRF is client-side",
+                    "They are the same thing",
+                    "XSS is more dangerous"
+                ],
+                correct: 0,
+                explanation: "XSS is a client-side attack that injects scripts, while CSRF is a server-side attack that forces actions."
+            },
+            {
+                question: "What is the primary risk of XSS?",
+                options: [
+                    "System downtime",
+                    "Session hijacking and data theft",
+                    "Performance issues",
+                    "Network congestion"
+                ],
+                correct: 1,
+                explanation: "The primary risk of XSS is session hijacking, data theft, and malicious actions on behalf of users."
+            },
+            {
+                question: "What is a XSS payload?",
+                options: [
+                    "A type of XSS attack",
+                    "Malicious code used in XSS attacks",
+                    "A type of SQL injection",
+                    "A type of authentication bypass"
+                ],
+                correct: 1,
+                explanation: "A XSS payload is malicious code used to exploit XSS vulnerabilities."
+            },
+            {
+                question: "What is the difference between stored and reflected XSS?",
+                options: [
+                    "Stored XSS is stored in the database, reflected XSS is reflected in the response",
+                    "They are the same thing",
+                    "Stored XSS is more dangerous",
+                    "Reflected XSS is more dangerous"
+                ],
+                correct: 0,
+                explanation: "Stored XSS is stored in the database and executed when the page is loaded, while reflected XSS is reflected in the response without being stored."
+            },
+            {
+                question: "What is the difference between XSS and SQL injection?",
+                options: [
+                    "XSS targets the client, SQL injection targets the database",
+                    "They are the same thing",
+                    "XSS is more dangerous",
+                    "SQL injection is more dangerous"
+                ],
+                correct: 0,
+                explanation: "XSS targets the client-side by injecting scripts, while SQL injection targets the database by injecting SQL code."
+            },
+            {
+                question: "What is the difference between XSS and CSRF?",
+                options: [
+                    "XSS injects scripts, CSRF forces actions",
+                    "They are the same thing",
+                    "XSS is more dangerous",
+                    "CSRF is more dangerous"
+                ],
+                correct: 0,
+                explanation: "XSS injects malicious scripts into web pages, while CSRF forces users to perform unwanted actions."
+            },
+            {
+                question: "What is the difference between XSS and injection?",
+                options: [
+                    "XSS is a type of injection attack",
+                    "They are the same thing",
+                    "XSS is more dangerous",
+                    "Injection is more dangerous"
+                ],
+                correct: 0,
+                explanation: "XSS is a type of injection attack that specifically targets client-side scripts."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let timeLeft = 20 * 60; // 20 minutes in seconds
+        let timerInterval;
+
+        function initQuiz() {
+            displayQuestion();
+            startTimer();
+            updateProgress();
+        }
+
+        function displayQuestion() {
+            const container = document.getElementById('questions-container');
+            const question = questions[currentQuestion];
+            
+            container.innerHTML = `
+                <div class="question active">
+                    <h3>Question ${currentQuestion + 1} of ${questions.length}</h3>
+                    <p>${question.question}</p>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <div class="option ${userAnswers[currentQuestion] === index ? 'selected' : ''}" 
+                                 onclick="selectOption(${index})">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation"></div>
+                </div>
+            `;
+            
+            updateNavigation();
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // Update visual selection
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.remove('selected');
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            updateNavigation();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+                updateProgress();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+                updateProgress();
+            }
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next';
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            const score = calculateScore();
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            document.querySelector('.quiz-content').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+            
+            const resultsDiv = document.getElementById('results');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const feedback = document.getElementById('feedback');
+            
+            scoreDisplay.textContent = `${score}/${questions.length} (${percentage}%)`;
+            
+            if (percentage >= 90) {
+                feedback.textContent = "Excellent! You have a strong understanding of Cross-Site Scripting.";
+            } else if (percentage >= 80) {
+                feedback.textContent = "Great job! You have a good grasp of XSS concepts.";
+            } else if (percentage >= 70) {
+                feedback.textContent = "Good work! You understand the basics of XSS.";
+            } else {
+                feedback.textContent = "Keep studying! Review Cross-Site Scripting concepts and try again.";
+            }
+            
+            resultsDiv.style.display = 'block';
+        }
+
+        function calculateScore() {
+            let score = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            return score;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            timeLeft = 20 * 60;
+            
+            document.querySelector('.quiz-content').style.display = 'block';
+            document.getElementById('timer').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            initQuiz();
+        }
+
+        // Initialize quiz when page loads
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>

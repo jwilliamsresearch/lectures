@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 10: WEB-DATA-01 & WEB-LOG-01 - Data Exposure & Logging - Birmingham Newman University</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .quiz-content {
+            padding: 40px;
+        }
+        
+        .quiz-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
+            display: none;
+        }
+        
+        .question.active {
+            display: block;
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+        
+        .question h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .option.selected {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+        
+        .option.correct {
+            border-color: #4caf50;
+            background: #e8f5e8;
+        }
+        
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .feedback {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .explanation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+            }
+            
+            .quiz-content {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .timer {
+                position: static;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Quiz 10: WEB-DATA-01 & WEB-LOG-01 - Data Exposure & Logging</h1>
+            <div class="subtitle">Birmingham Newman University | Cyber Security Module</div>
+        </div>
+        
+        <div class="quiz-content">
+            <div class="quiz-info">
+                <h3>Quiz Instructions</h3>
+                <p><strong>Questions:</strong> 15 | <strong>Time Limit:</strong> 20 minutes | <strong>Passing Score:</strong> 70%</p>
+                <p>Test your understanding of data exposure and logging failures (OWASP A08 & A09). Select the best answer for each question.</p>
+            </div>
+            
+            <div class="timer" id="timer">Time: 20:00</div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            
+            <div id="questions-container">
+                <!-- Questions will be populated by JavaScript -->
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+        
+        <div class="results" id="results">
+            <div class="score-display" id="scoreDisplay"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="btn btn-primary" onclick="restartQuiz()">Take Quiz Again</button>
+            <button class="btn btn-secondary" onclick="window.location.href='../index.html'">Back to Module</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is data exposure?",
+                options: [
+                    "Weak password policies",
+                    "Sensitive data exposure",
+                    "SQL injection vulnerabilities",
+                    "Cross-site scripting attacks"
+                ],
+                correct: 1,
+                explanation: "Data exposure occurs when sensitive data is not properly protected and can be accessed by unauthorized users."
+            },
+            {
+                question: "What is the primary cause of data exposure?",
+                options: [
+                    "Weak authentication",
+                    "Insufficient data protection",
+                    "SQL injection",
+                    "Cross-site scripting"
+                ],
+                correct: 1,
+                explanation: "Data exposure is primarily caused by insufficient data protection mechanisms."
+            },
+            {
+                question: "What is the primary defense against data exposure?",
+                options: [
+                    "Input validation",
+                    "Strong data protection",
+                    "Output encoding",
+                    "Session management"
+                ],
+                correct: 1,
+                explanation: "Strong data protection mechanisms are the primary defense against data exposure."
+            },
+            {
+                question: "What is logging failure?",
+                options: [
+                    "Weak password policies",
+                    "Insufficient logging and monitoring",
+                    "SQL injection vulnerabilities",
+                    "Cross-site scripting attacks"
+                ],
+                correct: 1,
+                explanation: "Logging failure occurs when logging and monitoring are insufficient, making it difficult to detect attacks."
+            },
+            {
+                question: "What is the primary cause of logging failures?",
+                options: [
+                    "Weak authentication",
+                    "Insufficient logging and monitoring",
+                    "SQL injection",
+                    "Cross-site scripting"
+                ],
+                correct: 1,
+                explanation: "Logging failures are primarily caused by insufficient logging and monitoring mechanisms."
+            },
+            {
+                question: "What is the primary defense against logging failures?",
+                options: [
+                    "Input validation",
+                    "Comprehensive logging and monitoring",
+                    "Output encoding",
+                    "Session management"
+                ],
+                correct: 1,
+                explanation: "Comprehensive logging and monitoring are the primary defense against logging failures."
+            },
+            {
+                question: "What is the difference between data exposure and logging failures?",
+                options: [
+                    "Data exposure exposes sensitive data, logging failures prevent detection",
+                    "They are the same thing",
+                    "Data exposure is more dangerous",
+                    "Logging failures are more dangerous"
+                ],
+                correct: 0,
+                explanation: "Data exposure exposes sensitive data to unauthorized parties, while logging failures prevent detection of attacks."
+            },
+            {
+                question: "What is the primary risk of data exposure?",
+                options: [
+                    "System downtime",
+                    "Sensitive data access by unauthorized parties",
+                    "Performance issues",
+                    "Network congestion"
+                ],
+                correct: 1,
+                explanation: "The primary risk of data exposure is sensitive data being accessed by unauthorized parties."
+            },
+            {
+                question: "What is the primary risk of logging failures?",
+                options: [
+                    "System downtime",
+                    "Inability to detect attacks",
+                    "Performance issues",
+                    "Network congestion"
+                ],
+                correct: 1,
+                explanation: "The primary risk of logging failures is the inability to detect attacks and security incidents."
+            },
+            {
+                question: "What is the difference between data exposure and broken access control?",
+                options: [
+                    "Data exposure exposes sensitive data, broken access control allows unauthorized access",
+                    "They are the same thing",
+                    "Data exposure is more dangerous",
+                    "Broken access control is more dangerous"
+                ],
+                correct: 0,
+                explanation: "Data exposure exposes sensitive data to unauthorized parties, while broken access control allows unauthorized access to resources."
+            },
+            {
+                question: "What is the difference between data exposure and cryptographic failures?",
+                options: [
+                    "Data exposure exposes sensitive data, cryptographic failures are encryption issues",
+                    "They are the same thing",
+                    "Data exposure is more dangerous",
+                    "Cryptographic failures are more dangerous"
+                ],
+                correct: 0,
+                explanation: "Data exposure exposes sensitive data to unauthorized parties, while cryptographic failures are weaknesses in encryption and data protection."
+            },
+            {
+                question: "What is the difference between data exposure and injection?",
+                options: [
+                    "Data exposure exposes sensitive data, injection injects malicious code",
+                    "They are the same thing",
+                    "Data exposure is more dangerous",
+                    "Injection is more dangerous"
+                ],
+                correct: 0,
+                explanation: "Data exposure exposes sensitive data to unauthorized parties, while injection is the injection of malicious code into applications."
+            },
+            {
+                question: "What is the difference between data exposure and insecure design?",
+                options: [
+                    "Data exposure exposes sensitive data, insecure design is missing security controls",
+                    "They are the same thing",
+                    "Data exposure is more dangerous",
+                    "Insecure design is more dangerous"
+                ],
+                correct: 0,
+                explanation: "Data exposure exposes sensitive data to unauthorized parties, while insecure design is missing or ineffective security controls."
+            },
+            {
+                question: "What is the difference between data exposure and security misconfiguration?",
+                options: [
+                    "Data exposure exposes sensitive data, security misconfiguration is poor configuration",
+                    "They are the same thing",
+                    "Data exposure is more dangerous",
+                    "Security misconfiguration is more dangerous"
+                ],
+                correct: 0,
+                explanation: "Data exposure exposes sensitive data to unauthorized parties, while security misconfiguration is poor security configuration."
+            },
+            {
+                question: "What is the difference between data exposure and vulnerable components?",
+                options: [
+                    "Data exposure exposes sensitive data, vulnerable components are third-party vulnerabilities",
+                    "They are the same thing",
+                    "Data exposure is more dangerous",
+                    "Vulnerable components are more dangerous"
+                ],
+                correct: 0,
+                explanation: "Data exposure exposes sensitive data to unauthorized parties, while vulnerable components are third-party components with known vulnerabilities."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let timeLeft = 20 * 60; // 20 minutes in seconds
+        let timerInterval;
+
+        function initQuiz() {
+            displayQuestion();
+            startTimer();
+            updateProgress();
+        }
+
+        function displayQuestion() {
+            const container = document.getElementById('questions-container');
+            const question = questions[currentQuestion];
+            
+            container.innerHTML = `
+                <div class="question active">
+                    <h3>Question ${currentQuestion + 1} of ${questions.length}</h3>
+                    <p>${question.question}</p>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <div class="option ${userAnswers[currentQuestion] === index ? 'selected' : ''}" 
+                                 onclick="selectOption(${index})">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation"></div>
+                </div>
+            `;
+            
+            updateNavigation();
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // Update visual selection
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.remove('selected');
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            updateNavigation();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+                updateProgress();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+                updateProgress();
+            }
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next';
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            const score = calculateScore();
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            document.querySelector('.quiz-content').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+            
+            const resultsDiv = document.getElementById('results');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const feedback = document.getElementById('feedback');
+            
+            scoreDisplay.textContent = `${score}/${questions.length} (${percentage}%)`;
+            
+            if (percentage >= 90) {
+                feedback.textContent = "Excellent! You have a strong understanding of data exposure and logging failures.";
+            } else if (percentage >= 80) {
+                feedback.textContent = "Great job! You have a good grasp of data exposure and logging concepts.";
+            } else if (percentage >= 70) {
+                feedback.textContent = "Good work! You understand the basics of data exposure and logging.";
+            } else {
+                feedback.textContent = "Keep studying! Review data exposure and logging concepts and try again.";
+            }
+            
+            resultsDiv.style.display = 'block';
+        }
+
+        function calculateScore() {
+            let score = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            return score;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            timeLeft = 20 * 60;
+            
+            document.querySelector('.quiz-content').style.display = 'block';
+            document.getElementById('timer').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            initQuiz();
+        }
+
+        // Initialize quiz when page loads
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
