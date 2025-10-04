@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 7: Django ORM & CRUD - Birmingham Newman University</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 300;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .quiz-content {
+            padding: 40px;
+        }
+
+        .quiz-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+
+        .question {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
+            display: none;
+        }
+
+        .question.active {
+            display: block;
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .question h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #4caf50;
+            color: white;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #f44336;
+            color: white;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            background: #e8f5e8;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 5px solid #4caf50;
+            display: none;
+        }
+
+        .results h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .progress {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-counter {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .quiz-content {
+                padding: 20px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1>Quiz 7: Django ORM & CRUD</h1>
+            <div class="subtitle">Birmingham Newman University | CMU721: Web Application Development</div>
+        </header>
+
+        <div class="quiz-content">
+            <div class="quiz-info">
+                <h3>Instructions</h3>
+                <p>Test your knowledge of django orm & crud. This quiz contains 10 questions.</p>
+                <ul>
+                    <li>Select the best answer for each question</li>
+                    <li>You can change your answer before submitting</li>
+                    <li>Your score will be displayed at the end</li>
+                    <li>Take your time and think carefully</li>
+                </ul>
+            </div>
+
+            <div class="question-counter">
+                Question <span id="current-question">1</span> of 10
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <div class="question" id="question-1">
+                <h3>Question 1: What does ORM stand for?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(1, 0)">Object-Relational Mapping</div>
+                    <div class="option" onclick="selectOption(1, 1)">Object-Relational Model</div>
+                    <div class="option" onclick="selectOption(1, 2)">Online Resource Management</div>
+                    <div class="option" onclick="selectOption(1, 3)">Object Resource Model</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-2">
+                <h3>Question 2: In Django, what are models?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(2, 0)">Template files</div>
+                    <div class="option" onclick="selectOption(2, 1)">Python classes that represent database tables</div>
+                    <div class="option" onclick="selectOption(2, 2)">CSS files</div>
+                    <div class="option" onclick="selectOption(2, 3)">JavaScript functions</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-3">
+                <h3>Question 3: What is a Django migration?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(3, 0)">Moving files between servers</div>
+                    <div class="option" onclick="selectOption(3, 1)">Changes to database schema</div>
+                    <div class="option" onclick="selectOption(3, 2)">Template updates</div>
+                    <div class="option" onclick="selectOption(3, 3)">URL pattern changes</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-4">
+                <h3>Question 4: Which CRUD operation creates new records?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(4, 0)">Create</div>
+                    <div class="option" onclick="selectOption(4, 1)">Read</div>
+                    <div class="option" onclick="selectOption(4, 2)">Update</div>
+                    <div class="option" onclick="selectOption(4, 3)">Delete</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-5">
+                <h3>Question 5: What is the purpose of Django forms?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(5, 0)">To style web pages</div>
+                    <div class="option" onclick="selectOption(5, 1)">To handle user input validation</div>
+                    <div class="option" onclick="selectOption(5, 2)">To create databases</div>
+                    <div class="option" onclick="selectOption(5, 3)">To write JavaScript</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-6">
+                <h3>Question 6: Which field type stores text in Django models?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(6, 0)">IntegerField</div>
+                    <div class="option" onclick="selectOption(6, 1)">CharField</div>
+                    <div class="option" onclick="selectOption(6, 2)">BooleanField</div>
+                    <div class="option" onclick="selectOption(6, 3)">DateField</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-7">
+                <h3>Question 7: What is a foreign key in Django?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(7, 0)">A primary key</div>
+                    <div class="option" onclick="selectOption(7, 1)">A relationship between models</div>
+                    <div class="option" onclick="selectOption(7, 2)">A type of field</div>
+                    <div class="option" onclick="selectOption(7, 3)">A template tag</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-8">
+                <h3>Question 8: Which Django view type is recommended for complex logic?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(8, 0)">Function-based views</div>
+                    <div class="option" onclick="selectOption(8, 1)">Class-based views</div>
+                    <div class="option" onclick="selectOption(8, 2)">Template views</div>
+                    <div class="option" onclick="selectOption(8, 3)">Static views</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-9">
+                <h3>Question 9: What is the Django shell used for?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(9, 0)">Styling websites</div>
+                    <div class="option" onclick="selectOption(9, 1)">Testing Django code interactively</div>
+                    <div class="option" onclick="selectOption(9, 2)">Creating templates</div>
+                    <div class="option" onclick="selectOption(9, 3)">Managing servers</div>
+                </div>
+            </div>
+
+            <div class="question" id="question-10">
+                <h3>Question 10: Which method saves a model instance to the database?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(10, 0)">create()</div>
+                    <div class="option" onclick="selectOption(10, 1)">save()</div>
+                    <div class="option" onclick="selectOption(10, 2)">insert()</div>
+                    <div class="option" onclick="selectOption(10, 3)">add()</div>
+                </div>
+            </div>
+
+            <div class="results" id="results">
+                <h3>Quiz Complete!</h3>
+                <p id="score">Your score: 0/10</p>
+                <p id="percentage">Percentage: 0%</p>
+                <button class="btn btn-primary" onclick="restartQuiz()">Retake Quiz</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Next</button>
+                <button class="btn btn-primary" id="submit-btn" onclick="submitQuiz()" style="display: none;">Submit Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [{'question': 'What does ORM stand for?', 'options': ['Object-Relational Mapping', 'Object-Relational Model', 'Online Resource Management', 'Object Resource Model'], 'correct': 0}, {'question': 'In Django, what are models?', 'options': ['Template files', 'Python classes that represent database tables', 'CSS files', 'JavaScript functions'], 'correct': 1}, {'question': 'What is a Django migration?', 'options': ['Moving files between servers', 'Changes to database schema', 'Template updates', 'URL pattern changes'], 'correct': 1}, {'question': 'Which CRUD operation creates new records?', 'options': ['Create', 'Read', 'Update', 'Delete'], 'correct': 0}, {'question': 'What is the purpose of Django forms?', 'options': ['To style web pages', 'To handle user input validation', 'To create databases', 'To write JavaScript'], 'correct': 1}, {'question': 'Which field type stores text in Django models?', 'options': ['IntegerField', 'CharField', 'BooleanField', 'DateField'], 'correct': 1}, {'question': 'What is a foreign key in Django?', 'options': ['A primary key', 'A relationship between models', 'A type of field', 'A template tag'], 'correct': 1}, {'question': 'Which Django view type is recommended for complex logic?', 'options': ['Function-based views', 'Class-based views', 'Template views', 'Static views'], 'correct': 1}, {'question': 'What is the Django shell used for?', 'options': ['Styling websites', 'Testing Django code interactively', 'Creating templates', 'Managing servers'], 'correct': 1}, {'question': 'Which method saves a model instance to the database?', 'options': ['create()', 'save()', 'insert()', 'add()'], 'correct': 1}];
+        let currentQuestion = 1;
+        let answers = [];
+        let score = 0;
+
+        function showQuestion(questionNum) {
+            // Hide all questions
+            const allQuestions = document.querySelectorAll('.question');
+            allQuestions.forEach(q => q.classList.remove('active'));
+
+            // Show current question
+            document.getElementById(`question-${questionNum}`).classList.add('active');
+
+            // Update counter
+            document.getElementById('current-question').textContent = questionNum;
+
+            // Update progress bar
+            const progress = (questionNum / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+
+            // Update navigation buttons
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (questionNum === 1) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+
+            if (questionNum === questions.length) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function selectOption(questionNum, optionIndex) {
+            // Remove previous selection for this question
+            const questionElement = document.getElementById(`question-${questionNum}`);
+            const options = questionElement.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Select current option
+            options[optionIndex].classList.add('selected');
+
+            // Store answer
+            answers[questionNum - 1] = optionIndex;
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            score = 0;
+
+            questions.forEach((q, index) => {
+                const questionElement = document.getElementById(`question-${index + 1}`);
+                const options = questionElement.querySelectorAll('.option');
+
+                // Clear previous results
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                });
+
+                if (answers[index] === q.correct) {
+                    options[q.correct].classList.add('correct');
+                    score++;
+                } else if (answers[index] !== undefined) {
+                    options[answers[index]].classList.add('incorrect');
+                    options[q.correct].classList.add('correct');
+                }
+            });
+
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('score').textContent = `Your score: ${score}/${questions.length}`;
+            document.getElementById('percentage').textContent = `Percentage: ${Math.round((score / questions.length) * 100)}%`;
+
+            // Hide navigation
+            document.querySelector('.navigation').style.display = 'none';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 1;
+            answers = [];
+            score = 0;
+
+            // Clear all selections
+            const allOptions = document.querySelectorAll('.option');
+            allOptions.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+
+            // Hide results
+            document.getElementById('results').style.display = 'none';
+
+            // Show navigation
+            document.querySelector('.navigation').style.display = 'flex';
+
+            // Show first question
+            showQuestion(1);
+        }
+
+        // Initialize quiz
+        showQuestion(1);
+    </script>
+</body>
+</html>

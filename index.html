@@ -6,8 +6,8 @@
     <title>James Williams - Teaching Portfolio | Birmingham Newman University</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="James Williams' comprehensive teaching portfolio featuring web development and cyber security modules at Birmingham Newman University. Access interactive slideshows, assessments, quizzes, and learning resources for CMU422, CMU529, and CMU540 courses.">
-    <meta name="keywords" content="James Williams, Birmingham Newman University, web development, cyber security, teaching portfolio, CMU422, CMU529, CMU540, HTML, CSS, JavaScript, PHP, MySQL, Bootstrap, OWASP, cybersecurity education">
+    <meta name="description" content="James Williams' comprehensive teaching portfolio featuring web development and cyber security modules at Birmingham Newman University. Access interactive slideshows, assessments, quizzes, and learning resources for CMM721, CMU422, CMU529, and CMU540 courses.">
+    <meta name="keywords" content="James Williams, Birmingham Newman University, web development, cyber security, teaching portfolio, CMM721, CMU422, CMU529, CMU540, HTML, CSS, JavaScript, Python, Django, React, Bootstrap, OWASP, cybersecurity education">
     <meta name="author" content="James Williams">
     <meta name="robots" content="index, follow">
     <meta name="language" content="English">
@@ -127,6 +127,27 @@
     }
     </script>
     
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "CMM721: Web Application Development",
+        "description": "A comprehensive introduction to full-stack web development, combining essential frontend and backend technologies. Students gain hands-on experience with HTML5, CSS3, JavaScript, Python, Django, and React.",
+        "provider": {
+            "@type": "EducationalOrganization",
+            "name": "Birmingham Newman University"
+        },
+        "instructor": {
+            "@type": "Person",
+            "name": "James Williams"
+        },
+        "courseCode": "CMM721",
+        "educationalLevel": "Undergraduate",
+        "credits": "20",
+        "url": "https://jwilliams.science/lectures/CMM721/"
+    }
+    </script>
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -379,6 +400,19 @@
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
         }
         
+        /* CMM721 - Web Application Development Theme */
+        .module-card.cmm721 {
+            border-color: #9b59b6;
+        }
+
+        .module-card.cmm721::before {
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+        }
+
+        .module-card.cmm721 .module-number {
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+        }
+
         /* CMU540 - Cyber Security Theme */
         .module-card.cmu540 {
             border-color: #2ecc71;
@@ -553,6 +587,21 @@
                 <h2 id="modules-heading">Module Portfolio</h2>
             
                 <div class="modules-grid" role="list">
+                    <article class="module-card cmm721" role="listitem">
+                        <a href="CMM721/index.html" aria-label="CMM721: Web Application Development - 20 credits masters level conversion course">
+                            <div class="module-number" aria-hidden="true">721</div>
+                            <h3 class="module-title">CMM721: Web Application Development</h3>
+                            <p class="module-description">Masters level conversion course providing comprehensive introduction to full-stack web development. Combining essential frontend and backend technologies with professional development practices. Students gain hands-on experience with HTML5, CSS3, JavaScript, Python, Django, and React.</p>
+                            <div class="module-details">20 credits • Masters Level Conversion • Full-Stack Focus</div>
+                            <ul class="module-features">
+                                <li>12 interactive slideshows</li>
+                                <li>Hands-on coding exercises</li>
+                                <li>Full-stack projects</li>
+                                <li>Modern frameworks</li>
+                            </ul>
+                        </a>
+                    </article>
+
                     <article class="module-card cmu422" role="listitem">
                         <a href="CMU422/index.html" aria-label="CMU422: Fundamentals of Web Design - 20 credits undergraduate course">
                             <div class="module-number" aria-hidden="true">422</div>

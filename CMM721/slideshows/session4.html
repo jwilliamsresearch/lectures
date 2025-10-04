@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 4: JavaScript Fundamentals</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling - Masters Purple Theme */
+        .task-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%);
+            border: 2px solid #9b59b6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1);
+        }
+
+        /* Code example styling - Dark theme for Masters level */
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #34495e;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.4;
+            max-height: 40vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Highlight styling - Purple accent for Masters */
+        .highlight {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #9b59b6;
+            margin: 10px 0;
+            box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2);
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Demo container */
+        .demo-container {
+            background: #fff;
+            border: 2px solid #9b59b6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2);
+        }
+
+        .demo-container h3 {
+            color: #9b59b6;
+            margin-top: 0;
+        }
+
+        /* Interactive demo button */
+        .demo-button {
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(155, 89, 182, 0.4);
+        }
+
+        /* Demo output */
+        .demo-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+            min-height: 50px;
+            font-family: 'Consolas', monospace;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container,
+        .codepen-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe,
+        .codepen-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover,
+        .codepen-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>JavaScript Fundamentals</h1>
+                <h3>CMM721: Web Application Development - Session 4</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Masters Level Conversion Course</p>
+                <p><small>3-hour session • 18 slides • 2 interactive tasks • Live demos</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1 - DOM Manipulation</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2 - Event Handling</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Master JavaScript fundamentals and ES6+ syntax</li>
+                    <li>Understand DOM manipulation techniques</li>
+                    <li>Implement event handling and event delegation</li>
+                    <li>Work with JavaScript data types and functions</li>
+                    <li>Use debugging tools effectively</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: JavaScript Overview -->
+            <section>
+                <h2>JavaScript: The Language of the Web</h2>
+                <div class="highlight">
+                    <strong>JavaScript</strong> - Dynamic, interpreted programming language
+                </div>
+                <ul>
+                    <li><strong>Purpose:</strong> Add interactivity to web pages</li>
+                    <li><strong>Runs:</strong> In the browser (client-side) and server (Node.js)</li>
+                    <li><strong>Standard:</strong> ECMAScript (ES6/ES2015+)</li>
+                    <li><strong>Paradigm:</strong> Multi-paradigm (procedural, OOP, functional)</li>
+                </ul>
+                <div class="code-example">
+                    // JavaScript runs in the browser<br>
+                    console.log('Hello from JavaScript!');<br><br>
+                    
+                    // Modern ES6+ syntax<br>
+                    const greeting = (name) => `Hello, ${name}!`;<br>
+                    console.log(greeting('CMM721'));
+                </div>
+            </section>
+
+            <!-- Slide 4: Variables and Data Types -->
+            <section>
+                <h2>Variables and Data Types</h2>
+                <h3>ES6 Variable Declarations:</h3>
+                <div class="code-example">
+                    // const - cannot be reassigned<br>
+                    const PI = 3.14159;<br><br>
+                    
+                    // let - block-scoped, can be reassigned<br>
+                    let counter = 0;<br>
+                    counter++;<br><br>
+                    
+                    // var - function-scoped (avoid in modern code)<br>
+                    var oldStyle = 'deprecated';
+                </div>
+                <h3>Data Types:</h3>
+                <ul>
+                    <li><strong>Primitives:</strong> string, number, boolean, null, undefined, symbol, bigint</li>
+                    <li><strong>Objects:</strong> {}, [], functions, Date, RegExp</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: LIVE DEMO - Interactive JavaScript -->
+            <section>
+                <h2>🎯 LIVE DEMO: JavaScript in Action</h2>
+                <div class="demo-container">
+                    <h3>Interactive Counter Demo</h3>
+                    <p>Click the buttons to see JavaScript in action:</p>
+                    
+                    <button class="demo-button" onclick="incrementCounter()">Increment (+)</button>
+                    <button class="demo-button" onclick="decrementCounter()">Decrement (-)</button>
+                    <button class="demo-button" onclick="resetCounter()">Reset</button>
+                    
+                    <div class="demo-output" id="counterOutput" style="font-size: 2em; text-align: center; color: #9b59b6; font-weight: bold;">
+                        Count: 0
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <strong>Code behind this demo:</strong>
+                        <div class="code-example" style="font-size: 0.8em; margin-top: 10px;">
+                            let count = 0;<br>
+                            function incrementCounter() {<br>
+                            &nbsp;&nbsp;count++;<br>
+                            &nbsp;&nbsp;document.getElementById('counterOutput')<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;.textContent = `Count: ${count}`;<br>
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    let count = 0;
+                    function incrementCounter() {
+                        count++;
+                        document.getElementById('counterOutput').textContent = `Count: ${count}`;
+                    }
+                    function decrementCounter() {
+                        count--;
+                        document.getElementById('counterOutput').textContent = `Count: ${count}`;
+                    }
+                    function resetCounter() {
+                        count = 0;
+                        document.getElementById('counterOutput').textContent = `Count: ${count}`;
+                    }
+                </script>
+            </section>
+
+            <!-- Slide 6: Functions -->
+            <section>
+                <h2>JavaScript Functions</h2>
+                <h3>Function Declaration:</h3>
+                <div class="code-example">
+                    function greet(name) {<br>
+                    &nbsp;&nbsp;return `Hello, ${name}!`;<br>
+                    }
+                </div>
+                
+                <h3>Arrow Functions (ES6):</h3>
+                <div class="code-example">
+                    const greet = (name) => `Hello, ${name}!`;<br><br>
+                    
+                    const multiply = (a, b) => a * b;<br><br>
+                    
+                    const processData = (data) => {<br>
+                    &nbsp;&nbsp;// Multiple statements<br>
+                    &nbsp;&nbsp;const result = data.map(x => x * 2);<br>
+                    &nbsp;&nbsp;return result;<br>
+                    };
+                </div>
+            </section>
+
+            <!-- Slide 7: DOM Manipulation -->
+            <section>
+                <h2>DOM (Document Object Model)</h2>
+                <div class="highlight">
+                    <strong>DOM</strong> - Tree-like representation of HTML document
+                </div>
+                <h3>Selecting Elements:</h3>
+                <div class="code-example">
+                    // Modern methods (recommended)<br>
+                    const element = document.querySelector('.class');<br>
+                    const elements = document.querySelectorAll('div');<br><br>
+                    
+                    // By ID<br>
+                    const header = document.getElementById('header');<br><br>
+                    
+                    // By class<br>
+                    const items = document.getElementsByClassName('item');
+                </div>
+            </section>
+
+            <!-- Slide 8: LIVE DEMO - DOM Manipulation -->
+            <section>
+                <h2>🎯 LIVE DEMO: DOM Manipulation</h2>
+                <div class="demo-container">
+                    <h3>Dynamic Content Generator</h3>
+                    
+                    <input type="text" id="nameInput" placeholder="Enter your name" 
+                           style="padding: 10px; font-size: 1em; width: 70%; border: 2px solid #9b59b6; border-radius: 5px;">
+                    <button class="demo-button" onclick="generateGreeting()">Generate Greeting</button>
+                    
+                    <div id="greetingOutput" class="demo-output" style="margin-top: 15px; min-height: 80px;">
+                        <p style="color: #666;">Enter a name and click the button!</p>
+                    </div>
+                    
+                    <button class="demo-button" onclick="changeStyle()">Change Style</button>
+                    <button class="demo-button" onclick="addElement()">Add Element</button>
+                </div>
+                
+                <script>
+                    function generateGreeting() {
+                        const name = document.getElementById('nameInput').value || 'Student';
+                        const output = document.getElementById('greetingOutput');
+                        output.innerHTML = `<h3 style="color: #9b59b6;">Welcome, ${name}!</h3>
+                                           <p>You're learning JavaScript DOM manipulation.</p>
+                                           <p style="font-size: 0.9em; color: #666;">Generated at: ${new Date().toLocaleTimeString()}</p>`;
+                    }
+                    
+                    function changeStyle() {
+                        const output = document.getElementById('greetingOutput');
+                        output.style.background = `linear-gradient(135deg, #f3e5f5, #e1f5fe)`;
+                        output.style.border = '2px solid #9b59b6';
+                        output.style.borderRadius = '10px';
+                        output.style.padding = '15px';
+                    }
+                    
+                    function addElement() {
+                        const output = document.getElementById('greetingOutput');
+                        const newElement = document.createElement('p');
+                        newElement.textContent = '✨ New element added dynamically!';
+                        newElement.style.color = '#3498db';
+                        newElement.style.fontWeight = 'bold';
+                        output.appendChild(newElement);
+                    }
+                </script>
+            </section>
+
+            <!-- Slide 9: Event Handling -->
+            <section>
+                <h2>Event Handling</h2>
+                <h3>Common Events:</h3>
+                <ul>
+                    <li><strong>click:</strong> Mouse click on element</li>
+                    <li><strong>submit:</strong> Form submission</li>
+                    <li><strong>keydown/keyup:</strong> Keyboard events</li>
+                    <li><strong>mouseover/mouseout:</strong> Mouse hover</li>
+                    <li><strong>change:</strong> Input value changes</li>
+                </ul>
+                <div class="code-example">
+                    // Event listener (modern approach)<br>
+                    const button = document.querySelector('#myButton');<br>
+                    button.addEventListener('click', (event) => {<br>
+                    &nbsp;&nbsp;console.log('Button clicked!');<br>
+                    &nbsp;&nbsp;event.preventDefault(); // Prevent default behavior<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 10: Task 1 - DOM Manipulation -->
+            <section>
+                <h2>Task 1: Build an Interactive Todo List</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a dynamic todo list application using DOM manipulation</p>
+
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create HTML structure: input field, add button, todo list container</li>
+                        <li>Implement addTodo() function to add new items</li>
+                        <li>Add delete functionality for each todo item</li>
+                        <li>Implement mark as complete (toggle styling)</li>
+                        <li>Add clear all completed button</li>
+                        <li>Store count of total/completed items</li>
+                    </ol>
+
+                    <h3>Bonus:</h3>
+                    <ul>
+                        <li>Add edit functionality</li>
+                        <li>Implement drag and drop reordering</li>
+                        <li>Save to localStorage</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 11: Arrays and Objects -->
+            <section>
+                <h2>Working with Arrays and Objects</h2>
+                <h3>Array Methods (ES6+):</h3>
+                <div class="code-example">
+                    const numbers = [1, 2, 3, 4, 5];<br><br>
+                    
+                    // map - transform each element<br>
+                    const doubled = numbers.map(n => n * 2);<br><br>
+                    
+                    // filter - select elements<br>
+                    const evens = numbers.filter(n => n % 2 === 0);<br><br>
+                    
+                    // reduce - accumulate values<br>
+                    const sum = numbers.reduce((acc, n) => acc + n, 0);<br><br>
+                    
+                    // find - get first match<br>
+                    const found = numbers.find(n => n > 3);
+                </div>
+            </section>
+
+            <!-- Slide 12: LIVE DEMO - Array Visualization -->
+            <section>
+                <h2>🎯 LIVE DEMO: Array Operations</h2>
+                <div class="demo-container">
+                    <h3>Interactive Array Methods</h3>
+                    <p>Original array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</p>
+                    
+                    <button class="demo-button" onclick="showMap()">Map (×2)</button>
+                    <button class="demo-button" onclick="showFilter()">Filter (Even)</button>
+                    <button class="demo-button" onclick="showReduce()">Reduce (Sum)</button>
+                    <button class="demo-button" onclick="showFind()">Find (>5)</button>
+                    
+                    <div id="arrayOutput" class="demo-output" style="font-size: 1.2em;">
+                        <strong>Result:</strong> Click a button to see array operations!
+                    </div>
+                </div>
+                
+                <script>
+                    const demoArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                    const output = () => document.getElementById('arrayOutput');
+                    
+                    function showMap() {
+                        const result = demoArray.map(n => n * 2);
+                        output().innerHTML = `<strong>Map (×2):</strong><br>[${result.join(', ')}]<br>
+                                            <small>Transformed each element by multiplying by 2</small>`;
+                    }
+                    
+                    function showFilter() {
+                        const result = demoArray.filter(n => n % 2 === 0);
+                        output().innerHTML = `<strong>Filter (Even numbers):</strong><br>[${result.join(', ')}]<br>
+                                            <small>Kept only even numbers</small>`;
+                    }
+                    
+                    function showReduce() {
+                        const result = demoArray.reduce((acc, n) => acc + n, 0);
+                        output().innerHTML = `<strong>Reduce (Sum):</strong><br>${result}<br>
+                                            <small>Added all numbers together: ${demoArray.join(' + ')} = ${result}</small>`;
+                    }
+                    
+                    function showFind() {
+                        const result = demoArray.find(n => n > 5);
+                        output().innerHTML = `<strong>Find (first > 5):</strong><br>${result}<br>
+                                            <small>Found first number greater than 5</small>`;
+                    }
+                </script>
+            </section>
+
+            <!-- Slide 13: ES6+ Features -->
+            <section>
+                <h2>Modern JavaScript (ES6+)</h2>
+                <h3>Template Literals:</h3>
+                <div class="code-example">
+                    const name = 'CMM721';<br>
+                    const message = `Welcome to ${name}!`;<br>
+                    const multiLine = `Line 1<br>
+                    Line 2<br>
+                    Line 3`;
+                </div>
+                
+                <h3>Destructuring:</h3>
+                <div class="code-example">
+                    // Array destructuring<br>
+                    const [first, second] = [1, 2, 3];<br><br>
+                    
+                    // Object destructuring<br>
+                    const {name, age} = {name: 'John', age: 30};<br><br>
+                    
+                    // Function parameters<br>
+                    function greet({name, course}) {<br>
+                    &nbsp;&nbsp;return `${name} in ${course}`;<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 14: Debugging JavaScript -->
+            <section>
+                <h2>Debugging Tools</h2>
+                <h3>Browser Developer Tools:</h3>
+                <ul>
+                    <li><strong>Console:</strong> console.log(), console.error(), console.table()</li>
+                    <li><strong>Debugger:</strong> Set breakpoints, step through code</li>
+                    <li><strong>Sources:</strong> View and edit code in real-time</li>
+                    <li><strong>Network:</strong> Monitor AJAX requests</li>
+                </ul>
+                <div class="code-example">
+                    // Console methods<br>
+                    console.log('Standard message');<br>
+                    console.error('Error message');<br>
+                    console.warn('Warning message');<br>
+                    console.table([{name: 'Item 1'}, {name: 'Item 2'}]);<br><br>
+                    
+                    // Debugger statement<br>
+                    debugger; // Pause execution here
+                </div>
+            </section>
+
+            <!-- Slide 15: Task 2 - Event Handling -->
+            <section>
+                <h2>Task 2: Build an Interactive Form Validator</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a real-time form validation system with event handling</p>
+
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create a registration form (name, email, password, confirm password)</li>
+                        <li>Validate email format in real-time (on 'input' event)</li>
+                        <li>Check password strength (weak/medium/strong)</li>
+                        <li>Confirm password match validation</li>
+                        <li>Display validation messages with appropriate styling</li>
+                        <li>Disable submit button until all fields valid</li>
+                        <li>Show success message on valid submission</li>
+                    </ol>
+
+                    <h3>Events to Handle:</h3>
+                    <ul>
+                        <li>input, blur, focus, submit</li>
+                        <li>Use event.preventDefault() for form submission</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 16: Best Practices -->
+            <section>
+                <h2>JavaScript Best Practices</h2>
+                <div class="highlight">
+                    <strong>Write Clean, Maintainable Code</strong>
+                </div>
+                <ul>
+                    <li><strong>Use const/let:</strong> Avoid var, prefer const by default</li>
+                    <li><strong>Arrow functions:</strong> Concise syntax, lexical this binding</li>
+                    <li><strong>Naming:</strong> camelCase for variables, PascalCase for classes</li>
+                    <li><strong>Comments:</strong> Explain why, not what</li>
+                    <li><strong>DRY:</strong> Don't Repeat Yourself</li>
+                    <li><strong>Single Responsibility:</strong> Functions do one thing well</li>
+                    <li><strong>Error Handling:</strong> Use try/catch blocks</li>
+                </ul>
+            </section>
+
+            <!-- Slide 17: Next Session Preview -->
+            <section>
+                <h2>Next Session: Asynchronous JavaScript & APIs</h2>
+                <ul>
+                    <li>Understanding asynchronous programming</li>
+                    <li>Callbacks, Promises, and async/await</li>
+                    <li>Fetch API for HTTP requests</li>
+                    <li>Working with REST APIs</li>
+                    <li>Error handling in async code</li>
+                    <li>Real-world API integration examples</li>
+                </ul>
+                <p><strong>Preparation:</strong> Review JavaScript fundamentals and practice DOM manipulation.</p>
+            </section>
+
+            <!-- Slide 18: Q&A -->
+            <section class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> MDN Web Docs, JavaScript.info</p>
+                <p>Thank you for your attention!</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            progress: true,
+            controls: true,
+            center: false,
+            mouseWheel: true,
+            transition: 'slide',
+            // Full-width configuration
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            display: 'block',
+            // Better responsive behavior
+            responsive: true,
+            // Mobile settings
+            mobileViewDistance: 2,
+            hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>

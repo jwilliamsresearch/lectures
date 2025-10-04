@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 6: Django Basics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
+        .reveal .slides section.center { text-align: center; }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
+        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
+        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
+        .demo-container h3 { color: #9b59b6; margin-top: 0; }
+        .django-flow { background: #f8f9fa; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .flow-step { background: linear-gradient(135deg, #9b59b6, #3498db); color: white; padding: 15px; margin: 10px 0; border-radius: 5px; text-align: center; font-weight: bold; }
+        .flow-arrow { text-align: center; font-size: 2em; color: #9b59b6; margin: 5px 0; }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
+        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <section class="center">
+                <h1>Django Basics</h1>
+                <h3>CMM721: Web Application Development - Session 6</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Masters Level Conversion Course</p>
+                <p><small>3-hour session • 18 slides • 2 tasks • Django diagrams</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand Django framework architecture</li>
+                    <li>Create Django projects and applications</li>
+                    <li>Implement URL routing and views</li>
+                    <li>Work with Django templates</li>
+                    <li>Handle static files</li>
+                    <li>Configure Django settings</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>What is Django?</h2>
+                <div class="highlight">
+                    <strong>Django:</strong> High-level Python web framework
+                </div>
+                <ul>
+                    <li><strong>Philosophy:</strong> "Batteries included" - everything you need</li>
+                    <li><strong>Pattern:</strong> MTV (Model-Template-View) similar to MVC</li>
+                    <li><strong>Features:</strong> ORM, admin interface, authentication, security</li>
+                    <li><strong>Used by:</strong> Instagram, Pinterest, NASA, Spotify</li>
+                </ul>
+                <h3>Why Django?</h3>
+                <ul>
+                    <li>Rapid development</li>
+                    <li>Security built-in (CSRF, XSS, SQL injection protection)</li>
+                    <li>Scalable architecture</li>
+                    <li>Excellent documentation</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Django MTV Architecture</h2>
+                <div class="django-flow">
+                    <div class="flow-step">HTTP Request → URL Pattern</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">View (Business Logic)</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">Model (Database)</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">Template (HTML)</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-step">HTTP Response</div>
+                </div>
+                <ul>
+                    <li><strong>Model:</strong> Data structure and database logic</li>
+                    <li><strong>Template:</strong> Presentation layer (HTML)</li>
+                    <li><strong>View:</strong> Business logic and request handling</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Installation</h2>
+                <h3>Setting Up Django:</h3>
+                <div class="code-example">
+                    # Create virtual environment<br>
+                    python -m venv venv<br><br>
+                    
+                    # Activate (Windows)<br>
+                    venv\Scripts\activate<br><br>
+                    
+                    # Activate (Mac/Linux)<br>
+                    source venv/bin/activate<br><br>
+                    
+                    # Install Django<br>
+                    pip install django<br><br>
+                    
+                    # Verify installation<br>
+                    python -m django --version
+                </div>
+            </section>
+
+            <section>
+                <h2>Creating a Django Project</h2>
+                <div class="code-example">
+                    # Create project<br>
+                    django-admin startproject myproject<br><br>
+                    
+                    # Project structure:<br>
+                    myproject/<br>
+                    &nbsp;&nbsp;manage.py<br>
+                    &nbsp;&nbsp;myproject/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;__init__.py<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;settings.py<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;urls.py<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;asgi.py<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;wsgi.py<br><br>
+                    
+                    # Run development server<br>
+                    python manage.py runserver<br><br>
+                    
+                    # Visit: http://127.0.0.1:8000/
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 Project Structure Visualization</h2>
+                <div class="demo-container">
+                    <h3>Django Project Layout</h3>
+                    <div style="font-family: monospace; background: #2c3e50; color: #ecf0f1; padding: 20px; border-radius: 10px;">
+                        <div style="margin-bottom: 10px;">📁 <strong style="color: #3498db;">myproject/</strong> (root directory)</div>
+                        <div style="margin-left: 20px; margin-bottom: 10px;">📄 <strong style="color: #e74c3c;">manage.py</strong> - Command-line utility</div>
+                        <div style="margin-left: 20px; margin-bottom: 10px;">📁 <strong style="color: #3498db;">myproject/</strong> (project package)</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #27ae60;">settings.py</strong> - Configuration</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #27ae60;">urls.py</strong> - URL routing</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #27ae60;">wsgi.py</strong> - Deployment</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #27ae60;">asgi.py</strong> - Async deployment</div>
+                        <div style="margin-left: 20px; margin-top: 15px; margin-bottom: 10px;">📁 <strong style="color: #9b59b6;">myapp/</strong> (application)</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">models.py</strong> - Data models</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">views.py</strong> - Views/Logic</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">urls.py</strong> - App URLs</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">admin.py</strong> - Admin config</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">tests.py</strong> - Unit tests</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📁 <strong style="color: #1abc9c;">templates/</strong> - HTML files</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📁 <strong style="color: #1abc9c;">static/</strong> - CSS, JS, images</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Creating an App</h2>
+                <div class="code-example">
+                    # Create app<br>
+                    python manage.py startapp blog<br><br>
+                    
+                    # Register app in settings.py<br>
+                    INSTALLED_APPS = [<br>
+                    &nbsp;&nbsp;'django.contrib.admin',<br>
+                    &nbsp;&nbsp;'django.contrib.auth',<br>
+                    &nbsp;&nbsp;# ...<br>
+                    &nbsp;&nbsp;'blog', # Add your app<br>
+                    ]
+                </div>
+                <div class="highlight">
+                    <strong>Project vs App:</strong><br>
+                    - Project: Entire website/application<br>
+                    - App: Module with specific functionality (blog, shop, etc.)
+                </div>
+            </section>
+
+            <section>
+                <h2>Views and URLs</h2>
+                <h3>Create a View (views.py):</h3>
+                <div class="code-example">
+                    from django.http import HttpResponse<br>
+                    from django.shortcuts import render<br><br>
+                    
+                    def home(request):<br>
+                    &nbsp;&nbsp;return HttpResponse("&lt;h1&gt;Welcome to CMM721!&lt;/h1&gt;")<br><br>
+                    
+                    def about(request):<br>
+                    &nbsp;&nbsp;context = {'course': 'CMM721'}<br>
+                    &nbsp;&nbsp;return render(request, 'about.html', context)
+                </div>
+                <h3>URL Configuration (urls.py):</h3>
+                <div class="code-example">
+                    from django.urls import path<br>
+                    from . import views<br><br>
+                    
+                    urlpatterns = [<br>
+                    &nbsp;&nbsp;path('', views.home, name='home'),<br>
+                    &nbsp;&nbsp;path('about/', views.about, name='about'),<br>
+                    ]
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 URL Routing Flow Diagram</h2>
+                <div class="demo-container">
+                    <h3>Request to Response Flow</h3>
+                    <div class="django-flow" style="background: linear-gradient(135deg, #f3e5f5, #e1f5fe);">
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>1. Browser Request:</strong> http://localhost:8000/blog/
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>2. Django URLconf:</strong> Match URL pattern in urls.py
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>3. View Function:</strong> Execute views.blog_list()
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>4. Query Database:</strong> Get blog posts from models
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>5. Render Template:</strong> blog_list.html with data
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>6. HTTP Response:</strong> HTML sent to browser
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 1: Build First Django App</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a personal portfolio website using Django</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create Django project: portfolio_project</li>
+                        <li>Create app: portfolio</li>
+                        <li>Create 3 views: home, about, contact</li>
+                        <li>Set up URL patterns for each view</li>
+                        <li>Create basic HTML responses (no templates yet)</li>
+                        <li>Test all URLs in browser</li>
+                    </ol>
+                    <h3>Deliverables:</h3>
+                    <ul>
+                        <li>Working Django project</li>
+                        <li>Screenshot of each page</li>
+                        <li>urls.py and views.py files</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Django Templates</h2>
+                <h3>Template Basics:</h3>
+                <div class="code-example">
+                    &lt;!-- templates/home.html --&gt;<br>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &nbsp;&nbsp;&lt;title&gt;{{ title }}&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &nbsp;&nbsp;&lt;h1&gt;Welcome {{ user.username }}!&lt;/h1&gt;<br>
+                    &nbsp;&nbsp;&lt;p&gt;{{ content }}&lt;/p&gt;<br>
+                    &nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;{% for item in items %}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;{{ item.name }}&lt;/div&gt;<br>
+                    &nbsp;&nbsp;{% endfor %}<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </div>
+            </section>
+
+            <section>
+                <h2>Template Syntax</h2>
+                <h3>Variables:</h3>
+                <div class="code-example">
+                    {{ variable }}<br>
+                    {{ user.name }}<br>
+                    {{ items.0.title }}
+                </div>
+                <h3>Tags:</h3>
+                <div class="code-example">
+                    {% if user.is_authenticated %}<br>
+                    &nbsp;&nbsp;Welcome {{ user.username }}!<br>
+                    {% else %}<br>
+                    &nbsp;&nbsp;Please log in.<br>
+                    {% endif %}<br><br>
+                    
+                    {% for post in posts %}<br>
+                    &nbsp;&nbsp;&lt;h2&gt;{{ post.title }}&lt;/h2&gt;<br>
+                    {% empty %}<br>
+                    &nbsp;&nbsp;&lt;p&gt;No posts yet.&lt;/p&gt;<br>
+                    {% endfor %}
+                </div>
+                <h3>Filters:</h3>
+                <div class="code-example">
+                    {{ text|lower }}<br>
+                    {{ date|date:"Y-m-d" }}<br>
+                    {{ content|truncatewords:30 }}
+                </div>
+            </section>
+
+            <section>
+                <h2>Template Inheritance</h2>
+                <h3>Base Template (base.html):</h3>
+                <div class="code-example">
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &nbsp;&nbsp;&lt;title&gt;{% block title %}CMM721{% endblock %}&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &nbsp;&nbsp;&lt;nav&gt;Navigation here&lt;/nav&gt;<br>
+                    &nbsp;&nbsp;{% block content %}{% endblock %}<br>
+                    &nbsp;&nbsp;&lt;footer&gt;Footer here&lt;/footer&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </div>
+                <h3>Child Template (home.html):</h3>
+                <div class="code-example">
+                    {% extends 'base.html' %}<br><br>
+                    
+                    {% block title %}Home - CMM721{% endblock %}<br><br>
+                    
+                    {% block content %}<br>
+                    &nbsp;&nbsp;&lt;h1&gt;Welcome Home&lt;/h1&gt;<br>
+                    &nbsp;&nbsp;&lt;p&gt;Page content here&lt;/p&gt;<br>
+                    {% endblock %}
+                </div>
+            </section>
+
+            <section>
+                <h2>Static Files</h2>
+                <h3>Configuration (settings.py):</h3>
+                <div class="code-example">
+                    STATIC_URL = '/static/'<br>
+                    STATICFILES_DIRS = [<br>
+                    &nbsp;&nbsp;BASE_DIR / 'static',<br>
+                    ]
+                </div>
+                <h3>Using Static Files in Templates:</h3>
+                <div class="code-example">
+                    {% load static %}<br><br>
+                    
+                    &lt;link rel="stylesheet" href="{% static 'css/style.css' %}"&gt;<br>
+                    &lt;img src="{% static 'images/logo.png' %}"&gt;<br>
+                    &lt;script src="{% static 'js/script.js' %}"&gt;&lt;/script&gt;
+                </div>
+                <h3>Folder Structure:</h3>
+                <div class="code-example">
+                    static/<br>
+                    &nbsp;&nbsp;css/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;style.css<br>
+                    &nbsp;&nbsp;js/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;script.js<br>
+                    &nbsp;&nbsp;images/<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;logo.png
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 2: Build Template System</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Enhance portfolio with Django templates and static files</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create base.html with navigation and footer</li>
+                        <li>Create child templates extending base (home, about, contact)</li>
+                        <li>Add static CSS file with custom styling</li>
+                        <li>Add static JavaScript for interactive elements</li>
+                        <li>Include logo/images in static files</li>
+                        <li>Implement template inheritance properly</li>
+                        <li>Pass context data from views to templates</li>
+                    </ol>
+                    <h3>Bonus:</h3>
+                    <ul>
+                        <li>Add a projects list page with loop</li>
+                        <li>Implement conditionals in templates</li>
+                        <li>Add template filters for formatting</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Django Settings</h2>
+                <h3>Important Settings:</h3>
+                <div class="code-example">
+                    # settings.py<br><br>
+                    
+                    SECRET_KEY = 'your-secret-key'<br>
+                    DEBUG = True # Set False in production<br><br>
+                    
+                    ALLOWED_HOSTS = ['localhost', '127.0.0.1']<br><br>
+                    
+                    INSTALLED_APPS = [...]<br><br>
+                    
+                    DATABASES = {<br>
+                    &nbsp;&nbsp;'default': {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'ENGINE': 'django.db.backends.sqlite3',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'NAME': BASE_DIR / 'db.sqlite3',<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    
+                    TIME_ZONE = 'Europe/London'<br>
+                    LANGUAGE_CODE = 'en-gb'
+                </div>
+            </section>
+
+            <section>
+                <h2>Django Management Commands</h2>
+                <div class="code-example">
+                    # Run development server<br>
+                    python manage.py runserver<br><br>
+                    
+                    # Create database migrations<br>
+                    python manage.py makemigrations<br>
+                    python manage.py migrate<br><br>
+                    
+                    # Create superuser<br>
+                    python manage.py createsuperuser<br><br>
+                    
+                    # Start new app<br>
+                    python manage.py startapp myapp<br><br>
+                    
+                    # Run tests<br>
+                    python manage.py test<br><br>
+                    
+                    # Collect static files<br>
+                    python manage.py collectstatic<br><br>
+                    
+                    # Open Django shell<br>
+                    python manage.py shell
+                </div>
+            </section>
+
+            <section>
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>Virtual Environment:</strong> Always use venv</li>
+                    <li><strong>SECRET_KEY:</strong> Never commit to version control</li>
+                    <li><strong>DEBUG:</strong> Set to False in production</li>
+                    <li><strong>Requirements:</strong> Keep requirements.txt updated</li>
+                    <li><strong>App Structure:</strong> One app = one functionality</li>
+                    <li><strong>URL Names:</strong> Always use named URLs</li>
+                    <li><strong>Templates:</strong> Use template inheritance</li>
+                    <li><strong>Static Files:</strong> Organize by type (css, js, images)</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Security First:</strong> Django has built-in security features - use them!
+                </div>
+            </section>
+
+            <section>
+                <h2>Next Session: Django ORM & CRUD</h2>
+                <ul>
+                    <li>Django Models and ORM</li>
+                    <li>Database migrations</li>
+                    <li>CRUD operations (Create, Read, Update, Delete)</li>
+                    <li>QuerySets and filtering</li>
+                    <li>Model relationships (ForeignKey, ManyToMany)</li>
+                    <li>Django Admin interface</li>
+                </ul>
+                <p><strong>Preparation:</strong> Complete Task 1 and 2. Review Python classes.</p>
+            </section>
+
+            <section class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> Django Documentation, Django Girls Tutorial</p>
+                <p>Thank you for your attention!</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
+            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>
