@@ -425,6 +425,23 @@
         .module-card.cmu540 .module-number {
             background: linear-gradient(135deg, #2ecc71, #27ae60);
         }
+
+        /* CMU601 - Dissertation Theme */
+        .module-card.cmu601 {
+            border-color: #f39c12;
+        }
+
+        .module-card.cmu601::before {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .module-card.cmu601 .module-number {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        
+        .module-card.cmm721 .module-features li::before {
+            color: #9b59b6;
+        }
         
         .module-number {
             color: white;
@@ -490,6 +507,10 @@
         
         .module-card.cmu540 .module-features li::before {
             color: #2ecc71;
+        }
+
+        .module-card.cmu601 .module-features li::before {
+            color: #f39c12;
         }
         
         .footer {
@@ -649,9 +670,30 @@
                 </div>
             </section>
             
-            <section class="coming-soon" aria-labelledby="semester2-heading">
+            <section class="semester-section" aria-labelledby="semester2-heading">
                 <h2 id="semester2-heading">Semester 2</h2>
-                <p>Additional modules for Semester 2 will be available here soon. These will include advanced topics in software engineering, data science, and emerging technologies.</p>
+                <div class="semester-description">
+                    <p>Final year dissertation support module providing essential guidance for project development, management, and design documentation.</p>
+                </div>
+            </section>
+
+            <section class="modules-section" aria-labelledby="semester2-modules-heading">
+                <div class="modules-grid" role="list">
+                    <article class="module-card cmu601" role="listitem">
+                        <a href="CMU601/index.html" aria-label="CMU601: Dissertation - 40 credits final year project">
+                            <div class="module-number" aria-hidden="true">601</div>
+                            <h3 class="module-title">CMU601: Dissertation</h3>
+                            <p class="module-description">Undergraduate final year project support covering development initiation, project management tools, and design methodologies. Three focused lecture sessions provide practical guidance for successful dissertation completion.</p>
+                            <div class="module-details">40 credits • Undergraduate Final Year • Project Support</div>
+                            <ul class="module-features">
+                                <li>3 practical lecture sessions</li>
+                                <li>Development best practices</li>
+                                <li>GitHub & project management</li>
+                                <li>Design diagrams & documentation</li>
+                            </ul>
+                        </a>
+                    </article>
+                </div>
             </section>
         </main>
         

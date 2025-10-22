@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7: Doing Design Diagrams</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling - Dissertation Orange Theme */
+        .task-box {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffe6cc 100%);
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(243, 156, 18, 0.1);
+        }
+
+        /* Code example styling - Dark theme for Dissertation */
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #34495e;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.4;
+            max-height: 40vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Highlight styling - Orange accent for Dissertation */
+        .highlight {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffe6cc 100%);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #f39c12;
+            margin: 10px 0;
+            box-shadow: 0 1px 4px rgba(243, 156, 18, 0.2);
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Diagram comparison styling */
+        .diagram-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .diagram-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f39c12;
+        }
+
+        .diagram-card h4 {
+            margin: 0 0 10px 0;
+            color: #f39c12;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(243, 156, 18, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(243, 156, 18, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>Doing Design Diagrams</h1>
+                <h3>CMU601: Dissertation - Week 7</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Undergraduate Final Year Project</p>
+                <p><small>3-hour session • 29 slides • 2 practical tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Introduction & objectives</li>
+                        <li>40 min: Diagram types & purposes</li>
+                        <li>45 min: Task 1 - Creating system diagrams</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>30 min: Advanced diagramming techniques</li>
+                        <li>40 min: Task 2 - Complete project diagrams</li>
+                        <li>Remaining: Self-directed work</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand different types of design diagrams and their purposes</li>
+                    <li>Create UML diagrams for software architecture</li>
+                    <li>Design entity-relationship diagrams (ERDs) for databases</li>
+                    <li>Develop wireframes and mockups for user interfaces</li>
+                    <li>Draw system architecture and flow diagrams</li>
+                    <li>Use professional diagramming tools effectively</li>
+                    <li>Document design decisions for dissertation reports</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Why Diagrams Matter:</strong> Good diagrams clarify your thinking, communicate ideas effectively, and demonstrate professional practice in your dissertation.
+                </div>
+            </section>
+
+            <!-- Slide 3: Why Design Diagrams Are Essential -->
+            <section>
+                <h2>The Importance of Design Diagrams</h2>
+                <h3>Benefits for Your Dissertation:</h3>
+                <ul>
+                    <li><strong>Clarity:</strong> Visualize complex systems at a glance</li>
+                    <li><strong>Planning:</strong> Think through architecture before coding</li>
+                    <li><strong>Communication:</strong> Share ideas with supervisors clearly</li>
+                    <li><strong>Documentation:</strong> Professional evidence for your report</li>
+                    <li><strong>Problem Detection:</strong> Spot issues early in design phase</li>
+                    <li><strong>Assessment:</strong> Markers expect professional diagrams</li>
+                </ul>
+                <h3>Common Mistakes:</h3>
+                <ul>
+                    <li>❌ Creating diagrams after building the system</li>
+                    <li>❌ Using hand-drawn sketches in final report</li>
+                    <li>❌ Diagrams that don't match actual implementation</li>
+                    <li>❌ Overly complex diagrams that confuse rather than clarify</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Types of Diagrams Overview -->
+            <section>
+                <h2>Types of Design Diagrams</h2>
+                <div class="diagram-comparison">
+                    <div class="diagram-card">
+                        <h4>Structure Diagrams</h4>
+                        <p>Show system components and relationships</p>
+                        <ul style="font-size: 0.9em;">
+                            <li>Class diagrams</li>
+                            <li>Component diagrams</li>
+                            <li>ER diagrams</li>
+                            <li>Architecture diagrams</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-card">
+                        <h4>Behavior Diagrams</h4>
+                        <p>Show system dynamics and flow</p>
+                        <ul style="font-size: 0.9em;">
+                            <li>Sequence diagrams</li>
+                            <li>Activity diagrams</li>
+                            <li>Use case diagrams</li>
+                            <li>State diagrams</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-card">
+                        <h4>Data Diagrams</h4>
+                        <p>Show data structure and relationships</p>
+                        <ul style="font-size: 0.9em;">
+                            <li>ER diagrams</li>
+                            <li>Data flow diagrams</li>
+                            <li>Database schemas</li>
+                            <li>Data models</li>
+                        </ul>
+                    </div>
+                    <div class="diagram-card">
+                        <h4>Interface Diagrams</h4>
+                        <p>Show user interfaces and navigation</p>
+                        <ul style="font-size: 0.9em;">
+                            <li>Wireframes</li>
+                            <li>Mockups</li>
+                            <li>Prototypes</li>
+                            <li>Site maps</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: UML Class Diagrams -->
+            <section>
+                <h2>UML Class Diagrams</h2>
+                <div class="highlight">
+                    <strong>Purpose:</strong> Show classes, attributes, methods, and relationships in object-oriented systems
+                </div>
+                <h3>When to Use:</h3>
+                <ul>
+                    <li>Object-oriented programming projects</li>
+                    <li>Showing system structure</li>
+                    <li>Planning class hierarchies</li>
+                    <li>Documenting existing code</li>
+                </ul>
+                <h3>Key Components:</h3>
+                <div class="code-example">
+                    ┌─────────────────────┐<br>
+                    │      User           │  ← Class Name<br>
+                    ├─────────────────────┤<br>
+                    │ - id: int           │  ← Attributes (- = private)<br>
+                    │ - username: string  │<br>
+                    │ - email: string     │<br>
+                    │ + password: string  │  (+ = public)<br>
+                    ├─────────────────────┤<br>
+                    │ + login(): bool     │  ← Methods<br>
+                    │ + logout(): void    │<br>
+                    │ + register(): bool  │<br>
+                    └─────────────────────┘
+                </div>
+            </section>
+
+            <!-- Slide 6: Class Diagram Relationships -->
+            <section>
+                <h2>Class Diagram Relationships</h2>
+                <h3>Types of Relationships:</h3>
+                <ul>
+                    <li><strong>Association:</strong> Basic connection (straight line)</li>
+                    <li><strong>Aggregation:</strong> "Has-a" relationship (hollow diamond)</li>
+                    <li><strong>Composition:</strong> "Part-of" relationship (filled diamond)</li>
+                    <li><strong>Inheritance:</strong> "Is-a" relationship (hollow triangle)</li>
+                    <li><strong>Dependency:</strong> Uses temporarily (dashed arrow)</li>
+                </ul>
+                <h3>Example:</h3>
+                <div class="code-example">
+                    University ◇───── Department ◇───── Course<br>
+                    (aggregation)    (aggregation)<br>
+                    <br>
+                    Student ←──────── Enrollment ──────→ Course<br>
+                    (many-to-many relationship)<br>
+                    <br>
+                    Person △<br>
+                           │<br>
+                    ┌──────┴──────┐<br>
+                    Student      Staff<br>
+                    (inheritance)
+                </div>
+            </section>
+
+            <!-- Slide 7: Practical Class Diagram Example -->
+            <section>
+                <h2>Real Example: E-commerce System</h2>
+                <div class="code-example">
+                    ┌─────────────────────┐<br>
+                    │      Customer       │<br>
+                    ├─────────────────────┤<br>
+                    │ - customerId: int   │<br>
+                    │ - name: string      │<br>
+                    │ - email: string     │<br>
+                    ├─────────────────────┤<br>
+                    │ + placeOrder()      │<br>
+                    │ + viewOrders()      │<br>
+                    └─────────────────────┘<br>
+                             │<br>
+                             │ 1<br>
+                             │<br>
+                             │ *<br>
+                    ┌─────────────────────┐<br>
+                    │       Order         │<br>
+                    ├─────────────────────┤<br>
+                    │ - orderId: int      │<br>
+                    │ - date: DateTime    │<br>
+                    │ - status: string    │<br>
+                    ├─────────────────────┤<br>
+                    │ + calculateTotal()  │<br>
+                    │ + cancelOrder()     │<br>
+                    └─────────────────────┘<br>
+                             │<br>
+                             │ 1<br>
+                             │<br>
+                             │ *<br>
+                    ┌─────────────────────┐<br>
+                    │     OrderItem       │<br>
+                    ├─────────────────────┤<br>
+                    │ - quantity: int     │<br>
+                    │ - price: decimal    │<br>
+                    ├─────────────────────┤<br>
+                    │ + getSubtotal()     │<br>
+                    └─────────────────────┘
+                </div>
+            </section>
+
+            <!-- Slide 8: Entity-Relationship Diagrams (ERD) -->
+            <section>
+                <h2>Entity-Relationship Diagrams</h2>
+                <div class="highlight">
+                    <strong>Purpose:</strong> Model database structure showing entities, attributes, and relationships
+                </div>
+                <h3>When to Use:</h3>
+                <ul>
+                    <li>Designing database schemas</li>
+                    <li>Planning data relationships</li>
+                    <li>Documenting existing databases</li>
+                    <li>Any project with persistent data storage</li>
+                </ul>
+                <h3>Key Components:</h3>
+                <ul>
+                    <li><strong>Entities:</strong> Tables/Objects (rectangles)</li>
+                    <li><strong>Attributes:</strong> Fields/Properties (ovals)</li>
+                    <li><strong>Relationships:</strong> Connections (diamonds or lines)</li>
+                    <li><strong>Cardinality:</strong> One-to-one, one-to-many, many-to-many</li>
+                    <li><strong>Primary Keys:</strong> Unique identifiers (underlined)</li>
+                    <li><strong>Foreign Keys:</strong> Reference to other tables</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: ERD Example -->
+            <section>
+                <h2>ERD Example: Student Management System</h2>
+                <div class="code-example">
+                    ┌──────────────────┐<br>
+                    │     Student      │<br>
+                    ├──────────────────┤<br>
+                    │ PK student_id    │<br>
+                    │    name          │<br>
+                    │    email         │<br>
+                    │    date_of_birth │<br>
+                    └──────────────────┘<br>
+                             │<br>
+                             │ 1<br>
+                             │<br>
+                    enrolls in│<br>
+                             │<br>
+                             │ N<br>
+                             │<br>
+                    ┌──────────────────┐<br>
+                    │   Enrollment     │<br>
+                    ├──────────────────┤<br>
+                    │ PK enrollment_id │<br>
+                    │ FK student_id    │<br>
+                    │ FK course_id     │<br>
+                    │    grade         │<br>
+                    │    semester      │<br>
+                    └──────────────────┘<br>
+                             │<br>
+                             │ N<br>
+                             │<br>
+                             │ 1<br>
+                             │<br>
+                    ┌──────────────────┐<br>
+                    │      Course      │<br>
+                    ├──────────────────┤<br>
+                    │ PK course_id     │<br>
+                    │    course_name   │<br>
+                    │    credits       │<br>
+                    │ FK instructor_id │<br>
+                    └──────────────────┘
+                </div>
+                <p><strong>PK</strong> = Primary Key, <strong>FK</strong> = Foreign Key</p>
+            </section>
+
+            <!-- Slide 10: Use Case Diagrams -->
+            <section>
+                <h2>Use Case Diagrams</h2>
+                <div class="highlight">
+                    <strong>Purpose:</strong> Show how users (actors) interact with the system
+                </div>
+                <h3>When to Use:</h3>
+                <ul>
+                    <li>Requirements gathering phase</li>
+                    <li>Showing system functionality from user perspective</li>
+                    <li>Identifying different user roles</li>
+                    <li>Planning features and interactions</li>
+                </ul>
+                <h3>Components:</h3>
+                <ul>
+                    <li><strong>Actors:</strong> Users or external systems (stick figures)</li>
+                    <li><strong>Use Cases:</strong> System functions (ovals)</li>
+                    <li><strong>System Boundary:</strong> Scope of your system (box)</li>
+                    <li><strong>Relationships:</strong> Associations, includes, extends</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Use Case Diagram Example -->
+            <section>
+                <h2>Use Case Example: Online Shopping</h2>
+                <div class="code-example">
+                        Customer                    ┌─────────────────────────┐<br>
+                           │                        │   Shopping System       │<br>
+                           │                        │                         │<br>
+                           ├──────────────────────→ │   ○ Browse Products     │<br>
+                           │                        │                         │<br>
+                           ├──────────────────────→ │   ○ Add to Cart         │<br>
+                           │                        │                         │<br>
+                           ├──────────────────────→ │   ○ Checkout            │<br>
+                           │                        │         │               │<br>
+                           │                        │         ├─&lt;includes&gt;   │<br>
+                           │                        │         │               │<br>
+                           │                        │         ↓               │<br>
+                           │                        │   ○ Process Payment     │<br>
+                           │                        │                         │<br>
+                           ├──────────────────────→ │   ○ Track Order         │<br>
+                           │                        │                         │<br>
+                           │                        │   ○ Write Review        │<br>
+                        Admin │                     │         │               │<br>
+                           │                        │         ├─&lt;extends&gt;     │<br>
+                           │                        │         │               │<br>
+                           ├──────────────────────→ │   ○ Manage Products     │<br>
+                           │                        │                         │<br>
+                           └──────────────────────→ │   ○ View Reports        │<br>
+                                                    │                         │<br>
+                                                    └─────────────────────────┘
+                </div>
+            </section>
+
+            <!-- Slide 12: Sequence Diagrams -->
+            <section>
+                <h2>Sequence Diagrams</h2>
+                <div class="highlight">
+                    <strong>Purpose:</strong> Show how objects interact in a particular sequence over time
+                </div>
+                <h3>When to Use:</h3>
+                <ul>
+                    <li>Documenting API calls</li>
+                    <li>Showing authentication flows</li>
+                    <li>Explaining complex interactions</li>
+                    <li>Debugging system behavior</li>
+                </ul>
+                <h3>Example: User Login Sequence</h3>
+                <div class="code-example">
+                    User      Browser     Server      Database<br>
+                     │           │           │            │<br>
+                     ├─Enter────→│           │            │<br>
+                     │credentials│           │            │<br>
+                     │           ├─POST────→ │            │<br>
+                     │           │ /login    │            │<br>
+                     │           │           ├─Query────→ │<br>
+                     │           │           │ user data  │<br>
+                     │           │           │←──────────┤<br>
+                     │           │           │  user row  │<br>
+                     │           │           ├─Verify────┤<br>
+                     │           │           │ password   │<br>
+                     │           │←─────────┤            │<br>
+                     │           │  JWT token│            │<br>
+                     │←──────────┤           │            │<br>
+                     │  Success  │           │            │<br>
+                     │           │           │            │
+                </div>
+            </section>
+
+            <!-- Slide 13: Activity Diagrams -->
+            <section>
+                <h2>Activity Diagrams (Flowcharts)</h2>
+                <div class="highlight">
+                    <strong>Purpose:</strong> Show workflow, business processes, or algorithm logic
+                </div>
+                <h3>When to Use:</h3>
+                <ul>
+                    <li>Documenting business logic</li>
+                    <li>Explaining algorithms</li>
+                    <li>Showing decision points</li>
+                    <li>Process workflows</li>
+                </ul>
+                <h3>Example: Password Reset Flow</h3>
+                <div class="code-example">
+                         ┌──────────────┐<br>
+                         │ User requests│<br>
+                         │ password reset│<br>
+                         └──────┬───────┘<br>
+                                │<br>
+                         ┌──────▼───────┐<br>
+                         │ Enter email  │<br>
+                         └──────┬───────┘<br>
+                                │<br>
+                         ┌──────▼───────┐<br>
+                      ◇  │Email exists? │<br>
+                         └┬─────────┬───┘<br>
+                      Yes │         │ No<br>
+                          │         └──────→ Show generic message<br>
+                          │<br>
+                   ┌──────▼────────┐<br>
+                   │Generate token │<br>
+                   └──────┬────────┘<br>
+                          │<br>
+                   ┌──────▼────────┐<br>
+                   │ Send email    │<br>
+                   └──────┬────────┘<br>
+                          │<br>
+                   ┌──────▼────────┐<br>
+                   │ User clicks   │<br>
+                   │ reset link    │<br>
+                   └──────┬────────┘<br>
+                          │<br>
+                   ┌──────▼────────┐<br>
+                   │ Enter new     │<br>
+                   │ password      │<br>
+                   └──────┬────────┘<br>
+                          │<br>
+                   ┌──────▼────────┐<br>
+                   │ Update DB     │<br>
+                   └──────┬────────┘<br>
+                          │<br>
+                   ┌──────▼────────┐<br>
+                   │  ●  Done      │<br>
+                   └───────────────┘
+                </div>
+            </section>
+
+            <!-- Slide 14: System Architecture Diagrams -->
+            <section>
+                <h2>System Architecture Diagrams</h2>
+                <div class="highlight">
+                    <strong>Purpose:</strong> Show high-level system components and how they connect
+                </div>
+                <h3>Example: Web Application Architecture</h3>
+                <div class="code-example">
+                    ┌─────────────────────────────────────────────────┐<br>
+                    │              CLIENT TIER                        │<br>
+                    │  ┌──────────┐  ┌──────────┐  ┌──────────┐     │<br>
+                    │  │ Browser  │  │  Mobile  │  │  Desktop │     │<br>
+                    │  │   App    │  │   App    │  │   App    │     │<br>
+                    │  └─────┬────┘  └────┬─────┘  └────┬─────┘     │<br>
+                    └────────┼────────────┼─────────────┼────────────┘<br>
+                             │            │             │<br>
+                          HTTPS        HTTPS         HTTPS<br>
+                             │            │             │<br>
+                    ┌────────▼────────────▼─────────────▼────────────┐<br>
+                    │          APPLICATION TIER (Backend)             │<br>
+                    │  ┌──────────────────────────────────────┐      │<br>
+                    │  │     Load Balancer (Nginx)            │      │<br>
+                    │  └────────────┬─────────────────────────┘      │<br>
+                    │               │                                 │<br>
+                    │  ┌────────────▼──────────┐  ┌──────────────┐  │<br>
+                    │  │   Web Server (Django) │  │  Web Server  │  │<br>
+                    │  │   - REST API          │  │  (Django)    │  │<br>
+                    │  │   - Business Logic    │  │              │  │<br>
+                    │  └────────────┬──────────┘  └──────┬───────┘  │<br>
+                    └───────────────┼────────────────────┼───────────┘<br>
+                                    │                    │<br>
+                    ┌───────────────▼────────────────────▼───────────┐<br>
+                    │              DATA TIER                          │<br>
+                    │  ┌──────────────────┐  ┌──────────────────┐   │<br>
+                    │  │   PostgreSQL     │  │   Redis Cache    │   │<br>
+                    │  │   Database       │  │                  │   │<br>
+                    │  └──────────────────┘  └──────────────────┘   │<br>
+                    └─────────────────────────────────────────────────┘
+                </div>
+            </section>
+
+            <!-- Slide 15: Wireframes -->
+            <section>
+                <h2>Wireframes: UI Planning</h2>
+                <div class="highlight">
+                    <strong>Purpose:</strong> Plan user interface layout and navigation before building
+                </div>
+                <h3>Wireframe Levels:</h3>
+                <ul>
+                    <li><strong>Low-Fidelity:</strong> Basic boxes and text (sketches)</li>
+                    <li><strong>Mid-Fidelity:</strong> More detail, grayscale</li>
+                    <li><strong>High-Fidelity:</strong> Detailed, interactive prototypes</li>
+                </ul>
+                <h3>What to Include:</h3>
+                <ul>
+                    <li>Layout structure and grid</li>
+                    <li>Navigation elements</li>
+                    <li>Content placement</li>
+                    <li>Interactive elements (buttons, forms)</li>
+                    <li>User flow between screens</li>
+                </ul>
+                <h3>Don't Include (in wireframes):</h3>
+                <ul>
+                    <li>Final colors and branding</li>
+                    <li>Actual images (use placeholders)</li>
+                    <li>Real content (use Lorem Ipsum)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 16: Task 1 - Create System Diagrams -->
+            <section>
+                <h2>Task 1: Design Your System Diagrams</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create professional diagrams for your dissertation project</p>
+
+                    <h3>Activity Steps:</h3>
+                    <ol>
+                        <li>Choose diagramming tool (Lucidchart, Draw.io, or PlantUML)</li>
+                        <li>Create an account and start new project</li>
+                        <li>Draw a system architecture diagram showing major components</li>
+                        <li>Create an ER diagram for your database (if applicable)</li>
+                        <li>OR create a class diagram for your main classes (OOP projects)</li>
+                        <li>Draw at least one sequence or activity diagram</li>
+                        <li>Export diagrams as PNG/PDF</li>
+                        <li>Save source files for future editing</li>
+                    </ol>
+
+                    <h3>Requirements:</h3>
+                    <ul>
+                        <li>Use proper notation (UML standards)</li>
+                        <li>Clear labels and relationships</li>
+                        <li>Appropriate level of detail (not too simple, not overwhelming)</li>
+                        <li>Professional appearance</li>
+                    </ul>
+
+                    <h3>Time:</h3>
+                    <p>45 minutes</p>
+                </div>
+            </section>
+
+            <!-- Slide 17: Diagramming Tools Overview -->
+            <section>
+                <h2>Professional Diagramming Tools</h2>
+                <h3>Lucidchart (Recommended for Beginners)</h3>
+                <ul>
+                    <li><strong>Pros:</strong> Intuitive, templates, collaboration, free for students</li>
+                    <li><strong>Best For:</strong> All diagram types, especially flowcharts and ERDs</li>
+                    <li><strong>Free Tier:</strong> 60 objects per diagram (upgrade with .ac.uk email)</li>
+                </ul>
+                <h3>Draw.io / Diagrams.net (Free & Open Source)</h3>
+                <ul>
+                    <li><strong>Pros:</strong> Completely free, works offline, integrates with Drive</li>
+                    <li><strong>Best For:</strong> All diagram types, technical users</li>
+                    <li><strong>Download:</strong> app.diagrams.net</li>
+                </ul>
+                <h3>PlantUML (Code-Based)</h3>
+                <ul>
+                    <li><strong>Pros:</strong> Version control friendly, generate from text</li>
+                    <li><strong>Best For:</strong> UML diagrams, developers who prefer code</li>
+                    <li><strong>Learning Curve:</strong> Steeper but powerful</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: More Diagramming Tools -->
+            <section>
+                <h2>Additional Diagramming Options</h2>
+                <div class="diagram-comparison">
+                    <div class="diagram-card">
+                        <h4>Figma</h4>
+                        <p>Best for: UI/UX wireframes and mockups</p>
+                        <p>Free tier: 3 projects</p>
+                    </div>
+                    <div class="diagram-card">
+                        <h4>Miro</h4>
+                        <p>Best for: Collaborative brainstorming and flowcharts</p>
+                        <p>Free tier: 3 boards</p>
+                    </div>
+                    <div class="diagram-card">
+                        <h4>Microsoft Visio</h4>
+                        <p>Best for: Professional diagrams, available through O365</p>
+                        <p>University license may be available</p>
+                    </div>
+                    <div class="diagram-card">
+                        <h4>Balsamiq</h4>
+                        <p>Best for: Low-fidelity wireframes</p>
+                        <p>30-day free trial</p>
+                    </div>
+                </div>
+                <h3>Recommendation:</h3>
+                <p>Start with <strong>Draw.io</strong> (free, unlimited) or <strong>Lucidchart</strong> (easier interface). Use <strong>Figma</strong> for UI/UX design.</p>
+            </section>
+
+            <!-- Slide 19: PlantUML Introduction -->
+            <section>
+                <h2>PlantUML: Code-to-Diagram</h2>
+                <h3>Why Use PlantUML?</h3>
+                <ul>
+                    <li>Generate diagrams from simple text</li>
+                    <li>Version control friendly (just text files)</li>
+                    <li>Easy to update and maintain</li>
+                    <li>Consistent styling automatically</li>
+                </ul>
+                <h3>Example: Class Diagram</h3>
+                <div class="code-example">
+                    @startuml<br>
+                    class User {<br>
+                      - id: int<br>
+                      - username: string<br>
+                      - email: string<br>
+                      + login(): bool<br>
+                      + logout(): void<br>
+                    }<br>
+                    <br>
+                    class Order {<br>
+                      - orderId: int<br>
+                      - date: DateTime<br>
+                      - total: decimal<br>
+                      + calculateTotal(): decimal<br>
+                    }<br>
+                    <br>
+                    User "1" -- "*" Order : places<br>
+                    @enduml
+                </div>
+                <p>Generates a professional UML diagram automatically!</p>
+            </section>
+
+            <!-- Slide 20: Diagram Best Practices -->
+            <section>
+                <h2>Design Diagram Best Practices</h2>
+                <h3>Do's:</h3>
+                <ul>
+                    <li>✅ Use standard notation (UML, ERD conventions)</li>
+                    <li>✅ Keep diagrams focused - one concept per diagram</li>
+                    <li>✅ Use clear, descriptive labels</li>
+                    <li>✅ Maintain consistent styling</li>
+                    <li>✅ Include legends if using custom notation</li>
+                    <li>✅ Export in high resolution (PNG 300dpi or vector PDF)</li>
+                    <li>✅ Keep source files for future edits</li>
+                </ul>
+                <h3>Don'ts:</h3>
+                <ul>
+                    <li>❌ Cramming too much into one diagram</li>
+                    <li>❌ Using non-standard symbols without explanation</li>
+                    <li>❌ Low-resolution screenshots</li>
+                    <li>❌ Hand-drawn diagrams in final report</li>
+                    <li>❌ Inconsistent styling across diagrams</li>
+                    <li>❌ Outdated diagrams that don't match code</li>
+                </ul>
+            </section>
+
+            <!-- Slide 21: Diagram Documentation -->
+            <section>
+                <h2>Documenting Your Diagrams</h2>
+                <h3>In Your Dissertation Report:</h3>
+                <ul>
+                    <li><strong>Caption:</strong> Clear, descriptive title</li>
+                    <li><strong>Figure Number:</strong> For cross-referencing</li>
+                    <li><strong>Context:</strong> Explain what the diagram shows</li>
+                    <li><strong>Explanation:</strong> Walk through key elements</li>
+                    <li><strong>Rationale:</strong> Why this design was chosen</li>
+                </ul>
+                <h3>Example Caption:</h3>
+                <div class="code-example">
+                    Figure 3.2: System Architecture Diagram<br>
+                    <br>
+                    This diagram illustrates the three-tier architecture of<br>
+                    the Student Management System. The client tier consists<br>
+                    of web and mobile interfaces, the application tier<br>
+                    handles business logic via Django REST API, and the<br>
+                    data tier uses PostgreSQL for persistence and Redis<br>
+                    for caching. This architecture was chosen to ensure<br>
+                    scalability and separation of concerns.
+                </div>
+            </section>
+
+            <!-- Slide 22: Wireframing Best Practices -->
+            <section>
+                <h2>Creating Effective Wireframes</h2>
+                <h3>Start with Paper Sketches:</h3>
+                <ul>
+                    <li>Quick iteration of ideas</li>
+                    <li>No commitment to specific design</li>
+                    <li>Easy to throw away and start over</li>
+                    <li>Focus on layout and flow</li>
+                </ul>
+                <h3>Progress to Digital:</h3>
+                <ul>
+                    <li>Use wireframing tools (Figma, Balsamiq)</li>
+                    <li>Maintain grayscale/low-fidelity look</li>
+                    <li>Focus on functionality, not aesthetics</li>
+                    <li>Create multiple views/screens</li>
+                    <li>Show user flow between screens</li>
+                </ul>
+                <h3>Essential Wireframe Elements:</h3>
+                <ul>
+                    <li>Header/navigation</li>
+                    <li>Content areas</li>
+                    <li>Sidebar elements</li>
+                    <li>Footer</li>
+                    <li>Interactive elements (buttons, forms)</li>
+                    <li>Modal/popup patterns</li>
+                </ul>
+            </section>
+
+            <!-- Slide 23: Mobile vs Desktop Wireframes -->
+            <section>
+                <h2>Responsive Design Wireframes</h2>
+                <div class="highlight">
+                    <strong>Show how your UI adapts to different screen sizes</strong>
+                </div>
+                <h3>Desktop Wireframe Priorities:</h3>
+                <ul>
+                    <li>Multiple columns possible</li>
+                    <li>Horizontal navigation</li>
+                    <li>More information density</li>
+                    <li>Hover states and interactions</li>
+                </ul>
+                <h3>Mobile Wireframe Priorities:</h3>
+                <ul>
+                    <li>Single column layout</li>
+                    <li>Hamburger menu or tab bar</li>
+                    <li>Touch-friendly buttons (minimum 44px)</li>
+                    <li>Simplified navigation</li>
+                    <li>Progressive disclosure</li>
+                </ul>
+                <h3>Tablet Considerations:</h3>
+                <ul>
+                    <li>Hybrid approach</li>
+                    <li>Often similar to desktop with some adaptations</li>
+                    <li>Touch targets still important</li>
+                </ul>
+            </section>
+
+            <!-- Slide 24: Site Maps & Navigation -->
+            <section>
+                <h2>Site Maps and Navigation Diagrams</h2>
+                <h3>Purpose:</h3>
+                <p>Show the information architecture and how users navigate through your system</p>
+                <h3>Example Site Map:</h3>
+                <div class="code-example">
+                    Home<br>
+                    ├── About<br>
+                    ├── Products<br>
+                    │   ├── Category A<br>
+                    │   │   ├── Product 1<br>
+                    │   │   └── Product 2<br>
+                    │   └── Category B<br>
+                    │       ├── Product 3<br>
+                    │       └── Product 4<br>
+                    ├── Services<br>
+                    │   ├── Service 1<br>
+                    │   └── Service 2<br>
+                    ├── Blog<br>
+                    │   └── Blog Post<br>
+                    └── Contact<br>
+                    <br>
+                    User Account (authenticated)<br>
+                    ├── Dashboard<br>
+                    ├── Profile<br>
+                    ├── Orders<br>
+                    │   └── Order Details<br>
+                    └── Settings
+                </div>
+            </section>
+
+            <!-- Slide 25: Data Flow Diagrams -->
+            <section>
+                <h2>Data Flow Diagrams (DFD)</h2>
+                <div class="highlight">
+                    <strong>Purpose:</strong> Show how data moves through your system
+                </div>
+                <h3>DFD Elements:</h3>
+                <ul>
+                    <li><strong>External Entities:</strong> Users, external systems (squares)</li>
+                    <li><strong>Processes:</strong> Data transformations (circles/bubbles)</li>
+                    <li><strong>Data Stores:</strong> Databases, files (parallel lines)</li>
+                    <li><strong>Data Flows:</strong> Movement of data (arrows)</li>
+                </ul>
+                <h3>Example: Online Order Processing</h3>
+                <div class="code-example">
+                    [Customer] ──order details──→ (1.0 Process Order)<br>
+                                                         │<br>
+                                                         ├──store order──→ ==Orders DB==<br>
+                                                         │<br>
+                                                         ├──payment info──→ (2.0 Process Payment)<br>
+                                                         │                        │<br>
+                                                         │                        └──→ [Payment Gateway]<br>
+                                                         │<br>
+                                                         └──confirmation──→ (3.0 Send Email)<br>
+                                                                              │<br>
+                                                                              └──email──→ [Customer]
+                </div>
+            </section>
+
+            <!-- Slide 26: Task 2 - Complete Project Documentation -->
+            <section>
+                <h2>Task 2: Complete Your Diagram Set</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create comprehensive diagram documentation for your dissertation</p>
+
+                    <h3>Activity Steps:</h3>
+                    <ol>
+                        <li>Review diagrams created in Task 1</li>
+                        <li>Create wireframes for 3-5 key screens/views</li>
+                        <li>Draw a site map or navigation diagram</li>
+                        <li>Create a use case diagram showing user interactions</li>
+                        <li>Draw at least one more detailed diagram (sequence, activity, or DFD)</li>
+                        <li>Ensure all diagrams follow consistent styling</li>
+                        <li>Add captions and explanations to each diagram</li>
+                        <li>Export all diagrams in high quality</li>
+                        <li>Organize in a "diagrams" folder in your project</li>
+                        <li>Create a diagrams.md file listing all diagrams with descriptions</li>
+                    </ol>
+
+                    <h3>Deliverable:</h3>
+                    <p>Complete set of professional diagrams ready for your dissertation report</p>
+
+                    <h3>Time:</h3>
+                    <p>40 minutes</p>
+                </div>
+            </section>
+
+            <!-- Slide 27: Integrating Diagrams with Development -->
+            <section>
+                <h2>Using Diagrams During Development</h2>
+                <h3>Diagrams as Living Documents:</h3>
+                <ul>
+                    <li>Reference diagrams while coding</li>
+                    <li>Update diagrams when architecture changes</li>
+                    <li>Use diagrams to explain code to supervisor</li>
+                    <li>Share diagrams in GitHub wiki or docs folder</li>
+                </ul>
+                <h3>Diagram-Driven Development:</h3>
+                <ol>
+                    <li><strong>Plan:</strong> Create diagrams before coding</li>
+                    <li><strong>Build:</strong> Implement based on diagrams</li>
+                    <li><strong>Refine:</strong> Update diagrams as you learn</li>
+                    <li><strong>Document:</strong> Final diagrams match implementation</li>
+                </ol>
+                <div class="highlight">
+                    <strong>Pro Tip:</strong> Keep diagram source files in your Git repository under docs/diagrams/
+                </div>
+            </section>
+
+            <!-- Slide 28: Common Diagramming Mistakes -->
+            <section>
+                <h2>Avoiding Common Mistakes</h2>
+                <h3>❌ Too Complex:</h3>
+                <ul>
+                    <li>Diagram shows every single detail</li>
+                    <li>Unreadable due to clutter</li>
+                    <li><strong>Fix:</strong> Create multiple focused diagrams instead</li>
+                </ul>
+                <h3>❌ Too Simple:</h3>
+                <ul>
+                    <li>Diagram lacks meaningful information</li>
+                    <li>Doesn't add value to understanding</li>
+                    <li><strong>Fix:</strong> Add appropriate level of detail</li>
+                </ul>
+                <h3>❌ Inconsistent Notation:</h3>
+                <ul>
+                    <li>Different styles across diagrams</li>
+                    <li>Custom notation without explanation</li>
+                    <li><strong>Fix:</strong> Follow UML/standard conventions</li>
+                </ul>
+                <h3>❌ Outdated Diagrams:</h3>
+                <ul>
+                    <li>Diagrams don't match actual implementation</li>
+                    <li>Created once, never updated</li>
+                    <li><strong>Fix:</strong> Update diagrams during development</li>
+                </ul>
+            </section>
+
+            <!-- Slide 29: Action Plan & Next Steps -->
+            <section class="center">
+                <h2>Key Takeaways</h2>
+                <div class="highlight">
+                    <h3>Remember:</h3>
+                    <ul style="text-align: left; margin: 20px auto; max-width: 650px;">
+                        <li>Different diagram types serve different purposes</li>
+                        <li>UML for software structure and behavior</li>
+                        <li>ERD for database design</li>
+                        <li>Wireframes for UI planning</li>
+                        <li>Architecture diagrams for system overview</li>
+                        <li>Choose appropriate tools (Draw.io, Lucidchart, Figma)</li>
+                        <li>Keep diagrams updated as your project evolves</li>
+                        <li>Professional diagrams demonstrate systematic development</li>
+                    </ul>
+                </div>
+                <div class="task-box" style="margin: 20px auto; max-width: 650px;">
+                    <h3>🎯 This Week's Goals</h3>
+                    <p><strong>Complete by end of week:</strong></p>
+                    <ul>
+                        <li>System architecture diagram</li>
+                        <li>Database ERD or class diagram</li>
+                        <li>3-5 wireframes for main screens</li>
+                        <li>At least 2 behavior diagrams (sequence/activity/use case)</li>
+                        <li>All diagrams organized and documented</li>
+                        <li>Regular development work continues!</li>
+                    </ul>
+                </div>
+                <p><strong>Remember:</strong> Diagrams are tools to help YOU think clearly and communicate effectively. They should make your dissertation stronger!</p>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            progress: true,
+            controls: true,
+            center: false,
+            mouseWheel: true,
+            transition: 'slide',
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            display: 'block',
+            responsive: true,
+            mobileViewDistance: 2,
+            hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>
