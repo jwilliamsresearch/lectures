@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -169,31 +169,53 @@
     }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --text-dark: #1a202c;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --bg-card: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.2);
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            color: var(--text-dark);
+            line-height: 1.6;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: white;
+            background: var(--bg-light);
             min-height: 100vh;
-            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-xl);
         }
         
+        /* Hero Section with Animated Background */
         .header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px;
+            padding: 80px 40px 120px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -206,152 +228,194 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--bg-light);
+            clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
         }
         
         .header h1 {
-            margin: 0;
-            font-size: 3em;
-            font-weight: 300;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
+            font-family: 'Poppins', sans-serif;
+            font-size: 4.5em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.2);
         }
         
         .header .subtitle {
-            font-size: 1.4em;
-            margin-bottom: 20px;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 500;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease 0.2s both;
         }
         
         .header .department {
-            font-size: 1.1em;
-            opacity: 0.8;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease 0.4s both;
         }
         
-        .header .website-link {
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            display: block;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
             font-size: 1em;
-            opacity: 0.8;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .header .website-link a {
-            color: #4ecdc4;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .header .website-link a:hover {
-            color: #45b7aa;
-            text-decoration: underline;
-        }
-        
-        .semester-info {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .semester-info h3 {
-            margin: 0 0 15px 0;
-            font-size: 1.3em;
-        }
-        
-        .semester-info p {
-            margin: 0;
-            font-size: 1.1em;
-            line-height: 1.6;
+            opacity: 0.9;
+            font-weight: 500;
         }
         
         .modules-section {
-            padding: 50px 40px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 80px 40px 100px;
+            background: var(--bg-light);
         }
         
         .semester-section {
-            padding: 40px;
-            background: #fff;
-            border-bottom: 1px solid #e9ecef;
+            padding: 80px 40px 40px;
+            background: white;
+            position: relative;
+        }
+        
+        .semester-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
         }
         
         .semester-section h2 {
             text-align: center;
-            color: #333;
-            font-size: 2.2em;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .semester-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            font-weight: 600;
             margin-bottom: 30px;
-            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .semester-section .semester-description {
             text-align: center;
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 40px;
-            max-width: 800px;
+            color: var(--text-light);
+            font-size: 1.2em;
+            margin-bottom: 60px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.6;
+            line-height: 1.8;
         }
         
         .modules-section h2 {
             text-align: center;
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            font-weight: 300;
-        }
-        
-        .coming-soon {
-            text-align: center;
-            padding: 60px 40px;
-            background: #f8f9fa;
-            color: #666;
-        }
-        
-        .coming-soon h3 {
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        .coming-soon p {
-            font-size: 1.1em;
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            font-size: 2.8em;
+            margin-bottom: 50px;
+            font-weight: 700;
         }
         
         .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 35px;
             margin-top: 30px;
         }
         
         .module-card {
-            background: #f8f9fa;
-            border-radius: 20px;
-            padding: 40px;
-            border: 3px solid transparent;
-            transition: all 0.4s ease;
-            text-decoration: none;
-            color: inherit;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 0;
+            border: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
+            display: block;
+        }
+        
+        .module-card a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 2;
         }
         
         .module-card::before {
@@ -360,83 +424,145 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 6px;
+            height: 8px;
             transform: scaleX(0);
-            transition: transform 0.4s ease;
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .module-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(135deg, transparent, transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 1;
         }
         
         .module-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-xl);
         }
         
         .module-card:hover::before {
             transform: scaleX(1);
         }
         
-        /* CMU422 - Web Design Theme */
-        .module-card.cmu422 {
-            border-color: #667eea;
+        .module-card:hover::after {
+            opacity: 1;
         }
         
+        .module-card-header {
+            padding: 35px 35px 25px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+            position: relative;
+        }
+        
+        .module-card-body {
+            padding: 0 35px 35px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* CMU422 - Web Design Theme */
         .module-card.cmu422::before {
             background: linear-gradient(90deg, #667eea, #764ba2);
         }
         
-        .module-card.cmu422 .module-number {
+        .module-card.cmu422::after {
             background: linear-gradient(135deg, #667eea, #764ba2);
         }
         
-        /* CMU529 - Advanced Web Development Theme */
-        .module-card.cmu529 {
-            border-color: #ff6b6b;
+        .module-card.cmu422 .module-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
         
+        .module-card.cmu422 .module-icon {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        }
+        
+        /* CMU529 - Advanced Web Development Theme */
         .module-card.cmu529::before {
             background: linear-gradient(90deg, #ff6b6b, #ee5a24);
         }
         
-        .module-card.cmu529 .module-number {
+        .module-card.cmu529::after {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
         }
         
+        .module-card.cmu529 .module-number {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .module-card.cmu529 .module-icon {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(238, 90, 36, 0.1));
+        }
+        
         /* CMM721 - Web Application Development Theme */
-        .module-card.cmm721 {
-            border-color: #9b59b6;
+        .module-card.cmm721::before {
+            background: linear-gradient(135deg, #9b59b6, #3498db);
         }
 
-        .module-card.cmm721::before {
+        .module-card.cmm721::after {
             background: linear-gradient(135deg, #9b59b6, #3498db);
         }
 
         .module-card.cmm721 .module-number {
             background: linear-gradient(135deg, #9b59b6, #3498db);
+            box-shadow: 0 8px 20px rgba(155, 89, 182, 0.4);
+        }
+        
+        .module-card.cmm721 .module-icon {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(52, 152, 219, 0.1));
         }
 
         /* CMU540 - Cyber Security Theme */
-        .module-card.cmu540 {
-            border-color: #2ecc71;
-        }
-        
         .module-card.cmu540::before {
             background: linear-gradient(90deg, #2ecc71, #27ae60);
         }
         
+        .module-card.cmu540::after {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
         .module-card.cmu540 .module-number {
             background: linear-gradient(135deg, #2ecc71, #27ae60);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+        }
+        
+        .module-card.cmu540 .module-icon {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.1));
         }
 
         /* CMU601 - Dissertation Theme */
-        .module-card.cmu601 {
-            border-color: #f39c12;
+        .module-card.cmu601::before {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
         }
 
-        .module-card.cmu601::before {
+        .module-card.cmu601::after {
             background: linear-gradient(135deg, #f39c12, #e67e22);
         }
 
         .module-card.cmu601 .module-number {
             background: linear-gradient(135deg, #f39c12, #e67e22);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.4);
+        }
+        
+        .module-card.cmu601 .module-icon {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.1), rgba(230, 126, 34, 0.1));
         }
         
         .module-card.cmm721 .module-features li::before {
@@ -445,60 +571,100 @@
         
         .module-number {
             color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.4em;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            font-weight: 800;
+            font-size: 1.6em;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .module-card:hover .module-number {
+            transform: scale(1.1) rotate(-5deg);
+        }
+        
+        .module-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            position: absolute;
+            right: 35px;
+            top: 35px;
+            opacity: 0.6;
         }
         
         .module-title {
-            font-size: 1.6em;
-            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
             margin-bottom: 15px;
-            color: #333;
+            color: var(--text-dark);
             line-height: 1.3;
+            letter-spacing: -0.5px;
         }
         
         .module-description {
-            color: #666;
-            line-height: 1.6;
+            color: var(--text-light);
+            line-height: 1.7;
             margin-bottom: 25px;
-            font-size: 1.1em;
+            font-size: 1.05em;
+            flex-grow: 1;
         }
         
         .module-details {
-            font-size: 1em;
-            color: #888;
-            font-weight: 500;
+            font-size: 0.95em;
+            color: var(--text-light);
+            font-weight: 600;
             margin-bottom: 20px;
+            padding: 12px 16px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
         }
         
         .module-features {
             list-style: none;
             padding: 0;
             margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
         
         .module-features li {
-            padding: 8px 0;
-            color: #555;
-            font-size: 0.95em;
+            padding: 10px 12px;
+            color: var(--text-dark);
+            font-size: 0.9em;
             position: relative;
-            padding-left: 25px;
+            padding-left: 32px;
+            background: rgba(0,0,0,0.02);
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .module-features li:hover {
+            background: rgba(0,0,0,0.04);
+            transform: translateX(3px);
         }
         
         .module-features li::before {
             content: '✓';
             position: absolute;
-            left: 0;
+            left: 10px;
             color: #667eea;
             font-weight: bold;
+            font-size: 1.1em;
         }
         
         .module-card.cmu529 .module-features li::before {
@@ -513,53 +679,160 @@
             color: #f39c12;
         }
         
+        .module-card.cmm721 .module-features li::before {
+            color: #9b59b6;
+        }
+        
         .footer {
-            background: #f8f9fa;
-            padding: 30px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 40px;
             text-align: center;
-            color: #666;
-            border-top: 1px solid #e9ecef;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--bg-light);
+            clip-path: polygon(0 0, 100% 50%, 100% 0);
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 1;
         }
         
         .footer p {
             margin: 0;
-            font-size: 1em;
+            font-size: 1.1em;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+        
+        .footer-links {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
         }
         
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .modules-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            }
+        }
+        
         @media (max-width: 768px) {
             .container {
                 margin: 0;
-                border-radius: 0;
+                box-shadow: none;
             }
             
             .header {
-                padding: 30px 20px;
+                padding: 60px 30px 100px;
             }
             
             .header h1 {
-                font-size: 2.2em;
+                font-size: 3em;
             }
             
             .header .subtitle {
-                font-size: 1.2em;
+                font-size: 1.4em;
+            }
+            
+            .header .department {
+                font-size: 1.1em;
+            }
+            
+            .stats-row {
+                gap: 40px;
+            }
+            
+            .stat-number {
+                font-size: 2.8em;
+            }
+            
+            .semester-section {
+                padding: 60px 30px 30px;
+            }
+            
+            .semester-section h2 {
+                font-size: 2.5em;
             }
             
             .modules-section {
-                padding: 30px 20px;
+                padding: 60px 30px 80px;
             }
             
             .modules-section h2 {
-                font-size: 2em;
+                font-size: 2.2em;
             }
             
             .modules-grid {
                 grid-template-columns: 1fr;
-                gap: 25px;
+                gap: 30px;
             }
             
-            .module-card {
+            .module-card-header,
+            .module-card-body {
                 padding: 30px;
+            }
+            
+            .module-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2em;
+                right: 30px;
+                top: 30px;
+            }
+            
+            .module-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer {
+                padding: 50px 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .semester-section h2 {
+                font-size: 2em;
+            }
+            
+            .stat-number {
+                font-size: 2.2em;
+            }
+            
+            .module-number {
+                width: 60px;
+                height: 60px;
+                font-size: 1.4em;
             }
         }
         
@@ -585,127 +858,170 @@
 <body>
     <div class="container">
         <header class="header" role="banner">
-            <h1>James Williams</h1>
-            <div class="subtitle">Lecturer in Computer Science</div>
-            <div class="department">School of Business and Law</div>
-            <div class="website-link">Personal Website: <a href="https://jwilliams.science" target="_blank" rel="noopener">jwilliams.science</a></div>
-            
-            <div class="semester-info">
-                <h2>2025 Teaching Portfolio</h2>
-                <p>Welcome to my teaching portfolio for 2025. Here you'll find comprehensive resources for modules across multiple semesters in web development and cyber security. Each module includes interactive slideshows, assessments, quizzes, and further reading materials.</p>
+            <div class="header-content">
+                <h1>James Williams</h1>
+                <div class="subtitle">Lecturer in Computer Science</div>
+                <div class="department">School of Business and Law | Birmingham Newman University</div>
+                
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">Modules</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">Lectures</span>
+                    </div>
+                </div>
             </div>
         </header>
         
         <main role="main">
             <section class="semester-section" aria-labelledby="semester1-heading">
+                <div class="semester-badge">2025-2026 Academic Year</div>
                 <h2 id="semester1-heading">Semester 1</h2>
                 <div class="semester-description">
-                    <p>Four comprehensive modules covering the fundamentals of web design, advanced web development techniques, cyber security principles, and dissertation project support. Each module is designed to provide hands-on experience with real-world applications.</p>
+                    <p>Five comprehensive modules covering web design fundamentals through to advanced development, cyber security, dissertation support, and masters-level web application development. Each module combines theory with hands-on practical experience.</p>
                 </div>
             </section>
             
             <section class="modules-section" aria-labelledby="modules-heading">
-                <h2 id="modules-heading">Module Portfolio</h2>
-            
                 <div class="modules-grid" role="list">
-                    <article class="module-card cmm721" role="listitem">
-                        <a href="CMM721/index.html" aria-label="CMM721: Web Application Development - 20 credits masters level conversion course">
-                            <div class="module-number" aria-hidden="true">721</div>
-                            <h3 class="module-title">CMM721: Web Application Development</h3>
-                            <p class="module-description">Masters level conversion course providing comprehensive introduction to full-stack web development. Combining essential frontend and backend technologies with professional development practices. Students gain hands-on experience with HTML5, CSS3, JavaScript, Python, Django, and React.</p>
-                            <div class="module-details">20 credits • Masters Level Conversion • Full-Stack Focus</div>
-                            <ul class="module-features">
-                                <li>12 interactive slideshows</li>
-                                <li>Hands-on coding exercises</li>
-                                <li>Full-stack projects</li>
-                                <li>Modern frameworks</li>
-                            </ul>
+                    <!-- CMU422 -->
+                    <article class="module-card cmu422" role="listitem">
+                        <a href="CMU422/index.html" aria-label="CMU422: Fundamentals of Web Design - 20 credits undergraduate course">
+                            <div class="module-card-header">
+                                <div class="module-number" aria-hidden="true">422</div>
+                                <div class="module-icon">🎨</div>
+                            </div>
+                            <div class="module-card-body">
+                                <h3 class="module-title">Fundamentals of Web Design</h3>
+                                <p class="module-description">Master the essentials of modern web design with HTML5, CSS3, and JavaScript. Build responsive, accessible websites for real clients while learning industry-standard practices.</p>
+                                <div class="module-details">20 credits • Undergraduate • Front-end Focus</div>
+                                <ul class="module-features">
+                                    <li>12 interactive lectures</li>
+                                    <li>Client projects</li>
+                                    <li>Responsive design</li>
+                                    <li>Web standards</li>
+                                </ul>
+                            </div>
                         </a>
                     </article>
 
-                    <article class="module-card cmu422" role="listitem">
-                        <a href="CMU422/index.html" aria-label="CMU422: Fundamentals of Web Design - 20 credits undergraduate course">
-                            <div class="module-number" aria-hidden="true">422</div>
-                            <h3 class="module-title">CMU422: Fundamentals of Web Design</h3>
-                            <p class="module-description">A comprehensive introduction to web design fundamentals, covering HTML5, CSS3, and JavaScript. Students develop responsive websites for real clients.</p>
-                            <div class="module-details">20 credits • Undergraduate • Front-end Focus</div>
-                            <ul class="module-features">
-                                <li>12 interactive slideshows</li>
-                                <li>Hands-on coding exercises</li>
-                                <li>Client website project</li>
-                                <li>Comprehensive assessment</li>
-                            </ul>
-                        </a>
-                    </article>
-                    
+                    <!-- CMU529 -->
                     <article class="module-card cmu529" role="listitem">
                         <a href="CMU529/index.html" aria-label="CMU529: Advanced Web Development - 20 credits undergraduate course">
-                            <div class="module-number" aria-hidden="true">529</div>
-                            <h3 class="module-title">CMU529: Advanced Web Development</h3>
-                            <p class="module-description">Advanced web development techniques including modern frameworks, APIs, and full-stack development. Building sophisticated web applications.</p>
-                            <div class="module-details">20 credits • Undergraduate • Full-stack Focus</div>
-                            <ul class="module-features">
-                                <li>Modern frameworks & libraries</li>
-                                <li>API development & integration</li>
-                                <li>Database design & management</li>
-                                <li>Advanced project work</li>
-                            </ul>
+                            <div class="module-card-header">
+                                <div class="module-number" aria-hidden="true">529</div>
+                                <div class="module-icon">🚀</div>
+                            </div>
+                            <div class="module-card-body">
+                                <h3 class="module-title">Advanced Web Development</h3>
+                                <p class="module-description">Dive deep into full-stack development with PHP, MySQL, and Bootstrap. Create sophisticated e-commerce applications with secure authentication and database management.</p>
+                                <div class="module-details">20 credits • Undergraduate • Full-stack Focus</div>
+                                <ul class="module-features">
+                                    <li>PHP & MySQL</li>
+                                    <li>E-commerce project</li>
+                                    <li>API integration</li>
+                                    <li>Security practices</li>
+                                </ul>
+                            </div>
                         </a>
                     </article>
                     
+                    <!-- CMU540 -->
                     <article class="module-card cmu540" role="listitem">
                         <a href="CMU540/index.html" aria-label="CMU540: Cyber Security - 20 credits undergraduate course">
-                            <div class="module-number" aria-hidden="true">540</div>
-                            <h3 class="module-title">CMU540: Cyber Security</h3>
-                            <p class="module-description">Comprehensive cyber security principles, threat analysis, and defensive strategies. Understanding modern security challenges and solutions.</p>
-                            <div class="module-details">20 credits • Undergraduate • Security Focus</div>
-                            <ul class="module-features">
-                                <li>Security fundamentals</li>
-                                <li>Threat analysis & prevention</li>
-                                <li>Practical security tools</li>
-                                <li>Ethical hacking concepts</li>
-                            </ul>
+                            <div class="module-card-header">
+                                <div class="module-number" aria-hidden="true">540</div>
+                                <div class="module-icon">🔒</div>
+                            </div>
+                            <div class="module-card-body">
+                                <h3 class="module-title">Cyber Security</h3>
+                                <p class="module-description">Explore network and web application security in our OS³ Cyber Security Lab. Learn threat analysis, defensive strategies, and ethical hacking fundamentals.</p>
+                                <div class="module-details">20 credits • Undergraduate • Security Focus</div>
+                                <ul class="module-features">
+                                    <li>OWASP Top 10</li>
+                                    <li>Network security</li>
+                                    <li>Penetration testing</li>
+                                    <li>Hands-on labs</li>
+                                </ul>
+                            </div>
                         </a>
                     </article>
                     
+                    <!-- CMU601 -->
                     <article class="module-card cmu601" role="listitem">
                         <a href="CMU601/index.html" aria-label="CMU601: Dissertation - 40 credits final year project">
-                            <div class="module-number" aria-hidden="true">601</div>
-                            <h3 class="module-title">CMU601: Dissertation</h3>
-                            <p class="module-description">Undergraduate final year project support covering development initiation, project management tools, and design methodologies. Three focused lecture sessions provide practical guidance for successful dissertation completion.</p>
-                            <div class="module-details">40 credits • Undergraduate Final Year • Project Support</div>
-                            <ul class="module-features">
-                                <li>3 practical lecture sessions</li>
-                                <li>Development best practices</li>
-                                <li>GitHub & project management</li>
-                                <li>Design diagrams & documentation</li>
-                            </ul>
+                            <div class="module-card-header">
+                                <div class="module-number" aria-hidden="true">601</div>
+                                <div class="module-icon">📚</div>
+                            </div>
+                            <div class="module-card-body">
+                                <h3 class="module-title">Dissertation Support</h3>
+                                <p class="module-description">Essential guidance for your final year project. Master development workflows, GitHub collaboration, project management tools, and professional design documentation.</p>
+                                <div class="module-details">40 credits • Final Year • Project Support</div>
+                                <ul class="module-features">
+                                    <li>3 focused lectures</li>
+                                    <li>GitHub workflows</li>
+                                    <li>UML diagrams</li>
+                                    <li>Best practices</li>
+                                </ul>
+                            </div>
+                        </a>
+                    </article>
+
+                    <!-- CMM721 -->
+                    <article class="module-card cmm721" role="listitem">
+                        <a href="CMM721/index.html" aria-label="CMM721: Web Application Development - 20 credits masters level conversion course">
+                            <div class="module-card-header">
+                                <div class="module-number" aria-hidden="true">721</div>
+                                <div class="module-icon">💻</div>
+                            </div>
+                            <div class="module-card-body">
+                                <h3 class="module-title">Web Application Development</h3>
+                                <p class="module-description">Intensive masters-level introduction to full-stack development. Master HTML5, CSS3, JavaScript, Python, Django, and React through comprehensive hands-on projects.</p>
+                                <div class="module-details">20 credits • Masters Conversion • Full-Stack</div>
+                                <ul class="module-features">
+                                    <li>12 comprehensive lectures</li>
+                                    <li>Django & React</li>
+                                    <li>REST APIs</li>
+                                    <li>Modern frameworks</li>
+                                </ul>
+                            </div>
                         </a>
                     </article>
                 </div>
             </section>
             
             <section class="semester-section" aria-labelledby="semester2-heading">
+                <div class="semester-badge">2025-2026 Academic Year</div>
                 <h2 id="semester2-heading">Semester 2</h2>
                 <div class="semester-description">
-                    <p>Final year dissertation support module providing essential guidance for project development, management, and design documentation.</p>
+                    <p>Continued dissertation support with advanced guidance on project development, documentation, and final year project completion.</p>
                 </div>
             </section>
 
             <section class="modules-section" aria-labelledby="semester2-modules-heading">
                 <div class="modules-grid" role="list">
+                    <!-- CMU601 (Semester 2) -->
                     <article class="module-card cmu601" role="listitem">
                         <a href="CMU601/index.html" aria-label="CMU601: Dissertation - 40 credits final year project">
-                            <div class="module-number" aria-hidden="true">601</div>
-                            <h3 class="module-title">CMU601: Dissertation</h3>
-                            <p class="module-description">Undergraduate final year project support covering development initiation, project management tools, and design methodologies. Three focused lecture sessions provide practical guidance for successful dissertation completion.</p>
-                            <div class="module-details">40 credits • Undergraduate Final Year • Project Support</div>
-                            <ul class="module-features">
-                                <li>3 practical lecture sessions</li>
-                                <li>Development best practices</li>
-                                <li>GitHub & project management</li>
-                                <li>Design diagrams & documentation</li>
-                            </ul>
+                            <div class="module-card-header">
+                                <div class="module-number" aria-hidden="true">601</div>
+                                <div class="module-icon">📚</div>
+                            </div>
+                            <div class="module-card-body">
+                                <h3 class="module-title">Dissertation Support</h3>
+                                <p class="module-description">Essential guidance for your final year project. Master development workflows, GitHub collaboration, project management tools, and professional design documentation.</p>
+                                <div class="module-details">40 credits • Final Year • Project Support</div>
+                                <ul class="module-features">
+                                    <li>3 focused lectures</li>
+                                    <li>GitHub workflows</li>
+                                    <li>UML diagrams</li>
+                                    <li>Best practices</li>
+                                </ul>
+                            </div>
                         </a>
                     </article>
                 </div>
@@ -713,7 +1029,13 @@
         </main>
         
         <footer class="footer" role="contentinfo">
-            <p>&copy; 2025 James Williams | Birmingham Newman University | School of Business and Law</p>
+            <div class="footer-content">
+                <p>&copy; 2025 James Williams | Birmingham Newman University | School of Business and Law</p>
+                <div class="footer-links">
+                    <a href="https://jwilliams.science" target="_blank" rel="noopener">Personal Website</a>
+                    <a href="https://www.newman.ac.uk" target="_blank" rel="noopener">University Homepage</a>
+                </div>
+            </div>
         </footer>
     </div>
 </body>
