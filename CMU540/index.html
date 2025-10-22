@@ -94,45 +94,105 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            overflow-x: hidden;
+            color: #333;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
             background: white;
-            min-height: 100vh;
-            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
         .header {
             background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
             color: white;
-            padding: 30px 40px;
-            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(30deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(150deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(30deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(150deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(60deg, rgba(255,255,255,.05) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05)),
+                linear-gradient(60deg, rgba(255,255,255,.05) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .module-code {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            letter-spacing: 2px;
         }
         
         .header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 300;
+            font-size: 3.5em;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
         
-        .header .subtitle {
-            font-size: 1.2em;
-            margin-top: 10px;
+        .header-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+        
+        .header-details {
+            font-size: 1.1em;
             opacity: 0.9;
+            margin-top: 20px;
+        }
+        
+        .module-description {
+            padding: 40px;
+            background: linear-gradient(to right, rgba(46, 204, 113, 0.05), transparent);
+            border-left: 4px solid #2ecc71;
+            margin: 0;
+        }
+        
+        .module-description h2 {
+            color: #2ecc71;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .module-description p {
+            line-height: 1.8;
+            color: #555;
+            margin: 0;
+            font-size: 1.1em;
         }
         
         .tabs {
             display: flex;
             background: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
+            border-bottom: 3px solid #e9ecef;
             overflow-x: auto;
             scrollbar-width: thin;
             scrollbar-color: #2ecc71 #f8f9fa;
@@ -157,7 +217,7 @@
             border: none;
             cursor: pointer;
             font-size: 1.1em;
-            font-weight: 500;
+            font-weight: 600;
             color: #666;
             transition: all 0.3s ease;
             white-space: nowrap;
@@ -208,14 +268,14 @@
         }
         
         .slideshow-card {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f4 100%);
             border-radius: 15px;
             padding: 30px;
-            border: 2px solid #e9ecef;
+            border: 2px solid #c8e6c9;
             transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.15);
             position: relative;
             overflow: hidden;
         }
@@ -234,7 +294,7 @@
         
         .slideshow-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.3);
             border-color: #2ecc71;
         }
         
@@ -498,9 +558,20 @@
 
     <div class="container">
         <div class="header">
-            <h1>CMU540: Cyber Security</h1>
-            <div class="subtitle">12-Week Cyber Security Course | OS³ Newman Cyber Security Lab | Birmingham Newman University</div>
+            <div class="header-content">
+                <div class="module-code">CMU540</div>
+                <h1>Cyber Security</h1>
+                <div class="header-subtitle">Network & Web Application Security</div>
+                <div class="header-details">
+                    Birmingham Newman University | OS³ Newman Cyber Security Lab | 20 Credits | Undergraduate
+                </div>
+            </div>
         </div>
+        
+        <section class="module-description">
+            <h2>Course Overview</h2>
+            <p>A comprehensive cyber security course using the OS³ Newman Cyber Security Lab. Balances network security (30%) and web application security (70%) through hands-on practical modules, progressing from fundamentals through web security to network security.</p>
+        </section>
         
         <div class="tabs">
             <button class="tab active" onclick="showTab('slides')">Slides</button>
