@@ -28,17 +28,6 @@ A comprehensive teaching portfolio showcasing web development and cyber security
 - **Content:** 12 sessions using OS³ Newman Cyber Security Lab
 - **Assessment:** Comprehensive security assessment
 
-## 🎯 Learning Outcomes
-
-Students will develop skills in:
-- Contemporary web interface design
-- Responsive web development
-- Full-stack application development
-- Cyber security principles and practices
-- OWASP Top 10 security controls
-- Network security analysis
-- Professional development practices
-
 ## 📁 Repository Structure
 
 ```
