@@ -5,9 +5,11 @@ User-agent: *
 Allow: /
 
 # Allow access to all course content
+Allow: /CMM721/
 Allow: /CMU422/
 Allow: /CMU529/
 Allow: /CMU540/
+Allow: /CMU601/
 Allow: /slideshows/
 Allow: /quizzes/
 
