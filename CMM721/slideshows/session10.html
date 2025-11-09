@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 10: Web App Critique</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
+        .reveal .slides section.center { text-align: center; }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
+        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
+        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
+        .demo-container h3 { color: #9b59b6; margin-top: 0; }
+        .critique-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 15px 0; }
+        .critique-card { background: linear-gradient(135deg, #f3e5f5, #e1f5fe); border: 2px solid #9b59b6; border-radius: 8px; padding: 15px; }
+        .critique-card h4 { margin: 0 0 10px 0; color: #9b59b6; }
+        .score-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin: 5px; }
+        .score-good { background: #27ae60; color: white; }
+        .score-ok { background: #f39c12; color: white; }
+        .score-bad { background: #e74c3c; color: white; }
+        .wcag-level { padding: 5px 10px; border-radius: 5px; font-weight: bold; display: inline-block; margin: 5px; }
+        .wcag-a { background: #95a5a6; color: white; }
+        .wcag-aa { background: #3498db; color: white; }
+        .wcag-aaa { background: #27ae60; color: white; }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
+        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <section class="center">
+                <h1>Web Application Critique</h1>
+                <h3>CMM721: Web Application Development - Session 10</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Masters Level Conversion Course</p>
+                <p><small>3-hour session • 18 slides • 2 tasks • Live evaluation demos</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Evaluate web application usability</li>
+                    <li>Assess performance and optimization</li>
+                    <li>Conduct accessibility audits (WCAG)</li>
+                    <li>Check standards compliance</li>
+                    <li>Identify security vulnerabilities</li>
+                    <li>Consider ethical implications</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Why Critique Web Applications?</h2>
+                <ul>
+                    <li><strong>Learning:</strong> Understand what makes good UX</li>
+                    <li><strong>Improvement:</strong> Identify areas for enhancement</li>
+                    <li><strong>Standards:</strong> Ensure compliance with web standards</li>
+                    <li><strong>Accessibility:</strong> Make web inclusive for all users</li>
+                    <li><strong>Performance:</strong> Optimize user experience</li>
+                    <li><strong>Security:</strong> Protect users and data</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Critical Analysis:</strong> Essential skill for professional developers
+                </div>
+            </section>
+
+            <section>
+                <h2>Usability Evaluation Framework</h2>
+                <div class="critique-grid">
+                    <div class="critique-card">
+                        <h4>Learnability</h4>
+                        <p>How easy is it for first-time users?</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Efficiency</h4>
+                        <p>Can experienced users perform tasks quickly?</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Memorability</h4>
+                        <p>Can users remember how to use it?</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Errors</h4>
+                        <p>How many errors? How severe? Easy recovery?</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Satisfaction</h4>
+                        <p>Is the experience pleasant?</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Accessibility</h4>
+                        <p>Can everyone use it?</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Nielsen's 10 Usability Heuristics</h2>
+                <ol style="font-size: 0.95em;">
+                    <li><strong>Visibility of system status</strong> - Keep users informed</li>
+                    <li><strong>Match between system and real world</strong> - Use familiar language</li>
+                    <li><strong>User control and freedom</strong> - Provide undo/redo</li>
+                    <li><strong>Consistency and standards</strong> - Follow conventions</li>
+                    <li><strong>Error prevention</strong> - Better than good error messages</li>
+                    <li><strong>Recognition rather than recall</strong> - Minimize memory load</li>
+                    <li><strong>Flexibility and efficiency</strong> - Accelerators for experts</li>
+                    <li><strong>Aesthetic and minimalist design</strong> - No unnecessary info</li>
+                    <li><strong>Help users recognize, diagnose, and recover from errors</strong></li>
+                    <li><strong>Help and documentation</strong> - When needed, easy to search</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>🎯 LIVE DEMO: Usability Analysis</h2>
+                <div class="demo-container">
+                    <h3>Example: E-commerce Checkout</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                        <h4 style="color: #27ae60; margin-top: 0;">✅ Good Practices:</h4>
+                        <ul>
+                            <li>Progress indicator shows current step (1 of 3)</li>
+                            <li>Form fields clearly labeled with helpful hints</li>
+                            <li>Real-time validation with clear error messages</li>
+                            <li>Guest checkout option (no forced registration)</li>
+                            <li>Order summary visible throughout process</li>
+                        </ul>
+                        
+                        <h4 style="color: #e74c3c; margin-top: 20px;">❌ Bad Practices:</h4>
+                        <ul>
+                            <li>No save progress - lose everything on refresh</li>
+                            <li>Requires account creation before showing total cost</li>
+                            <li>CAPTCHA on every page</li>
+                            <li>Timeout after 5 minutes with no warning</li>
+                            <li>No back button - must restart entire process</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Performance Evaluation</h2>
+                <h3>Key Metrics:</h3>
+                <ul>
+                    <li><strong>First Contentful Paint (FCP):</strong> &lt; 1.8s</li>
+                    <li><strong>Largest Contentful Paint (LCP):</strong> &lt; 2.5s</li>
+                    <li><strong>Time to Interactive (TTI):</strong> &lt; 3.8s</li>
+                    <li><strong>Cumulative Layout Shift (CLS):</strong> &lt; 0.1</li>
+                    <li><strong>Total Blocking Time (TBT):</strong> &lt; 200ms</li>
+                </ul>
+                <h3>Tools:</h3>
+                <ul>
+                    <li>Google Lighthouse</li>
+                    <li>WebPageTest</li>
+                    <li>Chrome DevTools Performance tab</li>
+                    <li>GTmetrix</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>🎯 Performance Score Example</h2>
+                <div class="demo-container">
+                    <h3>Lighthouse Audit Results</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                            <div style="font-size: 3em; font-weight: bold; color: #27ae60;">92</div>
+                            <div style="color: #666;">Performance</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                            <div style="font-size: 3em; font-weight: bold; color: #27ae60;">98</div>
+                            <div style="color: #666;">Accessibility</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                            <div style="font-size: 3em; font-weight: bold; color: #27ae60;">100</div>
+                            <div style="color: #666;">Best Practices</div>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                            <div style="font-size: 3em; font-weight: bold; color: #f39c12;">87</div>
+                            <div style="color: #666;">SEO</div>
+                        </div>
+                    </div>
+                    <p style="color: #666; font-size: 0.9em; text-align: center;">Scores: 90-100 = Good, 50-89 = Needs Improvement, 0-49 = Poor</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 1: Usability & Performance Audit</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Conduct comprehensive usability and performance evaluation</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Select a live web application (e.g., e-commerce, news, social)</li>
+                        <li>Apply Nielsen's 10 heuristics - rate each (1-5)</li>
+                        <li>Run Lighthouse audit - analyze all 4 categories</li>
+                        <li>Test on mobile and desktop</li>
+                        <li>Document 5 usability issues with severity ratings</li>
+                        <li>Identify 3 performance bottlenecks</li>
+                        <li>Provide actionable recommendations</li>
+                    </ol>
+                    <h3>Deliverables:</h3>
+                    <ul>
+                        <li>Written report (1000-1500 words)</li>
+                        <li>Screenshots with annotations</li>
+                        <li>Lighthouse report screenshots</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Accessibility (WCAG 2.1)</h2>
+                <div class="highlight">
+                    <strong>WCAG:</strong> Web Content Accessibility Guidelines
+                </div>
+                <h3>Four Principles (POUR):</h3>
+                <ul>
+                    <li><strong>Perceivable:</strong> Can users perceive the content?</li>
+                    <li><strong>Operable:</strong> Can users operate the interface?</li>
+                    <li><strong>Understandable:</strong> Can users understand the content?</li>
+                    <li><strong>Robust:</strong> Works with assistive technologies?</li>
+                </ul>
+                <h3>Conformance Levels:</h3>
+                <span class="wcag-level wcag-a">Level A</span> Minimum<br>
+                <span class="wcag-level wcag-aa">Level AA</span> Required (legal standard)<br>
+                <span class="wcag-level wcag-aaa">Level AAA</span> Enhanced
+            </section>
+
+            <section>
+                <h2>Common Accessibility Issues</h2>
+                <div class="critique-grid">
+                    <div class="critique-card">
+                        <h4>Color Contrast</h4>
+                        <p>Text not readable against background (WCAG 4.5:1 ratio)</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Missing Alt Text</h4>
+                        <p>Images without descriptive alternatives</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Keyboard Navigation</h4>
+                        <p>Can't navigate without mouse</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Form Labels</h4>
+                        <p>Inputs without associated labels</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>Heading Structure</h4>
+                        <p>Skipped heading levels (h1→h3)</p>
+                    </div>
+                    <div class="critique-card">
+                        <h4>ARIA Misuse</h4>
+                        <p>Incorrect or unnecessary ARIA attributes</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 LIVE DEMO: Accessibility Testing</h2>
+                <div class="demo-container">
+                    <h3>Testing Tools & Techniques</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <h4 style="margin-top: 0;">Automated Tools:</h4>
+                        <ul>
+                            <li><strong>WAVE:</strong> Web Accessibility Evaluation Tool</li>
+                            <li><strong>axe DevTools:</strong> Browser extension</li>
+                            <li><strong>Lighthouse:</strong> Accessibility score</li>
+                            <li><strong>Pa11y:</strong> Command-line tool</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: 15px;">Manual Tests:</h4>
+                        <ul>
+                            <li><strong>Keyboard only:</strong> Tab through entire page</li>
+                            <li><strong>Screen reader:</strong> NVDA (Windows) or VoiceOver (Mac)</li>
+                            <li><strong>Zoom to 200%:</strong> Check text reflow</li>
+                            <li><strong>Color blindness:</strong> Use ColorOracle simulator</li>
+                            <li><strong>Disable CSS:</strong> Check semantic structure</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Code Examples: Accessibility</h2>
+                <h3>❌ Bad:</h3>
+                <div class="code-example">
+                    &lt;div onclick="submitForm()"&gt;Submit&lt;/div&gt;<br>
+                    &lt;img src="logo.png"&gt;<br>
+                    &lt;input type="text" placeholder="Name"&gt;<br>
+                    &lt;span style="color: #ccc"&gt;Click here&lt;/span&gt;
+                </div>
+                <h3>✅ Good:</h3>
+                <div class="code-example">
+                    &lt;button type="submit"&gt;Submit&lt;/button&gt;<br>
+                    &lt;img src="logo.png" alt="Company Logo"&gt;<br>
+                    &lt;label for="name"&gt;Name:&lt;/label&gt;<br>
+                    &lt;input type="text" id="name" name="name"&gt;<br>
+                    &lt;a href="/page" style="color: #0066cc"&gt;Read more about our services&lt;/a&gt;
+                </div>
+            </section>
+
+            <section>
+                <h2>Standards Compliance</h2>
+                <h3>HTML Validation:</h3>
+                <ul>
+                    <li><strong>W3C Markup Validator:</strong> validator.w3.org</li>
+                    <li>Check for proper DOCTYPE</li>
+                    <li>Validate semantic structure</li>
+                    <li>Ensure closing tags</li>
+                </ul>
+                <h3>CSS Validation:</h3>
+                <ul>
+                    <li><strong>W3C CSS Validator:</strong> jigsaw.w3.org/css-validator</li>
+                    <li>Check vendor prefixes</li>
+                    <li>Validate syntax</li>
+                </ul>
+                <h3>Best Practices:</h3>
+                <ul>
+                    <li>Use semantic HTML5 elements</li>
+                    <li>Follow HTML/CSS specifications</li>
+                    <li>Test across browsers</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Task 2: Accessibility Audit</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Conduct comprehensive accessibility evaluation</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Select a government or education website</li>
+                        <li>Run WAVE accessibility tool - document all errors</li>
+                        <li>Run Lighthouse accessibility audit</li>
+                        <li>Test keyboard navigation - document issues</li>
+                        <li>Test with screen reader (NVDA/VoiceOver)</li>
+                        <li>Check color contrast (minimum 4.5:1)</li>
+                        <li>Validate HTML and check semantic structure</li>
+                        <li>Rate against WCAG 2.1 Level AA criteria</li>
+                    </ol>
+                    <h3>Deliverables:</h3>
+                    <ul>
+                        <li>Accessibility audit report (1500-2000 words)</li>
+                        <li>WCAG compliance checklist</li>
+                        <li>Prioritized recommendations</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Security Considerations</h2>
+                <h3>Common Vulnerabilities:</h3>
+                <ul>
+                    <li><strong>XSS:</strong> Cross-Site Scripting</li>
+                    <li><strong>CSRF:</strong> Cross-Site Request Forgery</li>
+                    <li><strong>SQL Injection:</strong> Unsanitized database queries</li>
+                    <li><strong>Insecure Authentication:</strong> Weak passwords, no 2FA</li>
+                    <li><strong>Exposed Sensitive Data:</strong> API keys in client code</li>
+                    <li><strong>Missing HTTPS:</strong> Unencrypted connections</li>
+                </ul>
+                <h3>Security Headers:</h3>
+                <div class="code-example">
+                    Content-Security-Policy<br>
+                    X-Content-Type-Options: nosniff<br>
+                    X-Frame-Options: DENY<br>
+                    Strict-Transport-Security
+                </div>
+            </section>
+
+            <section>
+                <h2>Ethical Considerations</h2>
+                <h3>Privacy:</h3>
+                <ul>
+                    <li>Clear privacy policy</li>
+                    <li>Informed consent for data collection</li>
+                    <li>GDPR compliance (for EU users)</li>
+                    <li>Right to deletion</li>
+                </ul>
+                <h3>Dark Patterns (Anti-patterns):</h3>
+                <ul>
+                    <li><strong>Trick questions:</strong> Confusing opt-out language</li>
+                    <li><strong>Roach motel:</strong> Easy to get in, hard to leave</li>
+                    <li><strong>Forced continuity:</strong> Hidden recurring charges</li>
+                    <li><strong>Bait and switch:</strong> Misleading UI elements</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Ethics:</strong> Design with user's best interest in mind
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 Dark Pattern Examples</h2>
+                <div class="demo-container">
+                    <h3>Common Manipulative Designs</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: #e74c3c; margin: 0 0 10px 0;">❌ Confirm Shaming</h4>
+                            <p style="margin: 0;">"No thanks, I don't want to save money"</p>
+                            <small style="color: #666;">Makes user feel bad for declining</small>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: #e74c3c; margin: 0 0 10px 0;">❌ Hidden Costs</h4>
+                            <p style="margin: 0;">£10 product → £25 at checkout (fees, shipping)</p>
+                            <small style="color: #666;">Surprise charges at final step</small>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: #e74c3c; margin: 0 0 10px 0;">❌ Misdirection</h4>
+                            <p style="margin: 0;">Giant "DOWNLOAD" ad vs tiny actual download button</p>
+                            <small style="color: #666;">Deliberately confusing UI</small>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: #27ae60; margin: 0 0 10px 0;">✅ Ethical Alternative</h4>
+                            <p style="margin: 0;">Clear options: "Yes, I'd like updates" or "No thanks"</p>
+                            <small style="color: #666;">Honest, respectful language</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Critique Report Structure</h2>
+                <ol>
+                    <li><strong>Introduction:</strong> App overview, purpose, target audience</li>
+                    <li><strong>Methodology:</strong> Tools used, testing approach</li>
+                    <li><strong>Usability Analysis:</strong> Heuristic evaluation, issues found</li>
+                    <li><strong>Performance:</strong> Metrics, bottlenecks, recommendations</li>
+                    <li><strong>Accessibility:</strong> WCAG compliance, barriers identified</li>
+                    <li><strong>Standards:</strong> HTML/CSS validation, browser compatibility</li>
+                    <li><strong>Security:</strong> Vulnerabilities, best practices</li>
+                    <li><strong>Ethics:</strong> Privacy, dark patterns, social responsibility</li>
+                    <li><strong>Recommendations:</strong> Prioritized action items</li>
+                    <li><strong>Conclusion:</strong> Overall assessment, rating</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>Be objective:</strong> Support claims with evidence</li>
+                    <li><strong>Be specific:</strong> "Button too small" → "Submit button is 20x20px (should be min 44x44px)"</li>
+                    <li><strong>Prioritize:</strong> Critical → High → Medium → Low</li>
+                    <li><strong>Be constructive:</strong> Offer solutions, not just problems</li>
+                    <li><strong>Consider context:</strong> Target audience, use cases</li>
+                    <li><strong>Test thoroughly:</strong> Multiple devices, browsers, scenarios</li>
+                    <li><strong>Document everything:</strong> Screenshots, metrics, quotes</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Next Session: Comparative Critique</h2>
+                <ul>
+                    <li>Comparing multiple web applications</li>
+                    <li>Framework comparison (React vs Vue vs Angular)</li>
+                    <li>Design decisions and trade-offs</li>
+                    <li>Scalability and maintainability</li>
+                    <li>Technology stack evaluation</li>
+                    <li>Competitive analysis</li>
+                </ul>
+                <p><strong>Preparation:</strong> Select 2-3 similar apps to compare (e.g., Twitter/Mastodon/Bluesky)</p>
+            </section>
+
+            <section class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> WCAG Guidelines, Nielsen Norman Group, Web.dev</p>
+                <p>Thank you for your attention!</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
+            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>

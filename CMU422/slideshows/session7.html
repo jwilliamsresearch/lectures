@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 7: JavaScript Events and Interactivity</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dom-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dom-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .dom-button {
+            padding: 10px 15px;
+            font-size: 1em;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dom-button:hover {
+            background-color: #1976d2;
+        }
+
+        .dom-button.danger {
+            background-color: #f44336;
+        }
+
+        .dom-button.danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .dom-button.success {
+            background-color: #4caf50;
+        }
+
+        .dom-button.success:hover {
+            background-color: #45a049;
+        }
+
+        .dom-display {
+            min-height: 100px;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dom-item {
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .dom-item:hover {
+            background-color: #bbdefb;
+            transform: scale(1.05);
+        }
+
+        .dom-item.highlighted {
+            background-color: #ffeb3b;
+            border-color: #fbc02d;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.2);
+        }
+
+        .color-option.selected {
+            border-width: 4px;
+            transform: scale(1.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>JavaScript Events and Interactivity</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 7</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Building responsive user interfaces</p>
+                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand JavaScript event handling</li>
+                    <li>Master different types of events</li>
+                    <li>Create interactive user interfaces</li>
+                    <li>Handle form submissions and validation</li>
+                    <li>Build responsive and accessible interactions</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: What are Events? -->
+            <section>
+                <h2>What are JavaScript Events?</h2>
+                <div class="highlight">
+                    <strong>Events</strong> are actions or occurrences that happen in the browser
+                </div>
+                <ul>
+                    <li>User interactions (clicks, key presses, mouse movements)</li>
+                    <li>Browser actions (page load, resize, scroll)</li>
+                    <li>Form submissions and input changes</li>
+                    <li>Network events (AJAX responses)</li>
+                </ul>
+                <div class="code-example">
+                    // Event example<br>
+                    button.addEventListener('click', function() {<br>
+                    &nbsp;&nbsp;console.log('Button clicked!');<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 4: Event Types -->
+            <section>
+                <h2>Common Event Types</h2>
+                <div class="code-example">
+                    // Mouse events<br>
+                    'click', 'dblclick', 'mouseenter', 'mouseleave'<br><br>
+                    // Keyboard events<br>
+                    'keydown', 'keyup', 'keypress'<br><br>
+                    // Form events<br>
+                    'submit', 'change', 'input', 'focus', 'blur'<br><br>
+                    // Document events<br>
+                    'load', 'DOMContentLoaded', 'resize', 'scroll'
+                </div>
+                <ul>
+                    <li>Mouse events for user interactions</li>
+                    <li>Keyboard events for text input</li>
+                    <li>Form events for data handling</li>
+                    <li>Document events for page lifecycle</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: Event Handling Methods -->
+            <section>
+                <h2>Event Handling Methods</h2>
+                <div class="code-example">
+                    // Method 1: addEventListener (recommended)<br>
+                    element.addEventListener('click', function(event) {<br>
+                    &nbsp;&nbsp;console.log('Clicked!');<br>
+                    });<br><br>
+                    // Method 2: Inline event handlers<br>
+                    &lt;button onclick="handleClick()"&gt;Click me&lt;/button&gt;<br><br>
+                    // Method 3: Event properties<br>
+                    element.onclick = function() {<br>
+                    &nbsp;&nbsp;console.log('Clicked!');<br>
+                    };
+                </div>
+                <ul>
+                    <li><code>addEventListener</code> is the modern approach</li>
+                    <li>Allows multiple event listeners</li>
+                    <li>Better control over event handling</li>
+                </ul>
+
+                <!-- Interactive DOM Manipulation Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Interactive DOM Manipulation</h3>
+                    <div class="demo-container">
+                        <div class="dom-demo">
+                            <div class="dom-controls">
+                                <button class="dom-button" onclick="addElement()">Add
+                                    Element</button>
+                                <button class="dom-button danger" onclick="removeElement()">Remove
+                                    Element</button>
+                                <button class="dom-button success"
+                                    onclick="highlightElements()">Highlight All</button>
+                                <button class="dom-button" onclick="clearHighlights()">Clear
+                                    Highlights</button>
+                            </div>
+
+                            <div class="color-picker">
+                                <span>Change color:</span>
+                                <div class="color-option" style="background-color: #e3f2fd;"
+                                    onclick="changeColor('#e3f2fd')"></div>
+                                <div class="color-option" style="background-color: #f3e5f5;"
+                                    onclick="changeColor('#f3e5f5')"></div>
+                                <div class="color-option" style="background-color: #e8f5e8;"
+                                    onclick="changeColor('#e8f5e8')"></div>
+                                <div class="color-option" style="background-color: #fff3e0;"
+                                    onclick="changeColor('#fff3e0')"></div>
+                            </div>
+
+                            <div id="dom-display" class="dom-display">
+                                <div class="dom-item">Click the buttons to manipulate me!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        This demo shows DOM manipulation, event handling, and dynamic styling!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 6: Event Object -->
+            <section>
+                <h2>The Event Object</h2>
+                <div class="code-example">
+                    element.addEventListener('click', function(event) {<br>
+                    &nbsp;&nbsp;console.log(event.type); // 'click'<br>
+                    &nbsp;&nbsp;console.log(event.target); // Element that was clicked<br>
+                    &nbsp;&nbsp;console.log(event.clientX); // Mouse X position<br>
+                    &nbsp;&nbsp;console.log(event.clientY); // Mouse Y position<br>
+                    &nbsp;&nbsp;event.preventDefault(); // Prevent default behavior<br>
+                    &nbsp;&nbsp;event.stopPropagation(); // Stop event bubbling<br>
+                    });
+                </div>
+                <ul>
+                    <li>Contains information about the event</li>
+                    <li>Provides methods to control event behavior</li>
+                    <li>Automatically passed to event handlers</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Event Bubbling and Capturing -->
+            <section>
+                <h2>Event Bubbling and Capturing</h2>
+                <div class="code-example">
+                    // Event bubbling (default)<br>
+                    parent.addEventListener('click', function() {<br>
+                    &nbsp;&nbsp;console.log('Parent clicked');<br>
+                    });<br><br>
+                    // Event capturing<br>
+                    parent.addEventListener('click', function() {<br>
+                    &nbsp;&nbsp;console.log('Parent clicked');<br>
+                    }, true); // true enables capturing<br><br>
+                    // Stop propagation<br>
+                    child.addEventListener('click', function(event) {<br>
+                    &nbsp;&nbsp;event.stopPropagation();<br>
+                    });
+                </div>
+                <ul>
+                    <li>Events bubble up from child to parent</li>
+                    <li>Capturing goes from parent to child</li>
+                    <li>Use <code>stopPropagation()</code> to prevent bubbling</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Form Events -->
+            <section>
+                <h2>Form Events</h2>
+                <div class="code-example">
+                    const form = document.querySelector('form');<br><br>
+                    // Form submission<br>
+                    form.addEventListener('submit', function(event) {<br>
+                    &nbsp;&nbsp;event.preventDefault();<br>
+                    &nbsp;&nbsp;// Handle form data<br>
+                    });<br><br>
+                    // Input changes<br>
+                    input.addEventListener('input', function(event) {<br>
+                    &nbsp;&nbsp;console.log('Input value:', event.target.value);<br>
+                    });<br><br>
+                    // Focus events<br>
+                    input.addEventListener('focus', function() {<br>
+                    &nbsp;&nbsp;this.style.borderColor = 'blue';<br>
+                    });
+                </div>
+                <ul>
+                    <li><code>submit</code>: Form submission</li>
+                    <li><code>input</code>: Value changes</li>
+                    <li><code>focus/blur</code>: Field focus</li>
+                    <li><code>change</code>: Value confirmed</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Keyboard Events -->
+            <section>
+                <h2>Keyboard Events</h2>
+                <div class="code-example">
+                    document.addEventListener('keydown', function(event) {<br>
+                    &nbsp;&nbsp;console.log('Key pressed:', event.key);<br>
+                    &nbsp;&nbsp;console.log('Key code:', event.code);<br><br>
+                    &nbsp;&nbsp;// Check for specific keys<br>
+                    &nbsp;&nbsp;if (event.key === 'Enter') {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Enter pressed!');<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;// Check for modifier keys<br>
+                    &nbsp;&nbsp;if (event.ctrlKey && event.key === 's') {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;event.preventDefault();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Save shortcut!');<br>
+                    &nbsp;&nbsp;}<br>
+                    });
+                </div>
+                <ul>
+                    <li><code>keydown</code>: Key pressed down</li>
+                    <li><code>keyup</code>: Key released</li>
+                    <li><code>keypress</code>: Character input</li>
+                    <li>Check for specific keys and modifiers</li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Mouse Events -->
+            <section>
+                <h2>Mouse Events</h2>
+                <div class="code-example">
+                    element.addEventListener('click', function(event) {<br>
+                    &nbsp;&nbsp;console.log('Click at:', event.clientX, event.clientY);<br>
+                    });<br><br>
+                    element.addEventListener('mouseenter', function() {<br>
+                    &nbsp;&nbsp;this.style.backgroundColor = 'yellow';<br>
+                    });<br><br>
+                    element.addEventListener('mouseleave', function() {<br>
+                    &nbsp;&nbsp;this.style.backgroundColor = 'white';<br>
+                    });<br><br>
+                    element.addEventListener('mousemove', function(event) {<br>
+                    &nbsp;&nbsp;// Track mouse movement<br>
+                    });
+                </div>
+                <ul>
+                    <li><code>click</code>: Single click</li>
+                    <li><code>dblclick</code>: Double click</li>
+                    <li><code>mouseenter/mouseleave</code>: Hover effects</li>
+                    <li><code>mousemove</code>: Mouse tracking</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Event Delegation -->
+            <section>
+                <h2>Event Delegation</h2>
+                <div class="code-example">
+                    // Instead of adding listeners to each item<br>
+                    const list = document.querySelector('ul');<br><br>
+                    list.addEventListener('click', function(event) {<br>
+                    &nbsp;&nbsp;if (event.target.tagName === 'LI') {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('List item clicked:',
+                    event.target.textContent);<br>
+                    &nbsp;&nbsp;}<br>
+                    });<br><br>
+                    // Works for dynamically added items too
+                </div>
+                <ul>
+                    <li>Attach event listener to parent element</li>
+                    <li>Use <code>event.target</code> to identify specific elements</li>
+                    <li>Efficient for multiple similar elements</li>
+                    <li>Works with dynamically added content</li>
+                </ul>
+            </section>
+
+            <!-- Slide 12: Form Validation -->
+            <section>
+                <h2>Client-Side Form Validation</h2>
+                <div class="code-example">
+                    form.addEventListener('submit', function(event) {<br>
+                    &nbsp;&nbsp;event.preventDefault();<br><br>
+                    &nbsp;&nbsp;const email = document.getElementById('email').value;<br>
+                    &nbsp;&nbsp;const password = document.getElementById('password').value;<br><br>
+                    &nbsp;&nbsp;if (!email.includes('@')) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;showError('Please enter a valid email');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;if (password.length < 8) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;showError('Password must be at least 8
+                        characters');<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+                        &nbsp;&nbsp;}<br><br>
+                        &nbsp;&nbsp;// Form is valid, submit it<br>
+                        &nbsp;&nbsp;this.submit();<br>
+                        });
+                </div>
+                <ul>
+                    <li>Validate before form submission</li>
+                    <li>Provide immediate user feedback</li>
+                    <li>Always validate on server side too</li>
+                    <li>Use HTML5 validation attributes</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: AJAX and Fetch -->
+            <section>
+                <h2>AJAX and Fetch API</h2>
+                <div class="code-example">
+                    // Fetch data from server<br>
+                    fetch('/api/data')<br>
+                    &nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;.then(data => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Data received:', data);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;updateUI(data);<br>
+                    &nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;.catch(error => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);<br>
+                    &nbsp;&nbsp;});<br><br>
+                    // POST data to server<br>
+                    fetch('/api/submit', {<br>
+                    &nbsp;&nbsp;method: 'POST',<br>
+                    &nbsp;&nbsp;headers: { 'Content-Type': 'application/json' },<br>
+                    &nbsp;&nbsp;body: JSON.stringify(data)<br>
+                    });
+                </div>
+                <ul>
+                    <li>Fetch API for HTTP requests</li>
+                    <li>Promise-based approach</li>
+                    <li>Handle success and error cases</li>
+                    <li>Update UI with received data</li>
+                </ul>
+            </section>
+
+            <!-- Slide 14: Local Storage -->
+            <section>
+                <h2>Local Storage</h2>
+                <div class="code-example">
+                    // Store data<br>
+                    localStorage.setItem('username', 'john');<br>
+                    localStorage.setItem('preferences', JSON.stringify({theme: 'dark'}));<br><br>
+                    // Retrieve data<br>
+                    const username = localStorage.getItem('username');<br>
+                    const preferences = JSON.parse(localStorage.getItem('preferences'));<br><br>
+                    // Remove data<br>
+                    localStorage.removeItem('username');<br>
+                    localStorage.clear(); // Remove all<br><br>
+                    // Session storage (cleared when tab closes)<br>
+                    sessionStorage.setItem('temp', 'value');
+                </div>
+                <ul>
+                    <li>Store data in browser</li>
+                    <li>Persists between sessions</li>
+                    <li>Limited to strings (use JSON for objects)</li>
+                    <li>5-10MB storage limit</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15: Animation and Transitions -->
+            <section>
+                <h2>Animation and Transitions</h2>
+                <div class="code-example">
+                    // CSS transitions<br>
+                    element.style.transition = 'all 0.3s ease';<br>
+                    element.style.transform = 'scale(1.1)';<br><br>
+                    // JavaScript animations<br>
+                    function animate(element, duration) {<br>
+                    &nbsp;&nbsp;const start = performance.now();<br>
+                    &nbsp;&nbsp;function update(currentTime) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const elapsed = currentTime - start;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const progress = Math.min(elapsed / duration, 1);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;element.style.opacity = progress;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (progress < 1) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestAnimationFrame(update);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;requestAnimationFrame(update);<br>
+                        }
+                </div>
+                <ul>
+                    <li>CSS transitions for simple animations</li>
+                    <li>JavaScript for complex animations</li>
+                    <li>Use <code>requestAnimationFrame</code> for smooth animations</li>
+                    <li>Consider performance and accessibility</li>
+                </ul>
+            </section>
+
+            <!-- Slide 16: Accessibility -->
+            <section>
+                <h2>Accessibility Best Practices</h2>
+                <ul>
+                    <li>Use semantic HTML elements</li>
+                    <li>Provide keyboard navigation</li>
+                    <li>Add ARIA attributes when needed</li>
+                    <li>Ensure focus management</li>
+                    <li>Test with screen readers</li>
+                    <li>Provide alternative text for images</li>
+                    <li>Use sufficient color contrast</li>
+                </ul>
+                <div class="code-example">
+                    // Keyboard navigation<br>
+                    element.addEventListener('keydown', function(event) {<br>
+                    &nbsp;&nbsp;if (event.key === 'Enter' || event.key === ' ') {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;event.preventDefault();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;handleClick();<br>
+                    &nbsp;&nbsp;}<br>
+                    });<br><br>
+                    // ARIA attributes<br>
+                    element.setAttribute('aria-label', 'Close dialog');<br>
+                    element.setAttribute('role', 'button');
+                </div>
+            </section>
+
+            <!-- Slide 17: Error Handling -->
+            <section>
+                <h2>Error Handling</h2>
+                <div class="code-example">
+                    // Try-catch for synchronous code<br>
+                    try {<br>
+                    &nbsp;&nbsp;const result = riskyOperation();<br>
+                    &nbsp;&nbsp;console.log(result);<br>
+                    } catch (error) {<br>
+                    &nbsp;&nbsp;console.error('Error occurred:', error.message);<br>
+                    &nbsp;&nbsp;showUserFriendlyError();<br>
+                    }<br><br>
+                    // Promise error handling<br>
+                    fetch('/api/data')<br>
+                    &nbsp;&nbsp;.then(response => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Network response was not
+                    ok');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return response.json();<br>
+                    &nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;.catch(error => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Fetch error:', error);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;showErrorMessage(error.message);<br>
+                    &nbsp;&nbsp;});
+                </div>
+                <ul>
+                    <li>Handle errors gracefully</li>
+                    <li>Provide user-friendly error messages</li>
+                    <li>Log errors for debugging</li>
+                    <li>Use try-catch and promise error handling</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Interactive Form</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>interactive-form.html</code></li>
+                        <li>Build a registration form with:</li>
+                        <ul>
+                            <li>Name, email, password, and confirm password fields</li>
+                            <li>Real-time validation as user types</li>
+                            <li>Password strength indicator</li>
+                            <li>Submit button with loading state</li>
+                        </ul>
+                        <li>Add event listeners for:</li>
+                        <ul>
+                            <li>Input validation on blur and input events</li>
+                            <li>Form submission with preventDefault</li>
+                            <li>Password strength calculation</li>
+                        </ul>
+                        <li>Use local storage to remember form data</li>
+                        <li>Add visual feedback for validation states</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand form events and validation</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Event Best Practices -->
+            <section>
+                <h2>Event Handling Best Practices</h2>
+                <ul>
+                    <li>Use <code>addEventListener</code> instead of inline handlers</li>
+                    <li>Remove event listeners when elements are destroyed</li>
+                    <li>Use event delegation for multiple elements</li>
+                    <li>Prevent default behavior when appropriate</li>
+                    <li>Handle errors gracefully</li>
+                    <li>Consider performance for frequent events</li>
+                    <li>Test across different browsers</li>
+                </ul>
+                <div class="code-example">
+                    // Remove event listener<br>
+                    const handler = function() { console.log('clicked'); };<br>
+                    element.addEventListener('click', handler);<br>
+                    element.removeEventListener('click', handler);<br><br>
+                    // Throttle frequent events<br>
+                    let timeout;<br>
+                    element.addEventListener('scroll', function() {<br>
+                    &nbsp;&nbsp;clearTimeout(timeout);<br>
+                    &nbsp;&nbsp;timeout = setTimeout(handleScroll, 100);<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 21: Performance Considerations -->
+            <section>
+                <h2>Performance Considerations</h2>
+                <ul>
+                    <li>Throttle or debounce frequent events</li>
+                    <li>Use event delegation for many elements</li>
+                    <li>Avoid inline event handlers</li>
+                    <li>Remove unused event listeners</li>
+                    <li>Use passive event listeners when possible</li>
+                    <li>Consider using Intersection Observer for scroll events</li>
+                </ul>
+                <div class="code-example">
+                    // Passive event listener<br>
+                    element.addEventListener('touchstart', handler, { passive: true });<br><br>
+                    // Intersection Observer<br>
+                    const observer = new IntersectionObserver(entries => {<br>
+                    &nbsp;&nbsp;entries.forEach(entry => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (entry.isIntersecting) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entry.target.classList.add('visible');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;});<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 22: Debugging Events -->
+            <section>
+                <h2>Debugging Event Issues</h2>
+                <ul>
+                    <li>Use browser developer tools</li>
+                    <li>Check event listener attachment</li>
+                    <li>Verify event target and currentTarget</li>
+                    <li>Monitor event propagation</li>
+                    <li>Check for JavaScript errors</li>
+                    <li>Test event timing</li>
+                </ul>
+                <div class="code-example">
+                    // Debug event listeners<br>
+                    element.addEventListener('click', function(event) {<br>
+                    &nbsp;&nbsp;console.log('Event target:', event.target);<br>
+                    &nbsp;&nbsp;console.log('Current target:', event.currentTarget);<br>
+                    &nbsp;&nbsp;console.log('Event phase:', event.eventPhase);<br>
+                    &nbsp;&nbsp;console.trace('Event call stack');<br>
+                    });<br><br>
+                    // Monitor all events<br>
+                    const originalAddEventListener = EventTarget.prototype.addEventListener;<br>
+                    EventTarget.prototype.addEventListener = function(type, listener, options) {<br>
+                    &nbsp;&nbsp;console.log('Adding listener:', type, 'to', this);<br>
+                    &nbsp;&nbsp;return originalAddEventListener.call(this, type, listener,
+                    options);<br>
+                    };
+                </div>
+            </section>
+
+            <!-- Slide 23: Mobile Events -->
+            <section>
+                <h2>Mobile-Specific Events</h2>
+                <div class="code-example">
+                    // Touch events<br>
+                    element.addEventListener('touchstart', function(event) {<br>
+                    &nbsp;&nbsp;console.log('Touch started');<br>
+                    &nbsp;&nbsp;event.preventDefault(); // Prevent default touch behavior<br>
+                    });<br><br>
+                    element.addEventListener('touchmove', function(event) {<br>
+                    &nbsp;&nbsp;console.log('Touch moved');<br>
+                    });<br><br>
+                    element.addEventListener('touchend', function(event) {<br>
+                    &nbsp;&nbsp;console.log('Touch ended');<br>
+                    });<br><br>
+                    // Device orientation<br>
+                    window.addEventListener('orientationchange', function() {<br>
+                    &nbsp;&nbsp;console.log('Orientation changed');<br>
+                    });
+                </div>
+                <ul>
+                    <li>Touch events for mobile interactions</li>
+                    <li>Orientation change events</li>
+                    <li>Consider touch targets (minimum 44px)</li>
+                    <li>Handle both touch and mouse events</li>
+                </ul>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Interactive Dashboard</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>interactive-dashboard.html</code>
+                        </li>
+                        <li>Build an interactive dashboard with:</li>
+                        <ul>
+                            <li><strong>Navigation:</strong> Tabbed interface with smooth
+                                transitions</li>
+                            <li><strong>Widgets:</strong> Collapsible panels with toggle
+                                functionality</li>
+                            <li><strong>Charts:</strong> Simple data visualization (use CSS or basic
+                                canvas)</li>
+                            <li><strong>Search:</strong> Real-time search with debouncing</li>
+                            <li><strong>Settings:</strong> Theme toggle and preferences</li>
+                        </ul>
+                        <li>Implement event handling for:</li>
+                        <ul>
+                            <li>Tab switching with keyboard navigation</li>
+                            <li>Widget collapse/expand animations</li>
+                            <li>Search input with live filtering</li>
+                            <li>Theme switching with local storage</li>
+                        </ul>
+                        <li>Add accessibility features (ARIA attributes, keyboard support)</li>
+                        <li>Make it responsive for mobile devices</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand complex event handling and UI
+                            interactions</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Events are the foundation of interactive web applications</li>
+                    <li>Use modern event handling methods</li>
+                    <li>Implement proper form validation</li>
+                    <li>Consider accessibility and performance</li>
+                    <li>Handle errors gracefully</li>
+                    <li>Test across different devices and browsers</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>JavaScript Advanced Concepts - Functions, objects, and modern JavaScript</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+
+        // DOM Manipulation Demo Functions
+        let elementCounter = 1;
+
+        function addElement() {
+            const display = document.getElementById('dom-display');
+            const newElement = document.createElement('div');
+            newElement.className = 'dom-item';
+            newElement.textContent = `New Element ${elementCounter++}`;
+            newElement.onclick = function () {
+                this.style.transform = 'rotate(5deg)';
+                setTimeout(() => {
+                    this.style.transform = 'rotate(0deg)';
+                }, 200);
+            };
+            display.appendChild(newElement);
+        }
+
+        function removeElement() {
+            const display = document.getElementById('dom-display');
+            const items = display.querySelectorAll('.dom-item');
+            if (items.length > 1) {
+                const lastItem = items[items.length - 1];
+                lastItem.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    display.removeChild(lastItem);
+                }, 300);
+            }
+        }
+
+        function highlightElements() {
+            const items = document.querySelectorAll('.dom-item');
+            items.forEach(item => {
+                item.classList.add('highlighted');
+            });
+        }
+
+        function clearHighlights() {
+            const items = document.querySelectorAll('.dom-item');
+            items.forEach(item => {
+                item.classList.remove('highlighted');
+            });
+        }
+
+        function changeColor(color) {
+            const items = document.querySelectorAll('.dom-item');
+            items.forEach(item => {
+                item.style.backgroundColor = color;
+            });
+
+            // Update selected color indicator
+            const colorOptions = document.querySelectorAll('.color-option');
+            colorOptions.forEach(option => {
+                option.classList.remove('selected');
+                if (option.style.backgroundColor === color) {
+                    option.classList.add('selected');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

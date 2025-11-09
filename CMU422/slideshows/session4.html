@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 4: CSS Layout and Box Model</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .box-model-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .box-model-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .control-group input {
+            width: 80px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .box-model-display {
+            position: relative;
+            background: #f0f0f0;
+            border: 2px dashed #999;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .box-model-element {
+            background: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border: 3px solid #2e7d32;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .box-model-labels {
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .box-model-labels::before {
+            content: "margin";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff9800;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+        }
+
+        .box-model-labels::after {
+            content: "border";
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2196f3;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+        }
+
+        .box-model-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .box-model-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+
+        .box-model-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>CSS Layout and Box Model</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 4</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Understanding layout flow and element positioning</p>
+                <p><small>3-hour session • 27 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Master the CSS box model concept</li>
+                    <li>Understand display properties and their effects</li>
+                    <li>Learn positioning techniques</li>
+                    <li>Create responsive layouts</li>
+                    <li>Apply layout best practices</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: The Box Model Revisited -->
+            <section>
+                <h2>The CSS Box Model</h2>
+                <div class="highlight">
+                    Every HTML element is treated as a box with content, padding, border, and margin
+                </div>
+                <div class="code-example">
+                    .box {<br>
+                    &nbsp;&nbsp;width: 200px;<br>
+                    &nbsp;&nbsp;height: 100px;<br>
+                    &nbsp;&nbsp;padding: 20px;<br>
+                    &nbsp;&nbsp;border: 2px solid black;<br>
+                    &nbsp;&nbsp;margin: 10px;<br>
+                    }
+                </div>
+                <div class="layout-demo">
+                    <div
+                        style="width: 200px; height: 100px; padding: 20px; border: 2px solid black; margin: 10px; background: #e7f3ff;">
+                        Content Area
+                    </div>
+                </div>
+
+                <!-- Interactive Box Model Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Interactive Box Model</h3>
+                    <div class="demo-container">
+                        <div class="box-model-demo">
+                            <div class="box-model-controls">
+                                <div class="control-group">
+                                    <label>Margin</label>
+                                    <input type="range" id="margin-slider" min="0" max="50"
+                                        value="10" oninput="updateBoxModel()">
+                                    <span id="margin-value">10px</span>
+                                </div>
+                                <div class="control-group">
+                                    <label>Border</label>
+                                    <input type="range" id="border-slider" min="0" max="20"
+                                        value="3" oninput="updateBoxModel()">
+                                    <span id="border-value">3px</span>
+                                </div>
+                                <div class="control-group">
+                                    <label>Padding</label>
+                                    <input type="range" id="padding-slider" min="0" max="50"
+                                        value="20" oninput="updateBoxModel()">
+                                    <span id="padding-value">20px</span>
+                                </div>
+                            </div>
+
+                            <div class="box-model-display">
+                                <div id="box-model-element" class="box-model-element">
+                                    Content
+                                </div>
+                            </div>
+
+                            <div class="box-model-info">
+                                <h4>Current Box Model Values:</h4>
+                                <p><strong>Margin:</strong> <span id="info-margin">10px</span></p>
+                                <p><strong>Border:</strong> <span id="info-border">3px solid</span>
+                                </p>
+                                <p><strong>Padding:</strong> <span id="info-padding">20px</span></p>
+                                <p><strong>Content:</strong> 200px × 100px</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Drag the sliders to see how margin, border, and padding affect the box
+                        model!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 4: Box Sizing -->
+            <section>
+                <h2>Box Sizing Property</h2>
+                <div class="code-example">
+                    /* Default behavior */<br>
+                    .default-box {<br>
+                    &nbsp;&nbsp;box-sizing: content-box;<br>
+                    &nbsp;&nbsp;width: 200px;<br>
+                    &nbsp;&nbsp;padding: 20px;<br>
+                    &nbsp;&nbsp;border: 2px solid black;<br>
+                    &nbsp;&nbsp;/* Total width = 200 + 40 + 4 = 244px */<br>
+                    }<br><br>
+                    /* Include padding and border in width */<br>
+                    .border-box {<br>
+                    &nbsp;&nbsp;box-sizing: border-box;<br>
+                    &nbsp;&nbsp;width: 200px;<br>
+                    &nbsp;&nbsp;padding: 20px;<br>
+                    &nbsp;&nbsp;border: 2px solid black;<br>
+                    &nbsp;&nbsp;/* Total width = 200px */<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 5: Display Property -->
+            <section>
+                <h2>Display Property Values</h2>
+                <div class="code-example">
+                    /* Block elements */<br>
+                    .block { display: block; }<br><br>
+                    /* Inline elements */<br>
+                    .inline { display: inline; }<br><br>
+                    /* Inline-block elements */<br>
+                    .inline-block { display: inline-block; }<br><br>
+                    /* Hidden elements */<br>
+                    .hidden { display: none; }<br><br>
+                    /* Table elements */<br>
+                    .table { display: table; }<br>
+                    .table-cell { display: table-cell; }
+                </div>
+            </section>
+
+            <!-- Slide 6: Block vs Inline -->
+            <section>
+                <h2>Block vs Inline Elements</h2>
+                <div class="layout-demo">
+                    <div
+                        style="display: block; background: #ffc107; padding: 10px; margin: 5px; border: 1px solid #333;">
+                        Block Element 1</div>
+                    <div
+                        style="display: block; background: #28a745; padding: 10px; margin: 5px; border: 1px solid #333;">
+                        Block Element 2</div>
+                    <span
+                        style="display: inline; background: #dc3545; padding: 10px; margin: 5px; border: 1px solid #333;">Inline
+                        Element 1</span>
+                    <span
+                        style="display: inline; background: #6f42c1; padding: 10px; margin: 5px; border: 1px solid #333;">Inline
+                        Element 2</span>
+                </div>
+                <ul>
+                    <li><strong>Block:</strong> Full width, starts on new line</li>
+                    <li><strong>Inline:</strong> Only takes needed width, no line breaks</li>
+                    <li><strong>Inline-block:</strong> Combines both behaviors</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Positioning -->
+            <section>
+                <h2>CSS Positioning</h2>
+                <div class="code-example">
+                    /* Static (default) */<br>
+                    .static { position: static; }<br><br>
+                    /* Relative */<br>
+                    .relative { position: relative; top: 10px; left: 20px; }<br><br>
+                    /* Absolute */<br>
+                    .absolute { position: absolute; top: 0; right: 0; }<br><br>
+                    /* Fixed */<br>
+                    .fixed { position: fixed; bottom: 20px; right: 20px; }<br><br>
+                    /* Sticky */<br>
+                    .sticky { position: sticky; top: 0; }
+                </div>
+            </section>
+
+            <!-- Slide 8: Relative Positioning -->
+            <section>
+                <h2>Relative Positioning</h2>
+                <div class="code-example">
+                    .relative-box {<br>
+                    &nbsp;&nbsp;position: relative;<br>
+                    &nbsp;&nbsp;top: 20px;<br>
+                    &nbsp;&nbsp;left: 30px;<br>
+                    &nbsp;&nbsp;background: #e7f3ff;<br>
+                    &nbsp;&nbsp;border: 2px solid #007bff;<br>
+                    &nbsp;&nbsp;padding: 15px;<br>
+                    }
+                </div>
+                <div class="layout-demo">
+                    <div
+                        style="position: relative; top: 20px; left: 30px; background: #e7f3ff; border: 2px solid #007bff; padding: 15px; width: 200px;">
+                        Relative positioned element
+                    </div>
+                </div>
+                <ul>
+                    <li>Moves element relative to its normal position</li>
+                    <li>Original space is preserved</li>
+                    <li>Other elements are not affected</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Absolute Positioning -->
+            <section>
+                <h2>Absolute Positioning</h2>
+                <div class="code-example">
+                    .container {<br>
+                    &nbsp;&nbsp;position: relative;<br>
+                    &nbsp;&nbsp;height: 200px;<br>
+                    &nbsp;&nbsp;border: 2px solid #333;<br>
+                    }<br><br>
+                    .absolute-box {<br>
+                    &nbsp;&nbsp;position: absolute;<br>
+                    &nbsp;&nbsp;top: 20px;<br>
+                    &nbsp;&nbsp;right: 20px;<br>
+                    &nbsp;&nbsp;background: #ffc107;<br>
+                    &nbsp;&nbsp;padding: 10px;<br>
+                    }
+                </div>
+                <div class="layout-demo">
+                    <div
+                        style="position: relative; height: 200px; border: 2px solid #333; background: #f8f9fa;">
+                        <div
+                            style="position: absolute; top: 20px; right: 20px; background: #ffc107; padding: 10px;">
+                            Absolute positioned
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Fixed Positioning -->
+            <section>
+                <h2>Fixed Positioning</h2>
+                <div class="code-example">
+                    .fixed-header {<br>
+                    &nbsp;&nbsp;position: fixed;<br>
+                    &nbsp;&nbsp;top: 0;<br>
+                    &nbsp;&nbsp;left: 0;<br>
+                    &nbsp;&nbsp;width: 100%;<br>
+                    &nbsp;&nbsp;background: #333;<br>
+                    &nbsp;&nbsp;color: white;<br>
+                    &nbsp;&nbsp;z-index: 1000;<br>
+                    }<br><br>
+                    .fixed-button {<br>
+                    &nbsp;&nbsp;position: fixed;<br>
+                    &nbsp;&nbsp;bottom: 20px;<br>
+                    &nbsp;&nbsp;right: 20px;<br>
+                    &nbsp;&nbsp;background: #007bff;<br>
+                    &nbsp;&nbsp;color: white;<br>
+                    &nbsp;&nbsp;padding: 15px;<br>
+                    &nbsp;&nbsp;border-radius: 50%;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Positioned relative to viewport</li>
+                    <li>Stays in place when scrolling</li>
+                    <li>Common for headers, navigation, and floating buttons</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Z-Index -->
+            <section>
+                <h2>Z-Index and Stacking</h2>
+                <div class="code-example">
+                    .background {<br>
+                    &nbsp;&nbsp;z-index: 1;<br>
+                    &nbsp;&nbsp;background: #e7f3ff;<br>
+                    }<br><br>
+                    .middle {<br>
+                    &nbsp;&nbsp;z-index: 2;<br>
+                    &nbsp;&nbsp;background: #ffc107;<br>
+                    }<br><br>
+                    .foreground {<br>
+                    &nbsp;&nbsp;z-index: 3;<br>
+                    &nbsp;&nbsp;background: #dc3545;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Controls stacking order of positioned elements</li>
+                    <li>Higher values appear on top</li>
+                    <li>Only works with positioned elements</li>
+                    <li>Creates stacking contexts</li>
+                </ul>
+            </section>
+
+            <!-- Slide 12: Float -->
+            <section>
+                <h2>Float Property</h2>
+                <div class="code-example">
+                    .float-left {<br>
+                    &nbsp;&nbsp;float: left;<br>
+                    &nbsp;&nbsp;width: 200px;<br>
+                    &nbsp;&nbsp;margin-right: 20px;<br>
+                    }<br><br>
+                    .float-right {<br>
+                    &nbsp;&nbsp;float: right;<br>
+                    &nbsp;&nbsp;width: 200px;<br>
+                    &nbsp;&nbsp;margin-left: 20px;<br>
+                    }<br><br>
+                    .clearfix::after {<br>
+                    &nbsp;&nbsp;content: "";<br>
+                    &nbsp;&nbsp;display: table;<br>
+                    &nbsp;&nbsp;clear: both;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Moves element to left or right</li>
+                    <li>Text flows around floated elements</li>
+                    <li>Requires clearfix to contain floats</li>
+                    <li>Being replaced by Flexbox and Grid</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: Clear Property -->
+            <section>
+                <h2>Clear Property</h2>
+                <div class="code-example">
+                    .clear-left { clear: left; }<br>
+                    .clear-right { clear: right; }<br>
+                    .clear-both { clear: both; }<br>
+                    .clear-none { clear: none; }<br><br>
+                    /* Modern clearfix */<br>
+                    .clearfix::after {<br>
+                    &nbsp;&nbsp;content: "";<br>
+                    &nbsp;&nbsp;display: table;<br>
+                    &nbsp;&nbsp;clear: both;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Prevents element from being next to floated elements</li>
+                    <li><code>left</code>: Clear left floats</li>
+                    <li><code>right</code>: Clear right floats</li>
+                    <li><code>both</code>: Clear both sides</li>
+                </ul>
+            </section>
+
+            <!-- Slide 14: Responsive Design Basics -->
+            <section>
+                <h2>Responsive Design Basics</h2>
+                <div class="code-example">
+                    /* Mobile first approach */<br>
+                    .container {<br>
+                    &nbsp;&nbsp;width: 100%;<br>
+                    &nbsp;&nbsp;max-width: 1200px;<br>
+                    &nbsp;&nbsp;margin: 0 auto;<br>
+                    }<br><br>
+                    /* Tablet styles */<br>
+                    @media (min-width: 768px) {<br>
+                    &nbsp;&nbsp;.container {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;padding: 0 20px;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    /* Desktop styles */<br>
+                    @media (min-width: 1024px) {<br>
+                    &nbsp;&nbsp;.container {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;padding: 0 40px;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 15: Media Queries -->
+            <section>
+                <h2>Media Queries</h2>
+                <div class="code-example">
+                    /* Small screens */<br>
+                    @media (max-width: 767px) {<br>
+                    &nbsp;&nbsp;.sidebar { display: none; }<br>
+                    &nbsp;&nbsp;.main { width: 100%; }<br>
+                    }<br><br>
+                    /* Medium screens */<br>
+                    @media (min-width: 768px) and (max-width: 1023px) {<br>
+                    &nbsp;&nbsp;.sidebar { width: 200px; }<br>
+                    &nbsp;&nbsp;.main { width: calc(100% - 200px); }<br>
+                    }<br><br>
+                    /* Large screens */<br>
+                    @media (min-width: 1024px) {<br>
+                    &nbsp;&nbsp;.sidebar { width: 250px; }<br>
+                    &nbsp;&nbsp;.main { width: calc(100% - 250px); }<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 16: Viewport Meta Tag -->
+            <section>
+                <h2>Viewport Meta Tag</h2>
+                <div class="code-example">
+                    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+                </div>
+                <ul>
+                    <li>Essential for responsive design</li>
+                    <li>Controls how page is displayed on mobile devices</li>
+                    <li><code>width=device-width</code>: Match viewport to device width</li>
+                    <li><code>initial-scale=1.0</code>: Set initial zoom level</li>
+                    <li>Prevents mobile browsers from scaling down desktop layouts</li>
+                </ul>
+            </section>
+
+            <!-- Slide 17: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Layout Practice</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>layout-practice.html</code></li>
+                        <li>Build a layout with the following elements:</li>
+                        <ul>
+                            <li><strong>Header:</strong> Fixed at top, full width, dark background
+                            </li>
+                            <li><strong>Sidebar:</strong> Fixed width (200px), positioned on left
+                            </li>
+                            <li><strong>Main content:</strong> Takes remaining width</li>
+                            <li><strong>Footer:</strong> At bottom, full width</li>
+                        </ul>
+                        <li>Use different background colors for each section</li>
+                        <li>Add sample content to each section</li>
+                        <li>Make sure the layout works with different content lengths</li>
+                        <li>Test with browser developer tools</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand CSS layout and positioning</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 18: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Layout Best Practices -->
+            <section>
+                <h2>Layout Best Practices</h2>
+                <ul>
+                    <li>Use semantic HTML elements</li>
+                    <li>Plan your layout before coding</li>
+                    <li>Consider mobile-first approach</li>
+                    <li>Test on different screen sizes</li>
+                    <li>Use CSS Grid and Flexbox for modern layouts</li>
+                    <li>Avoid excessive nesting</li>
+                    <li>Keep layouts simple and maintainable</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Remember:</strong> Good layouts are both functional and accessible.
+                </div>
+            </section>
+
+            <!-- Slide 19: Common Layout Patterns -->
+            <section>
+                <h2>Common Layout Patterns</h2>
+                <ul>
+                    <li><strong>Single Column:</strong> Simple, mobile-friendly</li>
+                    <li><strong>Two Column:</strong> Sidebar + main content</li>
+                    <li><strong>Three Column:</strong> Left sidebar + main + right sidebar</li>
+                    <li><strong>Grid Layout:</strong> Card-based layouts</li>
+                    <li><strong>Sticky Header:</strong> Navigation that stays visible</li>
+                    <li><strong>Hero Section:</strong> Large banner area</li>
+                    <li><strong>Footer:</strong> Bottom information area</li>
+                </ul>
+            </section>
+
+            <!-- Slide 20: CSS Reset vs Normalize -->
+            <section>
+                <h2>CSS Reset vs Normalize</h2>
+                <div class="code-example">
+                    /* CSS Reset - removes all defaults */<br>
+                    * {<br>
+                    &nbsp;&nbsp;margin: 0;<br>
+                    &nbsp;&nbsp;padding: 0;<br>
+                    &nbsp;&nbsp;box-sizing: border-box;<br>
+                    }<br><br>
+                    /* Normalize - preserves useful defaults */<br>
+                    /* Use normalize.css for better cross-browser consistency */
+                </div>
+                <ul>
+                    <li><strong>Reset:</strong> Removes all browser defaults</li>
+                    <li><strong>Normalize:</strong> Preserves useful defaults, fixes bugs</li>
+                    <li>Choose based on project needs</li>
+                    <li>Normalize is generally recommended</li>
+                </ul>
+            </section>
+
+            <!-- Slide 21: Layout Debugging -->
+            <section>
+                <h2>Layout Debugging Tips</h2>
+                <ul>
+                    <li>Use browser developer tools</li>
+                    <li>Add temporary borders to see element boundaries</li>
+                    <li>Check box model calculations</li>
+                    <li>Verify positioning context</li>
+                    <li>Test with different content lengths</li>
+                    <li>Check for overflow issues</li>
+                    <li>Validate CSS syntax</li>
+                </ul>
+                <div class="code-example">
+                    /* Debug with borders */<br>
+                    * { border: 1px solid red !important; }
+                </div>
+            </section>
+
+            <!-- Slide 22: Performance Considerations -->
+            <section>
+                <h2>Layout Performance</h2>
+                <ul>
+                    <li>Avoid layout thrashing (multiple reflows)</li>
+                    <li>Use transform instead of changing position</li>
+                    <li>Batch DOM changes when possible</li>
+                    <li>Use will-change for animations</li>
+                    <li>Minimize use of position: absolute</li>
+                    <li>Consider CSS containment</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Tip:</strong> Use browser dev tools to profile layout performance.
+                </div>
+            </section>
+
+            <!-- Slide 23: Accessibility in Layouts -->
+            <section>
+                <h2>Accessibility Considerations</h2>
+                <ul>
+                    <li>Maintain logical tab order</li>
+                    <li>Ensure sufficient color contrast</li>
+                    <li>Provide focus indicators</li>
+                    <li>Use semantic HTML elements</li>
+                    <li>Test with screen readers</li>
+                    <li>Ensure keyboard navigation works</li>
+                    <li>Don't rely solely on visual positioning</li>
+                </ul>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Responsive Website Layout</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>responsive-layout.html</code></li>
+                        <li>Build a responsive website with:</li>
+                        <ul>
+                            <li><strong>Mobile (default):</strong> Single column layout</li>
+                            <li><strong>Tablet (768px+):</strong> Two column layout</li>
+                            <li><strong>Desktop (1024px+):</strong> Three column layout</li>
+                        </ul>
+                        <li>Include navigation that adapts to screen size</li>
+                        <li>Add images that scale appropriately</li>
+                        <li>Ensure text remains readable at all sizes</li>
+                        <li>Test on different devices or browser dev tools</li>
+                        <li>Add smooth transitions between breakpoints</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand responsive design and media
+                            queries</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: CSS Grid Preview -->
+            <section>
+                <h2>CSS Grid Preview</h2>
+                <div class="code-example">
+                    .grid-container {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: 1fr 2fr 1fr;<br>
+                    &nbsp;&nbsp;grid-gap: 20px;<br>
+                    }<br><br>
+                    .grid-item {<br>
+                    &nbsp;&nbsp;background: #e7f3ff;<br>
+                    &nbsp;&nbsp;padding: 20px;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Modern two-dimensional layout system</li>
+                    <li>More powerful than Flexbox for complex layouts</li>
+                    <li>Will be covered in detail in Session 5</li>
+                    <li>Excellent for overall page layouts</li>
+                </ul>
+            </section>
+
+            <!-- Slide 26: Troubleshooting Layouts -->
+            <section>
+                <h2>Common Layout Issues</h2>
+                <ul>
+                    <li><strong>Elements not positioning correctly:</strong> Check positioning
+                        context</li>
+                    <li><strong>Layout breaking on mobile:</strong> Add viewport meta tag</li>
+                    <li><strong>Floats not clearing:</strong> Use clearfix or clear property</li>
+                    <li><strong>Z-index not working:</strong> Ensure element is positioned</li>
+                    <li><strong>Responsive issues:</strong> Check media query syntax</li>
+                    <li><strong>Box model confusion:</strong> Use box-sizing: border-box</li>
+                </ul>
+            </section>
+
+            <!-- Slide 27: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Master the box model for precise layouts</li>
+                    <li>Use positioning to control element placement</li>
+                    <li>Create responsive designs with media queries</li>
+                    <li>Follow best practices for maintainable layouts</li>
+                    <li>Test layouts across different devices</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>CSS Flexbox and Grid - Modern layout techniques</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+
+        // Box Model Demo Functions
+        function updateBoxModel() {
+            const marginSlider = document.getElementById('margin-slider');
+            const borderSlider = document.getElementById('border-slider');
+            const paddingSlider = document.getElementById('padding-slider');
+
+            const marginValue = marginSlider.value;
+            const borderValue = borderSlider.value;
+            const paddingValue = paddingSlider.value;
+
+            // Update display values
+            document.getElementById('margin-value').textContent = marginValue + 'px';
+            document.getElementById('border-value').textContent = borderValue + 'px';
+            document.getElementById('padding-value').textContent = paddingValue + 'px';
+
+            // Update info panel
+            document.getElementById('info-margin').textContent = marginValue + 'px';
+            document.getElementById('info-border').textContent = borderValue + 'px solid';
+            document.getElementById('info-padding').textContent = paddingValue + 'px';
+
+            // Apply styles to the element
+            const element = document.getElementById('box-model-element');
+            element.style.margin = marginValue + 'px';
+            element.style.borderWidth = borderValue + 'px';
+            element.style.padding = paddingValue + 'px';
+        }
+    </script>
+</body>
+
+</html>

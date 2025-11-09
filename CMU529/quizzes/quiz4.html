@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 4: PHP Fundamentals & Server Setup - Birmingham Newman University</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        .quiz-content {
+            padding: 40px;
+        }
+        
+        .quiz-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
+            display: none;
+        }
+        
+        .question.active {
+            display: block;
+            border-color: #ff6b6b;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.1);
+        }
+        
+        .question h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .option:hover {
+            border-color: #ff6b6b;
+            background: #f8f9ff;
+        }
+        
+        .option.selected {
+            border-color: #ff6b6b;
+            background: #e3f2fd;
+        }
+        
+        .option.correct {
+            border-color: #4caf50;
+            background: #e8f5e8;
+        }
+        
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 20px 0;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #ee5a24;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        .feedback {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+            }
+            
+            .quiz-content {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .timer {
+                position: static;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Quiz 4: PHP Fundamentals & Server Setup</h1>
+            <div class="subtitle">Birmingham Newman University | CMU529: Advanced Web Development</div>
+        </div>
+        
+        <div class="quiz-content">
+            <div class="quiz-info">
+                <h3>Quiz Instructions</h3>
+                <p><strong>Questions:</strong> 15 | <strong>Time Limit:</strong> 20 minutes | <strong>Passing Score:</strong> 70%</p>
+                <p>Test your understanding of Session 4 content. Select the best answer for each question.</p>
+            </div>
+            
+            <div class="timer" id="timer">Time: 20:00</div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            
+            <div id="questions-container">
+                <!-- Questions will be populated by JavaScript -->
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+        
+        <div class="results" id="results">
+            <div class="score-display" id="scoreDisplay"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="btn btn-primary" onclick="restartQuiz()">Take Quiz Again</button>
+            <button class="btn btn-secondary" onclick="window.location.href='../index.html'">Back to Module</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [{"question":"What does PHP stand for?","options":["Personal Home Page","PHP: Hypertext Preprocessor","Programming Home Page","Public HTML Processor"],"correct":1,"explanation":"PHP originally stood for Personal Home Page, but now stands for PHP: Hypertext Preprocessor."},{"question":"Which symbol is used to denote PHP variables?","options":["@","$","#","%"],"correct":1,"explanation":"PHP variables are denoted with the $ symbol."},{"question":"What is the correct way to start a PHP block?","options":["<?php","<php>","<?","<?="],"correct":0,"explanation":"<?php is the standard way to start a PHP code block."},{"question":"Which function is used to output text in PHP?","options":["print()","echo","output()","display()"],"correct":1,"explanation":"echo is used to output text in PHP."},{"question":"What is the purpose of the include() function?","options":["To include external files","To create variables","To define functions","To handle forms"],"correct":0,"explanation":"include() is used to include external PHP files."},{"question":"Which data type is used for whole numbers in PHP?","options":["string","integer","float","boolean"],"correct":1,"explanation":"integer is used for whole numbers in PHP."},{"question":"What is the purpose of the isset() function?","options":["To check if a variable is set","To create variables","To define functions","To handle forms"],"correct":0,"explanation":"isset() checks if a variable is set and not null."},{"question":"Which operator is used for concatenation in PHP?","options":["+",".","&","|"],"correct":1,"explanation":"The dot (.) operator is used for string concatenation in PHP."},{"question":"What is the purpose of the count() function?","options":["To count array elements","To create variables","To define functions","To handle forms"],"correct":0,"explanation":"count() returns the number of elements in an array."},{"question":"Which superglobal contains POST data?","options":["$_GET","$_POST","$_REQUEST","$_SERVER"],"correct":1,"explanation":"$_POST contains data submitted via POST method."},{"question":"What is the purpose of the empty() function?","options":["To check if a variable is empty","To create variables","To define functions","To handle forms"],"correct":0,"explanation":"empty() checks if a variable is empty (null, false, 0, empty string, etc.)."},{"question":"Which function is used to format strings in PHP?","options":["printf()","format()","string()","text()"],"correct":0,"explanation":"printf() is used to format strings in PHP."},{"question":"What is the purpose of the array() function?","options":["To create arrays","To create variables","To define functions","To handle forms"],"correct":0,"explanation":"array() is used to create arrays in PHP."},{"question":"Which function is used to get the current date in PHP?","options":["date()","time()","now()","current()"],"correct":0,"explanation":"date() is used to format and get the current date/time."},{"question":"What is the purpose of the strlen() function?","options":["To get string length","To create variables","To define functions","To handle forms"],"correct":0,"explanation":"strlen() returns the length of a string."}];
+
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let timeLeft = 20 * 60; // 20 minutes in seconds
+        let timerInterval;
+
+        function initQuiz() {
+            displayQuestion();
+            startTimer();
+            updateProgress();
+        }
+
+        function displayQuestion() {
+            const container = document.getElementById('questions-container');
+            const question = questions[currentQuestion];
+            
+            container.innerHTML = `
+                <div class="question active">
+                    <h3>Question ${currentQuestion + 1} of ${questions.length}</h3>
+                    <p>${question.question}</p>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <div class="option ${userAnswers[currentQuestion] === index ? 'selected' : ''}" 
+                                 onclick="selectOption(${index})">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            updateNavigation();
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            
+            // Update visual selection
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.remove('selected');
+                if (index === optionIndex) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            updateNavigation();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+                updateProgress();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+                updateProgress();
+            }
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next';
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            const score = calculateScore();
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            document.querySelector('.quiz-content').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+            
+            const resultsDiv = document.getElementById('results');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const feedback = document.getElementById('feedback');
+            
+            scoreDisplay.textContent = `${score}/${questions.length} (${percentage}%)`;
+            
+            if (percentage >= 90) {
+                feedback.textContent = "Excellent! You have mastered this topic.";
+            } else if (percentage >= 80) {
+                feedback.textContent = "Great job! You have a strong understanding of this topic.";
+            } else if (percentage >= 70) {
+                feedback.textContent = "Good work! You understand the basics of this topic.";
+            } else {
+                feedback.textContent = "Keep studying! Review the material and try again.";
+            }
+            
+            resultsDiv.style.display = 'block';
+        }
+
+        function calculateScore() {
+            let score = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            return score;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            timeLeft = 20 * 60;
+            
+            document.querySelector('.quiz-content').style.display = 'block';
+            document.getElementById('timer').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            initQuiz();
+        }
+
+        // Initialize quiz when page loads
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 12: Project Finalisation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
+        .reveal .slides section.center { text-align: center; }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
+        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
+        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
+        .demo-container h3 { color: #9b59b6; margin-top: 0; }
+        .pipeline-step { background: linear-gradient(135deg, #f3e5f5, #e1f5fe); border: 2px solid #9b59b6; border-radius: 8px; padding: 15px; margin: 10px 0; }
+        .pipeline-step h4 { color: #9b59b6; margin: 0 0 10px 0; }
+        .checklist { background: #f8f9fa; border-left: 4px solid #27ae60; padding: 15px; border-radius: 5px; margin: 15px 0; }
+        .checklist h4 { color: #27ae60; margin-top: 0; }
+        .deployment-card { background: linear-gradient(135deg, #e8eaf6, #e1f5fe); border: 2px solid #3498db; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .deployment-card h4 { color: #3498db; margin-top: 0; }
+        .test-pyramid { width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 250px solid #9b59b6; position: relative; margin: 30px auto; }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
+        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <section class="center">
+                <h1>Project Finalisation</h1>
+                <h3>CMM721: Web Application Development - Session 12</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Masters Level Conversion Course</p>
+                <p><small>3-hour session • 18 slides • 2 tasks • Testing & deployment demos</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Implement comprehensive testing strategies</li>
+                    <li>Perform load testing and optimization</li>
+                    <li>Write effective documentation</li>
+                    <li>Deploy applications to production</li>
+                    <li>Set up CI/CD pipelines</li>
+                    <li>Prepare professional project presentations</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Testing Strategy Overview</h2>
+                <div class="demo-container">
+                    <h3>The Testing Pyramid</h3>
+                    <div style="text-align: center; margin: 30px 0;">
+                        <div style="background: linear-gradient(to top, #9b59b6, #e1f5fe); width: 400px; height: 300px; margin: 0 auto; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); display: flex; flex-direction: column; justify-content: space-around; align-items: center; color: white; font-weight: bold; padding: 40px 20px;">
+                            <div style="font-size: 1.2em;">E2E Tests (Few)</div>
+                            <div style="font-size: 1.5em;">Integration Tests (Some)</div>
+                            <div style="font-size: 2em;">Unit Tests (Many)</div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #666; margin-top: 30px;">
+                        More tests at the bottom, fewer at the top
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Unit Testing</h2>
+                <div class="highlight">
+                    <strong>Unit Test:</strong> Test individual functions/components in isolation
+                </div>
+                <h3>Python (Django) - pytest:</h3>
+                <div class="code-example">
+                    # test_models.py<br>
+                    import pytest<br>
+                    from django.contrib.auth.models import User<br>
+                    from blog.models import Post<br><br>
+                    
+                    @pytest.mark.django_db<br>
+                    def test_post_creation():<br>
+                    &nbsp;&nbsp;user = User.objects.create(username='test')<br>
+                    &nbsp;&nbsp;post = Post.objects.create(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;title='Test Post',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;content='Content',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;author=user<br>
+                    &nbsp;&nbsp;)<br>
+                    &nbsp;&nbsp;assert post.title == 'Test Post'<br>
+                    &nbsp;&nbsp;assert post.author == user<br><br>
+                    
+                    # Run: pytest
+                </div>
+            </section>
+
+            <section>
+                <h2>JavaScript Unit Testing</h2>
+                <h3>Jest (React):</h3>
+                <div class="code-example">
+                    // Counter.test.js<br>
+                    import { render, screen, fireEvent } from '@testing-library/react';<br>
+                    import Counter from './Counter';<br><br>
+                    
+                    test('increments counter on button click', () => {<br>
+                    &nbsp;&nbsp;render(&lt;Counter /&gt;);<br>
+                    &nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;const button = screen.getByText('Increment');<br>
+                    &nbsp;&nbsp;const count = screen.getByText('0');<br>
+                    &nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;fireEvent.click(button);<br>
+                    &nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;expect(screen.getByText('1')).toBeInTheDocument();<br>
+                    });<br><br>
+                    
+                    // Run: npm test
+                </div>
+            </section>
+
+            <section>
+                <h2>Integration Testing</h2>
+                <div class="highlight">
+                    <strong>Integration Test:</strong> Test how multiple components work together
+                </div>
+                <div class="code-example">
+                    # test_views.py<br>
+                    from django.test import TestCase, Client<br>
+                    from django.urls import reverse<br><br>
+                    
+                    class PostViewTests(TestCase):<br>
+                    &nbsp;&nbsp;def setUp(self):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;self.client = Client()<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;self.user = User.objects.create_user('test', password='pass')<br><br>
+                    
+                    &nbsp;&nbsp;def test_post_list_view(self):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;response = self.client.get(reverse('post_list'))<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;self.assertEqual(response.status_code, 200)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;self.assertContains(response, 'Blog Posts')<br><br>
+                    
+                    &nbsp;&nbsp;def test_create_post_authenticated(self):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;self.client.login(username='test', password='pass')<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;response = self.client.post(reverse('post_create'), {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'title': 'New Post',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'content': 'Content'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;self.assertEqual(response.status_code, 302)
+                </div>
+            </section>
+
+            <section>
+                <h2>End-to-End (E2E) Testing</h2>
+                <div class="highlight">
+                    <strong>E2E Test:</strong> Test complete user workflows in real browser
+                </div>
+                <h3>Playwright:</h3>
+                <div class="code-example">
+                    // e2e/login.spec.js<br>
+                    const { test, expect } = require('@playwright/test');<br><br>
+                    
+                    test('user can login successfully', async ({ page }) => {<br>
+                    &nbsp;&nbsp;await page.goto('http://localhost:3000/login');<br>
+                    &nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;await page.fill('input[name="username"]', 'testuser');<br>
+                    &nbsp;&nbsp;await page.fill('input[name="password"]', 'password123');<br>
+                    &nbsp;&nbsp;await page.click('button[type="submit"]');<br>
+                    &nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;await expect(page).toHaveURL('http://localhost:3000/dashboard');<br>
+                    &nbsp;&nbsp;await expect(page.locator('h1')).toContainText('Welcome');<br>
+                    });<br><br>
+                    
+                    // Run: npx playwright test
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 Test Coverage Example</h2>
+                <div class="demo-container">
+                    <h3>Coverage Report</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; font-family: monospace;">
+                        <div style="margin-bottom: 15px;">
+                            <strong>blog/models.py</strong>
+                            <div style="background: #ddd; height: 25px; border-radius: 5px; overflow: hidden; margin-top: 5px;">
+                                <div style="background: #27ae60; height: 100%; width: 95%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: bold;">95%</div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>blog/views.py</strong>
+                            <div style="background: #ddd; height: 25px; border-radius: 5px; overflow: hidden; margin-top: 5px;">
+                                <div style="background: #f39c12; height: 100%; width: 78%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: bold;">78%</div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>blog/serializers.py</strong>
+                            <div style="background: #ddd; height: 25px; border-radius: 5px; overflow: hidden; margin-top: 5px;">
+                                <div style="background: #27ae60; height: 100%; width: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: bold;">100%</div>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>TOTAL</strong>
+                            <div style="background: #ddd; height: 30px; border-radius: 5px; overflow: hidden; margin-top: 5px;">
+                                <div style="background: #27ae60; height: 100%; width: 87%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: bold; font-size: 1.1em;">87%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: #666; text-align: center; margin-top: 15px;">
+                        Aim for 80%+ coverage, but quality > quantity
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 1: Comprehensive Testing</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Implement full test suite for your project</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Write 10+ unit tests for models/functions</li>
+                        <li>Write 5+ integration tests for API endpoints</li>
+                        <li>Write 3+ E2E tests for critical user flows</li>
+                        <li>Achieve minimum 80% code coverage</li>
+                        <li>Set up test database</li>
+                        <li>Run all tests successfully</li>
+                        <li>Generate coverage report</li>
+                    </ol>
+                    <h3>Test Scenarios to Cover:</h3>
+                    <ul>
+                        <li>User registration and authentication</li>
+                        <li>CRUD operations on main entities</li>
+                        <li>Form validation</li>
+                        <li>Error handling</li>
+                        <li>Permission checks</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Load Testing</h2>
+                <div class="highlight">
+                    <strong>Load Testing:</strong> Test how app performs under high traffic
+                </div>
+                <h3>Tools:</h3>
+                <ul>
+                    <li><strong>Locust:</strong> Python-based, write tests in code</li>
+                    <li><strong>Apache JMeter:</strong> GUI-based, widely used</li>
+                    <li><strong>k6:</strong> Modern, JavaScript-based</li>
+                </ul>
+                <h3>Locust Example:</h3>
+                <div class="code-example">
+                    # locustfile.py<br>
+                    from locust import HttpUser, task, between<br><br>
+                    
+                    class WebsiteUser(HttpUser):<br>
+                    &nbsp;&nbsp;wait_time = between(1, 3)<br><br>
+                    
+                    &nbsp;&nbsp;@task(3)<br>
+                    &nbsp;&nbsp;def view_posts(self):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;self.client.get("/api/posts/")<br><br>
+                    
+                    &nbsp;&nbsp;@task(1)<br>
+                    &nbsp;&nbsp;def view_post_detail(self):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;self.client.get("/api/posts/1/")<br><br>
+                    
+                    # Run: locust -f locustfile.py
+                </div>
+            </section>
+
+            <section>
+                <h2>Performance Optimization</h2>
+                <h3>Backend Optimization:</h3>
+                <ul>
+                    <li>Database query optimization (select_related, prefetch_related)</li>
+                    <li>Caching (Redis, Memcached)</li>
+                    <li>Database indexing</li>
+                    <li>Pagination for large datasets</li>
+                    <li>Async tasks (Celery)</li>
+                </ul>
+                <h3>Frontend Optimization:</h3>
+                <ul>
+                    <li>Code splitting (React.lazy)</li>
+                    <li>Image optimization (WebP, lazy loading)</li>
+                    <li>Minification and bundling</li>
+                    <li>CDN for static assets</li>
+                    <li>Service workers for offline support</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Documentation Best Practices</h2>
+                <div class="checklist">
+                    <h4>Essential Documentation:</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✅ <strong>README.md:</strong> Project overview, setup, usage</li>
+                        <li>✅ <strong>Installation Guide:</strong> Dependencies, environment setup</li>
+                        <li>✅ <strong>API Documentation:</strong> Endpoints, request/response examples</li>
+                        <li>✅ <strong>User Guide:</strong> How to use the application</li>
+                        <li>✅ <strong>Developer Guide:</strong> Architecture, contributing</li>
+                        <li>✅ <strong>Changelog:</strong> Version history</li>
+                        <li>✅ <strong>License:</strong> MIT, GPL, etc.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>README.md Template</h2>
+                <div class="code-example">
+                    # Project Title<br>
+                    Brief description of your project.<br><br>
+                    
+                    ## Features<br>
+                    - Feature 1<br>
+                    - Feature 2<br><br>
+                    
+                    ## Tech Stack<br>
+                    - Frontend: React, Tailwind CSS<br>
+                    - Backend: Django, PostgreSQL<br>
+                    - Deployment: Heroku<br><br>
+                    
+                    ## Installation<br>
+                    \`\`\`bash<br>
+                    git clone https://github.com/user/project.git<br>
+                    cd project<br>
+                    pip install -r requirements.txt<br>
+                    python manage.py migrate<br>
+                    python manage.py runserver<br>
+                    \`\`\`<br><br>
+                    
+                    ## Usage<br>
+                    Visit http://localhost:8000<br><br>
+                    
+                    ## Testing<br>
+                    \`\`\`bash<br>
+                    pytest<br>
+                    \`\`\`<br><br>
+                    
+                    ## License<br>
+                    MIT
+                </div>
+            </section>
+
+            <section>
+                <h2>Deployment Strategies</h2>
+                <div class="deployment-card">
+                    <h4>Platform as a Service (PaaS)</h4>
+                    <p><strong>Options:</strong> Heroku, Railway, Render, PythonAnywhere</p>
+                    <p><strong>Pros:</strong> Easy setup, managed infrastructure, auto-scaling</p>
+                    <p><strong>Cons:</strong> Less control, more expensive at scale</p>
+                </div>
+                <div class="deployment-card">
+                    <h4>Infrastructure as a Service (IaaS)</h4>
+                    <p><strong>Options:</strong> AWS EC2, DigitalOcean, Google Cloud, Azure</p>
+                    <p><strong>Pros:</strong> Full control, cost-effective at scale</p>
+                    <p><strong>Cons:</strong> More setup, requires DevOps knowledge</p>
+                </div>
+                <div class="deployment-card">
+                    <h4>Serverless</h4>
+                    <p><strong>Options:</strong> Vercel, Netlify (frontend), AWS Lambda (backend)</p>
+                    <p><strong>Pros:</strong> Auto-scaling, pay per use, zero maintenance</p>
+                    <p><strong>Cons:</strong> Cold starts, limited execution time</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 Deployment Checklist</h2>
+                <div class="demo-container">
+                    <div class="checklist">
+                        <h4>Pre-Deployment:</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✅ Set DEBUG=False</li>
+                            <li>✅ Configure ALLOWED_HOSTS</li>
+                            <li>✅ Use environment variables for secrets</li>
+                            <li>✅ Set up production database</li>
+                            <li>✅ Configure static files (collectstatic)</li>
+                            <li>✅ Set up HTTPS/SSL</li>
+                            <li>✅ Configure CORS</li>
+                            <li>✅ Run security checks</li>
+                            <li>✅ Create backup strategy</li>
+                            <li>✅ Set up monitoring (Sentry, LogRocket)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>CI/CD Pipeline</h2>
+                <div class="highlight">
+                    <strong>CI/CD:</strong> Continuous Integration / Continuous Deployment
+                </div>
+                <h3>GitHub Actions Example:</h3>
+                <div class="code-example">
+                    # .github/workflows/django.yml<br>
+                    name: Django CI<br><br>
+                    
+                    on: [push, pull_request]<br><br>
+                    
+                    jobs:<br>
+                    &nbsp;&nbsp;test:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;steps:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v3<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- name: Set up Python<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/setup-python@v4<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;python-version: 3.11<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- name: Install dependencies<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: pip install -r requirements.txt<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- name: Run tests<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: pytest<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if: github.ref == 'refs/heads/main'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: # deployment command
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 2: Deploy Your Project</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Deploy your application to a live production environment</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Choose deployment platform (Heroku/Railway/Render)</li>
+                        <li>Set up production database (PostgreSQL)</li>
+                        <li>Configure environment variables</li>
+                        <li>Set DEBUG=False, configure ALLOWED_HOSTS</li>
+                        <li>Set up static files serving (WhiteNoise or CDN)</li>
+                        <li>Configure HTTPS</li>
+                        <li>Deploy backend and frontend</li>
+                        <li>Test all functionality in production</li>
+                        <li>Set up CI/CD pipeline (GitHub Actions)</li>
+                        <li>Document deployment process</li>
+                    </ol>
+                    <h3>Deliverables:</h3>
+                    <ul>
+                        <li>Live application URL</li>
+                        <li>Deployment documentation</li>
+                        <li>CI/CD configuration files</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Project Presentation Tips</h2>
+                <h3>Structure (10-15 minutes):</h3>
+                <ol>
+                    <li><strong>Introduction (1 min):</strong> Title, your name, overview</li>
+                    <li><strong>Problem (2 min):</strong> What problem does it solve?</li>
+                    <li><strong>Demo (5 min):</strong> Live walkthrough of key features</li>
+                    <li><strong>Technical (3 min):</strong> Architecture, tech stack, challenges</li>
+                    <li><strong>Testing (2 min):</strong> Testing strategy, coverage</li>
+                    <li><strong>Conclusion (2 min):</strong> Achievements, future work, Q&A</li>
+                </ol>
+                <h3>Best Practices:</h3>
+                <ul>
+                    <li>Practice multiple times</li>
+                    <li>Prepare backup (video if live demo fails)</li>
+                    <li>Focus on highlights, not every feature</li>
+                    <li>Show code for interesting parts</li>
+                    <li>Be ready to answer questions</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>🎯 Presentation Slide Structure</h2>
+                <div class="demo-container">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <div class="pipeline-step">
+                            <h4>Slide 1: Title</h4>
+                            <p>Project name, your name, date</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <h4>Slide 2-3: Problem & Solution</h4>
+                            <p>What problem? Why does it matter? Your solution</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <h4>Slide 4: Architecture</h4>
+                            <p>System diagram, tech stack</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <h4>Slide 5-7: Features</h4>
+                            <p>Screenshots, key functionality</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <h4>Slide 8: Technical Challenges</h4>
+                            <p>What was hard? How did you solve it?</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <h4>Slide 9: Testing & Quality</h4>
+                            <p>Coverage, performance, security</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <h4>Slide 10: Conclusion</h4>
+                            <p>Achievements, lessons learned, future work</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Final Project Checklist</h2>
+                <div class="checklist">
+                    <h4>Before Submission:</h4>
+                    <ul style="list-style: none; padding: 0; columns: 2;">
+                        <li>✅ All features working</li>
+                        <li>✅ Tests passing (80%+ coverage)</li>
+                        <li>✅ Code well-documented</li>
+                        <li>✅ README.md complete</li>
+                        <li>✅ API documentation</li>
+                        <li>✅ Deployed to production</li>
+                        <li>✅ HTTPS enabled</li>
+                        <li>✅ Responsive design</li>
+                        <li>✅ Accessibility checked</li>
+                        <li>✅ Performance optimized</li>
+                        <li>✅ Security best practices</li>
+                        <li>✅ Error handling</li>
+                        <li>✅ No sensitive data in repo</li>
+                        <li>✅ Clean git history</li>
+                        <li>✅ License included</li>
+                        <li>✅ Presentation prepared</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Module Review</h2>
+                <h3>What We've Covered:</h3>
+                <ul style="columns: 2; font-size: 0.95em;">
+                    <li>Web architecture</li>
+                    <li>HTML5 & semantics</li>
+                    <li>CSS3 & responsive design</li>
+                    <li>JavaScript fundamentals</li>
+                    <li>Async JS & APIs</li>
+                    <li>Django basics</li>
+                    <li>Django ORM & CRUD</li>
+                    <li>Django REST Framework</li>
+                    <li>React & state management</li>
+                    <li>Web app critique</li>
+                    <li>Comparative analysis</li>
+                    <li>Testing & deployment</li>
+                </ul>
+                <div class="highlight">
+                    <strong>You now have full-stack development skills!</strong>
+                </div>
+            </section>
+
+            <section class="center">
+                <h2>Congratulations!</h2>
+                <h3>You've completed CMM721</h3>
+                <p style="font-size: 1.2em; margin: 30px 0;">🎉</p>
+                <div class="highlight" style="max-width: 600px; margin: 20px auto;">
+                    <p><strong>Remember:</strong></p>
+                    <ul style="text-align: left;">
+                        <li>Keep learning - technology evolves rapidly</li>
+                        <li>Build projects - practice is key</li>
+                        <li>Contribute to open source</li>
+                        <li>Stay curious and keep coding!</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 30px;"><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Good luck with your projects and future careers!</strong></p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
+            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>

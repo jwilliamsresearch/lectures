@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 5: CSS Flexbox and Grid</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .layout-playground {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .layout-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .control-group select {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .layout-toggle {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .layout-toggle button {
+            padding: 10px 20px;
+            border: 2px solid #2196f3;
+            background: white;
+            color: #2196f3;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .layout-toggle button.active {
+            background: #2196f3;
+            color: white;
+        }
+
+        .layout-display {
+            min-height: 200px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f9f9f9;
+            margin: 20px 0;
+        }
+
+        .flexbox-container {
+            display: flex;
+            gap: 10px;
+            min-height: 150px;
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .grid-container {
+            display: grid;
+            gap: 10px;
+            min-height: 150px;
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .layout-item {
+            background: #ff9800;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            font-weight: bold;
+            min-height: 40px;
+        }
+
+        .layout-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .layout-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+
+        .layout-info code {
+            background: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>CSS Flexbox and Grid</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 5</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Modern layout techniques for responsive design</p>
+                <p><small>3-hour session • 26 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand CSS Flexbox layout system</li>
+                    <li>Master CSS Grid for complex layouts</li>
+                    <li>Create responsive and flexible designs</li>
+                    <li>Combine Flexbox and Grid effectively</li>
+                    <li>Build modern, accessible layouts</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: What is Flexbox? -->
+            <section>
+                <h2>What is CSS Flexbox?</h2>
+                <div class="highlight">
+                    <strong>Flexbox</strong> is a one-dimensional layout method for arranging items
+                    in rows or columns
+                </div>
+                <ul>
+                    <li>Designed for one-dimensional layouts</li>
+                    <li>Automatically adjusts item sizes</li>
+                    <li>Handles alignment and distribution</li>
+                    <li>Great for navigation, forms, and card layouts</li>
+                </ul>
+                <div class="code-example">
+                    .container {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;justify-content: space-between;<br>
+                    &nbsp;&nbsp;align-items: center;<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 4: Flexbox Container Properties -->
+            <section>
+                <h2>Flexbox Container Properties</h2>
+                <div class="code-example">
+                    .flex-container {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;flex-direction: row | column;<br>
+                    &nbsp;&nbsp;justify-content: flex-start | center | flex-end | space-between;<br>
+                    &nbsp;&nbsp;align-items: stretch | center | flex-start | flex-end;<br>
+                    &nbsp;&nbsp;flex-wrap: nowrap | wrap | wrap-reverse;<br>
+                    }
+                </div>
+                <ul>
+                    <li><code>flex-direction</code>: Main axis direction</li>
+                    <li><code>justify-content</code>: Main axis alignment</li>
+                    <li><code>align-items</code>: Cross axis alignment</li>
+                    <li><code>flex-wrap</code>: Wrapping behavior</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: Flexbox Item Properties -->
+            <section>
+                <h2>Flexbox Item Properties</h2>
+                <div class="code-example">
+                    .flex-item {<br>
+                    &nbsp;&nbsp;flex-grow: 0;<br>
+                    &nbsp;&nbsp;flex-shrink: 1;<br>
+                    &nbsp;&nbsp;flex-basis: auto;<br>
+                    &nbsp;&nbsp;flex: 0 1 auto; /* shorthand */<br>
+                    &nbsp;&nbsp;align-self: auto | flex-start | center | flex-end;<br>
+                    }
+                </div>
+                <ul>
+                    <li><code>flex-grow</code>: Growth factor</li>
+                    <li><code>flex-shrink</code>: Shrink factor</li>
+                    <li><code>flex-basis</code>: Initial size</li>
+                    <li><code>align-self</code>: Individual alignment</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Flexbox Examples -->
+            <section>
+                <h2>Common Flexbox Patterns</h2>
+                <div class="code-example">
+                    /* Navigation bar */<br>
+                    .nav {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;justify-content: space-between;<br>
+                    &nbsp;&nbsp;align-items: center;<br>
+                    }<br><br>
+                    /* Card layout */<br>
+                    .card {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;flex-direction: column;<br>
+                    &nbsp;&nbsp;justify-content: space-between;<br>
+                    }
+                </div>
+
+                <!-- Interactive Flexbox/Grid Playground -->
+                <div class="interactive-demo">
+                    <h3>Try It: Layout Playground</h3>
+                    <div class="demo-container">
+                        <div class="layout-playground">
+                            <div class="layout-toggle">
+                                <button id="flexbox-btn" class="active"
+                                    onclick="switchLayout('flexbox')">Flexbox</button>
+                                <button id="grid-btn" onclick="switchLayout('grid')">CSS
+                                    Grid</button>
+                            </div>
+
+                            <div class="layout-controls">
+                                <div class="control-group">
+                                    <label>Justify Content</label>
+                                    <select id="justify-select" onchange="updateLayout()">
+                                        <option value="flex-start">flex-start</option>
+                                        <option value="center">center</option>
+                                        <option value="flex-end">flex-end</option>
+                                        <option value="space-between">space-between</option>
+                                        <option value="space-around">space-around</option>
+                                        <option value="space-evenly">space-evenly</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <label>Align Items</label>
+                                    <select id="align-select" onchange="updateLayout()">
+                                        <option value="stretch">stretch</option>
+                                        <option value="flex-start">flex-start</option>
+                                        <option value="center">center</option>
+                                        <option value="flex-end">flex-end</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <label>Flex Direction</label>
+                                    <select id="direction-select" onchange="updateLayout()">
+                                        <option value="row">row</option>
+                                        <option value="column">column</option>
+                                        <option value="row-reverse">row-reverse</option>
+                                        <option value="column-reverse">column-reverse</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layout-display">
+                                <div id="layout-container" class="flexbox-container">
+                                    <div class="layout-item">1</div>
+                                    <div class="layout-item">2</div>
+                                    <div class="layout-item">3</div>
+                                    <div class="layout-item">4</div>
+                                </div>
+                            </div>
+
+                            <div class="layout-info">
+                                <h4>Current CSS Properties:</h4>
+                                <p><code>display: <span id="display-value">flex</span></code></p>
+                                <p><code>justify-content: <span id="justify-value">flex-start</span></code>
+                                </p>
+                                <p><code>align-items: <span id="align-value">stretch</span></code>
+                                </p>
+                                <p><code>flex-direction: <span id="direction-value">row</span></code>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Switch between Flexbox and Grid, then adjust the properties to see how they
+                        affect the layout!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 7: What is CSS Grid? -->
+            <section>
+                <h2>What is CSS Grid?</h2>
+                <div class="highlight">
+                    <strong>CSS Grid</strong> is a two-dimensional layout system for creating
+                    complex web layouts
+                </div>
+                <ul>
+                    <li>Two-dimensional (rows and columns)</li>
+                    <li>Precise control over layout</li>
+                    <li>Great for overall page layouts</li>
+                    <li>Works well with Flexbox</li>
+                </ul>
+                <div class="code-example">
+                    .grid-container {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: 1fr 2fr 1fr;<br>
+                    &nbsp;&nbsp;grid-template-rows: auto 1fr auto;<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 8: Grid Container Properties -->
+            <section>
+                <h2>Grid Container Properties</h2>
+                <div class="code-example">
+                    .grid-container {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: 200px 1fr 200px;<br>
+                    &nbsp;&nbsp;grid-template-rows: 100px 1fr 100px;<br>
+                    &nbsp;&nbsp;grid-gap: 20px;<br>
+                    &nbsp;&nbsp;justify-items: center;<br>
+                    &nbsp;&nbsp;align-items: center;<br>
+                    }
+                </div>
+                <ul>
+                    <li><code>grid-template-columns/rows</code>: Define tracks</li>
+                    <li><code>grid-gap</code>: Spacing between items</li>
+                    <li><code>justify-items/align-items</code>: Item alignment</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Grid Areas -->
+            <section>
+                <h2>Grid Template Areas</h2>
+                <div class="code-example">
+                    .container {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-areas:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"header header header"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"sidebar main aside"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"footer footer footer";<br>
+                    }<br><br>
+                    .header { grid-area: header; }<br>
+                    .sidebar { grid-area: sidebar; }<br>
+                    .main { grid-area: main; }<br>
+                    .aside { grid-area: aside; }<br>
+                    .footer { grid-area: footer; }
+                </div>
+            </section>
+
+            <!-- Slide 10: Grid Item Properties -->
+            <section>
+                <h2>Grid Item Properties</h2>
+                <div class="code-example">
+                    .grid-item {<br>
+                    &nbsp;&nbsp;grid-column: 1 / 3;<br>
+                    &nbsp;&nbsp;grid-row: 1 / 2;<br>
+                    &nbsp;&nbsp;justify-self: center;<br>
+                    &nbsp;&nbsp;align-self: center;<br>
+                    }
+                </div>
+                <ul>
+                    <li><code>grid-column/row</code>: Item placement</li>
+                    <li><code>justify-self/align-self</code>: Individual alignment</li>
+                    <li>Use line numbers or area names</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Responsive Grid -->
+            <section>
+                <h2>Responsive Grid Layout</h2>
+                <div class="code-example">
+                    .grid {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: 1fr;<br>
+                    }<br><br>
+                    @media (min-width: 768px) {<br>
+                    &nbsp;&nbsp;.grid {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;grid-template-columns: 1fr 1fr;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    @media (min-width: 1024px) {<br>
+                    &nbsp;&nbsp;.grid {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;grid-template-columns: 1fr 1fr 1fr;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 12: Flexbox vs Grid -->
+            <section>
+                <h2>Flexbox vs Grid: When to Use Each</h2>
+                <div class="highlight">
+                    <strong>Flexbox:</strong> One-dimensional layouts (rows OR columns)
+                </div>
+                <ul>
+                    <li>Navigation menus</li>
+                    <li>Form layouts</li>
+                    <li>Card components</li>
+                    <li>Toolbars</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Grid:</strong> Two-dimensional layouts (rows AND columns)
+                </div>
+                <ul>
+                    <li>Page layouts</li>
+                    <li>Photo galleries</li>
+                    <li>Dashboard layouts</li>
+                    <li>Complex forms</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: Combining Flexbox and Grid -->
+            <section>
+                <h2>Combining Flexbox and Grid</h2>
+                <div class="code-example">
+                    /* Grid for overall layout */<br>
+                    .page {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-areas: "header" "main" "footer";<br>
+                    }<br><br>
+                    /* Flexbox for navigation */<br>
+                    .nav {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;justify-content: space-between;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Use Grid for overall page structure</li>
+                    <li>Use Flexbox for component layouts</li>
+                    <li>Grid items can be Flexbox containers</li>
+                    <li>Flexbox items can be Grid containers</li>
+                </ul>
+            </section>
+
+            <!-- Slide 14: Browser Support -->
+            <section>
+                <h2>Browser Support</h2>
+                <ul>
+                    <li><strong>Flexbox:</strong> Excellent support in all modern browsers</li>
+                    <li><strong>Grid:</strong> Good support in modern browsers</li>
+                    <li>Use fallbacks for older browsers</li>
+                    <li>Test across different browsers</li>
+                    <li>Consider using CSS Grid polyfills</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Progressive Enhancement:</strong> Start with basic layouts, enhance with
+                    modern features
+                </div>
+            </section>
+
+            <!-- Slide 15: Performance Considerations -->
+            <section>
+                <h2>Performance Considerations</h2>
+                <ul>
+                    <li>Grid and Flexbox are hardware accelerated</li>
+                    <li>Avoid excessive nesting</li>
+                    <li>Use appropriate units (fr, %, auto)</li>
+                    <li>Minimize layout recalculations</li>
+                    <li>Test on mobile devices</li>
+                </ul>
+                <div class="code-example">
+                    /* Good: Use fr units for flexible layouts */<br>
+                    grid-template-columns: 1fr 2fr 1fr;<br><br>
+                    /* Avoid: Fixed pixel values for responsive layouts */<br>
+                    grid-template-columns: 200px 400px 200px;
+                </div>
+            </section>
+
+            <!-- Slide 16: Accessibility -->
+            <section>
+                <h2>Accessibility Best Practices</h2>
+                <ul>
+                    <li>Maintain logical document flow</li>
+                    <li>Use semantic HTML elements</li>
+                    <li>Ensure keyboard navigation works</li>
+                    <li>Test with screen readers</li>
+                    <li>Provide fallbacks for older browsers</li>
+                    <li>Use appropriate ARIA attributes</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Remember:</strong> Layout should enhance, not hinder, accessibility
+                </div>
+            </section>
+
+            <!-- Slide 17: Common Layout Patterns -->
+            <section>
+                <h2>Common Layout Patterns</h2>
+                <ul>
+                    <li><strong>Holy Grail Layout:</strong> Header, footer, sidebar, main content
+                    </li>
+                    <li><strong>Card Layout:</strong> Flexible cards in a grid</li>
+                    <li><strong>Sticky Footer:</strong> Footer at bottom of viewport</li>
+                    <li><strong>Sidebar Layout:</strong> Fixed sidebar with scrollable main</li>
+                    <li><strong>Masonry Layout:</strong> Pinterest-style grid</li>
+                    <li><strong>Dashboard:</strong> Multiple widgets in grid</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Flexbox Layout Practice</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>flexbox-practice.html</code></li>
+                        <li>Build a navigation bar using Flexbox with:</li>
+                        <ul>
+                            <li>Logo on the left</li>
+                            <li>Navigation links in the center</li>
+                            <li>User menu on the right</li>
+                        </ul>
+                        <li>Create a card layout with:</li>
+                        <ul>
+                            <li>3 cards in a row (responsive)</li>
+                            <li>Cards with image, title, description, and button</li>
+                            <li>Equal height cards</li>
+                        </ul>
+                        <li>Add a footer with social media links</li>
+                        <li>Make it responsive for mobile devices</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand Flexbox layout and responsive
+                            design</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Grid Best Practices -->
+            <section>
+                <h2>Grid Best Practices</h2>
+                <ul>
+                    <li>Plan your grid structure before coding</li>
+                    <li>Use semantic names for grid areas</li>
+                    <li>Keep grid definitions simple</li>
+                    <li>Use appropriate units (fr, %, auto)</li>
+                    <li>Test on different screen sizes</li>
+                    <li>Consider mobile-first approach</li>
+                </ul>
+                <div class="code-example">
+                    /* Good: Named grid areas */<br>
+                    grid-template-areas:<br>
+                    &nbsp;&nbsp;"header header"<br>
+                    &nbsp;&nbsp;"sidebar main"<br>
+                    &nbsp;&nbsp;"footer footer";
+                </div>
+            </section>
+
+            <!-- Slide 21: Grid Auto-Fit and Auto-Fill -->
+            <section>
+                <h2>Auto-Fit vs Auto-Fill</h2>
+                <div class="code-example">
+                    /* Auto-fit: Creates as many columns as can fit */<br>
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));<br><br>
+                    /* Auto-fill: Creates as many columns as possible */<br>
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                </div>
+                <ul>
+                    <li><code>auto-fit</code>: Expands columns to fill space</li>
+                    <li><code>auto-fill</code>: Keeps minimum column width</li>
+                    <li>Great for responsive card layouts</li>
+                    <li>No media queries needed</li>
+                </ul>
+            </section>
+
+            <!-- Slide 22: Subgrid (Future Feature) -->
+            <section>
+                <h2>CSS Subgrid (Future Feature)</h2>
+                <div class="code-example">
+                    .parent {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: 1fr 2fr 1fr;<br>
+                    }<br><br>
+                    .child {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: subgrid;<br>
+                    }
+                </div>
+                <ul>
+                    <li>Allows nested grids to align with parent</li>
+                    <li>Currently limited browser support</li>
+                    <li>Will simplify complex layouts</li>
+                    <li>Use with feature detection</li>
+                </ul>
+            </section>
+
+            <!-- Slide 23: Layout Debugging -->
+            <section>
+                <h2>Layout Debugging Tools</h2>
+                <ul>
+                    <li>Browser Developer Tools</li>
+                    <li>Grid and Flexbox inspectors</li>
+                    <li>Layout visualization</li>
+                    <li>CSS Grid Garden (learning tool)</li>
+                    <li>Flexbox Froggy (learning tool)</li>
+                    <li>Grid by Example (resources)</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Chrome DevTools:</strong> Highlight grid areas and flex items
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: CSS Grid Dashboard</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>grid-dashboard.html</code></li>
+                        <li>Build a dashboard layout using CSS Grid with:</li>
+                        <ul>
+                            <li><strong>Header:</strong> Full width, contains title and user info
+                            </li>
+                            <li><strong>Sidebar:</strong> Navigation menu with multiple items</li>
+                            <li><strong>Main Content:</strong> Grid of widgets/cards</li>
+                            <li><strong>Widgets:</strong> Statistics, charts, recent activity</li>
+                        </ul>
+                        <li>Use grid-template-areas for layout</li>
+                        <li>Make widgets responsive (different sizes)</li>
+                        <li>Add hover effects and transitions</li>
+                        <li>Ensure the layout works on different screen sizes</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand CSS Grid and complex layouts</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Troubleshooting -->
+            <section>
+                <h2>Common Layout Issues</h2>
+                <ul>
+                    <li><strong>Items not aligning:</strong> Check justify/align properties</li>
+                    <li><strong>Grid not working:</strong> Verify display: grid</li>
+                    <li><strong>Responsive issues:</strong> Use appropriate units</li>
+                    <li><strong>Browser differences:</strong> Test across browsers</li>
+                    <li><strong>Performance problems:</strong> Avoid excessive nesting</li>
+                    <li><strong>Accessibility issues:</strong> Maintain logical flow</li>
+                </ul>
+            </section>
+
+            <!-- Slide 26: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Flexbox for one-dimensional layouts</li>
+                    <li>Grid for two-dimensional layouts</li>
+                    <li>Combine both for complex designs</li>
+                    <li>Use responsive units and techniques</li>
+                    <li>Test across different browsers</li>
+                    <li>Consider accessibility and performance</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>JavaScript Basics - Adding interactivity to your layouts</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+
+        // Layout Playground Functions
+        let currentLayout = 'flexbox';
+
+        function switchLayout(layout) {
+            currentLayout = layout;
+            const container = document.getElementById('layout-container');
+            const flexboxBtn = document.getElementById('flexbox-btn');
+            const gridBtn = document.getElementById('grid-btn');
+
+            // Update button states
+            flexboxBtn.classList.toggle('active', layout === 'flexbox');
+            gridBtn.classList.toggle('active', layout === 'grid');
+
+            // Update container class
+            if (layout === 'flexbox') {
+                container.className = 'flexbox-container';
+                document.getElementById('display-value').textContent = 'flex';
+            } else {
+                container.className = 'grid-container';
+                container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+                container.style.gridTemplateRows = 'repeat(2, 1fr)';
+                document.getElementById('display-value').textContent = 'grid';
+            }
+
+            updateLayout();
+        }
+
+        function updateLayout() {
+            const container = document.getElementById('layout-container');
+            const justifySelect = document.getElementById('justify-select');
+            const alignSelect = document.getElementById('align-select');
+            const directionSelect = document.getElementById('direction-select');
+
+            const justifyValue = justifySelect.value;
+            const alignValue = alignSelect.value;
+            const directionValue = directionSelect.value;
+
+            // Update display values
+            document.getElementById('justify-value').textContent = justifyValue;
+            document.getElementById('align-value').textContent = alignValue;
+            document.getElementById('direction-value').textContent = directionValue;
+
+            if (currentLayout === 'flexbox') {
+                container.style.justifyContent = justifyValue;
+                container.style.alignItems = alignValue;
+                container.style.flexDirection = directionValue;
+            } else {
+                // For grid, map flexbox properties to grid equivalents
+                container.style.justifyContent = justifyValue;
+                container.style.alignItems = alignValue;
+                // Grid doesn't have flex-direction, so we'll skip that
+            }
+        }
+    </script>
+</body>
+
+</html>

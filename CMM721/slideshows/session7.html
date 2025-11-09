@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 7: Django ORM & CRUD</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
+        .reveal .slides section.center { text-align: center; }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
+        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
+        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
+        .demo-container h3 { color: #9b59b6; margin-top: 0; }
+        .db-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9em; }
+        .db-table th { background: linear-gradient(135deg, #9b59b6, #3498db); color: white; padding: 10px; text-align: left; }
+        .db-table td { border: 1px solid #ddd; padding: 8px; }
+        .db-table tr:nth-child(even) { background: #f8f9fa; }
+        .relationship-diagram { background: #f8f9fa; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .model-box { background: white; border: 2px solid #3498db; border-radius: 5px; padding: 15px; margin: 10px; display: inline-block; min-width: 200px; }
+        .model-box h4 { margin: 0 0 10px 0; color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+        .model-field { padding: 5px 0; font-family: monospace; font-size: 0.9em; }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
+        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <section class="center">
+                <h1>Django ORM & CRUD Operations</h1>
+                <h3>CMM721: Web Application Development - Session 7</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Masters Level Conversion Course</p>
+                <p><small>3-hour session • 18 slides • 2 tasks • Database visualizations</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Create and manage Django models</li>
+                    <li>Understand database migrations</li>
+                    <li>Perform CRUD operations using Django ORM</li>
+                    <li>Work with QuerySets and filtering</li>
+                    <li>Implement model relationships</li>
+                    <li>Use Django Admin interface</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>What is an ORM?</h2>
+                <div class="highlight">
+                    <strong>ORM:</strong> Object-Relational Mapping
+                </div>
+                <ul>
+                    <li><strong>Purpose:</strong> Interact with databases using Python objects</li>
+                    <li><strong>Benefit:</strong> Write Python instead of SQL</li>
+                    <li><strong>Database Agnostic:</strong> Works with SQLite, PostgreSQL, MySQL, etc.</li>
+                </ul>
+                <h3>Without ORM (Raw SQL):</h3>
+                <div class="code-example">
+                    cursor.execute("SELECT * FROM users WHERE age > 21")
+                </div>
+                <h3>With ORM:</h3>
+                <div class="code-example">
+                    User.objects.filter(age__gt=21)
+                </div>
+            </section>
+
+            <section>
+                <h2>Creating Django Models</h2>
+                <div class="code-example">
+                    # models.py<br>
+                    from django.db import models<br>
+                    from django.contrib.auth.models import User<br><br>
+                    
+                    class Post(models.Model):<br>
+                    &nbsp;&nbsp;title = models.CharField(max_length=200)<br>
+                    &nbsp;&nbsp;content = models.TextField()<br>
+                    &nbsp;&nbsp;author = models.ForeignKey(User, on_delete=models.CASCADE)<br>
+                    &nbsp;&nbsp;created_at = models.DateTimeField(auto_now_add=True)<br>
+                    &nbsp;&nbsp;updated_at = models.DateTimeField(auto_now=True)<br>
+                    &nbsp;&nbsp;published = models.BooleanField(default=False)<br><br>
+                    
+                    &nbsp;&nbsp;def __str__(self):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return self.title<br><br>
+                    
+                    &nbsp;&nbsp;class Meta:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;ordering = ['-created_at']
+                </div>
+            </section>
+
+            <section>
+                <h2>Field Types</h2>
+                <div class="code-example">
+                    # Character/Text fields<br>
+                    CharField(max_length=100)<br>
+                    TextField()<br>
+                    EmailField()<br>
+                    URLField()<br><br>
+                    
+                    # Numeric fields<br>
+                    IntegerField()<br>
+                    DecimalField(max_digits=10, decimal_places=2)<br>
+                    FloatField()<br><br>
+                    
+                    # Date/Time fields<br>
+                    DateField()<br>
+                    DateTimeField()<br>
+                    TimeField()<br><br>
+                    
+                    # Boolean<br>
+                    BooleanField(default=False)<br><br>
+                    
+                    # File fields<br>
+                    FileField(upload_to='files/')<br>
+                    ImageField(upload_to='images/')
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 Database Table Visualization</h2>
+                <div class="demo-container">
+                    <h3>Post Model → Database Table</h3>
+                    <table class="db-table">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>title</th>
+                                <th>content</th>
+                                <th>author_id</th>
+                                <th>created_at</th>
+                                <th>published</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Django Tutorial</td>
+                                <td>Learn Django ORM...</td>
+                                <td>1</td>
+                                <td>2024-01-15 10:30</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Python Basics</td>
+                                <td>Introduction to Python...</td>
+                                <td>2</td>
+                                <td>2024-01-16 14:20</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Web Security</td>
+                                <td>Best practices...</td>
+                                <td>1</td>
+                                <td>2024-01-17 09:15</td>
+                                <td>✗</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.9em; color: #666;">Django automatically creates an 'id' primary key field</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Migrations</h2>
+                <h3>Create Migrations:</h3>
+                <div class="code-example">
+                    # Create migration files<br>
+                    python manage.py makemigrations<br><br>
+                    
+                    # Output:<br>
+                    # Migrations for 'blog':<br>
+                    # &nbsp;&nbsp;blog/migrations/0001_initial.py<br>
+                    # &nbsp;&nbsp;&nbsp;&nbsp;- Create model Post<br><br>
+                    
+                    # Apply migrations<br>
+                    python manage.py migrate<br><br>
+                    
+                    # View SQL<br>
+                    python manage.py sqlmigrate blog 0001<br><br>
+                    
+                    # Show migration status<br>
+                    python manage.py showmigrations
+                </div>
+                <div class="highlight">
+                    <strong>Always:</strong> makemigrations → migrate
+                </div>
+            </section>
+
+            <section>
+                <h2>CRUD: Create</h2>
+                <h3>Creating Objects:</h3>
+                <div class="code-example">
+                    # Method 1: Create and save<br>
+                    post = Post()<br>
+                    post.title = "My First Post"<br>
+                    post.content = "Hello World!"<br>
+                    post.author = request.user<br>
+                    post.save()<br><br>
+                    
+                    # Method 2: Create in one line<br>
+                    post = Post.objects.create(<br>
+                    &nbsp;&nbsp;title="My First Post",<br>
+                    &nbsp;&nbsp;content="Hello World!",<br>
+                    &nbsp;&nbsp;author=request.user<br>
+                    )<br><br>
+                    
+                    # Method 3: get_or_create<br>
+                    post, created = Post.objects.get_or_create(<br>
+                    &nbsp;&nbsp;title="Unique Title",<br>
+                    &nbsp;&nbsp;defaults={'content': 'Content', 'author': user}<br>
+                    )
+                </div>
+            </section>
+
+            <section>
+                <h2>CRUD: Read (Query)</h2>
+                <div class="code-example">
+                    # Get all objects<br>
+                    posts = Post.objects.all()<br><br>
+                    
+                    # Get specific object<br>
+                    post = Post.objects.get(id=1)<br>
+                    post = Post.objects.get(title="Django Tutorial")<br><br>
+                    
+                    # Filter objects<br>
+                    published = Post.objects.filter(published=True)<br>
+                    recent = Post.objects.filter(created_at__gte='2024-01-01')<br><br>
+                    
+                    # Exclude<br>
+                    drafts = Post.objects.exclude(published=True)<br><br>
+                    
+                    # First/Last<br>
+                    first_post = Post.objects.first()<br>
+                    latest = Post.objects.last()<br><br>
+                    
+                    # Count<br>
+                    count = Post.objects.count()
+                </div>
+            </section>
+
+            <section>
+                <h2>Advanced Queries</h2>
+                <div class="code-example">
+                    # Chaining filters<br>
+                    posts = Post.objects.filter(<br>
+                    &nbsp;&nbsp;published=True<br>
+                    ).filter(<br>
+                    &nbsp;&nbsp;created_at__year=2024<br>
+                    ).order_by('-created_at')<br><br>
+                    
+                    # OR queries<br>
+                    from django.db.models import Q<br>
+                    posts = Post.objects.filter(<br>
+                    &nbsp;&nbsp;Q(title__icontains='django') | Q(content__icontains='django')<br>
+                    )<br><br>
+                    
+                    # Lookup types<br>
+                    Post.objects.filter(title__icontains='python') # Case-insensitive<br>
+                    Post.objects.filter(title__startswith='Django')<br>
+                    Post.objects.filter(created_at__year=2024)<br>
+                    Post.objects.filter(id__in=[1, 2, 3])<br>
+                    Post.objects.filter(title__isnull=False)
+                </div>
+            </section>
+
+            <section>
+                <h2>CRUD: Update</h2>
+                <div class="code-example">
+                    # Method 1: Get, modify, save<br>
+                    post = Post.objects.get(id=1)<br>
+                    post.title = "Updated Title"<br>
+                    post.published = True<br>
+                    post.save()<br><br>
+                    
+                    # Method 2: Update queryset (bulk update)<br>
+                    Post.objects.filter(author=user).update(published=True)<br><br>
+                    
+                    # Update specific fields only<br>
+                    post = Post.objects.get(id=1)<br>
+                    post.title = "New Title"<br>
+                    post.save(update_fields=['title']) # Only update title
+                </div>
+                <div class="highlight">
+                    <strong>Note:</strong> .update() doesn't call save() or send signals
+                </div>
+            </section>
+
+            <section>
+                <h2>CRUD: Delete</h2>
+                <div class="code-example">
+                    # Delete single object<br>
+                    post = Post.objects.get(id=1)<br>
+                    post.delete()<br><br>
+                    
+                    # Delete multiple objects<br>
+                    Post.objects.filter(published=False).delete()<br><br>
+                    
+                    # Delete all (BE CAREFUL!)<br>
+                    Post.objects.all().delete()
+                </div>
+                <div class="highlight">
+                    <strong>Warning:</strong> Delete operations are irreversible!
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 1: Build Blog CRUD</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a fully functional blog with CRUD operations</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create Post model (title, content, author, created_at, published)</li>
+                        <li>Run migrations</li>
+                        <li>Create views for: list, detail, create, update, delete</li>
+                        <li>Create templates for each view</li>
+                        <li>Implement URL patterns</li>
+                        <li>Test all CRUD operations</li>
+                    </ol>
+                    <h3>Views to Implement:</h3>
+                    <ul>
+                        <li>post_list - Display all posts</li>
+                        <li>post_detail - Show single post</li>
+                        <li>post_create - Form to create post</li>
+                        <li>post_update - Form to edit post</li>
+                        <li>post_delete - Confirm and delete</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Model Relationships</h2>
+                <h3>ForeignKey (Many-to-One):</h3>
+                <div class="code-example">
+                    class Comment(models.Model):<br>
+                    &nbsp;&nbsp;post = models.ForeignKey(Post, on_delete=models.CASCADE)<br>
+                    &nbsp;&nbsp;text = models.TextField()<br>
+                    &nbsp;&nbsp;author = models.ForeignKey(User, on_delete=models.CASCADE)<br><br>
+                    
+                    # Access<br>
+                    post.comment_set.all() # All comments for a post<br>
+                    comment.post # The post this comment belongs to
+                </div>
+                <h3>on_delete Options:</h3>
+                <ul>
+                    <li><strong>CASCADE:</strong> Delete related objects</li>
+                    <li><strong>PROTECT:</strong> Prevent deletion</li>
+                    <li><strong>SET_NULL:</strong> Set to NULL</li>
+                    <li><strong>SET_DEFAULT:</strong> Set to default value</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>🎯 Relationship Visualization</h2>
+                <div class="demo-container">
+                    <h3>Blog Database Schema</h3>
+                    <div class="relationship-diagram">
+                        <div class="model-box">
+                            <h4>User</h4>
+                            <div class="model-field">• id (PK)</div>
+                            <div class="model-field">• username</div>
+                            <div class="model-field">• email</div>
+                        </div>
+                        <span style="font-size: 2em; margin: 0 20px;">→</span>
+                        <div class="model-box">
+                            <h4>Post</h4>
+                            <div class="model-field">• id (PK)</div>
+                            <div class="model-field">• title</div>
+                            <div class="model-field">• content</div>
+                            <div class="model-field" style="color: #e74c3c;">• author_id (FK)</div>
+                            <div class="model-field">• created_at</div>
+                        </div>
+                        <span style="font-size: 2em; margin: 0 20px;">→</span>
+                        <div class="model-box">
+                            <h4>Comment</h4>
+                            <div class="model-field">• id (PK)</div>
+                            <div class="model-field" style="color: #e74c3c;">• post_id (FK)</div>
+                            <div class="model-field" style="color: #e74c3c;">• author_id (FK)</div>
+                            <div class="model-field">• text</div>
+                            <div class="model-field">• created_at</div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #666; margin-top: 15px;">
+                        PK = Primary Key | FK = Foreign Key
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Many-to-Many Relationships</h2>
+                <div class="code-example">
+                    class Tag(models.Model):<br>
+                    &nbsp;&nbsp;name = models.CharField(max_length=50)<br><br>
+                    
+                    class Post(models.Model):<br>
+                    &nbsp;&nbsp;title = models.CharField(max_length=200)<br>
+                    &nbsp;&nbsp;tags = models.ManyToManyField(Tag)<br><br>
+                    
+                    # Usage<br>
+                    post = Post.objects.get(id=1)<br>
+                    tag = Tag.objects.get(name='Django')<br><br>
+                    
+                    # Add tag to post<br>
+                    post.tags.add(tag)<br><br>
+                    
+                    # Get all tags for a post<br>
+                    post.tags.all()<br><br>
+                    
+                    # Get all posts with a tag<br>
+                    Tag.objects.get(name='Python').post_set.all()<br><br>
+                    
+                    # Remove tag<br>
+                    post.tags.remove(tag)
+                </div>
+            </section>
+
+            <section>
+                <h2>Django Admin</h2>
+                <h3>Register Models (admin.py):</h3>
+                <div class="code-example">
+                    from django.contrib import admin<br>
+                    from .models import Post, Comment<br><br>
+                    
+                    @admin.register(Post)<br>
+                    class PostAdmin(admin.ModelAdmin):<br>
+                    &nbsp;&nbsp;list_display = ('title', 'author', 'created_at', 'published')<br>
+                    &nbsp;&nbsp;list_filter = ('published', 'created_at')<br>
+                    &nbsp;&nbsp;search_fields = ('title', 'content')<br>
+                    &nbsp;&nbsp;date_hierarchy = 'created_at'<br>
+                    &nbsp;&nbsp;ordering = ('-created_at',)<br><br>
+                    
+                    admin.site.register(Comment)
+                </div>
+                <h3>Create Superuser:</h3>
+                <div class="code-example">
+                    python manage.py createsuperuser<br>
+                    # Visit: http://127.0.0.1:8000/admin/
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 2: Advanced Blog Features</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Enhance blog with relationships and admin interface</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Add Comment model with ForeignKey to Post</li>
+                        <li>Add Tag model with ManyToMany to Post</li>
+                        <li>Create views to display comments under posts</li>
+                        <li>Add form to create new comments</li>
+                        <li>Implement tag filtering (show posts by tag)</li>
+                        <li>Configure Django Admin for all models</li>
+                        <li>Customize admin: list_display, search, filters</li>
+                    </ol>
+                    <h3>Bonus:</h3>
+                    <ul>
+                        <li>Add pagination (10 posts per page)</li>
+                        <li>Implement comment count per post</li>
+                        <li>Add "related posts" by shared tags</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>QuerySet Optimization</h2>
+                <h3>select_related (ForeignKey):</h3>
+                <div class="code-example">
+                    # Without optimization (N+1 queries)<br>
+                    posts = Post.objects.all()<br>
+                    for post in posts:<br>
+                    &nbsp;&nbsp;print(post.author.username) # Database hit each time<br><br>
+                    
+                    # With select_related (1 query with JOIN)<br>
+                    posts = Post.objects.select_related('author').all()<br>
+                    for post in posts:<br>
+                    &nbsp;&nbsp;print(post.author.username) # No extra queries
+                </div>
+                <h3>prefetch_related (ManyToMany):</h3>
+                <div class="code-example">
+                    # Optimize ManyToMany<br>
+                    posts = Post.objects.prefetch_related('tags').all()<br>
+                    for post in posts:<br>
+                    &nbsp;&nbsp;print(post.tags.all()) # Already loaded
+                </div>
+            </section>
+
+            <section>
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>Always use __str__:</strong> Define readable string representation</li>
+                    <li><strong>Indexes:</strong> Add db_index=True for frequently queried fields</li>
+                    <li><strong>Validation:</strong> Use clean() method for custom validation</li>
+                    <li><strong>Migrations:</strong> Review migration files before applying</li>
+                    <li><strong>QuerySet optimization:</strong> Use select_related/prefetch_related</li>
+                    <li><strong>Bulk operations:</strong> Use bulk_create() for multiple inserts</li>
+                    <li><strong>Admin:</strong> Customize admin interface for better usability</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Remember:</strong> QuerySets are lazy - they don't hit database until evaluated
+                </div>
+            </section>
+
+            <section>
+                <h2>Next Session: Django REST Framework</h2>
+                <ul>
+                    <li>Introduction to REST APIs</li>
+                    <li>Django REST Framework (DRF) basics</li>
+                    <li>Serializers and validation</li>
+                    <li>ViewSets and Routers</li>
+                    <li>Authentication and permissions</li>
+                    <li>API testing with Postman</li>
+                </ul>
+                <p><strong>Preparation:</strong> Install: pip install djangorestframework</p>
+            </section>
+
+            <section class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> Django ORM Docs, QuerySet API Reference</p>
+                <p>Thank you for your attention!</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
+            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>

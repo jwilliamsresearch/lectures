@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 4: PHP Fundamentals & Server Setup</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            display: inline-block;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>PHP Fundamentals & Server Setup</h1>
+                <h3>CMU529: Advanced Web Development - Session 4</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Introduction to server-side programming with PHP</p>
+                <p><small>3-hour session • 26 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand PHP basics and server-side programming</li>
+                    <li>Set up a local development environment with XAMPP</li>
+                    <li>Learn PHP syntax, variables, and data types</li>
+                    <li>Create basic PHP scripts and functions</li>
+                    <li>Understand PHP's role in web development</li>
+                    <li>Build simple dynamic web pages</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: What is PHP? -->
+            <section>
+                <h2>What is PHP?</h2>
+                <div class="highlight">
+                    <strong>PHP (Hypertext Preprocessor)</strong> is a server-side scripting
+                    language designed for web development
+                </div>
+                <ul>
+                    <li>Open-source and free to use</li>
+                    <li>Runs on web servers (Apache, Nginx)</li>
+                    <li>Processes code on the server before sending to browser</li>
+                    <li>Can generate dynamic HTML content</li>
+                    <li>Integrates with databases (MySQL, PostgreSQL)</li>
+                    <li>Widely used in web development</li>
+                </ul>
+                <div class="diagram">
+                    <h4>PHP Processing Flow</h4>
+                    <p><strong>Request:</strong> Browser → Server</p>
+                    <p><strong>Process:</strong> Server → PHP Engine</p>
+                    <p><strong>Response:</strong> PHP → HTML → Browser</p>
+                </div>
+
+                <!-- YouTube Video: PHP Fundamentals Explained -->
+                <div class="interactive-content">
+                    <h3>Watch: PHP Fundamentals Explained</h3>
+                    <div class="video-container">
+                        <iframe width="100%" height="315"
+                            src="https://www.youtube-nocookie.com/embed/OK_JCtrrv-c"
+                            title="PHP Fundamentals Explained" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="interactive-description">
+                        Comprehensive introduction to PHP - the server-side programming language
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 4: PHP vs Client-side Languages -->
+            <section>
+                <h2>PHP vs Client-side Languages</h2>
+                <div class="code-example">
+                    PHP (Server-side):<br><br>
+
+                    ✓ Runs on web server<br>
+                    ✓ Processes before page loads<br>
+                    ✓ Can access databases<br>
+                    ✓ Secure (code not visible)<br>
+                    ✓ Generates HTML dynamically<br>
+                    ✓ Handles form processing<br>
+                    ✓ Session management<br>
+                    ✓ File operations<br><br>
+
+                    JavaScript (Client-side):<br><br>
+
+                    ✓ Runs in browser<br>
+                    ✓ Processes after page loads<br>
+                    ✓ Cannot access databases directly<br>
+                    ✗ Code visible to users<br>
+                    ✓ Manipulates existing HTML<br>
+                    ✓ Handles user interactions<br>
+                    ✓ Local storage only<br>
+                    ✓ Limited file access
+                </div>
+            </section>
+
+            <!-- Slide 5: Setting Up XAMPP -->
+            <section>
+                <h2>Setting Up XAMPP</h2>
+                <div class="code-example">
+                    XAMPP Installation Steps:<br><br>
+
+                    1. Download XAMPP from apachefriends.org<br>
+                    2. Run installer (Windows/macOS/Linux)<br>
+                    3. Choose installation directory<br>
+                    4. Select components (Apache, MySQL, PHP)<br>
+                    5. Complete installation<br>
+                    6. Start XAMPP Control Panel<br>
+                    7. Start Apache and MySQL services<br>
+                    8. Access http://localhost/phpmyadmin<br>
+                    9. Create project folder in htdocs/
+                </div>
+                <ul>
+                    <li>XAMPP provides Apache, MySQL, PHP, and phpMyAdmin</li>
+                    <li>All-in-one package for local development</li>
+                    <li>No complex configuration required</li>
+                    <li>Perfect for learning and development</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Basic PHP Syntax -->
+            <section>
+                <h2>Basic PHP Syntax</h2>
+                <div class="code-example">
+                    &lt;?php<br>
+                    // This is a PHP comment<br>
+                    echo "Hello, World!";<br>
+                    ?&gt;<br><br>
+
+                    &lt;?php<br>
+                    /* Multi-line<br>
+                    comment */<br>
+                    $message = "Welcome to PHP";<br>
+                    echo $message;<br>
+                    ?&gt;<br><br>
+
+                    &lt;?php<br>
+                    # Another comment style<br>
+                    $number = 42;<br>
+                    echo "The answer is: " . $number;<br>
+                    ?&gt;
+                </div>
+                <ul>
+                    <li>PHP code is enclosed in <code>&lt;?php ?&gt;</code> tags</li>
+                    <li>Statements end with semicolons</li>
+                    <li>Variables start with <code>$</code> symbol</li>
+                    <li>Comments use <code>//</code>, <code>/* */</code>, or <code>#</code></li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: PHP Variables -->
+            <section>
+                <h2>PHP Variables</h2>
+                <div class="code-example">
+                    Variable Declaration:<br><br>
+
+                    &lt;?php<br>
+                    $name = "John";<br>
+                    $age = 25;<br>
+                    $price = 19.99;<br>
+                    $isActive = true;<br>
+                    $products = ["Apple", "Banana", "Orange"];<br><br>
+
+                    echo "Name: " . $name;<br>
+                    echo "Age: " . $age;<br>
+                    echo "Price: $" . $price;<br>
+                    echo "Active: " . ($isActive ? "Yes" : "No");<br>
+                    echo "Products: " . implode(", ", $products);<br>
+                    ?&gt;
+                </div>
+                <ul>
+                    <li>Variables are dynamically typed</li>
+                    <li>No need to declare data type</li>
+                    <li>Case-sensitive names</li>
+                    <li>Must start with letter or underscore</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: PHP Data Types -->
+            <section>
+                <h2>PHP Data Types</h2>
+                <div class="code-example">
+                    PHP Data Types:<br><br>
+
+                    // String<br>
+                    $name = "John Doe";<br>
+                    $message = 'Hello World';<br><br>
+
+                    // Integer<br>
+                    $age = 25;<br>
+                    $count = -10;<br><br>
+
+                    // Float<br>
+                    $price = 19.99;<br>
+                    $pi = 3.14159;<br><br>
+
+                    // Boolean<br>
+                    $isActive = true;<br>
+                    $isLoggedIn = false;<br><br>
+
+                    // Array<br>
+                    $colors = ["red", "green", "blue"];<br>
+                    $user = ["name" => "John", "age" => 25];<br><br>
+
+                    // Null<br>
+                    $empty = null;
+                </div>
+            </section>
+
+            <!-- Slide 9: PHP Arrays -->
+            <section>
+                <h2>PHP Arrays</h2>
+                <div class="code-example">
+                    Array Examples:<br><br>
+
+                    // Indexed Array<br>
+                    $products = ["Laptop", "Mouse", "Keyboard"];<br>
+                    echo $products[0]; // Outputs: Laptop<br><br>
+
+                    // Associative Array<br>
+                    $user = [<br>
+                    &nbsp;&nbsp;"name" => "John",<br>
+                    &nbsp;&nbsp;"email" => "john@example.com",<br>
+                    &nbsp;&nbsp;"age" => 25<br>
+                    ];<br>
+                    echo $user["name"]; // Outputs: John<br><br>
+
+                    // Multidimensional Array<br>
+                    $orders = [<br>
+                    &nbsp;&nbsp;[<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"id" => 1,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"product" => "Laptop",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"price" => 999.99<br>
+                    &nbsp;&nbsp;],<br>
+                    &nbsp;&nbsp;[<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"id" => 2,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"product" => "Mouse",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"price" => 29.99<br>
+                    &nbsp;&nbsp;]<br>
+                    ];
+                </div>
+            </section>
+
+            <!-- Slide 10: PHP Functions -->
+            <section>
+                <h2>PHP Functions</h2>
+                <div class="code-example">
+                    Function Examples:<br><br>
+
+                    // Basic function<br>
+                    function greet($name) {<br>
+                    &nbsp;&nbsp;return "Hello, " . $name . "!";<br>
+                    }<br><br>
+
+                    // Function with default parameter<br>
+                    function calculateTotal($price, $tax = 0.20) {<br>
+                    &nbsp;&nbsp;return $price * (1 + $tax);<br>
+                    }<br><br>
+
+                    // Function with multiple parameters<br>
+                    function createUser($name, $email, $age = 18) {<br>
+                    &nbsp;&nbsp;return [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"name" => $name,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"email" => $email,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"age" => $age<br>
+                    &nbsp;&nbsp;];<br>
+                    }<br><br>
+
+                    // Using functions<br>
+                    echo greet("John");<br>
+                    echo calculateTotal(100);<br>
+                    $user = createUser("Jane", "jane@example.com", 25);
+                </div>
+            </section>
+
+            <!-- Slide 11: PHP Control Structures -->
+            <section>
+                <h2>PHP Control Structures</h2>
+                <div class="code-example">
+                    If Statement:<br><br>
+
+                    $age = 18;<br>
+                    if ($age >= 18) {<br>
+                    &nbsp;&nbsp;echo "You are an adult";<br>
+                    } else {<br>
+                    &nbsp;&nbsp;echo "You are a minor";<br>
+                    }<br><br>
+
+                    Switch Statement:<br><br>
+
+                    $status = "active";<br>
+                    switch ($status) {<br>
+                    &nbsp;&nbsp;case "active":<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "User is active";<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                    &nbsp;&nbsp;case "inactive":<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "User is inactive";<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                    &nbsp;&nbsp;default:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Unknown status";<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 12: PHP Loops -->
+            <section>
+                <h2>PHP Loops</h2>
+                <div class="code-example">
+                    Loop Examples:<br><br>
+
+                    // For loop<br>
+                    for ($i = 1; $i <= 5; $i++) {<br>
+                        &nbsp;&nbsp;echo "Number: " . $i . "&lt;br&gt;";<br>
+                        }<br><br>
+
+                        // While loop<br>
+                        $count = 0;<br>
+                        while ($count < 3) {<br>
+                            &nbsp;&nbsp;echo "Count: " . $count . "&lt;br&gt;";<br>
+                            &nbsp;&nbsp;$count++;<br>
+                            }<br><br>
+
+                            // Foreach loop<br>
+                            $products = ["Laptop", "Mouse", "Keyboard"];<br>
+                            foreach ($products as $product) {<br>
+                            &nbsp;&nbsp;echo "Product: " . $product . "&lt;br&gt;";<br>
+                            }<br><br>
+
+                            // Foreach with associative array<br>
+                            $user = ["name" => "John", "age" => 25];<br>
+                            foreach ($user as $key => $value) {<br>
+                            &nbsp;&nbsp;echo $key . ": " . $value . "&lt;br&gt;";<br>
+                            }
+                </div>
+            </section>
+
+            <!-- Slide 13: PHP and HTML Integration -->
+            <section>
+                <h2>PHP and HTML Integration</h2>
+                <div class="code-example">
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &nbsp;&nbsp;&lt;title&gt;PHP Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &nbsp;&nbsp;&lt;h1&gt;Welcome to our Store&lt;/h1&gt;<br><br>
+
+                    &nbsp;&nbsp;&lt;?php<br>
+                    &nbsp;&nbsp;$products = ["Laptop", "Mouse", "Keyboard"];<br>
+                    &nbsp;&nbsp;$currentTime = date("Y-m-d H:i:s");<br>
+                    &nbsp;&nbsp;?&gt;<br><br>
+
+                    &nbsp;&nbsp;&lt;p&gt;Current time: &lt;?php echo $currentTime;
+                    ?&gt;&lt;/p&gt;<br><br>
+
+                    &nbsp;&nbsp;&lt;h2&gt;Our Products:&lt;/h2&gt;<br>
+                    &nbsp;&nbsp;&lt;ul&gt;<br>
+                    &nbsp;&nbsp;&lt;?php foreach ($products as $product): ?&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;?php echo $product; ?&gt;&lt;/li&gt;<br>
+                    &nbsp;&nbsp;&lt;?php endforeach; ?&gt;<br>
+                    &nbsp;&nbsp;&lt;/ul&gt;<br><br>
+
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </div>
+            </section>
+
+            <!-- Slide 14: PHP Form Processing -->
+            <section>
+                <h2>PHP Form Processing</h2>
+                <div class="code-example">
+                    HTML Form:<br><br>
+
+                    &lt;form method="POST" action="process.php"&gt;<br>
+                    &nbsp;&nbsp;&lt;label for="name"&gt;Name:&lt;/label&gt;<br>
+                    &nbsp;&nbsp;&lt;input type="text" name="name"
+                    id="name"&gt;&lt;br&gt;&lt;br&gt;<br>
+                    &nbsp;&nbsp;&lt;label for="email"&gt;Email:&lt;/label&gt;<br>
+                    &nbsp;&nbsp;&lt;input type="email" name="email"
+                    id="email"&gt;&lt;br&gt;&lt;br&gt;<br>
+                    &nbsp;&nbsp;&lt;button type="submit"&gt;Submit&lt;/button&gt;<br>
+                    &lt;/form&gt;<br><br>
+
+                    PHP Processing (process.php):<br><br>
+
+                    &lt;?php<br>
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {<br>
+                    &nbsp;&nbsp;$name = $_POST["name"];<br>
+                    &nbsp;&nbsp;$email = $_POST["email"];<br><br>
+
+                    &nbsp;&nbsp;echo "Name: " . $name . "&lt;br&gt;";<br>
+                    &nbsp;&nbsp;echo "Email: " . $email . "&lt;br&gt;";<br>
+                    }<br>
+                    ?&gt;
+                </div>
+            </section>
+
+            <!-- Slide 15: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Basic PHP Development</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Set up XAMPP and start Apache service</li>
+                        <li>Create a new project folder in htdocs directory</li>
+                        <li>Create PHP files with the following:</li>
+                        <ul>
+                            <li>Basic PHP syntax and variables</li>
+                            <li>Arrays and loops</li>
+                            <li>Functions with parameters</li>
+                            <li>HTML integration</li>
+                            <li>Simple form processing</li>
+                        </ul>
+                        <li>Test all files through localhost</li>
+                        <li>Create a simple product catalog page</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand PHP basics and server setup</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 17: PHP Superglobals -->
+            <section>
+                <h2>PHP Superglobals</h2>
+                <div class="code-example">
+                    Common Superglobals:<br><br>
+
+                    // $_POST - Form data<br>
+                    $name = $_POST["name"];<br><br>
+
+                    // $_GET - URL parameters<br>
+                    $id = $_GET["id"];<br><br>
+
+                    // $_SERVER - Server information<br>
+                    $method = $_SERVER["REQUEST_METHOD"];<br>
+                    $url = $_SERVER["REQUEST_URI"];<br><br>
+
+                    // $_SESSION - Session data<br>
+                    session_start();<br>
+                    $_SESSION["user_id"] = 123;<br><br>
+
+                    // $_COOKIE - Cookie data<br>
+                    $theme = $_COOKIE["theme"];<br><br>
+
+                    // $_FILES - File uploads<br>
+                    $uploadedFile = $_FILES["file"];
+                </div>
+            </section>
+
+            <!-- Slide 18: PHP Error Handling -->
+            <section>
+                <h2>PHP Error Handling</h2>
+                <div class="code-example">
+                    Error Handling Examples:<br><br>
+
+                    // Display errors (development only)<br>
+                    ini_set('display_errors', 1);<br>
+                    error_reporting(E_ALL);<br><br>
+
+                    // Try-catch for exceptions<br>
+                    try {<br>
+                    &nbsp;&nbsp;$result = 10 / 0;<br>
+                    } catch (Exception $e) {<br>
+                    &nbsp;&nbsp;echo "Error: " . $e->getMessage();<br>
+                    }<br><br>
+
+                    // Custom error handling<br>
+                    function customErrorHandler($errno, $errstr) {<br>
+                    &nbsp;&nbsp;echo "Error [$errno]: $errstr";<br>
+                    }<br>
+                    set_error_handler("customErrorHandler");<br><br>
+
+                    // Error logging<br>
+                    error_log("This is an error message", 0);
+                </div>
+            </section>
+
+            <!-- Slide 19: PHP Security Basics -->
+            <section>
+                <h2>PHP Security Basics</h2>
+                <ul>
+                    <li><strong>Input Validation:</strong> Always validate user input</li>
+                    <li><strong>SQL Injection:</strong> Use prepared statements</li>
+                    <li><strong>XSS Prevention:</strong> Escape output with htmlspecialchars()</li>
+                    <li><strong>CSRF Protection:</strong> Use tokens for forms</li>
+                    <li><strong>File Upload Security:</strong> Validate file types and sizes</li>
+                </ul>
+                <div class="code-example">
+                    Security Examples:<br><br>
+
+                    // Input validation<br>
+                    $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);<br><br>
+
+                    // XSS prevention<br>
+                    $userInput = "&lt;script&gt;alert('XSS')&lt;/script&gt;";<br>
+                    echo htmlspecialchars($userInput);<br><br>
+
+                    // File upload validation<br>
+                    $allowedTypes = ["jpg", "png", "gif"];<br>
+                    $fileExtension = strtolower(pathinfo($_FILES["file"]["name"],
+                    PATHINFO_EXTENSION));<br>
+                    if (in_array($fileExtension, $allowedTypes)) {<br>
+                    &nbsp;&nbsp;// Process file<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 20: PHP File Operations -->
+            <section>
+                <h2>PHP File Operations</h2>
+                <div class="code-example">
+                    File Operations Examples:<br><br>
+
+                    // Reading a file<br>
+                    $content = file_get_contents("data.txt");<br>
+                    echo $content;<br><br>
+
+                    // Writing to a file<br>
+                    $data = "Hello, World!";<br>
+                    file_put_contents("output.txt", $data);<br><br>
+
+                    // Reading file line by line<br>
+                    $handle = fopen("data.txt", "r");<br>
+                    while (($line = fgets($handle)) !== false) {<br>
+                    &nbsp;&nbsp;echo $line;<br>
+                    }<br>
+                    fclose($handle);<br><br>
+
+                    // Checking if file exists<br>
+                    if (file_exists("config.php")) {<br>
+                    &nbsp;&nbsp;include "config.php";<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 21: PHP Include and Require -->
+            <section>
+                <h2>PHP Include and Require</h2>
+                <div class="code-example">
+                    Include Examples:<br><br>
+
+                    // Include file (continues if file not found)<br>
+                    include "header.php";<br><br>
+
+                    // Require file (stops if file not found)<br>
+                    require "config.php";<br><br>
+
+                    // Include once (prevents multiple inclusion)<br>
+                    include_once "functions.php";<br><br>
+
+                    // Require once (prevents multiple inclusion)<br>
+                    require_once "database.php";<br><br>
+
+                    // Example structure:<br>
+                    // header.php<br>
+                    &lt;?php<br>
+                    echo "&lt;h1&gt;My Website&lt;/h1&gt;";<br>
+                    ?&gt;<br><br>
+
+                    // footer.php<br>
+                    &lt;?php<br>
+                    echo "&lt;p&gt;© 2024 My Website&lt;/p&gt;";<br>
+                    ?&gt;
+                </div>
+            </section>
+
+            <!-- Slide 22: PHP Sessions -->
+            <section>
+                <h2>PHP Sessions</h2>
+                <div class="code-example">
+                    Session Management:<br><br>
+
+                    // Start session<br>
+                    session_start();<br><br>
+
+                    // Set session variables<br>
+                    $_SESSION["user_id"] = 123;<br>
+                    $_SESSION["username"] = "john_doe";<br>
+                    $_SESSION["logged_in"] = true;<br><br>
+
+                    // Access session variables<br>
+                    echo "User ID: " . $_SESSION["user_id"];<br>
+                    echo "Username: " . $_SESSION["username"];<br><br>
+
+                    // Check if user is logged in<br>
+                    if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]) {<br>
+                    &nbsp;&nbsp;echo "Welcome back!";<br>
+                    } else {<br>
+                    &nbsp;&nbsp;echo "Please log in";<br>
+                    }<br><br>
+
+                    // Destroy session<br>
+                    session_destroy();
+                </div>
+            </section>
+
+            <!-- Slide 23: PHP Best Practices -->
+            <section>
+                <h2>PHP Best Practices</h2>
+                <ul>
+                    <li><strong>Code Organization:</strong> Use meaningful file and folder names
+                    </li>
+                    <li><strong>Comments:</strong> Document your code properly</li>
+                    <li><strong>Naming Conventions:</strong> Use consistent naming (camelCase,
+                        snake_case)</li>
+                    <li><strong>Error Handling:</strong> Always handle errors gracefully</li>
+                    <li><strong>Security:</strong> Never trust user input</li>
+                    <li><strong>Performance:</strong> Optimize database queries and loops</li>
+                </ul>
+                <div class="code-example">
+                    Good Practices Example:<br><br>
+
+                    // Good: Clear variable names<br>
+                    $userFirstName = "John";<br>
+                    $userLastName = "Doe";<br><br>
+
+                    // Good: Proper error handling<br>
+                    if (!file_exists("config.php")) {<br>
+                    &nbsp;&nbsp;die("Configuration file not found");<br>
+                    }<br><br>
+
+                    // Good: Input validation<br>
+                    $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);<br>
+                    if (!$email) {<br>
+                    &nbsp;&nbsp;echo "Invalid email address";<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: E-commerce PHP Foundation</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a basic e-commerce PHP application with:</li>
+                        <ul>
+                            <li>Product listing page with PHP arrays</li>
+                            <li>Product detail page with URL parameters</li>
+                            <li>Contact form with validation</li>
+                            <li>Session-based shopping cart</li>
+                            <li>Simple user authentication system</li>
+                        </ul>
+                        <li>Implement proper error handling</li>
+                        <li>Use include/require for code organization</li>
+                        <li>Add security measures (input validation, XSS prevention)</li>
+                        <li>Test all functionality thoroughly</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you build a foundation for e-commerce PHP
+                            development</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>PHP is a powerful server-side scripting language</li>
+                    <li>XAMPP provides a complete local development environment</li>
+                    <li>PHP integrates seamlessly with HTML</li>
+                    <li>Proper error handling and security are essential</li>
+                    <li>Sessions enable user state management</li>
+                    <li>Code organization and best practices improve maintainability</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>PHP Forms & Data Processing - Advanced form handling and validation</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            fitToParent: true,
+            responsive: true,
+            scrollBeyondOnePage: true
+        });
+    </script>
+</body>
+
+</html>

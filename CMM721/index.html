@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM721: Web Application Development | James Williams | Birmingham Newman University</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="CMM721 Web Application Development course by James Williams at Birmingham Newman University. Learn full-stack development with HTML5, CSS3, JavaScript, Python, Django, and React.">
+    <meta name="keywords" content="CMM721, web application development, full-stack, HTML5, CSS3, JavaScript, Python, Django, React, James Williams, Birmingham Newman University, responsive design, API development">
+    <meta name="author" content="James Williams">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jwilliams.science/lectures/CMM721/">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="CMM721: Web Application Development | James Williams | Birmingham Newman University">
+    <meta property="og:description" content="Learn full-stack web application development with modern technologies including HTML5, CSS3, JavaScript, Python, Django, and React.">
+    <meta property="og:url" content="https://jwilliams.science/lectures/CMM721/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="James Williams Teaching Portfolio">
+    <meta property="og:locale" content="en_GB">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CMM721: Web Application Development | James Williams | Birmingham Newman University">
+    <meta name="twitter:description" content="Learn full-stack web application development with modern technologies including HTML5, CSS3, JavaScript, Python, Django, and React.">
+    <meta name="twitter:url" content="https://jwilliams.science/lectures/CMM721/">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#9b59b6">
+    <meta name="msapplication-TileColor" content="#9b59b6">
+    <meta name="application-name" content="CMM721 Web Application Development Course">
+    
+    <!-- Performance Optimization -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.newman.ac.uk" crossorigin>
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//developer.mozilla.org">
+    <link rel="dns-prefetch" href="//html.spec.whatwg.org">
+    <link rel="dns-prefetch" href="//css-tricks.com">
+    <link rel="dns-prefetch" href="//react.dev">
+    <link rel="dns-prefetch" href="//djangoproject.com">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "CMM721: Web Application Development",
+        "description": "A comprehensive introduction to full-stack web development, combining essential frontend and backend technologies. Students gain hands-on experience with HTML5, CSS3, JavaScript, Python, Django, and React.",
+        "provider": {
+            "@type": "EducationalOrganization",
+            "name": "Birmingham Newman University",
+            "url": "https://www.newman.ac.uk"
+        },
+        "instructor": {
+            "@type": "Person",
+            "name": "James Williams",
+            "jobTitle": "Lecturer in Computer Science"
+        },
+        "courseCode": "CMM721",
+        "educationalLevel": "Undergraduate",
+        "credits": "20",
+        "url": "https://jwilliams.science/lectures/CMM721/",
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "blended",
+            "courseWorkload": "PT36H"
+        },
+        "teaches": [
+            "HTML5",
+            "CSS3", 
+            "JavaScript",
+            "Python",
+            "Django",
+            "React",
+            "Full-Stack Development",
+            "API Development",
+            "Responsive Design"
+        ]
+    }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);
+            color: white;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(30deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(150deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(30deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(150deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(60deg, rgba(255,255,255,.05) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05)),
+                linear-gradient(60deg, rgba(255,255,255,.05) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .module-code {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            letter-spacing: 2px;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+        
+        .header-details {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+        
+        .module-description {
+            padding: 40px;
+            background: linear-gradient(to right, rgba(155, 89, 182, 0.05), transparent);
+            border-left: 4px solid #9b59b6;
+            margin: 0;
+        }
+        
+        .module-description h2 {
+            color: #9b59b6;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .module-description p {
+            line-height: 1.8;
+            color: #555;
+            margin: 0;
+            font-size: 1.1em;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #e9ecef;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #9b59b6 #f8f9fa;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .tabs::-webkit-scrollbar-track {
+            background: #f8f9fa;
+        }
+        
+        .tabs::-webkit-scrollbar-thumb {
+            background: #9b59b6;
+            border-radius: 3px;
+        }
+        
+        .tab {
+            padding: 20px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #9b59b6;
+            border-bottom-color: #9b59b6;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 40px;
+            min-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .module-info {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #9b59b6;
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.2);
+        }
+        
+        .module-info h2 {
+            margin-top: 0;
+            color: #9b59b6;
+        }
+        
+        .slideshow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .slideshow-card {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid #e1bee7;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slideshow-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #9b59b6, #3498db);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .slideshow-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(155, 89, 182, 0.3);
+            border-color: #9b59b6;
+        }
+        
+        .slideshow-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .slideshow-number {
+            background: linear-gradient(135deg, #9b59b6, #3498db);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .slideshow-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            line-height: 1.3;
+        }
+        
+        .slideshow-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+        
+        .slideshow-details {
+            font-size: 0.95em;
+            color: #888;
+            font-weight: 500;
+        }
+        
+        /* Assessment Tab Styles */
+        .assessment-section {
+            background: #fff3e0;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .assessment-section h3 {
+            color: #e65100;
+            margin-top: 0;
+        }
+        
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .assessment-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ffcc02;
+            box-shadow: 0 3px 10px rgba(255, 152, 0, 0.1);
+        }
+        
+        /* Quiz Tab Styles */
+        .quiz-section {
+            background: #e8f5e8;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .quiz-section h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+        
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .quiz-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #66bb6a;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+        }
+        
+        /* Further Reading Tab Styles */
+        .further-reading-section {
+            background: #f3e5f5;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #9c27b0;
+        }
+        
+        .further-reading-section h3 {
+            color: #6a1b9a;
+            margin-top: 0;
+        }
+        
+        .further-reading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .resource-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #ba68c8;
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.2);
+        }
+        
+        .resource-card h4 {
+            color: #6a1b9a;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .resource-card .resource-type {
+            display: inline-block;
+            background: #e1bee7;
+            color: #6a1b9a;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .resource-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .resource-card a {
+            color: #9c27b0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .resource-card a:hover {
+            color: #6a1b9a;
+            text-decoration: underline;
+        }
+        
+        .resource-card .author {
+            font-size: 0.9em;
+            color: #888;
+            font-style: italic;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                padding: 15px 20px;
+                font-size: 1em;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .slideshow-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .slideshow-card {
+                padding: 25px;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        .tab-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .tab-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .tab-content::-webkit-scrollbar-thumb {
+            background: #9b59b6;
+            border-radius: 4px;
+        }
+        
+        .tab-content::-webkit-scrollbar-thumb:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <nav style="position: fixed; top: 20px; left: 20px; z-index: 1000;" role="navigation" aria-label="Main navigation">
+        <a href="../index.html" style="
+            background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            display: inline-block;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'"
+           aria-label="Return to teaching portfolio homepage">
+            ← Back to Teaching Portfolio
+        </a>
+    </nav>
+    <div class="container">
+        <header class="header" role="banner">
+            <div class="header-content">
+                <div class="module-code">CMM721</div>
+                <h1>Web Application Development</h1>
+                <div class="header-subtitle">Full-Stack Development with Django & React</div>
+                <div class="header-details">
+                    Birmingham Newman University | Lecturer: James Williams | 20 Credits | Masters Level Conversion
+                </div>
+            </div>
+        </header>
+        
+        <section class="module-description">
+            <h2>Module Overview</h2>
+            <p>A comprehensive introduction to full-stack web development, combining essential frontend and backend technologies. Students gain hands-on experience with HTML5, CSS3, JavaScript, Python, Django, and React to build modern, responsive web applications.</p>
+        </section>
+        
+        <nav class="tabs" role="tablist" aria-label="Course content navigation">
+            <button class="tab active" onclick="showTab('slides')" role="tab" aria-selected="true" aria-controls="slides" id="tab-slides">Slides</button>
+            <button class="tab" onclick="showTab('assessment')" role="tab" aria-selected="false" aria-controls="assessment" id="tab-assessment">Assessment</button>
+            <button class="tab" onclick="showTab('quizzes')" role="tab" aria-selected="false" aria-controls="quizzes" id="tab-quizzes">Quizzes</button>
+            <button class="tab" onclick="showTab('further-reading')" role="tab" aria-selected="false" aria-controls="further-reading" id="tab-further-reading">Further Reading</button>
+        </nav>
+        
+        <main role="main">
+            <!-- Slides Tab -->
+            <section id="slides" class="tab-content active" role="tabpanel" aria-labelledby="tab-slides">
+                <div class="module-info">
+                    <h2>Module Overview</h2>
+                    <p><strong>Credits:</strong> 20 credits | <strong>Level:</strong> Undergraduate | <strong>Focus:</strong> Full-Stack Web Application Development</p>
+                    <p>This module provides a comprehensive introduction to full-stack web development, combining essential frontend and backend technologies. Students will gain hands-on experience with HTML5, CSS3, JavaScript, Python, and Django, while exploring modern frameworks such as React and Django Rest Framework. Each slideshow is designed for a 3-hour session with interactive tasks.</p>
+                </div>
+
+                <div class="slideshow-grid" role="list">
+                    <a href="slideshows/session1.html" class="slideshow-card">
+                        <div class="slideshow-number" aria-hidden="true">1</div>
+                        <h3 class="slideshow-title">Module Introduction & Web Architecture</h3>
+                        <p class="slideshow-description">Module overview, assessment breakdown, tooling setup, and web architecture fundamentals</p>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session2.html" class="slideshow-card">
+                        <div class="slideshow-number">2</div>
+                        <div class="slideshow-title">HTML5 & Semantic Structure</div>
+                        <div class="slideshow-description">Semantic HTML, accessibility, SEO, ARIA roles, and structure validation</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session3.html" class="slideshow-card">
+                        <div class="slideshow-number">3</div>
+                        <div class="slideshow-title">CSS3 & Responsive Design</div>
+                        <div class="slideshow-description">Flexbox, Grid, media queries, and responsive design principles</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session4.html" class="slideshow-card">
+                        <div class="slideshow-number">4</div>
+                        <div class="slideshow-title">JavaScript Fundamentals</div>
+                        <div class="slideshow-description">DOM manipulation, events, ES6 syntax, functions, and debugging tools</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session5.html" class="slideshow-card">
+                        <div class="slideshow-number">5</div>
+                        <div class="slideshow-title">Asynchronous JavaScript & APIs</div>
+                        <div class="slideshow-description">Fetch API, Promises, async/await, and API integration patterns</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session6.html" class="slideshow-card">
+                        <div class="slideshow-number">6</div>
+                        <div class="slideshow-title">Django Basics</div>
+                        <div class="slideshow-description">Django project setup, views, templates, URL routing, and static files</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session7.html" class="slideshow-card">
+                        <div class="slideshow-number">7</div>
+                        <div class="slideshow-title">Django ORM & CRUD</div>
+                        <div class="slideshow-description">Models, migrations, admin interface, CRUD operations, and form handling</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session8.html" class="slideshow-card">
+                        <div class="slideshow-number">8</div>
+                        <div class="slideshow-title">Django REST Framework</div>
+                        <div class="slideshow-description">Serializers, viewsets, routers, authentication, and API testing</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session9.html" class="slideshow-card">
+                        <div class="slideshow-number">9</div>
+                        <div class="slideshow-title">React & State Management</div>
+                        <div class="slideshow-description">JSX, components, props/state, lifecycle methods, and Redux basics</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session10.html" class="slideshow-card">
+                        <div class="slideshow-number">10</div>
+                        <div class="slideshow-title">Web App Critique</div>
+                        <div class="slideshow-description">Evaluating usability, performance, accessibility, and standards compliance</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session11.html" class="slideshow-card">
+                        <div class="slideshow-number">11</div>
+                        <div class="slideshow-title">Comparative Critique</div>
+                        <div class="slideshow-description">Comparing frameworks, design decisions, scalability, and maintainability</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+
+                    <a href="slideshows/session12.html" class="slideshow-card">
+                        <div class="slideshow-number">12</div>
+                        <div class="slideshow-title">Project Finalisation</div>
+                        <div class="slideshow-description">Testing strategies, documentation, deployment, and presentation tips</div>
+                        <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                    </a>
+                </div>
+            </section>
+        
+            <!-- Assessment Tab -->
+            <section id="assessment" class="tab-content" role="tabpanel" aria-labelledby="tab-assessment">
+                <div class="assessment-section">
+                    <h3>Assessment Overview</h3>
+                    <p>CMM721: Web Application Development has two assessment components: a portfolio of exercises and case studies (60%), and a final project (40%).</p>
+                </div>
+                
+                <div class="assessment-grid">
+                    <div class="assessment-card">
+                        <h4>Portfolio - Exercises and Case Studies (60%)</h4>
+                        <p><strong>Project Type:</strong> Portfolio of weekly exercises and case study critiques</p>
+                        <p><strong>Requirements:</strong> Weekly practical exercises and critical evaluations of existing web applications</p>
+                        <p><strong>Focus:</strong> Technical proficiency, design awareness, and critical analysis skills</p>
+                        <p><strong>Due:</strong> Weekly submissions throughout the module</p>
+                    </div>
+
+                    <div class="assessment-card">
+                        <h4>Final Project - Web Application (40%)</h4>
+                        <p><strong>Project Type:</strong> Individual full-stack web application</p>
+                        <p><strong>Requirements:</strong> Complete web application using technologies covered in the module</p>
+                        <p><strong>Focus:</strong> Technical implementation, design quality, and professional standards</p>
+                        <p><strong>Due:</strong> End of module with presentation</p>
+                    </div>
+                </div>
+                
+                <div class="assessment-section">
+                    <h3>Project Requirements</h3>
+                    <ul>
+                        <li><strong>Technical Stack:</strong> HTML5, CSS3, JavaScript, Python/Django, and React (minimum requirements)</li>
+                        <li><strong>Functionality:</strong> Full-stack application with database integration and API endpoints</li>
+                        <li><strong>Design Requirements:</strong> Responsive design, modern UI/UX, accessibility compliance</li>
+                        <li><strong>Documentation:</strong> Comprehensive technical documentation and user guides</li>
+                        <li><strong>Code Quality:</strong> Well-structured, commented code following best practices</li>
+                        <li><strong>Testing:</strong> Unit tests, integration tests, and user acceptance testing</li>
+                        <li><strong>Deployment:</strong> Live deployment with proper hosting configuration</li>
+                    </ul>
+                </div>
+                
+                <div class="assessment-section">
+                    <h3>Learning Outcomes Assessed</h3>
+                    <ul>
+                        <li>Develop full-stack web applications using modern frameworks and technologies</li>
+                        <li>Apply responsive design principles and accessibility standards</li>
+                        <li>Design and implement secure API endpoints and database systems</li>
+                        <li>Critically evaluate existing web applications and design decisions</li>
+                        <li>Work independently to solve complex web development problems</li>
+                        <li>Demonstrate professional development practices and ethical considerations</li>
+                        <li>Present technical work effectively to both technical and non-technical audiences</li>
+                    </ul>
+                </div>
+                
+                <div class="assessment-section">
+                    <h3>Important Notes</h3>
+                    <div class="important-note">
+                        <p><strong>Weekly Exercises:</strong> Each week includes practical exercises that contribute to your portfolio assessment.</p>
+                        <p><strong>Case Studies:</strong> Critical evaluations of existing web applications demonstrating analytical skills.</p>
+                        <p><strong>Project Scope:</strong> Students must agree on project scope with their tutor before development begins.</p>
+                        <p><strong>Professional Standards:</strong> All work should demonstrate industry-standard practices and ethical considerations.</p>
+                    </div>
+                </div>
+            </section>
+        
+            <!-- Quizzes Tab -->
+            <section id="quizzes" class="tab-content" role="tabpanel" aria-labelledby="tab-quizzes">
+                <div class="quiz-section">
+                    <h3>Module Quizzes</h3>
+                    <p>Test your knowledge with interactive quizzes for each session. Each quiz contains questions based on the lecture content and practical exercises.</p>
+                </div>
+                
+                <div class="quiz-grid">
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz1.html'">
+                        <h4>Quiz 1: Module Introduction & Web Architecture</h4>
+                        <p>Test your understanding of web architecture fundamentals and development setup.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz2.html'">
+                        <h4>Quiz 2: HTML5 & Semantic Structure</h4>
+                        <p>Assess your knowledge of semantic HTML, accessibility, and SEO principles.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz3.html'">
+                        <h4>Quiz 3: CSS3 & Responsive Design</h4>
+                        <p>Evaluate your CSS skills including layout techniques and responsive design.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz4.html'">
+                        <h4>Quiz 4: JavaScript Fundamentals</h4>
+                        <p>Test your JavaScript fundamentals including DOM manipulation and ES6 features.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz5.html'">
+                        <h4>Quiz 5: Asynchronous JavaScript & APIs</h4>
+                        <p>Assess your understanding of async programming and API integration patterns.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz6.html'">
+                        <h4>Quiz 6: Django Basics</h4>
+                        <p>Test your knowledge of Django project setup, views, and template systems.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz7.html'">
+                        <h4>Quiz 7: Django ORM & CRUD</h4>
+                        <p>Evaluate your understanding of Django models, database operations, and forms.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz8.html'">
+                        <h4>Quiz 8: Django REST Framework</h4>
+                        <p>Test your knowledge of REST APIs, serializers, and authentication in Django.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz9.html'">
+                        <h4>Quiz 9: React & State Management</h4>
+                        <p>Assess your React skills including components, state management, and hooks.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz10.html'">
+                        <h4>Quiz 10: Web App Critique</h4>
+                        <p>Test your ability to evaluate web applications for usability and performance.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz11.html'">
+                        <h4>Quiz 11: Comparative Critique</h4>
+                        <p>Evaluate your understanding of framework comparison and design decisions.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                    
+                    <div class="quiz-card" onclick="window.location.href='quizzes/quiz12.html'">
+                        <h4>Quiz 12: Project Finalisation</h4>
+                        <p>Comprehensive assessment covering testing, deployment, and project management.</p>
+                        <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes</p>
+                    </div>
+                </div>
+            </section>
+        
+            <!-- Further Reading Tab -->
+            <section id="further-reading" class="tab-content" role="tabpanel" aria-labelledby="tab-further-reading">
+                <div class="further-reading-section">
+                    <h3>Further Reading & Resources</h3>
+                    <p>Explore additional resources to deepen your understanding of full-stack web development. These carefully selected materials include official documentation, educational platforms, and industry resources.</p>
+                </div>
+                
+                <div class="further-reading-grid">
+                    <div class="resource-card">
+                        <div class="resource-type">Web Development Fundamentals</div>
+                        <h4>MDN Web Docs – Web Development Guide</h4>
+                        <p>Complete guide to web development covering HTML, CSS, JavaScript, and modern web standards from the Mozilla Developer Network.</p>
+                        <a href="https://developer.mozilla.org/en-US/docs/Learn" target="_blank">Visit MDN Web Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">Django Framework</div>
+                        <h4>Django Official Documentation</h4>
+                        <p>Comprehensive documentation for Django web framework, including tutorials, API reference, and best practices.</p>
+                        <a href="https://docs.djangoproject.com/" target="_blank">Visit Django Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">React Library</div>
+                        <h4>React Official Documentation</h4>
+                        <p>Official React documentation covering components, state management, hooks, and modern React patterns.</p>
+                        <a href="https://react.dev/" target="_blank">Visit React Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">Python Programming</div>
+                        <h4>Python Official Documentation</h4>
+                        <p>Complete Python language reference, tutorials, and library documentation for web development.</p>
+                        <a href="https://docs.python.org/3/" target="_blank">Visit Python Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">API Development</div>
+                        <h4>Django REST Framework Documentation</h4>
+                        <p>Official documentation for building REST APIs with Django, including authentication and serialization.</p>
+                        <a href="https://www.django-rest-framework.org/" target="_blank">Visit DRF Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">JavaScript Runtime</div>
+                        <h4>Node.js Official Documentation</h4>
+                        <p>Documentation for Node.js JavaScript runtime, essential for modern web development workflows.</p>
+                        <a href="https://nodejs.org/en/docs/" target="_blank">Visit Node.js Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">Package Management</div>
+                        <h4>npm Documentation</h4>
+                        <p>Official documentation for npm package manager, essential for JavaScript dependency management.</p>
+                        <a href="https://docs.npmjs.com/" target="_blank">Visit npm Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">Version Control</div>
+                        <h4>Git Official Documentation</h4>
+                        <p>Complete guide to Git version control system, essential for collaborative web development.</p>
+                        <a href="https://git-scm.com/doc" target="_blank">Visit Git Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">CSS Framework</div>
+                        <h4>Bootstrap Documentation</h4>
+                        <p>Official Bootstrap CSS framework documentation for responsive web design and components.</p>
+                        <a href="https://getbootstrap.com/docs/" target="_blank">Visit Bootstrap Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">Database Design</div>
+                        <h4>PostgreSQL Documentation</h4>
+                        <p>Comprehensive documentation for PostgreSQL database, commonly used with Django applications.</p>
+                        <a href="https://www.postgresql.org/docs/" target="_blank">Visit PostgreSQL Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">Deployment & Hosting</div>
+                        <h4>Heroku Dev Center</h4>
+                        <p>Documentation and guides for deploying web applications to Heroku cloud platform.</p>
+                        <a href="https://devcenter.heroku.com/" target="_blank">Visit Heroku Docs</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-type">Testing</div>
+                        <h4>Testing JavaScript</h4>
+                        <p>Comprehensive guide to testing JavaScript applications, including Jest and testing best practices.</p>
+                        <a href="https://testingjavascript.com/" target="_blank">Visit Testing JavaScript</a>
+                    </div>
+                </div>
+                
+                <div class="further-reading-section">
+                    <h3>Additional Resources</h3>
+                    <ul>
+                        <li><strong>Code Editors:</strong> Visual Studio Code, PyCharm, WebStorm</li>
+                        <li><strong>Browser Developer Tools:</strong> Chrome DevTools, Firefox Developer Tools</li>
+                        <li><strong>Version Control:</strong> Git, GitHub, GitLab</li>
+                        <li><strong>Web Hosting:</strong> Heroku, DigitalOcean, AWS</li>
+                        <li><strong>Design Tools:</strong> Figma, Adobe XD, Canva</li>
+                        <li><strong>API Testing:</strong> Postman, Insomnia</li>
+                        <li><strong>Database Tools:</strong> pgAdmin, DBeaver</li>
+                        <li><strong>Package Managers:</strong> pip (Python), npm (Node.js)</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

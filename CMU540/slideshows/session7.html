@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 7: WEB-VULN-01 & WEB-AUTH-01 - Vulnerable Components & Authentication</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* OS³ Studio specific styling */
+        .os3-studio {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Vulnerability examples */
+        .vulnerability {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Career focus styling */
+        .career-box {
+            background: #f0f8ff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Demo links styling */
+        .demo-link {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container,
+        .codepen-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe,
+        .codepen-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover,
+        .codepen-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>WEB-VULN-01 & WEB-AUTH-01</h1>
+                <h2>Vulnerable Components & Authentication</h2>
+                <h3>CMU540: Cyber Security - Session 7</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Understanding third-party vulnerabilities and authentication failures</p>
+                <p><small>3-hour session • 30 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand OWASP A06: Vulnerable Components & A07: Authentication Failures</li>
+                    <li>Identify third-party component vulnerabilities</li>
+                    <li>Learn secure authentication practices</li>
+                    <li>Practice vulnerability discovery using OS³ Studio</li>
+                    <li>Implement secure component management and authentication</li>
+                    <li>Explore career opportunities in security engineering</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: OWASP A06 & A07 Overview -->
+            <section>
+                <h2>OWASP A06: Vulnerable Components & A07: Authentication Failures</h2>
+                <div class="highlight">
+                    <p><strong>A06:</strong> Using components with known vulnerabilities exposes applications to attacks</p>
+                    <p><strong>A07:</strong> Authentication failures allow attackers to compromise user accounts</p>
+                </div>
+                <h3>Key Areas:</h3>
+                <ul>
+                    <li>Third-party library vulnerabilities</li>
+                    <li>Weak authentication mechanisms</li>
+                    <li>Session management flaws</li>
+                    <li>Credential stuffing attacks</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Real-World Impact -->
+            <section>
+                <h2>Real-World Impact</h2>
+                <div class="vulnerability">
+                    <h3>Notable Breaches:</h3>
+                    <ul>
+                        <li><strong>Equifax (2017):</strong> Apache Struts vulnerability exposed 147M records</li>
+                        <li><strong>Target (2013):</strong> Weak authentication led to 40M credit cards stolen</li>
+                        <li><strong>LinkedIn (2012):</strong> Weak password hashing exposed 6.5M passwords</li>
+                    </ul>
+                    <p><strong>Impact:</strong> Data breaches, financial loss, reputation damage</p>
+                </div>
+            </section>
+
+            <!-- Slide 5: Vulnerable Components -->
+            <section>
+                <h2>Common Vulnerable Components</h2>
+                <h3>1. Web Frameworks</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: Outdated framework --&gt;<br>
+&lt;dependency&gt;<br>
+&nbsp;&nbsp;&lt;groupId&gt;org.apache.struts&lt;/groupId&gt;<br>
+&nbsp;&nbsp;&lt;artifactId&gt;struts2-core&lt;/artifactId&gt;<br>
+&nbsp;&nbsp;&lt;version&gt;2.3.16&lt;/version&gt;  &lt;!-- Known vulnerabilities --&gt;<br>
+&lt;/dependency&gt;<br><br>
+&lt;!-- SECURE: Updated framework --&gt;<br>
+&lt;dependency&gt;<br>
+&nbsp;&nbsp;&lt;groupId&gt;org.apache.struts&lt;/groupId&gt;<br>
+&nbsp;&nbsp;&lt;artifactId&gt;struts2-core&lt;/artifactId&gt;<br>
+&nbsp;&nbsp;&lt;version&gt;2.5.30&lt;/version&gt;  &lt;!-- Latest secure version --&gt;<br>
+&lt;/dependency&gt;
+                </div>
+                <h3>2. JavaScript Libraries</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: jQuery 1.6.2 --&gt;<br>
+&lt;script src="https://code.jquery.com/jquery-1.6.2.min.js"&gt;&lt;/script&gt;<br><br>
+&lt;!-- SECURE: jQuery 3.6.0 --&gt;<br>
+&lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+                </div>
+            </section>
+
+            <!-- Slide 6: Component Vulnerability Scanning -->
+            <section>
+                <h2>Component Vulnerability Scanning</h2>
+                <h3>1. Automated Scanning Tools</h3>
+                <div class="code-example">
+&lt;!-- Security scanning tools --&gt;<br>
+npm audit                    # Node.js dependencies<br>
+composer audit              # PHP dependencies<br>
+pip-audit                   # Python dependencies<br>
+mvn org.owasp:dependency-check-maven:check  # Java Maven<br><br>
+&lt;!-- Commercial tools --&gt;<br>
+Snyk, WhiteSource, Sonatype Nexus
+                </div>
+                <h3>2. Vulnerability Databases</h3>
+                <ul>
+                    <li><strong>CVE:</strong> Common Vulnerabilities and Exposures</li>
+                    <li><strong>NVD:</strong> National Vulnerability Database</li>
+                    <li><strong>OWASP Dependency Check:</strong> Open source scanner</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Authentication Failures -->
+            <section>
+                <h2>Common Authentication Failures</h2>
+                <h3>1. Weak Password Policies</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: Weak password policy --&gt;<br>
+function validatePassword(password) {<br>
+&nbsp;&nbsp;return password.length >= 6;  // Too weak<br>}<br><br>
+&lt;!-- SECURE: Strong password policy --&gt;<br>
+function validatePassword(password) {<br>
+&nbsp;&nbsp;if (password.length < 12) return false;<br>
+&nbsp;&nbsp;if (!/[A-Z]/.test(password)) return false;<br>
+&nbsp;&nbsp;if (!/[a-z]/.test(password)) return false;<br>
+&nbsp;&nbsp;if (!/[0-9]/.test(password)) return false;<br>
+&nbsp;&nbsp;if (!/[^A-Za-z0-9]/.test(password)) return false;<br>
+&nbsp;&nbsp;return true;<br>}
+                </div>
+                <h3>2. Brute Force Vulnerabilities</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: No rate limiting --&gt;<br>
+POST /login<br>
+Content-Type: application/json<br>
+{"username": "admin", "password": "password123"}<br><br>
+&lt;!-- SECURE: Rate limiting implemented --&gt;<br>
+if (failedAttempts > 5) {<br>
+&nbsp;&nbsp;accountLocked = true;<br>
+&nbsp;&nbsp;lockoutDuration = 30 * 60 * 1000; // 30 minutes<br>}
+                </div>
+            </section>
+
+            <!-- Slide 8: Session Management Flaws -->
+            <section>
+                <h2>Session Management Flaws</h2>
+                <h3>1. Predictable Session IDs</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: Predictable session ID --&gt;<br>
+session_id = username + timestamp;  // Predictable<br><br>
+&lt;!-- SECURE: Random session ID --&gt;<br>
+session_id = crypto.randomBytes(32).toString('hex');<br><br>
+&lt;!-- SECURE: Session configuration --&gt;<br>
+session.cookie_httponly = 1<br>
+session.cookie_secure = 1<br>
+session.cookie_samesite = "Strict"
+                </div>
+                <h3>2. Session Fixation</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: Session fixation --&gt;<br>
+// Attacker sets session ID<br>
+// User logs in with attacker's session ID<br>
+// Attacker gains access<br><br>
+&lt;!-- SECURE: Regenerate session on login --&gt;<br>
+session_regenerate_id(true);  // PHP<br>
+request.session.regenerate()  // Django
+                </div>
+            </section>
+
+            <!-- Slide 9: Credential Stuffing -->
+            <section>
+                <h2>Credential Stuffing Attacks</h2>
+                <h3>Attack Scenario:</h3>
+                <div class="code-example">
+&lt;!-- Attack process --&gt;<br>
+1. Obtain username/password lists from breaches<br>
+2. Use automated tools to test credentials<br>
+3. Exploit successful logins<br><br>
+&lt;!-- VULNERABLE: No protection --&gt;<br>
+POST /login<br>
+{"username": "user@example.com", "password": "password123"}<br><br>
+&lt;!-- SECURE: Multi-factor authentication --&gt;<br>
+POST /login<br>
+{"username": "user@example.com", "password": "password123", "totp": "123456"}
+                </div>
+                <div class="vulnerability">
+                    <p><strong>Impact:</strong> Account takeover, data theft, financial fraud</p>
+                </div>
+            </section>
+
+            <!-- Slide 10: Multi-Factor Authentication -->
+            <section>
+                <h2>Multi-Factor Authentication (MFA)</h2>
+                <h3>1. TOTP Implementation</h3>
+                <div class="code-example">
+&lt;!-- SECURE: TOTP implementation --&gt;<br>
+const speakeasy = require('speakeasy');<br><br>
+// Generate secret<br>
+const secret = speakeasy.generateSecret({<br>
+&nbsp;&nbsp;name: 'MyApp',<br>
+&nbsp;&nbsp;issuer: 'MyCompany'<br>});<br><br>
+// Verify token<br>
+const verified = speakeasy.totp.verify({<br>
+&nbsp;&nbsp;secret: user.secret,<br>
+&nbsp;&nbsp;encoding: 'base32',<br>
+&nbsp;&nbsp;token: userInput,<br>
+&nbsp;&nbsp;window: 2<br>});
+                </div>
+                <h3>2. SMS and Email MFA</h3>
+                <div class="code-example">
+&lt;!-- SECURE: SMS MFA --&gt;<br>
+const code = Math.floor(100000 + Math.random() * 900000);<br>
+await sendSMS(user.phone, `Your code: ${code}`);<br>
+session.mfaCode = code;<br>
+session.mfaExpiry = Date.now() + 300000; // 5 minutes
+                </div>
+            </section>
+
+            <!-- Slide 11: Career Opportunities -->
+            <section>
+                <h2>Career Opportunities in Security Engineering</h2>
+                <div class="career-box">
+                    <h3>Security Engineering Roles:</h3>
+                    <ul>
+                        <li><strong>Security Engineer:</strong> £40,000 - £80,000</li>
+                        <li><strong>Application Security Engineer:</strong> £45,000 - £90,000</li>
+                        <li><strong>DevSecOps Engineer:</strong> £45,000 - £90,000</li>
+                        <li><strong>Security Architect:</strong> £60,000 - £120,000</li>
+                        <li><strong>Penetration Tester:</strong> £35,000 - £70,000</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> Security engineering, Risk assessment, Compliance, System design</p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Industry Certifications -->
+            <section>
+                <h2>Industry Certifications</h2>
+                <h3>Security Engineering Certifications:</h3>
+                <ul>
+                    <li><strong>CISSP:</strong> Certified Information Systems Security Professional</li>
+                    <li><strong>CISM:</strong> Certified Information Security Manager</li>
+                    <li><strong>CISA:</strong> Certified Information Systems Auditor</li>
+                    <li><strong>OSCP:</strong> Offensive Security Certified Professional</li>
+                    <li><strong>CEH:</strong> Certified Ethical Hacker</li>
+                </ul>
+                <div class="demo-link">
+                    <p><strong>Resources:</strong> <a href="https://www.isc2.org/" target="_blank">ISC²</a> | <a href="https://www.offensive-security.com/" target="_blank">Offensive Security</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 13: OS³ Studio Introduction -->
+            <section>
+                <h2>OS³ Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>WEB-VULN-01 & WEB-AUTH-01 Lab Environment</h3>
+                    <p>Our OS³ Studio provides hands-on experience with:</p>
+                    <ul>
+                        <li>Vulnerable applications with outdated components</li>
+                        <li>Weak authentication mechanisms</li>
+                        <li>Secure implementation challenges</li>
+                        <li>Component management best practices</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <!-- Slide 14: Web Demos and Tools -->
+            <section>
+                <h2>Web Demos and Tools</h2>
+                <div class="demo-link">
+                    <h3>Security Testing Tools:</h3>
+                    <ul>
+                        <li><a href="https://snyk.io/" target="_blank">Snyk</a> - Vulnerability scanning</li>
+                        <li><a href="https://github.com/OWASP/dependency-check" target="_blank">OWASP Dependency Check</a> - Open source scanner</li>
+                        <li><a href="https://portswigger.net/burp" target="_blank">Burp Suite</a> - Web application security testing</li>
+                        <li><a href="https://github.com/OWASP/OWASP-ZAP" target="_blank">OWASP ZAP</a> - Open source web app scanner</li>
+                        <li><a href="https://www.haveibeenpwned.com/" target="_blank">Have I Been Pwned</a> - Breach database</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 15: Case Study -->
+            <section>
+                <h2>Case Study: Equifax Breach</h2>
+                <div class="vulnerability">
+                    <h3>2017 Equifax Data Breach</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> 147 million records exposed</li>
+                        <li><strong>Cause:</strong> Unpatched Apache Struts vulnerability (CVE-2017-5638)</li>
+                        <li><strong>Method:</strong> Remote code execution via file upload</li>
+                        <li><strong>Cost:</strong> $1.4 billion in settlements</li>
+                    </ul>
+                    <p><strong>Lesson:</strong> Unpatched components can lead to catastrophic breaches</p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Summary of Vulnerabilities -->
+            <section>
+                <h2>Summary: Common Vulnerabilities</h2>
+                <div class="highlight">
+                    <h3>Key Vulnerabilities to Look For:</h3>
+                    <ol>
+                        <li>Outdated third-party components</li>
+                        <li>Weak password policies</li>
+                        <li>Missing rate limiting</li>
+                        <li>Predictable session IDs</li>
+                        <li>Session fixation vulnerabilities</li>
+                        <li>Missing multi-factor authentication</li>
+                        <li>Insecure credential storage</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Task 1: Vulnerability Discovery -->
+            <section>
+                <h2>Task 1: Component & Authentication Vulnerability Discovery</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to identify vulnerable components and authentication failures in the lab environment.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio vulnerable application</li>
+                        <li>Scan for outdated components and libraries</li>
+                        <li>Test for weak authentication mechanisms</li>
+                        <li>Attempt brute force attacks</li>
+                        <li>Test for session management flaws</li>
+                        <li>Look for credential stuffing opportunities</li>
+                        <li>Document all findings with proof of concept</li>
+                        <li>Prepare a vulnerability assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on systematic testing and thorough documentation</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 17: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secure implementation and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 18: Secure Component Management -->
+            <section>
+                <h2>Secure Component Management</h2>
+                
+                <h3>1. Dependency Management</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Automated dependency updates --&gt;<br>
+# package.json<br>
+"scripts": {<br>
+&nbsp;&nbsp;"audit": "npm audit",<br>
+&nbsp;&nbsp;"audit:fix": "npm audit fix",<br>
+&nbsp;&nbsp;"update": "npm update"<br>}<br><br>
+# CI/CD pipeline<br>
+- name: Security Audit<br>
+&nbsp;&nbsp;run: npm audit --audit-level=moderate<br>
+- name: Update Dependencies<br>
+&nbsp;&nbsp;run: npm update
+                </div>
+
+                <h3>2. Vulnerability Monitoring</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Automated vulnerability scanning --&gt;<br>
+# GitHub Actions<br>
+- name: Run Snyk to check for vulnerabilities<br>
+&nbsp;&nbsp;uses: snyk/actions/node@master<br>
+&nbsp;&nbsp;env:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}<br>
+&nbsp;&nbsp;with:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;args: --severity-threshold=high
+                </div>
+            </section>
+
+            <!-- Slide 19: Secure Authentication Implementation -->
+            <section>
+                <h2>Secure Authentication Implementation</h2>
+                
+                <h3>1. Password Hashing</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Password hashing --&gt;<br>
+const bcrypt = require('bcrypt');<br>
+const saltRounds = 12;<br><br>
+async function hashPassword(password) {<br>
+&nbsp;&nbsp;return await bcrypt.hash(password, saltRounds);<br>}<br><br>
+async function verifyPassword(password, hash) {<br>
+&nbsp;&nbsp;return await bcrypt.compare(password, hash);<br>}
+                </div>
+
+                <h3>2. Rate Limiting</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Rate limiting --&gt;<br>
+const rateLimit = require('express-rate-limit');<br><br>
+const loginLimiter = rateLimit({<br>
+&nbsp;&nbsp;windowMs: 15 * 60 * 1000, // 15 minutes<br>
+&nbsp;&nbsp;max: 5, // 5 attempts per window<br>
+&nbsp;&nbsp;message: 'Too many login attempts, try again later',<br>
+&nbsp;&nbsp;standardHeaders: true,<br>
+&nbsp;&nbsp;legacyHeaders: false<br>});<br><br>
+app.use('/login', loginLimiter);
+                </div>
+            </section>
+
+            <!-- Slide 20: Session Security -->
+            <section>
+                <h2>Session Security</h2>
+                
+                <h3>1. Secure Session Configuration</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Session configuration --&gt;<br>
+app.use(session({<br>
+&nbsp;&nbsp;secret: process.env.SESSION_SECRET,<br>
+&nbsp;&nbsp;resave: false,<br>
+&nbsp;&nbsp;saveUninitialized: false,<br>
+&nbsp;&nbsp;cookie: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;secure: true,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;httpOnly: true,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxAge: 30 * 60 * 1000, // 30 minutes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sameSite: 'strict'<br>
+&nbsp;&nbsp;}<br>}));
+                </div>
+
+                <h3>2. Session Regeneration</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Session regeneration on login --&gt;<br>
+app.post('/login', async (req, res) => {<br>
+&nbsp;&nbsp;const { username, password } = req.body;<br>
+&nbsp;&nbsp;const user = await authenticateUser(username, password);<br>
+&nbsp;&nbsp;if (user) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;req.session.regenerate(() => {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;req.session.userId = user.id;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res.redirect('/dashboard');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;});<br>
+&nbsp;&nbsp;}<br>});
+                </div>
+            </section>
+
+            <!-- Slide 21: Multi-Factor Authentication -->
+            <section>
+                <h2>Multi-Factor Authentication Implementation</h2>
+                
+                <h3>1. TOTP Setup</h3>
+                <div class="code-example">
+&lt;!-- SECURE: TOTP setup --&gt;<br>
+const speakeasy = require('speakeasy');<br><br>
+app.post('/setup-mfa', async (req, res) => {<br>
+&nbsp;&nbsp;const secret = speakeasy.generateSecret({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name: 'MyApp',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;issuer: 'MyCompany',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;length: 32<br>
+&nbsp;&nbsp;});<br>
+&nbsp;&nbsp;await saveUserSecret(req.user.id, secret.base32);<br>
+&nbsp;&nbsp;res.json({ qr: secret.otpauth_url });<br>});
+                </div>
+
+                <h3>2. MFA Verification</h3>
+                <div class="code-example">
+&lt;!-- SECURE: MFA verification --&gt;<br>
+app.post('/verify-mfa', async (req, res) => {<br>
+&nbsp;&nbsp;const { token } = req.body;<br>
+&nbsp;&nbsp;const userSecret = await getUserSecret(req.user.id);<br>
+&nbsp;&nbsp;const verified = speakeasy.totp.verify({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;secret: userSecret,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;encoding: 'base32',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;token: token,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;window: 2<br>
+&nbsp;&nbsp;});<br>
+&nbsp;&nbsp;if (verified) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;req.session.mfaVerified = true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;res.redirect('/dashboard');<br>
+&nbsp;&nbsp;}<br>});
+                </div>
+            </section>
+
+            <!-- Slide 22: Account Security -->
+            <section>
+                <h2>Account Security Measures</h2>
+                
+                <h3>1. Account Lockout</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Account lockout --&gt;<br>
+async function handleFailedLogin(userId) {<br>
+&nbsp;&nbsp;const attempts = await getFailedAttempts(userId);<br>
+&nbsp;&nbsp;if (attempts >= 5) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;await lockAccount(userId, 30 * 60 * 1000); // 30 minutes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;await sendSecurityAlert(userId);<br>
+&nbsp;&nbsp;} else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;await incrementFailedAttempts(userId);<br>
+&nbsp;&nbsp;}<br>}
+                </div>
+
+                <h3>2. Password Reset Security</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Password reset --&gt;<br>
+async function requestPasswordReset(email) {<br>
+&nbsp;&nbsp;const user = await findUserByEmail(email);<br>
+&nbsp;&nbsp;if (user) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const token = crypto.randomBytes(32).toString('hex');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;await saveResetToken(user.id, token, 15 * 60 * 1000); // 15 minutes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;await sendPasswordResetEmail(email, token);<br>
+&nbsp;&nbsp;}<br>}
+                </div>
+            </section>
+
+            <!-- Slide 23: Monitoring and Alerting -->
+            <section>
+                <h2>Monitoring and Alerting</h2>
+                
+                <h3>1. Security Event Monitoring</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Security monitoring --&gt;<br>
+function logSecurityEvent(event, details) {<br>
+&nbsp;&nbsp;const logEntry = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timestamp: new Date().toISOString(),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;event: event,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userId: details.userId,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ip: details.ip,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;userAgent: details.userAgent,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;details: details<br>
+&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;securityLogger.warn(logEntry);<br>}
+                </div>
+
+                <h3>2. Anomaly Detection</h3>
+                <ul>
+                    <li>Monitor failed login attempts</li>
+                    <li>Track unusual access patterns</li>
+                    <li>Alert on privilege escalation</li>
+                    <li>Monitor for credential stuffing</li>
+                </ul>
+            </section>
+
+            <!-- Slide 24: Compliance and Standards -->
+            <section>
+                <h2>Compliance and Standards</h2>
+                
+                <h3>1. Security Frameworks</h3>
+                <ul>
+                    <li><strong>OWASP Top 10:</strong> Web application security risks</li>
+                    <li><strong>NIST Cybersecurity Framework:</strong> Risk management</li>
+                    <li><strong>ISO 27001:</strong> Information security management</li>
+                    <li><strong>PCI DSS:</strong> Payment card industry standards</li>
+                </ul>
+
+                <h3>2. Best Practices</h3>
+                <div class="highlight">
+                    <ul>
+                        <li>Regular component updates</li>
+                        <li>Strong authentication policies</li>
+                        <li>Multi-factor authentication</li>
+                        <li>Continuous security monitoring</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 25: Career Development -->
+            <section>
+                <h2>Career Development in Security Engineering</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Advanced Certifications:</strong> CISSP, CISM, CISA</li>
+                        <li><strong>Specialized Training:</strong> Security engineering, Risk management</li>
+                        <li><strong>Hands-on Practice:</strong> Security assessments, Penetration testing</li>
+                        <li><strong>Industry Networking:</strong> Security conferences, meetups</li>
+                        <li><strong>Research:</strong> New attack techniques, Defense methods</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://owasp.org/" target="_blank">OWASP</a> | <a href="https://www.nist.gov/" target="_blank">NIST</a> | <a href="https://snyk.io/" target="_blank">Snyk</a></p>
+                </div>
+            </section>
+
+            <!-- Task 2: Secure Implementation -->
+            <section>
+                <h2>Task 2: Secure Component & Authentication Implementation</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to implement secure component management and authentication practices.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio secure implementation environment</li>
+                        <li>Update all vulnerable components to latest versions</li>
+                        <li>Implement strong password policies</li>
+                        <li>Add rate limiting and account lockout</li>
+                        <li>Configure secure session management</li>
+                        <li>Implement multi-factor authentication</li>
+                        <li>Test the secure implementation</li>
+                        <li>Document the security improvements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on implementing industry-standard security practices</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 26: Further Activity -->
+            <section>
+                <h2>Further Activity: Code Inspection</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Code Analysis:</h3>
+                    <p>For students with additional time, explore the source code to understand:</p>
+                    <ul>
+                        <li>How component dependencies are managed</li>
+                        <li>Authentication and session management implementation</li>
+                        <li>Password hashing and storage mechanisms</li>
+                        <li>Multi-factor authentication setup</li>
+                        <li>Security monitoring and logging</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Code review report with security recommendations</p>
+                </div>
+            </section>
+
+            <!-- Slide 27: Summary -->
+            <section>
+                <h2>Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>Vulnerable components are a major security risk</li>
+                        <li>Authentication failures can lead to account compromise</li>
+                        <li>Regular component updates are essential</li>
+                        <li>OS³ Studio provides hands-on vulnerability testing</li>
+                        <li>Secure implementation requires multiple layers of protection</li>
+                        <li>Career opportunities in security engineering are growing</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 28: Next Steps -->
+            <section class="center">
+                <h2>Next Steps</h2>
+                <div class="timeline-info">
+                    <h3>Continue Learning:</h3>
+                    <ul>
+                        <li>Complete the OS³ Studio tasks</li>
+                        <li>Explore additional security topics</li>
+                        <li>Practice with security testing tools</li>
+                        <li>Consider industry certifications</li>
+                        <li>Join cybersecurity communities</li>
+                    </ul>
+                    <p><strong>Next Session:</strong> WEB-DATA-01 & WEB-LOG-01 - Data Exposure & Logging</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: false,
+            preloadIframes: null,
+            autoAnimate: true,
+            autoAnimateMatcher: null,
+            autoAnimateEasing: 'ease',
+            autoAnimateDuration: 1.0,
+            autoAnimateUnmatched: true,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: null,
+            defaultTiming: null,
+            mouseWheel: false,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            disableLayout: false
+        });
+    </script>
+</body>
+
+</html>

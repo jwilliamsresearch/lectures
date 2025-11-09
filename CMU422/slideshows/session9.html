@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 9: Web APIs and External Libraries</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .map-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .map-button {
+            padding: 10px 15px;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .map-button:hover {
+            background-color: #1976d2;
+        }
+
+        .map-container {
+            height: 400px;
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .map-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .map-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+
+        .map-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .chart-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-button {
+            padding: 10px 15px;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chart-button:hover {
+            background-color: #1976d2;
+        }
+
+        .chart-container {
+            height: 300px;
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 10px;
+            background: white;
+        }
+
+        .chart-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .chart-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+
+        .chart-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>Web APIs and External Libraries</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 9</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Working with third-party services and libraries</p>
+                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand Web APIs and their usage</li>
+                    <li>Work with external libraries and frameworks</li>
+                    <li>Integrate third-party services</li>
+                    <li>Handle API authentication and security</li>
+                    <li>Build applications with external dependencies</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: What are Web APIs? -->
+            <section>
+                <h2>What are Web APIs?</h2>
+                <div class="highlight">
+                    <strong>Web APIs</strong> are interfaces that allow applications to communicate
+                    with external services
+                </div>
+                <ul>
+                    <li>REST APIs for data exchange</li>
+                    <li>Browser APIs for device features</li>
+                    <li>Third-party service APIs</li>
+                    <li>Social media and payment APIs</li>
+                </ul>
+                <div class="code-example">
+                    // Example: Fetching data from a REST API<br>
+                    fetch('https://api.example.com/data')<br>
+                    &nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;.then(data => console.log(data))<br>
+                    &nbsp;&nbsp;.catch(error => console.error(error));
+                </div>
+            </section>
+
+            <!-- Slide 4: REST API Basics -->
+            <section>
+                <h2>REST API Basics</h2>
+                <div class="code-example">
+                    // HTTP Methods<br>
+                    GET /api/users // Retrieve data<br>
+                    POST /api/users // Create new data<br>
+                    PUT /api/users/123 // Update data<br>
+                    DELETE /api/users/123 // Delete data<br><br>
+                    // Status Codes<br>
+                    200 - OK<br>
+                    201 - Created<br>
+                    400 - Bad Request<br>
+                    401 - Unauthorized<br>
+                    404 - Not Found<br>
+                    500 - Internal Server Error
+                </div>
+                <ul>
+                    <li>Standard HTTP methods for CRUD operations</li>
+                    <li>Status codes indicate request results</li>
+                    <li>JSON is common data format</li>
+                    <li>Stateless communication</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: Fetch API -->
+            <section>
+                <h2>Fetch API</h2>
+                <div class="code-example">
+                    // Basic GET request<br>
+                    fetch('https://api.example.com/users')<br>
+                    &nbsp;&nbsp;.then(response => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Network response was not
+                    ok');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return response.json();<br>
+                    &nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;.then(data => console.log(data))<br>
+                    &nbsp;&nbsp;.catch(error => console.error(error));<br><br>
+                    // POST request with data<br>
+                    fetch('https://api.example.com/users', {<br>
+                    &nbsp;&nbsp;method: 'POST',<br>
+                    &nbsp;&nbsp;headers: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'Content-Type': 'application/json',<br>
+                    &nbsp;&nbsp;},<br>
+                    &nbsp;&nbsp;body: JSON.stringify({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;name: 'John Doe',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;email: 'john@example.com'<br>
+                    &nbsp;&nbsp;})<br>
+                    });
+                </div>
+                <ul>
+                    <li>Modern way to make HTTP requests</li>
+                    <li>Promise-based API</li>
+                    <li>Supports all HTTP methods</li>
+                    <li>Built into modern browsers</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: API Authentication -->
+            <section>
+                <h2>API Authentication</h2>
+                <div class="code-example">
+                    // API Key authentication<br>
+                    fetch('https://api.example.com/data', {<br>
+                    &nbsp;&nbsp;headers: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'Authorization': 'Bearer YOUR_API_KEY',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'X-API-Key': 'your-api-key'<br>
+                    &nbsp;&nbsp;}<br>
+                    });<br><br>
+                    // OAuth 2.0 flow<br>
+                    const clientId = 'your-client-id';<br>
+                    const redirectUri = 'https://yourapp.com/callback';<br>
+                    const authUrl =
+                    `https://api.example.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+                </div>
+                <ul>
+                    <li>API keys for simple authentication</li>
+                    <li>OAuth 2.0 for secure authorization</li>
+                    <li>JWT tokens for stateless authentication</li>
+                    <li>Always secure API keys</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Browser APIs -->
+            <section>
+                <h2>Browser APIs</h2>
+                <div class="code-example">
+                    // Geolocation API<br>
+                    navigator.geolocation.getCurrentPosition(<br>
+                    &nbsp;&nbsp;position => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Latitude:', position.coords.latitude);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Longitude:',
+                    position.coords.longitude);<br>
+                    &nbsp;&nbsp;},<br>
+                    &nbsp;&nbsp;error => console.error('Error:', error)<br>
+                    );<br><br>
+                    // Local Storage API<br>
+                    localStorage.setItem('user', JSON.stringify(userData));<br>
+                    const user = JSON.parse(localStorage.getItem('user'));<br><br>
+                    // Web Audio API<br>
+                    const audioContext = new AudioContext();<br>
+                    const oscillator = audioContext.createOscillator();
+                </div>
+                <ul>
+                    <li>Geolocation for location services</li>
+                    <li>Local Storage for client-side data</li>
+                    <li>Web Audio for sound processing</li>
+                    <li>Canvas for graphics and animations</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: External Libraries -->
+            <section>
+                <h2>External Libraries</h2>
+                <div class="highlight">
+                    <strong>Libraries</strong> provide pre-built functionality to speed up
+                    development
+                </div>
+                <ul>
+                    <li>jQuery for DOM manipulation</li>
+                    <li>Lodash for utility functions</li>
+                    <li>Axios for HTTP requests</li>
+                    <li>Chart.js for data visualization</li>
+                    <li>Moment.js for date handling</li>
+                </ul>
+                <div class="code-example">
+                    // Including libraries<br>
+                    &lt;script
+                    src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"&gt;&lt;/script&gt;<br>
+                    &lt;script
+                    src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"&gt;&lt;/script&gt;<br><br>
+                    // Using jQuery<br>
+                    $('#element').hide().fadeIn(1000);<br><br>
+                    // Using Lodash<br>
+                    const uniqueItems = _.uniq(array);
+                </div>
+            </section>
+
+            <!-- Slide 9: jQuery -->
+            <section>
+                <h2>jQuery Library</h2>
+                <div class="code-example">
+                    // DOM manipulation<br>
+                    $('#myElement').addClass('highlight');<br>
+                    $('.items').each(function(index, element) {<br>
+                    &nbsp;&nbsp;$(element).text('Item ' + (index + 1));<br>
+                    });<br><br>
+                    // Event handling<br>
+                    $('#button').on('click', function() {<br>
+                    &nbsp;&nbsp;console.log('Button clicked!');<br>
+                    });<br><br>
+                    // AJAX requests<br>
+                    $.ajax({<br>
+                    &nbsp;&nbsp;url: 'https://api.example.com/data',<br>
+                    &nbsp;&nbsp;method: 'GET',<br>
+                    &nbsp;&nbsp;success: function(data) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(data);<br>
+                    &nbsp;&nbsp;},<br>
+                    &nbsp;&nbsp;error: function(xhr, status, error) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
+                    &nbsp;&nbsp;}<br>
+                    });
+                </div>
+                <ul>
+                    <li>Simplified DOM manipulation</li>
+                    <li>Cross-browser compatibility</li>
+                    <li>Rich plugin ecosystem</li>
+                    <li>Easy AJAX requests</li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Axios -->
+            <section>
+                <h2>Axios HTTP Client</h2>
+                <div class="code-example">
+                    // Basic GET request<br>
+                    axios.get('https://api.example.com/users')<br>
+                    &nbsp;&nbsp;.then(response => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(response.data);<br>
+                    &nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;.catch(error => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
+                    &nbsp;&nbsp;});<br><br>
+                    // POST request<br>
+                    axios.post('https://api.example.com/users', {<br>
+                    &nbsp;&nbsp;name: 'John Doe',<br>
+                    &nbsp;&nbsp;email: 'john@example.com'<br>
+                    })<br>
+                    &nbsp;&nbsp;.then(response => console.log(response.data));<br><br>
+                    // Request configuration<br>
+                    axios.defaults.baseURL = 'https://api.example.com';<br>
+                    axios.defaults.headers.common['Authorization'] = 'Bearer token';
+                </div>
+                <ul>
+                    <li>Promise-based HTTP client</li>
+                    <li>Automatic JSON transformation</li>
+                    <li>Request/response interceptors</li>
+                    <li>Better error handling</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Chart.js -->
+            <section>
+                <h2>Chart.js for Data Visualization</h2>
+                <div class="code-example">
+                    // HTML<br>
+                    &lt;canvas id="myChart"&gt;&lt;/canvas&gt;<br><br>
+                    // JavaScript<br>
+                    const ctx = document.getElementById('myChart').getContext('2d');<br>
+                    const myChart = new Chart(ctx, {<br>
+                    &nbsp;&nbsp;type: 'bar',<br>
+                    &nbsp;&nbsp;data: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;labels: ['Red', 'Blue', 'Yellow', 'Green'],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;datasets: [{<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: 'Dataset 1',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data: [12, 19, 3, 5],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundColor: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'rgba(255, 99, 132, 0.2)',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'rgba(54, 162, 235, 0.2)'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}]<br>
+                    &nbsp;&nbsp;},<br>
+                    &nbsp;&nbsp;options: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;responsive: true,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;scales: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beginAtZero: true<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    });
+                </div>
+                <ul>
+                    <li>Multiple chart types (bar, line, pie, etc.)</li>
+                    <li>Responsive and interactive</li>
+                    <li>Customizable styling</li>
+                    <li>Animation support</li>
+                </ul>
+
+                <!-- Interactive Chart.js Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Interactive Charts</h3>
+                    <div class="demo-container">
+                        <div class="chart-demo">
+                            <div class="chart-controls">
+                                <button class="chart-button" onclick="createBarChart()">Bar
+                                    Chart</button>
+                                <button class="chart-button" onclick="createLineChart()">Line
+                                    Chart</button>
+                                <button class="chart-button" onclick="createPieChart()">Pie
+                                    Chart</button>
+                                <button class="chart-button"
+                                    onclick="createDoughnutChart()">Doughnut Chart</button>
+                            </div>
+
+                            <div class="chart-container">
+                                <canvas id="chartCanvas"></canvas>
+                            </div>
+
+                            <div class="chart-info">
+                                <h4>Chart.js Features:</h4>
+                                <p><strong>Interactive:</strong> Hover over data points for details
+                                </p>
+                                <p><strong>Responsive:</strong> Charts automatically resize</p>
+                                <p><strong>Animated:</strong> Smooth transitions and animations</p>
+                                <p><strong>Customizable:</strong> Colors, fonts, and styling options
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Click the buttons to see different chart types powered by Chart.js!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Interactive Map with Leaflet -->
+            <section>
+                <h2>Interactive Map with Leaflet</h2>
+                <div class="highlight">
+                    <strong>Leaflet</strong> is a lightweight, open-source JavaScript library for
+                    interactive maps
+                </div>
+
+                <!-- Interactive Leaflet Map Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Interactive Map Playground</h3>
+                    <div class="demo-container">
+                        <div class="map-demo">
+                            <div class="map-controls">
+                                <button class="map-button" onclick="addMarker()">Add Marker</button>
+                                <button class="map-button" onclick="addCircle()">Add Circle</button>
+                                <button class="map-button" onclick="addPolygon()">Add
+                                    Polygon</button>
+                                <button class="map-button" onclick="clearMap()">Clear Map</button>
+                            </div>
+
+                            <div id="map" class="map-container"></div>
+
+                            <div class="map-info">
+                                <h4>Leaflet Map Features:</h4>
+                                <p><strong>Interactive:</strong> Zoom, pan, and click on the map</p>
+                                <p><strong>Markers:</strong> Click "Add Marker" to place markers</p>
+                                <p><strong>Shapes:</strong> Add circles and polygons to the map</p>
+                                <p><strong>Responsive:</strong> Works on desktop and mobile devices
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        This map is powered by Leaflet.js - a popular open-source mapping library!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Weather API Example -->
+            <section>
+                <h2>Weather API Integration</h2>
+                <div class="code-example">
+                    // OpenWeatherMap API<br>
+                    const apiKey = 'your-api-key';<br>
+                    const city = 'London';<br><br>
+                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)<br>
+                    &nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;.then(data => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const temperature = data.main.temp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const description = data.weather[0].description;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const humidity = data.main.humidity;<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;document.getElementById('weather').innerHTML = `<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Temperature: ${temperature}°C<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description: ${description}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Humidity: ${humidity}%<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;`;<br>
+                    &nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;.catch(error => console.error('Error:', error));
+                </div>
+                <ul>
+                    <li>Real-world API integration</li>
+                    <li>Data parsing and display</li>
+                    <li>Error handling</li>
+                    <li>User interface updates</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: Social Media APIs -->
+            <section>
+                <h2>Social Media APIs</h2>
+                <div class="code-example">
+                    // Twitter API (example)<br>
+                    const twitterApi = {<br>
+                    &nbsp;&nbsp;consumerKey: 'your-consumer-key',<br>
+                    &nbsp;&nbsp;consumerSecret: 'your-consumer-secret',<br>
+                    &nbsp;&nbsp;accessToken: 'your-access-token',<br>
+                    &nbsp;&nbsp;accessTokenSecret: 'your-access-token-secret'<br>
+                    };<br><br>
+                    // Facebook Graph API<br>
+                    fetch('https://graph.facebook.com/me?access_token=your-token')<br>
+                    &nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;.then(data => console.log(data));<br><br>
+                    // Instagram Basic Display API<br>
+                    const instagramUrl =
+                    'https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url&access_token=your-token';
+                </div>
+                <ul>
+                    <li>OAuth 2.0 authentication</li>
+                    <li>Rate limiting considerations</li>
+                    <li>Data privacy compliance</li>
+                    <li>API versioning</li>
+                </ul>
+            </section>
+
+            <!-- Slide 14: Payment APIs -->
+            <section>
+                <h2>Payment APIs</h2>
+                <div class="code-example">
+                    // Stripe payment integration<br>
+                    const stripe = Stripe('your-publishable-key');<br>
+                    const elements = stripe.elements();<br><br>
+                    // Create card element<br>
+                    const card = elements.create('card');<br>
+                    card.mount('#card-element');<br><br>
+                    // Handle payment<br>
+                    const form = document.getElementById('payment-form');<br>
+                    form.addEventListener('submit', async (event) => {<br>
+                    &nbsp;&nbsp;event.preventDefault();<br><br>
+                    &nbsp;&nbsp;const {error, paymentMethod} = await
+                    stripe.createPaymentMethod({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;type: 'card',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;card: card,<br>
+                    &nbsp;&nbsp;});<br><br>
+                    &nbsp;&nbsp;if (error) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
+                    &nbsp;&nbsp;} else {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Payment method:', paymentMethod);<br>
+                    &nbsp;&nbsp;}<br>
+                    });
+                </div>
+                <ul>
+                    <li>Secure payment processing</li>
+                    <li>PCI compliance requirements</li>
+                    <li>Multiple payment methods</li>
+                    <li>Webhook handling</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15: Error Handling -->
+            <section>
+                <h2>API Error Handling</h2>
+                <div class="code-example">
+                    // Comprehensive error handling<br>
+                    async function fetchData(url) {<br>
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(url);<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error(`HTTP error! status:
+                    ${response.status}`);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const data = await response.json();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return data;<br>
+                    &nbsp;&nbsp;} catch (error) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (error.name === 'TypeError') {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('Network error:',
+                    error.message);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('API error:',
+                    error.message);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;// Show user-friendly error message<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;showErrorMessage('Failed to load data. Please try
+                    again.');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw error;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <ul>
+                    <li>Network error handling</li>
+                    <li>HTTP status code checking</li>
+                    <li>User-friendly error messages</li>
+                    <li>Retry mechanisms</li>
+                </ul>
+            </section>
+
+            <!-- Slide 16: Security Best Practices -->
+            <section>
+                <h2>API Security Best Practices</h2>
+                <ul>
+                    <li>Never expose API keys in client-side code</li>
+                    <li>Use HTTPS for all API requests</li>
+                    <li>Implement rate limiting</li>
+                    <li>Validate and sanitize input data</li>
+                    <li>Use CORS properly</li>
+                    <li>Implement proper authentication</li>
+                </ul>
+                <div class="code-example">
+                    // Secure API key handling<br>
+                    // ❌ Bad: Exposing API key in frontend<br>
+                    const apiKey = 'sk-1234567890abcdef';<br><br>
+                    // ✅ Good: Use environment variables<br>
+                    const apiKey = process.env.API_KEY;<br><br>
+                    // ✅ Good: Use backend proxy<br>
+                    fetch('/api/weather?city=London') // Backend handles API key<br><br>
+                    // Input validation<br>
+                    function validateInput(input) {<br>
+                    &nbsp;&nbsp;if (typeof input !== 'string' || input.length > 100) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Invalid input');<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;return input.trim();<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 17: Performance Optimization -->
+            <section>
+                <h2>API Performance Optimization</h2>
+                <ul>
+                    <li>Implement caching strategies</li>
+                    <li>Use request batching</li>
+                    <li>Implement pagination</li>
+                    <li>Optimize payload size</li>
+                    <li>Use CDNs for libraries</li>
+                </ul>
+                <div class="code-example">
+                    // Caching with localStorage<br>
+                    function getCachedData(key, ttl = 300000) { // 5 minutes<br>
+                    &nbsp;&nbsp;const cached = localStorage.getItem(key);<br>
+                    &nbsp;&nbsp;if (cached) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const { data, timestamp } = JSON.parse(cached);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (Date.now() - timestamp < ttl) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return data;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;return null;<br>
+                        }<br><br>
+                        // Request batching<br>
+                        const batchRequests = (requests) => {<br>
+                        &nbsp;&nbsp;return Promise.all(requests.map(req => fetch(req)));<br>
+                        };
+                </div>
+            </section>
+
+            <!-- Slide 18: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Weather Dashboard</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>weather-dashboard.html</code></li>
+                        <li>Build a weather dashboard using OpenWeatherMap API:</li>
+                        <ul>
+                            <li>Search for cities and display current weather</li>
+                            <li>Show temperature, humidity, wind speed, and weather description</li>
+                            <li>Display weather icons and background images</li>
+                            <li>Add a 5-day forecast section</li>
+                        </ul>
+                        <li>Integrate external libraries:</li>
+                        <ul>
+                            <li>Use Chart.js to display temperature trends</li>
+                            <li>Use Axios for API requests</li>
+                            <li>Use Moment.js for date formatting</li>
+                        </ul>
+                        <li>Implement features:</li>
+                        <ul>
+                            <li>Geolocation to get user's current location</li>
+                            <li>Local storage to save favorite cities</li>
+                            <li>Responsive design for mobile devices</li>
+                            <li>Error handling for API failures</li>
+                        </ul>
+                        <li>Add loading states and user feedback</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand API integration and external library
+                            usage</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Advanced API Patterns -->
+            <section>
+                <h2>Advanced API Patterns</h2>
+                <ul>
+                    <li>API versioning strategies</li>
+                    <li>Request/response interceptors</li>
+                    <li>Retry mechanisms</li>
+                    <li>Circuit breaker pattern</li>
+                    <li>API mocking for development</li>
+                </ul>
+                <div class="code-example">
+                    // Retry mechanism<br>
+                    async function fetchWithRetry(url, maxRetries = 3) {<br>
+                    &nbsp;&nbsp;for (let i = 0; i < maxRetries; i++) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;try {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(url);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (response.ok) return
+                        response.json();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;} catch (error) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (i === maxRetries - 1) throw
+                        error;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await new Promise(resolve =>
+                        setTimeout(resolve, 1000 * (i + 1)));<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br><br>
+                        // API mocking<br>
+                        const mockApi = {<br>
+                        &nbsp;&nbsp;get: (url) => Promise.resolve({ data: mockData[url] }),<br>
+                        &nbsp;&nbsp;post: (url, data) => Promise.resolve({ data: { id: Date.now(),
+                        ...data } })<br>
+                        };
+                </div>
+            </section>
+
+            <!-- Slide 21: WebSocket APIs -->
+            <section>
+                <h2>WebSocket APIs</h2>
+                <div class="code-example">
+                    // WebSocket connection<br>
+                    const socket = new WebSocket('wss://echo.websocket.org');<br><br>
+                    socket.onopen = function(event) {<br>
+                    &nbsp;&nbsp;console.log('Connection established');<br>
+                    &nbsp;&nbsp;socket.send('Hello Server!');<br>
+                    };<br><br>
+                    socket.onmessage = function(event) {<br>
+                    &nbsp;&nbsp;console.log('Message from server:', event.data);<br>
+                    };<br><br>
+                    socket.onclose = function(event) {<br>
+                    &nbsp;&nbsp;console.log('Connection closed:', event.code, event.reason);<br>
+                    };<br><br>
+                    socket.onerror = function(error) {<br>
+                    &nbsp;&nbsp;console.error('WebSocket error:', error);<br>
+                    };
+                </div>
+                <ul>
+                    <li>Real-time bidirectional communication</li>
+                    <li>Chat applications and live updates</li>
+                    <li>Gaming and collaborative tools</li>
+                    <li>Financial data streaming</li>
+                </ul>
+            </section>
+
+            <!-- Slide 22: GraphQL APIs -->
+            <section>
+                <h2>GraphQL APIs</h2>
+                <div class="code-example">
+                    // GraphQL query<br>
+                    const query = `<br>
+                    &nbsp;&nbsp;query GetUser($id: ID!) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;user(id: $id) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posts {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    `;<br><br>
+                    // Fetch GraphQL data<br>
+                    fetch('/graphql', {<br>
+                    &nbsp;&nbsp;method: 'POST',<br>
+                    &nbsp;&nbsp;headers: { 'Content-Type': 'application/json' },<br>
+                    &nbsp;&nbsp;body: JSON.stringify({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;query: query,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;variables: { id: '123' }<br>
+                    &nbsp;&nbsp;})<br>
+                    });
+                </div>
+                <ul>
+                    <li>Single endpoint for all data</li>
+                    <li>Client specifies required fields</li>
+                    <li>Strong typing system</li>
+                    <li>Real-time subscriptions</li>
+                </ul>
+            </section>
+
+            <!-- Slide 23: API Testing -->
+            <section>
+                <h2>API Testing</h2>
+                <ul>
+                    <li>Unit testing API calls</li>
+                    <li>Integration testing</li>
+                    <li>Mock API responses</li>
+                    <li>Error scenario testing</li>
+                    <li>Performance testing</li>
+                </ul>
+                <div class="code-example">
+                    // Jest test example<br>
+                    describe('Weather API', () => {<br>
+                    &nbsp;&nbsp;test('fetches weather data successfully', async () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const mockResponse = {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main: { temp: 20, humidity: 65 },<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;weather: [{ description: 'sunny' }]<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;};<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;global.fetch = jest.fn(() =><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Promise.resolve({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;json: () =>
+                    Promise.resolve(mockResponse)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;);<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const weather = await fetchWeather('London');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;expect(weather.temperature).toBe(20);<br>
+                    &nbsp;&nbsp;});<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Social Media Integration App</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>social-media-app.html</code></li>
+                        <li>Build a social media integration app with:</li>
+                        <ul>
+                            <li><strong>Multiple API Integration:</strong> Twitter, Instagram, and
+                                YouTube APIs</li>
+                            <li><strong>Content Aggregation:</strong> Display posts from different
+                                platforms</li>
+                            <li><strong>Search Functionality:</strong> Search across platforms by
+                                hashtag or keyword</li>
+                            <li><strong>Analytics Dashboard:</strong> Show engagement metrics using
+                                Chart.js</li>
+                        </ul>
+                        <li>Implement advanced features:</li>
+                        <ul>
+                            <li>OAuth 2.0 authentication flow</li>
+                            <li>Real-time updates using WebSockets</li>
+                            <li>Content filtering and moderation</li>
+                            <li>Scheduled posting functionality</li>
+                            <li>Export data to CSV/JSON</li>
+                        </ul>
+                        <li>Use external libraries:</li>
+                        <ul>
+                            <li>Axios for API requests</li>
+                            <li>Chart.js for analytics</li>
+                            <li>Moment.js for date handling</li>
+                            <li>Bootstrap or Material-UI for styling</li>
+                        </ul>
+                        <li>Add comprehensive error handling and rate limiting</li>
+                        <li>Implement responsive design and accessibility features</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand complex API integrations and
+                            multi-platform development</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Web APIs enable powerful integrations</li>
+                    <li>External libraries accelerate development</li>
+                    <li>Security and error handling are crucial</li>
+                    <li>Performance optimization improves user experience</li>
+                    <li>Testing ensures reliable API interactions</li>
+                    <li>Real-time features enhance user engagement</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>Project Planning and Development - Building complete web applications</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+
+        // Chart.js Demo Functions
+        let currentChart = null;
+
+        function createBarChart() {
+            destroyCurrentChart();
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
+            currentChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                    datasets: [{
+                        label: 'Sales',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 159, 64, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 205, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function createLineChart() {
+            destroyCurrentChart();
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
+            currentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Website Visitors',
+                        data: [65, 59, 80, 81, 56, 55],
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.1,
+                        fill: true
+                    }, {
+                        label: 'Mobile Users',
+                        data: [28, 48, 40, 19, 86, 27],
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function createPieChart() {
+            destroyCurrentChart();
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
+            currentChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Desktop', 'Mobile', 'Tablet', 'Other'],
+                    datasets: [{
+                        data: [45, 35, 15, 5],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 205, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function createDoughnutChart() {
+            destroyCurrentChart();
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
+            currentChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'In Progress', 'Not Started'],
+                    datasets: [{
+                        data: [60, 25, 15],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(255, 99, 132, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 205, 86, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '50%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function destroyCurrentChart() {
+            if (currentChart) {
+                currentChart.destroy();
+                currentChart = null;
+            }
+        }
+
+        // Leaflet Map Demo Functions
+        let map = null;
+        let markerCount = 0;
+        let circleCount = 0;
+        let polygonCount = 0;
+
+        // Initialize map when the slide is shown
+        Reveal.addEventListener('slidechanged', function (event) {
+            if (event.currentSlide.querySelector('#map') && !map) {
+                initializeMap();
+            }
+        });
+
+        function initializeMap() {
+            // Initialize the map centered on London
+            map = L.map('map').setView([51.505, -0.09], 13);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add a default marker
+            L.marker([51.5, -0.09]).addTo(map)
+                .bindPopup('Welcome to the interactive map!<br>Click the buttons to add more elements.')
+                .openPopup();
+        }
+
+        function addMarker() {
+            if (!map) return;
+
+            markerCount++;
+            const lat = 51.5 + (Math.random() - 0.5) * 0.1;
+            const lng = -0.09 + (Math.random() - 0.5) * 0.1;
+
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup(`Marker ${markerCount}<br>Coordinates: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+        }
+
+        function addCircle() {
+            if (!map) return;
+
+            circleCount++;
+            const lat = 51.5 + (Math.random() - 0.5) * 0.1;
+            const lng = -0.09 + (Math.random() - 0.5) * 0.1;
+            const radius = 500 + Math.random() * 1000;
+
+            L.circle([lat, lng], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: radius
+            }).addTo(map)
+                .bindPopup(`Circle ${circleCount}<br>Radius: ${Math.round(radius)}m`);
+        }
+
+        function addPolygon() {
+            if (!map) return;
+
+            polygonCount++;
+            const centerLat = 51.5 + (Math.random() - 0.5) * 0.1;
+            const centerLng = -0.09 + (Math.random() - 0.5) * 0.1;
+
+            const polygon = L.polygon([
+                [centerLat + 0.01, centerLng + 0.01],
+                [centerLat + 0.01, centerLng - 0.01],
+                [centerLat - 0.01, centerLng - 0.01],
+                [centerLat - 0.01, centerLng + 0.01]
+            ], {
+                color: 'blue',
+                fillColor: '#30f',
+                fillOpacity: 0.3
+            }).addTo(map)
+                .bindPopup(`Polygon ${polygonCount}<br>4-sided shape`);
+        }
+
+        function clearMap() {
+            if (!map) return;
+
+            map.eachLayer(function (layer) {
+                if (layer instanceof L.Marker || layer instanceof L.Circle || layer instanceof L.Polygon) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            markerCount = 0;
+            circleCount = 0;
+            polygonCount = 0;
+        }
+    </script>
+</body>
+
+</html>

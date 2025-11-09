@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU529: Advanced Web Development | James Williams | Birmingham Newman University</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="CMU529 Advanced Web Development course by James Williams at Birmingham Newman University. Learn PHP, MySQL, Bootstrap, full-stack development with modern frameworks and e-commerce applications.">
+    <meta name="keywords" content="CMU529, advanced web development, PHP, MySQL, Bootstrap, full-stack development, James Williams, Birmingham Newman University, e-commerce, web applications">
+    <meta name="author" content="James Williams">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jwilliams.science/lectures/CMU529/">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="CMU529: Advanced Web Development | James Williams | Birmingham Newman University">
+    <meta property="og:description" content="Learn advanced web development with PHP, MySQL, Bootstrap. Build full-stack e-commerce applications with modern frameworks and APIs.">
+    <meta property="og:url" content="https://jwilliams.science/lectures/CMU529/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="James Williams Teaching Portfolio">
+    <meta property="og:locale" content="en_GB">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CMU529: Advanced Web Development | James Williams | Birmingham Newman University">
+    <meta name="twitter:description" content="Learn advanced web development with PHP, MySQL, Bootstrap. Build full-stack e-commerce applications with modern frameworks and APIs.">
+    <meta name="twitter:url" content="https://jwilliams.science/lectures/CMU529/">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#ff6b6b">
+    <meta name="msapplication-TileColor" content="#ff6b6b">
+    <meta name="application-name" content="CMU529 Advanced Web Development Course">
+    
+    <!-- Performance Optimization -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.newman.ac.uk" crossorigin>
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//www.php.net">
+    <link rel="dns-prefetch" href="//dev.mysql.com">
+    <link rel="dns-prefetch" href="//getbootstrap.com">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "CMU529: Advanced Web Development",
+        "description": "Advanced web development techniques including modern frameworks, APIs, and full-stack development. Building sophisticated web applications.",
+        "provider": {
+            "@type": "EducationalOrganization",
+            "name": "Birmingham Newman University",
+            "url": "https://www.newman.ac.uk"
+        },
+        "instructor": {
+            "@type": "Person",
+            "name": "James Williams",
+            "jobTitle": "Lecturer in Computer Science"
+        },
+        "courseCode": "CMU529",
+        "educationalLevel": "Undergraduate",
+        "credits": "20",
+        "url": "https://jwilliams.science/lectures/CMU529/",
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "blended",
+            "courseWorkload": "PT36H"
+        },
+        "teaches": [
+            "PHP",
+            "MySQL",
+            "Bootstrap",
+            "Full-stack Development",
+            "E-commerce Applications",
+            "API Development"
+        ]
+    }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(30deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(150deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(30deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(150deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
+                linear-gradient(60deg, rgba(255,255,255,.05) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05)),
+                linear-gradient(60deg, rgba(255,255,255,.05) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05));
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .module-code {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            letter-spacing: 2px;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+        
+        .header-details {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+        
+        .module-description {
+            padding: 40px;
+            background: linear-gradient(to right, rgba(255, 107, 107, 0.05), transparent);
+            border-left: 4px solid #ff6b6b;
+            margin: 0;
+        }
+        
+        .module-description h2 {
+            color: #ff6b6b;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .module-description p {
+            line-height: 1.8;
+            color: #555;
+            margin: 0;
+            font-size: 1.1em;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #e9ecef;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #ff6b6b #f8f9fa;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .tabs::-webkit-scrollbar-track {
+            background: #f8f9fa;
+        }
+        
+        .tabs::-webkit-scrollbar-thumb {
+            background: #ff6b6b;
+            border-radius: 3px;
+        }
+        
+        .tab {
+            padding: 20px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #ff6b6b;
+            border-bottom-color: #ff6b6b;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 40px;
+            min-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .module-info {
+            background: #fff5f5;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff6b6b;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.1);
+        }
+        
+        .module-info h2 {
+            margin-top: 0;
+            color: #d63031;
+        }
+        
+        .slideshow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .slideshow-card {
+            background: linear-gradient(135deg, #ffe6e6 0%, #fff0e6 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid #ffcccc;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slideshow-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .slideshow-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+        }
+        
+        .slideshow-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .slideshow-number {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .slideshow-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            line-height: 1.3;
+        }
+        
+        .slideshow-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+        
+        .slideshow-details {
+            font-size: 0.95em;
+            color: #888;
+            font-weight: 500;
+        }
+        
+        /* Assessment Tab Styles */
+        .assessment-section {
+            background: #fff8f0;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff9500;
+        }
+        
+        .quiz-section {
+            background: #f0f8ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #007bff;
+        }
+        
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .quiz-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #007bff;
+        }
+        
+        .quiz-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .quiz-description {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-details {
+            font-size: 0.9em;
+            color: #888;
+            font-weight: 500;
+        }
+        
+        .slideshow-details {
+            font-size: 0.95em;
+            color: #888;
+            font-weight: 500;
+        }
+        
+        /* Assessment Tab Styles */
+        .assessment-section {
+            background: #fff8f0;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #ff8c42;
+        }
+        
+        .assessment-section h3 {
+            color: #e17055;
+            margin-top: 0;
+        }
+        
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .assessment-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ffcc80;
+            box-shadow: 0 3px 10px rgba(255, 140, 66, 0.1);
+        }
+        
+        /* Quiz Tab Styles */
+        .quiz-section {
+            background: #f0fff4;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .quiz-section h3 {
+            color: #d63031;
+            margin-top: 0;
+        }
+        
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .quiz-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ff8a80;
+            box-shadow: 0 3px 10px rgba(255, 107, 107, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.2);
+        }
+        
+        /* Further Reading Tab Styles */
+        .further-reading-section {
+            background: #faf0ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .further-reading-section h3 {
+            color: #d63031;
+            margin-top: 0;
+        }
+        
+        .further-reading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .resource-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #ffb3ba;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.2);
+        }
+        
+        .resource-card h4 {
+            color: #d63031;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .resource-card .resource-type {
+            display: inline-block;
+            background: #ffe0e0;
+            color: #d63031;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .resource-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .resource-card a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .resource-card a:hover {
+            color: #d63031;
+            text-decoration: underline;
+        }
+        
+        .resource-card .author {
+            font-size: 0.9em;
+            color: #888;
+            font-style: italic;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                padding: 15px 20px;
+                font-size: 1em;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .slideshow-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .slideshow-card {
+                padding: 25px;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        .tab-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .tab-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .tab-content::-webkit-scrollbar-thumb {
+            background: #ff6b6b;
+            border-radius: 4px;
+        }
+        
+        .tab-content::-webkit-scrollbar-thumb:hover {
+            background: #ee5a24;
+        }
+    </style>
+</head>
+<body>
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+            <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+                ← Back to Teaching Portfolio
+            </a>
+        </div>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="module-code">CMU529</div>
+                <h1>Advanced Web Development</h1>
+                <div class="header-subtitle">Full-Stack Development with PHP & MySQL</div>
+                <div class="header-details">
+                    Birmingham Newman University | Lecturer: James Williams | 20 Credits | Undergraduate
+                </div>
+            </div>
+        </div>
+        
+        <section class="module-description">
+            <h2>Module Overview</h2>
+            <p>This advanced module builds on basic HTML/CSS knowledge to create full-stack web applications using PHP, MySQL, and Bootstrap. Students develop a complete e-commerce website project with secure authentication, database management, and modern web development practices.</p>
+        </section>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('slides')">Slides</button>
+            <button class="tab" onclick="showTab('assessment')">Assessment</button>
+            <button class="tab" onclick="showTab('quizzes')">Quizzes</button>
+            <button class="tab" onclick="showTab('further-reading')">Further Reading</button>
+        </div>
+        
+        <!-- Slides Tab -->
+        <div id="slides" class="tab-content active">
+            <div class="module-info">
+                <h2>Module Overview</h2>
+                <p><strong>Credits:</strong> 20 credits | <strong>Level:</strong> Undergraduate | <strong>Focus:</strong> Full-stack Web Development with PHP & MySQL</p>
+                <p>This advanced module builds on basic HTML/CSS knowledge to create full-stack web applications. Students will learn PHP, MySQL, Bootstrap, and modern web development practices, culminating in a complete e-commerce website project.</p>
+            </div>
+
+            <div class="slideshow-grid">
+                <a href="slideshows/session1.html" class="slideshow-card">
+                    <div class="slideshow-number">1</div>
+                    <div class="slideshow-title">Introduction to Full-stack Development</div>
+                    <div class="slideshow-description">Overview of client-server architecture, web development stack, and project planning for e-commerce</div>
+                    <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session2.html" class="slideshow-card">
+                    <div class="slideshow-number">2</div>
+                    <div class="slideshow-title">Bootstrap Framework Fundamentals</div>
+                    <div class="slideshow-description">Introduction to Bootstrap 5, responsive grid system, components, and utility classes</div>
+                    <div class="slideshow-details">28 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session3.html" class="slideshow-card">
+                    <div class="slideshow-number">3</div>
+                    <div class="slideshow-title">Bootstrap Components & Customization</div>
+                    <div class="slideshow-description">Advanced Bootstrap components, custom styling, and responsive design patterns</div>
+                    <div class="slideshow-details">26 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session4.html" class="slideshow-card">
+                    <div class="slideshow-number">4</div>
+                    <div class="slideshow-title">PHP Fundamentals & Server Setup</div>
+                    <div class="slideshow-description">PHP basics, server environment setup, variables, functions, and control structures</div>
+                    <div class="slideshow-details">27 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session5.html" class="slideshow-card">
+                    <div class="slideshow-number">5</div>
+                    <div class="slideshow-title">PHP Forms & Data Processing</div>
+                    <div class="slideshow-description">Form handling, data validation, file uploads, and security considerations</div>
+                    <div class="slideshow-details">26 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session6.html" class="slideshow-card">
+                    <div class="slideshow-number">6</div>
+                    <div class="slideshow-title">MySQL Database Design</div>
+                    <div class="slideshow-description">Database fundamentals, SQL queries, table design for e-commerce applications</div>
+                    <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session7.html" class="slideshow-card">
+                    <div class="slideshow-number">7</div>
+                    <div class="slideshow-title">PHP Database Connectivity</div>
+                    <div class="slideshow-description">Connecting PHP to MySQL, CRUD operations, prepared statements, and data management</div>
+                    <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session8.html" class="slideshow-card">
+                    <div class="slideshow-number">8</div>
+                    <div class="slideshow-title">Session Management & User Authentication</div>
+                    <div class="slideshow-description">User registration, login systems, session handling, and security best practices</div>
+                    <div class="slideshow-details">26 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session9.html" class="slideshow-card">
+                    <div class="slideshow-number">9</div>
+                    <div class="slideshow-title">E-commerce Core Features</div>
+                    <div class="slideshow-description">Product catalogues, shopping cart implementation, and order management systems</div>
+                    <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session10.html" class="slideshow-card">
+                    <div class="slideshow-number">10</div>
+                    <div class="slideshow-title">Advanced PHP Features & Security</div>
+                    <div class="slideshow-description">Object-oriented PHP, input validation, SQL injection prevention, and security hardening</div>
+                    <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session11.html" class="slideshow-card">
+                    <div class="slideshow-number">11</div>
+                    <div class="slideshow-title">Modern JavaScript Libraries</div>
+                    <div class="slideshow-description">Introduction to jQuery, AJAX, and modern JavaScript frameworks for enhanced interactivity</div>
+                    <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                </a>
+
+                <a href="slideshows/session12.html" class="slideshow-card">
+                    <div class="slideshow-number">12</div>
+                    <div class="slideshow-title">Final E-commerce Project Development</div>
+                    <div class="slideshow-description">Complete e-commerce application development, testing, deployment, and project presentation</div>
+                    <div class="slideshow-details">25 slides • 3 hours • 2 tasks</div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Assessment Tab -->
+        <div id="assessment" class="tab-content">
+            <div class="assessment-section">
+                <h3>Assessment Overview</h3>
+                <p>CMU529: Advanced Web Development focuses on building complete e-commerce applications using PHP, MySQL, Bootstrap, and modern web technologies.</p>
+            </div>
+            
+            <div class="assessment-grid">
+                <div class="assessment-card">
+                    <h4>E-commerce Web Application (100%)</h4>
+                    <p><strong>Project Type:</strong> Individual full-stack e-commerce application</p>
+                    <p><strong>Technology Stack:</strong> PHP, MySQL, HTML5, CSS3, JavaScript, Bootstrap</p>
+                    <p><strong>Requirements:</strong> Complete online store with product catalogue, shopping cart, user accounts, and payment system</p>
+                    <p><strong>Due:</strong> End of module (consultation with tutor required)</p>
+                </div>
+            </div>
+            
+            <div class="assessment-section">
+                <h3>Project Requirements</h3>
+                <ul>
+                    <li><strong>Front-end Framework:</strong> Bootstrap 5 for responsive design and modern UI components</li>
+                    <li><strong>Back-end Development:</strong> PHP for server-side logic and database operations</li>
+                    <li><strong>Database:</strong> MySQL for data storage and management</li>
+                    <li><strong>Product Catalogue:</strong> Complete product management system with categories and search</li>
+                    <li><strong>Shopping Cart:</strong> Session-based cart functionality with add/remove items</li>
+                    <li><strong>User Accounts:</strong> Registration, login, and user profile management</li>
+                    <li><strong>Order System:</strong> Complete order processing and tracking system</li>
+                    <li><strong>Payment Integration:</strong> Mock payment system (no real payment data)</li>
+                    <li><strong>Admin Panel:</strong> Product and order management interface</li>
+                    <li><strong>Security:</strong> Input validation, SQL injection prevention, and secure practices</li>
+                    <li><strong>Documentation:</strong> Comprehensive code comments with Harvard Newman format references</li>
+                </ul>
+            </div>
+            
+            <div class="assessment-section">
+                <h3>Learning Outcomes Assessed</h3>
+                <ul>
+                    <li>Plan and design contemporary web-based interfaces using digital tools and techniques</li>
+                    <li>Design usable interfaces for web-based environments across mobile, tablet, and desktop browsers</li>
+                    <li>Examine and interpret how interactive and responsive websites are designed, organised, and managed through contemporary code and frameworks</li>
+                    <li>Write and manipulate efficient code to problem solve, develop interactive technologies, and manage digital web-based content</li>
+                    <li>Have an awareness of the process by which front-end webpages are delivered to users</li>
+                    <li>Reflect on the professional, moral, legal and ethical issues associated with a computer science professional working within the field of web application development</li>
+                </ul>
+            </div>
+            
+            <div class="assessment-section">
+                <h3>Technical Requirements</h3>
+                <ul>
+                    <li><strong>Server Environment:</strong> XAMPP, WAMP, or similar local development environment</li>
+                    <li><strong>Code Editor:</strong> Visual Studio Code, Sublime Text, or similar</li>
+                    <li><strong>Version Control:</strong> Git for project management and version control</li>
+                    <li><strong>Database Management:</strong> phpMyAdmin for MySQL administration</li>
+                    <li><strong>Browser Testing:</strong> Cross-browser compatibility testing required</li>
+                    <li><strong>Responsive Design:</strong> Must work across mobile, tablet, and desktop devices</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Quizzes Tab -->
+        <div id="quizzes" class="tab-content">
+            <div class="quiz-section">
+                <h3>Module Quizzes</h3>
+                <p>Test your knowledge with interactive quizzes covering multiple sessions. Each quiz contains questions based on the lecture content and practical exercises.</p>
+            </div>
+            
+            <div class="quiz-grid">
+                <a href="quizzes/quiz1.html" class="quiz-card">
+                    <h4>Quiz 1: Introduction to Full-stack Development</h4>
+                    <p>Test your understanding of full-stack development concepts, LAMP stack, and project planning fundamentals.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 1</p>
+                </a>
+                
+                <a href="quizzes/quiz2.html" class="quiz-card">
+                    <h4>Quiz 2: Bootstrap Framework Fundamentals</h4>
+                    <p>Assess your knowledge of Bootstrap 5, responsive grid system, components, and utility classes.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 2</p>
+                </a>
+                
+                <a href="quizzes/quiz3.html" class="quiz-card">
+                    <h4>Quiz 3: Bootstrap Components & Customization</h4>
+                    <p>Test your understanding of advanced Bootstrap components, custom styling, and responsive design patterns.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 3</p>
+                </a>
+                
+                <a href="quizzes/quiz4.html" class="quiz-card">
+                    <h4>Quiz 4: PHP Fundamentals & Server Setup</h4>
+                    <p>Assess your knowledge of PHP basics, server environment setup, variables, functions, and control structures.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 4</p>
+                </a>
+                
+                <a href="quizzes/quiz5.html" class="quiz-card">
+                    <h4>Quiz 5: PHP Forms & Data Processing</h4>
+                    <p>Test your understanding of form handling, data validation, file uploads, and security considerations.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 5</p>
+                </a>
+                
+                <a href="quizzes/quiz6.html" class="quiz-card">
+                    <h4>Quiz 6: MySQL Database Design</h4>
+                    <p>Assess your knowledge of database fundamentals, SQL queries, and table design for e-commerce applications.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 6</p>
+                </a>
+                
+                <a href="quizzes/quiz7.html" class="quiz-card">
+                    <h4>Quiz 7: PHP Database Connectivity</h4>
+                    <p>Test your understanding of connecting PHP to MySQL, CRUD operations, prepared statements, and data management.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 7</p>
+                </a>
+                
+                <a href="quizzes/quiz8.html" class="quiz-card">
+                    <h4>Quiz 8: Session Management & User Authentication</h4>
+                    <p>Assess your knowledge of user registration, login systems, session handling, and security best practices.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 8</p>
+                </a>
+                
+                <a href="quizzes/quiz9.html" class="quiz-card">
+                    <h4>Quiz 9: E-commerce Core Features</h4>
+                    <p>Test your understanding of product catalogues, shopping cart implementation, and order management systems.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 9</p>
+                </a>
+                
+                <a href="quizzes/quiz10.html" class="quiz-card">
+                    <h4>Quiz 10: Advanced PHP Features & Security</h4>
+                    <p>Assess your knowledge of object-oriented PHP, input validation, SQL injection prevention, and security hardening.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 10</p>
+                </a>
+                
+                <a href="quizzes/quiz11.html" class="quiz-card">
+                    <h4>Quiz 11: Modern JavaScript Libraries</h4>
+                    <p>Test your understanding of jQuery, AJAX, and modern JavaScript frameworks for enhanced interactivity.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 11</p>
+                </a>
+                
+                <a href="quizzes/quiz12.html" class="quiz-card">
+                    <h4>Quiz 12: Final E-commerce Project Development</h4>
+                    <p>Assess your knowledge of complete e-commerce application development, testing, deployment, and project presentation.</p>
+                    <p><strong>Questions:</strong> 15 | <strong>Time:</strong> 20 minutes | <strong>Session:</strong> 12</p>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Further Reading Tab -->
+        <div id="further-reading" class="tab-content">
+            <div class="further-reading-section">
+                <h3>Further Reading & Resources</h3>
+                <p>Explore additional resources to deepen your understanding of full-stack web development. These carefully selected materials include official documentation, educational videos, and academic articles.</p>
+            </div>
+            
+                         <div class="further-reading-grid">
+                 <div class="resource-card">
+                     <div class="resource-type">PHP Learning</div>
+                     <h4>PHP Official Manual – Getting Started</h4>
+                     <p>Official PHP documentation and getting started guide. Learn PHP fundamentals, syntax, and server-side development basics.</p>
+                     <a href="https://www.php.net/manual/en/getting-started.php" target="_blank">Visit PHP Manual</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">Database Learning</div>
+                     <h4>MySQL Reference Manual – Tutorial</h4>
+                     <p>Official MySQL tutorial covering database design, SQL queries, and database management for web applications.</p>
+                     <a href="https://dev.mysql.com/doc/refman/8.0/en/tutorial.html" target="_blank">Visit MySQL Tutorial</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">Front-End Framework</div>
+                     <h4>Bootstrap 5 Documentation – Getting Started</h4>
+                     <p>Complete Bootstrap 5 documentation with examples, components, and responsive design patterns for modern web development.</p>
+                     <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">Visit Bootstrap Docs</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">Security Standards</div>
+                     <h4>OWASP Top 10 Web Application Security Risks</h4>
+                     <p>Essential security resource covering the most critical web application security risks and prevention strategies.</p>
+                     <a href="https://www.owasp.org/index.php/Top_10" target="_blank">Visit OWASP Top 10</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">PHP Best Practices</div>
+                     <h4>PHP: The Right Way</h4>
+                     <p>Comprehensive guide to PHP best practices, coding standards, and modern PHP development techniques.</p>
+                     <a href="https://www.phptherightway.com/" target="_blank">Visit PHP: The Right Way</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">E-commerce Design</div>
+                     <h4>Smashing Magazine – E-commerce Performance & Accessibility</h4>
+                     <p>In-depth articles on e-commerce web design, performance optimization, and accessibility best practices.</p>
+                     <a href="https://www.smashingmagazine.com/2018/06/ecommerce-web-design-performance-accessibility/" target="_blank">Visit Smashing Magazine</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">Deployment Guide</div>
+                     <h4>DigitalOcean Tutorials – How to Deploy a Web Application</h4>
+                     <p>Step-by-step tutorials for deploying web applications to production servers and cloud platforms.</p>
+                     <a href="https://www.digitalocean.com/community/tutorial_series/how-to-deploy" target="_blank">Visit DigitalOcean Tutorials</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">Web Standards</div>
+                     <h4>A List Apart – Standards-Based Web Design</h4>
+                     <p>Influential web design and development publication focusing on web standards, accessibility, and best practices.</p>
+                     <a href="https://alistapart.com/" target="_blank">Visit A List Apart</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">Server-Side Development</div>
+                     <h4>MDN Web Docs – Server-Side Development Fundamentals</h4>
+                     <p>Comprehensive guide to server-side development covering PHP, databases, and backend web technologies.</p>
+                     <a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side" target="_blank">Visit MDN Server-Side Guide</a>
+                 </div>
+                 
+                 <div class="resource-card">
+                     <div class="resource-type">JavaScript Frameworks</div>
+                     <h4>MDN Web Docs – Using Modern JavaScript Frameworks</h4>
+                     <p>Guide to modern JavaScript frameworks and libraries for enhanced front-end development and interactivity.</p>
+                     <a href="https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks" target="_blank">Visit MDN JavaScript Frameworks</a>
+                 </div>
+             </div>
+            
+            <div class="further-reading-section">
+                <h3>Additional Resources</h3>
+                <ul>
+                    <li><strong>Development Tools:</strong> VS Code, XAMPP, phpMyAdmin, Postman</li>
+                    <li><strong>Testing Tools:</strong> PHPUnit, Selenium, Postman, Browser Developer Tools</li>
+                    <li><strong>Deployment Platforms:</strong> cPanel, AWS, DigitalOcean, Heroku</li>
+                    <li><strong>Database Tools:</strong> MySQL Workbench, phpMyAdmin, HeidiSQL</li>
+                    <li><strong>Version Control:</strong> Git, GitHub, GitLab, Bitbucket</li>
+                    <li><strong>E-commerce Tools:</strong> PayPal Sandbox, Stripe Test Mode, SSL Certificates</li>
+                    <li><strong>Design Resources:</strong> Bootstrap Themes, Font Awesome, Google Fonts</li>
+                    <li><strong>Code Quality:</strong> PHP CodeSniffer, ESLint, Prettier</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

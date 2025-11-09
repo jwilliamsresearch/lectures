@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 6: JavaScript Basics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .calculator input {
+            grid-column: 1 / -1;
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: right;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .calculator button {
+            padding: 15px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .calculator button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .calculator .operator {
+            background-color: #2196f3;
+            color: white;
+        }
+
+        .calculator .operator:hover {
+            background-color: #1976d2;
+        }
+
+        .calculator .equals {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .calculator .equals:hover {
+            background-color: #45a049;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-input {
+            padding: 10px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            width: 200px;
+        }
+
+        .game-button {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .game-button:hover {
+            background-color: #1976d2;
+        }
+
+        .game-feedback {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .game-feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .game-feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .game-feedback.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>JavaScript Basics</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 6</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Adding interactivity and dynamic behavior</p>
+                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand what JavaScript is and its role in web development</li>
+                    <li>Learn JavaScript syntax and basic concepts</li>
+                    <li>Master variables, data types, and operators</li>
+                    <li>Create functions and control structures</li>
+                    <li>Manipulate the DOM (Document Object Model)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: What is JavaScript? -->
+            <section>
+                <h2>What is JavaScript?</h2>
+                <div class="highlight">
+                    <strong>JavaScript</strong> is a programming language that adds interactivity to
+                    web pages
+                </div>
+                <ul>
+                    <li>Makes web pages dynamic and interactive</li>
+                    <li>Runs in the browser (client-side)</li>
+                    <li>Can also run on servers (Node.js)</li>
+                    <li>Essential for modern web development</li>
+                </ul>
+                <div class="code-example">
+                    // Simple JavaScript example<br>
+                    console.log("Hello, World!");<br>
+                    alert("Welcome to our website!");
+                </div>
+
+                <!-- YouTube Video: JavaScript Fundamentals Explained -->
+                <div class="interactive-content">
+                    <h3>Watch: JavaScript Fundamentals Explained</h3>
+                    <div class="video-container">
+                        <iframe width="100%" height="315"
+                            src="https://www.youtube-nocookie.com/embed/W6NZfCO5SIk"
+                            title="JavaScript Fundamentals Explained" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p class="interactive-description">
+                        Comprehensive introduction to JavaScript - the programming language of the
+                        web
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 4: Adding JavaScript to HTML -->
+            <section>
+                <h2>Adding JavaScript to HTML</h2>
+                <div class="code-example">
+                    &lt;!-- Method 1: External JavaScript --&gt;<br>
+                    &lt;script src="script.js"&gt;&lt;/script&gt;<br><br>
+                    &lt;!-- Method 2: Internal JavaScript --&gt;<br>
+                    &lt;script&gt;<br>
+                    &nbsp;&nbsp;console.log("Hello from internal script");<br>
+                    &lt;/script&gt;<br><br>
+                    &lt;!-- Method 3: Inline JavaScript --&gt;<br>
+                    &lt;button onclick="alert('Hello!')"&gt;Click me&lt;/button&gt;
+                </div>
+                <ul>
+                    <li><strong>External:</strong> Best for multiple pages</li>
+                    <li><strong>Internal:</strong> Good for single page</li>
+                    <li><strong>Inline:</strong> Avoid for maintainability</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: JavaScript Syntax -->
+            <section>
+                <h2>JavaScript Syntax</h2>
+                <div class="code-example">
+                    // This is a comment<br><br>
+                    let message = "Hello World";<br>
+                    const PI = 3.14159;<br><br>
+                    if (condition) {<br>
+                    &nbsp;&nbsp;// code block<br>
+                    }<br><br>
+                    function greet() {<br>
+                    &nbsp;&nbsp;return "Hello!";<br>
+                    }
+                </div>
+                <ul>
+                    <li>Statements end with semicolons (optional but recommended)</li>
+                    <li>Use <code>//</code> for single-line comments</li>
+                    <li>Use <code>/* */</code> for multi-line comments</li>
+                    <li>Code blocks use curly braces <code>{}</code></li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Variables -->
+            <section>
+                <h2>Variables</h2>
+                <div class="code-example">
+                    // Variable declaration<br>
+                    let name = "John";<br>
+                    let age = 25;<br>
+                    let isStudent = true;<br><br>
+                    // Reassigning values<br>
+                    name = "Jane";<br>
+                    age = 30;<br><br>
+                    // Constants (cannot be changed)<br>
+                    const PI = 3.14159;<br>
+                    const COMPANY = "Tech Corp";
+                </div>
+                <ul>
+                    <li><code>let</code>: Block-scoped, can be reassigned</li>
+                    <li><code>const</code>: Block-scoped, cannot be reassigned</li>
+                    <li><code>var</code>: Function-scoped (avoid in modern JS)</li>
+                    <li>Use descriptive variable names</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Data Types -->
+            <section>
+                <h2>JavaScript Data Types</h2>
+                <div class="code-example">
+                    // String<br>
+                    let text = "Hello World";<br>
+                    let name = 'John';<br><br>
+                    // Number<br>
+                    let age = 25;<br>
+                    let price = 19.99;<br><br>
+                    // Boolean<br>
+                    let isActive = true;<br>
+                    let isLoggedIn = false;<br><br>
+                    // Undefined<br>
+                    let notDefined;<br><br>
+                    // Null<br>
+                    let emptyValue = null;
+                </div>
+                <ul>
+                    <li><strong>String:</strong> Text data</li>
+                    <li><strong>Number:</strong> Integers and decimals</li>
+                    <li><strong>Boolean:</strong> true or false</li>
+                    <li><strong>Undefined:</strong> Variable declared but not assigned</li>
+                    <li><strong>Null:</strong> Intentional absence of value</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Operators -->
+            <section>
+                <h2>JavaScript Operators</h2>
+                <div class="code-example">
+                    // Arithmetic operators<br>
+                    let sum = 5 + 3; // 8<br>
+                    let diff = 10 - 4; // 6<br>
+                    let product = 6 * 7; // 42<br>
+                    let quotient = 15 / 3; // 5<br>
+                    let remainder = 17 % 5; // 2<br><br>
+                    // Assignment operators<br>
+                    let x = 10;<br>
+                    x += 5; // Same as x = x + 5<br>
+                    x -= 3; // Same as x = x - 3<br>
+                    x *= 2; // Same as x = x * 2
+                </div>
+
+                <!-- Interactive Calculator Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Interactive Calculator</h3>
+                    <div class="demo-container">
+                        <div class="calculator">
+                            <input type="text" id="calc-display" value="0" readonly>
+                            <button onclick="clearCalc()">C</button>
+                            <button onclick="deleteLast()">⌫</button>
+                            <button class="operator" onclick="appendToDisplay('/')">/</button>
+                            <button class="operator" onclick="appendToDisplay('*')">×</button>
+                            <button onclick="appendToDisplay('7')">7</button>
+                            <button onclick="appendToDisplay('8')">8</button>
+                            <button onclick="appendToDisplay('9')">9</button>
+                            <button class="operator" onclick="appendToDisplay('-')">-</button>
+                            <button onclick="appendToDisplay('4')">4</button>
+                            <button onclick="appendToDisplay('5')">5</button>
+                            <button onclick="appendToDisplay('6')">6</button>
+                            <button class="operator" onclick="appendToDisplay('+')">+</button>
+                            <button onclick="appendToDisplay('1')">1</button>
+                            <button onclick="appendToDisplay('2')">2</button>
+                            <button onclick="appendToDisplay('3')">3</button>
+                            <button class="equals" onclick="calculateResult()"
+                                rowspan="2">=</button>
+                            <button onclick="appendToDisplay('0')"
+                                style="grid-column: 1 / 3;">0</button>
+                            <button onclick="appendToDisplay('.')">.</button>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Click the buttons to perform calculations using JavaScript operators!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 9: Comparison Operators -->
+            <section>
+                <h2>Comparison Operators</h2>
+                <div class="code-example">
+                    // Comparison operators<br>
+                    let a = 5;<br>
+                    let b = "5";<br><br>
+                    a == b; // true (loose equality)<br>
+                    a === b; // false (strict equality)<br>
+                    a != b; // false<br>
+                    a !== b; // true<br><br>
+                    a > 3; // true<br>
+                    a >= 5; // true<br>
+                    a < 10; // true<br>
+                        a <= 5; // true </div>
+                            <ul>
+                                <li><code>==</code>: Loose equality (converts types)</li>
+                                <li><code>===</code>: Strict equality (no type conversion)</li>
+                                <li>Always use <code>===</code> and <code>!==</code> when possible
+                                </li>
+                            </ul>
+            </section>
+
+            <!-- Slide 10: Logical Operators -->
+            <section>
+                <h2>Logical Operators</h2>
+                <div class="code-example">
+                    // Logical operators<br>
+                    let isLoggedIn = true;<br>
+                    let hasPermission = false;<br><br>
+                    isLoggedIn && hasPermission; // false (AND)<br>
+                    isLoggedIn || hasPermission; // true (OR)<br>
+                    !isLoggedIn; // false (NOT)<br><br>
+                    // Short-circuit evaluation<br>
+                    let name = "John" || "Guest"; // "John"<br>
+                    let age = 0 || 25; // 25
+                </div>
+                <ul>
+                    <li><code>&&</code>: AND (both must be true)</li>
+                    <li><code>||</code>: OR (at least one must be true)</li>
+                    <li><code>!</code>: NOT (inverts boolean value)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Strings -->
+            <section>
+                <h2>Working with Strings</h2>
+                <div class="code-example">
+                    let firstName = "John";<br>
+                    let lastName = "Doe";<br><br>
+                    // String concatenation<br>
+                    let fullName = firstName + " " + lastName;<br><br>
+                    // Template literals (ES6)<br>
+                    let greeting = `Hello, ${firstName}!`;<br><br>
+                    // String methods<br>
+                    let message = "Hello World";<br>
+                    message.length; // 11<br>
+                    message.toUpperCase(); // "HELLO WORLD"<br>
+                    message.toLowerCase(); // "hello world"<br>
+                    message.indexOf("World"); // 6
+                </div>
+            </section>
+
+            <!-- Slide 12: Arrays -->
+            <section>
+                <h2>Arrays</h2>
+                <div class="code-example">
+                    // Creating arrays<br>
+                    let fruits = ["Apple", "Banana", "Orange"];<br>
+                    let numbers = [1, 2, 3, 4, 5];<br>
+                    let mixed = ["text", 42, true];<br><br>
+                    // Accessing elements<br>
+                    fruits[0]; // "Apple"<br>
+                    fruits[1]; // "Banana"<br><br>
+                    // Array methods<br>
+                    fruits.push("Grape"); // Add to end<br>
+                    fruits.pop(); // Remove from end<br>
+                    fruits.unshift("Lemon"); // Add to beginning<br>
+                    fruits.shift(); // Remove from beginning
+                </div>
+            </section>
+
+            <!-- Slide 13: Functions -->
+            <section>
+                <h2>Functions</h2>
+                <div class="code-example">
+                    // Function declaration<br>
+                    function greet(name) {<br>
+                    &nbsp;&nbsp;return `Hello, ${name}!`;<br>
+                    }<br><br>
+                    // Function expression<br>
+                    let multiply = function(a, b) {<br>
+                    &nbsp;&nbsp;return a * b;<br>
+                    };<br><br>
+                    // Arrow function (ES6)<br>
+                    let divide = (a, b) => a / b;<br><br>
+                    // Calling functions<br>
+                    greet("John"); // "Hello, John!"<br>
+                    multiply(5, 3); // 15<br>
+                    divide(10, 2); // 5
+                </div>
+
+                <!-- Interactive Number Guessing Game -->
+                <div class="interactive-demo">
+                    <h3>Try It: Number Guessing Game</h3>
+                    <div class="game-container">
+                        <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+                        <input type="number" id="guess-input" class="game-input"
+                            placeholder="Enter your guess" min="1" max="100">
+                        <br>
+                        <button class="game-button" onclick="makeGuess()">Guess</button>
+                        <button class="game-button" onclick="startNewGame()">New Game</button>
+                        <div id="game-feedback" class="game-feedback info">
+                            Enter a number and click Guess to start!
+                        </div>
+                        <div id="game-stats">
+                            <p>Guesses: <span id="guess-count">0</span></p>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        This game uses functions to handle game logic, validation, and feedback!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 14: Control Structures -->
+            <section>
+                <h2>Control Structures</h2>
+                <div class="code-example">
+                    // If statement<br>
+                    let age = 18;<br>
+                    if (age >= 18) {<br>
+                    &nbsp;&nbsp;console.log("Adult");<br>
+                    } else {<br>
+                    &nbsp;&nbsp;console.log("Minor");<br>
+                    }<br><br>
+                    // Switch statement<br>
+                    let day = "Monday";<br>
+                    switch(day) {<br>
+                    &nbsp;&nbsp;case "Monday":<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log("Start of week");<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                    &nbsp;&nbsp;default:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log("Other day");<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 15: Loops -->
+            <section>
+                <h2>Loops</h2>
+                <div class="code-example">
+                    // For loop<br>
+                    for (let i = 0; i < 5; i++) {<br>
+                        &nbsp;&nbsp;console.log(i);<br>
+                        }<br><br>
+                        // While loop<br>
+                        let count = 0;<br>
+                        while (count < 3) {<br>
+                            &nbsp;&nbsp;console.log(count);<br>
+                            &nbsp;&nbsp;count++;<br>
+                            }<br><br>
+                            // For...of loop (arrays)<br>
+                            let fruits = ["Apple", "Banana", "Orange"];<br>
+                            for (let fruit of fruits) {<br>
+                            &nbsp;&nbsp;console.log(fruit);<br>
+                            }
+                </div>
+            </section>
+
+            <!-- Slide 16: DOM Manipulation -->
+            <section>
+                <h2>DOM Manipulation</h2>
+                <div class="code-example">
+                    // Selecting elements<br>
+                    let element = document.getElementById("myId");<br>
+                    let elements = document.getElementsByClassName("myClass");<br>
+                    let element = document.querySelector(".myClass");<br><br>
+                    // Changing content<br>
+                    element.innerHTML = "New content";<br>
+                    element.textContent = "Plain text";<br><br>
+                    // Changing styles<br>
+                    element.style.color = "red";<br>
+                    element.style.fontSize = "20px";<br><br>
+                    // Adding/removing classes<br>
+                    element.classList.add("highlight");<br>
+                    element.classList.remove("old-class");
+                </div>
+            </section>
+
+            <!-- Slide 17: Event Handling -->
+            <section>
+                <h2>Event Handling</h2>
+                <div class="code-example">
+                    // HTML<br>
+                    &lt;button id="myButton"&gt;Click me&lt;/button&gt;<br><br>
+                    // JavaScript<br>
+                    let button = document.getElementById("myButton");<br><br>
+                    button.addEventListener("click", function() {<br>
+                    &nbsp;&nbsp;alert("Button clicked!");<br>
+                    });<br><br>
+                    // Arrow function version<br>
+                    button.addEventListener("click", () => {<br>
+                    &nbsp;&nbsp;console.log("Button clicked!");<br>
+                    });
+                </div>
+                <ul>
+                    <li>Common events: click, mouseover, keydown, submit</li>
+                    <li>Use <code>addEventListener</code> for event handling</li>
+                    <li>Can add multiple event listeners to same element</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Basic JavaScript Practice</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>js-practice.html</code></li>
+                        <li>Add a &lt;script&gt; tag in the &lt;head&gt; section</li>
+                        <li>Practice the following JavaScript concepts:</li>
+                        <ul>
+                            <li>Declare variables with different data types</li>
+                            <li>Create a function that takes parameters</li>
+                            <li>Use arithmetic and comparison operators</li>
+                            <li>Create an array and access its elements</li>
+                            <li>Use a loop to iterate through the array</li>
+                            <li>Add a button that triggers a JavaScript function</li>
+                        </ul>
+                        <li>Use console.log() to see your output</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand basic JavaScript syntax and
+                            concepts</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Error Handling -->
+            <section>
+                <h2>Error Handling</h2>
+                <div class="code-example">
+                    // Try-catch statement<br>
+                    try {<br>
+                    &nbsp;&nbsp;let result = 10 / 0;<br>
+                    &nbsp;&nbsp;console.log(result);<br>
+                    } catch (error) {<br>
+                    &nbsp;&nbsp;console.error("An error occurred:", error.message);<br>
+                    } finally {<br>
+                    &nbsp;&nbsp;console.log("This always runs");<br>
+                    }<br><br>
+                    // Throwing custom errors<br>
+                    function divide(a, b) {<br>
+                    &nbsp;&nbsp;if (b === 0) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw new Error("Cannot divide by zero");<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;return a / b;<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 20: Scope and Hoisting -->
+            <section>
+                <h2>Scope and Hoisting</h2>
+                <div class="code-example">
+                    // Global scope<br>
+                    let globalVar = "I'm global";<br><br>
+                    function myFunction() {<br>
+                    &nbsp;&nbsp;// Local scope<br>
+                    &nbsp;&nbsp;let localVar = "I'm local";<br>
+                    &nbsp;&nbsp;console.log(globalVar); // Can access global<br>
+                    &nbsp;&nbsp;console.log(localVar); // Can access local<br>
+                    }<br><br>
+                    // Hoisting example<br>
+                    console.log(x); // undefined (not an error)<br>
+                    var x = 5; // var is hoisted<br>
+                    console.log(y); // ReferenceError<br>
+                    let y = 10; // let is not hoisted
+                </div>
+            </section>
+
+            <!-- Slide 21: Objects -->
+            <section>
+                <h2>Objects</h2>
+                <div class="code-example">
+                    // Object literal<br>
+                    let person = {<br>
+                    &nbsp;&nbsp;name: "John",<br>
+                    &nbsp;&nbsp;age: 30,<br>
+                    &nbsp;&nbsp;city: "New York",<br>
+                    &nbsp;&nbsp;greet: function() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return `Hello, I'm ${this.name}`;<br>
+                    &nbsp;&nbsp;}<br>
+                    };<br><br>
+                    // Accessing properties<br>
+                    person.name; // "John"<br>
+                    person["age"]; // 30<br>
+                    person.greet(); // "Hello, I'm John"<br><br>
+                    // Adding properties<br>
+                    person.email = "john@example.com";
+                </div>
+            </section>
+
+            <!-- Slide 22: JSON -->
+            <section>
+                <h2>JSON (JavaScript Object Notation)</h2>
+                <div class="code-example">
+                    // JSON string<br>
+                    let jsonString = '{"name":"John","age":30,"city":"NYC"}';<br><br>
+                    // Parse JSON to object<br>
+                    let obj = JSON.parse(jsonString);<br>
+                    console.log(obj.name); // "John"<br><br>
+                    // Convert object to JSON<br>
+                    let person = {name: "Jane", age: 25};<br>
+                    let json = JSON.stringify(person);<br>
+                    console.log(json); // '{"name":"Jane","age":25}'
+                </div>
+                <ul>
+                    <li>JSON is a data format, not a programming language</li>
+                    <li>Commonly used for API communication</li>
+                    <li><code>JSON.parse()</code> converts JSON to object</li>
+                    <li><code>JSON.stringify()</code> converts object to JSON</li>
+                </ul>
+            </section>
+
+            <!-- Slide 23: Debugging JavaScript -->
+            <section>
+                <h2>Debugging JavaScript</h2>
+                <ul>
+                    <li><code>console.log()</code>: Output values to console</li>
+                    <li><code>console.error()</code>: Log errors</li>
+                    <li><code>console.warn()</code>: Log warnings</li>
+                    <li><code>console.table()</code>: Display data in table format</li>
+                    <li>Browser Developer Tools: Set breakpoints</li>
+                    <li><code>debugger;</code>: Programmatic breakpoint</li>
+                </ul>
+                <div class="code-example">
+                    // Debugging example<br>
+                    let x = 5;<br>
+                    let y = 10;<br>
+                    console.log("x =", x, "y =", y);<br>
+                    console.table({x, y});<br>
+                    debugger; // Execution stops here<br>
+                    let result = x + y;
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Interactive Web Page</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>interactive-page.html</code></li>
+                        <li>Build an interactive page with:</li>
+                        <ul>
+                            <li><strong>Form:</strong> Input fields for name, age, and favorite
+                                color</li>
+                            <li><strong>Button:</strong> Submit button that collects form data</li>
+                            <li><strong>Display:</strong> Show collected data in a formatted way
+                            </li>
+                            <li><strong>Validation:</strong> Check if fields are filled</li>
+                            <li><strong>Styling:</strong> Change page colors based on favorite color
+                            </li>
+                        </ul>
+                        <li>Use DOM manipulation to update the page</li>
+                        <li>Add event listeners for user interactions</li>
+                        <li>Include error handling for invalid inputs</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand DOM manipulation and event
+                            handling</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>JavaScript adds interactivity to web pages</li>
+                    <li>Master variables, data types, and operators</li>
+                    <li>Use functions to organize and reuse code</li>
+                    <li>Control structures manage program flow</li>
+                    <li>DOM manipulation creates dynamic content</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>JavaScript Events and Interactivity - Building responsive user interfaces</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+
+        // Calculator Functions
+        let currentInput = '';
+        let operator = '';
+        let previousInput = '';
+        let shouldResetDisplay = false;
+
+        function updateDisplay(value) {
+            const display = document.getElementById('calc-display');
+            display.value = value;
+        }
+
+        function appendToDisplay(value) {
+            const display = document.getElementById('calc-display');
+
+            if (shouldResetDisplay) {
+                display.value = '';
+                shouldResetDisplay = false;
+            }
+
+            if (value === '.' && display.value.includes('.')) {
+                return; // Prevent multiple decimal points
+            }
+
+            if (display.value === '0' && value !== '.') {
+                display.value = value;
+            } else {
+                display.value += value;
+            }
+        }
+
+        function clearCalc() {
+            updateDisplay('0');
+            currentInput = '';
+            operator = '';
+            previousInput = '';
+        }
+
+        function deleteLast() {
+            const display = document.getElementById('calc-display');
+            if (display.value.length > 1) {
+                display.value = display.value.slice(0, -1);
+            } else {
+                display.value = '0';
+            }
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('calc-display');
+            const currentValue = parseFloat(display.value);
+
+            if (operator && previousInput !== '') {
+                let result;
+                switch (operator) {
+                    case '+':
+                        result = previousInput + currentValue;
+                        break;
+                    case '-':
+                        result = previousInput - currentValue;
+                        break;
+                    case '*':
+                        result = previousInput * currentValue;
+                        break;
+                    case '/':
+                        result = currentValue !== 0 ? previousInput / currentValue : 'Error';
+                        break;
+                    default:
+                        return;
+                }
+
+                updateDisplay(result.toString());
+                operator = '';
+                previousInput = '';
+                shouldResetDisplay = true;
+            }
+        }
+
+        // Number Guessing Game Functions
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let guessCount = 0;
+
+        function startNewGame() {
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            guessCount = 0;
+            document.getElementById('guess-count').textContent = '0';
+            document.getElementById('guess-input').value = '';
+            document.getElementById('game-feedback').textContent = 'New game started! Guess a number between 1 and 100.';
+            document.getElementById('game-feedback').className = 'game-feedback info';
+        }
+
+        function makeGuess() {
+            const guessInput = document.getElementById('guess-input');
+            const feedback = document.getElementById('game-feedback');
+            const guessCountElement = document.getElementById('guess-count');
+
+            const guess = parseInt(guessInput.value);
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                feedback.textContent = 'Please enter a valid number between 1 and 100.';
+                feedback.className = 'game-feedback error';
+                return;
+            }
+
+            guessCount++;
+            guessCountElement.textContent = guessCount;
+
+            if (guess === secretNumber) {
+                feedback.textContent = `🎉 Congratulations! You guessed it in ${guessCount} tries!`;
+                feedback.className = 'game-feedback success';
+                guessInput.disabled = true;
+            } else if (guess < secretNumber) {
+                feedback.textContent = 'Too low! Try a higher number.';
+                feedback.className = 'game-feedback info';
+            } else {
+                feedback.textContent = 'Too high! Try a lower number.';
+                feedback.className = 'game-feedback info';
+            }
+
+            guessInput.value = '';
+        }
+
+        // Allow Enter key to submit guess
+        document.addEventListener('DOMContentLoaded', function () {
+            const guessInput = document.getElementById('guess-input');
+            if (guessInput) {
+                guessInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        makeGuess();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

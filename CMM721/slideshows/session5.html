@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 5: Asynchronous JavaScript & APIs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
+        .reveal .slides section.center { text-align: center; }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
+        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
+        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
+        .demo-container h3 { color: #9b59b6; margin-top: 0; }
+        .demo-button { background: linear-gradient(135deg, #9b59b6, #3498db); color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; margin: 5px; transition: all 0.3s ease; }
+        .demo-button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(155, 89, 182, 0.4); }
+        .demo-output { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; padding: 15px; margin-top: 10px; min-height: 50px; font-family: 'Consolas', monospace; font-size: 0.9em; }
+        .loading { color: #9b59b6; font-style: italic; }
+        .error { color: #e74c3c; font-weight: bold; }
+        .success { color: #27ae60; font-weight: bold; }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
+        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <section class="center">
+                <h1>Asynchronous JavaScript & APIs</h1>
+                <h3>CMM721: Web Application Development - Session 5</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Masters Level Conversion Course</p>
+                <p><small>3-hour session • 18 slides • 2 tasks • Live API demos</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand asynchronous programming concepts</li>
+                    <li>Master Promises and async/await syntax</li>
+                    <li>Use the Fetch API for HTTP requests</li>
+                    <li>Integrate with REST APIs</li>
+                    <li>Handle errors in asynchronous code</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Synchronous vs Asynchronous</h2>
+                <div class="highlight">
+                    <strong>Synchronous:</strong> Code executes line by line, blocking
+                </div>
+                <div class="code-example">
+                    console.log('First');<br>
+                    console.log('Second');<br>
+                    console.log('Third');<br>
+                    // Output: First, Second, Third
+                </div>
+                <div class="highlight">
+                    <strong>Asynchronous:</strong> Non-blocking, allows other code to run
+                </div>
+                <div class="code-example">
+                    console.log('First');<br>
+                    setTimeout(() => console.log('Second'), 1000);<br>
+                    console.log('Third');<br>
+                    // Output: First, Third, Second (after 1s)
+                </div>
+            </section>
+
+            <section>
+                <h2>Callbacks</h2>
+                <h3>Traditional Async Pattern:</h3>
+                <div class="code-example">
+                    function fetchData(callback) {<br>
+                    &nbsp;&nbsp;setTimeout(() => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const data = {name: 'John', age: 30};<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;callback(data);<br>
+                    &nbsp;&nbsp;}, 1000);<br>
+                    }<br><br>
+                    
+                    fetchData((result) => {<br>
+                    &nbsp;&nbsp;console.log(result);<br>
+                    });
+                </div>
+                <h3>Problem: Callback Hell</h3>
+                <div class="code-example">
+                    getData(function(a) {<br>
+                    &nbsp;&nbsp;getMoreData(a, function(b) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;getMoreData(b, function(c) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Nested callbacks...<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                    &nbsp;&nbsp;});<br>
+                    });
+                </div>
+            </section>
+
+            <section>
+                <h2>Promises</h2>
+                <div class="highlight">
+                    <strong>Promise:</strong> Object representing eventual completion/failure
+                </div>
+                <div class="code-example">
+                    const promise = new Promise((resolve, reject) => {<br>
+                    &nbsp;&nbsp;setTimeout(() => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const success = true;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (success) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve({data: 'Success!'});<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(new Error('Failed'));<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}, 1000);<br>
+                    });<br><br>
+                    
+                    promise<br>
+                    &nbsp;&nbsp;.then(result => console.log(result))<br>
+                    &nbsp;&nbsp;.catch(error => console.error(error));
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 LIVE DEMO: Promise Simulator</h2>
+                <div class="demo-container">
+                    <h3>Interactive Promise Example</h3>
+                    <button class="demo-button" onclick="runSuccessPromise()">Run Success Promise</button>
+                    <button class="demo-button" onclick="runFailPromise()">Run Fail Promise</button>
+                    <button class="demo-button" onclick="runChainedPromises()">Chain Promises</button>
+                    <div id="promiseOutput" class="demo-output">
+                        Click a button to see Promises in action!
+                    </div>
+                </div>
+                
+                <script>
+                    function runSuccessPromise() {
+                        const output = document.getElementById('promiseOutput');
+                        output.innerHTML = '<span class="loading">⏳ Promise pending...</span>';
+                        
+                        new Promise((resolve) => {
+                            setTimeout(() => resolve('✅ Promise resolved successfully!'), 2000);
+                        })
+                        .then(result => {
+                            output.innerHTML = `<span class="success">${result}</span><br>
+                                              <small>Resolved after 2 seconds</small>`;
+                        });
+                    }
+                    
+                    function runFailPromise() {
+                        const output = document.getElementById('promiseOutput');
+                        output.innerHTML = '<span class="loading">⏳ Promise pending...</span>';
+                        
+                        new Promise((resolve, reject) => {
+                            setTimeout(() => reject(new Error('Network error')), 2000);
+                        })
+                        .catch(error => {
+                            output.innerHTML = `<span class="error">❌ Promise rejected: ${error.message}</span><br>
+                                              <small>Caught and handled the error</small>`;
+                        });
+                    }
+                    
+                    function runChainedPromises() {
+                        const output = document.getElementById('promiseOutput');
+                        output.innerHTML = '<span class="loading">⏳ Step 1...</span>';
+                        
+                        Promise.resolve('Step 1')
+                            .then(result => {
+                                output.innerHTML = `<span class="success">✅ ${result} complete</span><br><span class="loading">⏳ Step 2...</span>`;
+                                return new Promise(resolve => setTimeout(() => resolve('Step 2'), 1000));
+                            })
+                            .then(result => {
+                                output.innerHTML += `<br><span class="success">✅ ${result} complete</span><br><span class="loading">⏳ Step 3...</span>`;
+                                return new Promise(resolve => setTimeout(() => resolve('Step 3'), 1000));
+                            })
+                            .then(result => {
+                                output.innerHTML += `<br><span class="success">✅ ${result} complete</span><br><strong>All steps finished!</strong>`;
+                            });
+                    }
+                </script>
+            </section>
+
+            <section>
+                <h2>Async/Await</h2>
+                <div class="highlight">
+                    <strong>async/await:</strong> Syntactic sugar for Promises (ES2017)
+                </div>
+                <div class="code-example">
+                    // Promise approach<br>
+                    fetch('https://api.example.com/data')<br>
+                    &nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;.then(data => console.log(data))<br>
+                    &nbsp;&nbsp;.catch(error => console.error(error));<br><br>
+                    
+                    // async/await approach<br>
+                    async function fetchData() {<br>
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch('https://api.example.com/data');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const data = await response.json();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(data);<br>
+                    &nbsp;&nbsp;} catch (error) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <section>
+                <h2>Fetch API</h2>
+                <h3>Making HTTP Requests:</h3>
+                <div class="code-example">
+                    // GET request<br>
+                    fetch('https://api.github.com/users/github')<br>
+                    &nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;.then(data => console.log(data));<br><br>
+                    
+                    // POST request<br>
+                    fetch('https://api.example.com/users', {<br>
+                    &nbsp;&nbsp;method: 'POST',<br>
+                    &nbsp;&nbsp;headers: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'Content-Type': 'application/json'<br>
+                    &nbsp;&nbsp;},<br>
+                    &nbsp;&nbsp;body: JSON.stringify({name: 'John', age: 30})<br>
+                    })<br>
+                    &nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;.then(data => console.log(data));
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 LIVE DEMO: Real API Integration</h2>
+                <div class="demo-container">
+                    <h3>Fetch GitHub User Data</h3>
+                    <input type="text" id="githubUsername" placeholder="Enter GitHub username" 
+                           style="padding: 10px; font-size: 1em; width: 60%; border: 2px solid #9b59b6; border-radius: 5px;">
+                    <button class="demo-button" onclick="fetchGitHubUser()">Fetch User</button>
+                    <button class="demo-button" onclick="fetchRandomUser()">Random User API</button>
+                    <div id="apiOutput" class="demo-output">
+                        Try: "github", "torvalds", or click Random User
+                    </div>
+                </div>
+                
+                <script>
+                    async function fetchGitHubUser() {
+                        const username = document.getElementById('githubUsername').value || 'github';
+                        const output = document.getElementById('apiOutput');
+                        output.innerHTML = '<span class="loading">⏳ Fetching data from GitHub API...</span>';
+                        
+                        try {
+                            const response = await fetch(`https://api.github.com/users/${username}`);
+                            if (!response.ok) throw new Error('User not found');
+                            const data = await response.json();
+                            
+                            output.innerHTML = `
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <img src="${data.avatar_url}" width="80" style="border-radius: 50%;">
+                                    <div>
+                                        <h4 style="margin: 0;">${data.name || data.login}</h4>
+                                        <p style="margin: 5px 0;"><strong>@${data.login}</strong></p>
+                                        <p style="margin: 5px 0;">${data.bio || 'No bio'}</p>
+                                        <p style="margin: 5px 0;">📍 ${data.location || 'Unknown'}</p>
+                                        <p style="margin: 5px 0;">👥 ${data.followers} followers • ${data.public_repos} repos</p>
+                                    </div>
+                                </div>
+                            `;
+                        } catch (error) {
+                            output.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+                        }
+                    }
+                    
+                    async function fetchRandomUser() {
+                        const output = document.getElementById('apiOutput');
+                        output.innerHTML = '<span class="loading">⏳ Fetching random user...</span>';
+                        
+                        try {
+                            const response = await fetch('https://randomuser.me/api/');
+                            const data = await response.json();
+                            const user = data.results[0];
+                            
+                            output.innerHTML = `
+                                <div style="display: flex; align-items: center; gap: 15px;">
+                                    <img src="${user.picture.large}" width="80" style="border-radius: 50%;">
+                                    <div>
+                                        <h4 style="margin: 0;">${user.name.first} ${user.name.last}</h4>
+                                        <p style="margin: 5px 0;">📧 ${user.email}</p>
+                                        <p style="margin: 5px 0;">📱 ${user.phone}</p>
+                                        <p style="margin: 5px 0;">📍 ${user.location.city}, ${user.location.country}</p>
+                                    </div>
+                                </div>
+                                <small>Data from randomuser.me API</small>
+                            `;
+                        } catch (error) {
+                            output.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+                        }
+                    }
+                </script>
+            </section>
+
+            <section>
+                <h2>Task 1: Weather App with API</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Build a weather application using the OpenWeather API</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create UI with city input and search button</li>
+                        <li>Fetch weather data using async/await</li>
+                        <li>Display: temperature, weather description, icon</li>
+                        <li>Show loading state during fetch</li>
+                        <li>Handle errors (invalid city, network issues)</li>
+                        <li>Add 5-day forecast display</li>
+                    </ol>
+                    <h3>API:</h3>
+                    <ul>
+                        <li>OpenWeatherMap API (free tier)</li>
+                        <li>Register at openweathermap.org</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Error Handling in Async Code</h2>
+                <div class="code-example">
+                    async function fetchUserData(userId) {<br>
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(`/api/users/${userId}`);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error(`HTTP error! status: ${response.status}`);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const data = await response.json();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return data;<br>
+                    &nbsp;&nbsp;} catch (error) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Failed to fetch user:', error);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw error; // Re-throw if needed<br>
+                    &nbsp;&nbsp;} finally {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Fetch attempt completed');<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 LIVE DEMO: Programming Jokes & Facts</h2>
+                <div class="demo-container">
+                    <h3>Programming Humor & Knowledge</h3>
+                    <button class="demo-button" onclick="fetchProgrammingJoke()">Get Programming Joke</button>
+                    <button class="demo-button" onclick="fetchProgrammingFact()">Get Programming Fact</button>
+                    <div id="jokeOutput" class="demo-output" style="font-size: 1.1em; line-height: 1.6;">
+                        Click a button to fetch programming content!
+                    </div>
+                </div>
+                
+                <script>
+                    async function fetchProgrammingJoke() {
+                        const output = document.getElementById('jokeOutput');
+                        output.innerHTML = '<span class="loading">⏳ Fetching programming joke...</span>';
+                        
+                        try {
+                            const response = await fetch('https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single');
+                            const data = await response.json();
+                            
+                            if (data.joke) {
+                                output.innerHTML = `<p>😄 <strong>${data.joke}</strong></p>
+                                                  <small>Category: ${data.category}</small>`;
+                            } else if (data.setup && data.delivery) {
+                                output.innerHTML = `<p>😄 <strong>${data.setup}</strong></p>
+                                                  <p style="margin-top: 10px;">...${data.delivery}</p>
+                                                  <small>Category: ${data.category}</small>`;
+                            }
+                        } catch (error) {
+                            output.innerHTML = `<span class="error">❌ Failed to fetch joke</span>`;
+                        }
+                    }
+                    
+                    async function fetchProgrammingFact() {
+                        const output = document.getElementById('jokeOutput');
+                        
+                        // Array of interesting programming facts
+                        const programmingFacts = [
+                            "The first computer bug was an actual bug - a moth found in the Harvard Mark II computer in 1947.",
+                            "Python was named after Monty Python's Flying Circus, not the snake.",
+                            "The first computer programmer was Ada Lovelace in the 1840s, writing algorithms for Charles Babbage's Analytical Engine.",
+                            "JavaScript was created in just 10 days by Brendan Eich in 1995.",
+                            "The first computer virus was created in 1983 and was called 'Elk Cloner'.",
+                            "Git was created by Linus Torvalds in 2005, the same person who created Linux.",
+                            "The '@' symbol in email addresses was chosen by Ray Tomlinson in 1971.",
+                            "The term 'debugging' originated from Admiral Grace Hopper removing an actual moth from a computer.",
+                            "Python's philosophy is summarized in 'The Zen of Python' - try typing 'import this' in Python!",
+                            "React was created by Jordan Walke at Facebook and released in 2013.",
+                            "The first website ever created is still online at info.cern.ch.",
+                            "C programming language was developed at Bell Labs by Dennis Ritchie between 1972-1973.",
+                            "Stack Overflow was launched in 2008 and now has over 20 million questions.",
+                            "The term 'cookie' in web development comes from 'magic cookie', a Unix programming term.",
+                            "Django framework was named after the jazz guitarist Django Reinhardt."
+                        ];
+                        
+                        const randomFact = programmingFacts[Math.floor(Math.random() * programmingFacts.length)];
+                        output.innerHTML = `<p>💡 <strong>${randomFact}</strong></p>
+                                          <small>Programming history & trivia</small>`;
+                    }
+                </script>
+            </section>
+
+            <section>
+                <h2>REST API Concepts</h2>
+                <div class="highlight">
+                    <strong>REST:</strong> Representational State Transfer
+                </div>
+                <h3>HTTP Methods (CRUD):</h3>
+                <ul>
+                    <li><strong>GET:</strong> Read/retrieve data</li>
+                    <li><strong>POST:</strong> Create new data</li>
+                    <li><strong>PUT:</strong> Update/replace data</li>
+                    <li><strong>PATCH:</strong> Partial update</li>
+                    <li><strong>DELETE:</strong> Remove data</li>
+                </ul>
+                <h3>Response Status Codes:</h3>
+                <ul>
+                    <li><strong>200:</strong> OK</li>
+                    <li><strong>201:</strong> Created</li>
+                    <li><strong>400:</strong> Bad Request</li>
+                    <li><strong>401:</strong> Unauthorized</li>
+                    <li><strong>404:</strong> Not Found</li>
+                    <li><strong>500:</strong> Internal Server Error</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Task 2: Todo API Integration</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a todo app using JSONPlaceholder API</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Fetch todos from: jsonplaceholder.typicode.com/todos</li>
+                        <li>Display todos with checkboxes</li>
+                        <li>Implement POST to create new todo (simulated)</li>
+                        <li>Implement DELETE to remove todo (simulated)</li>
+                        <li>Show loading states for all operations</li>
+                        <li>Handle all errors gracefully</li>
+                        <li>Add filter: all/completed/active</li>
+                    </ol>
+                    <h3>Bonus:</h3>
+                    <ul>
+                        <li>Add pagination (10 items per page)</li>
+                        <li>Implement search functionality</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Parallel Requests</h2>
+                <h3>Promise.all - Wait for all:</h3>
+                <div class="code-example">
+                    async function fetchMultiple() {<br>
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const [users, posts, comments] = await Promise.all([<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fetch('/api/users').then(r => r.json()),<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fetch('/api/posts').then(r => r.json()),<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fetch('/api/comments').then(r => r.json())<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;]);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return {users, posts, comments};<br>
+                    &nbsp;&nbsp;} catch (error) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('One of the requests failed:', error);<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <h3>Promise.race - First to finish:</h3>
+                <div class="code-example">
+                    const fastest = await Promise.race([<br>
+                    &nbsp;&nbsp;fetch('https://api1.example.com'),<br>
+                    &nbsp;&nbsp;fetch('https://api2.example.com')<br>
+                    ]);
+                </div>
+            </section>
+
+            <section>
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>Always handle errors:</strong> Use try/catch with async/await</li>
+                    <li><strong>Loading states:</strong> Show feedback during async operations</li>
+                    <li><strong>Timeout handling:</strong> Implement request timeouts</li>
+                    <li><strong>Avoid callback hell:</strong> Use Promises or async/await</li>
+                    <li><strong>Cancel requests:</strong> Use AbortController for cleanup</li>
+                    <li><strong>Cache responses:</strong> Avoid redundant API calls</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Remember:</strong> async functions always return a Promise
+                </div>
+            </section>
+
+            <section>
+                <h2>Next Session: Django Basics</h2>
+                <ul>
+                    <li>Introduction to Django framework</li>
+                    <li>Project and app structure</li>
+                    <li>URL routing and views</li>
+                    <li>Django templates and template inheritance</li>
+                    <li>Static files handling</li>
+                    <li>Django settings and configuration</li>
+                </ul>
+                <p><strong>Preparation:</strong> Install Python 3.11+ and ensure pip is working.</p>
+            </section>
+
+            <section class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> MDN Fetch API, JavaScript.info</p>
+                <p>Thank you for your attention!</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
+            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>

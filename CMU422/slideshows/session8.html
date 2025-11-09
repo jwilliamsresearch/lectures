@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 8: JavaScript Advanced Concepts</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive Demo Styling */
+        .interactive-demo {
+            background: #f8f9fa;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .interactive-demo h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .js-concepts-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .concept-tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .concept-tab {
+            padding: 10px 20px;
+            border: 2px solid #2196f3;
+            background: white;
+            color: #2196f3;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .concept-tab.active {
+            background: #2196f3;
+            color: white;
+        }
+
+        .concept-content {
+            min-height: 200px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f9f9f9;
+            margin: 20px 0;
+        }
+
+        .concept-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .demo-button {
+            padding: 10px 15px;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .demo-button:hover {
+            background-color: #1976d2;
+        }
+
+        .demo-output {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            min-height: 100px;
+            width: 100%;
+            max-width: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .demo-output .log-entry {
+            margin: 5px 0;
+            padding: 2px 0;
+        }
+
+        .demo-output .log-entry.info {
+            color: #63b3ed;
+        }
+
+        .demo-output .log-entry.success {
+            color: #68d391;
+        }
+
+        .demo-output .log-entry.error {
+            color: #fc8181;
+        }
+
+        .demo-output .log-entry.warning {
+            color: #f6e05e;
+        }
+
+        .concept-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .concept-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+
+        .concept-info code {
+            background: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>JavaScript Advanced Concepts</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 8</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Functions, objects, and modern JavaScript</p>
+                <p><small>3-hour session • 26 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Master advanced function concepts</li>
+                    <li>Understand object-oriented programming</li>
+                    <li>Learn modern JavaScript features</li>
+                    <li>Work with asynchronous programming</li>
+                    <li>Apply functional programming concepts</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: Function Types -->
+            <section>
+                <h2>Advanced Function Concepts</h2>
+                <div class="highlight">
+                    <strong>Functions</strong> are first-class citizens in JavaScript
+                </div>
+                <div class="code-example">
+                    // Function declaration<br>
+                    function greet(name) { return `Hello ${name}`; }<br><br>
+                    // Function expression<br>
+                    const greet = function(name) { return `Hello ${name}`; };<br><br>
+                    // Arrow function<br>
+                    const greet = (name) => `Hello ${name}`;<br><br>
+                    // Immediately Invoked Function Expression (IIFE)<br>
+                    (function() { console.log('IIFE'); })();
+                </div>
+                <ul>
+                    <li>Multiple ways to define functions</li>
+                    <li>Functions can be assigned to variables</li>
+                    <li>Functions can be passed as arguments</li>
+                    <li>Functions can return other functions</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Higher-Order Functions -->
+            <section>
+                <h2>Higher-Order Functions</h2>
+                <div class="code-example">
+                    // Function that returns a function<br>
+                    function multiply(x) {<br>
+                    &nbsp;&nbsp;return function(y) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return x * y;<br>
+                    &nbsp;&nbsp;};<br>
+                    }<br><br>
+                    const multiplyByTwo = multiply(2);<br>
+                    console.log(multiplyByTwo(5)); // 10<br><br>
+                    // Function that takes a function as argument<br>
+                    function processArray(arr, callback) {<br>
+                    &nbsp;&nbsp;return arr.map(callback);<br>
+                    }<br><br>
+                    const numbers = [1, 2, 3, 4];<br>
+                    const doubled = processArray(numbers, x => x * 2);
+                </div>
+                <ul>
+                    <li>Functions that return functions</li>
+                    <li>Functions that take functions as arguments</li>
+                    <li>Enable functional programming patterns</li>
+                    <li>Create reusable and composable code</li>
+                </ul>
+
+                <!-- Interactive Advanced JavaScript Concepts Demo -->
+                <div class="interactive-demo">
+                    <h3>Try It: Advanced JavaScript Concepts</h3>
+                    <div class="demo-container">
+                        <div class="js-concepts-demo">
+                            <div class="concept-tabs">
+                                <button class="concept-tab active"
+                                    onclick="switchConcept('closures')">Closures</button>
+                                <button class="concept-tab"
+                                    onclick="switchConcept('promises')">Promises</button>
+                                <button class="concept-tab"
+                                    onclick="switchConcept('async')">Async/Await</button>
+                            </div>
+
+                            <div class="concept-content">
+                                <div id="closures-demo" class="concept-demo">
+                                    <h4>Closure Demo</h4>
+                                    <div class="demo-controls">
+                                        <button class="demo-button" onclick="createCounter()">Create
+                                            Counter</button>
+                                        <button class="demo-button"
+                                            onclick="incrementCounter()">Increment</button>
+                                        <button class="demo-button" onclick="createWallet()">Create
+                                            Wallet</button>
+                                        <button class="demo-button" onclick="depositMoney()">Deposit
+                                            $10</button>
+                                        <button class="demo-button"
+                                            onclick="withdrawMoney()">Withdraw $5</button>
+                                    </div>
+                                    <div id="demo-output" class="demo-output">
+                                        <div class="log-entry info">Click buttons to see closures in
+                                            action!</div>
+                                    </div>
+                                </div>
+
+                                <div id="promises-demo" class="concept-demo" style="display: none;">
+                                    <h4>Promise Demo</h4>
+                                    <div class="demo-controls">
+                                        <button class="demo-button"
+                                            onclick="simulateAsyncTask()">Start Async Task</button>
+                                        <button class="demo-button"
+                                            onclick="simulatePromiseChain()">Promise Chain</button>
+                                        <button class="demo-button"
+                                            onclick="simulatePromiseAll()">Promise.all()</button>
+                                    </div>
+                                    <div id="promise-output" class="demo-output">
+                                        <div class="log-entry info">Click buttons to see promises in
+                                            action!</div>
+                                    </div>
+                                </div>
+
+                                <div id="async-demo" class="concept-demo" style="display: none;">
+                                    <h4>Async/Await Demo</h4>
+                                    <div class="demo-controls">
+                                        <button class="demo-button"
+                                            onclick="simulateAsyncFunction()">Async
+                                            Function</button>
+                                        <button class="demo-button"
+                                            onclick="simulateAsyncError()">Error Handling</button>
+                                        <button class="demo-button"
+                                            onclick="simulateAsyncParallel()">Parallel
+                                            Execution</button>
+                                    </div>
+                                    <div id="async-output" class="demo-output">
+                                        <div class="log-entry info">Click buttons to see async/await
+                                            in action!</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="concept-info">
+                                <h4>Current Concept:</h4>
+                                <p id="concept-description">Closures allow functions to access
+                                    variables from their outer scope even after the outer function
+                                    has returned.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="interactive-description">
+                        Explore advanced JavaScript concepts with interactive examples!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 5: Closures -->
+            <section>
+                <h2>Closures</h2>
+                <div class="code-example">
+                    function createCounter() {<br>
+                    &nbsp;&nbsp;let count = 0;<br>
+                    &nbsp;&nbsp;return function() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return count;<br>
+                    &nbsp;&nbsp;};<br>
+                    }<br><br>
+                    const counter = createCounter();<br>
+                    console.log(counter()); // 1<br>
+                    console.log(counter()); // 2<br>
+                    console.log(counter()); // 3<br><br>
+                    // Private variables<br>
+                    function createWallet(initialBalance) {<br>
+                    &nbsp;&nbsp;let balance = initialBalance;<br>
+                    &nbsp;&nbsp;return {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;getBalance: () => balance,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;deposit: (amount) => { balance += amount; },<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;withdraw: (amount) => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (amount <= balance) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;balance -= amount;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;};<br>
+                        }
+                </div>
+                <ul>
+                    <li>Functions that remember their lexical scope</li>
+                    <li>Access to variables from outer scope</li>
+                    <li>Used for data privacy and state management</li>
+                    <li>Common in modern JavaScript patterns</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Object-Oriented Programming -->
+            <section>
+                <h2>Object-Oriented Programming</h2>
+                <div class="code-example">
+                    // Constructor function<br>
+                    function Person(name, age) {<br>
+                    &nbsp;&nbsp;this.name = name;<br>
+                    &nbsp;&nbsp;this.age = age;<br>
+                    }<br><br>
+                    Person.prototype.greet = function() {<br>
+                    &nbsp;&nbsp;return `Hello, I'm ${this.name}`;<br>
+                    };<br><br>
+                    const person = new Person('John', 30);<br>
+                    console.log(person.greet()); // "Hello, I'm John"<br><br>
+                    // ES6 Classes<br>
+                    class Person {<br>
+                    &nbsp;&nbsp;constructor(name, age) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.name = name;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.age = age;<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;greet() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return `Hello, I'm ${this.name}`;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <ul>
+                    <li>Constructor functions and prototypes</li>
+                    <li>ES6 class syntax (syntactic sugar)</li>
+                    <li>Inheritance and polymorphism</li>
+                    <li>Encapsulation and abstraction</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Inheritance -->
+            <section>
+                <h2>Inheritance</h2>
+                <div class="code-example">
+                    class Animal {<br>
+                    &nbsp;&nbsp;constructor(name) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.name = name;<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;speak() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return `${this.name} makes a sound`;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    class Dog extends Animal {<br>
+                    &nbsp;&nbsp;constructor(name, breed) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;super(name);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.breed = breed;<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;speak() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return `${this.name} barks`;<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;fetch() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return `${this.name} fetches the ball`;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    const dog = new Dog('Buddy', 'Golden Retriever');<br>
+                    console.log(dog.speak()); // "Buddy barks"
+                </div>
+                <ul>
+                    <li>Use <code>extends</code> for inheritance</li>
+                    <li>Call <code>super()</code> in constructor</li>
+                    <li>Override methods in child classes</li>
+                    <li>Add new methods to child classes</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Modern JavaScript Features -->
+            <section>
+                <h2>Modern JavaScript Features</h2>
+                <div class="code-example">
+                    // Destructuring<br>
+                    const { name, age } = person;<br>
+                    const [first, second, ...rest] = array;<br><br>
+                    // Spread operator<br>
+                    const newArray = [...oldArray, newItem];<br>
+                    const newObject = { ...oldObject, newProperty: value };<br><br>
+                    // Template literals<br>
+                    const message = `Hello ${name}, you are ${age} years old`;<br><br>
+                    // Default parameters<br>
+                    function greet(name = 'Guest') {<br>
+                    &nbsp;&nbsp;return `Hello ${name}`;<br>
+                    }<br><br>
+                    // Rest parameters<br>
+                    function sum(...numbers) {<br>
+                    &nbsp;&nbsp;return numbers.reduce((a, b) => a + b, 0);<br>
+                    }
+                </div>
+                <ul>
+                    <li>Destructuring for cleaner code</li>
+                    <li>Spread operator for copying and merging</li>
+                    <li>Template literals for string interpolation</li>
+                    <li>Default and rest parameters</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Promises -->
+            <section>
+                <h2>Promises</h2>
+                <div class="code-example">
+                    // Creating a promise<br>
+                    const myPromise = new Promise((resolve, reject) => {<br>
+                    &nbsp;&nbsp;setTimeout(() => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const random = Math.random();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (random > 0.5) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve('Success!');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject('Failed!');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}, 1000);<br>
+                    });<br><br>
+                    // Using promises<br>
+                    myPromise<br>
+                    &nbsp;&nbsp;.then(result => console.log(result))<br>
+                    &nbsp;&nbsp;.catch(error => console.error(error));<br><br>
+                    // Promise chaining<br>
+                    fetch('/api/data')<br>
+                    &nbsp;&nbsp;.then(response => response.json())<br>
+                    &nbsp;&nbsp;.then(data => processData(data))<br>
+                    &nbsp;&nbsp;.catch(error => handleError(error));
+                </div>
+                <ul>
+                    <li>Handle asynchronous operations</li>
+                    <li>Better than callbacks</li>
+                    <li>Chain multiple operations</li>
+                    <li>Error handling with catch</li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Async/Await -->
+            <section>
+                <h2>Async/Await</h2>
+                <div class="code-example">
+                    // Async function<br>
+                    async function fetchUserData(userId) {<br>
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await
+                    fetch(`/api/users/${userId}`);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('User not found');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const userData = await response.json();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return userData;<br>
+                    &nbsp;&nbsp;} catch (error) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error fetching user:', error);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw error;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    // Using async function<br>
+                    async function displayUser(userId) {<br>
+                    &nbsp;&nbsp;const user = await fetchUserData(userId);<br>
+                    &nbsp;&nbsp;console.log(`User: ${user.name}`);<br>
+                    }<br><br>
+                    // Arrow function with async<br>
+                    const loadData = async () => {<br>
+                    &nbsp;&nbsp;const data = await fetch('/api/data');<br>
+                    &nbsp;&nbsp;return data.json();<br>
+                    };
+                </div>
+                <ul>
+                    <li>Syntactic sugar over promises</li>
+                    <li>Makes async code look synchronous</li>
+                    <li>Better error handling with try/catch</li>
+                    <li>Easier to read and understand</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Modules -->
+            <section>
+                <h2>ES6 Modules</h2>
+                <div class="code-example">
+                    // math.js (exporting)<br>
+                    export const add = (a, b) => a + b;<br>
+                    export const subtract = (a, b) => a - b;<br><br>
+                    export default class Calculator {<br>
+                    &nbsp;&nbsp;multiply(a, b) { return a * b; }<br>
+                    }<br><br>
+                    // app.js (importing)<br>
+                    import Calculator, { add, subtract } from './math.js';<br><br>
+                    const calc = new Calculator();<br>
+                    console.log(add(5, 3)); // 8<br>
+                    console.log(calc.multiply(4, 2)); // 8<br><br>
+                    // Dynamic imports<br>
+                    const module = await import('./dynamic-module.js');
+                </div>
+                <ul>
+                    <li>Organize code into separate files</li>
+                    <li>Export and import functionality</li>
+                    <li>Default and named exports</li>
+                    <li>Dynamic imports for code splitting</li>
+                </ul>
+            </section>
+
+            <!-- Slide 12: Functional Programming -->
+            <section>
+                <h2>Functional Programming Concepts</h2>
+                <div class="code-example">
+                    // Pure functions<br>
+                    const add = (a, b) => a + b;<br>
+                    const multiply = (a, b) => a * b;<br><br>
+                    // Function composition<br>
+                    const compose = (...fns) => x =><br>
+                    &nbsp;&nbsp;fns.reduceRight((acc, fn) => fn(acc), x);<br><br>
+                    const addOne = x => x + 1;<br>
+                    const double = x => x * 2;<br>
+                    const addOneAndDouble = compose(double, addOne);<br><br>
+                    console.log(addOneAndDouble(5)); // 12<br><br>
+                    // Immutability<br>
+                    const original = [1, 2, 3];<br>
+                    const doubled = original.map(x => x * 2);<br>
+                    // original is unchanged
+                </div>
+                <ul>
+                    <li>Pure functions (no side effects)</li>
+                    <li>Function composition</li>
+                    <li>Immutability</li>
+                    <li>Higher-order functions</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: Array Methods -->
+            <section>
+                <h2>Modern Array Methods</h2>
+                <div class="code-example">
+                    const numbers = [1, 2, 3, 4, 5];<br><br>
+                    // Map<br>
+                    const doubled = numbers.map(x => x * 2);<br>
+                    // [2, 4, 6, 8, 10]<br><br>
+                    // Filter<br>
+                    const evens = numbers.filter(x => x % 2 === 0);<br>
+                    // [2, 4]<br><br>
+                    // Reduce<br>
+                    const sum = numbers.reduce((acc, x) => acc + x, 0);<br>
+                    // 15<br><br>
+                    // Find<br>
+                    const firstEven = numbers.find(x => x % 2 === 0);<br>
+                    // 2<br><br>
+                    // Some<br>
+                    const hasEven = numbers.some(x => x % 2 === 0);<br>
+                    // true<br><br>
+                    // Every<br>
+                    const allPositive = numbers.every(x => x > 0);<br>
+                    // true
+                </div>
+                <ul>
+                    <li>Functional programming approach</li>
+                    <li>Chain multiple operations</li>
+                    <li>More readable than loops</li>
+                    <li>Immutable operations</li>
+                </ul>
+            </section>
+
+            <!-- Slide 14: Error Handling -->
+            <section>
+                <h2>Advanced Error Handling</h2>
+                <div class="code-example">
+                    // Custom error classes<br>
+                    class ValidationError extends Error {<br>
+                    &nbsp;&nbsp;constructor(message, field) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;super(message);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.name = 'ValidationError';<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.field = field;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    // Error handling with async/await<br>
+                    async function processData(data) {<br>
+                    &nbsp;&nbsp;try {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (!data) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ValidationError('Data is
+                    required', 'data');<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const result = await validateAndProcess(data);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
+                    &nbsp;&nbsp;} catch (error) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (error instanceof ValidationError) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(`Validation error in
+                    ${error.field}:`, error.message);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('Unexpected error:',
+                    error);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw error;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <ul>
+                    <li>Custom error classes</li>
+                    <li>Error inheritance</li>
+                    <li>Type checking with instanceof</li>
+                    <li>Proper error propagation</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15: Performance Optimization -->
+            <section>
+                <h2>Performance Optimization</h2>
+                <ul>
+                    <li>Memoization for expensive calculations</li>
+                    <li>Debouncing and throttling</li>
+                    <li>Lazy loading and code splitting</li>
+                    <li>Efficient DOM manipulation</li>
+                    <li>Memory leak prevention</li>
+                </ul>
+                <div class="code-example">
+                    // Memoization<br>
+                    function memoize(fn) {<br>
+                    &nbsp;&nbsp;const cache = new Map();<br>
+                    &nbsp;&nbsp;return function(...args) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const key = JSON.stringify(args);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (cache.has(key)) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return cache.get(key);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const result = fn.apply(this, args);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;cache.set(key, result);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
+                    &nbsp;&nbsp;};<br>
+                    }<br><br>
+                    // Debouncing<br>
+                    function debounce(func, wait) {<br>
+                    &nbsp;&nbsp;let timeout;<br>
+                    &nbsp;&nbsp;return function executedFunction(...args) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const later = () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clearTimeout(timeout);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;func(...args);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;};<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;clearTimeout(timeout);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;timeout = setTimeout(later, wait);<br>
+                    &nbsp;&nbsp;};<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 16: Testing -->
+            <section>
+                <h2>Testing JavaScript Code</h2>
+                <ul>
+                    <li>Unit testing with Jest or Mocha</li>
+                    <li>Test-driven development (TDD)</li>
+                    <li>Mocking and stubbing</li>
+                    <li>Integration testing</li>
+                    <li>Code coverage</li>
+                </ul>
+                <div class="code-example">
+                    // Example test with Jest<br>
+                    function add(a, b) {<br>
+                    &nbsp;&nbsp;return a + b;<br>
+                    }<br><br>
+                    // test.js<br>
+                    describe('add function', () => {<br>
+                    &nbsp;&nbsp;test('adds two positive numbers', () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(2, 3)).toBe(5);<br>
+                    &nbsp;&nbsp;});<br><br>
+                    &nbsp;&nbsp;test('adds negative numbers', () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(-1, -2)).toBe(-3);<br>
+                    &nbsp;&nbsp;});<br><br>
+                    &nbsp;&nbsp;test('handles zero', () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(0, 5)).toBe(5);<br>
+                    &nbsp;&nbsp;});<br>
+                    });
+                </div>
+            </section>
+
+            <!-- Slide 17: Debugging -->
+            <section>
+                <h2>Advanced Debugging</h2>
+                <ul>
+                    <li>Browser developer tools</li>
+                    <li>Console methods (log, warn, error, table)</li>
+                    <li>Breakpoints and step-through</li>
+                    <li>Performance profiling</li>
+                    <li>Memory leak detection</li>
+                </ul>
+                <div class="code-example">
+                    // Debugging techniques<br>
+                    console.log('Debug info:', { user, data });<br>
+                    console.table(arrayOfObjects);<br>
+                    console.trace('Function call stack');<br><br>
+                    // Performance measurement<br>
+                    console.time('operation');<br>
+                    // ... expensive operation<br>
+                    console.timeEnd('operation');<br><br>
+                    // Debugger statement<br>
+                    function complexFunction() {<br>
+                    &nbsp;&nbsp;let result = 0;<br>
+                    &nbsp;&nbsp;debugger; // Execution stops here<br>
+                    &nbsp;&nbsp;return result;<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 18: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Advanced JavaScript Library</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new JavaScript file called <code>advanced-library.js</code>
+                        </li>
+                        <li>Build a utility library with:</li>
+                        <ul>
+                            <li><strong>Math utilities:</strong> Advanced mathematical functions
+                            </li>
+                            <li><strong>Array utilities:</strong> Custom array manipulation methods
+                            </li>
+                            <li><strong>Object utilities:</strong> Deep cloning, merging, validation
+                            </li>
+                            <li><strong>Async utilities:</strong> Promise helpers and async
+                                operations</li>
+                        </ul>
+                        <li>Use modern JavaScript features:</li>
+                        <ul>
+                            <li>ES6 classes and modules</li>
+                            <li>Arrow functions and destructuring</li>
+                            <li>Promises and async/await</li>
+                            <li>Higher-order functions</li>
+                        </ul>
+                        <li>Implement proper error handling</li>
+                        <li>Add JSDoc documentation</li>
+                        <li>Create unit tests for your functions</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand advanced JavaScript concepts and
+                            patterns</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Design Patterns -->
+            <section>
+                <h2>Common Design Patterns</h2>
+                <ul>
+                    <li><strong>Singleton:</strong> Single instance pattern</li>
+                    <li><strong>Factory:</strong> Object creation pattern</li>
+                    <li><strong>Observer:</strong> Event handling pattern</li>
+                    <li><strong>Module:</strong> Encapsulation pattern</li>
+                    <li><strong>Decorator:</strong> Function enhancement pattern</li>
+                </ul>
+                <div class="code-example">
+                    // Singleton pattern<br>
+                    class Database {<br>
+                    &nbsp;&nbsp;constructor() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (Database.instance) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Database.instance;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Database.instance = this;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    // Factory pattern<br>
+                    class UserFactory {<br>
+                    &nbsp;&nbsp;createUser(type, data) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;switch(type) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'admin': return new
+                    AdminUser(data);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'regular': return new
+                    RegularUser(data);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 21: Memory Management -->
+            <section>
+                <h2>Memory Management</h2>
+                <ul>
+                    <li>Garbage collection</li>
+                    <li>Memory leaks prevention</li>
+                    <li>Event listener cleanup</li>
+                    <li>Closure memory considerations</li>
+                    <li>WeakMap and WeakSet usage</li>
+                </ul>
+                <div class="code-example">
+                    // Memory leak prevention<br>
+                    class EventManager {<br>
+                    &nbsp;&nbsp;constructor() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.listeners = new Map();<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;addListener(element, event, handler) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;element.addEventListener(event, handler);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.listeners.set(element, { event, handler });<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;removeListener(element) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;const listener = this.listeners.get(element);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if (listener) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;element.removeEventListener(listener.event,
+                    listener.handler);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.listeners.delete(element);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;cleanup() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;this.listeners.forEach((listener, element) => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.removeListener(element);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 22: Security Best Practices -->
+            <section>
+                <h2>Security Best Practices</h2>
+                <ul>
+                    <li>Input validation and sanitization</li>
+                    <li>XSS prevention</li>
+                    <li>CSRF protection</li>
+                    <li>Secure coding practices</li>
+                    <li>Content Security Policy (CSP)</li>
+                </ul>
+                <div class="code-example">
+                    // Input validation<br>
+                    function validateInput(input) {<br>
+                    &nbsp;&nbsp;if (typeof input !== 'string') {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Input must be a string');<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;return input.replace(/[<>]/g, ''); // Basic XSS prevention<br>
+                        }<br><br>
+                        // Secure object property access<br>
+                        const safeGet = (obj, path) => {<br>
+                        &nbsp;&nbsp;return path.split('.').reduce((current, key) => {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return current && current[key] !== undefined ?
+                        current[key] : null;<br>
+                        &nbsp;&nbsp;}, obj);<br>
+                        };
+                </div>
+            </section>
+
+            <!-- Slide 23: Code Quality -->
+            <section>
+                <h2>Code Quality and Standards</h2>
+                <ul>
+                    <li>ESLint for code linting</li>
+                    <li>Prettier for code formatting</li>
+                    <li>JSDoc for documentation</li>
+                    <li>TypeScript for type safety</li>
+                    <li>Code review practices</li>
+                </ul>
+                <div class="code-example">
+                    // JSDoc documentation<br>
+                    /**<br>
+                    * Calculates the factorial of a number<br>
+                    * @param {number} n - The number to calculate factorial for<br>
+                    * @returns {number} The factorial of n<br>
+                    * @throws {Error} If n is negative<br>
+                    */<br>
+                    function factorial(n) {<br>
+                    &nbsp;&nbsp;if (n < 0) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Factorial is not defined for
+                        negative numbers');<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;if (n === 0 || n === 1) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;return n * factorial(n - 1);<br>
+                        }
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Complete Web Application</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a complete web application using all concepts learned</li>
+                        <li>Build a task management app with:</li>
+                        <ul>
+                            <li><strong>Architecture:</strong> Modular design with ES6 modules</li>
+                            <li><strong>Data Management:</strong> Local storage with CRUD operations
+                            </li>
+                            <li><strong>UI Components:</strong> Reusable components using classes
+                            </li>
+                            <li><strong>Async Operations:</strong> Simulated API calls with promises
+                            </li>
+                            <li><strong>Event Handling:</strong> Advanced event delegation and
+                                custom events</li>
+                        </ul>
+                        <li>Implement advanced features:</li>
+                        <ul>
+                            <li>Task filtering and sorting</li>
+                            <li>Drag and drop functionality</li>
+                            <li>Real-time search with debouncing</li>
+                            <li>Data validation and error handling</li>
+                            <li>Responsive design with modern CSS</li>
+                        </ul>
+                        <li>Use design patterns (Factory, Observer, Module)</li>
+                        <li>Add comprehensive error handling and logging</li>
+                        <li>Include unit tests for core functionality</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand full-stack JavaScript development</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Troubleshooting -->
+            <section>
+                <h2>Common Advanced Issues</h2>
+                <ul>
+                    <li><strong>Scope issues:</strong> Check closure and context</li>
+                    <li><strong>Async problems:</strong> Promise rejection handling</li>
+                    <li><strong>Memory leaks:</strong> Event listener cleanup</li>
+                    <li><strong>Performance issues:</strong> Profiling and optimization</li>
+                    <li><strong>Module errors:</strong> Import/export syntax</li>
+                    <li><strong>Type errors:</strong> Runtime type checking</li>
+                </ul>
+                <div class="code-example">
+                    // Common debugging patterns<br>
+                    // Check if function is called<br>
+                    console.log('Function called with:', arguments);<br><br>
+                    // Check promise state<br>
+                    promise.then(result => {<br>
+                    &nbsp;&nbsp;console.log('Promise resolved:', result);<br>
+                    }).catch(error => {<br>
+                    &nbsp;&nbsp;console.error('Promise rejected:', error);<br>
+                    });<br><br>
+                    // Check object structure<br>
+                    console.log('Object keys:', Object.keys(obj));<br>
+                    console.log('Object values:', Object.values(obj));
+                </div>
+            </section>
+
+            <!-- Slide 26: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Master advanced function concepts and closures</li>
+                    <li>Understand object-oriented programming</li>
+                    <li>Use modern JavaScript features effectively</li>
+                    <li>Handle asynchronous operations properly</li>
+                    <li>Apply functional programming concepts</li>
+                    <li>Write maintainable and testable code</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>Web APIs and External Libraries - Working with third-party services</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+
+        // Advanced JavaScript Concepts Demo Functions
+        let counter = null;
+        let wallet = null;
+
+        function switchConcept(concept) {
+            // Update tab states
+            document.querySelectorAll('.concept-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide demos
+            document.querySelectorAll('.concept-demo').forEach(demo => demo.style.display = 'none');
+            document.getElementById(concept + '-demo').style.display = 'flex';
+
+            // Update description
+            const descriptions = {
+                closures: 'Closures allow functions to access variables from their outer scope even after the outer function has returned.',
+                promises: 'Promises represent the eventual completion (or failure) of an asynchronous operation.',
+                async: 'Async/await provides a cleaner way to work with promises and asynchronous code.'
+            };
+            document.getElementById('concept-description').textContent = descriptions[concept];
+        }
+
+        function logToOutput(outputId, message, type = 'info') {
+            const output = document.getElementById(outputId);
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            output.appendChild(logEntry);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Closure functions
+        function createCounter() {
+            counter = (() => {
+                let count = 0;
+                return () => {
+                    count++;
+                    return count;
+                };
+            })();
+            logToOutput('demo-output', 'Counter created!', 'success');
+        }
+
+        function incrementCounter() {
+            if (counter) {
+                const result = counter();
+                logToOutput('demo-output', `Counter incremented: ${result}`, 'success');
+            } else {
+                logToOutput('demo-output', 'Please create a counter first!', 'error');
+            }
+        }
+
+        function createWallet() {
+            wallet = (() => {
+                let balance = 0;
+                return {
+                    getBalance: () => balance,
+                    deposit: (amount) => {
+                        balance += amount;
+                        return balance;
+                    },
+                    withdraw: (amount) => {
+                        if (amount <= balance) {
+                            balance -= amount;
+                            return balance;
+                        }
+                        return false;
+                    }
+                };
+            })();
+            logToOutput('demo-output', 'Wallet created with $0 balance!', 'success');
+        }
+
+        function depositMoney() {
+            if (wallet) {
+                const newBalance = wallet.deposit(10);
+                logToOutput('demo-output', `Deposited $10. New balance: $${newBalance}`, 'success');
+            } else {
+                logToOutput('demo-output', 'Please create a wallet first!', 'error');
+            }
+        }
+
+        function withdrawMoney() {
+            if (wallet) {
+                const result = wallet.withdraw(5);
+                if (result !== false) {
+                    logToOutput('demo-output', `Withdrew $5. New balance: $${result}`, 'success');
+                } else {
+                    logToOutput('demo-output', 'Insufficient funds!', 'error');
+                }
+            } else {
+                logToOutput('demo-output', 'Please create a wallet first!', 'error');
+            }
+        }
+
+        // Promise functions
+        function simulateAsyncTask() {
+            logToOutput('promise-output', 'Starting async task...', 'info');
+
+            new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve('Task completed!');
+                }, 2000);
+            }).then(result => {
+                logToOutput('promise-output', result, 'success');
+            });
+        }
+
+        function simulatePromiseChain() {
+            logToOutput('promise-output', 'Starting promise chain...', 'info');
+
+            Promise.resolve(1)
+                .then(value => {
+                    logToOutput('promise-output', `Step 1: ${value}`, 'info');
+                    return value * 2;
+                })
+                .then(value => {
+                    logToOutput('promise-output', `Step 2: ${value}`, 'info');
+                    return value + 3;
+                })
+                .then(value => {
+                    logToOutput('promise-output', `Final result: ${value}`, 'success');
+                });
+        }
+
+        function simulatePromiseAll() {
+            logToOutput('promise-output', 'Starting Promise.all...', 'info');
+
+            const promises = [
+                new Promise(resolve => setTimeout(() => resolve('Task 1'), 1000)),
+                new Promise(resolve => setTimeout(() => resolve('Task 2'), 1500)),
+                new Promise(resolve => setTimeout(() => resolve('Task 3'), 800))
+            ];
+
+            Promise.all(promises).then(results => {
+                logToOutput('promise-output', `All tasks completed: ${results.join(', ')}`, 'success');
+            });
+        }
+
+        // Async/await functions
+        async function simulateAsyncFunction() {
+            logToOutput('async-output', 'Starting async function...', 'info');
+
+            try {
+                const result = await new Promise(resolve => {
+                    setTimeout(() => resolve('Async operation completed!'), 2000);
+                });
+                logToOutput('async-output', result, 'success');
+            } catch (error) {
+                logToOutput('async-output', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function simulateAsyncError() {
+            logToOutput('async-output', 'Testing error handling...', 'info');
+
+            try {
+                await new Promise((resolve, reject) => {
+                    setTimeout(() => reject(new Error('Something went wrong!')), 1500);
+                });
+            } catch (error) {
+                logToOutput('async-output', `Caught error: ${error.message}`, 'error');
+            }
+        }
+
+        async function simulateAsyncParallel() {
+            logToOutput('async-output', 'Starting parallel async operations...', 'info');
+
+            const startTime = Date.now();
+
+            const [result1, result2, result3] = await Promise.all([
+                new Promise(resolve => setTimeout(() => resolve('Operation 1'), 1000)),
+                new Promise(resolve => setTimeout(() => resolve('Operation 2'), 1200)),
+                new Promise(resolve => setTimeout(() => resolve('Operation 3'), 800))
+            ]);
+
+            const endTime = Date.now();
+            const duration = endTime - startTime;
+
+            logToOutput('async-output', `Parallel results: ${result1}, ${result2}, ${result3}`, 'success');
+            logToOutput('async-output', `Total time: ${duration}ms (vs ~3000ms sequential)`, 'info');
+        }
+    </script>
+</body>
+
+</html>

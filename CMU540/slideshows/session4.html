@@ -1,0 +1,902 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 4: WEB-SQL-01 - SQL Injection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* OS³ Studio specific styling */
+        .os3-studio {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Vulnerability examples */
+        .vulnerability {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Career focus styling */
+        .career-box {
+            background: #f0f8ff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Demo links styling */
+        .demo-link {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container,
+        .codepen-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe,
+        .codepen-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover,
+        .codepen-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>WEB-SQL-01</h1>
+                <h2>SQL Injection</h2>
+                <h3>CMU540: Cyber Security - Session 4</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Understanding SQL injection vulnerabilities and secure database practices</p>
+                <p><small>3-hour session • 30 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand OWASP A03: SQL Injection</li>
+                    <li>Identify common SQL injection attack vectors</li>
+                    <li>Learn secure database query practices</li>
+                    <li>Practice vulnerability discovery using OS³ Studio</li>
+                    <li>Implement secure database solutions</li>
+                    <li>Explore career opportunities in database security</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: OWASP A03 Overview -->
+            <section>
+                <h2>OWASP A03: SQL Injection</h2>
+                <div class="highlight">
+                    <p><strong>Definition:</strong> SQL injection occurs when malicious SQL code is inserted into application queries, allowing attackers to manipulate databases.</p>
+                </div>
+                <h3>Key Attack Types:</h3>
+                <ul>
+                    <li>Union-based injection</li>
+                    <li>Boolean-based blind injection</li>
+                    <li>Time-based blind injection</li>
+                    <li>Error-based injection</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Real-World Impact -->
+            <section>
+                <h2>Real-World Impact</h2>
+                <div class="vulnerability">
+                    <h3>Notable Breaches:</h3>
+                    <ul>
+                        <li><strong>Heartland Payment Systems (2008):</strong> 130 million credit cards compromised</li>
+                        <li><strong>TalkTalk (2015):</strong> 157,000 customer records exposed</li>
+                        <li><strong>Yahoo (2013-2014):</strong> 3 billion accounts compromised</li>
+                    </ul>
+                    <p><strong>Impact:</strong> Data theft, financial loss, reputation damage</p>
+                </div>
+            </section>
+
+            <!-- Slide 5: Common SQL Injection Vulnerabilities -->
+            <section>
+                <h2>Common SQL Injection Vulnerabilities</h2>
+                <h3>1. String Concatenation</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: String concatenation --&gt;<br>
+String query = "SELECT * FROM users WHERE username = '" + username + "'";<br><br>
+// Input: admin' OR '1'='1<br>
+// Result: SELECT * FROM users WHERE username = 'admin' OR '1'='1'
+                </div>
+                <h3>2. Dynamic Query Building</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: Dynamic queries --&gt;<br>
+String query = "SELECT * FROM products WHERE category = " + categoryId;<br><br>
+// Input: 1; DROP TABLE users; --<br>
+// Result: SELECT * FROM products WHERE category = 1; DROP TABLE users; --
+                </div>
+            </section>
+
+            <!-- Slide 6: Union-Based Injection -->
+            <section>
+                <h2>Union-Based Injection</h2>
+                <h3>Attack Technique:</h3>
+                <div class="code-example">
+&lt;!-- Original query --&gt;<br>
+SELECT name, email FROM users WHERE id = 1<br><br>
+&lt;!-- Injected query --&gt;<br>
+SELECT name, email FROM users WHERE id = 1 UNION SELECT username, password FROM admin_users<br><br>
+&lt;!-- Result: Data from both tables --&gt;
+                </div>
+                <div class="highlight">
+                    <p><strong>Impact:</strong> Unauthorized data access, information disclosure</p>
+                </div>
+            </section>
+
+            <!-- Slide 7: Boolean-Based Blind Injection -->
+            <section>
+                <h2>Boolean-Based Blind Injection</h2>
+                <h3>Attack Technique:</h3>
+                <div class="code-example">
+&lt;!-- Testing for vulnerability --&gt;<br>
+SELECT * FROM users WHERE id = 1 AND 1=1  -- Returns data<br>
+SELECT * FROM users WHERE id = 1 AND 1=2  -- Returns no data<br><br>
+&lt;!-- Extracting data character by character --&gt;<br>
+SELECT * FROM users WHERE id = 1 AND ASCII(SUBSTRING(password,1,1)) > 65<br>
+SELECT * FROM users WHERE id = 1 AND ASCII(SUBSTRING(password,1,1)) > 66
+                </div>
+                <div class="vulnerability">
+                    <p><strong>Method:</strong> Use boolean conditions to extract data without direct output</p>
+                </div>
+            </section>
+
+            <!-- Slide 8: Time-Based Blind Injection -->
+            <section>
+                <h2>Time-Based Blind Injection</h2>
+                <h3>Attack Technique:</h3>
+                <div class="code-example">
+&lt;!-- Testing for vulnerability --&gt;<br>
+SELECT * FROM users WHERE id = 1; WAITFOR DELAY '00:00:05'  -- 5 second delay<br><br>
+&lt;!-- Extracting data with timing --&gt;<br>
+SELECT * FROM users WHERE id = 1 AND IF(ASCII(SUBSTRING(password,1,1)) > 65, SLEEP(5), 0)<br><br>
+&lt;!-- If condition is true, response is delayed --&gt;
+                </div>
+                <div class="highlight">
+                    <p><strong>Method:</strong> Use time delays to infer data without direct output</p>
+                </div>
+            </section>
+
+            <!-- Slide 9: Error-Based Injection -->
+            <section>
+                <h2>Error-Based Injection</h2>
+                <h3>Attack Technique:</h3>
+                <div class="code-example">
+&lt;!-- Triggering database errors --&gt;<br>
+SELECT * FROM users WHERE id = 1 AND (SELECT * FROM (SELECT COUNT(*),CONCAT(version(),FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)<br><br>
+&lt;!-- Error reveals database version --&gt;<br>
+Duplicate entry '5.7.29-0ubuntu0.18.04.1' for key 'group_key'
+                </div>
+                <div class="vulnerability">
+                    <p><strong>Method:</strong> Exploit error messages to extract sensitive information</p>
+                </div>
+            </section>
+
+            <!-- Slide 10: Second-Order SQL Injection -->
+            <section>
+                <h2>Second-Order SQL Injection</h2>
+                <h3>Attack Scenario:</h3>
+                <div class="code-example">
+&lt;!-- Step 1: Store malicious input --&gt;<br>
+INSERT INTO comments (text) VALUES ('admin''--');<br><br>
+&lt;!-- Step 2: Later query uses stored data --&gt;<br>
+SELECT * FROM users WHERE username = 'admin'--' AND password = 'password'<br><br>
+&lt;!-- Result: Bypasses password check --&gt;
+                </div>
+                <div class="highlight">
+                    <p><strong>Risk:</strong> Input validation doesn't prevent stored malicious data from being executed</p>
+                </div>
+            </section>
+
+            <!-- Slide 11: NoSQL Injection -->
+            <section>
+                <h2>NoSQL Injection</h2>
+                <h3>MongoDB Example:</h3>
+                <div class="code-example">
+&lt;!-- VULNERABLE: Direct object injection --&gt;<br>
+db.users.find({username: req.body.username, password: req.body.password})<br><br>
+&lt;!-- Malicious input --&gt;<br>
+{"username": {"$ne": null}, "password": {"$ne": null}}<br><br>
+&lt;!-- Result: Matches any user with non-null username/password --&gt;
+                </div>
+                <div class="vulnerability">
+                    <p><strong>Risk:</strong> NoSQL databases are also vulnerable to injection attacks</p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Career Opportunities -->
+            <section>
+                <h2>Career Opportunities in Database Security</h2>
+                <div class="career-box">
+                    <h3>Database Security Roles:</h3>
+                    <ul>
+                        <li><strong>Database Security Specialist:</strong> £45,000 - £85,000</li>
+                        <li><strong>Penetration Tester:</strong> £35,000 - £70,000</li>
+                        <li><strong>Security Consultant:</strong> £50,000 - £100,000</li>
+                        <li><strong>Database Administrator:</strong> £40,000 - £80,000</li>
+                        <li><strong>Application Security Engineer:</strong> £45,000 - £90,000</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> SQL, Database security, Web application security, Penetration testing</p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Industry Certifications -->
+            <section>
+                <h2>Industry Certifications</h2>
+                <h3>Database Security Certifications:</h3>
+                <ul>
+                    <li><strong>OSCP:</strong> Offensive Security Certified Professional</li>
+                    <li><strong>CEH:</strong> Certified Ethical Hacker</li>
+                    <li><strong>CISSP:</strong> Certified Information Systems Security Professional</li>
+                    <li><strong>GWAPT:</strong> GIAC Web Application Penetration Tester</li>
+                    <li><strong>OSWE:</strong> Offensive Security Web Expert</li>
+                </ul>
+                <div class="demo-link">
+                    <p><strong>Resources:</strong> <a href="https://www.offensive-security.com/" target="_blank">Offensive Security</a> | <a href="https://www.eccouncil.org/" target="_blank">EC-Council</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 14: OS³ Studio Introduction -->
+            <section>
+                <h2>OS³ Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>WEB-SQL-01 Lab Environment</h3>
+                    <p>Our OS³ Studio provides hands-on experience with:</p>
+                    <ul>
+                        <li>Vulnerable web applications with SQL injection flaws</li>
+                        <li>Real-world attack scenarios and techniques</li>
+                        <li>Secure implementation challenges</li>
+                        <li>Database security best practices</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <!-- Slide 15: Practical Examples -->
+            <section>
+                <h2>Practical Examples</h2>
+                <div class="interactive-content">
+                    <h3>Watch: SQL Injection Explained</h3>
+                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
+                    <p class="interactive-description">
+                        Understanding real-world SQL injection vulnerabilities and attack techniques
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Web Demos and Tools -->
+            <section>
+                <h2>Web Demos and Tools</h2>
+                <div class="demo-link">
+                    <h3>SQL Injection Testing Tools:</h3>
+                    <ul>
+                        <li><a href="https://sqlmap.org/" target="_blank">SQLMap</a> - Automated SQL injection tool</li>
+                        <li><a href="https://portswigger.net/burp" target="_blank">Burp Suite</a> - Web application security testing</li>
+                        <li><a href="https://github.com/sqlmapproject/sqlmap" target="_blank">SQLMap GitHub</a> - Open source SQL injection scanner</li>
+                        <li><a href="https://www.owasp.org/index.php/OWASP_WebGoat_Project" target="_blank">WebGoat</a> - Vulnerable web application</li>
+                        <li><a href="https://pentesterlab.com/" target="_blank">PentesterLab</a> - Hands-on security training</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 17: Case Study -->
+            <section>
+                <h2>Case Study: Heartland Payment Systems</h2>
+                <div class="vulnerability">
+                    <h3>2008 Data Breach</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> 130 million credit card records compromised</li>
+                        <li><strong>Cause:</strong> SQL injection vulnerability in web application</li>
+                        <li><strong>Method:</strong> Malicious SQL code injected through web forms</li>
+                        <li><strong>Cost:</strong> $140 million in fines and settlements</li>
+                    </ul>
+                    <p><strong>Lesson:</strong> Even large organizations can fall victim to basic SQL injection attacks</p>
+                </div>
+            </section>
+
+            <!-- Slide 18: Summary of Vulnerabilities -->
+            <section>
+                <h2>Summary: Common SQL Injection Vulnerabilities</h2>
+                <div class="highlight">
+                    <h3>Key Vulnerabilities to Look For:</h3>
+                    <ol>
+                        <li>String concatenation in SQL queries</li>
+                        <li>Dynamic query building</li>
+                        <li>Lack of input validation</li>
+                        <li>Missing parameterized queries</li>
+                        <li>Insufficient error handling</li>
+                        <li>NoSQL injection vulnerabilities</li>
+                        <li>Second-order injection risks</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Task 1: Vulnerability Discovery -->
+            <section>
+                <h2>Task 1: SQL Injection Vulnerability Discovery</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to identify SQL injection vulnerabilities in the WEB-SQL-01 lab environment.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio vulnerable application</li>
+                        <li>Test for basic SQL injection vulnerabilities</li>
+                        <li>Attempt union-based injection attacks</li>
+                        <li>Test for boolean-based blind injection</li>
+                        <li>Try time-based blind injection techniques</li>
+                        <li>Look for error-based injection opportunities</li>
+                        <li>Document all findings with proof of concept</li>
+                        <li>Prepare a vulnerability assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on systematic testing and thorough documentation</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secure implementation and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Secure Database Implementation -->
+            <section>
+                <h2>Secure Database Implementation</h2>
+                
+                <h3>1. Parameterized Queries (Prepared Statements)</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Parameterized queries --&gt;<br>
+String query = "SELECT * FROM users WHERE username = ? AND password = ?";<br>
+PreparedStatement stmt = connection.prepareStatement(query);<br>
+stmt.setString(1, username);<br>
+stmt.setString(2, password);<br>
+ResultSet rs = stmt.executeQuery();
+                </div>
+
+                <h3>2. Input Validation</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Input validation --&gt;<br>
+public boolean isValidInput(String input) {<br>
+&nbsp;&nbsp;if (input == null || input.trim().isEmpty()) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;// Check for SQL injection patterns<br>
+&nbsp;&nbsp;String[] dangerousPatterns = {"'", "\"", ";", "--", "/*", "*/", "xp_", "sp_"};<br>
+&nbsp;&nbsp;for (String pattern : dangerousPatterns) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (input.toLowerCase().contains(pattern)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;return true;<br>}
+                </div>
+            </section>
+
+            <!-- Slide 21: Database Security Best Practices -->
+            <section>
+                <h2>Database Security Best Practices</h2>
+                
+                <h3>1. Principle of Least Privilege</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Limited database user permissions --&gt;<br>
+-- Create application-specific user<br>
+CREATE USER 'webapp'@'localhost' IDENTIFIED BY 'strong_password';<br><br>
+-- Grant only necessary permissions<br>
+GRANT SELECT, INSERT, UPDATE ON webapp_db.users TO 'webapp'@'localhost';<br>
+GRANT SELECT ON webapp_db.products TO 'webapp'@'localhost';<br><br>
+-- No DROP, CREATE, or ALTER permissions
+                </div>
+
+                <h3>2. Database Connection Security</h3>
+                <ul>
+                    <li>Use encrypted connections (SSL/TLS)</li>
+                    <li>Implement connection pooling</li>
+                    <li>Use strong authentication</li>
+                    <li>Enable database audit logging</li>
+                </ul>
+            </section>
+
+            <!-- Slide 22: ORM Security -->
+            <section>
+                <h2>ORM Security</h2>
+                
+                <h3>1. Safe ORM Usage</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Using ORM safely --&gt;<br>
+// Good: Parameterized query<br>
+User user = session.createQuery("FROM User WHERE username = :username")<br>
+&nbsp;&nbsp;.setParameter("username", username)<br>
+&nbsp;&nbsp;.uniqueResult();<br><br>
+// Bad: String concatenation<br>
+String hql = "FROM User WHERE username = '" + username + "'";<br>
+User user = session.createQuery(hql).uniqueResult();
+                </div>
+
+                <h3>2. ORM-Specific Protections</h3>
+                <ul>
+                    <li>Use parameterized queries in ORM</li>
+                    <li>Avoid dynamic query building</li>
+                    <li>Implement proper input validation</li>
+                    <li>Use ORM's built-in security features</li>
+                </ul>
+            </section>
+
+            <!-- Slide 23: Web Application Firewall -->
+            <section>
+                <h2>Web Application Firewall (WAF)</h2>
+                
+                <h3>1. WAF Configuration</h3>
+                <div class="code-example">
+&lt;!-- SECURE: WAF rules for SQL injection --&gt;<br>
+# ModSecurity rules<br>
+SecRule ARGS "@detectSQLi" \<br>
+&nbsp;&nbsp;"id:1001,phase:2,block,msg:'SQL Injection Attack Detected',\<br>
+&nbsp;&nbsp;logdata:'Matched Data: %{MATCHED_VAR} found within %{MATCHED_VAR_NAME}',\<br>
+&nbsp;&nbsp;tag:'application-multi',tag:'language-multi',tag:'platform-multi',\<br>
+&nbsp;&nbsp;tag:'attack-sqli',severity:'CRITICAL'"
+                </div>
+
+                <h3>2. Additional Protections</h3>
+                <ul>
+                    <li>Rate limiting on database queries</li>
+                    <li>Input sanitization middleware</li>
+                    <li>Database query monitoring</li>
+                    <li>Anomaly detection</li>
+                </ul>
+            </section>
+
+            <!-- Slide 24: Database Monitoring -->
+            <section>
+                <h2>Database Monitoring</h2>
+                
+                <h3>1. Query Logging</h3>
+                <div class="code-example">
+&lt;!-- SECURE: Database query monitoring --&gt;<br>
+// Log all database queries<br>
+logger.info("Database Query", {<br>
+&nbsp;&nbsp;query: query,<br>
+&nbsp;&nbsp;parameters: parameters,<br>
+&nbsp;&nbsp;executionTime: executionTime,<br>
+&nbsp;&nbsp;userId: userId,<br>
+&nbsp;&nbsp;ip: request.ip,<br>
+&nbsp;&nbsp;timestamp: new Date()<br>});
+                </div>
+
+                <h3>2. Anomaly Detection</h3>
+                <ul>
+                    <li>Monitor unusual query patterns</li>
+                    <li>Alert on suspicious database access</li>
+                    <li>Track failed authentication attempts</li>
+                    <li>Implement query rate limiting</li>
+                </ul>
+            </section>
+
+            <!-- Slide 25: Secure Coding Practices -->
+            <section>
+                <h2>Secure Coding Practices</h2>
+                
+                <h3>1. Code Review Checklist</h3>
+                <ul>
+                    <li>All database queries use parameterized statements</li>
+                    <li>Input validation implemented</li>
+                    <li>Error handling doesn't expose sensitive information</li>
+                    <li>Database connections use least privilege</li>
+                    <li>No dynamic query building</li>
+                </ul>
+
+                <h3>2. Automated Security Testing</h3>
+                <div class="code-example">
+&lt;!-- Security testing tools --&gt;<br>
+npm install --save-dev eslint-plugin-security<br>
+npm install --save-dev sqlmap<br><br>
+// Run security audit<br>
+npm audit<br>
+sqlmap -u "http://example.com/login" --batch
+                </div>
+            </section>
+
+            <!-- Slide 26: Compliance and Standards -->
+            <section>
+                <h2>Compliance and Standards</h2>
+                
+                <h3>1. Industry Standards</h3>
+                <ul>
+                    <li><strong>OWASP Top 10:</strong> SQL injection prevention</li>
+                    <li><strong>PCI DSS:</strong> Payment card industry standards</li>
+                    <li><strong>ISO 27001:</strong> Information security management</li>
+                    <li><strong>NIST SP 800-53:</strong> Security controls</li>
+                </ul>
+
+                <h3>2. Best Practices</h3>
+                <div class="highlight">
+                    <ul>
+                        <li>Use parameterized queries exclusively</li>
+                        <li>Implement defense in depth</li>
+                        <li>Regular security assessments</li>
+                        <li>Incident response planning</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 27: Career Development -->
+            <section>
+                <h2>Career Development in Database Security</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Advanced Certifications:</strong> OSCP, OSWE, GWAPT</li>
+                        <li><strong>Specialized Training:</strong> Database security, Web app testing</li>
+                        <li><strong>Hands-on Practice:</strong> CTF competitions, bug bounties</li>
+                        <li><strong>Industry Networking:</strong> Security conferences, meetups</li>
+                        <li><strong>Research:</strong> New attack techniques, defense methods</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://owasp.org/" target="_blank">OWASP</a> | <a href="https://portswigger.net/" target="_blank">PortSwigger</a> | <a href="https://pentesterlab.com/" target="_blank">PentesterLab</a></p>
+                </div>
+            </section>
+
+            <!-- Task 2: Secure Implementation -->
+            <section>
+                <h2>Task 2: Secure Database Implementation</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to implement secure database practices and fix the SQL injection vulnerabilities found in Task 1.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio secure implementation environment</li>
+                        <li>Replace all dynamic queries with parameterized queries</li>
+                        <li>Implement proper input validation</li>
+                        <li>Configure database user with least privilege</li>
+                        <li>Add database query monitoring</li>
+                        <li>Implement error handling that doesn't leak information</li>
+                        <li>Test the secure implementation</li>
+                        <li>Document the security improvements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on implementing industry-standard security practices</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 28: Further Activity -->
+            <section>
+                <h2>Further Activity: Code Inspection</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Code Analysis:</h3>
+                    <p>For students with additional time, explore the source code to understand:</p>
+                    <ul>
+                        <li>How database queries are constructed</li>
+                        <li>Input validation mechanisms</li>
+                        <li>Error handling and logging</li>
+                        <li>Database connection management</li>
+                        <li>ORM configuration and security</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Code review report with security recommendations</p>
+                </div>
+            </section>
+
+            <!-- Slide 29: Summary -->
+            <section>
+                <h2>Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>SQL injection is a critical security vulnerability</li>
+                        <li>Multiple attack techniques exist (union, boolean, time-based, error-based)</li>
+                        <li>Parameterized queries are the primary defense</li>
+                        <li>OS³ Studio provides hands-on vulnerability testing</li>
+                        <li>Secure implementation requires multiple layers of protection</li>
+                        <li>Career opportunities in database security are growing</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 30: Next Steps -->
+            <section class="center">
+                <h2>Next Steps</h2>
+                <div class="timeline-info">
+                    <h3>Continue Learning:</h3>
+                    <ul>
+                        <li>Complete the OS³ Studio tasks</li>
+                        <li>Explore additional SQL injection techniques</li>
+                        <li>Practice with security testing tools</li>
+                        <li>Consider industry certifications</li>
+                        <li>Join cybersecurity communities</li>
+                    </ul>
+                    <p><strong>Next Session:</strong> Advanced Web Security Topics</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: false,
+            preloadIframes: null,
+            autoAnimate: true,
+            autoAnimateMatcher: null,
+            autoAnimateEasing: 'ease',
+            autoAnimateDuration: 1.0,
+            autoAnimateUnmatched: true,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: null,
+            defaultTiming: null,
+            mouseWheel: false,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            disableLayout: false
+        });
+    </script>
+</body>
+
+</html>

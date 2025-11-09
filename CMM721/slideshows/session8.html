@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 8: Django REST Framework</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
+        .reveal .slides section.center { text-align: center; }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
+        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
+        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
+        .demo-container h3 { color: #9b59b6; margin-top: 0; }
+        .api-endpoint { background: #2c3e50; color: #ecf0f1; padding: 10px 15px; border-radius: 5px; font-family: monospace; margin: 10px 0; display: flex; align-items: center; gap: 10px; }
+        .method-badge { padding: 5px 10px; border-radius: 3px; font-weight: bold; font-size: 0.9em; }
+        .method-get { background: #27ae60; color: white; }
+        .method-post { background: #3498db; color: white; }
+        .method-put { background: #f39c12; color: white; }
+        .method-delete { background: #e74c3c; color: white; }
+        .json-example { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.85em; overflow-x: auto; }
+        .json-key { color: #9cdcfe; }
+        .json-string { color: #ce9178; }
+        .json-number { color: #b5cea8; }
+        .json-boolean { color: #569cd6; }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
+        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <section class="center">
+                <h1>Django REST Framework</h1>
+                <h3>CMM721: Web Application Development - Session 8</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Masters Level Conversion Course</p>
+                <p><small>3-hour session • 18 slides • 2 tasks • API testing demos</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand REST API principles</li>
+                    <li>Install and configure Django REST Framework</li>
+                    <li>Create serializers for data validation</li>
+                    <li>Build API views and viewsets</li>
+                    <li>Implement authentication and permissions</li>
+                    <li>Test APIs using browsable API and Postman</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>What is REST?</h2>
+                <div class="highlight">
+                    <strong>REST:</strong> Representational State Transfer
+                </div>
+                <h3>Key Principles:</h3>
+                <ul>
+                    <li><strong>Stateless:</strong> Each request contains all information needed</li>
+                    <li><strong>Resource-based:</strong> Everything is a resource with a URI</li>
+                    <li><strong>HTTP Methods:</strong> GET, POST, PUT, PATCH, DELETE</li>
+                    <li><strong>JSON Format:</strong> Standard data exchange format</li>
+                </ul>
+                <h3>Example REST API:</h3>
+                <div class="api-endpoint">
+                    <span class="method-badge method-get">GET</span>
+                    <span>https://api.example.com/posts/</span>
+                </div>
+                <div class="api-endpoint">
+                    <span class="method-badge method-post">POST</span>
+                    <span>https://api.example.com/posts/</span>
+                </div>
+            </section>
+
+            <section>
+                <h2>Django REST Framework (DRF)</h2>
+                <h3>Installation:</h3>
+                <div class="code-example">
+                    # Install DRF<br>
+                    pip install djangorestframework<br><br>
+                    
+                    # Add to INSTALLED_APPS in settings.py<br>
+                    INSTALLED_APPS = [<br>
+                    &nbsp;&nbsp;...<br>
+                    &nbsp;&nbsp;'rest_framework',<br>
+                    ]<br><br>
+                    
+                    # Add REST Framework settings<br>
+                    REST_FRAMEWORK = {<br>
+                    &nbsp;&nbsp;'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',<br>
+                    &nbsp;&nbsp;'PAGE_SIZE': 10<br>
+                    }
+                </div>
+            </section>
+
+            <section>
+                <h2>Serializers</h2>
+                <div class="highlight">
+                    <strong>Serializer:</strong> Converts complex data (models) ↔ JSON
+                </div>
+                <div class="code-example">
+                    # serializers.py<br>
+                    from rest_framework import serializers<br>
+                    from .models import Post<br><br>
+                    
+                    class PostSerializer(serializers.ModelSerializer):<br>
+                    &nbsp;&nbsp;author_name = serializers.CharField(source='author.username', read_only=True)<br><br>
+                    
+                    &nbsp;&nbsp;class Meta:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;model = Post<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;fields = ['id', 'title', 'content', 'author', 'author_name', 'created_at']<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;read_only_fields = ['id', 'created_at']
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 Serialization Example</h2>
+                <div class="demo-container">
+                    <h3>Django Model → JSON</h3>
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center;">
+                        <div>
+                            <h4 style="color: #3498db;">Python Object</h4>
+                            <div class="code-example" style="font-size: 0.8em;">
+                                post = Post(<br>
+                                &nbsp;&nbsp;id=1,<br>
+                                &nbsp;&nbsp;title="Django REST",<br>
+                                &nbsp;&nbsp;content="API tutorial",<br>
+                                &nbsp;&nbsp;author=user<br>
+                                )
+                            </div>
+                        </div>
+                        <div style="font-size: 2em; color: #9b59b6;">→</div>
+                        <div>
+                            <h4 style="color: #27ae60;">JSON Response</h4>
+                            <div class="json-example">
+                                {<br>
+                                &nbsp;&nbsp;<span class="json-key">"id"</span>: <span class="json-number">1</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"title"</span>: <span class="json-string">"Django REST"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"content"</span>: <span class="json-string">"API tutorial"</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"author"</span>: <span class="json-number">5</span>,<br>
+                                &nbsp;&nbsp;<span class="json-key">"created_at"</span>: <span class="json-string">"2024-01-15"</span><br>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>API Views</h2>
+                <h3>Function-Based View:</h3>
+                <div class="code-example">
+                    from rest_framework.decorators import api_view<br>
+                    from rest_framework.response import Response<br>
+                    from rest_framework import status<br><br>
+                    
+                    @api_view(['GET', 'POST'])<br>
+                    def post_list(request):<br>
+                    &nbsp;&nbsp;if request.method == 'GET':<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;posts = Post.objects.all()<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;serializer = PostSerializer(posts, many=True)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return Response(serializer.data)<br><br>
+                    
+                    &nbsp;&nbsp;elif request.method == 'POST':<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;serializer = PostSerializer(data=request.data)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if serializer.is_valid():<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serializer.save()<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Response(serializer.data, status=status.HTTP_201_CREATED)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                </div>
+            </section>
+
+            <section>
+                <h2>Class-Based Views</h2>
+                <div class="code-example">
+                    from rest_framework import generics<br><br>
+                    
+                    class PostListCreate(generics.ListCreateAPIView):<br>
+                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
+                    &nbsp;&nbsp;serializer_class = PostSerializer<br><br>
+                    
+                    class PostDetail(generics.RetrieveUpdateDestroyAPIView):<br>
+                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
+                    &nbsp;&nbsp;serializer_class = PostSerializer
+                </div>
+                <h3>URL Configuration:</h3>
+                <div class="code-example">
+                    from django.urls import path<br>
+                    from . import views<br><br>
+                    
+                    urlpatterns = [<br>
+                    &nbsp;&nbsp;path('api/posts/', views.PostListCreate.as_view()),<br>
+                    &nbsp;&nbsp;path('api/posts/&lt;int:pk&gt;/', views.PostDetail.as_view()),<br>
+                    ]
+                </div>
+            </section>
+
+            <section>
+                <h2>ViewSets and Routers</h2>
+                <div class="code-example">
+                    # views.py<br>
+                    from rest_framework import viewsets<br><br>
+                    
+                    class PostViewSet(viewsets.ModelViewSet):<br>
+                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
+                    &nbsp;&nbsp;serializer_class = PostSerializer<br><br>
+                    
+                    # urls.py<br>
+                    from rest_framework.routers import DefaultRouter<br>
+                    from . import views<br><br>
+                    
+                    router = DefaultRouter()<br>
+                    router.register(r'posts', views.PostViewSet)<br><br>
+                    
+                    urlpatterns = [<br>
+                    &nbsp;&nbsp;path('api/', include(router.urls)),<br>
+                    ]
+                </div>
+                <div class="highlight">
+                    <strong>Result:</strong> Automatic CRUD endpoints with minimal code!
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 API Endpoint Overview</h2>
+                <div class="demo-container">
+                    <h3>Generated Endpoints</h3>
+                    <div class="api-endpoint">
+                        <span class="method-badge method-get">GET</span>
+                        <span>/api/posts/</span>
+                        <span style="color: #7f8c8d; margin-left: auto;">List all posts</span>
+                    </div>
+                    <div class="api-endpoint">
+                        <span class="method-badge method-post">POST</span>
+                        <span>/api/posts/</span>
+                        <span style="color: #7f8c8d; margin-left: auto;">Create new post</span>
+                    </div>
+                    <div class="api-endpoint">
+                        <span class="method-badge method-get">GET</span>
+                        <span>/api/posts/1/</span>
+                        <span style="color: #7f8c8d; margin-left: auto;">Retrieve post #1</span>
+                    </div>
+                    <div class="api-endpoint">
+                        <span class="method-badge method-put">PUT</span>
+                        <span>/api/posts/1/</span>
+                        <span style="color: #7f8c8d; margin-left: auto;">Update post #1</span>
+                    </div>
+                    <div class="api-endpoint">
+                        <span class="method-badge method-delete">DELETE</span>
+                        <span>/api/posts/1/</span>
+                        <span style="color: #7f8c8d; margin-left: auto;">Delete post #1</span>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 1: Build REST API</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a complete REST API for your blog</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Install Django REST Framework</li>
+                        <li>Create PostSerializer with all fields</li>
+                        <li>Create CommentSerializer</li>
+                        <li>Implement ViewSets for Post and Comment</li>
+                        <li>Configure router for automatic URL generation</li>
+                        <li>Test all endpoints in browsable API</li>
+                        <li>Ensure proper JSON responses</li>
+                    </ol>
+                    <h3>Test Endpoints:</h3>
+                    <ul>
+                        <li>GET /api/posts/ - List posts</li>
+                        <li>POST /api/posts/ - Create post</li>
+                        <li>GET /api/posts/1/ - Detail view</li>
+                        <li>PUT /api/posts/1/ - Update</li>
+                        <li>DELETE /api/posts/1/ - Delete</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Authentication</h2>
+                <h3>Token Authentication:</h3>
+                <div class="code-example">
+                    # settings.py<br>
+                    INSTALLED_APPS = [<br>
+                    &nbsp;&nbsp;...<br>
+                    &nbsp;&nbsp;'rest_framework.authtoken',<br>
+                    ]<br><br>
+                    
+                    REST_FRAMEWORK = {<br>
+                    &nbsp;&nbsp;'DEFAULT_AUTHENTICATION_CLASSES': [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;'rest_framework.authentication.TokenAuthentication',<br>
+                    &nbsp;&nbsp;]<br>
+                    }<br><br>
+                    
+                    # Generate token for user<br>
+                    from rest_framework.authtoken.models import Token<br>
+                    token = Token.objects.create(user=user)<br>
+                    print(token.key)
+                </div>
+            </section>
+
+            <section>
+                <h2>Permissions</h2>
+                <div class="code-example">
+                    from rest_framework import permissions<br><br>
+                    
+                    class PostViewSet(viewsets.ModelViewSet):<br>
+                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
+                    &nbsp;&nbsp;serializer_class = PostSerializer<br>
+                    &nbsp;&nbsp;permission_classes = [permissions.IsAuthenticatedOrReadOnly]<br><br>
+                    
+                    &nbsp;&nbsp;def perform_create(self, serializer):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;serializer.save(author=self.request.user)
+                </div>
+                <h3>Built-in Permissions:</h3>
+                <ul>
+                    <li><strong>AllowAny:</strong> No restrictions</li>
+                    <li><strong>IsAuthenticated:</strong> Must be logged in</li>
+                    <li><strong>IsAuthenticatedOrReadOnly:</strong> Read for all, write for authenticated</li>
+                    <li><strong>IsAdminUser:</strong> Admin only</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Custom Permissions</h2>
+                <div class="code-example">
+                    from rest_framework import permissions<br><br>
+                    
+                    class IsAuthorOrReadOnly(permissions.BasePermission):<br>
+                    &nbsp;&nbsp;"""<br>
+                    &nbsp;&nbsp;Custom permission: only author can edit/delete<br>
+                    &nbsp;&nbsp;"""<br>
+                    &nbsp;&nbsp;def has_object_permission(self, request, view, obj):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;# Read permissions allowed for any request<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if request.method in permissions.SAFE_METHODS:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True<br><br>
+                    
+                    &nbsp;&nbsp;&nbsp;&nbsp;# Write permissions only for author<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return obj.author == request.user<br><br>
+                    
+                    # Usage<br>
+                    class PostViewSet(viewsets.ModelViewSet):<br>
+                    &nbsp;&nbsp;permission_classes = [IsAuthorOrReadOnly]
+                </div>
+            </section>
+
+            <section>
+                <h2>Filtering and Search</h2>
+                <div class="code-example">
+                    # Install<br>
+                    pip install django-filter<br><br>
+                    
+                    # Add to INSTALLED_APPS<br>
+                    INSTALLED_APPS = [<br>
+                    &nbsp;&nbsp;...<br>
+                    &nbsp;&nbsp;'django_filters',<br>
+                    ]<br><br>
+                    
+                    # ViewSet with filtering<br>
+                    from rest_framework import filters<br>
+                    from django_filters.rest_framework import DjangoFilterBackend<br><br>
+                    
+                    class PostViewSet(viewsets.ModelViewSet):<br>
+                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
+                    &nbsp;&nbsp;serializer_class = PostSerializer<br>
+                    &nbsp;&nbsp;filter_backends = [DjangoFilterBackend, filters.SearchFilter]<br>
+                    &nbsp;&nbsp;filterset_fields = ['author', 'published']<br>
+                    &nbsp;&nbsp;search_fields = ['title', 'content']
+                </div>
+            </section>
+
+            <section>
+                <h2>Task 2: Authentication & Permissions</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Add authentication and authorization to your API</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Implement Token Authentication</li>
+                        <li>Create login/logout endpoints</li>
+                        <li>Add IsAuthenticatedOrReadOnly to posts</li>
+                        <li>Create custom IsAuthorOrReadOnly permission</li>
+                        <li>Automatically assign author on post creation</li>
+                        <li>Add filtering by author and published status</li>
+                        <li>Implement search on title and content</li>
+                        <li>Test with authenticated and anonymous users</li>
+                    </ol>
+                    <h3>Bonus:</h3>
+                    <ul>
+                        <li>Add user registration endpoint</li>
+                        <li>Implement pagination</li>
+                        <li>Add ordering by date</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>🎯 Testing with Browsable API</h2>
+                <div class="demo-container">
+                    <h3>DRF Browsable API Features</h3>
+                    <ul style="font-size: 1em;">
+                        <li><strong>Interactive Interface:</strong> Test API directly in browser</li>
+                        <li><strong>JSON/HTML Toggle:</strong> View responses in different formats</li>
+                        <li><strong>Login/Logout:</strong> Built-in authentication UI</li>
+                        <li><strong>Forms:</strong> Automatically generated for POST/PUT</li>
+                        <li><strong>OPTIONS:</strong> See available actions and fields</li>
+                    </ul>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                        <p style="margin: 0;"><strong>Try it:</strong></p>
+                        <code style="color: #9b59b6;">http://127.0.0.1:8000/api/posts/</code>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Testing with Postman</h2>
+                <h3>GET Request:</h3>
+                <div class="code-example">
+                    GET http://127.0.0.1:8000/api/posts/<br>
+                    Headers:<br>
+                    &nbsp;&nbsp;Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+                </div>
+                <h3>POST Request:</h3>
+                <div class="code-example">
+                    POST http://127.0.0.1:8000/api/posts/<br>
+                    Headers:<br>
+                    &nbsp;&nbsp;Content-Type: application/json<br>
+                    &nbsp;&nbsp;Authorization: Token 9944b09...<br>
+                    Body:<br>
+                    {<br>
+                    &nbsp;&nbsp;"title": "New Post",<br>
+                    &nbsp;&nbsp;"content": "Post content here",<br>
+                    &nbsp;&nbsp;"published": true<br>
+                    }
+                </div>
+            </section>
+
+            <section>
+                <h2>Nested Serializers</h2>
+                <div class="code-example">
+                    class CommentSerializer(serializers.ModelSerializer):<br>
+                    &nbsp;&nbsp;author_name = serializers.CharField(source='author.username', read_only=True)<br><br>
+                    
+                    &nbsp;&nbsp;class Meta:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;model = Comment<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;fields = ['id', 'text', 'author', 'author_name', 'created_at']<br><br>
+                    
+                    class PostSerializer(serializers.ModelSerializer):<br>
+                    &nbsp;&nbsp;comments = CommentSerializer(many=True, read_only=True, source='comment_set')<br>
+                    &nbsp;&nbsp;comment_count = serializers.SerializerMethodField()<br><br>
+                    
+                    &nbsp;&nbsp;class Meta:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;model = Post<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;fields = ['id', 'title', 'content', 'comments', 'comment_count']<br><br>
+                    
+                    &nbsp;&nbsp;def get_comment_count(self, obj):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return obj.comment_set.count()
+                </div>
+            </section>
+
+            <section>
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>Versioning:</strong> Use API versioning (/api/v1/)</li>
+                    <li><strong>Pagination:</strong> Always paginate list endpoints</li>
+                    <li><strong>Error Handling:</strong> Return consistent error responses</li>
+                    <li><strong>Validation:</strong> Use serializer validation methods</li>
+                    <li><strong>Documentation:</strong> Use drf-yasg or drf-spectacular</li>
+                    <li><strong>CORS:</strong> Configure django-cors-headers for frontend</li>
+                    <li><strong>Throttling:</strong> Implement rate limiting</li>
+                    <li><strong>Testing:</strong> Write API tests using APITestCase</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Security:</strong> Always use HTTPS in production!
+                </div>
+            </section>
+
+            <section>
+                <h2>Next Session: React & State Management</h2>
+                <ul>
+                    <li>Introduction to React</li>
+                    <li>Components, props, and state</li>
+                    <li>React Hooks (useState, useEffect)</li>
+                    <li>Fetching data from Django API</li>
+                    <li>State management basics</li>
+                    <li>Redux fundamentals</li>
+                </ul>
+                <p><strong>Preparation:</strong> Install Node.js and create-react-app</p>
+            </section>
+
+            <section class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> DRF Documentation, Postman Learning Center</p>
+                <p>Thank you for your attention!</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
+            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>

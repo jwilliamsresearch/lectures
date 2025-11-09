@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6: Using GitHub & Project Management Tools</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling - Dissertation Orange Theme */
+        .task-box {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffe6cc 100%);
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(243, 156, 18, 0.1);
+        }
+
+        /* Code example styling - Dark theme for Dissertation */
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #34495e;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.4;
+            max-height: 40vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Highlight styling - Orange accent for Dissertation */
+        .highlight {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffe6cc 100%);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #f39c12;
+            margin: 10px 0;
+            box-shadow: 0 1px 4px rgba(243, 156, 18, 0.2);
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Tool comparison styling */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .tool-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f39c12;
+        }
+
+        .tool-card h4 {
+            margin: 0 0 10px 0;
+            color: #f39c12;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="
+                background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+                transition: all 0.3s ease;
+                display: inline-block;
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(243, 156, 18, 0.6)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(243, 156, 18, 0.4)'">
+            ← Back to Module
+        </a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>Using GitHub & Project Management Tools</h1>
+                <h3>CMU601: Dissertation - Week 6</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Undergraduate Final Year Project</p>
+                <p><small>3-hour session • 30 slides • 2 practical tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Introduction & objectives</li>
+                        <li>45 min: GitHub workflows & collaboration</li>
+                        <li>40 min: Task 1 - Advanced GitHub features</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>30 min: Project management tools overview</li>
+                        <li>40 min: Task 2 - Set up project board</li>
+                        <li>Remaining: Self-directed work</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Master GitHub workflows for solo and collaborative development</li>
+                    <li>Use branches, pull requests, and GitHub Issues effectively</li>
+                    <li>Implement project management with Kanban boards</li>
+                    <li>Explore various project management tools (Trello, Jira, etc.)</li>
+                    <li>Track dissertation progress systematically</li>
+                    <li>Demonstrate professional development practices</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Why This Matters:</strong> Professional developers use these tools daily. Mastering them shows technical maturity and makes your work more manageable.
+                </div>
+            </section>
+
+            <!-- Slide 3: GitHub Beyond Basic Commits -->
+            <section>
+                <h2>GitHub: More Than Just Storage</h2>
+                <div class="highlight">
+                    <strong>GitHub is a complete project management platform</strong>
+                </div>
+                <h3>Key Features for Dissertation Projects:</h3>
+                <ul>
+                    <li><strong>Version Control:</strong> Track every change, revert when needed</li>
+                    <li><strong>Branches:</strong> Work on features without breaking main code</li>
+                    <li><strong>Issues:</strong> Track bugs, tasks, and features</li>
+                    <li><strong>Projects:</strong> Kanban boards integrated with your repo</li>
+                    <li><strong>Wiki:</strong> Documentation beyond README</li>
+                    <li><strong>Releases:</strong> Version your dissertation milestones</li>
+                    <li><strong>GitHub Actions:</strong> Automate testing and deployment</li>
+                    <li><strong>Insights:</strong> Visualize your development activity</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Git Branching Strategy -->
+            <section>
+                <h2>Branching Strategy for Dissertations</h2>
+                <h3>Why Use Branches?</h3>
+                <ul>
+                    <li>Experiment safely without breaking working code</li>
+                    <li>Develop features independently</li>
+                    <li>Easy to show supervisor "stable" vs "experimental" versions</li>
+                    <li>Organize work by feature or iteration</li>
+                </ul>
+                <h3>Recommended Structure:</h3>
+                <div class="code-example">
+                    main                    # Stable, working version<br>
+                    ├── develop            # Integration branch<br>
+                    ├── feature/user-auth  # User authentication feature<br>
+                    ├── feature/dashboard  # Dashboard implementation<br>
+                    ├── feature/api        # API development<br>
+                    └── bugfix/login-error # Bug fixes
+                </div>
+                <p><strong>Golden Rule:</strong> Main branch should always be deployable/demonstrable</p>
+            </section>
+
+            <!-- Slide 5: Branch Commands -->
+            <section>
+                <h2>Essential Branch Commands</h2>
+                <h3>Creating and Switching Branches:</h3>
+                <div class="code-example">
+                    # Create new branch<br>
+                    git branch feature/user-authentication<br>
+                    <br>
+                    # Switch to branch<br>
+                    git checkout feature/user-authentication<br>
+                    <br>
+                    # Create and switch in one command<br>
+                    git checkout -b feature/user-authentication<br>
+                    <br>
+                    # See all branches<br>
+                    git branch -a<br>
+                    <br>
+                    # Switch back to main<br>
+                    git checkout main
+                </div>
+                <h3>Merging Branches:</h3>
+                <div class="code-example">
+                    # Switch to main branch<br>
+                    git checkout main<br>
+                    <br>
+                    # Merge feature branch into main<br>
+                    git merge feature/user-authentication<br>
+                    <br>
+                    # Push to GitHub<br>
+                    git push origin main
+                </div>
+            </section>
+
+            <!-- Slide 6: Real Example - Feature Branch Workflow -->
+            <section>
+                <h2>Example: Implementing a New Feature</h2>
+                <h3>Scenario: Adding Email Notifications</h3>
+                <div class="code-example">
+                    # 1. Create feature branch from main<br>
+                    git checkout main<br>
+                    git pull origin main  # Get latest changes<br>
+                    git checkout -b feature/email-notifications<br>
+                    <br>
+                    # 2. Make changes, commit regularly<br>
+                    # ... edit files ...<br>
+                    git add .<br>
+                    git commit -m "Add email service configuration"<br>
+                    # ... more changes ...<br>
+                    git commit -m "Implement notification templates"<br>
+                    git commit -m "Add email sending functionality"<br>
+                    <br>
+                    # 3. Push feature branch to GitHub<br>
+                    git push origin feature/email-notifications<br>
+                    <br>
+                    # 4. Test feature thoroughly<br>
+                    <br>
+                    # 5. Merge back to main when ready<br>
+                    git checkout main<br>
+                    git merge feature/email-notifications<br>
+                    git push origin main<br>
+                    <br>
+                    # 6. Delete feature branch (optional)<br>
+                    git branch -d feature/email-notifications
+                </div>
+            </section>
+
+            <!-- Slide 7: GitHub Issues -->
+            <section>
+                <h2>GitHub Issues: Your Task Tracker</h2>
+                <div class="highlight">
+                    <strong>Issues help you organize work and demonstrate systematic development</strong>
+                </div>
+                <h3>What to Track with Issues:</h3>
+                <ul>
+                    <li><strong>Features:</strong> New functionality to implement</li>
+                    <li><strong>Bugs:</strong> Problems that need fixing</li>
+                    <li><strong>Enhancements:</strong> Improvements to existing features</li>
+                    <li><strong>Documentation:</strong> Writing or updating docs</li>
+                    <li><strong>Research:</strong> Investigation tasks</li>
+                </ul>
+                <h3>Issue Best Practices:</h3>
+                <ul>
+                    <li>Use descriptive titles: "Add user authentication" not "Feature"</li>
+                    <li>Include context in description</li>
+                    <li>Add labels (bug, enhancement, documentation)</li>
+                    <li>Reference issues in commits: "Fix #12: Resolve login timeout"</li>
+                    <li>Close issues when complete</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Creating Effective Issues -->
+            <section>
+                <h2>Writing Good Issues</h2>
+                <h3>❌ Poor Issue:</h3>
+                <div class="code-example">
+                    Title: Fix stuff<br>
+                    <br>
+                    Description: The thing isn't working
+                </div>
+                <h3>✅ Good Issue:</h3>
+                <div class="code-example">
+                    Title: Add password reset functionality<br>
+                    <br>
+                    Description:<br>
+                    Users need ability to reset forgotten passwords.<br>
+                    <br>
+                    Requirements:<br>
+                    - Email verification link to user<br>
+                    - Secure token generation (expires in 1 hour)<br>
+                    - New password form<br>
+                    - Update password in database<br>
+                    - Confirmation email<br>
+                    <br>
+                    Acceptance Criteria:<br>
+                    - User receives reset email within 1 minute<br>
+                    - Token expires after 1 hour<br>
+                    - Password meets security requirements<br>
+                    - User can login with new password<br>
+                    <br>
+                    Related: #15 (User authentication system)<br>
+                    <br>
+                    Labels: enhancement, user-management
+                </div>
+            </section>
+
+            <!-- Slide 9: GitHub Projects / Kanban Boards -->
+            <section>
+                <h2>GitHub Projects: Built-in Kanban</h2>
+                <h3>Setting Up a Project Board:</h3>
+                <ol>
+                    <li>Go to your repository on GitHub</li>
+                    <li>Click "Projects" tab</li>
+                    <li>Create "New project"</li>
+                    <li>Choose "Board" template</li>
+                    <li>Create columns: To Do, In Progress, Done</li>
+                    <li>Add issues as cards to columns</li>
+                </ol>
+                <h3>Workflow:</h3>
+                <div class="code-example">
+                    To Do → In Progress → In Review → Done<br>
+                    <br>
+                    Example:<br>
+                    - Issue #12: Add user profiles [To Do]<br>
+                    - Issue #15: Database optimization [In Progress]<br>
+                    - Issue #18: Implement search [In Review]<br>
+                    - Issue #21: Setup CI/CD [Done]
+                </div>
+                <div class="highlight">
+                    <strong>Benefit:</strong> Visual progress tracking perfect for demonstrating systematic development in your dissertation report!
+                </div>
+            </section>
+
+            <!-- Slide 10: Pull Requests -->
+            <section>
+                <h2>Pull Requests (PRs)</h2>
+                <h3>What is a Pull Request?</h3>
+                <p>A way to propose changes from one branch to another, with review and discussion.</p>
+                <h3>Why Use PRs for Solo Projects?</h3>
+                <ul>
+                    <li>Review your own code before merging</li>
+                    <li>Create documented history of major changes</li>
+                    <li>Supervisor can review code easily</li>
+                    <li>Automatic checks (if you set up GitHub Actions)</li>
+                    <li>Professional development practice</li>
+                </ul>
+                <h3>Creating a Pull Request:</h3>
+                <ol>
+                    <li>Push feature branch to GitHub</li>
+                    <li>Go to repository on GitHub</li>
+                    <li>Click "Pull requests" → "New pull request"</li>
+                    <li>Select base (main) and compare (feature) branches</li>
+                    <li>Add title and description</li>
+                    <li>Create pull request</li>
+                    <li>Review changes, then merge</li>
+                </ol>
+            </section>
+
+            <!-- Slide 11: Task 1 - GitHub Workflow -->
+            <section>
+                <h2>Task 1: Implement GitHub Workflow</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Set up professional GitHub workflow for your dissertation project</p>
+
+                    <h3>Activity Steps:</h3>
+                    <ol>
+                        <li>Create a GitHub Project board for your repository</li>
+                        <li>Add columns: Backlog, To Do, In Progress, Done</li>
+                        <li>Create 5-7 issues for upcoming features/tasks</li>
+                        <li>Add labels to categorize issues (bug, feature, docs, etc.)</li>
+                        <li>Create a new feature branch for one task</li>
+                        <li>Make changes on that branch and commit</li>
+                        <li>Push branch to GitHub</li>
+                        <li>Create a Pull Request with detailed description</li>
+                        <li>Review and merge your PR</li>
+                        <li>Close the related issue</li>
+                    </ol>
+
+                    <h3>Deliverable:</h3>
+                    <p>Working project board with issues and at least one completed PR</p>
+
+                    <h3>Time:</h3>
+                    <p>40 minutes</p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Introduction to Project Management Tools -->
+            <section>
+                <h2>Project Management Tools Overview</h2>
+                <div class="highlight">
+                    <strong>The right tool helps you stay organized and productive</strong>
+                </div>
+                <h3>Why Use PM Tools?</h3>
+                <ul>
+                    <li>Visualize what needs to be done</li>
+                    <li>Track progress over time</li>
+                    <li>Plan iterations and sprints</li>
+                    <li>Manage deadlines and milestones</li>
+                    <li>Document development decisions</li>
+                    <li>Share progress with supervisors</li>
+                </ul>
+                <h3>Popular Options:</h3>
+                <ul>
+                    <li><strong>Trello:</strong> Simple, visual, Kanban-based</li>
+                    <li><strong>Jira:</strong> Comprehensive, agile-focused</li>
+                    <li><strong>Asana:</strong> Task-focused with timeline views</li>
+                    <li><strong>Notion:</strong> All-in-one workspace</li>
+                    <li><strong>Monday.com:</strong> Highly customizable</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: Trello Deep Dive -->
+            <section>
+                <h2>Trello: Visual Project Management</h2>
+                <h3>Key Features:</h3>
+                <ul>
+                    <li><strong>Boards:</strong> Represent projects</li>
+                    <li><strong>Lists:</strong> Columns for workflow stages</li>
+                    <li><strong>Cards:</strong> Individual tasks</li>
+                    <li><strong>Labels:</strong> Color-coded categories</li>
+                    <li><strong>Checklists:</strong> Sub-tasks within cards</li>
+                    <li><strong>Due Dates:</strong> Deadline tracking</li>
+                    <li><strong>Attachments:</strong> Files, links, images</li>
+                    <li><strong>Power-Ups:</strong> Integrations (GitHub, Calendar, etc.)</li>
+                </ul>
+                <h3>Sample Board Structure:</h3>
+                <div class="code-example">
+                    Dissertation Board:<br>
+                    ├── 📋 Research & Planning<br>
+                    ├── 🔥 This Week<br>
+                    ├── 👨‍💻 In Development<br>
+                    ├── 🧪 Testing<br>
+                    ├── 📝 Documentation<br>
+                    └── ✅ Complete
+                </div>
+            </section>
+
+            <!-- Slide 14: Trello Setup Example -->
+            <section>
+                <h2>Setting Up Trello for Dissertations</h2>
+                <h3>Example Cards:</h3>
+                <div class="code-example">
+                    Card: "Implement User Authentication"<br>
+                    List: In Development<br>
+                    Labels: Backend, High Priority<br>
+                    Due Date: March 15, 2025<br>
+                    <br>
+                    Description:<br>
+                    Build secure authentication system with JWT tokens<br>
+                    <br>
+                    Checklist:<br>
+                    ☑ Design database schema for users<br>
+                    ☑ Implement registration endpoint<br>
+                    ☐ Implement login endpoint<br>
+                    ☐ Add JWT token generation<br>
+                    ☐ Add password hashing<br>
+                    ☐ Write unit tests<br>
+                    ☐ Update API documentation<br>
+                    <br>
+                    Attachments:<br>
+                    - auth-flow-diagram.png<br>
+                    - JWT-research.pdf<br>
+                    <br>
+                    Comments:<br>
+                    "Using bcrypt for password hashing - more secure than md5"
+                </div>
+            </section>
+
+            <!-- Slide 15: Jira for Dissertations -->
+            <section>
+                <h2>Jira: Professional Agile Tool</h2>
+                <h3>When to Use Jira:</h3>
+                <ul>
+                    <li>Complex projects with many components</li>
+                    <li>Want to learn industry-standard tool</li>
+                    <li>Need advanced reporting features</li>
+                    <li>Planning sprints and iterations</li>
+                </ul>
+                <h3>Key Features:</h3>
+                <ul>
+                    <li><strong>Epic:</strong> Large feature (e.g., "User Management System")</li>
+                    <li><strong>Story:</strong> User-focused feature (e.g., "As a user, I can reset my password")</li>
+                    <li><strong>Task:</strong> Work item (e.g., "Create password reset form")</li>
+                    <li><strong>Bug:</strong> Issues to fix</li>
+                    <li><strong>Sprints:</strong> 1-2 week development cycles</li>
+                    <li><strong>Reports:</strong> Burndown charts, velocity tracking</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Free for students!</strong> Use your .ac.uk email to get free access
+                </div>
+            </section>
+
+            <!-- Slide 16: Other Useful Tools -->
+            <section>
+                <h2>Additional Project Management Tools</h2>
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <h4>Notion</h4>
+                        <p>All-in-one workspace combining docs, wikis, and databases. Great for documentation alongside project management.</p>
+                    </div>
+                    <div class="tool-card">
+                        <h4>Asana</h4>
+                        <p>Task management with timeline and calendar views. Good for deadline-heavy projects.</p>
+                    </div>
+                    <div class="tool-card">
+                        <h4>ClickUp</h4>
+                        <p>Comprehensive tool with docs, tasks, goals, and time tracking. Highly customizable.</p>
+                    </div>
+                    <div class="tool-card">
+                        <h4>Todoist</h4>
+                        <p>Simple task manager with natural language dates. Good for personal task tracking.</p>
+                    </div>
+                </div>
+                <h3>Choosing Your Tool:</h3>
+                <ul>
+                    <li>Start simple (Trello or GitHub Projects)</li>
+                    <li>Choose based on project complexity</li>
+                    <li>Consider what you'll actually use consistently</li>
+                    <li>Free tier is usually sufficient for dissertations</li>
+                </ul>
+            </section>
+
+            <!-- Slide 17: Time Tracking Tools -->
+            <section>
+                <h2>Time Tracking for Dissertations</h2>
+                <div class="highlight">
+                    <strong>Tracking time helps with project planning and demonstrates work in reports</strong>
+                </div>
+                <h3>Why Track Time?</h3>
+                <ul>
+                    <li>Understand how long tasks actually take</li>
+                    <li>Improve future estimates</li>
+                    <li>Document effort for dissertation report</li>
+                    <li>Identify time-consuming areas</li>
+                    <li>Prove consistent work to supervisors</li>
+                </ul>
+                <h3>Recommended Tools:</h3>
+                <ul>
+                    <li><strong>Toggl Track:</strong> Simple time tracking with reports</li>
+                    <li><strong>Clockify:</strong> Free unlimited time tracking</li>
+                    <li><strong>RescueTime:</strong> Automatic tracking of computer activity</li>
+                    <li><strong>WakaTime:</strong> Automatic coding time tracking (IDE plugin)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: Kanban Methodology -->
+            <section>
+                <h2>Understanding Kanban</h2>
+                <h3>Core Principles:</h3>
+                <ul>
+                    <li><strong>Visualize Work:</strong> See all tasks at a glance</li>
+                    <li><strong>Limit WIP:</strong> Work In Progress - focus on finishing tasks</li>
+                    <li><strong>Flow:</strong> Move tasks smoothly through stages</li>
+                    <li><strong>Continuous Improvement:</strong> Reflect and adjust</li>
+                </ul>
+                <h3>Typical Kanban Board:</h3>
+                <div class="code-example">
+                    ┌─────────┬──────────┬────────────┬──────┐<br>
+                    │ Backlog │  To Do   │ In Progress│ Done │<br>
+                    ├─────────┼──────────┼────────────┼──────┤<br>
+                    │ Task A  │  Task D  │   Task G   │Task J│<br>
+                    │ Task B  │  Task E  │   Task H   │Task K│<br>
+                    │ Task C  │  Task F  │            │Task L│<br>
+                    │         │          │            │      │<br>
+                    └─────────┴──────────┴────────────┴──────┘<br>
+                    <br>
+                    WIP Limit: Max 2 tasks in "In Progress"
+                </div>
+                <p><strong>Golden Rule:</strong> Finish what you start before taking on new tasks</p>
+            </section>
+
+            <!-- Slide 19: Sprint Planning -->
+            <section>
+                <h2>Sprint Planning for Dissertations</h2>
+                <h3>What is a Sprint?</h3>
+                <p>A fixed time period (1-2 weeks) where you commit to completing specific tasks.</p>
+                <h3>Benefits for Dissertations:</h3>
+                <ul>
+                    <li>Creates regular milestones and deadlines</li>
+                    <li>Forces prioritization of work</li>
+                    <li>Natural review and reflection points</li>
+                    <li>Manageable chunks of work</li>
+                    <li>Regular sense of progress and completion</li>
+                </ul>
+                <h3>Example Sprint Plan:</h3>
+                <div class="code-example">
+                    Sprint 3 (Feb 10-23):<br>
+                    <br>
+                    Sprint Goal: Complete user authentication system<br>
+                    <br>
+                    Tasks:<br>
+                    1. Design database schema (3h) - HIGH<br>
+                    2. Implement registration (5h) - HIGH<br>
+                    3. Implement login (4h) - HIGH<br>
+                    4. Add password hashing (2h) - HIGH<br>
+                    5. Write tests (4h) - MEDIUM<br>
+                    6. Update documentation (2h) - MEDIUM<br>
+                    <br>
+                    Total: 20 hours over 2 weeks = 10h/week
+                </div>
+            </section>
+
+            <!-- Slide 20: Daily/Weekly Routines -->
+            <section>
+                <h2>Establishing Development Routines</h2>
+                <h3>Daily Routine (15-30 minutes):</h3>
+                <div class="code-example">
+                    Morning:<br>
+                    1. Review project board<br>
+                    2. Pick 1-2 tasks for today<br>
+                    3. Move cards to "In Progress"<br>
+                    4. Start timer (if tracking time)<br>
+                    <br>
+                    During Development:<br>
+                    1. Work on tasks<br>
+                    2. Commit regularly<br>
+                    3. Update card checklists<br>
+                    <br>
+                    Evening:<br>
+                    1. Move completed tasks to "Done"<br>
+                    2. Stop timer<br>
+                    3. Quick reflection note<br>
+                    4. Plan tomorrow's task
+                </div>
+                <h3>Weekly Review (30-60 minutes):</h3>
+                <ul>
+                    <li>Review completed tasks</li>
+                    <li>Update project timeline</li>
+                    <li>Plan next week's sprint</li>
+                    <li>Document any blockers</li>
+                    <li>Backup code and documents</li>
+                </ul>
+            </section>
+
+            <!-- Slide 21: Documentation Tools -->
+            <section>
+                <h2>Documentation Management</h2>
+                <h3>Where to Keep Documentation:</h3>
+                <ul>
+                    <li><strong>GitHub Wiki:</strong> Technical docs, API reference</li>
+                    <li><strong>Notion:</strong> Research notes, meeting notes</li>
+                    <li><strong>Google Docs:</strong> Dissertation writing, shared docs</li>
+                    <li><strong>Markdown Files:</strong> In repository (docs/ folder)</li>
+                </ul>
+                <h3>Essential Documentation:</h3>
+                <ul>
+                    <li><strong>README.md:</strong> Project overview and setup</li>
+                    <li><strong>CHANGELOG.md:</strong> Version history</li>
+                    <li><strong>ARCHITECTURE.md:</strong> System design decisions</li>
+                    <li><strong>API.md:</strong> API endpoints and usage</li>
+                    <li><strong>DEVELOPMENT-LOG.md:</strong> Weekly progress notes</li>
+                    <li><strong>TESTING.md:</strong> Testing strategy and results</li>
+                </ul>
+            </section>
+
+            <!-- Slide 22: Task 2 - Project Management Setup -->
+            <section>
+                <h2>Task 2: Set Up Project Management</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create comprehensive project management system for your dissertation</p>
+
+                    <h3>Activity Steps:</h3>
+                    <ol>
+                        <li>Choose a PM tool (Trello recommended for simplicity)</li>
+                        <li>Create a board for your dissertation project</li>
+                        <li>Set up columns matching your workflow</li>
+                        <li>Create cards for all major features and tasks</li>
+                        <li>Add detailed descriptions and checklists to cards</li>
+                        <li>Set due dates for upcoming milestones</li>
+                        <li>Create labels for categorization</li>
+                        <li>If using Trello, add GitHub Power-Up</li>
+                        <li>Move 2-3 cards to "In Progress"</li>
+                        <li>Create a development log document</li>
+                    </ol>
+
+                    <h3>Bonus:</h3>
+                    <ul>
+                        <li>Set up time tracking with Toggl or Clockify</li>
+                        <li>Create calendar view of deadlines</li>
+                        <li>Share board with supervisor</li>
+                    </ul>
+
+                    <h3>Time:</h3>
+                    <p>40 minutes</p>
+                </div>
+            </section>
+
+            <!-- Slide 23: Communication Tools -->
+            <section>
+                <h2>Communication & Collaboration Tools</h2>
+                <h3>Staying Connected:</h3>
+                <ul>
+                    <li><strong>Slack:</strong> Team communication, channels for different topics</li>
+                    <li><strong>Discord:</strong> Voice chat, screen sharing, communities</li>
+                    <li><strong>Microsoft Teams:</strong> University standard, includes video calls</li>
+                    <li><strong>Email:</strong> Formal supervisor communication</li>
+                </ul>
+                <h3>For Supervisor Meetings:</h3>
+                <ul>
+                    <li>Share your project board link before meetings</li>
+                    <li>Prepare demo of recent progress</li>
+                    <li>Document decisions in meeting notes</li>
+                    <li>Create issues for supervisor feedback</li>
+                    <li>Send summary email after each meeting</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Pro Tip:</strong> Keep meeting notes in a shared document both you and supervisor can access
+                </div>
+            </section>
+
+            <!-- Slide 24: Backup Strategies -->
+            <section>
+                <h2>Backup & Version Control Strategy</h2>
+                <div class="highlight">
+                    <strong>⚠️ CRITICAL: Multiple backups prevent disaster!</strong>
+                </div>
+                <h3>3-2-1 Backup Rule:</h3>
+                <ul>
+                    <li><strong>3 copies:</strong> Original + 2 backups</li>
+                    <li><strong>2 different media:</strong> Local + Cloud</li>
+                    <li><strong>1 offsite:</strong> Cloud or remote location</li>
+                </ul>
+                <h3>Backup Locations:</h3>
+                <ul>
+                    <li><strong>GitHub:</strong> Code and documentation (primary)</li>
+                    <li><strong>University OneDrive:</strong> Dissertation document, reports</li>
+                    <li><strong>Google Drive:</strong> Secondary backup</li>
+                    <li><strong>External Drive:</strong> Weekly full backups</li>
+                    <li><strong>Local Machine:</strong> Working copies</li>
+                </ul>
+                <h3>What to Backup:</h3>
+                <ul>
+                    <li>All source code (GitHub handles this)</li>
+                    <li>Dissertation report drafts</li>
+                    <li>Design documents and diagrams</li>
+                    <li>Research notes and references</li>
+                    <li>Test data and results</li>
+                </ul>
+            </section>
+
+            <!-- Slide 25: Automation Tools -->
+            <section>
+                <h2>Automation to Save Time</h2>
+                <h3>GitHub Actions (CI/CD):</h3>
+                <div class="code-example">
+                    # .github/workflows/tests.yml<br>
+                    name: Run Tests<br>
+                    <br>
+                    on: [push, pull_request]<br>
+                    <br>
+                    jobs:<br>
+                      test:<br>
+                        runs-on: ubuntu-latest<br>
+                        steps:<br>
+                          - uses: actions/checkout@v2<br>
+                          - name: Set up Python<br>
+                            uses: actions/setup-python@v2<br>
+                            with:<br>
+                              python-version: 3.11<br>
+                          - name: Install dependencies<br>
+                            run: pip install -r requirements.txt<br>
+                          - name: Run tests<br>
+                            run: pytest
+                </div>
+                <h3>Other Automation:</h3>
+                <ul>
+                    <li><strong>Code formatters:</strong> Black (Python), Prettier (JS) - auto-format code</li>
+                    <li><strong>Linters:</strong> Pylint, ESLint - catch errors automatically</li>
+                    <li><strong>Zapier/IFTTT:</strong> Connect tools (GitHub → Trello updates)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 26: Progress Tracking & Reporting -->
+            <section>
+                <h2>Tracking and Reporting Progress</h2>
+                <h3>What to Track:</h3>
+                <ul>
+                    <li><strong>Commits:</strong> GitHub tracks automatically</li>
+                    <li><strong>Completed Features:</strong> Project board visualization</li>
+                    <li><strong>Time Spent:</strong> Time tracking tools</li>
+                    <li><strong>Milestones:</strong> Major achievements</li>
+                    <li><strong>Challenges:</strong> Problems and solutions</li>
+                    <li><strong>Decisions:</strong> Why you made certain choices</li>
+                </ul>
+                <h3>Creating Progress Reports:</h3>
+                <div class="code-example">
+                    Weekly Progress Report Template:<br>
+                    <br>
+                    Week: [Date Range]<br>
+                    <br>
+                    Completed:<br>
+                    - Implemented user authentication (8 hours)<br>
+                    - Wrote unit tests for auth module (3 hours)<br>
+                    - Updated API documentation (2 hours)<br>
+                    <br>
+                    In Progress:<br>
+                    - User profile page (60% complete)<br>
+                    <br>
+                    Next Week:<br>
+                    - Complete user profiles<br>
+                    - Start dashboard implementation<br>
+                    <br>
+                    Challenges:<br>
+                    - JWT token validation took longer than expected<br>
+                    - Resolved by reading RFC 7519 specification<br>
+                    <br>
+                    Decisions:<br>
+                    - Chose bcrypt over argon2 for password hashing<br>
+                    - Better Python library support
+                </div>
+            </section>
+
+            <!-- Slide 27: Demonstrating Professional Practice -->
+            <section>
+                <h2>Showcasing Professional Development</h2>
+                <div class="highlight">
+                    <strong>Your dissertation report should demonstrate professional practices!</strong>
+                </div>
+                <h3>Include in Your Report:</h3>
+                <ul>
+                    <li>Screenshots of project management boards</li>
+                    <li>GitHub commit graphs showing consistent development</li>
+                    <li>Issue tracking showing systematic problem-solving</li>
+                    <li>Branch strategy diagrams</li>
+                    <li>Development timeline with milestones</li>
+                    <li>Testing coverage reports</li>
+                    <li>Code review examples (PRs)</li>
+                </ul>
+                <h3>Markers Look For:</h3>
+                <ul>
+                    <li>Evidence of planning and organization</li>
+                    <li>Systematic approach to development</li>
+                    <li>Professional tools and workflows</li>
+                    <li>Regular, consistent progress</li>
+                    <li>Problem-solving documentation</li>
+                </ul>
+            </section>
+
+            <!-- Slide 28: Common Pitfalls to Avoid -->
+            <section>
+                <h2>Common Project Management Mistakes</h2>
+                <h3>❌ What NOT to Do:</h3>
+                <ul>
+                    <li><strong>Tool Hopping:</strong> Switching tools constantly instead of committing to one</li>
+                    <li><strong>Over-Planning:</strong> Spending more time planning than doing</li>
+                    <li><strong>Ignoring Tools:</strong> Setting up boards but never updating them</li>
+                    <li><strong>Too Complex:</strong> Creating complicated workflows you won't maintain</li>
+                    <li><strong>No Updates:</strong> Forgetting to move cards or update status</li>
+                    <li><strong>Giant Commits:</strong> Committing weeks of work at once</li>
+                    <li><strong>Poor Messages:</strong> Commit messages like "updates" or "fix"</li>
+                </ul>
+                <h3>✅ What TO Do:</h3>
+                <ul>
+                    <li>Pick one tool and stick with it</li>
+                    <li>Keep it simple - complexity kills adoption</li>
+                    <li>Update boards daily or weekly</li>
+                    <li>Commit early and often</li>
+                    <li>Write clear commit messages</li>
+                    <li>Regular backups</li>
+                </ul>
+            </section>
+
+            <!-- Slide 29: Action Plan for This Week -->
+            <section>
+                <h2>Your Action Plan</h2>
+                <div class="task-box">
+                    <h3>Immediate Actions (Today):</h3>
+                    <ul>
+                        <li>Complete Task 1: Set up GitHub workflow</li>
+                        <li>Complete Task 2: Create project management board</li>
+                        <li>Create development log document</li>
+                    </ul>
+                    <h3>This Week (Days 1-7):</h3>
+                    <ul>
+                        <li>Move at least 3 tasks from "To Do" to "Done"</li>
+                        <li>Make daily commits to GitHub</li>
+                        <li>Update project board daily</li>
+                        <li>Track time spent on development</li>
+                        <li>Write weekly progress entry</li>
+                    </ul>
+                    <h3>Next Two Weeks:</h3>
+                    <ul>
+                        <li>Complete one full sprint</li>
+                        <li>Create and merge 2-3 pull requests</li>
+                        <li>Close 5-7 GitHub issues</li>
+                        <li>Prepare progress demo for supervisor</li>
+                        <li>Backup all work in multiple locations</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 30: Closing & Next Session -->
+            <section class="center">
+                <h2>Key Takeaways</h2>
+                <div class="highlight">
+                    <h3>Remember:</h3>
+                    <ul style="text-align: left; margin: 20px auto; max-width: 600px;">
+                        <li>GitHub is more than storage - use its full features</li>
+                        <li>Use branches for feature development</li>
+                        <li>Track work with issues and project boards</li>
+                        <li>Choose ONE project management tool and use it consistently</li>
+                        <li>Update boards and commit code regularly</li>
+                        <li>Document your development process</li>
+                        <li>These tools demonstrate professionalism in your report!</li>
+                    </ul>
+                </div>
+                <div class="task-box" style="margin: 20px auto; max-width: 600px;">
+                    <h3>🎯 Success Metrics</h3>
+                    <p><strong>By end of this week, you should have:</strong></p>
+                    <ul>
+                        <li>Active GitHub project board</li>
+                        <li>5+ open/closed issues</li>
+                        <li>At least 1 merged pull request</li>
+                        <li>Project management tool set up</li>
+                        <li>10+ task cards created</li>
+                        <li>Development log started</li>
+                    </ul>
+                </div>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Next Week:</strong> Doing Design Diagrams</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            progress: true,
+            controls: true,
+            center: false,
+            mouseWheel: true,
+            transition: 'slide',
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            display: 'block',
+            responsive: true,
+            mobileViewDistance: 2,
+            hideEmptyElements: true
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 10: Project Planning and Development</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+                <style>
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        
+        .reveal .slides section.center {
+            text-align: center;
+        }
+        
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+        
+        .reveal .slides section ul, .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+        
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+        
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        /* Code example styling */
+        .code-example {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.3;
+            max-height: 40vh;
+            overflow-y: auto;
+        }
+        
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+            
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+            
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+            
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+            
+            .task-box, .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+        
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+            <a href="../index.html" style="
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                display: inline-block;
+            " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'" 
+               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
+                ← Back to Module
+            </a>
+        </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="center">
+                <h1>Project Planning and Development</h1>
+                <h3>CMU422: Fundamentals of Web Design - Session 10</h3>
+                <p><strong>Birmingham Newman University</strong></p>
+                <p><em>Lecturer: James Williams</em></p>
+                <p>Building complete web applications</p>
+                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
+                <div class="timeline-info">
+                    <p><strong>Session Timeline:</strong></p>
+                    <ul>
+                        <li>10 min: Registration & waiting</li>
+                        <li>20 min: Opening slides</li>
+                        <li>45 min: Task 1</li>
+                        <li>15 min: Break/Catch up</li>
+                        <li>20 min: Secondary slides</li>
+                        <li>45 min: Task 2</li>
+                        <li>Remaining: Self-study</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section>
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand project planning methodologies</li>
+                    <li>Learn requirements gathering techniques</li>
+                    <li>Master project structure and organization</li>
+                    <li>Implement version control best practices</li>
+                    <li>Build complete web applications</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: Project Planning Fundamentals -->
+            <section>
+                <h2>Project Planning Fundamentals</h2>
+                <div class="highlight">
+                    <strong>Project Planning</strong> is the process of defining project scope, objectives, and deliverables
+                </div>
+                <ul>
+                    <li>Define project goals and objectives</li>
+                    <li>Identify stakeholders and requirements</li>
+                    <li>Create project timeline and milestones</li>
+                    <li>Allocate resources and budget</li>
+                    <li>Plan risk management strategies</li>
+                </ul>
+                <div class="code-example">
+                    // Project structure example<br>
+                    project-name/<br>
+                    &nbsp;&nbsp;├── src/<br>
+                    &nbsp;&nbsp;│   ├── html/<br>
+                    &nbsp;&nbsp;│   ├── css/<br>
+                    &nbsp;&nbsp;│   ├── js/<br>
+                    &nbsp;&nbsp;│   └── assets/<br>
+                    &nbsp;&nbsp;├── docs/<br>
+                    &nbsp;&nbsp;├── tests/<br>
+                    &nbsp;&nbsp;└── README.md
+                </div>
+            </section>
+
+            <!-- Slide 4: Requirements Gathering -->
+            <section>
+                <h2>Requirements Gathering</h2>
+                <div class="code-example">
+                    // Functional Requirements<br>
+                    - User can register and login<br>
+                    - User can create and edit posts<br>
+                    - User can upload images<br>
+                    - User can comment on posts<br>
+                    - User can search for content<br><br>
+                    // Non-Functional Requirements<br>
+                    - Page load time < 3 seconds<br>
+                    - Mobile responsive design<br>
+                    - Cross-browser compatibility<br>
+                    - Accessibility compliance<br>
+                    - Security requirements
+                </div>
+                <ul>
+                    <li>Functional requirements (what the system does)</li>
+                    <li>Non-functional requirements (how the system performs)</li>
+                    <li>User stories and use cases</li>
+                    <li>Acceptance criteria</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: User Stories -->
+            <section>
+                <h2>User Stories</h2>
+                <div class="code-example">
+                    // User Story Format<br>
+                    As a [type of user]<br>
+                    I want [goal/feature]<br>
+                    So that [benefit/value]<br><br>
+                    // Examples<br>
+                    As a registered user<br>
+                    I want to create a new post<br>
+                    So that I can share my thoughts with others<br><br>
+                    As a visitor<br>
+                    I want to search for content<br>
+                    So that I can find relevant information quickly<br><br>
+                    As an admin<br>
+                    I want to moderate comments<br>
+                    So that I can maintain community standards
+                </div>
+                <ul>
+                    <li>Focus on user perspective</li>
+                    <li>Include acceptance criteria</li>
+                    <li>Prioritize by business value</li>
+                    <li>Estimate effort and complexity</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Project Structure -->
+            <section>
+                <h2>Project Structure</h2>
+                <div class="code-example">
+                    // Recommended project structure<br>
+                    my-web-app/<br>
+                    &nbsp;&nbsp;├── index.html<br>
+                    &nbsp;&nbsp;├── pages/<br>
+                    &nbsp;&nbsp;│   ├── about.html<br>
+                    &nbsp;&nbsp;│   ├── contact.html<br>
+                    &nbsp;&nbsp;│   └── dashboard.html<br>
+                    &nbsp;&nbsp;├── css/<br>
+                    &nbsp;&nbsp;│   ├── main.css<br>
+                    &nbsp;&nbsp;│   ├── components.css<br>
+                    &nbsp;&nbsp;│   └── responsive.css<br>
+                    &nbsp;&nbsp;├── js/<br>
+                    &nbsp;&nbsp;│   ├── app.js<br>
+                    &nbsp;&nbsp;│   ├── utils.js<br>
+                    &nbsp;&nbsp;│   └── api.js<br>
+                    &nbsp;&nbsp;├── assets/<br>
+                    &nbsp;&nbsp;│   ├── images/<br>
+                    &nbsp;&nbsp;│   ├── icons/<br>
+                    &nbsp;&nbsp;│   └── fonts/<br>
+                    &nbsp;&nbsp;├── docs/<br>
+                    &nbsp;&nbsp;├── tests/<br>
+                    &nbsp;&nbsp;└── README.md
+                </div>
+                <ul>
+                    <li>Organize by file type and purpose</li>
+                    <li>Separate concerns (HTML, CSS, JS)</li>
+                    <li>Include documentation and tests</li>
+                    <li>Follow naming conventions</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Version Control with Git -->
+            <section>
+                <h2>Version Control with Git</h2>
+                <div class="code-example">
+                    // Initialize Git repository<br>
+                    git init<br>
+                    git add .<br>
+                    git commit -m "Initial commit"<br><br>
+                    // Create and switch branches<br>
+                    git checkout -b feature/user-authentication<br>
+                    git checkout -b bugfix/login-error<br><br>
+                    // Commit changes<br>
+                    git add .<br>
+                    git commit -m "Add user authentication feature"<br><br>
+                    // Merge branches<br>
+                    git checkout main<br>
+                    git merge feature/user-authentication<br><br>
+                    // Push to remote<br>
+                    git remote add origin https://github.com/user/repo.git<br>
+                    git push -u origin main
+                </div>
+                <ul>
+                    <li>Track changes and history</li>
+                    <li>Collaborate with team members</li>
+                    <li>Branch for features and fixes</li>
+                    <li>Rollback to previous versions</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Git Workflow -->
+            <section>
+                <h2>Git Workflow</h2>
+                <div class="code-example">
+                    // Feature Branch Workflow<br>
+                    1. Create feature branch from main<br>
+                    git checkout -b feature/new-feature<br><br>
+                    2. Make changes and commit<br>
+                    git add .<br>
+                    git commit -m "Add new feature"<br><br>
+                    3. Push to remote<br>
+                    git push origin feature/new-feature<br><br>
+                    4. Create Pull Request<br>
+                    5. Code review and merge<br>
+                    6. Delete feature branch<br><br>
+                    // Commit Message Convention<br>
+                    feat: add user authentication<br>
+                    fix: resolve login error<br>
+                    docs: update README<br>
+                    style: format code
+                </div>
+                <ul>
+                    <li>Feature branch workflow</li>
+                    <li>Pull request process</li>
+                    <li>Code review practices</li>
+                    <li>Commit message conventions</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Project Documentation -->
+            <section>
+                <h2>Project Documentation</h2>
+                <div class="code-example">
+                    // README.md structure<br>
+                    # Project Name<br><br>
+                    ## Description<br>
+                    Brief description of the project<br><br>
+                    ## Features<br>
+                    - Feature 1<br>
+                    - Feature 2<br><br>
+                    ## Installation<br>
+                    ```bash<br>
+                    git clone https://github.com/user/project.git<br>
+                    cd project<br>
+                    open index.html<br>
+                    ```<br><br>
+                    ## Usage<br>
+                    Instructions on how to use the application<br><br>
+                    ## Technologies Used<br>
+                    - HTML5<br>
+                    - CSS3<br>
+                    - JavaScript<br><br>
+                    ## Contributing<br>
+                    Guidelines for contributing to the project
+                </div>
+                <ul>
+                    <li>README file for project overview</li>
+                    <li>Installation and setup instructions</li>
+                    <li>API documentation</li>
+                    <li>Code comments and inline docs</li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Wireframing and Mockups -->
+            <section>
+                <h2>Wireframing and Mockups</h2>
+                <div class="highlight">
+                    <strong>Wireframes</strong> are low-fidelity sketches of the user interface
+                </div>
+                <ul>
+                    <li>Paper sketches for quick ideas</li>
+                    <li>Digital tools (Figma, Sketch, Adobe XD)</li>
+                    <li>Focus on layout and structure</li>
+                    <li>Include user flow diagrams</li>
+                    <li>Create responsive design mockups</li>
+                </ul>
+                <div class="code-example">
+                    // HTML wireframe example<br>
+                    &lt;div class="header"&gt;<br>
+                    &nbsp;&nbsp;&lt;nav&gt;Navigation&lt;/nav&gt;<br>
+                    &lt;/div&gt;<br>
+                    &lt;div class="main"&gt;<br>
+                    &nbsp;&nbsp;&lt;section class="hero"&gt;Hero Section&lt;/section&gt;<br>
+                    &nbsp;&nbsp;&lt;section class="content"&gt;Main Content&lt;/section&gt;<br>
+                    &lt;/div&gt;<br>
+                    &lt;div class="footer"&gt;Footer&lt;/div&gt;
+                </div>
+            </section>
+
+            <!-- Slide 11: Responsive Design Planning -->
+            <section>
+                <h2>Responsive Design Planning</h2>
+                <div class="code-example">
+                    // Mobile-first approach<br>
+                    /* Base styles (mobile) */<br>
+                    .container {<br>
+                    &nbsp;&nbsp;width: 100%;<br>
+                    &nbsp;&nbsp;padding: 10px;<br>
+                    }<br><br>
+                    /* Tablet styles */<br>
+                    @media (min-width: 768px) {<br>
+                    &nbsp;&nbsp;.container {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;max-width: 750px;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;margin: 0 auto;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    /* Desktop styles */<br>
+                    @media (min-width: 1024px) {<br>
+                    &nbsp;&nbsp;.container {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;max-width: 1200px;<br>
+                    &nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <ul>
+                    <li>Mobile-first design approach</li>
+                    <li>Breakpoint planning</li>
+                    <li>Flexible grid systems</li>
+                    <li>Touch-friendly interfaces</li>
+                </ul>
+            </section>
+
+            <!-- Slide 12: Development Workflow -->
+            <section>
+                <h2>Development Workflow</h2>
+                <div class="code-example">
+                    // Development phases<br>
+                    1. Planning & Design<br>
+                    &nbsp;&nbsp;- Requirements gathering<br>
+                    &nbsp;&nbsp;- Wireframing<br>
+                    &nbsp;&nbsp;- Project setup<br><br>
+                    2. Development<br>
+                    &nbsp;&nbsp;- HTML structure<br>
+                    &nbsp;&nbsp;- CSS styling<br>
+                    &nbsp;&nbsp;- JavaScript functionality<br><br>
+                    3. Testing<br>
+                    &nbsp;&nbsp;- Unit testing<br>
+                    &nbsp;&nbsp;- Integration testing<br>
+                    &nbsp;&nbsp;- User testing<br><br>
+                    4. Deployment<br>
+                    &nbsp;&nbsp;- Code review<br>
+                    &nbsp;&nbsp;- Production deployment<br>
+                    &nbsp;&nbsp;- Monitoring
+                </div>
+                <ul>
+                    <li>Iterative development process</li>
+                    <li>Continuous integration</li>
+                    <li>Testing at each phase</li>
+                    <li>Regular code reviews</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: Testing Strategies -->
+            <section>
+                <h2>Testing Strategies</h2>
+                <div class="code-example">
+                    // Unit testing example<br>
+                    describe('Calculator', () => {<br>
+                    &nbsp;&nbsp;test('adds two numbers correctly', () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(2, 3)).toBe(5);<br>
+                    &nbsp;&nbsp;});<br><br>
+                    &nbsp;&nbsp;test('handles negative numbers', () => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(-1, 1)).toBe(0);<br>
+                    &nbsp;&nbsp;});<br>
+                    });<br><br>
+                    // Integration testing<br>
+                    test('user registration flow', async () => {<br>
+                    &nbsp;&nbsp;const user = await registerUser({<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;email: 'test@example.com',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;password: 'password123'<br>
+                    &nbsp;&nbsp;});<br>
+                    &nbsp;&nbsp;expect(user.email).toBe('test@example.com');<br>
+                    });
+                </div>
+                <ul>
+                    <li>Unit testing for individual functions</li>
+                    <li>Integration testing for features</li>
+                    <li>End-to-end testing for user flows</li>
+                    <li>Manual testing and user feedback</li>
+                </ul>
+            </section>
+
+            <!-- Slide 14: Performance Optimization -->
+            <section>
+                <h2>Performance Optimization</h2>
+                <ul>
+                    <li>Image optimization and compression</li>
+                    <li>CSS and JavaScript minification</li>
+                    <li>Lazy loading for images</li>
+                    <li>Code splitting and bundling</li>
+                    <li>Caching strategies</li>
+                </ul>
+                <div class="code-example">
+                    // Image optimization<br>
+                    &lt;img src="image.jpg" loading="lazy" alt="Description"&gt;<br><br>
+                    // CSS optimization<br>
+                    /* Minified CSS */<br>
+                    .header{background:#fff;padding:20px}<br><br>
+                    // JavaScript optimization<br>
+                    // Use async/defer for scripts<br>
+                    &lt;script src="app.js" defer&gt;&lt;/script&gt;<br><br>
+                    // Caching headers<br>
+                    Cache-Control: max-age=31536000
+                </div>
+            </section>
+
+            <!-- Slide 15: Accessibility Planning -->
+            <section>
+                <h2>Accessibility Planning</h2>
+                <div class="code-example">
+                    // Semantic HTML<br>
+                    &lt;header&gt;Site header&lt;/header&gt;<br>
+                    &lt;nav&gt;Navigation&lt;/nav&gt;<br>
+                    &lt;main&gt;Main content&lt;/main&gt;<br>
+                    &lt;footer&gt;Site footer&lt;/footer&gt;<br><br>
+                    // ARIA attributes<br>
+                    &lt;button aria-label="Close dialog"&gt;×&lt;/button&gt;<br>
+                    &lt;div role="alert" aria-live="polite"&gt;Message&lt;/div&gt;<br><br>
+                    // Keyboard navigation<br>
+                    element.addEventListener('keydown', (event) => {<br>
+                    &nbsp;&nbsp;if (event.key === 'Enter' || event.key === ' ') {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;event.preventDefault();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;handleClick();<br>
+                    &nbsp;&nbsp;}<br>
+                    });
+                </div>
+                <ul>
+                    <li>Semantic HTML structure</li>
+                    <li>ARIA attributes for screen readers</li>
+                    <li>Keyboard navigation support</li>
+                    <li>Color contrast compliance</li>
+                    <li>Alt text for images</li>
+                </ul>
+            </section>
+
+            <!-- Slide 16: Security Considerations -->
+            <section>
+                <h2>Security Considerations</h2>
+                <ul>
+                    <li>Input validation and sanitization</li>
+                    <li>Cross-site scripting (XSS) prevention</li>
+                    <li>Cross-site request forgery (CSRF) protection</li>
+                    <li>Content Security Policy (CSP)</li>
+                    <li>HTTPS implementation</li>
+                </ul>
+                <div class="code-example">
+                    // Input validation<br>
+                    function validateInput(input) {<br>
+                    &nbsp;&nbsp;if (typeof input !== 'string') {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Invalid input type');<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;return input.replace(/[<>]/g, '');<br>
+                    }<br><br>
+                    // Content Security Policy<br>
+                    &lt;meta http-equiv="Content-Security-Policy"<br>
+                    &nbsp;&nbsp;content="default-src 'self'; script-src 'self' 'unsafe-inline'"&gt;<br><br>
+                    // HTTPS redirect<br>
+                    if (location.protocol !== 'https:') {<br>
+                    &nbsp;&nbsp;location.replace('https:' + location.href.substring(location.protocol.length));<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 17: Deployment Planning -->
+            <section>
+                <h2>Deployment Planning</h2>
+                <div class="code-example">
+                    // Deployment options<br>
+                    - GitHub Pages (free, static sites)<br>
+                    - Netlify (free tier, continuous deployment)<br>
+                    - Vercel (free tier, serverless)<br>
+                    - AWS S3 + CloudFront<br>
+                    - Traditional web hosting<br><br>
+                    // Environment variables<br>
+                    const apiUrl = process.env.API_URL || 'http://localhost:3000';<br>
+                    const apiKey = process.env.API_KEY;<br><br>
+                    // Build process<br>
+                    npm run build<br>
+                    npm run test<br>
+                    npm run deploy
+                </div>
+                <ul>
+                    <li>Choose appropriate hosting platform</li>
+                    <li>Set up continuous deployment</li>
+                    <li>Configure environment variables</li>
+                    <li>Monitor application performance</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: TASK 1 - Halfway Point -->
+            <section class="center">
+                <h2>Task 1: Project Planning Exercise</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a comprehensive project plan for a web application</li>
+                        <li>Choose one of these project ideas:</li>
+                        <ul>
+                            <li><strong>E-commerce Website:</strong> Online store with product catalog, shopping cart, and checkout</li>
+                            <li><strong>Blog Platform:</strong> Content management system with user authentication and commenting</li>
+                            <li><strong>Task Management App:</strong> Project management tool with team collaboration features</li>
+                            <li><strong>Portfolio Website:</strong> Personal portfolio with projects showcase and contact form</li>
+                        </ul>
+                        <li>Complete the following planning documents:</li>
+                        <ul>
+                            <li>Project overview and objectives</li>
+                            <li>User stories and requirements</li>
+                            <li>Wireframes and mockups (paper or digital)</li>
+                            <li>Project structure and file organization</li>
+                            <li>Technology stack and dependencies</li>
+                            <li>Development timeline and milestones</li>
+                        </ul>
+                        <li>Set up version control with Git</li>
+                        <li>Create initial project structure</li>
+                        <li>Write comprehensive README.md</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand project planning and organization</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Break/Catch Up -->
+            <section class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Agile Development -->
+            <section>
+                <h2>Agile Development</h2>
+                <ul>
+                    <li>Sprint planning and backlog management</li>
+                    <li>Daily standups and progress tracking</li>
+                    <li>Sprint reviews and retrospectives</li>
+                    <li>Continuous improvement</li>
+                </ul>
+                <div class="code-example">
+                    // Sprint planning example<br>
+                    Sprint 1 (Week 1-2):<br>
+                    - User authentication system<br>
+                    - Basic navigation structure<br>
+                    - Homepage layout<br><br>
+                    Sprint 2 (Week 3-4):<br>
+                    - Product catalog<br>
+                    - Shopping cart functionality<br>
+                    - User profile management<br><br>
+                    Sprint 3 (Week 5-6):<br>
+                    - Checkout process<br>
+                    - Payment integration<br>
+                    - Order management
+                </div>
+            </section>
+
+            <!-- Slide 21: Code Quality and Standards -->
+            <section>
+                <h2>Code Quality and Standards</h2>
+                <ul>
+                    <li>Coding standards and style guides</li>
+                    <li>Code review processes</li>
+                    <li>Linting and formatting tools</li>
+                    <li>Documentation requirements</li>
+                </ul>
+                <div class="code-example">
+                    // ESLint configuration<br>
+                    {<br>
+                    &nbsp;&nbsp;"extends": ["eslint:recommended"],<br>
+                    &nbsp;&nbsp;"rules": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"indent": ["error", 2],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"quotes": ["error", "single"],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"semi": ["error", "always"]<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    // Prettier configuration<br>
+                    {<br>
+                    &nbsp;&nbsp;"tabWidth": 2,<br>
+                    &nbsp;&nbsp;"singleQuote": true,<br>
+                    &nbsp;&nbsp;"trailingComma": "es5"<br>
+                    }
+                </div>
+            </section>
+
+            <!-- Slide 22: Team Collaboration -->
+            <section>
+                <h2>Team Collaboration</h2>
+                <ul>
+                    <li>Communication tools and platforms</li>
+                    <li>Code sharing and pair programming</li>
+                    <li>Conflict resolution strategies</li>
+                    <li>Knowledge sharing practices</li>
+                </ul>
+                <div class="code-example">
+                    // Branch naming conventions<br>
+                    feature/user-authentication<br>
+                    bugfix/login-error<br>
+                    hotfix/security-patch<br>
+                    release/v1.0.0<br><br>
+                    // Commit message format<br>
+                    feat: add user authentication<br>
+                    fix: resolve login error<br>
+                    docs: update README<br>
+                    style: format code<br><br>
+                    // Pull request template<br>
+                    ## Description<br>
+                    Brief description of changes<br><br>
+                    ## Testing<br>
+                    Steps to test the changes<br><br>
+                    ## Checklist<br>
+                    - [ ] Code follows style guidelines<br>
+                    - [ ] Tests pass<br>
+                    - [ ] Documentation updated
+                </div>
+            </section>
+
+            <!-- Slide 23: Project Monitoring -->
+            <section>
+                <h2>Project Monitoring</h2>
+                <ul>
+                    <li>Progress tracking and metrics</li>
+                    <li>Issue tracking and bug reports</li>
+                    <li>Performance monitoring</li>
+                    <li>User feedback collection</li>
+                </ul>
+                <div class="code-example">
+                    // Issue tracking template<br>
+                    ## Bug Report<br>
+                    **Description:** Brief description of the bug<br>
+                    **Steps to reproduce:**<br>
+                    1. Step 1<br>
+                    2. Step 2<br>
+                    3. Step 3<br>
+                    **Expected behavior:** What should happen<br>
+                    **Actual behavior:** What actually happens<br>
+                    **Environment:** Browser, OS, etc.<br><br>
+                    // Performance monitoring<br>
+                    // Google Analytics<br>
+                    gtag('config', 'GA_MEASUREMENT_ID');<br><br>
+                    // Custom performance tracking<br>
+                    performance.mark('app-start');<br>
+                    performance.measure('app-load', 'app-start');
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section class="center">
+                <h2>Task 2: Complete Web Application</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Build a complete web application based on your project plan from Task 1</li>
+                        <li>Implement all planned features and functionality</li>
+                        <li>Follow best practices:</li>
+                        <ul>
+                            <li><strong>Code Organization:</strong> Modular structure with separate concerns</li>
+                            <li><strong>Version Control:</strong> Regular commits with meaningful messages</li>
+                            <li><strong>Testing:</strong> Unit tests for core functionality</li>
+                            <li><strong>Documentation:</strong> Comprehensive README and code comments</li>
+                            <li><strong>Responsive Design:</strong> Mobile-first approach</li>
+                            <li><strong>Accessibility:</strong> WCAG compliance</li>
+                        </ul>
+                        <li>Include advanced features:</li>
+                        <ul>
+                            <li>User authentication and authorization</li>
+                            <li>Data persistence (localStorage or mock API)</li>
+                            <li>Form validation and error handling</li>
+                            <li>Search and filtering functionality</li>
+                            <li>Responsive navigation and layout</li>
+                            <li>Performance optimization</li>
+                        </ul>
+                        <li>Deploy the application to a hosting platform</li>
+                        <li>Create a presentation showcasing your work</li>
+                        <li>Prepare for code review and feedback</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand complete web application development</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Project planning is essential for successful development</li>
+                    <li>Version control enables collaboration and history tracking</li>
+                    <li>Testing ensures quality and reliability</li>
+                    <li>Documentation helps maintain and scale projects</li>
+                    <li>Performance and accessibility are crucial for user experience</li>
+                    <li>Continuous improvement leads to better outcomes</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>Advanced Topics and Future Trends - Exploring modern web development</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+        <script>
+                Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            touch: true,
+            loop: false,
+            rtl: false,
+            navigationMode: 'default',
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            preloadIframes: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: null,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideEmptyElements: true,
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            // Ensure content is always visible
+            fitToParent: true,
+            // Better responsive behavior
+            responsive: true,
+            // Allow content to scroll within slides
+            scrollBeyondOnePage: true
+        });
+    </script>
+</body>
+</html>
