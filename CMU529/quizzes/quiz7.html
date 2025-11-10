@@ -3,412 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz 7: PHP Database Connectivity - Birmingham Newman University</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        
+    <title>Quiz 7: PHP Database Connectivity - Newman University</title>
+    <link rel="stylesheet" href="../../base.css">
+    <link rel="stylesheet" href="../../placeholder/quiz.css">    <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            min-height: 100vh;
+            max-width: 900px;
+            margin: 2em auto;
+            padding: 2em;
         }
         
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            min-height: 100vh;
-            box-shadow: 0 0 50px rgba(0,0,0,0.1);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 30px 40px;
+        .quiz-header {
             text-align: center;
+            margin-bottom: 3em;
+            padding-bottom: 2em;
+            border-bottom: 1px solid #e0e0e0;
         }
         
-        .header h1 {
-            margin: 0;
-            font-size: 2.2em;
-            font-weight: 300;
+        .quiz-header h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
         }
         
-        .header .subtitle {
+        .quiz-header .subtitle {
+            color: #666;
             font-size: 1.1em;
-            margin-top: 10px;
-            opacity: 0.9;
-        }
-        
-        .quiz-content {
-            padding: 40px;
         }
         
         .quiz-info {
-            background: #e3f2fd;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 5px solid #2196f3;
+            background: #f8f8f8;
+            padding: 1.5em;
+            margin-bottom: 2em;
+            border-left: 3px solid #2c3e50;
         }
         
         .question {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border: 2px solid #e9ecef;
-            display: none;
+            background: #fff;
+            padding: 2em;
+            margin-bottom: 2em;
+            border: 1px solid #e0e0e0;
         }
         
-        .question.active {
-            display: block;
-            border-color: #ff6b6b;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.1);
+        .question-number {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 1em;
         }
         
-        .question h3 {
-            color: #333;
-            margin-top: 0;
-            margin-bottom: 20px;
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 1.5em;
+            line-height: 1.6;
         }
         
         .options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 0.8em;
         }
         
         .option {
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
+            padding: 1em;
+            border: 1px solid #ddd;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
+            transition: all 0.2s;
         }
         
         .option:hover {
-            border-color: #ff6b6b;
-            background: #f8f9ff;
+            background: #f8f8f8;
+            border-color: #2c3e50;
         }
         
         .option.selected {
-            border-color: #ff6b6b;
-            background: #e3f2fd;
+            background: #e8f0f8;
+            border-color: #2c3e50;
         }
         
         .option.correct {
+            background: #e8f5e9;
             border-color: #4caf50;
-            background: #e8f5e8;
+            border-width: 2px;
         }
         
         .option.incorrect {
-            border-color: #f44336;
             background: #ffebee;
+            border-color: #f44336;
+            border-width: 2px;
         }
         
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding: 20px 0;
+        .explanation {
+            margin-top: 1em;
+            padding: 1em;
+            background: #f0f7ff;
+            border-left: 3px solid #2196f3;
+            display: none;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .submit-container {
+            text-align: center;
+            margin: 3em 0 2em 0;
         }
         
         .btn {
-            padding: 12px 25px;
+            padding: 1em 2.5em;
+            background: #2c3e50;
+            color: white;
             border: none;
-            border-radius: 8px;
             cursor: pointer;
             font-size: 1em;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            transition: background 0.2s;
         }
         
-        .btn-primary {
-            background: #ff6b6b;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #ee5a24;
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
+        .btn:hover {
+            background: #1a252f;
         }
         
         .btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
-        }
-        
-        .progress-bar {
-            background: #e9ecef;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
-            height: 100%;
-            transition: width 0.3s ease;
         }
         
         .results {
             display: none;
             text-align: center;
-            padding: 40px;
+            padding: 3em;
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
         }
         
-        .score-display {
+        .results.show {
+            display: block;
+        }
+        
+        .score {
             font-size: 3em;
             font-weight: bold;
-            color: #ff6b6b;
-            margin-bottom: 20px;
+            color: #2c3e50;
+            margin-bottom: 0.5em;
         }
         
         .feedback {
             font-size: 1.2em;
-            margin-bottom: 30px;
+            margin-bottom: 2em;
+            color: #666;
         }
         
-        .timer {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                margin: 0;
-            }
-            
-            .quiz-content {
-                padding: 20px;
-            }
-            
-            .navigation {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .timer {
-                position: static;
-                text-align: center;
-                margin-bottom: 20px;
-            }
+        .results-buttons {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            flex-wrap: wrap;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Quiz 7: PHP Database Connectivity</h1>
-            <div class="subtitle">Birmingham Newman University | CMU529: Advanced Web Development</div>
-        </div>
-        
-        <div class="quiz-content">
-            <div class="quiz-info">
-                <h3>Quiz Instructions</h3>
-                <p><strong>Questions:</strong> 15 | <strong>Time Limit:</strong> 20 minutes | <strong>Passing Score:</strong> 70%</p>
-                <p>Test your understanding of Session 7 content. Select the best answer for each question.</p>
-            </div>
-            
-            <div class="timer" id="timer">Time: 20:00</div>
-            
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress"></div>
-            </div>
-            
-            <div id="questions-container">
-                <!-- Questions will be populated by JavaScript -->
-            </div>
-            
-            <div class="navigation">
-                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
-                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
-            </div>
-        </div>
-        
-        <div class="results" id="results">
-            <div class="score-display" id="scoreDisplay"></div>
-            <div class="feedback" id="feedback"></div>
-            <button class="btn btn-primary" onclick="restartQuiz()">Take Quiz Again</button>
-            <button class="btn btn-secondary" onclick="window.location.href='../index.html'">Back to Module</button>
+    <div class="quiz-header">
+        <h1>Quiz 7: PHP Database Connectivity</h1>
+        <div class="subtitle">Newman University | CMU529: Advanced Web Development</div>
+    </div>
+    
+    <div class="quiz-info">
+        <p><strong>Instructions:</strong> Answer all questions below. Questions are randomized each time. Click "Submit Quiz" when finished to see your results.</p>
+    </div>
+    
+    <div id="quiz-container">
+        <!-- Questions will be populated by JavaScript -->
+    </div>
+    
+    <div class="submit-container">
+        <button class="btn" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+    </div>
+    
+    <div class="results" id="results">
+        <div class="score" id="scoreDisplay"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="results-buttons">
+            <button class="btn" onclick="location.reload()">Retake Quiz</button>
+            <button class="btn" onclick="window.location.href='../index.html'">Back to Module</button>
         </div>
     </div>
 
     <script>
-        const questions = [{"question":"Which PHP extension is used for MySQL connections?","options":["PDO","mysqli","mysql","All of the above"],"correct":3,"explanation":"All three can be used, but PDO and mysqli are recommended."},{"question":"What is the purpose of PDO?","options":["Database abstraction layer","To create databases","To store data","To validate data"],"correct":0,"explanation":"PDO (PHP Data Objects) is a database abstraction layer."},{"question":"Which method is used to connect to MySQL with PDO?","options":["new PDO()","connect()","open()","link()"],"correct":0,"explanation":"new PDO() creates a new PDO instance for database connection."},{"question":"What is the purpose of prepared statements?","options":["To prevent SQL injection","To create tables","To store data","To validate data"],"correct":0,"explanation":"Prepared statements prevent SQL injection attacks."},{"question":"Which method executes a prepared statement?","options":["execute()","run()","start()","go()"],"correct":0,"explanation":"execute() executes a prepared statement."},{"question":"What is the purpose of fetch() method?","options":["To retrieve a row","To insert data","To update data","To delete data"],"correct":0,"explanation":"fetch() retrieves the next row from a result set."},{"question":"Which fetch mode returns an associative array?","options":["PDO::FETCH_ASSOC","PDO::FETCH_NUM","PDO::FETCH_BOTH","PDO::FETCH_OBJ"],"correct":0,"explanation":"PDO::FETCH_ASSOC returns an associative array."},{"question":"What is the purpose of rowCount()?","options":["To count affected rows","To count total rows","To count columns","To count tables"],"correct":0,"explanation":"rowCount() returns the number of rows affected by the last statement."},{"question":"Which method begins a transaction?","options":["beginTransaction()","start()","begin()","transaction()"],"correct":0,"explanation":"beginTransaction() begins a database transaction."},{"question":"What is the purpose of commit()?","options":["To commit a transaction","To rollback a transaction","To start a transaction","To end a transaction"],"correct":0,"explanation":"commit() commits the current transaction."},{"question":"Which method rolls back a transaction?","options":["rollback()","undo()","cancel()","reverse()"],"correct":0,"explanation":"rollback() rolls back the current transaction."},{"question":"What is the purpose of lastInsertId()?","options":["To get the last inserted ID","To get the last updated ID","To get the last deleted ID","To get the last query ID"],"correct":0,"explanation":"lastInsertId() returns the ID of the last inserted row."},{"question":"Which method closes the database connection?","options":["null","close()","end()","disconnect()"],"correct":0,"explanation":"Setting the PDO object to null closes the connection."},{"question":"What is the purpose of errorInfo()?","options":["To get error information","To create errors","To handle errors","To log errors"],"correct":0,"explanation":"errorInfo() returns error information about the last operation."},{"question":"Which method sets error mode?","options":["setAttribute()","setErrorMode()","setMode()","setError()"],"correct":0,"explanation":"setAttribute() with PDO::ATTR_ERRMODE sets the error mode."}];
-
-        let currentQuestion = 0;
-        let userAnswers = new Array(questions.length).fill(null);
-        let timeLeft = 20 * 60; // 20 minutes in seconds
-        let timerInterval;
-
-        function initQuiz() {
-            displayQuestion();
-            startTimer();
-            updateProgress();
+        const questionsData = [
+        {
+                "question": "Which PHP extension is used for MySQL connections?",
+                "options": [
+                        "PDO",
+                        "mysqli",
+                        "mysql",
+                        "All of the above"
+                ],
+                "correct": 3,
+                "explanation": "All three can be used, but PDO and mysqli are recommended."
+        },
+        {
+                "question": "What is the purpose of PDO?",
+                "options": [
+                        "Database abstraction layer",
+                        "To create databases",
+                        "To store data",
+                        "To validate data"
+                ],
+                "correct": 0,
+                "explanation": "PDO (PHP Data Objects) is a database abstraction layer."
+        },
+        {
+                "question": "Which method is used to connect to MySQL with PDO?",
+                "options": [
+                        "new PDO()",
+                        "connect()",
+                        "open()",
+                        "link()"
+                ],
+                "correct": 0,
+                "explanation": "new PDO() creates a new PDO instance for database connection."
+        },
+        {
+                "question": "What is the purpose of prepared statements?",
+                "options": [
+                        "To prevent SQL injection",
+                        "To create tables",
+                        "To store data",
+                        "To validate data"
+                ],
+                "correct": 0,
+                "explanation": "Prepared statements prevent SQL injection attacks."
+        },
+        {
+                "question": "Which method executes a prepared statement?",
+                "options": [
+                        "execute()",
+                        "run()",
+                        "start()",
+                        "go()"
+                ],
+                "correct": 0,
+                "explanation": "execute() executes a prepared statement."
+        },
+        {
+                "question": "What is the purpose of fetch() method?",
+                "options": [
+                        "To retrieve a row",
+                        "To insert data",
+                        "To update data",
+                        "To delete data"
+                ],
+                "correct": 0,
+                "explanation": "fetch() retrieves the next row from a result set."
+        },
+        {
+                "question": "Which fetch mode returns an associative array?",
+                "options": [
+                        "PDO::FETCH_ASSOC",
+                        "PDO::FETCH_NUM",
+                        "PDO::FETCH_BOTH",
+                        "PDO::FETCH_OBJ"
+                ],
+                "correct": 0,
+                "explanation": "PDO::FETCH_ASSOC returns an associative array."
+        },
+        {
+                "question": "What is the purpose of rowCount()?",
+                "options": [
+                        "To count affected rows",
+                        "To count total rows",
+                        "To count columns",
+                        "To count tables"
+                ],
+                "correct": 0,
+                "explanation": "rowCount() returns the number of rows affected by the last statement."
+        },
+        {
+                "question": "Which method begins a transaction?",
+                "options": [
+                        "beginTransaction()",
+                        "start()",
+                        "begin()",
+                        "transaction()"
+                ],
+                "correct": 0,
+                "explanation": "beginTransaction() begins a database transaction."
+        },
+        {
+                "question": "What is the purpose of commit()?",
+                "options": [
+                        "To commit a transaction",
+                        "To rollback a transaction",
+                        "To start a transaction",
+                        "To end a transaction"
+                ],
+                "correct": 0,
+                "explanation": "commit() commits the current transaction."
+        },
+        {
+                "question": "Which method rolls back a transaction?",
+                "options": [
+                        "rollback()",
+                        "undo()",
+                        "cancel()",
+                        "reverse()"
+                ],
+                "correct": 0,
+                "explanation": "rollback() rolls back the current transaction."
+        },
+        {
+                "question": "What is the purpose of lastInsertId()?",
+                "options": [
+                        "To get the last inserted ID",
+                        "To get the last updated ID",
+                        "To get the last deleted ID",
+                        "To get the last query ID"
+                ],
+                "correct": 0,
+                "explanation": "lastInsertId() returns the ID of the last inserted row."
+        },
+        {
+                "question": "Which method closes the database connection?",
+                "options": [
+                        "null",
+                        "close()",
+                        "end()",
+                        "disconnect()"
+                ],
+                "correct": 0,
+                "explanation": "Setting the PDO object to null closes the connection."
+        },
+        {
+                "question": "What is the purpose of errorInfo()?",
+                "options": [
+                        "To get error information",
+                        "To create errors",
+                        "To handle errors",
+                        "To log errors"
+                ],
+                "correct": 0,
+                "explanation": "errorInfo() returns error information about the last operation."
+        },
+        {
+                "question": "Which method sets error mode?",
+                "options": [
+                        "setAttribute()",
+                        "setErrorMode()",
+                        "setMode()",
+                        "setError()"
+                ],
+                "correct": 0,
+                "explanation": "setAttribute() with PDO::ATTR_ERRMODE sets the error mode."
         }
-
-        function displayQuestion() {
-            const container = document.getElementById('questions-container');
-            const question = questions[currentQuestion];
-            
-            container.innerHTML = `
-                <div class="question active">
-                    <h3>Question ${currentQuestion + 1} of ${questions.length}</h3>
-                    <p>${question.question}</p>
+];
+        
+        // Shuffle array function
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        // Randomize questions on page load
+        const questions = shuffleArray(questionsData);
+        let userAnswers = new Array(questions.length).fill(null);
+        
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = questions.map((q, qIndex) => `
+                <div class="question" id="question-${qIndex}">
+                    <div class="question-number">Question ${qIndex + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
                     <div class="options">
-                        ${question.options.map((option, index) => `
-                            <div class="option ${userAnswers[currentQuestion] === index ? 'selected' : ''}" 
-                                 onclick="selectOption(${index})">
+                        ${q.options.map((option, oIndex) => `
+                            <div class="option" data-question="${qIndex}" data-option="${oIndex}" onclick="selectOption(${qIndex}, ${oIndex})">
                                 ${option}
                             </div>
                         `).join('')}
                     </div>
+                    <div class="explanation" id="explanation-${qIndex}">
+                        <strong>Explanation:</strong> ${q.explanation || 'No explanation provided.'}
+                    </div>
                 </div>
-            `;
-            
-            updateNavigation();
+            `).join('');
         }
-
-        function selectOption(optionIndex) {
-            userAnswers[currentQuestion] = optionIndex;
-            
-            // Update visual selection
-            const options = document.querySelectorAll('.option');
-            options.forEach((option, index) => {
-                option.classList.remove('selected');
-                if (index === optionIndex) {
-                    option.classList.add('selected');
-                }
+        
+        function selectOption(questionIndex, optionIndex) {
+            // Deselect all options for this question
+            document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                opt.classList.remove('selected');
             });
             
-            updateNavigation();
+            // Select the clicked option
+            event.target.classList.add('selected');
+            userAnswers[questionIndex] = optionIndex;
         }
-
-        function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                displayQuestion();
-                updateProgress();
-            } else {
-                finishQuiz();
+        
+        function submitQuiz() {
+            // Check if all questions are answered
+            if (userAnswers.includes(null)) {
+                alert('Please answer all questions before submitting.');
+                return;
             }
-        }
-
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                displayQuestion();
-                updateProgress();
-            }
-        }
-
-        function updateNavigation() {
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
             
-            prevBtn.disabled = currentQuestion === 0;
-            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next';
-        }
-
-        function updateProgress() {
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progress').style.width = progress + '%';
-        }
-
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
+            // Calculate score
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const isCorrect = userAnswers[index] === q.correct;
+                if (isCorrect) correct++;
                 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    finishQuiz();
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            document.getElementById('timer').textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function finishQuiz() {
-            clearInterval(timerInterval);
+                // Show correct/incorrect
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                options.forEach((opt, oIndex) => {
+                    opt.style.cursor = 'default';
+                    opt.onclick = null;
+                    
+                    if (oIndex === q.correct) {
+                        opt.classList.add('correct');
+                    } else if (oIndex === userAnswers[index]) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+                
+                // Show explanation
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
             
-            const score = calculateScore();
-            const percentage = Math.round((score / questions.length) * 100);
+            // Display results
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('scoreDisplay').textContent = `${correct}/${questions.length} (${percentage}%)`;
             
-            document.querySelector('.quiz-content').style.display = 'none';
-            document.getElementById('timer').style.display = 'none';
-            
-            const resultsDiv = document.getElementById('results');
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            const feedback = document.getElementById('feedback');
-            
-            scoreDisplay.textContent = `${score}/${questions.length} (${percentage}%)`;
-            
+            let feedbackText = '';
             if (percentage >= 90) {
-                feedback.textContent = "Excellent! You have mastered this topic.";
+                feedbackText = 'Excellent work! You have demonstrated mastery of this material.';
             } else if (percentage >= 80) {
-                feedback.textContent = "Great job! You have a strong understanding of this topic.";
+                feedbackText = 'Very good! You have a strong understanding of the concepts.';
             } else if (percentage >= 70) {
-                feedback.textContent = "Good work! You understand the basics of this topic.";
+                feedbackText = 'Good effort. You have grasped the fundamentals.';
+            } else if (percentage >= 60) {
+                feedbackText = 'Fair performance. Review the material to strengthen your understanding.';
             } else {
-                feedback.textContent = "Keep studying! Review the material and try again.";
+                feedbackText = 'Additional study is recommended. Review the session materials carefully.';
             }
             
-            resultsDiv.style.display = 'block';
-        }
-
-        function calculateScore() {
-            let score = 0;
-            for (let i = 0; i < questions.length; i++) {
-                if (userAnswers[i] === questions[i].correct) {
-                    score++;
-                }
-            }
-            return score;
-        }
-
-        function restartQuiz() {
-            currentQuestion = 0;
-            userAnswers = new Array(questions.length).fill(null);
-            timeLeft = 20 * 60;
+            document.getElementById('feedback').textContent = feedbackText;
+            document.getElementById('results').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
             
-            document.querySelector('.quiz-content').style.display = 'block';
-            document.getElementById('timer').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            
-            initQuiz();
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
-
-        // Initialize quiz when page loads
+        
+        // Initialize quiz on page load
         window.onload = initQuiz;
     </script>
-</body>
+    <script src="../../placeholder/quiz.js"></script></body>
 </html>

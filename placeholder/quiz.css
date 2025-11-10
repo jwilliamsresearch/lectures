@@ -1,0 +1,152 @@
+/* Shared quiz styles: simple, scientific/academic look */
+body.quiz-page {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: #222;
+    background: #ffffff;
+}
+
+.quiz-wrapper {
+    max-width: 900px;
+    margin: 2em auto;
+    padding: 2em;
+}
+
+.quiz-header {
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.quiz-header h1 {
+    font-size: 1.8em;
+    margin: 0;
+}
+
+.quiz-header .subtitle {
+    color: #666;
+    font-size: 0.95em;
+}
+
+.quiz-info {
+    background: #fbfbfb;
+    padding: 1em;
+    border-left: 3px solid #2c3e50;
+    margin-bottom: 1.5em
+}
+
+.question {
+    background: #fff;
+    padding: 1.25em;
+    margin-bottom: 1.25em;
+    border: 1px solid #e6e6e6
+}
+
+.question-number {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 0.5em
+}
+
+.question-text {
+    font-size: 1.05em;
+    line-height: 1.6
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    margin-top: 0.8em
+}
+
+.option {
+    padding: 0.85em;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.15s
+}
+
+.option:hover {
+    background: #f5f8fb;
+    border-color: #2c3e50
+}
+
+.option.selected {
+    background: #e8f0f8;
+    border-color: #2c3e50
+}
+
+.option.correct {
+    background: #e8f5e9;
+    border-color: #4caf50;
+    border-width: 2px
+}
+
+.option.incorrect {
+    background: #ffebee;
+    border-color: #f44336;
+    border-width: 2px
+}
+
+.explanation {
+    margin-top: 0.75em;
+    padding: 0.8em;
+    background: #f0f7ff;
+    border-left: 3px solid #2196f3;
+    display: none
+}
+
+.explanation.show {
+    display: block
+}
+
+.submit-container {
+    text-align: center;
+    margin: 1.5em 0
+}
+
+.btn {
+    padding: 0.8em 1.8em;
+    background: #2c3e50;
+    color: #fff;
+    border: none;
+    cursor: pointer
+}
+
+.btn:disabled {
+    opacity: 0.5
+}
+
+.results {
+    display: none;
+    text-align: center;
+    padding: 1.5em;
+    background: #fbfbfb;
+    border: 1px solid #e6e6e6
+}
+
+.results.show {
+    display: block
+}
+
+.score {
+    font-size: 2em;
+    font-weight: 700;
+    color: #2c3e50
+}
+
+.feedback {
+    color: #666;
+    margin-bottom: 1em
+}
+
+/* small screens */
+@media (max-width:600px) {
+    .quiz-wrapper {
+        padding: 1em;
+        margin: 1em
+    }
+
+    .question-text {
+        font-size: 1em
+    }
+}
