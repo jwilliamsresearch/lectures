@@ -2,133 +2,203 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMU422: Fundamentals of Web Design | James Williams | Birmingham Newman University
-    </title>
-    <meta name="description"
-        content="CMU422 Fundamentals of Web Design course by James Williams at Birmingham Newman University. Learn HTML5, CSS3, JavaScript.">
-    <meta name="author" content="James Williams">
-    <link rel="stylesheet" href="../base.css">
-    <style>
-        .back-link {
-            display: inline-block;
-            margin-bottom: var(--spacing-md);
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-    </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CMU422: Fundamentals of Web Design | James Williams | Birmingham Newman University
+        </title>
+        <meta name="description"
+                content="CMU422 Fundamentals of Web Design course by James Williams at Birmingham Newman University. Learn HTML5, CSS3, JavaScript.">
+        <meta name="author" content="James Williams">
+        <link rel="stylesheet" href="../base.css">
+        <style>
+                .back-link {
+                        display: inline-block;
+                        margin-bottom: var(--spacing-md);
+                        color: var(--text-muted);
+                        font-size: 0.875rem;
+                }
+        </style>
 </head>
 
 <body>
-    <div class="container">
-        <a href="../index.html" class="back-link">← Back to Teaching Portfolio</a>
-        <header class="header">
-            <div class="module-code">CMU422</div>
-            <h1>Fundamentals of Web Design</h1>
-            <p class="subtitle">HTML5, CSS3 & JavaScript</p>
-            <p class="department">Birmingham Newman University | 20 Credits | Undergraduate</p>
-        </header>
-        <main>
-            <section class="info-box">
-                <h3>Module Overview</h3>
-                <p>Master the essentials of modern web design with HTML5, CSS3, and JavaScript.
-                    Build responsive, accessible websites for real clients while learning
-                    industry-standard practices.</p>
-            </section>
-            <nav class="tabs">
-                <button class="tab active" onclick="showTab('slides')">Slides</button>
-                <button class="tab" onclick="showTab('quizzes')">Quizzes</button>
-                <button class="tab" onclick="showTab('resources')">Resources</button>
-            </nav>
-            <div id="slides" class="tab-content active">
-                <h3>Lecture Slides</h3>
-                <ul class="sessions-list">
-                    <li class="session-item"><span class="session-number">1.</span><a
-                            href="slideshows/session1.html" class="session-title">Introduction to HTML</a><span class="text-light"> — Web fundamentals and HTML
-                            basics</span></li>
-                    <li class="session-item"><span class="session-number">2.</span><a
-                            href="slideshows/session2.html" class="session-title">HTML Forms and Input</a><span class="text-light"> — Semantic HTML and
-                            accessibility</span></li>
-                    <li class="session-item"><span class="session-number">3.</span><a
-                            href="slideshows/session3.html" class="session-title">CSS
-                            Fundamentals</a><span class="text-light"> — Selectors and
-                            properties</span></li>
-                    <li class="session-item"><span class="session-number">4.</span><a
-                            href="slideshows/session4.html" class="session-title">CSS Layout and Box Model</a><span class="text-light"> — Flexbox and Grid</span></li>
-                    <li class="session-item"><span class="session-number">5.</span><a
-                            href="slideshows/session5.html" class="session-title">CSS Flexbox and Grid</a><span class="text-light"> — Media queries and
-                            mobile-first</span></li>
-                    <li class="session-item"><span class="session-number">6.</span><a
-                            href="slideshows/session6.html" class="session-title">JavaScript Basics</a><span class="text-light"> — Variables and
-                            functions</span></li>
-                    <li class="session-item"><span class="session-number">7.</span><a
-                            href="slideshows/session7.html" class="session-title">JavaScript Events and Interactivity</a><span class="text-light"> — Event handling</span></li>
-                    <li class="session-item"><span class="session-number">8.</span><a
-                            href="slideshows/session8.html" class="session-title">JavaScript Advanced Concepts</a><span class="text-light"> — Client-side validation</span>
-                    </li>
-                    <li class="session-item"><span class="session-number">9.</span><a
-                            href="slideshows/session9.html" class="session-title">Web APIs and External Libraries</a><span class="text-light"> — Smooth interactions</span>
-                    </li>
-                    <li class="session-item"><span class="session-number">10.</span><a
-                            href="slideshows/session10.html" class="session-title">Project Planning and Development</a><span class="text-light"> — Optimization
-                            techniques</span></li>
-                    <li class="session-item"><span class="session-number">11.</span><a
-                            href="slideshows/session11.html" class="session-title">Advanced Topics and Future Trends</a><span class="text-light"> — WCAG guidelines</span></li>
-                    <li class="session-item"><span class="session-number">12.</span><a
-                            href="slideshows/session12.html" class="session-title">Final Project and Assessment</a><span class="text-light"> — Professional workflow</span>
-                    </li>
-                </ul>
-            </div>
-            <div id="quizzes" class="tab-content">
-                <h3>Module Quizzes</h3>
-                <ul class="quizzes-list">
-                    <li class="quiz-item"><span class="quiz-number">Q1.</span><a
-                            href="quizzes/quiz1.html">Introduction to HTML</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q2.</span><a
-                            href="quizzes/quiz2.html">HTML Forms and Input</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q3.</span><a
-                            href="quizzes/quiz3.html">CSS Fundamentals</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q4.</span><a
-                            href="quizzes/quiz4.html">CSS Layout and Box Model</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q5.</span><a
-                            href="quizzes/quiz5.html">CSS Flexbox and Grid</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q6.</span><a
-                            href="quizzes/quiz6.html">JavaScript Basics</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q7.</span><a
-                            href="quizzes/quiz7.html">JavaScript Events and Interactivity</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q8.</span><a
-                            href="quizzes/quiz8.html">JavaScript Advanced Concepts</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q9.</span><a
-                            href="quizzes/quiz9.html">Web APIs and External Libraries</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q10.</span><a
-                            href="quizzes/quiz10.html">Project Planning and Development</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q11.</span><a
-                            href="quizzes/quiz11.html">Advanced Topics and Future Trends</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q12.</span><a
-                            href="quizzes/quiz12.html">Final Project and Assessment</a></li>
-                </ul>
-            </div>
-            <div id="resources" class="tab-content">
-                <h3>Resources</h3>
-                <div class="content-section">
-                    <h4>Documentation</h4>
-                    <ul>
-                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML"
-                                target="_blank">MDN HTML Reference</a></li>
-                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS"
-                                target="_blank">MDN CSS Reference</a></li>
-                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-                                target="_blank">MDN JavaScript Guide</a></li>
-                    </ul>
-                </div>
-            </div>
-        </main>
-        <footer class="footer">
-            <p>&copy; 2025 James Williams, Birmingham Newman University</p>
-        </footer>
-    </div>
-    <script>function showTab(t) { document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active')); document.querySelectorAll('.tab').forEach(e => e.classList.remove('active')); document.getElementById(t).classList.add('active'); event.target.classList.add('active'); }</script>
+        <div class="container">
+                <a href="../index.html" class="back-link">← Back to Teaching Portfolio</a>
+                <header class="header">
+                        <div class="module-code">CMU422</div>
+                        <h1>Fundamentals of Web Design</h1>
+                        <p class="subtitle">HTML5, CSS3 & JavaScript</p>
+                        <p class="department">Birmingham Newman University | 20 Credits |
+                                Undergraduate</p>
+                </header>
+                <main>
+                        <section class="info-box">
+                                <h3>Module Overview</h3>
+                                <p>Master the essentials of modern web design with HTML5, CSS3, and
+                                        JavaScript.
+                                        Build responsive, accessible websites for real clients while
+                                        learning
+                                        industry-standard practices.</p>
+                        </section>
+                        <nav class="tabs">
+                                <button class="tab active"
+                                        onclick="showTab('slides')">Slides</button>
+                                <button class="tab" onclick="showTab('quizzes')">Quizzes</button>
+                                <button class="tab"
+                                        onclick="showTab('resources')">Resources</button>
+                        </nav>
+                        <div id="slides" class="tab-content active">
+                                <h3>Lecture Slides</h3>
+                                <ul class="sessions-list">
+                                        <li class="session-item"><span
+                                                        class="session-number">1.</span><a
+                                                        href="slideshows/session1.html"
+                                                        class="session-title">Introduction to
+                                                        HTML</a><span class="text-light"> — Web
+                                                        fundamentals and HTML
+                                                        basics</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">2.</span><a
+                                                        href="slideshows/session2.html"
+                                                        class="session-title">HTML Forms and
+                                                        Input</a><span class="text-light"> —
+                                                        Semantic HTML and
+                                                        accessibility</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">3.</span><a
+                                                        href="slideshows/session3.html"
+                                                        class="session-title">CSS
+                                                        Fundamentals</a><span class="text-light"> —
+                                                        Selectors and
+                                                        properties</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">4.</span><a
+                                                        href="slideshows/session4.html"
+                                                        class="session-title">CSS Layout and Box
+                                                        Model</a><span class="text-light"> — Flexbox
+                                                        and Grid</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">5.</span><a
+                                                        href="slideshows/session5.html"
+                                                        class="session-title">CSS Flexbox and
+                                                        Grid</a><span class="text-light"> — Media
+                                                        queries and
+                                                        mobile-first</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">6.</span><a
+                                                        href="slideshows/session6.html"
+                                                        class="session-title">JavaScript
+                                                        Basics</a><span class="text-light"> —
+                                                        Variables and
+                                                        functions</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">7.</span><a
+                                                        href="slideshows/session7.html"
+                                                        class="session-title">JavaScript Events and
+                                                        Interactivity</a><span class="text-light"> —
+                                                        Event handling</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">8.</span><a
+                                                        href="slideshows/session8.html"
+                                                        class="session-title">JavaScript Advanced
+                                                        Concepts</a><span class="text-light"> —
+                                                        Client-side validation</span>
+                                        </li>
+                                        <li class="session-item"><span
+                                                        class="session-number">9.</span><a
+                                                        href="slideshows/session9.html"
+                                                        class="session-title">Web APIs and External
+                                                        Libraries</a><span class="text-light"> —
+                                                        Smooth interactions</span>
+                                        </li>
+                                        <li class="session-item"><span
+                                                        class="session-number">10.</span><a
+                                                        href="slideshows/session10.html"
+                                                        class="session-title">Project Planning and
+                                                        Development</a><span class="text-light"> —
+                                                        Optimization
+                                                        techniques</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">11.</span><a
+                                                        href="slideshows/session11.html"
+                                                        class="session-title">Advanced Topics and
+                                                        Future Trends</a><span class="text-light"> —
+                                                        WCAG guidelines</span></li>
+                                        <li class="session-item"><span
+                                                        class="session-number">12.</span><a
+                                                        href="slideshows/session12.html"
+                                                        class="session-title">Final Project and
+                                                        Assessment</a><span class="text-light"> —
+                                                        Professional workflow</span>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div id="quizzes" class="tab-content">
+                                <h3>Module Quizzes</h3>
+                                <ul class="quizzes-list">
+                                        <li class="quiz-item"><span class="quiz-number">Q1.</span><a
+                                                        href="quizzes/quiz1.html">Introduction to
+                                                        HTML</a></li>
+                                        <li class="quiz-item"><span class="quiz-number">Q2.</span><a
+                                                        href="quizzes/quiz2.html">HTML Forms and
+                                                        Input</a></li>
+                                        <li class="quiz-item"><span class="quiz-number">Q3.</span><a
+                                                        href="quizzes/quiz3.html">CSS
+                                                        Fundamentals</a></li>
+                                        <li class="quiz-item"><span class="quiz-number">Q4.</span><a
+                                                        href="quizzes/quiz4.html">CSS Layout and Box
+                                                        Model</a></li>
+                                        <li class="quiz-item"><span class="quiz-number">Q5.</span><a
+                                                        href="quizzes/quiz5.html">CSS Flexbox and
+                                                        Grid</a></li>
+                                        <li class="quiz-item"><span class="quiz-number">Q6.</span><a
+                                                        href="quizzes/quiz6.html">JavaScript
+                                                        Basics</a></li>
+                                        <li class="quiz-item"><span class="quiz-number">Q7.</span><a
+                                                        href="quizzes/quiz7.html">JavaScript Events
+                                                        and Interactivity</a></li>
+                                        <li class="quiz-item"><span class="quiz-number">Q8.</span><a
+                                                        href="quizzes/quiz8.html">JavaScript
+                                                        Advanced Concepts</a></li>
+                                        <li class="quiz-item"><span class="quiz-number">Q9.</span><a
+                                                        href="quizzes/quiz9.html">Web APIs and
+                                                        External Libraries</a></li>
+                                        <li class="quiz-item"><span
+                                                        class="quiz-number">Q10.</span><a
+                                                        href="quizzes/quiz10.html">Project Planning
+                                                        and Development</a></li>
+                                        <li class="quiz-item"><span
+                                                        class="quiz-number">Q11.</span><a
+                                                        href="quizzes/quiz11.html">Advanced Topics
+                                                        and Future Trends</a></li>
+                                        <li class="quiz-item"><span
+                                                        class="quiz-number">Q12.</span><a
+                                                        href="quizzes/quiz12.html">Final Project and
+                                                        Assessment</a></li>
+                                </ul>
+                        </div>
+                        <div id="resources" class="tab-content">
+                                <h3>Resources</h3>
+                                <div class="content-section">
+                                        <h4>Documentation</h4>
+                                        <ul>
+                                                <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML"
+                                                                target="_blank">MDN HTML
+                                                                Reference</a></li>
+                                                <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS"
+                                                                target="_blank">MDN CSS
+                                                                Reference</a></li>
+                                                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                                                                target="_blank">MDN JavaScript
+                                                                Guide</a></li>
+                                        </ul>
+                                </div>
+                        </div>
+                </main>
+                <footer class="footer">
+                        <p>&copy; 2025 James Williams, Birmingham Newman University</p>
+                </footer>
+        </div>
+        <script>function showTab(t) { document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active')); document.querySelectorAll('.tab').forEach(e => e.classList.remove('active')); document.getElementById(t).classList.add('active'); event.target.classList.add('active'); }</script>
 </body>
 
 </html>
