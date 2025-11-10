@@ -2,253 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 1: Module Introduction & Web Architecture</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+    <title>CMM721 - Session 1: Module Introduction & Web Architecture</title>
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
 
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
-
-        /* Task box styling - Masters Purple Theme */
-        .task-box {
-            background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%);
-            border: 2px solid #9b59b6;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-            box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1);
-        }
-
-        /* Code example styling - Dark theme for Masters level */
-        .code-example {
-            background: #2c3e50;
-            color: #ecf0f1;
-            border: 1px solid #34495e;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.4;
-            max-height: 40vh;
-            overflow-y: auto;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Highlight styling - Purple accent for Masters */
-        .highlight {
-            background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%);
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #9b59b6;
-            margin: 10px 0;
-            box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2);
-        }
-
-        /* Timeline info styling */
-        .timeline-info {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-
-        .timeline-info ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .timeline-info li {
-            margin-bottom: 0.2em;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .reveal .slides section {
-                padding: 15px;
-            }
-
-            .reveal .slides section h1 {
-                font-size: 2em;
-            }
-
-            .reveal .slides section h2 {
-                font-size: 1.6em;
-            }
-
-            .reveal .slides section h3 {
-                font-size: 1.3em;
-            }
-
-            .task-box,
-            .code-example {
-                font-size: 0.9em;
-                padding: 15px;
-            }
-        }
-
-        /* Custom scrollbar for better UX */
-        .reveal .slides section::-webkit-scrollbar,
-        .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-track,
-        .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb,
-        .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb:hover,
-        .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Interactive content styling */
-        .interactive-content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .interactive-content h3 {
-            color: #2196f3;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .video-container,
-        .codepen-container {
-            position: relative;
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .video-container iframe,
-        .codepen-container iframe {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container iframe:hover,
-        .codepen-container iframe:hover {
-            transform: scale(1.02);
-        }
-
-        .interactive-description {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-            font-style: italic;
-        }
-    </style>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
-            ← Back to Module
-        </a>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="../index.html" title="Previous Session">&lt;</a>
+        <a href="session2.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <!-- Slide 1: Title -->
-            <section class="center">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
                 <h1>Module Introduction & Web Architecture</h1>
-                <h3>CMM721: Web Application Development - Session 1</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Masters Level Conversion Course</p>
-                <p><small>3-hour session • 16 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Session 1</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand the CMM721 module structure and assessment requirements</li>
@@ -259,8 +46,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 3: CMM721 Module Overview -->
-            <section>
+            <section data-slide-title="CMM721: Web Application Development">
                 <h2>CMM721: Web Application Development</h2>
                 <div class="highlight">
                     <strong>Masters Level Conversion Course - Full-Stack Development</strong>
@@ -275,8 +61,7 @@
                 <p>This module prepares conversion students for professional full-stack web development careers, emphasising industry-standard practices and modern development workflows.</p>
             </section>
 
-            <!-- Slide 4: Assessment Structure -->
-            <section>
+            <section data-slide-title="Assessment Structure">
                 <h2>Assessment Structure</h2>
                 <div class="task-box">
                     <h3>Portfolio (60%)</h3>
@@ -296,8 +81,7 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Development Tools -->
-            <section>
+            <section data-slide-title="Essential Development Tools">
                 <h2>Essential Development Tools</h2>
                 <h3>Code Editors & IDEs</h3>
                 <ul>
@@ -317,8 +101,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 6: Web Architecture Fundamentals -->
-            <section>
+            <section data-slide-title="Web Architecture Fundamentals">
                 <h2>Web Architecture Fundamentals</h2>
                 <div class="highlight">
                     <strong>Client-Server Architecture</strong>
@@ -331,23 +114,22 @@
                     <li><strong>Full-Stack:</strong> Frontend + Backend + Database integration</li>
                 </ul>
                 <div class="code-example">
-                    Client (Browser) → HTTP Request → Server (Django) → Database Query<br>
-                    ↓<br>
-                    Database Response → Server Processing → HTTP Response → Client Renders
+                    <pre><code class="language-python">Client (Browser) → HTTP Request → Server (Django) → Database Query
+↓
+Database Response → Server Processing → HTTP Response → Client Renders</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 7: HTTP Protocol -->
-            <section>
+            <section data-slide-title="HTTP Protocol Basics">
                 <h2>HTTP Protocol Basics</h2>
                 <h3>HTTP Methods (CRUD Operations)</h3>
                 <div class="code-example">
-                    GET    /api/users/         # Retrieve list of users<br>
-                    GET    /api/users/1/       # Retrieve specific user<br>
-                    POST   /api/users/         # Create new user<br>
-                    PUT    /api/users/1/       # Update entire user record<br>
-                    PATCH  /api/users/1/       # Partial update<br>
-                    DELETE /api/users/1/       # Delete user
+                    <pre><code class="language-http">GET    /api/users/         # Retrieve list of users
+GET    /api/users/1/       # Retrieve specific user
+POST   /api/users/         # Create new user
+PUT    /api/users/1/       # Update entire user record
+PATCH  /api/users/1/       # Partial update
+DELETE /api/users/1/       # Delete user</code></pre>
                 </div>
                 <h3>HTTP Status Codes</h3>
                 <ul>
@@ -359,8 +141,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 8: Full-Stack Development Stack -->
-            <section>
+            <section data-slide-title="Full-Stack Development Stack">
                 <h2>Full-Stack Development Stack</h2>
                 <div class="task-box">
                     <h3>Frontend (Client-Side)</h3>
@@ -382,8 +163,7 @@
                 </div>
             </section>
 
-            <!-- Slide 9: Task 1 - Environment Setup -->
-            <section>
+            <section data-slide-title="Task 1: Development Environment Setup">
                 <h2>Task 1: Development Environment Setup</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -408,34 +188,32 @@
                 </div>
             </section>
 
-            <!-- Slide 10: Project Structure -->
-            <section>
+            <section data-slide-title="Recommended Project Structure">
                 <h2>Recommended Project Structure</h2>
                 <div class="code-example">
-                    my-web-app/<br>
-                    ├── frontend/                # React application<br>
-                    │   ├── public/<br>
-                    │   ├── src/<br>
-                    │   │   ├── components/      # Reusable UI components<br>
-                    │   │   ├── pages/           # Page-level components<br>
-                    │   │   ├── services/        # API service functions<br>
-                    │   │   └── styles/          # CSS/SCSS files<br>
-                    │   └── package.json<br>
-                    ├── backend/                 # Django application<br>
-                    │   ├── app/                 # Main Django app<br>
-                    │   │   ├── models.py        # Database models<br>
-                    │   │   ├── views.py         # View functions/classes<br>
-                    │   │   ├── serializers.py   # DRF serializers<br>
-                    │   │   └── urls.py          # URL routing<br>
-                    │   ├── manage.py<br>
-                    │   └── requirements.txt     # Python dependencies<br>
-                    ├── .gitignore<br>
-                    └── README.md
+                    <pre><code class="language-javascript">my-web-app/
+├── frontend/                # React application
+│   ├── public/
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Page-level components
+│   │   ├── services/        # API service functions
+│   │   └── styles/          # CSS/SCSS files
+│   └── package.json
+├── backend/                 # Django application
+│   ├── app/                 # Main Django app
+│   │   ├── models.py        # Database models
+│   │   ├── views.py         # View functions/classes
+│   │   ├── serializers.py   # DRF serializers
+│   │   └── urls.py          # URL routing
+│   ├── manage.py
+│   └── requirements.txt     # Python dependencies
+├── .gitignore
+└── README.md</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 11: Modern Development Workflow -->
-            <section>
+            <section data-slide-title="Modern Development Workflow">
                 <h2>Modern Development Workflow</h2>
                 <ol>
                     <li><strong>Plan:</strong> Define requirements, user stories, and architecture</li>
@@ -451,8 +229,7 @@
                 </div>
             </section>
 
-            <!-- Slide 12: Task 2 - HTTP Request/Response -->
-            <section>
+            <section data-slide-title="Task 2: Understanding HTTP">
                 <h2>Task 2: Understanding HTTP</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -479,8 +256,7 @@
                 </div>
             </section>
 
-            <!-- Slide 13: Web Development Best Practices -->
-            <section>
+            <section data-slide-title="Web Development Best Practices">
                 <h2>Web Development Best Practices</h2>
                 <h3>Code Organization</h3>
                 <ul>
@@ -498,8 +274,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 14: Security Considerations -->
-            <section>
+            <section data-slide-title="Security Considerations">
                 <h2>Security Considerations</h2>
                 <div class="highlight">
                     <strong>Security by Design - OWASP Top 10</strong>
@@ -516,8 +291,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 15: Next Session Preview -->
-            <section>
+            <section data-slide-title="Next Session: HTML5 & Semantic Structure">
                 <h2>Next Session: HTML5 & Semantic Structure</h2>
                 <ul>
                     <li>Semantic HTML5 elements and document structure</li>
@@ -529,39 +303,47 @@
                 <p><strong>Preparation:</strong> Review HTML fundamentals and think about accessible web design principles.</p>
             </section>
 
-            <!-- Slide 16: Q&A -->
-            <section class="center">
+            <section data-slide-title="Questions & Discussion" class="center">
                 <h2>Questions & Discussion</h2>
                 <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
                 <p><strong>Office Hours:</strong> By appointment</p>
                 <p><strong>Resources:</strong> Moodle, GitHub Classroom</p>
                 <p>Thank you for your attention!</p>
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
         Reveal.initialize({
             hash: true,
             slideNumber: true,
-            progress: true,
-            controls: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            mouseWheel: true,
-            transition: 'slide',
-            // Full-width configuration
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            display: 'block',
-            // Better responsive behavior
-            responsive: true,
-            // Mobile settings
-            mobileViewDistance: 2,
-            hideEmptyElements: true
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

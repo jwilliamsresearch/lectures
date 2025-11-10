@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 7: PHP Database Connectivity</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style>
         .reveal .slides section {
             text-align: left;
@@ -14,7 +18,6 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        .reveal .slides section.center { text-align: center; }
         .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
         .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
         .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
@@ -31,16 +34,13 @@
             overflow-y: auto;
         }
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
         .highlight {
             background: #fff3cd;
@@ -78,76 +78,41 @@
         /* Custom scrollbar styling */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-    </style>
+        </style>
 </head>
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease;
-            display: inline-block;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" 
-           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-            ← Back to Module
-        </a>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session6.html" title="Previous Session">&lt;</a>
+        <a href="session8.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 7</div>
                 <h1>PHP Database Connectivity</h1>
-                <h3>CMU529: Advanced Web Development - Session 7</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Connecting PHP to MySQL, CRUD operations, prepared statements</p>
-                <p><small>3-hour session • 22 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Connect PHP to MySQL databases</li>
                     <li>Perform CRUD operations with PHP</li>
@@ -158,28 +123,25 @@
             </section>
 
             <!-- Slide 3: Database Connection -->
-            <section>
-                <h2>Database Connection</h2>
+            <section data-slide-title="Database Connection"><h2>Database Connection</h2>
                 <div class="code-example">
-                    Basic Database Connection:<br><br>
-                    
-                    &lt;?php<br>
-                    // Database configuration<br>
-                    $host = "localhost";<br>
-                    $username = "root";<br>
-                    $password = "";<br>
-                    $database = "ecommerce";<br><br>
-                    
-                    // Create connection<br>
-                    try {<br>
-                    &nbsp;&nbsp;$pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);<br>
-                    &nbsp;&nbsp;$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);<br>
-                    &nbsp;&nbsp;echo "Connected successfully";<br>
-                    } catch(PDOException $e) {<br>
-                    &nbsp;&nbsp;echo "Connection failed: " . $e->getMessage();<br>
-                    }<br>
-                    ?&gt;
-                </div>
+                <pre><code class="language-php">Basic Database Connection:
+&lt;?php
+// Database configuration
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "ecommerce";
+// Create connection
+try {
+  $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+  $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  echo "Connected successfully";
+} catch(PDOException $e) {
+  echo "Connection failed: " . $e-&gt;getMessage();
+}
+?&gt;</code></pre>
+            </div>
                 <ul>
                     <li>PDO provides database abstraction</li>
                     <li>Exception handling for errors</li>
@@ -188,25 +150,21 @@
             </section>
 
             <!-- Slide 4: Basic Queries -->
-            <section>
-                <h2>Basic Queries</h2>
+            <section data-slide-title="Basic Queries"><h2>Basic Queries</h2>
                 <div class="code-example">
-                    Simple SELECT Query:<br><br>
-                    
-                    // Get all products<br>
-                    $stmt = $pdo->query("SELECT * FROM products");<br>
-                    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);<br><br>
-                    
-                    // Display products<br>
-                    foreach ($products as $product) {<br>
-                    &nbsp;&nbsp;echo "Name: " . $product['name'] . "&lt;br&gt;";<br>
-                    &nbsp;&nbsp;echo "Price: $" . $product['price'] . "&lt;br&gt;";<br>
-                    }<br><br>
-                    
-                    // Get single product<br>
-                    $stmt = $pdo->query("SELECT * FROM products WHERE id = 1");<br>
-                    $product = $stmt->fetch(PDO::FETCH_ASSOC);
-                </div>
+                <pre><code class="language-php">Simple SELECT Query:
+// Get all products
+$stmt = $pdo-&gt;query("SELECT * FROM products");
+$products = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);
+// Display products
+foreach ($products as $product) {
+  echo "Name: " . $product['name'] . "&lt;br&gt;";
+  echo "Price: $" . $product['price'] . "&lt;br&gt;";
+}
+// Get single product
+$stmt = $pdo-&gt;query("SELECT * FROM products WHERE id = 1");
+$product = $stmt-&gt;fetch(PDO::FETCH_ASSOC);</code></pre>
+            </div>
                 <ul>
                     <li>Use query() for simple queries</li>
                     <li>fetchAll() gets all results</li>
@@ -215,25 +173,21 @@
             </section>
 
             <!-- Slide 5: Prepared Statements -->
-            <section>
-                <h2>Prepared Statements</h2>
+            <section data-slide-title="Prepared Statements"><h2>Prepared Statements</h2>
                 <div class="code-example">
-                    Secure Database Queries:<br><br>
-                    
-                    // User registration with prepared statement<br>
-                    $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");<br><br>
-                    
-                    $username = $_POST['username'];<br>
-                    $email = $_POST['email'];<br>
-                    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);<br><br>
-                    
-                    try {<br>
-                    &nbsp;&nbsp;$stmt->execute([$username, $email, $password]);<br>
-                    &nbsp;&nbsp;echo "User registered successfully";<br>
-                    } catch(PDOException $e) {<br>
-                    &nbsp;&nbsp;echo "Error: " . $e->getMessage();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Secure Database Queries:
+// User registration with prepared statement
+$stmt = $pdo-&gt;prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+$username = $_POST['username'];
+$email = $_POST['email'];
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+try {
+  $stmt-&gt;execute([$username, $email, $password]);
+  echo "User registered successfully";
+} catch(PDOException $e) {
+  echo "Error: " . $e-&gt;getMessage();
+}</code></pre>
+            </div>
                 <ul>
                     <li>Prevents SQL injection attacks</li>
                     <li>Separates data from SQL logic</li>
@@ -242,26 +196,22 @@
             </section>
 
             <!-- Slide 6: INSERT Operations -->
-            <section>
-                <h2>INSERT Operations</h2>
+            <section data-slide-title="INSERT Operations"><h2>INSERT Operations</h2>
                 <div class="code-example">
-                    Adding New Records:<br><br>
-                    
-                    // Insert new product<br>
-                    $stmt = $pdo->prepare("INSERT INTO products (name, price, description) VALUES (?, ?, ?)");<br><br>
-                    
-                    $name = "Laptop";<br>
-                    $price = 999.99;<br>
-                    $description = "High-performance laptop";<br><br>
-                    
-                    try {<br>
-                    &nbsp;&nbsp;$stmt->execute([$name, $price, $description]);<br>
-                    &nbsp;&nbsp;$productId = $pdo->lastInsertId();<br>
-                    &nbsp;&nbsp;echo "Product added with ID: " . $productId;<br>
-                    } catch(PDOException $e) {<br>
-                    &nbsp;&nbsp;echo "Insert failed: " . $e->getMessage();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Adding New Records:
+// Insert new product
+$stmt = $pdo-&gt;prepare("INSERT INTO products (name, price, description) VALUES (?, ?, ?)");
+$name = "Laptop";
+$price = 999.99;
+$description = "High-performance laptop";
+try {
+  $stmt-&gt;execute([$name, $price, $description]);
+  $productId = $pdo-&gt;lastInsertId();
+  echo "Product added with ID: " . $productId;
+} catch(PDOException $e) {
+  echo "Insert failed: " . $e-&gt;getMessage();
+}</code></pre>
+            </div>
                 <ul>
                     <li>Use prepared statements for security</li>
                     <li>lastInsertId() gets the new record ID</li>
@@ -270,28 +220,24 @@
             </section>
 
             <!-- Slide 7: SELECT with Conditions -->
-            <section>
-                <h2>SELECT with Conditions</h2>
+            <section data-slide-title="SELECT with Conditions"><h2>SELECT with Conditions</h2>
                 <div class="code-example">
-                    Filtered Queries:<br><br>
-                    
-                    // Get products by category<br>
-                    $category = "electronics";<br>
-                    $stmt = $pdo->prepare("SELECT * FROM products WHERE category = ?");<br>
-                    $stmt->execute([$category]);<br>
-                    $products = $stmt->fetchAll();<br><br>
-                    
-                    // Get expensive products<br>
-                    $minPrice = 500;<br>
-                    $stmt = $pdo->prepare("SELECT * FROM products WHERE price > ? ORDER BY price DESC");<br>
-                    $stmt->execute([$minPrice]);<br>
-                    $expensiveProducts = $stmt->fetchAll();<br><br>
-                    
-                    // Search products<br>
-                    $searchTerm = "%laptop%";<br>
-                    $stmt = $pdo->prepare("SELECT * FROM products WHERE name LIKE ?");<br>
-                    $stmt->execute([$searchTerm]);
-                </div>
+                <pre><code class="language-php">Filtered Queries:
+// Get products by category
+$category = "electronics";
+$stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE category = ?");
+$stmt-&gt;execute([$category]);
+$products = $stmt-&gt;fetchAll();
+// Get expensive products
+$minPrice = 500;
+$stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE price &gt; ? ORDER BY price DESC");
+$stmt-&gt;execute([$minPrice]);
+$expensiveProducts = $stmt-&gt;fetchAll();
+// Search products
+$searchTerm = "%laptop%";
+$stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE name LIKE ?");
+$stmt-&gt;execute([$searchTerm]);</code></pre>
+            </div>
                 <ul>
                     <li>Use WHERE clauses for filtering</li>
                     <li>ORDER BY for sorting results</li>
@@ -300,29 +246,24 @@
             </section>
 
             <!-- Slide 8: UPDATE Operations -->
-            <section>
-                <h2>UPDATE Operations</h2>
+            <section data-slide-title="UPDATE Operations"><h2>UPDATE Operations</h2>
                 <div class="code-example">
-                    Modifying Records:<br><br>
-                    
-                    // Update product price<br>
-                    $productId = 1;<br>
-                    $newPrice = 899.99;<br><br>
-                    
-                    $stmt = $pdo->prepare("UPDATE products SET price = ? WHERE id = ?");<br>
-                    $stmt->execute([$newPrice, $productId]);<br><br>
-                    
-                    // Update multiple fields<br>
-                    $stmt = $pdo->prepare("UPDATE products SET name = ?, price = ?, description = ? WHERE id = ?");<br>
-                    $stmt->execute(["Gaming Laptop", 1299.99, "High-end gaming laptop", $productId]);<br><br>
-                    
-                    // Check if update was successful<br>
-                    if ($stmt->rowCount() > 0) {<br>
-                    &nbsp;&nbsp;echo "Product updated successfully";<br>
-                    } else {<br>
-                    &nbsp;&nbsp;echo "No product found with that ID";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Modifying Records:
+// Update product price
+$productId = 1;
+$newPrice = 899.99;
+$stmt = $pdo-&gt;prepare("UPDATE products SET price = ? WHERE id = ?");
+$stmt-&gt;execute([$newPrice, $productId]);
+// Update multiple fields
+$stmt = $pdo-&gt;prepare("UPDATE products SET name = ?, price = ?, description = ? WHERE id = ?");
+$stmt-&gt;execute(["Gaming Laptop", 1299.99, "High-end gaming laptop", $productId]);
+// Check if update was successful
+if ($stmt-&gt;rowCount() &gt; 0) {
+  echo "Product updated successfully";
+} else {
+  echo "No product found with that ID";
+}</code></pre>
+            </div>
                 <ul>
                     <li>rowCount() shows affected rows</li>
                     <li>Always use WHERE clause</li>
@@ -331,28 +272,24 @@
             </section>
 
             <!-- Slide 9: DELETE Operations -->
-            <section>
-                <h2>DELETE Operations</h2>
+            <section data-slide-title="DELETE Operations"><h2>DELETE Operations</h2>
                 <div class="code-example">
-                    Removing Records:<br><br>
-                    
-                    // Delete product by ID<br>
-                    $productId = 5;<br>
-                    $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");<br>
-                    $stmt->execute([$productId]);<br><br>
-                    
-                    // Delete multiple records<br>
-                    $category = "old_products";<br>
-                    $stmt = $pdo->prepare("DELETE FROM products WHERE category = ?");<br>
-                    $stmt->execute([$category]);<br><br>
-                    
-                    // Check deletion result<br>
-                    if ($stmt->rowCount() > 0) {<br>
-                    &nbsp;&nbsp;echo "Deleted " . $stmt->rowCount() . " products";<br>
-                    } else {<br>
-                    &nbsp;&nbsp;echo "No products found to delete";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Removing Records:
+// Delete product by ID
+$productId = 5;
+$stmt = $pdo-&gt;prepare("DELETE FROM products WHERE id = ?");
+$stmt-&gt;execute([$productId]);
+// Delete multiple records
+$category = "old_products";
+$stmt = $pdo-&gt;prepare("DELETE FROM products WHERE category = ?");
+$stmt-&gt;execute([$category]);
+// Check deletion result
+if ($stmt-&gt;rowCount() &gt; 0) {
+  echo "Deleted " . $stmt-&gt;rowCount() . " products";
+} else {
+  echo "No products found to delete";
+}</code></pre>
+            </div>
                 <ul>
                     <li>Always use WHERE clause</li>
                     <li>Be careful with DELETE operations</li>
@@ -361,30 +298,26 @@
             </section>
 
             <!-- Slide 10: Error Handling -->
-            <section>
-                <h2>Error Handling</h2>
+            <section data-slide-title="Error Handling"><h2>Error Handling</h2>
                 <div class="code-example">
-                    Database Error Management:<br><br>
-                    
-                    try {<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO orders (user_id, total) VALUES (?, ?)");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId, $total]);<br>
-                    &nbsp;&nbsp;$orderId = $pdo->lastInsertId();<br><br>
-                    
-                    &nbsp;&nbsp;// Insert order items<br>
-                    &nbsp;&nbsp;foreach ($items as $item) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)");<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute([$orderId, $item['id'], $item['quantity']]);<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;$pdo->commit();<br>
-                    &nbsp;&nbsp;echo "Order placed successfully";<br>
-                    } catch(PDOException $e) {<br>
-                    &nbsp;&nbsp;$pdo->rollback();<br>
-                    &nbsp;&nbsp;error_log("Database error: " . $e->getMessage());<br>
-                    &nbsp;&nbsp;echo "Order failed. Please try again.";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Database Error Management:
+try {
+  $stmt = $pdo-&gt;prepare("INSERT INTO orders (user_id, total) VALUES (?, ?)");
+  $stmt-&gt;execute([$userId, $total]);
+  $orderId = $pdo-&gt;lastInsertId();
+  // Insert order items
+  foreach ($items as $item) {
+    $stmt = $pdo-&gt;prepare("INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)");
+    $stmt-&gt;execute([$orderId, $item['id'], $item['quantity']]);
+  }
+  $pdo-&gt;commit();
+  echo "Order placed successfully";
+} catch(PDOException $e) {
+  $pdo-&gt;rollback();
+  error_log("Database error: " . $e-&gt;getMessage());
+  echo "Order failed. Please try again.";
+}</code></pre>
+            </div>
                 <ul>
                     <li>Use try-catch for database operations</li>
                     <li>Log errors for debugging</li>
@@ -393,8 +326,7 @@
             </section>
 
             <!-- Slide 11: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Basic CRUD Operations</h2>
+            <section data-slide-title="Task 1: Basic CRUD Operations" class="center"><h2>Task 1: Basic CRUD Operations</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -417,8 +349,7 @@
             </section>
 
             <!-- Slide 12: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -427,26 +358,22 @@
             </section>
 
             <!-- Slide 13: Joins -->
-            <section>
-                <h2>Database Joins</h2>
+            <section data-slide-title="Database Joins"><h2>Database Joins</h2>
                 <div class="code-example">
-                    Joining Tables:<br><br>
-                    
-                    // Get products with category names<br>
-                    $stmt = $pdo->prepare("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id");<br>
-                    $stmt->execute();<br>
-                    $products = $stmt->fetchAll();<br><br>
-                    
-                    // Get orders with user details<br>
-                    $stmt = $pdo->prepare("SELECT o.*, u.username FROM orders o INNER JOIN users u ON o.user_id = u.id WHERE o.user_id = ?");<br>
-                    $stmt->execute([$userId]);<br>
-                    $orders = $stmt->fetchAll();<br><br>
-                    
-                    // Display joined data<br>
-                    foreach ($products as $product) {<br>
-                    &nbsp;&nbsp;echo "Product: " . $product['name'] . " - Category: " . $product['category_name'] . "&lt;br&gt;";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Joining Tables:
+// Get products with category names
+$stmt = $pdo-&gt;prepare("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id");
+$stmt-&gt;execute();
+$products = $stmt-&gt;fetchAll();
+// Get orders with user details
+$stmt = $pdo-&gt;prepare("SELECT o.*, u.username FROM orders o INNER JOIN users u ON o.user_id = u.id WHERE o.user_id = ?");
+$stmt-&gt;execute([$userId]);
+$orders = $stmt-&gt;fetchAll();
+// Display joined data
+foreach ($products as $product) {
+  echo "Product: " . $product['name'] . " - Category: " . $product['category_name'] . "&lt;br&gt;";
+}</code></pre>
+            </div>
                 <ul>
                     <li>LEFT JOIN includes all left table records</li>
                     <li>INNER JOIN only includes matching records</li>
@@ -455,29 +382,24 @@
             </section>
 
             <!-- Slide 14: Aggregation -->
-            <section>
-                <h2>Aggregation Functions</h2>
+            <section data-slide-title="Aggregation Functions"><h2>Aggregation Functions</h2>
                 <div class="code-example">
-                    Data Aggregation:<br><br>
-                    
-                    // Count total products<br>
-                    $stmt = $pdo->query("SELECT COUNT(*) as total FROM products");<br>
-                    $result = $stmt->fetch();<br>
-                    echo "Total products: " . $result['total'] . "&lt;br&gt;";<br><br>
-                    
-                    // Average product price<br>
-                    $stmt = $pdo->query("SELECT AVG(price) as avg_price FROM products");<br>
-                    $result = $stmt->fetch();<br>
-                    echo "Average price: $" . number_format($result['avg_price'], 2) . "&lt;br&gt;";<br><br>
-                    
-                    // Products by category count<br>
-                    $stmt = $pdo->query("SELECT category, COUNT(*) as count FROM products GROUP BY category");<br>
-                    $categories = $stmt->fetchAll();<br><br>
-                    
-                    foreach ($categories as $cat) {<br>
-                    &nbsp;&nbsp;echo $cat['category'] . ": " . $cat['count'] . " products&lt;br&gt;";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Data Aggregation:
+// Count total products
+$stmt = $pdo-&gt;query("SELECT COUNT(*) as total FROM products");
+$result = $stmt-&gt;fetch();
+echo "Total products: " . $result['total'] . "&lt;br&gt;";
+// Average product price
+$stmt = $pdo-&gt;query("SELECT AVG(price) as avg_price FROM products");
+$result = $stmt-&gt;fetch();
+echo "Average price: $" . number_format($result['avg_price'], 2) . "&lt;br&gt;";
+// Products by category count
+$stmt = $pdo-&gt;query("SELECT category, COUNT(*) as count FROM products GROUP BY category");
+$categories = $stmt-&gt;fetchAll();
+foreach ($categories as $cat) {
+  echo $cat['category'] . ": " . $cat['count'] . " products&lt;br&gt;";
+}</code></pre>
+            </div>
                 <ul>
                     <li>COUNT() counts records</li>
                     <li>AVG() calculates average</li>
@@ -486,31 +408,26 @@
             </section>
 
             <!-- Slide 15: Pagination -->
-            <section>
-                <h2>Pagination</h2>
+            <section data-slide-title="Pagination"><h2>Pagination</h2>
                 <div class="code-example">
-                    Page Navigation:<br><br>
-                    
-                    // Pagination variables<br>
-                    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;<br>
-                    $limit = 10;<br>
-                    $offset = ($page - 1) * $limit;<br><br>
-                    
-                    // Get total count<br>
-                    $stmt = $pdo->query("SELECT COUNT(*) as total FROM products");<br>
-                    $total = $stmt->fetch()['total'];<br>
-                    $totalPages = ceil($total / $limit);<br><br>
-                    
-                    // Get products for current page<br>
-                    $stmt = $pdo->prepare("SELECT * FROM products ORDER BY name LIMIT ? OFFSET ?");<br>
-                    $stmt->execute([$limit, $offset]);<br>
-                    $products = $stmt->fetchAll();<br><br>
-                    
-                    // Display pagination links<br>
-                    for ($i = 1; $i <= $totalPages; $i++) {<br>
-                    &nbsp;&nbsp;echo "&lt;a href='?page=$i'&gt;Page $i&lt;/a&gt; ";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Page Navigation:
+// Pagination variables
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 10;
+$offset = ($page - 1) * $limit;
+// Get total count
+$stmt = $pdo-&gt;query("SELECT COUNT(*) as total FROM products");
+$total = $stmt-&gt;fetch()['total'];
+$totalPages = ceil($total / $limit);
+// Get products for current page
+$stmt = $pdo-&gt;prepare("SELECT * FROM products ORDER BY name LIMIT ? OFFSET ?");
+$stmt-&gt;execute([$limit, $offset]);
+$products = $stmt-&gt;fetchAll();
+// Display pagination links
+for ($i = 1; $i &lt;= $totalPages; $i++) {
+  echo "&lt;a href='?page=$i'&gt;Page $i&lt;/a&gt; ";
+}</code></pre>
+            </div>
                 <ul>
                     <li>LIMIT controls number of results</li>
                     <li>OFFSET skips previous pages</li>
@@ -519,35 +436,30 @@
             </section>
 
             <!-- Slide 16: Transactions -->
-            <section>
-                <h2>Transactions</h2>
+            <section data-slide-title="Transactions"><h2>Transactions</h2>
                 <div class="code-example">
-                    Transaction Management:<br><br>
-                    
-                    try {<br>
-                    &nbsp;&nbsp;$pdo->beginTransaction();<br><br>
-                    
-                    &nbsp;&nbsp;// Create order<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO orders (user_id, total) VALUES (?, ?)");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId, $total]);<br>
-                    &nbsp;&nbsp;$orderId = $pdo->lastInsertId();<br><br>
-                    
-                    &nbsp;&nbsp;// Add order items<br>
-                    &nbsp;&nbsp;foreach ($cartItems as $item) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)");<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute([$orderId, $item['id'], $item['quantity']]);<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;// Update stock<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute([$item['quantity'], $item['id']]);<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;$pdo->commit();<br>
-                    &nbsp;&nbsp;echo "Order completed successfully";<br>
-                    } catch(PDOException $e) {<br>
-                    &nbsp;&nbsp;$pdo->rollback();<br>
-                    &nbsp;&nbsp;echo "Order failed: " . $e->getMessage();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Transaction Management:
+try {
+  $pdo-&gt;beginTransaction();
+  // Create order
+  $stmt = $pdo-&gt;prepare("INSERT INTO orders (user_id, total) VALUES (?, ?)");
+  $stmt-&gt;execute([$userId, $total]);
+  $orderId = $pdo-&gt;lastInsertId();
+  // Add order items
+  foreach ($cartItems as $item) {
+    $stmt = $pdo-&gt;prepare("INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)");
+    $stmt-&gt;execute([$orderId, $item['id'], $item['quantity']]);
+    // Update stock
+    $stmt = $pdo-&gt;prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
+    $stmt-&gt;execute([$item['quantity'], $item['id']]);
+  }
+  $pdo-&gt;commit();
+  echo "Order completed successfully";
+} catch(PDOException $e) {
+  $pdo-&gt;rollback();
+  echo "Order failed: " . $e-&gt;getMessage();
+}</code></pre>
+            </div>
                 <ul>
                     <li>beginTransaction() starts transaction</li>
                     <li>commit() saves all changes</li>
@@ -556,30 +468,25 @@
             </section>
 
             <!-- Slide 17: Search Functionality -->
-            <section>
-                <h2>Search Functionality</h2>
+            <section data-slide-title="Search Functionality"><h2>Search Functionality</h2>
                 <div class="code-example">
-                    Product Search:<br><br>
-                    
-                    // Search products<br>
-                    $search = isset($_GET['search']) ? trim($_GET['search']) : '';<br><br>
-                    
-                    if (!empty($search)) {<br>
-                    &nbsp;&nbsp;$searchTerm = "%$search%";<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT * FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY name");<br>
-                    &nbsp;&nbsp;$stmt->execute([$searchTerm, $searchTerm]);<br>
-                    } else {<br>
-                    &nbsp;&nbsp;$stmt = $pdo->query("SELECT * FROM products ORDER BY name");<br>
-                    }<br><br>
-                    
-                    $products = $stmt->fetchAll();<br><br>
-                    
-                    // Display search form<br>
-                    echo "&lt;form method='GET'&gt;";<br>
-                    echo "&lt;input type='text' name='search' placeholder='Search products...'&gt;";<br>
-                    echo "&lt;button type='submit'&gt;Search&lt;/button&gt;";<br>
-                    echo "&lt;/form&gt;";
-                </div>
+                <pre><code class="language-php">Product Search:
+// Search products
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+if (!empty($search)) {
+  $searchTerm = "%$search%";
+  $stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE name LIKE ? OR description LIKE ? ORDER BY name");
+  $stmt-&gt;execute([$searchTerm, $searchTerm]);
+} else {
+  $stmt = $pdo-&gt;query("SELECT * FROM products ORDER BY name");
+}
+$products = $stmt-&gt;fetchAll();
+// Display search form
+echo "&lt;form method='GET'&gt;";
+echo "&lt;input type='text' name='search' placeholder='Search products...'&gt;";
+echo "&lt;button type='submit'&gt;Search&lt;/button&gt;";
+echo "&lt;/form&gt;";</code></pre>
+            </div>
                 <ul>
                     <li>Use LIKE for pattern matching</li>
                     <li>Search multiple fields</li>
@@ -588,32 +495,28 @@
             </section>
 
             <!-- Slide 18: Data Validation -->
-            <section>
-                <h2>Data Validation</h2>
+            <section data-slide-title="Data Validation"><h2>Data Validation</h2>
                 <div class="code-example">
-                    Database-Level Validation:<br><br>
-                    
-                    function checkEmailExists($email) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$email]);<br>
-                    &nbsp;&nbsp;return $stmt->fetchColumn() > 0;<br>
-                    }<br><br>
-                    
-                    function validateUniqueUsername($username) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$username]);<br>
-                    &nbsp;&nbsp;return $stmt->fetchColumn() == 0;<br>
-                    }<br><br>
-                    
-                    // Check before inserting<br>
-                    if (checkEmailExists($email)) {<br>
-                    &nbsp;&nbsp;echo "Email already exists";<br>
-                    } else {<br>
-                    &nbsp;&nbsp;// Proceed with registration<br>
-                    }
-                </div>
+                <pre><code class="language-php">Database-Level Validation:
+function checkEmailExists($email) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+  $stmt-&gt;execute([$email]);
+  return $stmt-&gt;fetchColumn() &gt; 0;
+}
+function validateUniqueUsername($username) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+  $stmt-&gt;execute([$username]);
+  return $stmt-&gt;fetchColumn() == 0;
+}
+// Check before inserting
+if (checkEmailExists($email)) {
+  echo "Email already exists";
+} else {
+  // Proceed with registration
+}</code></pre>
+            </div>
                 <ul>
                     <li>Check for duplicate data</li>
                     <li>Validate data integrity</li>
@@ -622,19 +525,16 @@
             </section>
 
             <!-- Slide 19: Performance Optimization -->
-            <section>
-                <h2>Performance Optimization</h2>
+            <section data-slide-title="Performance Optimization"><h2>Performance Optimization</h2>
                 <div class="code-example">
-                    Database Indexes:<br><br>
-                    
-                    // Add indexes for better performance<br>
-                    CREATE INDEX idx_products_name ON products(name);<br>
-                    CREATE INDEX idx_products_price ON products(price);<br>
-                    CREATE INDEX idx_users_email ON users(email);<br><br>
-                    
-                    // Optimized query with joins<br>
-                    $stmt = $pdo->prepare("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.name LIKE ? ORDER BY p.created_at DESC LIMIT ? OFFSET ?");
-                </div>
+                <pre><code class="language-php">Database Indexes:
+// Add indexes for better performance
+CREATE INDEX idx_products_name ON products(name);
+CREATE INDEX idx_products_price ON products(price);
+CREATE INDEX idx_users_email ON users(email);
+// Optimized query with joins
+$stmt = $pdo-&gt;prepare("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.name LIKE ? ORDER BY p.created_at DESC LIMIT ? OFFSET ?");</code></pre>
+            </div>
                 <ul>
                     <li>Use indexes on frequently searched columns</li>
                     <li>Implement pagination for large datasets</li>
@@ -644,23 +544,19 @@
             </section>
 
             <!-- Slide 20: Security Best Practices -->
-            <section>
-                <h2>Security Best Practices</h2>
+            <section data-slide-title="Security Best Practices"><h2>Security Best Practices</h2>
                 <div class="code-example">
-                    Security Implementation:<br><br>
-                    
-                    // Secure password hashing<br>
-                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);<br><br>
-                    
-                    // Input sanitization<br>
-                    $username = htmlspecialchars(trim($_POST['username']));<br>
-                    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);<br><br>
-                    
-                    // CSRF protection<br>
-                    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {<br>
-                    &nbsp;&nbsp;die('CSRF token validation failed');<br>
-                    }
-                </div>
+                <pre><code class="language-php">Security Implementation:
+// Secure password hashing
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+// Input sanitization
+$username = htmlspecialchars(trim($_POST['username']));
+$email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+// CSRF protection
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+  die('CSRF token validation failed');
+}</code></pre>
+            </div>
                 <ul>
                     <li>Always use prepared statements</li>
                     <li>Hash passwords with password_hash()</li>
@@ -670,8 +566,7 @@
             </section>
 
             <!-- Slide 21: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Complete E-commerce Database System</h2>
+            <section data-slide-title="Task 2: Complete E-commerce Database System" class="center"><h2>Task 2: Complete E-commerce Database System</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -695,8 +590,7 @@
             </section>
 
             <!-- Slide 22: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>Database integration is essential for dynamic web applications</li>
                     <li>Prepared statements prevent SQL injection attacks</li>
@@ -715,51 +609,30 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            fitToParent: true,
-            responsive: true,
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
     </script>
 </body>

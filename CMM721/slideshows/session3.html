@@ -2,253 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 3: CSS3 & Responsive Design</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+    <title>CMM721 - Session 3: CSS3 & Responsive Design</title>
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
 
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
-
-        /* Task box styling - Masters Purple Theme */
-        .task-box {
-            background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%);
-            border: 2px solid #9b59b6;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-            box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1);
-        }
-
-        /* Code example styling - Dark theme for Masters level */
-        .code-example {
-            background: #2c3e50;
-            color: #ecf0f1;
-            border: 1px solid #34495e;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.4;
-            max-height: 40vh;
-            overflow-y: auto;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Highlight styling - Purple accent for Masters */
-        .highlight {
-            background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%);
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #9b59b6;
-            margin: 10px 0;
-            box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2);
-        }
-
-        /* Timeline info styling */
-        .timeline-info {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-
-        .timeline-info ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .timeline-info li {
-            margin-bottom: 0.2em;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .reveal .slides section {
-                padding: 15px;
-            }
-
-            .reveal .slides section h1 {
-                font-size: 2em;
-            }
-
-            .reveal .slides section h2 {
-                font-size: 1.6em;
-            }
-
-            .reveal .slides section h3 {
-                font-size: 1.3em;
-            }
-
-            .task-box,
-            .code-example {
-                font-size: 0.9em;
-                padding: 15px;
-            }
-        }
-
-        /* Custom scrollbar for better UX */
-        .reveal .slides section::-webkit-scrollbar,
-        .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-track,
-        .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb,
-        .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb:hover,
-        .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Interactive content styling */
-        .interactive-content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .interactive-content h3 {
-            color: #2196f3;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .video-container,
-        .codepen-container {
-            position: relative;
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .video-container iframe,
-        .codepen-container iframe {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container iframe:hover,
-        .codepen-container iframe:hover {
-            transform: scale(1.02);
-        }
-
-        .interactive-description {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-            font-style: italic;
-        }
-    </style>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
-            ← Back to Module
-        </a>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session2.html" title="Previous Session">&lt;</a>
+        <a href="session4.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <!-- Slide 1: Title -->
-            <section class="center">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
                 <h1>CSS3 & Responsive Design</h1>
-                <h3>CMM721: Web Application Development - Session 3</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Masters Level Conversion Course</p>
-                <p><small>3-hour session • 17 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Session 3</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Apply CSS3 layout techniques including Flexbox and Grid</li>
@@ -259,8 +46,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 3: CSS3 Fundamentals -->
-            <section>
+            <section data-slide-title="CSS3 Fundamentals">
                 <h2>CSS3 Fundamentals</h2>
                 <h3>CSS Box Model:</h3>
                 <ul>
@@ -270,29 +56,28 @@
                     <li><strong>Margin:</strong> Space outside the border</li>
                 </ul>
                 <div class="code-example">
-                    .box {<br>
-                    &nbsp;&nbsp;width: 200px;<br>
-                    &nbsp;&nbsp;height: 100px;<br>
-                    &nbsp;&nbsp;padding: 20px;<br>
-                    &nbsp;&nbsp;border: 2px solid #333;<br>
-                    &nbsp;&nbsp;margin: 10px;<br>
-                    }
+                    <pre><code class="language-css">.box {
+width: 200px;
+height: 100px;
+padding: 20px;
+border: 2px solid #333;
+margin: 10px;
+}</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 4: CSS Box Model -->
-            <section>
+            <section data-slide-title="CSS Box Model in Detail">
                 <h2>CSS Box Model in Detail</h2>
                 <div class="code-example">
-                    /* Box Model Properties */<br>
-                    .element {<br>
-                    &nbsp;&nbsp;width: 300px;        /* Content width */<br>
-                    &nbsp;&nbsp;height: 200px;       /* Content height */<br>
-                    &nbsp;&nbsp;padding: 20px;       /* Space inside border */<br>
-                    &nbsp;&nbsp;border: 5px solid #000;  /* Border around padding */<br>
-                    &nbsp;&nbsp;margin: 15px;        /* Space outside border */<br>
-                    &nbsp;&nbsp;box-sizing: border-box;  /* Includes padding/border in dimensions */<br>
-                    }
+                    <pre><code class="language-css">/* Box Model Properties */
+.element {
+width: 300px;        /* Content width */
+height: 200px;       /* Content height */
+padding: 20px;       /* Space inside border */
+border: 5px solid #000;  /* Border around padding */
+margin: 15px;        /* Space outside border */
+box-sizing: border-box;  /* Includes padding/border in dimensions */
+}</code></pre>
                 </div>
                 <ul>
                     <li><strong>box-sizing: content-box:</strong> Default (width/height = content only)</li>
@@ -300,8 +85,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 5: Flexbox Layout -->
-            <section>
+            <section data-slide-title="Flexbox Layout System">
                 <h2>Flexbox Layout System</h2>
                 <div class="highlight">
                     <strong>Flexible Box Layout</strong> - One-dimensional layout system
@@ -314,16 +98,15 @@
                     <li><strong>align-items:</strong> Aligns items along cross axis</li>
                 </ul>
                 <div class="code-example">
-                    .container {<br>
-                    &nbsp;&nbsp;display: flex;<br>
-                    &nbsp;&nbsp;justify-content: space-between;<br>
-                    &nbsp;&nbsp;align-items: center;<br>
-                    }
+                    <pre><code class="language-plaintext">.container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 6: CSS Grid -->
-            <section>
+            <section data-slide-title="CSS Grid Layout">
                 <h2>CSS Grid Layout</h2>
                 <div class="highlight">
                     <strong>Grid Layout</strong> - Two-dimensional layout system
@@ -337,30 +120,27 @@
                 </ul>
             </section>
 
-            <!-- Slide 7: Media Queries -->
-            <section>
+            <section data-slide-title="Media Queries">
                 <h2>Media Queries</h2>
                 <div class="code-example">
-                    /* Mobile First Approach */<br>
-                    .container {<br>
-                    &nbsp;&nbsp;width: 100%;<br>
-                    &nbsp;&nbsp;padding: 15px;<br>
-                    }<br><br>
-
-                    /* Tablet */<br>
-                    @media (min-width: 768px) {<br>
-                    &nbsp;&nbsp;.container {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;max-width: 750px;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;margin: 0 auto;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-
-                    /* Desktop */<br>
-                    @media (min-width: 1024px) {<br>
-                    &nbsp;&nbsp;.container {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;max-width: 1000px;<br>
-                    &nbsp;&nbsp;}<br>
-                    }
+                    <pre><code class="language-css">/* Mobile First Approach */
+.container {
+width: 100%;
+padding: 15px;
+}
+/* Tablet */
+@media (min-width: 768px) {
+.container {
+max-width: 750px;
+margin: 0 auto;
+}
+}
+/* Desktop */
+@media (min-width: 1024px) {
+.container {
+max-width: 1000px;
+}
+}</code></pre>
                 </div>
                 <h3>Common Breakpoints:</h3>
                 <ul>
@@ -370,8 +150,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 8: Responsive Design Principles -->
-            <section>
+            <section data-slide-title="Responsive Design Principles">
                 <h2>Responsive Design Principles</h2>
                 <h3>Mobile-First Approach:</h3>
                 <ol>
@@ -389,14 +168,13 @@
                 </ul>
             </section>
 
-            <!-- Slide 9: Viewport Meta Tag -->
-            <section>
+            <section data-slide-title="Viewport Meta Tag">
                 <h2>Viewport Meta Tag</h2>
                 <div class="highlight">
                     <strong>Essential for Responsive Design</strong>
                 </div>
                 <div class="code-example">
-                    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+                    <pre><code class="language-plaintext">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
                 </div>
                 <ul>
                     <li><strong>width=device-width:</strong> Sets viewport width to device width</li>
@@ -405,8 +183,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 10: Task 1 - Responsive Layout -->
-            <section>
+            <section data-slide-title="Task 1: Responsive Layout Creation">
                 <h2>Task 1: Responsive Layout Creation</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -431,8 +208,7 @@
                 </div>
             </section>
 
-            <!-- Slide 11: CSS Frameworks -->
-            <section>
+            <section data-slide-title="CSS Frameworks">
                 <h2>CSS Frameworks</h2>
                 <h3>Popular Options:</h3>
                 <ul>
@@ -449,16 +225,15 @@
                 </ul>
             </section>
 
-            <!-- Slide 12: Bootstrap Grid System -->
-            <section>
+            <section data-slide-title="Bootstrap Grid System">
                 <h2>Bootstrap Grid System</h2>
                 <div class="code-example">
-                    &lt;div class="container"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="row"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-md-6"&gt;Half width on medium+&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-md-6"&gt;Half width on medium+&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
+                    <pre><code class="language-html">&lt;div class="container"&gt;
+&lt;div class="row"&gt;
+&lt;div class="col-md-6"&gt;Half width on medium+&lt;/div&gt;
+&lt;div class="col-md-6"&gt;Half width on medium+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</code></pre>
                 </div>
                 <ul>
                     <li><strong>12-column grid system</strong></li>
@@ -467,8 +242,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 13: Task 2 - Cross-Device Testing -->
-            <section>
+            <section data-slide-title="Task 2: Cross-Device Testing">
                 <h2>Task 2: Cross-Device Testing</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -492,8 +266,7 @@
                 </div>
             </section>
 
-            <!-- Slide 14: Performance Considerations -->
-            <section>
+            <section data-slide-title="Performance Considerations">
                 <h2>Performance Considerations</h2>
                 <h3>CSS Performance Tips:</h3>
                 <ul>
@@ -511,8 +284,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 15: Accessibility in Layout -->
-            <section>
+            <section data-slide-title="Accessibility in Layout">
                 <h2>Accessibility in Layout</h2>
                 <h3>Important Considerations:</h3>
                 <ul>
@@ -527,8 +299,7 @@
                 </div>
             </section>
 
-            <!-- Slide 16: Next Session Preview -->
-            <section>
+            <section data-slide-title="Next Session: JavaScript Fundamentals">
                 <h2>Next Session: JavaScript Fundamentals</h2>
                 <ul>
                     <li>JavaScript basics and data types</li>
@@ -540,38 +311,46 @@
                 <p>Prepare by reviewing JavaScript fundamentals and practicing basic scripting.</p>
             </section>
 
-            <!-- Slide 17: Q&A -->
-            <section class="center">
+            <section data-slide-title="Questions & Discussion" class="center">
                 <h2>Questions & Discussion</h2>
                 <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
                 <p><strong>Office Hours:</strong> Available for consultation</p>
                 <p>Thank you for your attention!</p>
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
         Reveal.initialize({
             hash: true,
             slideNumber: true,
-            progress: true,
-            controls: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            mouseWheel: true,
-            transition: 'slide',
-            // Full-width configuration
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            display: 'block',
-            // Better responsive behavior
-            responsive: true,
-            // Mobile settings
-            mobileViewDistance: 2,
-            hideEmptyElements: true
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

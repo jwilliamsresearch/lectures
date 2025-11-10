@@ -5,8 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 2: Bootstrap Framework Fundamentals</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet">
@@ -14,51 +18,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/cerulean/bootstrap.min.css"
         rel="stylesheet" id="bootswatch-theme">
     <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+        /* Preserve existing custom component styles */
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
-
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
+        
 
         /* Task box styling */
         .task-box {
@@ -73,16 +35,13 @@
 
         /* Code example styling */
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
 
         /* Highlight styling */
@@ -123,6 +82,13 @@
             text-align: center;
         }
 
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
         /* Responsive design */
         @media (max-width: 768px) {
             .reveal .slides section {
@@ -151,30 +117,12 @@
         /* Custom scrollbar for better UX */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
         /* Interactive content styling */
         .interactive-content {
             margin-top: 20px;
@@ -277,50 +225,32 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease;
-            display: inline-block;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-            ← Back to Module
-        </a>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session1.html" title="Previous Session">&lt;</a>
+        <a href="session3.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 2</div>
                 <h1>Bootstrap Framework Fundamentals</h1>
-                <h3>CMU529: Advanced Web Development - Session 2</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Building responsive user interfaces with Bootstrap 5</p>
-                <p><small>3-hour session • 31 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>25 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand what Bootstrap is and its benefits</li>
                     <li>Learn Bootstrap 5 grid system and responsive design</li>
@@ -332,8 +262,7 @@
             </section>
 
             <!-- Slide 3: What is Bootstrap? -->
-            <section>
-                <h2>What is Bootstrap?</h2>
+            <section data-slide-title="What is Bootstrap?"><h2>What is Bootstrap?</h2>
                 <div class="highlight">
                     <strong>Bootstrap</strong> is a free, open-source CSS framework for creating
                     responsive, mobile-first websites
@@ -355,36 +284,24 @@
 
                 <!-- YouTube Video: Bootstrap Fundamentals Explained -->
                 <div class="interactive-content">
-                    <h3>Watch: Bootstrap Fundamentals Explained</h3>
-                    <div class="video-container">
-                        <iframe width="100%" height="315"
-                            src="https://www.youtube-nocookie.com/embed/4sosXZsdy-s"
-                            title="Bootstrap Fundamentals Explained" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <p class="interactive-description">
-                        Comprehensive introduction to Bootstrap - the popular CSS framework
-                    </p>
+                    <h3>Watch:Bootstrap Fundamentals Explained</h3>
+                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
                 </div>
             </section>
 
             <!-- Slide 6: Bootstrap 5 Features -->
-            <section>
-                <h2>Bootstrap 5 Features</h2>
+            <section data-slide-title="Bootstrap 5 Features"><h2>Bootstrap 5 Features</h2>
                 <div class="code-example">
-                    Bootstrap 5 Key Features:<br><br>
-
-                    ✓ CSS Grid System (12 columns)<br>
-                    ✓ Responsive Breakpoints<br>
-                    ✓ Pre-built Components<br>
-                    ✓ Utility Classes<br>
-                    ✓ JavaScript Plugins<br>
-                    ✓ Sass/SCSS Support<br>
-                    ✓ No jQuery Dependency<br>
-                    ✓ Improved Accessibility
-                </div>
+                <pre><code class="language-html">Bootstrap 5 Key Features:
+✓ CSS Grid System (12 columns)
+✓ Responsive Breakpoints
+✓ Pre-built Components
+✓ Utility Classes
+✓ JavaScript Plugins
+✓ Sass/SCSS Support
+✓ No jQuery Dependency
+✓ Improved Accessibility</code></pre>
+            </div>
                 <ul>
                     <li><strong>Grid System:</strong> Flexible 12-column layout</li>
                     <li><strong>Components:</strong> Buttons, forms, navigation, cards</li>
@@ -394,49 +311,45 @@
             </section>
 
             <!-- Slide 7: Including Bootstrap -->
-            <section>
-                <h2>Including Bootstrap in Your Project</h2>
+            <section data-slide-title="Including Bootstrap in Your Project"><h2>Including Bootstrap in Your Project</h2>
                 <div class="code-example">
-                    &lt;!DOCTYPE html&gt;<br>
-                    &lt;html lang="en"&gt;<br>
-                    &lt;head&gt;<br>
-                    &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
-                    &nbsp;&nbsp;&lt;meta name="viewport" content="width=device-width,
-                    initial-scale=1.0"&gt;<br>
-                    &nbsp;&nbsp;&lt;title&gt;Bootstrap Page&lt;/title&gt;<br>
-                    &nbsp;&nbsp;&lt;!-- Bootstrap CSS --&gt;<br>
-                    &nbsp;&nbsp;&lt;link
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-                    rel="stylesheet"&gt;<br>
-                    &lt;/head&gt;<br>
-                    &lt;body&gt;<br>
-                    &nbsp;&nbsp;&lt;!-- Your content here --&gt;<br>
-                    &nbsp;&nbsp;&lt;!-- Bootstrap JS --&gt;<br>
-                    &nbsp;&nbsp;&lt;script
-                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;<br>
-                    &lt;/body&gt;<br>
-                    &lt;/html&gt;
-                </div>
+                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width,
+initial-scale=1.0"&gt;
+  &lt;title&gt;Bootstrap Page&lt;/title&gt;
+  &lt;!-- Bootstrap CSS --&gt;
+  &lt;link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Your content here --&gt;
+  &lt;!-- Bootstrap JS --&gt;
+  &lt;script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
                 <div class="highlight">
                     <strong>CDN Method:</strong> Quick setup using Bootstrap's CDN links
                 </div>
             </section>
 
             <!-- Slide 8: Bootstrap Grid System -->
-            <section>
-                <h2>Bootstrap Grid System</h2>
+            <section data-slide-title="Bootstrap Grid System"><h2>Bootstrap Grid System</h2>
                 <div class="code-example">
-                    Bootstrap Grid Classes:<br><br>
-
-                    .col-* (Extra small: &lt;576px)<br>
-                    .col-sm-* (Small: ≥576px)<br>
-                    .col-md-* (Medium: ≥768px)<br>
-                    .col-lg-* (Large: ≥992px)<br>
-                    .col-xl-* (Extra large: ≥1200px)<br>
-                    .col-xxl-* (Extra extra large: ≥1400px)<br><br>
-
-                    * = number of columns (1-12)
-                </div>
+                <pre><code class="language-html">Bootstrap Grid Classes:
+.col-* (Extra small: &lt;576px)
+.col-sm-* (Small: ≥576px)
+.col-md-* (Medium: ≥768px)
+.col-lg-* (Large: ≥992px)
+.col-xl-* (Extra large: ≥1200px)
+.col-xxl-* (Extra extra large: ≥1400px)
+* = number of columns (1-12)</code></pre>
+            </div>
                 <ul>
                     <li>12-column grid system</li>
                     <li>Mobile-first responsive design</li>
@@ -446,16 +359,15 @@
             </section>
 
             <!-- Slide 9: Basic Grid Example -->
-            <section>
-                <h2>Basic Grid Example</h2>
+            <section data-slide-title="Basic Grid Example"><h2>Basic Grid Example</h2>
                 <div class="code-example">
-                    &lt;div class="container"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="row"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-md-6"&gt;Left Column&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-md-6"&gt;Right Column&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-md-6"&gt;Left Column&lt;/div&gt;
+    &lt;div class="col-md-6"&gt;Right Column&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
                 <ul>
                     <li><code>.container</code>: Responsive container with max-width</li>
                     <li><code>.row</code>: Horizontal group of columns</li>
@@ -468,20 +380,19 @@
             </section>
 
             <!-- Slide 10: Responsive Grid Layouts -->
-            <section>
-                <h2>Responsive Grid Layouts</h2>
+            <section data-slide-title="Responsive Grid Layouts"><h2>Responsive Grid Layouts</h2>
                 <div class="code-example">
-                    &lt;div class="container"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="row"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-12 col-md-8 col-lg-6"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Main Content<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-12 col-md-4 col-lg-6"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sidebar<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-12 col-md-8 col-lg-6"&gt;
+      Main Content
+    &lt;/div&gt;
+    &lt;div class="col-12 col-md-4 col-lg-6"&gt;
+      Sidebar
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
                 <div class="diagram">
                     <h4>Responsive Behavior</h4>
                     <p><strong>Mobile:</strong> 12 columns (full width each)</p>
@@ -491,20 +402,16 @@
             </section>
 
             <!-- Slide 11: Bootstrap Containers -->
-            <section>
-                <h2>Bootstrap Containers</h2>
+            <section data-slide-title="Bootstrap Containers"><h2>Bootstrap Containers</h2>
                 <div class="code-example">
-                    Container Types:<br><br>
-
-                    &lt;div class="container"&gt;...&lt;/div&gt;<br>
-                    &lt;!-- Responsive with max-width --&gt;<br><br>
-
-                    &lt;div class="container-fluid"&gt;...&lt;/div&gt;<br>
-                    &lt;!-- Full width, no max-width --&gt;<br><br>
-
-                    &lt;div class="container-sm"&gt;...&lt;/div&gt;<br>
-                    &lt;!-- Responsive at small breakpoint --&gt;
-                </div>
+                <pre><code class="language-html">Container Types:
+&lt;div class="container"&gt;...&lt;/div&gt;
+&lt;!-- Responsive with max-width --&gt;
+&lt;div class="container-fluid"&gt;...&lt;/div&gt;
+&lt;!-- Full width, no max-width --&gt;
+&lt;div class="container-sm"&gt;...&lt;/div&gt;
+&lt;!-- Responsive at small breakpoint --&gt;</code></pre>
+            </div>
                 <ul>
                     <li><strong>.container:</strong> Responsive with max-width at each breakpoint
                     </li>
@@ -515,20 +422,18 @@
             </section>
 
             <!-- Slide 12: Bootstrap Components -->
-            <section>
-                <h2>Bootstrap Components</h2>
+            <section data-slide-title="Bootstrap Components"><h2>Bootstrap Components</h2>
                 <div class="code-example">
-                    Common Bootstrap Components:<br><br>
-
-                    Navigation & Navbar<br>
-                    Buttons & Button Groups<br>
-                    Cards & Card Groups<br>
-                    Forms & Form Controls<br>
-                    Alerts & Badges<br>
-                    Modals & Dropdowns<br>
-                    Carousel & Pagination<br>
-                    Tables & Lists
-                </div>
+                <pre><code class="language-html">Common Bootstrap Components:
+Navigation &amp; Navbar
+Buttons &amp; Button Groups
+Cards &amp; Card Groups
+Forms &amp; Form Controls
+Alerts &amp; Badges
+Modals &amp; Dropdowns
+Carousel &amp; Pagination
+Tables &amp; Lists</code></pre>
+            </div>
                 <ul>
                     <li>Pre-built, reusable components</li>
                     <li>Consistent styling and behavior</li>
@@ -538,20 +443,18 @@
             </section>
 
             <!-- Slide 13: Bootstrap Buttons -->
-            <section>
-                <h2>Bootstrap Buttons</h2>
+            <section data-slide-title="Bootstrap Buttons"><h2>Bootstrap Buttons</h2>
                 <div class="code-example">
-                    Button Classes:<br><br>
-
-                    &lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;<br>
-                    &lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;<br>
-                    &lt;button class="btn btn-success"&gt;Success&lt;/button&gt;<br>
-                    &lt;button class="btn btn-danger"&gt;Danger&lt;/button&gt;<br>
-                    &lt;button class="btn btn-warning"&gt;Warning&lt;/button&gt;<br>
-                    &lt;button class="btn btn-info"&gt;Info&lt;/button&gt;<br>
-                    &lt;button class="btn btn-light"&gt;Light&lt;/button&gt;<br>
-                    &lt;button class="btn btn-dark"&gt;Dark&lt;/button&gt;
-                </div>
+                <pre><code class="language-html">Button Classes:
+&lt;button class="btn btn-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="btn btn-secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="btn btn-success"&gt;Success&lt;/button&gt;
+&lt;button class="btn btn-danger"&gt;Danger&lt;/button&gt;
+&lt;button class="btn btn-warning"&gt;Warning&lt;/button&gt;
+&lt;button class="btn btn-info"&gt;Info&lt;/button&gt;
+&lt;button class="btn btn-light"&gt;Light&lt;/button&gt;
+&lt;button class="btn btn-dark"&gt;Dark&lt;/button&gt;</code></pre>
+            </div>
                 <ul>
                     <li>Multiple color variants</li>
                     <li>Different sizes: .btn-sm, .btn-lg</li>
@@ -561,20 +464,19 @@
             </section>
 
             <!-- Slide 14: Bootstrap Cards -->
-            <section>
-                <h2>Bootstrap Cards</h2>
+            <section data-slide-title="Bootstrap Cards"><h2>Bootstrap Cards</h2>
                 <div class="code-example">
-                    &lt;div class="card" style="width: 18rem;"&gt;<br>
-                    &nbsp;&nbsp;&lt;img src="product.jpg" class="card-img-top" alt="Product"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="card-body"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;Product Name&lt;/h5&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="card-text"&gt;Product
-                    description...&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="#" class="btn btn-primary"&gt;Add to
-                    Cart&lt;/a&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">&lt;div class="card" style="width: 18rem;"&gt;
+  &lt;img src="product.jpg" class="card-img-top" alt="Product"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;Product Name&lt;/h5&gt;
+    &lt;p class="card-text"&gt;Product
+description...&lt;/p&gt;
+    &lt;a href="#" class="btn btn-primary"&gt;Add to
+Cart&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
                 <ul>
                     <li>Flexible content containers</li>
                     <li>Headers, footers, and content sections</li>
@@ -584,30 +486,29 @@
             </section>
 
             <!-- Slide 15: Bootstrap Navigation -->
-            <section>
-                <h2>Bootstrap Navigation</h2>
+            <section data-slide-title="Bootstrap Navigation"><h2>Bootstrap Navigation</h2>
                 <div class="code-example">
-                    &lt;nav class="navbar navbar-expand-lg navbar-light bg-light"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="container"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;a class="navbar-brand"
-                    href="#"&gt;E-Commerce&lt;/a&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span
-                    class="navbar-toggler-icon"&gt;&lt;/span&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="collapse navbar-collapse"
-                    id="navbarNav"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul class="navbar-nav"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;&lt;a
-                    class="nav-link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class="nav-item"&gt;&lt;a
-                    class="nav-link" href="#"&gt;Products&lt;/a&gt;&lt;/li&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/nav&gt;
-                </div>
+                <pre><code class="language-html">&lt;nav class="navbar navbar-expand-lg navbar-light bg-light"&gt;
+  &lt;div class="container"&gt;
+    &lt;a class="navbar-brand"
+href="#"&gt;E-Commerce&lt;/a&gt;
+    &lt;button class="navbar-toggler" type="button"
+data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;
+      &lt;span
+class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse"
+id="navbarNav"&gt;
+      &lt;ul class="navbar-nav"&gt;
+        &lt;li class="nav-item"&gt;&lt;a
+class="nav-link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a
+class="nav-link" href="#"&gt;Products&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
                 <ul>
                     <li>Responsive navigation bar</li>
                     <li>Collapsible on mobile devices</li>
@@ -617,26 +518,25 @@
             </section>
 
             <!-- Slide 16: Bootstrap Forms -->
-            <section>
-                <h2>Bootstrap Forms</h2>
+            <section data-slide-title="Bootstrap Forms"><h2>Bootstrap Forms</h2>
                 <div class="code-example">
-                    &lt;form&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="mb-3"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email" class="form-label"&gt;Email
-                    address&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email" class="form-control"
-                    id="email"&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="mb-3"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="password"
-                    class="form-label"&gt;Password&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="password" class="form-control"
-                    id="password"&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;button type="submit" class="btn
-                    btn-primary"&gt;Submit&lt;/button&gt;<br>
-                    &lt;/form&gt;
-                </div>
+                <pre><code class="language-html">&lt;form&gt;
+  &lt;div class="mb-3"&gt;
+    &lt;label for="email" class="form-label"&gt;Email
+address&lt;/label&gt;
+    &lt;input type="email" class="form-control"
+id="email"&gt;
+  &lt;/div&gt;
+  &lt;div class="mb-3"&gt;
+    &lt;label for="password"
+class="form-label"&gt;Password&lt;/label&gt;
+    &lt;input type="password" class="form-control"
+id="password"&gt;
+  &lt;/div&gt;
+  &lt;button type="submit" class="btn
+btn-primary"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            </div>
                 <ul>
                     <li>Styled form controls</li>
                     <li>Form validation classes</li>
@@ -646,19 +546,17 @@
             </section>
 
             <!-- Slide 17: Bootstrap Utilities -->
-            <section>
-                <h2>Bootstrap Utilities</h2>
+            <section data-slide-title="Bootstrap Utilities"><h2>Bootstrap Utilities</h2>
                 <div class="code-example">
-                    Utility Classes:<br><br>
-
-                    Spacing: m-*, p-*, mt-*, mb-*, etc.<br>
-                    Colors: text-primary, bg-success, etc.<br>
-                    Typography: text-center, fw-bold, etc.<br>
-                    Flexbox: d-flex, justify-content-center, etc.<br>
-                    Display: d-none, d-block, d-md-flex, etc.<br>
-                    Borders: border, rounded, shadow, etc.<br>
-                    Position: position-relative, top-0, etc.
-                </div>
+                <pre><code class="language-html">Utility Classes:
+Spacing: m-*, p-*, mt-*, mb-*, etc.
+Colors: text-primary, bg-success, etc.
+Typography: text-center, fw-bold, etc.
+Flexbox: d-flex, justify-content-center, etc.
+Display: d-none, d-block, d-md-flex, etc.
+Borders: border, rounded, shadow, etc.
+Position: position-relative, top-0, etc.</code></pre>
+            </div>
                 <ul>
                     <li>Quick styling without custom CSS</li>
                     <li>Responsive utilities available</li>
@@ -668,33 +566,28 @@
             </section>
 
             <!-- Slide 18: E-commerce Layout Structure -->
-            <section>
-                <h2>E-commerce Layout Structure</h2>
+            <section data-slide-title="E-commerce Layout Structure"><h2>E-commerce Layout Structure</h2>
                 <div class="code-example">
-                    E-commerce Page Structure:<br><br>
-
-                    &lt;!-- Header/Navigation --&gt;<br>
-                    &lt;nav class="navbar navbar-expand-lg navbar-dark
-                    bg-dark"&gt;...&lt;/nav&gt;<br><br>
-
-                    &lt;!-- Main Content --&gt;<br>
-                    &lt;div class="container mt-4"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="row"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Sidebar --&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-md-3"&gt;Filters&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Products --&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-md-9"&gt;Product Grid&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;<br><br>
-
-                    &lt;!-- Footer --&gt;<br>
-                    &lt;footer class="bg-light mt-5"&gt;...&lt;/footer&gt;
-                </div>
+                <pre><code class="language-html">E-commerce Page Structure:
+&lt;!-- Header/Navigation --&gt;
+&lt;nav class="navbar navbar-expand-lg navbar-dark
+bg-dark"&gt;...&lt;/nav&gt;
+&lt;!-- Main Content --&gt;
+&lt;div class="container mt-4"&gt;
+  &lt;div class="row"&gt;
+    &lt;!-- Sidebar --&gt;
+    &lt;div class="col-md-3"&gt;Filters&lt;/div&gt;
+    &lt;!-- Products --&gt;
+    &lt;div class="col-md-9"&gt;Product Grid&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- Footer --&gt;
+&lt;footer class="bg-light mt-5"&gt;...&lt;/footer&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 19: Responsive Design Best Practices -->
-            <section>
-                <h2>Responsive Design Best Practices</h2>
+            <section data-slide-title="Responsive Design Best Practices"><h2>Responsive Design Best Practices</h2>
                 <ul>
                     <li><strong>Mobile-First:</strong> Design for mobile first, then enhance for
                         larger screens</li>
@@ -714,8 +607,7 @@
             </section>
 
             <!-- Slide 20: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Bootstrap Grid Layout</h2>
+            <section data-slide-title="Task 1: Bootstrap Grid Layout" class="center"><h2>Task 1: Bootstrap Grid Layout</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -738,8 +630,7 @@
             </section>
 
             <!-- Slide 21: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -748,8 +639,7 @@
             </section>
 
             <!-- Slide 22: Bootstrap Customization -->
-            <section>
-                <h2>Bootstrap Customization</h2>
+            <section data-slide-title="Bootstrap Customization"><h2>Bootstrap Customization</h2>
                 <ul>
                     <li><strong>Sass Variables:</strong> Customize colors, fonts, spacing</li>
                     <li><strong>Custom CSS:</strong> Override Bootstrap styles</li>
@@ -758,22 +648,20 @@
                     <li><strong>Utility Classes:</strong> Extend with custom utilities</li>
                 </ul>
                 <div class="code-example">
-                    Custom CSS Example:<br>
-                    :root {<br>
-                    &nbsp;&nbsp;--bs-primary: #ff6b6b;<br>
-                    &nbsp;&nbsp;--bs-secondary: #ee5a24;<br>
-                    }<br><br>
-
-                    .btn-custom {<br>
-                    &nbsp;&nbsp;background-color: var(--bs-primary);<br>
-                    &nbsp;&nbsp;border-color: var(--bs-primary);<br>
-                    }
-                </div>
+                <pre><code class="language-html">Custom CSS Example:
+:root {
+  --bs-primary: #ff6b6b;
+  --bs-secondary: #ee5a24;
+}
+.btn-custom {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 23: Bootstrap Theme Customization -->
-            <section>
-                <h2>Bootstrap Theme Customization</h2>
+            <section data-slide-title="Bootstrap Theme Customization"><h2>Bootstrap Theme Customization</h2>
                 <div class="highlight">
                     <strong>Bootswatch</strong> provides free themes for Bootstrap that you can
                     easily customize
@@ -888,20 +776,18 @@
             </section>
 
             <!-- Slide 24: Bootstrap JavaScript Components -->
-            <section>
-                <h2>Bootstrap JavaScript Components</h2>
+            <section data-slide-title="Bootstrap JavaScript Components"><h2>Bootstrap JavaScript Components</h2>
                 <div class="code-example">
-                    JavaScript Components:<br><br>
-
-                    Modals & Dialogs<br>
-                    Dropdown Menus<br>
-                    Collapse & Accordion<br>
-                    Carousel & Slideshows<br>
-                    Tooltips & Popovers<br>
-                    Scrollspy & Affix<br>
-                    Toast Notifications<br>
-                    Offcanvas Sidebar
-                </div>
+                <pre><code class="language-html">JavaScript Components:
+Modals &amp; Dialogs
+Dropdown Menus
+Collapse &amp; Accordion
+Carousel &amp; Slideshows
+Tooltips &amp; Popovers
+Scrollspy &amp; Affix
+Toast Notifications
+Offcanvas Sidebar</code></pre>
+            </div>
                 <ul>
                     <li>Interactive components</li>
                     <li>No jQuery required in Bootstrap 5</li>
@@ -911,8 +797,7 @@
             </section>
 
             <!-- Slide 25: Bootstrap Accessibility -->
-            <section>
-                <h2>Bootstrap Accessibility Features</h2>
+            <section data-slide-title="Bootstrap Accessibility Features"><h2>Bootstrap Accessibility Features</h2>
                 <ul>
                     <li><strong>ARIA Attributes:</strong> Built-in accessibility support</li>
                     <li><strong>Keyboard Navigation:</strong> All components keyboard accessible
@@ -929,8 +814,7 @@
             </section>
 
             <!-- Slide 26: Bootstrap Performance -->
-            <section>
-                <h2>Bootstrap Performance Optimization</h2>
+            <section data-slide-title="Bootstrap Performance Optimization"><h2>Bootstrap Performance Optimization</h2>
                 <ul>
                     <li><strong>Custom Builds:</strong> Include only needed components</li>
                     <li><strong>CSS Minification:</strong> Reduce file size</li>
@@ -940,31 +824,29 @@
                     <li><strong>Tree Shaking:</strong> Remove unused CSS</li>
                 </ul>
                 <div class="code-example">
-                    Custom Build Process:<br>
-                    1. Install Bootstrap Sass<br>
-                    2. Import only needed components<br>
-                    3. Compile with custom variables<br>
-                    4. Minify for production
-                </div>
+                <pre><code class="language-html">Custom Build Process:
+1. Install Bootstrap Sass
+2. Import only needed components
+3. Compile with custom variables
+4. Minify for production</code></pre>
+            </div>
             </section>
 
             <!-- Slide 27: Common Bootstrap Patterns -->
-            <section>
-                <h2>Common Bootstrap Patterns</h2>
+            <section data-slide-title="Common Bootstrap Patterns"><h2>Common Bootstrap Patterns</h2>
                 <div class="code-example">
-                    E-commerce Patterns:<br><br>
-
-                    Product Cards:<br>
-                    &lt;div class="card h-100"&gt;<br>
-                    &nbsp;&nbsp;&lt;img class="card-img-top"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="card-body d-flex flex-column"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;&lt;/h5&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="card-text flex-grow-1"&gt;&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="btn btn-primary mt-auto"&gt;Add to
-                    Cart&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">E-commerce Patterns:
+Product Cards:
+&lt;div class="card h-100"&gt;
+  &lt;img class="card-img-top"&gt;
+  &lt;div class="card-body d-flex flex-column"&gt;
+    &lt;h5 class="card-title"&gt;&lt;/h5&gt;
+    &lt;p class="card-text flex-grow-1"&gt;&lt;/p&gt;
+    &lt;button class="btn btn-primary mt-auto"&gt;Add to
+Cart&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
                 <ul>
                     <li>Consistent card heights</li>
                     <li>Sticky buttons at bottom</li>
@@ -974,8 +856,7 @@
             </section>
 
             <!-- Slide 28: Bootstrap Troubleshooting -->
-            <section>
-                <h2>Common Bootstrap Issues</h2>
+            <section data-slide-title="Common Bootstrap Issues"><h2>Common Bootstrap Issues</h2>
                 <ul>
                     <li><strong>Grid Not Working:</strong> Check container and row structure</li>
                     <li><strong>Responsive Issues:</strong> Verify viewport meta tag</li>
@@ -991,8 +872,7 @@
             </section>
 
             <!-- Slide 29: Bootstrap Resources -->
-            <section>
-                <h2>Bootstrap Resources</h2>
+            <section data-slide-title="Bootstrap Resources"><h2>Bootstrap Resources</h2>
                 <ul>
                     <li><strong>Official Documentation:</strong> getbootstrap.com</li>
                     <li><strong>Examples:</strong> Bootstrap examples and templates</li>
@@ -1002,17 +882,16 @@
                     <li><strong>Inspiration:</strong> Bootstrap showcase websites</li>
                 </ul>
                 <div class="code-example">
-                    Useful Tools:<br>
-                    - Bootstrap Icons<br>
-                    - Bootstrap Themes<br>
-                    - Bootstrap Studio<br>
-                    - Bootstrap Build Tools
-                </div>
+                <pre><code class="language-html">Useful Tools:
+- Bootstrap Icons
+- Bootstrap Themes
+- Bootstrap Studio
+- Bootstrap Build Tools</code></pre>
+            </div>
             </section>
 
             <!-- Slide 30: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: E-commerce Product Page</h2>
+            <section data-slide-title="Task 2: E-commerce Product Page" class="center"><h2>Task 2: E-commerce Product Page</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -1037,8 +916,7 @@
             </section>
 
             <!-- Slide 31: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>Bootstrap provides a powerful framework for responsive design</li>
                     <li>Grid system enables flexible, mobile-first layouts</li>
@@ -1056,57 +934,33 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <!-- Bootstrap JS -->
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            // Ensure content is always visible
-            fitToParent: true,
-            // Better responsive behavior
-            responsive: true,
-            // Allow content to scroll within slides
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
 
         // Bootstrap Theme Switcher Functions

@@ -2,294 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 11: NET-PROTO-01, NET-SCAN-01 & NET-DNS-01 - Network Security Fundamentals</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+    <title>CMU540 - Session 11: NET-PROTO-01, NET-SCAN-01 & NET-DNS-01 - Network Security Fundamentals</title>
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
 
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
-
-        /* Task box styling */
-        .task-box {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Code example styling */
-        .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
-        }
-
-        /* Highlight styling */
-        .highlight {
-            background: #fff3cd;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #ffc107;
-            margin: 10px 0;
-        }
-
-        /* Timeline info styling */
-        .timeline-info {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-
-        .timeline-info ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .timeline-info li {
-            margin-bottom: 0.2em;
-        }
-
-        /* OS³ Studio specific styling */
-        .os3-studio {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Vulnerability examples */
-        .vulnerability {
-            background: #ffebee;
-            border: 2px solid #f44336;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Career focus styling */
-        .career-box {
-            background: #f0f8ff;
-            border: 2px solid #007bff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Demo links styling */
-        .demo-link {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .reveal .slides section {
-                padding: 15px;
-            }
-
-            .reveal .slides section h1 {
-                font-size: 2em;
-            }
-
-            .reveal .slides section h2 {
-                font-size: 1.6em;
-            }
-
-            .reveal .slides section h3 {
-                font-size: 1.3em;
-            }
-
-            .task-box,
-            .code-example {
-                font-size: 0.9em;
-                padding: 15px;
-            }
-        }
-
-        /* Custom scrollbar for better UX */
-        .reveal .slides section::-webkit-scrollbar,
-        .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-track,
-        .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb,
-        .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb:hover,
-        .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Interactive content styling */
-        .interactive-content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .interactive-content h3 {
-            color: #2196f3;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .video-container,
-        .codepen-container {
-            position: relative;
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .video-container iframe,
-        .codepen-container iframe {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container iframe:hover,
-        .codepen-container iframe:hover {
-            transform: scale(1.02);
-        }
-
-        .interactive-description {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-            font-style: italic;
-        }
-    </style>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session10.html" title="Previous Session">&lt;</a>
+        <a href="session12.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <!-- Slide 1: Title -->
-            <section class="center">
-                <h1>NET-PROTO-01, NET-SCAN-01 & NET-DNS-01</h1>
-                <h2>Network Security Fundamentals</h2>
-                <h3>CMU540: Cyber Security - Session 11</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Understanding protocol security, port scanning, and DNS security analysis</p>
-                <p><small>3-hour session • 38 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>NET-PROTO-01, NET-SCAN-01 & NET-DNS-01 - Network Security Fundamentals</h1>
+                <h2>Session 11</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand network protocol security fundamentals</li>
@@ -301,8 +47,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 3: Network Security Overview -->
-            <section>
+            <section data-slide-title="Network Security Fundamentals">
                 <h2>Network Security Fundamentals</h2>
                 <div class="highlight">
                     <p><strong>NET-PROTO-01:</strong> Protocol security focuses on securing network communication protocols</p>
@@ -318,8 +63,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 4: Real-World Impact -->
-            <section>
+            <section data-slide-title="Real-World Impact">
                 <h2>Real-World Impact</h2>
                 <div class="vulnerability">
                     <h3>Notable Network Attacks:</h3>
@@ -332,183 +76,177 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Protocol Security Vulnerabilities -->
-            <section>
+            <section data-slide-title="Common Protocol Security Vulnerabilities">
                 <h2>Common Protocol Security Vulnerabilities</h2>
                 <h3>1. Weak Encryption Protocols</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Weak protocols --&gt;<br>
-SSH-1.0                    # Weak encryption<br>
-SSL 2.0/3.0                # Deprecated protocols<br>
-WEP (WiFi)                 # Easily cracked<br>
-Telnet                     # Plaintext transmission<br><br>
-&lt;!-- SECURE: Strong protocols --&gt;<br>
-SSH-2.0                    # Strong encryption<br>
-TLS 1.2/1.3               # Modern protocols<br>
-WPA3 (WiFi)               # Strong authentication<br>
-SSH/HTTPS                 # Encrypted transmission
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Weak protocols --&gt;
+SSH-1.0                    # Weak encryption
+SSL 2.0/3.0                # Deprecated protocols
+WEP (WiFi)                 # Easily cracked
+Telnet                     # Plaintext transmission
+&lt;!-- SECURE: Strong protocols --&gt;
+SSH-2.0                    # Strong encryption
+TLS 1.2/1.3               # Modern protocols
+WPA3 (WiFi)               # Strong authentication
+SSH/HTTPS                 # Encrypted transmission</code></pre>
                 </div>
                 <h3>2. Protocol Implementation Flaws</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Implementation flaws --&gt;<br>
-Heartbleed (OpenSSL)       # Buffer overflow<br>
-POODLE (SSL 3.0)          # Padding oracle<br>
-BEAST (TLS 1.0)           # Block cipher attack<br>
-CRIME (TLS)               # Compression attack<br><br>
-&lt;!-- SECURE: Proper implementation --&gt;<br>
-Regular security updates<br>
-Proper input validation<br>
-Secure random number generation<br>
-Memory-safe programming
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Implementation flaws --&gt;
+Heartbleed (OpenSSL)       # Buffer overflow
+POODLE (SSL 3.0)          # Padding oracle
+BEAST (TLS 1.0)           # Block cipher attack
+CRIME (TLS)               # Compression attack
+&lt;!-- SECURE: Proper implementation --&gt;
+Regular security updates
+Proper input validation
+Secure random number generation
+Memory-safe programming</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 6: Port Scanning Techniques -->
-            <section>
+            <section data-slide-title="Port Scanning Techniques">
                 <h2>Port Scanning Techniques</h2>
                 <h3>1. TCP Scanning Methods</h3>
                 <div class="code-example">
-&lt;!-- TCP Connect Scan --&gt;<br>
-nmap -sT target.com<br><br>
-&lt;!-- TCP SYN Scan (Stealth) --&gt;<br>
-nmap -sS target.com<br><br>
-&lt;!-- TCP FIN Scan --&gt;<br>
-nmap -sF target.com<br><br>
-&lt;!-- TCP NULL Scan --&gt;<br>
-nmap -sN target.com<br><br>
-&lt;!-- TCP XMAS Scan --&gt;<br>
-nmap -sX target.com
+                    <pre><code class="language-plaintext">&lt;!-- TCP Connect Scan --&gt;
+nmap -sT target.com
+&lt;!-- TCP SYN Scan (Stealth) --&gt;
+nmap -sS target.com
+&lt;!-- TCP FIN Scan --&gt;
+nmap -sF target.com
+&lt;!-- TCP NULL Scan --&gt;
+nmap -sN target.com
+&lt;!-- TCP XMAS Scan --&gt;
+nmap -sX target.com</code></pre>
                 </div>
                 <h3>2. UDP Scanning</h3>
                 <div class="code-example">
-&lt;!-- UDP Scan --&gt;<br>
-nmap -sU target.com<br><br>
-&lt;!-- UDP Scan with Service Detection --&gt;<br>
-nmap -sU -sV target.com<br><br>
-&lt;!-- Common UDP Ports --&gt;<br>
-53  - DNS<br>
-67  - DHCP<br>
-123 - NTP<br>
-161 - SNMP<br>
-500 - IKE
+                    <pre><code class="language-plaintext">&lt;!-- UDP Scan --&gt;
+nmap -sU target.com
+&lt;!-- UDP Scan with Service Detection --&gt;
+nmap -sU -sV target.com
+&lt;!-- Common UDP Ports --&gt;
+53  - DNS
+67  - DHCP
+123 - NTP
+161 - SNMP
+500 - IKE</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 7: Advanced Scanning Techniques -->
-            <section>
+            <section data-slide-title="Advanced Scanning Techniques">
                 <h2>Advanced Scanning Techniques</h2>
                 <h3>1. Service Detection</h3>
                 <div class="code-example">
-&lt;!-- Service Version Detection --&gt;<br>
-nmap -sV target.com<br><br>
-&lt;!-- OS Detection --&gt;<br>
-nmap -O target.com<br><br>
-&lt;!-- Script Scanning --&gt;<br>
-nmap --script vuln target.com<br><br>
-&lt;!-- Aggressive Scan --&gt;<br>
-nmap -A target.com
+                    <pre><code class="language-plaintext">&lt;!-- Service Version Detection --&gt;
+nmap -sV target.com
+&lt;!-- OS Detection --&gt;
+nmap -O target.com
+&lt;!-- Script Scanning --&gt;
+nmap --script vuln target.com
+&lt;!-- Aggressive Scan --&gt;
+nmap -A target.com</code></pre>
                 </div>
                 <h3>2. Stealth and Evasion</h3>
                 <div class="code-example">
-&lt;!-- Timing Control --&gt;<br>
-nmap -T0 target.com    # Paranoid (slowest)<br>
-nmap -T5 target.com    # Insane (fastest)<br><br>
-&lt;!-- Fragmentation --&gt;<br>
-nmap -f target.com<br><br>
-&lt;!-- Decoy Scanning --&gt;<br>
-nmap -D decoy1,decoy2,ME target.com<br><br>
-&lt;!-- Source Port Spoofing --&gt;<br>
-nmap --source-port 53 target.com
+                    <pre><code class="language-plaintext">&lt;!-- Timing Control --&gt;
+nmap -T0 target.com    # Paranoid (slowest)
+nmap -T5 target.com    # Insane (fastest)
+&lt;!-- Fragmentation --&gt;
+nmap -f target.com
+&lt;!-- Decoy Scanning --&gt;
+nmap -D decoy1,decoy2,ME target.com
+&lt;!-- Source Port Spoofing --&gt;
+nmap --source-port 53 target.com</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 8: DNS Security Vulnerabilities -->
-            <section>
+            <section data-slide-title="DNS Security Vulnerabilities">
                 <h2>DNS Security Vulnerabilities</h2>
                 <h3>1. DNS Cache Poisoning</h3>
                 <div class="code-example">
-&lt;!-- DNS Cache Poisoning Attack --&gt;<br>
-1. Attacker queries DNS server for non-existent subdomain<br>
-2. DNS server queries authoritative server<br>
-3. Attacker floods with fake responses<br>
-4. DNS server caches fake response<br><br>
-&lt;!-- Example --&gt;<br>
-Query: nonexistent.example.com<br>
-Fake Response: example.com A 192.168.1.100<br>
-Result: All queries to example.com redirected
+                    <pre><code class="language-plaintext">&lt;!-- DNS Cache Poisoning Attack --&gt;
+1. Attacker queries DNS server for non-existent subdomain
+2. DNS server queries authoritative server
+3. Attacker floods with fake responses
+4. DNS server caches fake response
+&lt;!-- Example --&gt;
+Query: nonexistent.example.com
+Fake Response: example.com A 192.168.1.100
+Result: All queries to example.com redirected</code></pre>
                 </div>
                 <h3>2. DNS Amplification Attacks</h3>
                 <div class="code-example">
-&lt;!-- DNS Amplification --&gt;<br>
-1. Attacker spoofs victim's IP address<br>
-2. Sends small DNS queries to open resolvers<br>
-3. Open resolvers send large responses to victim<br>
-4. Amplification factor: 50-100x<br><br>
-&lt;!-- Mitigation --&gt;<br>
-- Disable open DNS resolvers<br>
-- Implement rate limiting<br>
-- Use DNS response size limits
+                    <pre><code class="language-plaintext">&lt;!-- DNS Amplification --&gt;
+1. Attacker spoofs victim's IP address
+2. Sends small DNS queries to open resolvers
+3. Open resolvers send large responses to victim
+4. Amplification factor: 50-100x
+&lt;!-- Mitigation --&gt;
+- Disable open DNS resolvers
+- Implement rate limiting
+- Use DNS response size limits</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 9: DNS Security Measures -->
-            <section>
+            <section data-slide-title="DNS Security Measures">
                 <h2>DNS Security Measures</h2>
                 <h3>1. DNSSEC Implementation</h3>
                 <div class="code-example">
-&lt;!-- DNSSEC Zone Signing --&gt;<br>
-dnssec-keygen -a RSASHA256 -b 2048 -n ZONE example.com<br>
-dnssec-signzone -o example.com example.com.db<br><br>
-&lt;!-- DNSSEC Validation --&gt;<br>
-dig +dnssec example.com<br>
-dig +cdflag example.com<br><br>
-&lt;!-- DNSSEC Chain of Trust --&gt;<br>
-Root Zone → TLD → Domain → Subdomain
+                    <pre><code class="language-plaintext">&lt;!-- DNSSEC Zone Signing --&gt;
+dnssec-keygen -a RSASHA256 -b 2048 -n ZONE example.com
+dnssec-signzone -o example.com example.com.db
+&lt;!-- DNSSEC Validation --&gt;
+dig +dnssec example.com
+dig +cdflag example.com
+&lt;!-- DNSSEC Chain of Trust --&gt;
+Root Zone → TLD → Domain → Subdomain</code></pre>
                 </div>
                 <h3>2. DNS Filtering and Monitoring</h3>
                 <div class="code-example">
-&lt;!-- DNS Filtering --&gt;<br>
-# Block malicious domains<br>
-*.malware.com A 0.0.0.0<br>
-*.phishing.com A 0.0.0.0<br><br>
-&lt;!-- DNS Monitoring --&gt;<br>
-# Log DNS queries<br>
-logging {<br>
-&nbsp;&nbsp;channel security {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;file "/var/log/dns-security.log";<br>
-&nbsp;&nbsp;&nbsp;&nbsp;severity info;<br>
-&nbsp;&nbsp;};<br>};
+                    <pre><code class="language-plaintext">&lt;!-- DNS Filtering --&gt;
+# Block malicious domains
+*.malware.com A 0.0.0.0
+*.phishing.com A 0.0.0.0
+&lt;!-- DNS Monitoring --&gt;
+# Log DNS queries
+logging {
+  channel security {
+    file "/var/log/dns-security.log";
+    severity info;
+  };
+};</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 10: Network Monitoring -->
-            <section>
+            <section data-slide-title="Network Monitoring and Detection">
                 <h2>Network Monitoring and Detection</h2>
                 <h3>1. Intrusion Detection Systems</h3>
                 <div class="code-example">
-&lt;!-- Snort IDS Rules --&gt;<br>
-alert tcp any any -> any 22 (msg:"SSH Brute Force"; threshold:type both, track by_src, count 5, seconds 60;)<br><br>
-alert udp any any -> any 53 (msg:"DNS Query"; content:"|01 00 00 01|"; depth:4;)<br><br>
-alert tcp any any -> any 80 (msg:"Web Attack"; content:"/etc/passwd"; nocase;)<br><br>
-&lt;!-- Suricata Rules --&gt;<br>
-alert http any any -> any any (msg:"Suspicious User Agent"; content:"sqlmap"; http_user_agent;)
+                    <pre><code class="language-plaintext">&lt;!-- Snort IDS Rules --&gt;
+alert tcp any any -&gt; any 22 (msg:"SSH Brute Force"; threshold:type both, track by_src, count 5, seconds 60;)
+alert udp any any -&gt; any 53 (msg:"DNS Query"; content:"|01 00 00 01|"; depth:4;)
+alert tcp any any -&gt; any 80 (msg:"Web Attack"; content:"/etc/passwd"; nocase;)
+&lt;!-- Suricata Rules --&gt;
+alert http any any -&gt; any any (msg:"Suspicious User Agent"; content:"sqlmap"; http_user_agent;)</code></pre>
                 </div>
                 <h3>2. Network Traffic Analysis</h3>
                 <div class="code-example">
-&lt;!-- Wireshark Filters --&gt;<br>
-tcp.port == 22 and tcp.flags.syn == 1<br>
-dns.qry.name contains "malware"<br>
-http.request.uri contains "admin"<br>
-ip.src == 192.168.1.100<br><br>
-&lt;!-- tcpdump Commands --&gt;<br>
-tcpdump -i eth0 port 22<br>
-tcpdump -i eth0 host 192.168.1.100<br>
-tcpdump -i eth0 -w capture.pcap
+                    <pre><code class="language-plaintext">&lt;!-- Wireshark Filters --&gt;
+tcp.port == 22 and tcp.flags.syn == 1
+dns.qry.name contains "malware"
+http.request.uri contains "admin"
+ip.src == 192.168.1.100
+&lt;!-- tcpdump Commands --&gt;
+tcpdump -i eth0 port 22
+tcpdump -i eth0 host 192.168.1.100
+tcpdump -i eth0 -w capture.pcap</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 11: Career Opportunities -->
-            <section>
+            <section data-slide-title="Career Opportunities in Network Security">
                 <h2>Career Opportunities in Network Security</h2>
                 <div class="career-box">
                     <h3>Network Security Roles:</h3>
@@ -523,8 +261,7 @@ tcpdump -i eth0 -w capture.pcap
                 </div>
             </section>
 
-            <!-- Slide 12: OS³ Studio Introduction -->
-            <section>
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
                 <h2>OS³ Newman Cyber Security Lab</h2>
                 <div class="os3-studio">
                     <h3>NET-PROTO-01, NET-SCAN-01 & NET-DNS-01 Lab Environment</h3>
@@ -539,8 +276,7 @@ tcpdump -i eth0 -w capture.pcap
                 </div>
             </section>
 
-            <!-- Slide 13: Web Demos and Tools -->
-            <section>
+            <section data-slide-title="Web Demos and Tools">
                 <h2>Web Demos and Tools</h2>
                 <div class="demo-link">
                     <h3>Network Security Tools:</h3>
@@ -554,8 +290,7 @@ tcpdump -i eth0 -w capture.pcap
                 </div>
             </section>
 
-            <!-- Slide 14: Case Study -->
-            <section>
+            <section data-slide-title="Case Study: Mirai Botnet">
                 <h2>Case Study: Mirai Botnet</h2>
                 <div class="vulnerability">
                     <h3>2016 Mirai Botnet Attack</h3>
@@ -569,8 +304,7 @@ tcpdump -i eth0 -w capture.pcap
                 </div>
             </section>
 
-            <!-- Slide 15: Summary of Vulnerabilities -->
-            <section>
+            <section data-slide-title="Summary: Common Network Security Issues">
                 <h2>Summary: Common Network Security Issues</h2>
                 <div class="highlight">
                     <h3>Key Vulnerabilities to Look For:</h3>
@@ -586,8 +320,7 @@ tcpdump -i eth0 -w capture.pcap
                 </div>
             </section>
 
-            <!-- Task 1: Vulnerability Discovery -->
-            <section>
+            <section data-slide-title="Task 1: Network Security Vulnerability Discovery">
                 <h2>Task 1: Network Security Vulnerability Discovery</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -609,8 +342,7 @@ tcpdump -i eth0 -w capture.pcap
                 </div>
             </section>
 
-            <!-- Slide 16: Break/Catch Up -->
-            <section class="center">
+            <section class="center" data-slide-title="Break Time">
                 <h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
@@ -619,161 +351,159 @@ tcpdump -i eth0 -w capture.pcap
                 </div>
             </section>
 
-            <!-- Slide 17: Secure Protocol Implementation -->
-            <section>
+            <section data-slide-title="Secure Protocol Implementation">
                 <h2>Secure Protocol Implementation</h2>
                 
                 <h3>1. Protocol Hardening</h3>
                 <div class="code-example">
-&lt;!-- SECURE: SSH Configuration --&gt;<br>
-# /etc/ssh/sshd_config<br>
-Protocol 2<br>
-PermitRootLogin no<br>
-PasswordAuthentication no<br>
-PubkeyAuthentication yes<br>
-MaxAuthTries 3<br>
-ClientAliveInterval 300<br>
-ClientAliveCountMax 2<br><br>
-&lt;!-- SECURE: TLS Configuration --&gt;<br>
-ssl_protocols TLSv1.2 TLSv1.3;<br>
-ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256;<br>
-ssl_prefer_server_ciphers on;<br>
-ssl_session_cache shared:SSL:10m;
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: SSH Configuration --&gt;
+# /etc/ssh/sshd_config
+Protocol 2
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+MaxAuthTries 3
+ClientAliveInterval 300
+ClientAliveCountMax 2
+&lt;!-- SECURE: TLS Configuration --&gt;
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256;
+ssl_prefer_server_ciphers on;
+ssl_session_cache shared:SSL:10m;</code></pre>
                 </div>
 
                 <h3>2. Network Segmentation</h3>
                 <div class="code-example">
-&lt;!-- SECURE: VLAN Configuration --&gt;<br>
-# DMZ Network<br>
-vlan 10<br>
-name DMZ<br>
-# Internal Network<br>
-vlan 20<br>
-name Internal<br>
-# Guest Network<br>
-vlan 30<br>
-name Guest<br><br>
-&lt;!-- Firewall Rules --&gt;<br>
-# Allow DMZ to Internet<br>
-permit ip 192.168.10.0/24 any<br>
-# Block Guest to Internal<br>
-deny ip 192.168.30.0/24 192.168.20.0/24
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: VLAN Configuration --&gt;
+# DMZ Network
+vlan 10
+name DMZ
+# Internal Network
+vlan 20
+name Internal
+# Guest Network
+vlan 30
+name Guest
+&lt;!-- Firewall Rules --&gt;
+# Allow DMZ to Internet
+permit ip 192.168.10.0/24 any
+# Block Guest to Internal
+deny ip 192.168.30.0/24 192.168.20.0/24</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 18: Secure DNS Configuration -->
-            <section>
+            <section data-slide-title="Secure DNS Configuration">
                 <h2>Secure DNS Configuration</h2>
                 
                 <h3>1. DNS Server Hardening</h3>
                 <div class="code-example">
-&lt;!-- SECURE: BIND Configuration --&gt;<br>
-options {<br>
-&nbsp;&nbsp;listen-on port 53 { 127.0.0.1; 192.168.1.10; };<br>
-&nbsp;&nbsp;allow-query { localnets; };<br>
-&nbsp;&nbsp;allow-recursion { localnets; };<br>
-&nbsp;&nbsp;recursion no;<br>
-&nbsp;&nbsp;version "Not disclosed";<br>
-&nbsp;&nbsp;hide-identity yes;<br>
-&nbsp;&nbsp;hide-version yes;<br>
-};<br><br>
-&lt;!-- DNSSEC Configuration --&gt;<br>
-zone "example.com" {<br>
-&nbsp;&nbsp;type master;<br>
-&nbsp;&nbsp;file "example.com.signed";<br>
-&nbsp;&nbsp;dnssec-enable yes;<br>
-&nbsp;&nbsp;dnssec-validation yes;<br>};
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: BIND Configuration --&gt;
+options {
+  listen-on port 53 { 127.0.0.1; 192.168.1.10; };
+  allow-query { localnets; };
+  allow-recursion { localnets; };
+  recursion no;
+  version "Not disclosed";
+  hide-identity yes;
+  hide-version yes;
+};
+&lt;!-- DNSSEC Configuration --&gt;
+zone "example.com" {
+  type master;
+  file "example.com.signed";
+  dnssec-enable yes;
+  dnssec-validation yes;
+};</code></pre>
                 </div>
 
                 <h3>2. DNS Filtering and Monitoring</h3>
                 <div class="code-example">
-&lt;!-- SECURE: DNS Filtering --&gt;<br>
-# Block malicious domains<br>
-zone "malware.com" {<br>
-&nbsp;&nbsp;type master;<br>
-&nbsp;&nbsp;file "blocked.zone";<br>};<br><br>
-&lt;!-- DNS Logging --&gt;<br>
-logging {<br>
-&nbsp;&nbsp;channel security {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;file "/var/log/dns-security.log";<br>
-&nbsp;&nbsp;&nbsp;&nbsp;severity info;<br>
-&nbsp;&nbsp;};<br>
-&nbsp;&nbsp;category security { security; };<br>};
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: DNS Filtering --&gt;
+# Block malicious domains
+zone "malware.com" {
+  type master;
+  file "blocked.zone";
+};
+&lt;!-- DNS Logging --&gt;
+logging {
+  channel security {
+    file "/var/log/dns-security.log";
+    severity info;
+  };
+  category security { security; };
+};</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 19: Network Monitoring Implementation -->
-            <section>
+            <section data-slide-title="Network Monitoring Implementation">
                 <h2>Network Monitoring Implementation</h2>
                 
                 <h3>1. IDS/IPS Configuration</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Snort Configuration --&gt;<br>
-# /etc/snort/snort.conf<br>
-var HOME_NET 192.168.1.0/24<br>
-var EXTERNAL_NET !$HOME_NET<br><br>
-# Enable rules<br>
-include $RULE_PATH/local.rules<br>
-include $RULE_PATH/web-attacks.rules<br><br>
-# Output configuration<br>
-output unified2: filename snort.log, limit 128<br><br>
-&lt;!-- Custom Rules --&gt;<br>
-alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:"SSH Brute Force"; threshold:type both, track by_src, count 5, seconds 60;)
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Snort Configuration --&gt;
+# /etc/snort/snort.conf
+var HOME_NET 192.168.1.0/24
+var EXTERNAL_NET !$HOME_NET
+# Enable rules
+include $RULE_PATH/local.rules
+include $RULE_PATH/web-attacks.rules
+# Output configuration
+output unified2: filename snort.log, limit 128
+&lt;!-- Custom Rules --&gt;
+alert tcp $EXTERNAL_NET any -&gt; $HOME_NET 22 (msg:"SSH Brute Force"; threshold:type both, track by_src, count 5, seconds 60;)</code></pre>
                 </div>
 
                 <h3>2. Network Traffic Analysis</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Traffic Monitoring --&gt;<br>
-# Monitor suspicious traffic<br>
-tcpdump -i eth0 -w suspicious.pcap host 192.168.1.100<br><br>
-# Analyze DNS queries<br>
-tcpdump -i eth0 port 53 -n<br><br>
-# Monitor failed connections<br>
-tcpdump -i eth0 'tcp[tcpflags] & (tcp-syn|tcp-rst) != 0'<br><br>
-# Real-time analysis<br>
-tshark -i eth0 -f "port 80" -T fields -e ip.src -e ip.dst
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Traffic Monitoring --&gt;
+# Monitor suspicious traffic
+tcpdump -i eth0 -w suspicious.pcap host 192.168.1.100
+# Analyze DNS queries
+tcpdump -i eth0 port 53 -n
+# Monitor failed connections
+tcpdump -i eth0 'tcp[tcpflags] &amp; (tcp-syn|tcp-rst) != 0'
+# Real-time analysis
+tshark -i eth0 -f "port 80" -T fields -e ip.src -e ip.dst</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 20: Access Control Implementation -->
-            <section>
+            <section data-slide-title="Access Control Implementation">
                 <h2>Access Control Implementation</h2>
                 
                 <h3>1. Network Access Control (NAC)</h3>
                 <div class="code-example">
-&lt;!-- SECURE: 802.1X Configuration --&gt;<br>
-# Switch Configuration<br>
-interface GigabitEthernet0/1<br>
-&nbsp;&nbsp;switchport mode access<br>
-&nbsp;&nbsp;authentication port-control auto<br>
-&nbsp;&nbsp;authentication host-mode multi-domain<br>
-&nbsp;&nbsp;authentication violation restrict<br><br>
-&lt;!-- RADIUS Configuration --&gt;<br>
-radius-server host 192.168.1.100<br>
-radius-server key secretkey<br>
-aaa authentication dot1x default group radius<br>
-dot1x system-auth-control
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: 802.1X Configuration --&gt;
+# Switch Configuration
+interface GigabitEthernet0/1
+  switchport mode access
+  authentication port-control auto
+  authentication host-mode multi-domain
+  authentication violation restrict
+&lt;!-- RADIUS Configuration --&gt;
+radius-server host 192.168.1.100
+radius-server key secretkey
+aaa authentication dot1x default group radius
+dot1x system-auth-control</code></pre>
                 </div>
 
                 <h3>2. Firewall Rules</h3>
                 <div class="code-example">
-&lt;!-- SECURE: iptables Rules --&gt;<br>
-# Default deny policy<br>
-iptables -P INPUT DROP<br>
-iptables -P FORWARD DROP<br>
-iptables -P OUTPUT ACCEPT<br><br>
-# Allow established connections<br>
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT<br><br>
-# Allow SSH from specific networks<br>
-iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT<br><br>
-# Block suspicious traffic<br>
-iptables -A INPUT -p tcp --dport 22 -m recent --set --name SSH<br>
-iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4 --name SSH -j DROP
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: iptables Rules --&gt;
+# Default deny policy
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+# Allow SSH from specific networks
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+# Block suspicious traffic
+iptables -A INPUT -p tcp --dport 22 -m recent --set --name SSH
+iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4 --name SSH -j DROP</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 21: Career Development -->
-            <section>
+            <section data-slide-title="Career Development in Network Security">
                 <h2>Career Development in Network Security</h2>
                 <div class="career-box">
                     <h3>Next Steps:</h3>
@@ -788,8 +518,7 @@ iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4
                 </div>
             </section>
 
-            <!-- Task 2: Secure Implementation -->
-            <section>
+            <section data-slide-title="Task 2: Secure Network Configuration Implementation">
                 <h2>Task 2: Secure Network Configuration Implementation</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -811,8 +540,7 @@ iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4
                 </div>
             </section>
 
-            <!-- Slide 22: Further Activity -->
-            <section>
+            <section data-slide-title="Further Activity: Code Inspection">
                 <h2>Further Activity: Code Inspection</h2>
                 <div class="os3-studio">
                     <h3>Advanced Students - Code Analysis:</h3>
@@ -828,8 +556,7 @@ iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4
                 </div>
             </section>
 
-            <!-- Slide 23: Summary -->
-            <section>
+            <section data-slide-title="Session Summary">
                 <h2>Session Summary</h2>
                 <div class="highlight">
                     <h3>Key Takeaways:</h3>
@@ -844,66 +571,39 @@ iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4
                 </div>
             </section>
 
-            <!-- Slide 24: Next Steps -->
-            <section class="center">
+            <section class="center" data-slide-title="Next Steps">
                 <h2>Next Steps</h2>
-                <div class="timeline-info">
-                    <h3>Continue Learning:</h3>
-                    <ul>
-                        <li>Complete the OS³ Studio tasks</li>
-                        <li>Explore additional network security topics</li>
-                        <li>Practice with security testing tools</li>
-                        <li>Consider industry certifications</li>
-                        <li>Join cybersecurity communities</li>
-                    </ul>
-                    <p><strong>Next Session:</strong> NET-TRAFFIC-01, NET-FIREWALL-01 & Final Assessment</p>
-                </div>
+                
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: false,
-            preloadIframes: null,
-            autoAnimate: true,
-            autoAnimateMatcher: null,
-            autoAnimateEasing: 'ease',
-            autoAnimateDuration: 1.0,
-            autoAnimateUnmatched: true,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: null,
-            defaultTiming: null,
-            mouseWheel: false,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            disableLayout: false
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

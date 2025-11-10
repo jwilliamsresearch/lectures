@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 6: Using GitHub & Project Management Tools</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <style>
         /* Global slide styling */
         .reveal .slides section {
@@ -186,50 +188,29 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(243, 156, 18, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(243, 156, 18, 0.4)'">
-            ← Back to Module
-        </a>
+    
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="week5.html" title="Previous Week">&lt;</a>
+        <a href="week7.html" title="Next Week">&gt;</a>
     </div>
-    <div class="reveal">
+<div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+                        <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU601</div>
                 <h1>Using GitHub & Project Management Tools</h1>
-                <h3>CMU601: Dissertation - Week 6</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Undergraduate Final Year Project</p>
-                <p><small>3-hour session • 30 slides • 2 practical tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Introduction & objectives</li>
-                        <li>45 min: GitHub workflows & collaboration</li>
-                        <li>40 min: Task 1 - Advanced GitHub features</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>30 min: Project management tools overview</li>
-                        <li>40 min: Task 2 - Set up project board</li>
-                        <li>Remaining: Self-directed work</li>
-                    </ul>
+                <h2>Week 6</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
             <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Master GitHub workflows for solo and collaborative development</li>
@@ -245,7 +226,7 @@
             </section>
 
             <!-- Slide 3: GitHub Beyond Basic Commits -->
-            <section>
+            <section data-slide-title="GitHub: More Than Just Storage">
                 <h2>GitHub: More Than Just Storage</h2>
                 <div class="highlight">
                     <strong>GitHub is a complete project management platform</strong>
@@ -264,7 +245,7 @@
             </section>
 
             <!-- Slide 4: Git Branching Strategy -->
-            <section>
+            <section data-slide-title="Branching Strategy for Dissertations">
                 <h2>Branching Strategy for Dissertations</h2>
                 <h3>Why Use Branches?</h3>
                 <ul>
@@ -275,84 +256,73 @@
                 </ul>
                 <h3>Recommended Structure:</h3>
                 <div class="code-example">
-                    main                    # Stable, working version<br>
-                    ├── develop            # Integration branch<br>
-                    ├── feature/user-auth  # User authentication feature<br>
-                    ├── feature/dashboard  # Dashboard implementation<br>
-                    ├── feature/api        # API development<br>
-                    └── bugfix/login-error # Bug fixes
+                    <pre><code class="language-plaintext">main                    # Stable, working version
+├── develop            # Integration branch
+├── feature/user-auth  # User authentication feature
+├── feature/dashboard  # Dashboard implementation
+├── feature/api        # API development
+└── bugfix/login-error # Bug fixes</code></pre>
                 </div>
                 <p><strong>Golden Rule:</strong> Main branch should always be deployable/demonstrable</p>
             </section>
 
             <!-- Slide 5: Branch Commands -->
-            <section>
+            <section data-slide-title="Essential Branch Commands">
                 <h2>Essential Branch Commands</h2>
                 <h3>Creating and Switching Branches:</h3>
                 <div class="code-example">
-                    # Create new branch<br>
-                    git branch feature/user-authentication<br>
-                    <br>
-                    # Switch to branch<br>
-                    git checkout feature/user-authentication<br>
-                    <br>
-                    # Create and switch in one command<br>
-                    git checkout -b feature/user-authentication<br>
-                    <br>
-                    # See all branches<br>
-                    git branch -a<br>
-                    <br>
-                    # Switch back to main<br>
-                    git checkout main
+                    <pre><code class="language-bash"># Create new branch
+git branch feature/user-authentication
+# Switch to branch
+git checkout feature/user-authentication
+# Create and switch in one command
+git checkout -b feature/user-authentication
+# See all branches
+git branch -a
+# Switch back to main
+git checkout main</code></pre>
                 </div>
                 <h3>Merging Branches:</h3>
                 <div class="code-example">
-                    # Switch to main branch<br>
-                    git checkout main<br>
-                    <br>
-                    # Merge feature branch into main<br>
-                    git merge feature/user-authentication<br>
-                    <br>
-                    # Push to GitHub<br>
-                    git push origin main
+                    <pre><code class="language-bash"># Switch to main branch
+git checkout main
+# Merge feature branch into main
+git merge feature/user-authentication
+# Push to GitHub
+git push origin main</code></pre>
                 </div>
             </section>
 
             <!-- Slide 6: Real Example - Feature Branch Workflow -->
-            <section>
+            <section data-slide-title="Example: Implementing a New Feature">
                 <h2>Example: Implementing a New Feature</h2>
                 <h3>Scenario: Adding Email Notifications</h3>
                 <div class="code-example">
-                    # 1. Create feature branch from main<br>
-                    git checkout main<br>
-                    git pull origin main  # Get latest changes<br>
-                    git checkout -b feature/email-notifications<br>
-                    <br>
-                    # 2. Make changes, commit regularly<br>
-                    # ... edit files ...<br>
-                    git add .<br>
-                    git commit -m "Add email service configuration"<br>
-                    # ... more changes ...<br>
-                    git commit -m "Implement notification templates"<br>
-                    git commit -m "Add email sending functionality"<br>
-                    <br>
-                    # 3. Push feature branch to GitHub<br>
-                    git push origin feature/email-notifications<br>
-                    <br>
-                    # 4. Test feature thoroughly<br>
-                    <br>
-                    # 5. Merge back to main when ready<br>
-                    git checkout main<br>
-                    git merge feature/email-notifications<br>
-                    git push origin main<br>
-                    <br>
-                    # 6. Delete feature branch (optional)<br>
-                    git branch -d feature/email-notifications
+                    <pre><code class="language-javascript"># 1. Create feature branch from main
+git checkout main
+git pull origin main  # Get latest changes
+git checkout -b feature/email-notifications
+# 2. Make changes, commit regularly
+# ... edit files ...
+git add .
+git commit -m "Add email service configuration"
+# ... more changes ...
+git commit -m "Implement notification templates"
+git commit -m "Add email sending functionality"
+# 3. Push feature branch to GitHub
+git push origin feature/email-notifications
+# 4. Test feature thoroughly
+# 5. Merge back to main when ready
+git checkout main
+git merge feature/email-notifications
+git push origin main
+# 6. Delete feature branch (optional)
+git branch -d feature/email-notifications</code></pre>
                 </div>
             </section>
 
             <!-- Slide 7: GitHub Issues -->
-            <section>
+            <section data-slide-title="GitHub Issues: Your Task Tracker">
                 <h2>GitHub Issues: Your Task Tracker</h2>
                 <div class="highlight">
                     <strong>Issues help you organize work and demonstrate systematic development</strong>
@@ -376,42 +346,36 @@
             </section>
 
             <!-- Slide 8: Creating Effective Issues -->
-            <section>
+            <section data-slide-title="Writing Good Issues">
                 <h2>Writing Good Issues</h2>
                 <h3>❌ Poor Issue:</h3>
                 <div class="code-example">
-                    Title: Fix stuff<br>
-                    <br>
-                    Description: The thing isn't working
+                    <pre><code class="language-plaintext">Title: Fix stuff
+Description: The thing isn't working</code></pre>
                 </div>
                 <h3>✅ Good Issue:</h3>
                 <div class="code-example">
-                    Title: Add password reset functionality<br>
-                    <br>
-                    Description:<br>
-                    Users need ability to reset forgotten passwords.<br>
-                    <br>
-                    Requirements:<br>
-                    - Email verification link to user<br>
-                    - Secure token generation (expires in 1 hour)<br>
-                    - New password form<br>
-                    - Update password in database<br>
-                    - Confirmation email<br>
-                    <br>
-                    Acceptance Criteria:<br>
-                    - User receives reset email within 1 minute<br>
-                    - Token expires after 1 hour<br>
-                    - Password meets security requirements<br>
-                    - User can login with new password<br>
-                    <br>
-                    Related: #15 (User authentication system)<br>
-                    <br>
-                    Labels: enhancement, user-management
+                    <pre><code class="language-javascript">Title: Add password reset functionality
+Description:
+Users need ability to reset forgotten passwords.
+Requirements:
+- Email verification link to user
+- Secure token generation (expires in 1 hour)
+- New password form
+- Update password in database
+- Confirmation email
+Acceptance Criteria:
+- User receives reset email within 1 minute
+- Token expires after 1 hour
+- Password meets security requirements
+- User can login with new password
+Related: #15 (User authentication system)
+Labels: enhancement, user-management</code></pre>
                 </div>
             </section>
 
             <!-- Slide 9: GitHub Projects / Kanban Boards -->
-            <section>
+            <section data-slide-title="GitHub Projects: Built-in Kanban">
                 <h2>GitHub Projects: Built-in Kanban</h2>
                 <h3>Setting Up a Project Board:</h3>
                 <ol>
@@ -424,13 +388,12 @@
                 </ol>
                 <h3>Workflow:</h3>
                 <div class="code-example">
-                    To Do → In Progress → In Review → Done<br>
-                    <br>
-                    Example:<br>
-                    - Issue #12: Add user profiles [To Do]<br>
-                    - Issue #15: Database optimization [In Progress]<br>
-                    - Issue #18: Implement search [In Review]<br>
-                    - Issue #21: Setup CI/CD [Done]
+                    <pre><code class="language-plaintext">To Do → In Progress → In Review → Done
+Example:
+- Issue #12: Add user profiles [To Do]
+- Issue #15: Database optimization [In Progress]
+- Issue #18: Implement search [In Review]
+- Issue #21: Setup CI/CD [Done]</code></pre>
                 </div>
                 <div class="highlight">
                     <strong>Benefit:</strong> Visual progress tracking perfect for demonstrating systematic development in your dissertation report!
@@ -438,7 +401,7 @@
             </section>
 
             <!-- Slide 10: Pull Requests -->
-            <section>
+            <section data-slide-title="Pull Requests (PRs)">
                 <h2>Pull Requests (PRs)</h2>
                 <h3>What is a Pull Request?</h3>
                 <p>A way to propose changes from one branch to another, with review and discussion.</p>
@@ -463,7 +426,7 @@
             </section>
 
             <!-- Slide 11: Task 1 - GitHub Workflow -->
-            <section>
+            <section data-slide-title="Task 1: Implement GitHub Workflow">
                 <h2>Task 1: Implement GitHub Workflow</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -492,7 +455,7 @@
             </section>
 
             <!-- Slide 12: Introduction to Project Management Tools -->
-            <section>
+            <section data-slide-title="Project Management Tools Overview">
                 <h2>Project Management Tools Overview</h2>
                 <div class="highlight">
                     <strong>The right tool helps you stay organized and productive</strong>
@@ -517,7 +480,7 @@
             </section>
 
             <!-- Slide 13: Trello Deep Dive -->
-            <section>
+            <section data-slide-title="Trello: Visual Project Management">
                 <h2>Trello: Visual Project Management</h2>
                 <h3>Key Features:</h3>
                 <ul>
@@ -532,49 +495,45 @@
                 </ul>
                 <h3>Sample Board Structure:</h3>
                 <div class="code-example">
-                    Dissertation Board:<br>
-                    ├── 📋 Research & Planning<br>
-                    ├── 🔥 This Week<br>
-                    ├── 👨‍💻 In Development<br>
-                    ├── 🧪 Testing<br>
-                    ├── 📝 Documentation<br>
-                    └── ✅ Complete
+                    <pre><code class="language-plaintext">Dissertation Board:
+├── 📋 Research &amp; Planning
+├── 🔥 This Week
+├── 👨‍💻 In Development
+├── 🧪 Testing
+├── 📝 Documentation
+└── ✅ Complete</code></pre>
                 </div>
             </section>
 
             <!-- Slide 14: Trello Setup Example -->
-            <section>
+            <section data-slide-title="Setting Up Trello for Dissertations">
                 <h2>Setting Up Trello for Dissertations</h2>
                 <h3>Example Cards:</h3>
                 <div class="code-example">
-                    Card: "Implement User Authentication"<br>
-                    List: In Development<br>
-                    Labels: Backend, High Priority<br>
-                    Due Date: March 15, 2025<br>
-                    <br>
-                    Description:<br>
-                    Build secure authentication system with JWT tokens<br>
-                    <br>
-                    Checklist:<br>
-                    ☑ Design database schema for users<br>
-                    ☑ Implement registration endpoint<br>
-                    ☐ Implement login endpoint<br>
-                    ☐ Add JWT token generation<br>
-                    ☐ Add password hashing<br>
-                    ☐ Write unit tests<br>
-                    ☐ Update API documentation<br>
-                    <br>
-                    Attachments:<br>
-                    - auth-flow-diagram.png<br>
-                    - JWT-research.pdf<br>
-                    <br>
-                    Comments:<br>
-                    "Using bcrypt for password hashing - more secure than md5"
+                    <pre><code class="language-plaintext">Card: "Implement User Authentication"
+List: In Development
+Labels: Backend, High Priority
+Due Date: March 15, 2025
+Description:
+Build secure authentication system with JWT tokens
+Checklist:
+☑ Design database schema for users
+☑ Implement registration endpoint
+☐ Implement login endpoint
+☐ Add JWT token generation
+☐ Add password hashing
+☐ Write unit tests
+☐ Update API documentation
+Attachments:
+- auth-flow-diagram.png
+- JWT-research.pdf
+Comments:
+"Using bcrypt for password hashing - more secure than md5"</code></pre>
                 </div>
             </section>
 
             <!-- Slide 15: Jira for Dissertations -->
-            <section>
+            <section data-slide-title="Jira: Professional Agile Tool">
                 <h2>Jira: Professional Agile Tool</h2>
                 <h3>When to Use Jira:</h3>
                 <ul>
@@ -598,7 +557,7 @@
             </section>
 
             <!-- Slide 16: Other Useful Tools -->
-            <section>
+            <section data-slide-title="Additional Project Management Tools">
                 <h2>Additional Project Management Tools</h2>
                 <div class="tool-grid">
                     <div class="tool-card">
@@ -628,7 +587,7 @@
             </section>
 
             <!-- Slide 17: Time Tracking Tools -->
-            <section>
+            <section data-slide-title="Time Tracking for Dissertations">
                 <h2>Time Tracking for Dissertations</h2>
                 <div class="highlight">
                     <strong>Tracking time helps with project planning and demonstrates work in reports</strong>
@@ -651,7 +610,7 @@
             </section>
 
             <!-- Slide 18: Kanban Methodology -->
-            <section>
+            <section data-slide-title="Understanding Kanban">
                 <h2>Understanding Kanban</h2>
                 <h3>Core Principles:</h3>
                 <ul>
@@ -662,22 +621,21 @@
                 </ul>
                 <h3>Typical Kanban Board:</h3>
                 <div class="code-example">
-                    ┌─────────┬──────────┬────────────┬──────┐<br>
-                    │ Backlog │  To Do   │ In Progress│ Done │<br>
-                    ├─────────┼──────────┼────────────┼──────┤<br>
-                    │ Task A  │  Task D  │   Task G   │Task J│<br>
-                    │ Task B  │  Task E  │   Task H   │Task K│<br>
-                    │ Task C  │  Task F  │            │Task L│<br>
-                    │         │          │            │      │<br>
-                    └─────────┴──────────┴────────────┴──────┘<br>
-                    <br>
-                    WIP Limit: Max 2 tasks in "In Progress"
+                    <pre><code class="language-plaintext">┌─────────┬──────────┬────────────┬──────┐
+│ Backlog │  To Do   │ In Progress│ Done │
+├─────────┼──────────┼────────────┼──────┤
+│ Task A  │  Task D  │   Task G   │Task J│
+│ Task B  │  Task E  │   Task H   │Task K│
+│ Task C  │  Task F  │            │Task L│
+│         │          │            │      │
+└─────────┴──────────┴────────────┴──────┘
+WIP Limit: Max 2 tasks in "In Progress"</code></pre>
                 </div>
                 <p><strong>Golden Rule:</strong> Finish what you start before taking on new tasks</p>
             </section>
 
             <!-- Slide 19: Sprint Planning -->
-            <section>
+            <section data-slide-title="Sprint Planning for Dissertations">
                 <h2>Sprint Planning for Dissertations</h2>
                 <h3>What is a Sprint?</h3>
                 <p>A fixed time period (1-2 weeks) where you commit to completing specific tasks.</p>
@@ -691,43 +649,38 @@
                 </ul>
                 <h3>Example Sprint Plan:</h3>
                 <div class="code-example">
-                    Sprint 3 (Feb 10-23):<br>
-                    <br>
-                    Sprint Goal: Complete user authentication system<br>
-                    <br>
-                    Tasks:<br>
-                    1. Design database schema (3h) - HIGH<br>
-                    2. Implement registration (5h) - HIGH<br>
-                    3. Implement login (4h) - HIGH<br>
-                    4. Add password hashing (2h) - HIGH<br>
-                    5. Write tests (4h) - MEDIUM<br>
-                    6. Update documentation (2h) - MEDIUM<br>
-                    <br>
-                    Total: 20 hours over 2 weeks = 10h/week
+                    <pre><code class="language-plaintext">Sprint 3 (Feb 10-23):
+Sprint Goal: Complete user authentication system
+Tasks:
+1. Design database schema (3h) - HIGH
+2. Implement registration (5h) - HIGH
+3. Implement login (4h) - HIGH
+4. Add password hashing (2h) - HIGH
+5. Write tests (4h) - MEDIUM
+6. Update documentation (2h) - MEDIUM
+Total: 20 hours over 2 weeks = 10h/week</code></pre>
                 </div>
             </section>
 
             <!-- Slide 20: Daily/Weekly Routines -->
-            <section>
+            <section data-slide-title="Establishing Development Routines">
                 <h2>Establishing Development Routines</h2>
                 <h3>Daily Routine (15-30 minutes):</h3>
                 <div class="code-example">
-                    Morning:<br>
-                    1. Review project board<br>
-                    2. Pick 1-2 tasks for today<br>
-                    3. Move cards to "In Progress"<br>
-                    4. Start timer (if tracking time)<br>
-                    <br>
-                    During Development:<br>
-                    1. Work on tasks<br>
-                    2. Commit regularly<br>
-                    3. Update card checklists<br>
-                    <br>
-                    Evening:<br>
-                    1. Move completed tasks to "Done"<br>
-                    2. Stop timer<br>
-                    3. Quick reflection note<br>
-                    4. Plan tomorrow's task
+                    <pre><code class="language-plaintext">Morning:
+1. Review project board
+2. Pick 1-2 tasks for today
+3. Move cards to "In Progress"
+4. Start timer (if tracking time)
+During Development:
+1. Work on tasks
+2. Commit regularly
+3. Update card checklists
+Evening:
+1. Move completed tasks to "Done"
+2. Stop timer
+3. Quick reflection note
+4. Plan tomorrow's task</code></pre>
                 </div>
                 <h3>Weekly Review (30-60 minutes):</h3>
                 <ul>
@@ -740,7 +693,7 @@
             </section>
 
             <!-- Slide 21: Documentation Tools -->
-            <section>
+            <section data-slide-title="Documentation Management">
                 <h2>Documentation Management</h2>
                 <h3>Where to Keep Documentation:</h3>
                 <ul>
@@ -761,7 +714,7 @@
             </section>
 
             <!-- Slide 22: Task 2 - Project Management Setup -->
-            <section>
+            <section data-slide-title="Task 2: Set Up Project Management">
                 <h2>Task 2: Set Up Project Management</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -794,7 +747,7 @@
             </section>
 
             <!-- Slide 23: Communication Tools -->
-            <section>
+            <section data-slide-title="Communication & Collaboration Tools">
                 <h2>Communication & Collaboration Tools</h2>
                 <h3>Staying Connected:</h3>
                 <ul>
@@ -817,7 +770,7 @@
             </section>
 
             <!-- Slide 24: Backup Strategies -->
-            <section>
+            <section data-slide-title="Backup & Version Control Strategy">
                 <h2>Backup & Version Control Strategy</h2>
                 <div class="highlight">
                     <strong>⚠️ CRITICAL: Multiple backups prevent disaster!</strong>
@@ -847,28 +800,26 @@
             </section>
 
             <!-- Slide 25: Automation Tools -->
-            <section>
+            <section data-slide-title="Automation to Save Time">
                 <h2>Automation to Save Time</h2>
                 <h3>GitHub Actions (CI/CD):</h3>
                 <div class="code-example">
-                    # .github/workflows/tests.yml<br>
-                    name: Run Tests<br>
-                    <br>
-                    on: [push, pull_request]<br>
-                    <br>
-                    jobs:<br>
-                      test:<br>
-                        runs-on: ubuntu-latest<br>
-                        steps:<br>
-                          - uses: actions/checkout@v2<br>
-                          - name: Set up Python<br>
-                            uses: actions/setup-python@v2<br>
-                            with:<br>
-                              python-version: 3.11<br>
-                          - name: Install dependencies<br>
-                            run: pip install -r requirements.txt<br>
-                          - name: Run tests<br>
-                            run: pytest
+                    <pre><code class="language-plaintext"># .github/workflows/tests.yml
+name: Run Tests
+on: [push, pull_request]
+jobs:
+test:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v2
+- name: Set up Python
+uses: actions/setup-python@v2
+with:
+python-version: 3.11
+- name: Install dependencies
+run: pip install -r requirements.txt
+- name: Run tests
+run: pytest</code></pre>
                 </div>
                 <h3>Other Automation:</h3>
                 <ul>
@@ -879,7 +830,7 @@
             </section>
 
             <!-- Slide 26: Progress Tracking & Reporting -->
-            <section>
+            <section data-slide-title="Tracking and Reporting Progress">
                 <h2>Tracking and Reporting Progress</h2>
                 <h3>What to Track:</h3>
                 <ul>
@@ -892,34 +843,28 @@
                 </ul>
                 <h3>Creating Progress Reports:</h3>
                 <div class="code-example">
-                    Weekly Progress Report Template:<br>
-                    <br>
-                    Week: [Date Range]<br>
-                    <br>
-                    Completed:<br>
-                    - Implemented user authentication (8 hours)<br>
-                    - Wrote unit tests for auth module (3 hours)<br>
-                    - Updated API documentation (2 hours)<br>
-                    <br>
-                    In Progress:<br>
-                    - User profile page (60% complete)<br>
-                    <br>
-                    Next Week:<br>
-                    - Complete user profiles<br>
-                    - Start dashboard implementation<br>
-                    <br>
-                    Challenges:<br>
-                    - JWT token validation took longer than expected<br>
-                    - Resolved by reading RFC 7519 specification<br>
-                    <br>
-                    Decisions:<br>
-                    - Chose bcrypt over argon2 for password hashing<br>
-                    - Better Python library support
+                    <pre><code class="language-plaintext">Weekly Progress Report Template:
+Week: [Date Range]
+Completed:
+- Implemented user authentication (8 hours)
+- Wrote unit tests for auth module (3 hours)
+- Updated API documentation (2 hours)
+In Progress:
+- User profile page (60% complete)
+Next Week:
+- Complete user profiles
+- Start dashboard implementation
+Challenges:
+- JWT token validation took longer than expected
+- Resolved by reading RFC 7519 specification
+Decisions:
+- Chose bcrypt over argon2 for password hashing
+- Better Python library support</code></pre>
                 </div>
             </section>
 
             <!-- Slide 27: Demonstrating Professional Practice -->
-            <section>
+            <section data-slide-title="Showcasing Professional Development">
                 <h2>Showcasing Professional Development</h2>
                 <div class="highlight">
                     <strong>Your dissertation report should demonstrate professional practices!</strong>
@@ -945,7 +890,7 @@
             </section>
 
             <!-- Slide 28: Common Pitfalls to Avoid -->
-            <section>
+            <section data-slide-title="Common Project Management Mistakes">
                 <h2>Common Project Management Mistakes</h2>
                 <h3>❌ What NOT to Do:</h3>
                 <ul>
@@ -969,7 +914,7 @@
             </section>
 
             <!-- Slide 29: Action Plan for This Week -->
-            <section>
+            <section data-slide-title="Your Action Plan">
                 <h2>Your Action Plan</h2>
                 <div class="task-box">
                     <h3>Immediate Actions (Today):</h3>
@@ -998,7 +943,7 @@
             </section>
 
             <!-- Slide 30: Closing & Next Session -->
-            <section class="center">
+            <section class="center" data-slide-title="Key Takeaways">
                 <h2>Key Takeaways</h2>
                 <div class="highlight">
                     <h3>Remember:</h3>
@@ -1024,14 +969,25 @@
                         <li>Development log started</li>
                     </ul>
                 </div>
-                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Contact:</strong> <a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 <p><strong>Next Week:</strong> Doing Design Diagrams</p>
             </section>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
             slideNumber: true,
@@ -1039,7 +995,7 @@
             controls: true,
             center: false,
             mouseWheel: true,
-            transition: 'slide',
+            transition: 'none',
             width: '100%',
             height: '100%',
             margin: 0.04,

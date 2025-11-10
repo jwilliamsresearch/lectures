@@ -2,85 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 10: Web App Critique</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
-        .reveal .slides section.center { text-align: center; }
-        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
-        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
-        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
-        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
-        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
-        .reveal .slides section li { margin-bottom: 0.3em; }
-        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
-        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
-        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
-        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
-        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
-        .timeline-info li { margin-bottom: 0.2em; }
-        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
-        .demo-container h3 { color: #9b59b6; margin-top: 0; }
-        .critique-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 15px 0; }
-        .critique-card { background: linear-gradient(135deg, #f3e5f5, #e1f5fe); border: 2px solid #9b59b6; border-radius: 8px; padding: 15px; }
-        .critique-card h4 { margin: 0 0 10px 0; color: #9b59b6; }
-        .score-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin: 5px; }
-        .score-good { background: #27ae60; color: white; }
-        .score-ok { background: #f39c12; color: white; }
-        .score-bad { background: #e74c3c; color: white; }
-        .wcag-level { padding: 5px 10px; border-radius: 5px; font-weight: bold; display: inline-block; margin: 5px; }
-        .wcag-a { background: #95a5a6; color: white; }
-        .wcag-aa { background: #3498db; color: white; }
-        .wcag-aaa { background: #27ae60; color: white; }
-        @media (max-width: 768px) {
-            .reveal .slides section { padding: 15px; }
-            .reveal .slides section h1 { font-size: 2em; }
-            .reveal .slides section h2 { font-size: 1.6em; }
-            .reveal .slides section h3 { font-size: 1.3em; }
-            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
-        }
-        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
-        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
-    </style>
+    <title>CMM721 - Session 10: Web App Critique</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
-            ← Back to Module
-        </a>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session9.html" title="Previous Session">&lt;</a>
+        <a href="session11.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <section class="center">
-                <h1>Web Application Critique</h1>
-                <h3>CMM721: Web Application Development - Session 10</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Masters Level Conversion Course</p>
-                <p><small>3-hour session • 18 slides • 2 tasks • Live evaluation demos</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
+                <h1>Web App Critique</h1>
+                <h2>Session 10</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Evaluate web application usability</li>
@@ -92,7 +47,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="Why Critique Web Applications?">
                 <h2>Why Critique Web Applications?</h2>
                 <ul>
                     <li><strong>Learning:</strong> Understand what makes good UX</li>
@@ -107,7 +62,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Usability Evaluation Framework">
                 <h2>Usability Evaluation Framework</h2>
                 <div class="critique-grid">
                     <div class="critique-card">
@@ -137,7 +92,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Nielsen's 10 Usability Heuristics">
                 <h2>Nielsen's 10 Usability Heuristics</h2>
                 <ol style="font-size: 0.95em;">
                     <li><strong>Visibility of system status</strong> - Keep users informed</li>
@@ -153,7 +108,7 @@
                 </ol>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 LIVE DEMO: Usability Analysis">
                 <h2>🎯 LIVE DEMO: Usability Analysis</h2>
                 <div class="demo-container">
                     <h3>Example: E-commerce Checkout</h3>
@@ -179,7 +134,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Performance Evaluation">
                 <h2>Performance Evaluation</h2>
                 <h3>Key Metrics:</h3>
                 <ul>
@@ -198,7 +153,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 Performance Score Example">
                 <h2>🎯 Performance Score Example</h2>
                 <div class="demo-container">
                     <h3>Lighthouse Audit Results</h3>
@@ -224,7 +179,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Task 1: Usability & Performance Audit">
                 <h2>Task 1: Usability & Performance Audit</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -248,7 +203,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Accessibility (WCAG 2.1)">
                 <h2>Accessibility (WCAG 2.1)</h2>
                 <div class="highlight">
                     <strong>WCAG:</strong> Web Content Accessibility Guidelines
@@ -266,7 +221,7 @@
                 <span class="wcag-level wcag-aaa">Level AAA</span> Enhanced
             </section>
 
-            <section>
+            <section data-slide-title="Common Accessibility Issues">
                 <h2>Common Accessibility Issues</h2>
                 <div class="critique-grid">
                     <div class="critique-card">
@@ -296,7 +251,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 LIVE DEMO: Accessibility Testing">
                 <h2>🎯 LIVE DEMO: Accessibility Testing</h2>
                 <div class="demo-container">
                     <h3>Testing Tools & Techniques</h3>
@@ -321,26 +276,26 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Code Examples: Accessibility">
                 <h2>Code Examples: Accessibility</h2>
                 <h3>❌ Bad:</h3>
                 <div class="code-example">
-                    &lt;div onclick="submitForm()"&gt;Submit&lt;/div&gt;<br>
-                    &lt;img src="logo.png"&gt;<br>
-                    &lt;input type="text" placeholder="Name"&gt;<br>
-                    &lt;span style="color: #ccc"&gt;Click here&lt;/span&gt;
+                    <pre><code class="language-html">&lt;div onclick="submitForm()"&gt;Submit&lt;/div&gt;
+&lt;img src="logo.png"&gt;
+&lt;input type="text" placeholder="Name"&gt;
+&lt;span style="color: #ccc"&gt;Click here&lt;/span&gt;</code></pre>
                 </div>
                 <h3>✅ Good:</h3>
                 <div class="code-example">
-                    &lt;button type="submit"&gt;Submit&lt;/button&gt;<br>
-                    &lt;img src="logo.png" alt="Company Logo"&gt;<br>
-                    &lt;label for="name"&gt;Name:&lt;/label&gt;<br>
-                    &lt;input type="text" id="name" name="name"&gt;<br>
-                    &lt;a href="/page" style="color: #0066cc"&gt;Read more about our services&lt;/a&gt;
+                    <pre><code class="language-html">&lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;img src="logo.png" alt="Company Logo"&gt;
+&lt;label for="name"&gt;Name:&lt;/label&gt;
+&lt;input type="text" id="name" name="name"&gt;
+&lt;a href="/page" style="color: #0066cc"&gt;Read more about our services&lt;/a&gt;</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Standards Compliance">
                 <h2>Standards Compliance</h2>
                 <h3>HTML Validation:</h3>
                 <ul>
@@ -363,7 +318,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="Task 2: Accessibility Audit">
                 <h2>Task 2: Accessibility Audit</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -388,7 +343,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Security Considerations">
                 <h2>Security Considerations</h2>
                 <h3>Common Vulnerabilities:</h3>
                 <ul>
@@ -401,14 +356,14 @@
                 </ul>
                 <h3>Security Headers:</h3>
                 <div class="code-example">
-                    Content-Security-Policy<br>
-                    X-Content-Type-Options: nosniff<br>
-                    X-Frame-Options: DENY<br>
-                    Strict-Transport-Security
+                    <pre><code class="language-plaintext">Content-Security-Policy
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Strict-Transport-Security</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Ethical Considerations">
                 <h2>Ethical Considerations</h2>
                 <h3>Privacy:</h3>
                 <ul>
@@ -429,7 +384,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 Dark Pattern Examples">
                 <h2>🎯 Dark Pattern Examples</h2>
                 <div class="demo-container">
                     <h3>Common Manipulative Designs</h3>
@@ -461,7 +416,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Critique Report Structure">
                 <h2>Critique Report Structure</h2>
                 <ol>
                     <li><strong>Introduction:</strong> App overview, purpose, target audience</li>
@@ -477,7 +432,7 @@
                 </ol>
             </section>
 
-            <section>
+            <section data-slide-title="Best Practices">
                 <h2>Best Practices</h2>
                 <ul>
                     <li><strong>Be objective:</strong> Support claims with evidence</li>
@@ -490,7 +445,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="Next Session: Comparative Critique">
                 <h2>Next Session: Comparative Critique</h2>
                 <ul>
                     <li>Comparing multiple web applications</li>
@@ -503,21 +458,47 @@
                 <p><strong>Preparation:</strong> Select 2-3 similar apps to compare (e.g., Twitter/Mastodon/Bluesky)</p>
             </section>
 
-            <section class="center">
+            <section data-slide-title="Questions & Discussion" class="center">
                 <h2>Questions & Discussion</h2>
                 <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
                 <p><strong>Office Hours:</strong> By appointment</p>
                 <p><strong>Resources:</strong> WCAG Guidelines, Nielsen Norman Group, Web.dev</p>
                 <p>Thank you for your attention!</p>
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
         Reveal.initialize({
-            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
-            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

@@ -2,80 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 9: React & State Management</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
-        .reveal .slides section.center { text-align: center; }
-        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
-        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
-        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
-        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
-        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
-        .reveal .slides section li { margin-bottom: 0.3em; }
-        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
-        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
-        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
-        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
-        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
-        .timeline-info li { margin-bottom: 0.2em; }
-        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
-        .demo-container h3 { color: #9b59b6; margin-top: 0; }
-        .component-box { background: linear-gradient(135deg, #f3e5f5, #e1f5fe); border: 2px solid #9b59b6; border-radius: 10px; padding: 15px; margin: 10px; display: inline-block; min-width: 200px; }
-        .component-box h4 { margin: 0 0 10px 0; color: #9b59b6; }
-        .react-demo { background: white; border: 2px solid #dee2e6; border-radius: 10px; padding: 20px; margin: 15px 0; }
-        .demo-button { background: linear-gradient(135deg, #9b59b6, #3498db); color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; margin: 5px; transition: all 0.3s ease; }
-        .demo-button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(155, 89, 182, 0.4); }
-        .counter-display { font-size: 3em; font-weight: bold; color: #9b59b6; text-align: center; margin: 20px 0; }
-        @media (max-width: 768px) {
-            .reveal .slides section { padding: 15px; }
-            .reveal .slides section h1 { font-size: 2em; }
-            .reveal .slides section h2 { font-size: 1.6em; }
-            .reveal .slides section h3 { font-size: 1.3em; }
-            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
-        }
-        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
-        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
-    </style>
+    <title>CMM721 - Session 9: React & State Management</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
-            ← Back to Module
-        </a>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session8.html" title="Previous Session">&lt;</a>
+        <a href="session10.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <section class="center">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
                 <h1>React & State Management</h1>
-                <h3>CMM721: Web Application Development - Session 9</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Masters Level Conversion Course</p>
-                <p><small>3-hour session • 18 slides • 2 tasks • Interactive React demos</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Session 9</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand React component architecture</li>
@@ -87,7 +47,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="What is React?">
                 <h2>What is React?</h2>
                 <div class="highlight">
                     <strong>React:</strong> JavaScript library for building user interfaces
@@ -100,67 +60,60 @@
                 </ul>
                 <h3>Setup:</h3>
                 <div class="code-example">
-                    # Install Node.js, then:<br>
-                    npx create-react-app my-app<br>
-                    cd my-app<br>
-                    npm start<br><br>
-                    
-                    # Visit: http://localhost:3000
+                    <pre><code class="language-bash"># Install Node.js, then:
+npx create-react-app my-app
+cd my-app
+npm start
+# Visit: http://localhost:3000</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="JSX Syntax">
                 <h2>JSX Syntax</h2>
                 <div class="highlight">
                     <strong>JSX:</strong> JavaScript XML - HTML-like syntax in JavaScript
                 </div>
                 <div class="code-example">
-                    // JSX<br>
-                    const element = &lt;h1&gt;Hello, CMM721!&lt;/h1&gt;;<br><br>
-                    
-                    // With expressions<br>
-                    const name = 'Student';<br>
-                    const greeting = &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;<br><br>
-                    
-                    // With attributes<br>
-                    const button = &lt;button className="btn" onClick={handleClick}&gt;<br>
-                    &nbsp;&nbsp;Click Me<br>
-                    &lt;/button&gt;;<br><br>
-                    
-                    // Multi-line<br>
-                    const element = (<br>
-                    &nbsp;&nbsp;&lt;div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Title&lt;/h1&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Content&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    );
+                    <pre><code class="language-html">// JSX
+const element = &lt;h1&gt;Hello, CMM721!&lt;/h1&gt;;
+// With expressions
+const name = 'Student';
+const greeting = &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;
+// With attributes
+const button = &lt;button className="btn" onClick={handleClick}&gt;
+Click Me
+&lt;/button&gt;;
+// Multi-line
+const element = (
+&lt;div&gt;
+&lt;h1&gt;Title&lt;/h1&gt;
+&lt;p&gt;Content&lt;/p&gt;
+&lt;/div&gt;
+);</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Function Components">
                 <h2>Function Components</h2>
                 <div class="code-example">
-                    // Simple component<br>
-                    function Welcome() {<br>
-                    &nbsp;&nbsp;return &lt;h1&gt;Hello, World!&lt;/h1&gt;;<br>
-                    }<br><br>
-                    
-                    // With props<br>
-                    function Welcome(props) {<br>
-                    &nbsp;&nbsp;return &lt;h1&gt;Hello, {props.name}!&lt;/h1&gt;;<br>
-                    }<br><br>
-                    
-                    // Arrow function<br>
-                    const Welcome = ({ name }) =&gt; {<br>
-                    &nbsp;&nbsp;return &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;<br>
-                    };<br><br>
-                    
-                    // Usage<br>
-                    &lt;Welcome name="James" /&gt;
+                    <pre><code class="language-javascript">// Simple component
+function Welcome() {
+return &lt;h1&gt;Hello, World!&lt;/h1&gt;;
+}
+// With props
+function Welcome(props) {
+return &lt;h1&gt;Hello, {props.name}!&lt;/h1&gt;;
+}
+// Arrow function
+const Welcome = ({ name }) =&gt; {
+return &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;
+};
+// Usage
+&lt;Welcome name="James" /&gt;</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 Component Hierarchy">
                 <h2>🎯 Component Hierarchy</h2>
                 <div class="demo-container">
                     <h3>React Component Tree</h3>
@@ -199,33 +152,31 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="useState Hook">
                 <h2>useState Hook</h2>
                 <div class="code-example">
-                    import { useState } from 'react';<br><br>
-                    
-                    function Counter() {<br>
-                    &nbsp;&nbsp;const [count, setCount] = useState(0);<br><br>
-                    
-                    &nbsp;&nbsp;return (<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Count: {count}&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button onClick={() =&gt; setCount(count + 1)}&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Increment<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button onClick={() =&gt; setCount(count - 1)}&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decrement<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;);<br>
-                    }
+                    <pre><code class="language-html">import { useState } from 'react';
+function Counter() {
+const [count, setCount] = useState(0);
+return (
+&lt;div&gt;
+&lt;p&gt;Count: {count}&lt;/p&gt;
+&lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+Increment
+&lt;/button&gt;
+&lt;button onClick={() =&gt; setCount(count - 1)}&gt;
+Decrement
+&lt;/button&gt;
+&lt;/div&gt;
+);
+}</code></pre>
                 </div>
                 <div class="highlight">
                     <strong>useState:</strong> Returns [value, setter function]
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 LIVE DEMO: Counter with State">
                 <h2>🎯 LIVE DEMO: Counter with State</h2>
                 <div class="demo-container">
                     <h3>Interactive Counter Component</h3>
@@ -266,59 +217,57 @@
                 </script>
             </section>
 
-            <section>
+            <section data-slide-title="Props">
                 <h2>Props</h2>
                 <div class="highlight">
                     <strong>Props:</strong> Pass data from parent to child components
                 </div>
                 <div class="code-example">
-                    // Parent component<br>
-                    function App() {<br>
-                    &nbsp;&nbsp;return (<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Greeting name="James" role="Lecturer" /&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Greeting name="Student" role="Learner" /&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;);<br>
-                    }<br><br>
-                    
-                    // Child component<br>
-                    function Greeting({ name, role }) {<br>
-                    &nbsp;&nbsp;return (<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;Hello, {name}!&lt;/h2&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Role: {role}&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;);<br>
-                    }
+                    <pre><code class="language-html">// Parent component
+function App() {
+return (
+&lt;div&gt;
+&lt;Greeting name="James" role="Lecturer" /&gt;
+&lt;Greeting name="Student" role="Learner" /&gt;
+&lt;/div&gt;
+);
+}
+// Child component
+function Greeting({ name, role }) {
+return (
+&lt;div&gt;
+&lt;h2&gt;Hello, {name}!&lt;/h2&gt;
+&lt;p&gt;Role: {role}&lt;/p&gt;
+&lt;/div&gt;
+);
+}</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Lists and Keys">
                 <h2>Lists and Keys</h2>
                 <div class="code-example">
-                    function PostList() {<br>
-                    &nbsp;&nbsp;const posts = [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;{ id: 1, title: 'Django Tutorial' },<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;{ id: 2, title: 'React Basics' },<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;{ id: 3, title: 'REST APIs' }<br>
-                    &nbsp;&nbsp;];<br><br>
-                    
-                    &nbsp;&nbsp;return (<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{posts.map(post =&gt; (<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li key={post.id}&gt;{post.title}&lt;/li&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;))}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br>
-                    &nbsp;&nbsp;);<br>
-                    }
+                    <pre><code class="language-javascript">function PostList() {
+const posts = [
+{ id: 1, title: 'Django Tutorial' },
+{ id: 2, title: 'React Basics' },
+{ id: 3, title: 'REST APIs' }
+];
+return (
+&lt;ul&gt;
+{posts.map(post =&gt; (
+&lt;li key={post.id}&gt;{post.title}&lt;/li&gt;
+))}
+&lt;/ul&gt;
+);
+}</code></pre>
                 </div>
                 <div class="highlight">
                     <strong>Keys:</strong> Help React identify which items changed
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Task 1: Build React Components">
                 <h2>Task 1: Build React Components</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -343,31 +292,28 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="useEffect Hook">
                 <h2>useEffect Hook</h2>
                 <div class="code-example">
-                    import { useState, useEffect } from 'react';<br><br>
-                    
-                    function Posts() {<br>
-                    &nbsp;&nbsp;const [posts, setPosts] = useState([]);<br>
-                    &nbsp;&nbsp;const [loading, setLoading] = useState(true);<br><br>
-                    
-                    &nbsp;&nbsp;useEffect(() =&gt; {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;fetch('http://localhost:8000/api/posts/')<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(response =&gt; response.json())<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.then(data =&gt; {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setPosts(data);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setLoading(false);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br>
-                    &nbsp;&nbsp;}, []); // Empty array = run once on mount<br><br>
-                    
-                    &nbsp;&nbsp;if (loading) return &lt;p&gt;Loading...&lt;/p&gt;;<br>
-                    &nbsp;&nbsp;return &lt;PostList posts={posts} /&gt;;<br>
-                    }
+                    <pre><code class="language-javascript">import { useState, useEffect } from 'react';
+function Posts() {
+const [posts, setPosts] = useState([]);
+const [loading, setLoading] = useState(true);
+useEffect(() =&gt; {
+fetch('http://localhost:8000/api/posts/')
+.then(response =&gt; response.json())
+.then(data =&gt; {
+setPosts(data);
+setLoading(false);
+});
+}, []); // Empty array = run once on mount
+if (loading) return &lt;p&gt;Loading...&lt;/p&gt;;
+return &lt;PostList posts={posts} /&gt;;
+}</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 LIVE DEMO: Fetch Posts">
                 <h2>🎯 LIVE DEMO: Fetch Posts</h2>
                 <div class="demo-container">
                     <h3>Simulating useEffect Data Fetching</h3>
@@ -406,66 +352,60 @@
                 </script>
             </section>
 
-            <section>
+            <section data-slide-title="useEffect Dependencies">
                 <h2>useEffect Dependencies</h2>
                 <div class="code-example">
-                    // Run once on mount<br>
-                    useEffect(() =&gt; {<br>
-                    &nbsp;&nbsp;fetchData();<br>
-                    }, []);<br><br>
-                    
-                    // Run when 'id' changes<br>
-                    useEffect(() =&gt; {<br>
-                    &nbsp;&nbsp;fetchPost(id);<br>
-                    }, [id]);<br><br>
-                    
-                    // Run on every render (avoid!)<br>
-                    useEffect(() =&gt; {<br>
-                    &nbsp;&nbsp;console.log('Component rendered');<br>
-                    });<br><br>
-                    
-                    // Cleanup function<br>
-                    useEffect(() =&gt; {<br>
-                    &nbsp;&nbsp;const timer = setInterval(() =&gt; {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Tick');<br>
-                    &nbsp;&nbsp;}, 1000);<br><br>
-                    
-                    &nbsp;&nbsp;return () =&gt; clearInterval(timer); // Cleanup<br>
-                    }, []);
+                    <pre><code class="language-javascript">// Run once on mount
+useEffect(() =&gt; {
+fetchData();
+}, []);
+// Run when 'id' changes
+useEffect(() =&gt; {
+fetchPost(id);
+}, [id]);
+// Run on every render (avoid!)
+useEffect(() =&gt; {
+console.log('Component rendered');
+});
+// Cleanup function
+useEffect(() =&gt; {
+const timer = setInterval(() =&gt; {
+console.log('Tick');
+}, 1000);
+return () =&gt; clearInterval(timer); // Cleanup
+}, []);</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Forms in React">
                 <h2>Forms in React</h2>
                 <div class="code-example">
-                    function CreatePost() {<br>
-                    &nbsp;&nbsp;const [title, setTitle] = useState('');<br>
-                    &nbsp;&nbsp;const [content, setContent] = useState('');<br><br>
-                    
-                    &nbsp;&nbsp;const handleSubmit = (e) =&gt; {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;e.preventDefault();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log({ title, content });<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;// Send to API<br>
-                    &nbsp;&nbsp;};<br><br>
-                    
-                    &nbsp;&nbsp;return (<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;form onSubmit={handleSubmit}&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value={title}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onChange={(e) =&gt; setTitle(e.target.value)}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;textarea<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value={content}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onChange={(e) =&gt; setContent(e.target.value)}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="submit"&gt;Create Post&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/form&gt;<br>
-                    &nbsp;&nbsp;);<br>
-                    }
+                    <pre><code class="language-html">function CreatePost() {
+const [title, setTitle] = useState('');
+const [content, setContent] = useState('');
+const handleSubmit = (e) =&gt; {
+e.preventDefault();
+console.log({ title, content });
+// Send to API
+};
+return (
+&lt;form onSubmit={handleSubmit}&gt;
+&lt;input
+value={title}
+onChange={(e) =&gt; setTitle(e.target.value)}
+/&gt;
+&lt;textarea
+value={content}
+onChange={(e) =&gt; setContent(e.target.value)}
+/&gt;
+&lt;button type="submit"&gt;Create Post&lt;/button&gt;
+&lt;/form&gt;
+);
+}</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Task 2: Fetch from Django API">
                 <h2>Task 2: Fetch from Django API</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -489,7 +429,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Introduction to Redux">
                 <h2>Introduction to Redux</h2>
                 <div class="highlight">
                     <strong>Redux:</strong> Predictable state container for JavaScript apps
@@ -510,34 +450,31 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="Redux Example">
                 <h2>Redux Example</h2>
                 <div class="code-example">
-                    // Action<br>
-                    const increment = () =&gt; ({ type: 'INCREMENT' });<br><br>
-                    
-                    // Reducer<br>
-                    const counterReducer = (state = { count: 0 }, action) =&gt; {<br>
-                    &nbsp;&nbsp;switch (action.type) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;case 'INCREMENT':<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return { count: state.count + 1 };<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;case 'DECREMENT':<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return { count: state.count - 1 };<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;default:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return state;<br>
-                    &nbsp;&nbsp;}<br>
-                    };<br><br>
-                    
-                    // Create store<br>
-                    import { createStore } from 'redux';<br>
-                    const store = createStore(counterReducer);<br><br>
-                    
-                    // Dispatch action<br>
-                    store.dispatch(increment());
+                    <pre><code class="language-javascript">// Action
+const increment = () =&gt; ({ type: 'INCREMENT' });
+// Reducer
+const counterReducer = (state = { count: 0 }, action) =&gt; {
+switch (action.type) {
+case 'INCREMENT':
+return { count: state.count + 1 };
+case 'DECREMENT':
+return { count: state.count - 1 };
+default:
+return state;
+}
+};
+// Create store
+import { createStore } from 'redux';
+const store = createStore(counterReducer);
+// Dispatch action
+store.dispatch(increment());</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="React Hooks vs Redux">
                 <h2>React Hooks vs Redux</h2>
                 <h3>useState/useContext (React):</h3>
                 <ul>
@@ -559,7 +496,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Best Practices">
                 <h2>Best Practices</h2>
                 <ul>
                     <li><strong>Component Structure:</strong> Keep components small and focused</li>
@@ -573,7 +510,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="Next Session: Web App Critique">
                 <h2>Next Session: Web App Critique</h2>
                 <ul>
                     <li>Evaluating usability and UX</li>
@@ -586,21 +523,47 @@
                 <p><strong>Preparation:</strong> Find 2-3 web applications to analyze</p>
             </section>
 
-            <section class="center">
+            <section data-slide-title="Questions & Discussion" class="center">
                 <h2>Questions & Discussion</h2>
                 <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
                 <p><strong>Office Hours:</strong> By appointment</p>
                 <p><strong>Resources:</strong> React Documentation, React Tutorial</p>
                 <p>Thank you for your attention!</p>
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
         Reveal.initialize({
-            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
-            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

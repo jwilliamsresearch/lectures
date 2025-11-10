@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 7: Doing Design Diagrams</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <style>
         /* Global slide styling */
         .reveal .slides section {
@@ -186,50 +188,29 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(243, 156, 18, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(243, 156, 18, 0.4)'">
-            ← Back to Module
-        </a>
+    
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="week6.html" title="Previous Week">&lt;</a>
+        <a href="../index.html" title="Next Week">&gt;</a>
     </div>
-    <div class="reveal">
+<div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+                        <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU601</div>
                 <h1>Doing Design Diagrams</h1>
-                <h3>CMU601: Dissertation - Week 7</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Undergraduate Final Year Project</p>
-                <p><small>3-hour session • 29 slides • 2 practical tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Introduction & objectives</li>
-                        <li>40 min: Diagram types & purposes</li>
-                        <li>45 min: Task 1 - Creating system diagrams</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>30 min: Advanced diagramming techniques</li>
-                        <li>40 min: Task 2 - Complete project diagrams</li>
-                        <li>Remaining: Self-directed work</li>
-                    </ul>
+                <h2>Week 7</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
             <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand different types of design diagrams and their purposes</li>
@@ -246,7 +227,7 @@
             </section>
 
             <!-- Slide 3: Why Design Diagrams Are Essential -->
-            <section>
+            <section data-slide-title="The Importance of Design Diagrams">
                 <h2>The Importance of Design Diagrams</h2>
                 <h3>Benefits for Your Dissertation:</h3>
                 <ul>
@@ -267,7 +248,7 @@
             </section>
 
             <!-- Slide 4: Types of Diagrams Overview -->
-            <section>
+            <section data-slide-title="Types of Design Diagrams">
                 <h2>Types of Design Diagrams</h2>
                 <div class="diagram-comparison">
                     <div class="diagram-card">
@@ -314,7 +295,7 @@
             </section>
 
             <!-- Slide 5: UML Class Diagrams -->
-            <section>
+            <section data-slide-title="UML Class Diagrams">
                 <h2>UML Class Diagrams</h2>
                 <div class="highlight">
                     <strong>Purpose:</strong> Show classes, attributes, methods, and relationships in object-oriented systems
@@ -328,23 +309,23 @@
                 </ul>
                 <h3>Key Components:</h3>
                 <div class="code-example">
-                    ┌─────────────────────┐<br>
-                    │      User           │  ← Class Name<br>
-                    ├─────────────────────┤<br>
-                    │ - id: int           │  ← Attributes (- = private)<br>
-                    │ - username: string  │<br>
-                    │ - email: string     │<br>
-                    │ + password: string  │  (+ = public)<br>
-                    ├─────────────────────┤<br>
-                    │ + login(): bool     │  ← Methods<br>
-                    │ + logout(): void    │<br>
-                    │ + register(): bool  │<br>
-                    └─────────────────────┘
+                    <pre><code class="language-plaintext">┌─────────────────────┐
+│      User           │  ← Class Name
+├─────────────────────┤
+│ - id: int           │  ← Attributes (- = private)
+│ - username: string  │
+│ - email: string     │
+│ + password: string  │  (+ = public)
+├─────────────────────┤
+│ + login(): bool     │  ← Methods
+│ + logout(): void    │
+│ + register(): bool  │
+└─────────────────────┘</code></pre>
                 </div>
             </section>
 
             <!-- Slide 6: Class Diagram Relationships -->
-            <section>
+            <section data-slide-title="Class Diagram Relationships">
                 <h2>Class Diagram Relationships</h2>
                 <h3>Types of Relationships:</h3>
                 <ul>
@@ -356,65 +337,63 @@
                 </ul>
                 <h3>Example:</h3>
                 <div class="code-example">
-                    University ◇───── Department ◇───── Course<br>
-                    (aggregation)    (aggregation)<br>
-                    <br>
-                    Student ←──────── Enrollment ──────→ Course<br>
-                    (many-to-many relationship)<br>
-                    <br>
-                    Person △<br>
-                           │<br>
-                    ┌──────┴──────┐<br>
-                    Student      Staff<br>
-                    (inheritance)
+                    <pre><code class="language-plaintext">University ◇───── Department ◇───── Course
+(aggregation)    (aggregation)
+Student ←──────── Enrollment ──────→ Course
+(many-to-many relationship)
+Person △
+│
+┌──────┴──────┐
+Student      Staff
+(inheritance)</code></pre>
                 </div>
             </section>
 
             <!-- Slide 7: Practical Class Diagram Example -->
-            <section>
+            <section data-slide-title="Real Example: E-commerce System">
                 <h2>Real Example: E-commerce System</h2>
                 <div class="code-example">
-                    ┌─────────────────────┐<br>
-                    │      Customer       │<br>
-                    ├─────────────────────┤<br>
-                    │ - customerId: int   │<br>
-                    │ - name: string      │<br>
-                    │ - email: string     │<br>
-                    ├─────────────────────┤<br>
-                    │ + placeOrder()      │<br>
-                    │ + viewOrders()      │<br>
-                    └─────────────────────┘<br>
-                             │<br>
-                             │ 1<br>
-                             │<br>
-                             │ *<br>
-                    ┌─────────────────────┐<br>
-                    │       Order         │<br>
-                    ├─────────────────────┤<br>
-                    │ - orderId: int      │<br>
-                    │ - date: DateTime    │<br>
-                    │ - status: string    │<br>
-                    ├─────────────────────┤<br>
-                    │ + calculateTotal()  │<br>
-                    │ + cancelOrder()     │<br>
-                    └─────────────────────┘<br>
-                             │<br>
-                             │ 1<br>
-                             │<br>
-                             │ *<br>
-                    ┌─────────────────────┐<br>
-                    │     OrderItem       │<br>
-                    ├─────────────────────┤<br>
-                    │ - quantity: int     │<br>
-                    │ - price: decimal    │<br>
-                    ├─────────────────────┤<br>
-                    │ + getSubtotal()     │<br>
-                    └─────────────────────┘
+                    <pre><code class="language-plaintext">┌─────────────────────┐
+│      Customer       │
+├─────────────────────┤
+│ - customerId: int   │
+│ - name: string      │
+│ - email: string     │
+├─────────────────────┤
+│ + placeOrder()      │
+│ + viewOrders()      │
+└─────────────────────┘
+│
+│ 1
+│
+│ *
+┌─────────────────────┐
+│       Order         │
+├─────────────────────┤
+│ - orderId: int      │
+│ - date: DateTime    │
+│ - status: string    │
+├─────────────────────┤
+│ + calculateTotal()  │
+│ + cancelOrder()     │
+└─────────────────────┘
+│
+│ 1
+│
+│ *
+┌─────────────────────┐
+│     OrderItem       │
+├─────────────────────┤
+│ - quantity: int     │
+│ - price: decimal    │
+├─────────────────────┤
+│ + getSubtotal()     │
+└─────────────────────┘</code></pre>
                 </div>
             </section>
 
             <!-- Slide 8: Entity-Relationship Diagrams (ERD) -->
-            <section>
+            <section data-slide-title="Entity-Relationship Diagrams">
                 <h2>Entity-Relationship Diagrams</h2>
                 <div class="highlight">
                     <strong>Purpose:</strong> Model database structure showing entities, attributes, and relationships
@@ -438,52 +417,52 @@
             </section>
 
             <!-- Slide 9: ERD Example -->
-            <section>
+            <section data-slide-title="ERD Example: Student Management System">
                 <h2>ERD Example: Student Management System</h2>
                 <div class="code-example">
-                    ┌──────────────────┐<br>
-                    │     Student      │<br>
-                    ├──────────────────┤<br>
-                    │ PK student_id    │<br>
-                    │    name          │<br>
-                    │    email         │<br>
-                    │    date_of_birth │<br>
-                    └──────────────────┘<br>
-                             │<br>
-                             │ 1<br>
-                             │<br>
-                    enrolls in│<br>
-                             │<br>
-                             │ N<br>
-                             │<br>
-                    ┌──────────────────┐<br>
-                    │   Enrollment     │<br>
-                    ├──────────────────┤<br>
-                    │ PK enrollment_id │<br>
-                    │ FK student_id    │<br>
-                    │ FK course_id     │<br>
-                    │    grade         │<br>
-                    │    semester      │<br>
-                    └──────────────────┘<br>
-                             │<br>
-                             │ N<br>
-                             │<br>
-                             │ 1<br>
-                             │<br>
-                    ┌──────────────────┐<br>
-                    │      Course      │<br>
-                    ├──────────────────┤<br>
-                    │ PK course_id     │<br>
-                    │    course_name   │<br>
-                    │    credits       │<br>
-                    │ FK instructor_id │<br>
-                    └──────────────────┘
+                    <pre><code class="language-plaintext">┌──────────────────┐
+│     Student      │
+├──────────────────┤
+│ PK student_id    │
+│    name          │
+│    email         │
+│    date_of_birth │
+└──────────────────┘
+│
+│ 1
+│
+enrolls in│
+│
+│ N
+│
+┌──────────────────┐
+│   Enrollment     │
+├──────────────────┤
+│ PK enrollment_id │
+│ FK student_id    │
+│ FK course_id     │
+│    grade         │
+│    semester      │
+└──────────────────┘
+│
+│ N
+│
+│ 1
+│
+┌──────────────────┐
+│      Course      │
+├──────────────────┤
+│ PK course_id     │
+│    course_name   │
+│    credits       │
+│ FK instructor_id │
+└──────────────────┘</code></pre>
                 </div>
                 <p><strong>PK</strong> = Primary Key, <strong>FK</strong> = Foreign Key</p>
             </section>
 
             <!-- Slide 10: Use Case Diagrams -->
-            <section>
+            <section data-slide-title="Use Case Diagrams">
                 <h2>Use Case Diagrams</h2>
                 <div class="highlight">
                     <strong>Purpose:</strong> Show how users (actors) interact with the system
@@ -505,39 +484,39 @@
             </section>
 
             <!-- Slide 11: Use Case Diagram Example -->
-            <section>
+            <section data-slide-title="Use Case Example: Online Shopping">
                 <h2>Use Case Example: Online Shopping</h2>
                 <div class="code-example">
-                        Customer                    ┌─────────────────────────┐<br>
-                           │                        │   Shopping System       │<br>
-                           │                        │                         │<br>
-                           ├──────────────────────→ │   ○ Browse Products     │<br>
-                           │                        │                         │<br>
-                           ├──────────────────────→ │   ○ Add to Cart         │<br>
-                           │                        │                         │<br>
-                           ├──────────────────────→ │   ○ Checkout            │<br>
-                           │                        │         │               │<br>
-                           │                        │         ├─&lt;includes&gt;   │<br>
-                           │                        │         │               │<br>
-                           │                        │         ↓               │<br>
-                           │                        │   ○ Process Payment     │<br>
-                           │                        │                         │<br>
-                           ├──────────────────────→ │   ○ Track Order         │<br>
-                           │                        │                         │<br>
-                           │                        │   ○ Write Review        │<br>
-                        Admin │                     │         │               │<br>
-                           │                        │         ├─&lt;extends&gt;     │<br>
-                           │                        │         │               │<br>
-                           ├──────────────────────→ │   ○ Manage Products     │<br>
-                           │                        │                         │<br>
-                           └──────────────────────→ │   ○ View Reports        │<br>
-                                                    │                         │<br>
-                                                    └─────────────────────────┘
+                    <pre><code class="language-plaintext">Customer                    ┌─────────────────────────┐
+│                        │   Shopping System       │
+│                        │                         │
+├──────────────────────→ │   ○ Browse Products     │
+│                        │                         │
+├──────────────────────→ │   ○ Add to Cart         │
+│                        │                         │
+├──────────────────────→ │   ○ Checkout            │
+│                        │         │               │
+│                        │         ├─&lt;includes&gt;   │
+│                        │         │               │
+│                        │         ↓               │
+│                        │   ○ Process Payment     │
+│                        │                         │
+├──────────────────────→ │   ○ Track Order         │
+│                        │                         │
+│                        │   ○ Write Review        │
+Admin │                     │         │               │
+│                        │         ├─&lt;extends&gt;     │
+│                        │         │               │
+├──────────────────────→ │   ○ Manage Products     │
+│                        │                         │
+└──────────────────────→ │   ○ View Reports        │
+│                         │
+└─────────────────────────┘</code></pre>
                 </div>
             </section>
 
             <!-- Slide 12: Sequence Diagrams -->
-            <section>
+            <section data-slide-title="Sequence Diagrams">
                 <h2>Sequence Diagrams</h2>
                 <div class="highlight">
                     <strong>Purpose:</strong> Show how objects interact in a particular sequence over time
@@ -551,28 +530,28 @@
                 </ul>
                 <h3>Example: User Login Sequence</h3>
                 <div class="code-example">
-                    User      Browser     Server      Database<br>
-                     │           │           │            │<br>
-                     ├─Enter────→│           │            │<br>
-                     │credentials│           │            │<br>
-                     │           ├─POST────→ │            │<br>
-                     │           │ /login    │            │<br>
-                     │           │           ├─Query────→ │<br>
-                     │           │           │ user data  │<br>
-                     │           │           │←──────────┤<br>
-                     │           │           │  user row  │<br>
-                     │           │           ├─Verify────┤<br>
-                     │           │           │ password   │<br>
-                     │           │←─────────┤            │<br>
-                     │           │  JWT token│            │<br>
-                     │←──────────┤           │            │<br>
-                     │  Success  │           │            │<br>
-                     │           │           │            │
+                    <pre><code class="language-plaintext">User      Browser     Server      Database
+│           │           │            │
+├─Enter────→│           │            │
+│credentials│           │            │
+│           ├─POST────→ │            │
+│           │ /login    │            │
+│           │           ├─Query────→ │
+│           │           │ user data  │
+│           │           │←──────────┤
+│           │           │  user row  │
+│           │           ├─Verify────┤
+│           │           │ password   │
+│           │←─────────┤            │
+│           │  JWT token│            │
+│←──────────┤           │            │
+│  Success  │           │            │
+│           │           │            │</code></pre>
                 </div>
             </section>
 
             <!-- Slide 13: Activity Diagrams -->
-            <section>
+            <section data-slide-title="Activity Diagrams (Flowcharts)">
                 <h2>Activity Diagrams (Flowcharts)</h2>
                 <div class="highlight">
                     <strong>Purpose:</strong> Show workflow, business processes, or algorithm logic
@@ -586,92 +565,92 @@
                 </ul>
                 <h3>Example: Password Reset Flow</h3>
                 <div class="code-example">
-                         ┌──────────────┐<br>
-                         │ User requests│<br>
-                         │ password reset│<br>
-                         └──────┬───────┘<br>
-                                │<br>
-                         ┌──────▼───────┐<br>
-                         │ Enter email  │<br>
-                         └──────┬───────┘<br>
-                                │<br>
-                         ┌──────▼───────┐<br>
-                      ◇  │Email exists? │<br>
-                         └┬─────────┬───┘<br>
-                      Yes │         │ No<br>
-                          │         └──────→ Show generic message<br>
-                          │<br>
-                   ┌──────▼────────┐<br>
-                   │Generate token │<br>
-                   └──────┬────────┘<br>
-                          │<br>
-                   ┌──────▼────────┐<br>
-                   │ Send email    │<br>
-                   └──────┬────────┘<br>
-                          │<br>
-                   ┌──────▼────────┐<br>
-                   │ User clicks   │<br>
-                   │ reset link    │<br>
-                   └──────┬────────┘<br>
-                          │<br>
-                   ┌──────▼────────┐<br>
-                   │ Enter new     │<br>
-                   │ password      │<br>
-                   └──────┬────────┘<br>
-                          │<br>
-                   ┌──────▼────────┐<br>
-                   │ Update DB     │<br>
-                   └──────┬────────┘<br>
-                          │<br>
-                   ┌──────▼────────┐<br>
-                   │  ●  Done      │<br>
-                   └───────────────┘
+                    <pre><code class="language-plaintext">┌──────────────┐
+│ User requests│
+│ password reset│
+└──────┬───────┘
+│
+┌──────▼───────┐
+│ Enter email  │
+└──────┬───────┘
+│
+┌──────▼───────┐
+◇  │Email exists? │
+└┬─────────┬───┘
+Yes │         │ No
+│         └──────→ Show generic message
+│
+┌──────▼────────┐
+│Generate token │
+└──────┬────────┘
+│
+┌──────▼────────┐
+│ Send email    │
+└──────┬────────┘
+│
+┌──────▼────────┐
+│ User clicks   │
+│ reset link    │
+└──────┬────────┘
+│
+┌──────▼────────┐
+│ Enter new     │
+│ password      │
+└──────┬────────┘
+│
+┌──────▼────────┐
+│ Update DB     │
+└──────┬────────┘
+│
+┌──────▼────────┐
+│  ●  Done      │
+└───────────────┘</code></pre>
                 </div>
             </section>
 
             <!-- Slide 14: System Architecture Diagrams -->
-            <section>
+            <section data-slide-title="System Architecture Diagrams">
                 <h2>System Architecture Diagrams</h2>
                 <div class="highlight">
                     <strong>Purpose:</strong> Show high-level system components and how they connect
                 </div>
                 <h3>Example: Web Application Architecture</h3>
                 <div class="code-example">
-                    ┌─────────────────────────────────────────────────┐<br>
-                    │              CLIENT TIER                        │<br>
-                    │  ┌──────────┐  ┌──────────┐  ┌──────────┐     │<br>
-                    │  │ Browser  │  │  Mobile  │  │  Desktop │     │<br>
-                    │  │   App    │  │   App    │  │   App    │     │<br>
-                    │  └─────┬────┘  └────┬─────┘  └────┬─────┘     │<br>
-                    └────────┼────────────┼─────────────┼────────────┘<br>
-                             │            │             │<br>
-                          HTTPS        HTTPS         HTTPS<br>
-                             │            │             │<br>
-                    ┌────────▼────────────▼─────────────▼────────────┐<br>
-                    │          APPLICATION TIER (Backend)             │<br>
-                    │  ┌──────────────────────────────────────┐      │<br>
-                    │  │     Load Balancer (Nginx)            │      │<br>
-                    │  └────────────┬─────────────────────────┘      │<br>
-                    │               │                                 │<br>
-                    │  ┌────────────▼──────────┐  ┌──────────────┐  │<br>
-                    │  │   Web Server (Django) │  │  Web Server  │  │<br>
-                    │  │   - REST API          │  │  (Django)    │  │<br>
-                    │  │   - Business Logic    │  │              │  │<br>
-                    │  └────────────┬──────────┘  └──────┬───────┘  │<br>
-                    └───────────────┼────────────────────┼───────────┘<br>
-                                    │                    │<br>
-                    ┌───────────────▼────────────────────▼───────────┐<br>
-                    │              DATA TIER                          │<br>
-                    │  ┌──────────────────┐  ┌──────────────────┐   │<br>
-                    │  │   PostgreSQL     │  │   Redis Cache    │   │<br>
-                    │  │   Database       │  │                  │   │<br>
-                    │  └──────────────────┘  └──────────────────┘   │<br>
-                    └─────────────────────────────────────────────────┘
+                    <pre><code class="language-plaintext">┌─────────────────────────────────────────────────┐
+│              CLIENT TIER                        │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐     │
+│  │ Browser  │  │  Mobile  │  │  Desktop │     │
+│  │   App    │  │   App    │  │   App    │     │
+│  └─────┬────┘  └────┬─────┘  └────┬─────┘     │
+└────────┼────────────┼─────────────┼────────────┘
+│            │             │
+HTTPS        HTTPS         HTTPS
+│            │             │
+┌────────▼────────────▼─────────────▼────────────┐
+│          APPLICATION TIER (Backend)             │
+│  ┌──────────────────────────────────────┐      │
+│  │     Load Balancer (Nginx)            │      │
+│  └────────────┬─────────────────────────┘      │
+│               │                                 │
+│  ┌────────────▼──────────┐  ┌──────────────┐  │
+│  │   Web Server (Django) │  │  Web Server  │  │
+│  │   - REST API          │  │  (Django)    │  │
+│  │   - Business Logic    │  │              │  │
+│  └────────────┬──────────┘  └──────┬───────┘  │
+└───────────────┼────────────────────┼───────────┘
+│                    │
+┌───────────────▼────────────────────▼───────────┐
+│              DATA TIER                          │
+│  ┌──────────────────┐  ┌──────────────────┐   │
+│  │   PostgreSQL     │  │   Redis Cache    │   │
+│  │   Database       │  │                  │   │
+│  └──────────────────┘  └──────────────────┘   │
+└─────────────────────────────────────────────────┘</code></pre>
                 </div>
             </section>
 
             <!-- Slide 15: Wireframes -->
-            <section>
+            <section data-slide-title="Wireframes: UI Planning">
                 <h2>Wireframes: UI Planning</h2>
                 <div class="highlight">
                     <strong>Purpose:</strong> Plan user interface layout and navigation before building
@@ -699,7 +678,7 @@
             </section>
 
             <!-- Slide 16: Task 1 - Create System Diagrams -->
-            <section>
+            <section data-slide-title="Task 1: Design Your System Diagrams">
                 <h2>Task 1: Design Your System Diagrams</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -731,7 +710,7 @@
             </section>
 
             <!-- Slide 17: Diagramming Tools Overview -->
-            <section>
+            <section data-slide-title="Professional Diagramming Tools">
                 <h2>Professional Diagramming Tools</h2>
                 <h3>Lucidchart (Recommended for Beginners)</h3>
                 <ul>
@@ -754,7 +733,7 @@
             </section>
 
             <!-- Slide 18: More Diagramming Tools -->
-            <section>
+            <section data-slide-title="Additional Diagramming Options">
                 <h2>Additional Diagramming Options</h2>
                 <div class="diagram-comparison">
                     <div class="diagram-card">
@@ -783,7 +762,7 @@
             </section>
 
             <!-- Slide 19: PlantUML Introduction -->
-            <section>
+            <section data-slide-title="PlantUML: Code-to-Diagram">
                 <h2>PlantUML: Code-to-Diagram</h2>
                 <h3>Why Use PlantUML?</h3>
                 <ul>
@@ -794,30 +773,28 @@
                 </ul>
                 <h3>Example: Class Diagram</h3>
                 <div class="code-example">
-                    @startuml<br>
-                    class User {<br>
-                      - id: int<br>
-                      - username: string<br>
-                      - email: string<br>
-                      + login(): bool<br>
-                      + logout(): void<br>
-                    }<br>
-                    <br>
-                    class Order {<br>
-                      - orderId: int<br>
-                      - date: DateTime<br>
-                      - total: decimal<br>
-                      + calculateTotal(): decimal<br>
-                    }<br>
-                    <br>
-                    User "1" -- "*" Order : places<br>
-                    @enduml
+                    <pre><code class="language-plaintext">@startuml
+class User {
+- id: int
+- username: string
+- email: string
++ login(): bool
++ logout(): void
+}
+class Order {
+- orderId: int
+- date: DateTime
+- total: decimal
++ calculateTotal(): decimal
+}
+User "1" -- "*" Order : places
+@enduml</code></pre>
                 </div>
                 <p>Generates a professional UML diagram automatically!</p>
             </section>
 
             <!-- Slide 20: Diagram Best Practices -->
-            <section>
+            <section data-slide-title="Design Diagram Best Practices">
                 <h2>Design Diagram Best Practices</h2>
                 <h3>Do's:</h3>
                 <ul>
@@ -841,7 +818,7 @@
             </section>
 
             <!-- Slide 21: Diagram Documentation -->
-            <section>
+            <section data-slide-title="Documenting Your Diagrams">
                 <h2>Documenting Your Diagrams</h2>
                 <h3>In Your Dissertation Report:</h3>
                 <ul>
@@ -853,20 +830,19 @@
                 </ul>
                 <h3>Example Caption:</h3>
                 <div class="code-example">
-                    Figure 3.2: System Architecture Diagram<br>
-                    <br>
-                    This diagram illustrates the three-tier architecture of<br>
-                    the Student Management System. The client tier consists<br>
-                    of web and mobile interfaces, the application tier<br>
-                    handles business logic via Django REST API, and the<br>
-                    data tier uses PostgreSQL for persistence and Redis<br>
-                    for caching. This architecture was chosen to ensure<br>
-                    scalability and separation of concerns.
+                    <pre><code class="language-plaintext">Figure 3.2: System Architecture Diagram
+This diagram illustrates the three-tier architecture of
+the Student Management System. The client tier consists
+of web and mobile interfaces, the application tier
+handles business logic via Django REST API, and the
+data tier uses PostgreSQL for persistence and Redis
+for caching. This architecture was chosen to ensure
+scalability and separation of concerns.</code></pre>
                 </div>
             </section>
 
             <!-- Slide 22: Wireframing Best Practices -->
-            <section>
+            <section data-slide-title="Creating Effective Wireframes">
                 <h2>Creating Effective Wireframes</h2>
                 <h3>Start with Paper Sketches:</h3>
                 <ul>
@@ -895,7 +871,7 @@
             </section>
 
             <!-- Slide 23: Mobile vs Desktop Wireframes -->
-            <section>
+            <section data-slide-title="Responsive Design Wireframes">
                 <h2>Responsive Design Wireframes</h2>
                 <div class="highlight">
                     <strong>Show how your UI adapts to different screen sizes</strong>
@@ -924,39 +900,38 @@
             </section>
 
             <!-- Slide 24: Site Maps & Navigation -->
-            <section>
+            <section data-slide-title="Site Maps and Navigation Diagrams">
                 <h2>Site Maps and Navigation Diagrams</h2>
                 <h3>Purpose:</h3>
                 <p>Show the information architecture and how users navigate through your system</p>
                 <h3>Example Site Map:</h3>
                 <div class="code-example">
-                    Home<br>
-                    ├── About<br>
-                    ├── Products<br>
-                    │   ├── Category A<br>
-                    │   │   ├── Product 1<br>
-                    │   │   └── Product 2<br>
-                    │   └── Category B<br>
-                    │       ├── Product 3<br>
-                    │       └── Product 4<br>
-                    ├── Services<br>
-                    │   ├── Service 1<br>
-                    │   └── Service 2<br>
-                    ├── Blog<br>
-                    │   └── Blog Post<br>
-                    └── Contact<br>
-                    <br>
-                    User Account (authenticated)<br>
-                    ├── Dashboard<br>
-                    ├── Profile<br>
-                    ├── Orders<br>
-                    │   └── Order Details<br>
-                    └── Settings
+                    <pre><code class="language-plaintext">Home
+├── About
+├── Products
+│   ├── Category A
+│   │   ├── Product 1
+│   │   └── Product 2
+│   └── Category B
+│       ├── Product 3
+│       └── Product 4
+├── Services
+│   ├── Service 1
+│   └── Service 2
+├── Blog
+│   └── Blog Post
+└── Contact
+User Account (authenticated)
+├── Dashboard
+├── Profile
+├── Orders
+│   └── Order Details
+└── Settings</code></pre>
                 </div>
             </section>
 
             <!-- Slide 25: Data Flow Diagrams -->
-            <section>
+            <section data-slide-title="Data Flow Diagrams (DFD)">
                 <h2>Data Flow Diagrams (DFD)</h2>
                 <div class="highlight">
                     <strong>Purpose:</strong> Show how data moves through your system
@@ -970,22 +945,22 @@
                 </ul>
                 <h3>Example: Online Order Processing</h3>
                 <div class="code-example">
-                    [Customer] ──order details──→ (1.0 Process Order)<br>
-                                                         │<br>
-                                                         ├──store order──→ ==Orders DB==<br>
-                                                         │<br>
-                                                         ├──payment info──→ (2.0 Process Payment)<br>
-                                                         │                        │<br>
-                                                         │                        └──→ [Payment Gateway]<br>
-                                                         │<br>
-                                                         └──confirmation──→ (3.0 Send Email)<br>
-                                                                              │<br>
-                                                                              └──email──→ [Customer]
+                    <pre><code class="language-plaintext">[Customer] ──order details──→ (1.0 Process Order)
+│
+├──store order──→ ==Orders DB==
+│
+├──payment info──→ (2.0 Process Payment)
+│                        │
+│                        └──→ [Payment Gateway]
+│
+└──confirmation──→ (3.0 Send Email)
+│
+└──email──→ [Customer]</code></pre>
                 </div>
             </section>
 
             <!-- Slide 26: Task 2 - Complete Project Documentation -->
-            <section>
+            <section data-slide-title="Task 2: Complete Your Diagram Set">
                 <h2>Task 2: Complete Your Diagram Set</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -1014,7 +989,7 @@
             </section>
 
             <!-- Slide 27: Integrating Diagrams with Development -->
-            <section>
+            <section data-slide-title="Using Diagrams During Development">
                 <h2>Using Diagrams During Development</h2>
                 <h3>Diagrams as Living Documents:</h3>
                 <ul>
@@ -1036,7 +1011,7 @@
             </section>
 
             <!-- Slide 28: Common Diagramming Mistakes -->
-            <section>
+            <section data-slide-title="Avoiding Common Mistakes">
                 <h2>Avoiding Common Mistakes</h2>
                 <h3>❌ Too Complex:</h3>
                 <ul>
@@ -1065,7 +1040,7 @@
             </section>
 
             <!-- Slide 29: Action Plan & Next Steps -->
-            <section class="center">
+            <section class="center" data-slide-title="Key Takeaways">
                 <h2>Key Takeaways</h2>
                 <div class="highlight">
                     <h3>Remember:</h3>
@@ -1093,13 +1068,24 @@
                     </ul>
                 </div>
                 <p><strong>Remember:</strong> Diagrams are tools to help YOU think clearly and communicate effectively. They should make your dissertation stronger!</p>
-                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Contact:</strong> <a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
             </section>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
             slideNumber: true,
@@ -1107,7 +1093,7 @@
             controls: true,
             center: false,
             mouseWheel: true,
-            transition: 'slide',
+            transition: 'none',
             width: '100%',
             height: '100%',
             margin: 0.04,

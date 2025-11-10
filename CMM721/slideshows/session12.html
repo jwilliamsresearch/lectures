@@ -2,81 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 12: Project Finalisation</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
-        .reveal .slides section.center { text-align: center; }
-        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
-        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
-        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
-        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
-        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
-        .reveal .slides section li { margin-bottom: 0.3em; }
-        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
-        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
-        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
-        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
-        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
-        .timeline-info li { margin-bottom: 0.2em; }
-        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
-        .demo-container h3 { color: #9b59b6; margin-top: 0; }
-        .pipeline-step { background: linear-gradient(135deg, #f3e5f5, #e1f5fe); border: 2px solid #9b59b6; border-radius: 8px; padding: 15px; margin: 10px 0; }
-        .pipeline-step h4 { color: #9b59b6; margin: 0 0 10px 0; }
-        .checklist { background: #f8f9fa; border-left: 4px solid #27ae60; padding: 15px; border-radius: 5px; margin: 15px 0; }
-        .checklist h4 { color: #27ae60; margin-top: 0; }
-        .deployment-card { background: linear-gradient(135deg, #e8eaf6, #e1f5fe); border: 2px solid #3498db; border-radius: 10px; padding: 20px; margin: 15px 0; }
-        .deployment-card h4 { color: #3498db; margin-top: 0; }
-        .test-pyramid { width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 250px solid #9b59b6; position: relative; margin: 30px auto; }
-        @media (max-width: 768px) {
-            .reveal .slides section { padding: 15px; }
-            .reveal .slides section h1 { font-size: 2em; }
-            .reveal .slides section h2 { font-size: 1.6em; }
-            .reveal .slides section h3 { font-size: 1.3em; }
-            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
-        }
-        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
-        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
-    </style>
+    <title>CMM721 - Session 12: Project Finalisation</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
-            ← Back to Module
-        </a>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session11.html" title="Previous Session">&lt;</a>
+        <a href="../index.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <section class="center">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
                 <h1>Project Finalisation</h1>
-                <h3>CMM721: Web Application Development - Session 12</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Masters Level Conversion Course</p>
-                <p><small>3-hour session • 18 slides • 2 tasks • Testing & deployment demos</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Session 12</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Implement comprehensive testing strategies</li>
@@ -88,7 +47,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="Testing Strategy Overview">
                 <h2>Testing Strategy Overview</h2>
                 <div class="demo-container">
                     <h3>The Testing Pyramid</h3>
@@ -105,112 +64,98 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Unit Testing">
                 <h2>Unit Testing</h2>
                 <div class="highlight">
                     <strong>Unit Test:</strong> Test individual functions/components in isolation
                 </div>
                 <h3>Python (Django) - pytest:</h3>
                 <div class="code-example">
-                    # test_models.py<br>
-                    import pytest<br>
-                    from django.contrib.auth.models import User<br>
-                    from blog.models import Post<br><br>
-                    
-                    @pytest.mark.django_db<br>
-                    def test_post_creation():<br>
-                    &nbsp;&nbsp;user = User.objects.create(username='test')<br>
-                    &nbsp;&nbsp;post = Post.objects.create(<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;title='Test Post',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;content='Content',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;author=user<br>
-                    &nbsp;&nbsp;)<br>
-                    &nbsp;&nbsp;assert post.title == 'Test Post'<br>
-                    &nbsp;&nbsp;assert post.author == user<br><br>
-                    
-                    # Run: pytest
+                    <pre><code class="language-python"># test_models.py
+import pytest
+from django.contrib.auth.models import User
+from blog.models import Post
+@pytest.mark.django_db
+def test_post_creation():
+user = User.objects.create(username='test')
+post = Post.objects.create(
+title='Test Post',
+content='Content',
+author=user
+)
+assert post.title == 'Test Post'
+assert post.author == user
+# Run: pytest</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="JavaScript Unit Testing">
                 <h2>JavaScript Unit Testing</h2>
                 <h3>Jest (React):</h3>
                 <div class="code-example">
-                    // Counter.test.js<br>
-                    import { render, screen, fireEvent } from '@testing-library/react';<br>
-                    import Counter from './Counter';<br><br>
-                    
-                    test('increments counter on button click', () => {<br>
-                    &nbsp;&nbsp;render(&lt;Counter /&gt;);<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;const button = screen.getByText('Increment');<br>
-                    &nbsp;&nbsp;const count = screen.getByText('0');<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;fireEvent.click(button);<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;expect(screen.getByText('1')).toBeInTheDocument();<br>
-                    });<br><br>
-                    
-                    // Run: npm test
+                    <pre><code class="language-javascript">// Counter.test.js
+import { render, screen, fireEvent } from '@testing-library/react';
+import Counter from './Counter';
+test('increments counter on button click', () =&gt; {
+render(&lt;Counter /&gt;);
+const button = screen.getByText('Increment');
+const count = screen.getByText('0');
+fireEvent.click(button);
+expect(screen.getByText('1')).toBeInTheDocument();
+});
+// Run: npm test</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Integration Testing">
                 <h2>Integration Testing</h2>
                 <div class="highlight">
                     <strong>Integration Test:</strong> Test how multiple components work together
                 </div>
                 <div class="code-example">
-                    # test_views.py<br>
-                    from django.test import TestCase, Client<br>
-                    from django.urls import reverse<br><br>
-                    
-                    class PostViewTests(TestCase):<br>
-                    &nbsp;&nbsp;def setUp(self):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;self.client = Client()<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;self.user = User.objects.create_user('test', password='pass')<br><br>
-                    
-                    &nbsp;&nbsp;def test_post_list_view(self):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;response = self.client.get(reverse('post_list'))<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;self.assertEqual(response.status_code, 200)<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;self.assertContains(response, 'Blog Posts')<br><br>
-                    
-                    &nbsp;&nbsp;def test_create_post_authenticated(self):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;self.client.login(username='test', password='pass')<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;response = self.client.post(reverse('post_create'), {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'title': 'New Post',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'content': 'Content'<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;self.assertEqual(response.status_code, 302)
+                    <pre><code class="language-python"># test_views.py
+from django.test import TestCase, Client
+from django.urls import reverse
+class PostViewTests(TestCase):
+def setUp(self):
+self.client = Client()
+self.user = User.objects.create_user('test', password='pass')
+def test_post_list_view(self):
+response = self.client.get(reverse('post_list'))
+self.assertEqual(response.status_code, 200)
+self.assertContains(response, 'Blog Posts')
+def test_create_post_authenticated(self):
+self.client.login(username='test', password='pass')
+response = self.client.post(reverse('post_create'), {
+'title': 'New Post',
+'content': 'Content'
+})
+self.assertEqual(response.status_code, 302)</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="End-to-End (E2E) Testing">
                 <h2>End-to-End (E2E) Testing</h2>
                 <div class="highlight">
                     <strong>E2E Test:</strong> Test complete user workflows in real browser
                 </div>
                 <h3>Playwright:</h3>
                 <div class="code-example">
-                    // e2e/login.spec.js<br>
-                    const { test, expect } = require('@playwright/test');<br><br>
-                    
-                    test('user can login successfully', async ({ page }) => {<br>
-                    &nbsp;&nbsp;await page.goto('http://localhost:3000/login');<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;await page.fill('input[name="username"]', 'testuser');<br>
-                    &nbsp;&nbsp;await page.fill('input[name="password"]', 'password123');<br>
-                    &nbsp;&nbsp;await page.click('button[type="submit"]');<br>
-                    &nbsp;&nbsp;<br>
-                    &nbsp;&nbsp;await expect(page).toHaveURL('http://localhost:3000/dashboard');<br>
-                    &nbsp;&nbsp;await expect(page.locator('h1')).toContainText('Welcome');<br>
-                    });<br><br>
-                    
-                    // Run: npx playwright test
+                    <pre><code class="language-javascript">// e2e/login.spec.js
+const { test, expect } = require('@playwright/test');
+test('user can login successfully', async ({ page }) =&gt; {
+await page.goto('http://localhost:3000/login');
+await page.fill('input[name="username"]', 'testuser');
+await page.fill('input[name="password"]', 'password123');
+await page.click('button[type="submit"]');
+await expect(page).toHaveURL('http://localhost:3000/dashboard');
+await expect(page.locator('h1')).toContainText('Welcome');
+});
+// Run: npx playwright test</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 Test Coverage Example">
                 <h2>🎯 Test Coverage Example</h2>
                 <div class="demo-container">
                     <h3>Coverage Report</h3>
@@ -246,7 +191,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Task 1: Comprehensive Testing">
                 <h2>Task 1: Comprehensive Testing</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -272,7 +217,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Load Testing">
                 <h2>Load Testing</h2>
                 <div class="highlight">
                     <strong>Load Testing:</strong> Test how app performs under high traffic
@@ -285,25 +230,21 @@
                 </ul>
                 <h3>Locust Example:</h3>
                 <div class="code-example">
-                    # locustfile.py<br>
-                    from locust import HttpUser, task, between<br><br>
-                    
-                    class WebsiteUser(HttpUser):<br>
-                    &nbsp;&nbsp;wait_time = between(1, 3)<br><br>
-                    
-                    &nbsp;&nbsp;@task(3)<br>
-                    &nbsp;&nbsp;def view_posts(self):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;self.client.get("/api/posts/")<br><br>
-                    
-                    &nbsp;&nbsp;@task(1)<br>
-                    &nbsp;&nbsp;def view_post_detail(self):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;self.client.get("/api/posts/1/")<br><br>
-                    
-                    # Run: locust -f locustfile.py
+                    <pre><code class="language-python"># locustfile.py
+from locust import HttpUser, task, between
+class WebsiteUser(HttpUser):
+wait_time = between(1, 3)
+@task(3)
+def view_posts(self):
+self.client.get("/api/posts/")
+@task(1)
+def view_post_detail(self):
+self.client.get("/api/posts/1/")
+# Run: locust -f locustfile.py</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Performance Optimization">
                 <h2>Performance Optimization</h2>
                 <h3>Backend Optimization:</h3>
                 <ul>
@@ -323,7 +264,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="Documentation Best Practices">
                 <h2>Documentation Best Practices</h2>
                 <div class="checklist">
                     <h4>Essential Documentation:</h4>
@@ -339,44 +280,38 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="README.md Template">
                 <h2>README.md Template</h2>
                 <div class="code-example">
-                    # Project Title<br>
-                    Brief description of your project.<br><br>
-                    
-                    ## Features<br>
-                    - Feature 1<br>
-                    - Feature 2<br><br>
-                    
-                    ## Tech Stack<br>
-                    - Frontend: React, Tailwind CSS<br>
-                    - Backend: Django, PostgreSQL<br>
-                    - Deployment: Heroku<br><br>
-                    
-                    ## Installation<br>
-                    \`\`\`bash<br>
-                    git clone https://github.com/user/project.git<br>
-                    cd project<br>
-                    pip install -r requirements.txt<br>
-                    python manage.py migrate<br>
-                    python manage.py runserver<br>
-                    \`\`\`<br><br>
-                    
-                    ## Usage<br>
-                    Visit http://localhost:8000<br><br>
-                    
-                    ## Testing<br>
-                    \`\`\`bash<br>
-                    pytest<br>
-                    \`\`\`<br><br>
-                    
-                    ## License<br>
-                    MIT
+                    <pre><code class="language-python"># Project Title
+Brief description of your project.
+## Features
+- Feature 1
+- Feature 2
+## Tech Stack
+- Frontend: React, Tailwind CSS
+- Backend: Django, PostgreSQL
+- Deployment: Heroku
+## Installation
+\`\`\`bash
+git clone https://github.com/user/project.git
+cd project
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+\`\`\`
+## Usage
+Visit http://localhost:8000
+## Testing
+\`\`\`bash
+pytest
+\`\`\`
+## License
+MIT</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Deployment Strategies">
                 <h2>Deployment Strategies</h2>
                 <div class="deployment-card">
                     <h4>Platform as a Service (PaaS)</h4>
@@ -398,7 +333,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 Deployment Checklist">
                 <h2>🎯 Deployment Checklist</h2>
                 <div class="demo-container">
                     <div class="checklist">
@@ -419,38 +354,36 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="CI/CD Pipeline">
                 <h2>CI/CD Pipeline</h2>
                 <div class="highlight">
                     <strong>CI/CD:</strong> Continuous Integration / Continuous Deployment
                 </div>
                 <h3>GitHub Actions Example:</h3>
                 <div class="code-example">
-                    # .github/workflows/django.yml<br>
-                    name: Django CI<br><br>
-                    
-                    on: [push, pull_request]<br><br>
-                    
-                    jobs:<br>
-                    &nbsp;&nbsp;test:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;steps:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v3<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- name: Set up Python<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: actions/setup-python@v4<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;python-version: 3.11<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- name: Install dependencies<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: pip install -r requirements.txt<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- name: Run tests<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: pytest<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;- name: Deploy<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if: github.ref == 'refs/heads/main'<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run: # deployment command
+                    <pre><code class="language-python"># .github/workflows/django.yml
+name: Django CI
+on: [push, pull_request]
+jobs:
+test:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v3
+- name: Set up Python
+uses: actions/setup-python@v4
+with:
+python-version: 3.11
+- name: Install dependencies
+run: pip install -r requirements.txt
+- name: Run tests
+run: pytest
+- name: Deploy
+if: github.ref == 'refs/heads/main'
+run: # deployment command</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Task 2: Deploy Your Project">
                 <h2>Task 2: Deploy Your Project</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -477,7 +410,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Project Presentation Tips">
                 <h2>Project Presentation Tips</h2>
                 <h3>Structure (10-15 minutes):</h3>
                 <ol>
@@ -498,7 +431,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 Presentation Slide Structure">
                 <h2>🎯 Presentation Slide Structure</h2>
                 <div class="demo-container">
                     <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
@@ -534,7 +467,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Final Project Checklist">
                 <h2>Final Project Checklist</h2>
                 <div class="checklist">
                     <h4>Before Submission:</h4>
@@ -559,7 +492,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Module Review">
                 <h2>Module Review</h2>
                 <h3>What We've Covered:</h3>
                 <ul style="columns: 2; font-size: 0.95em;">
@@ -581,7 +514,7 @@
                 </div>
             </section>
 
-            <section class="center">
+            <section data-slide-title="Congratulations!" class="center">
                 <h2>Congratulations!</h2>
                 <h3>You've completed CMM721</h3>
                 <p style="font-size: 1.2em; margin: 30px 0;">🎉</p>
@@ -597,14 +530,40 @@
                 <p style="margin-top: 30px;"><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
                 <p><strong>Good luck with your projects and future careers!</strong></p>
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
         Reveal.initialize({
-            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
-            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

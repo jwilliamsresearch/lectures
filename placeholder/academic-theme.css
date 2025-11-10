@@ -72,11 +72,53 @@
     width: 100vw;
     background: #000000;
     color: #ffffff;
-    padding: 0.8em 3em;
+    padding: 0.8em 2em;
     font-size: 1.4em;
     font-weight: 600;
     z-index: 10000;
     box-sizing: border-box;
+}
+
+/* Navigation buttons in header */
+.slide-nav {
+    position: fixed;
+    top: 0;
+    right: 2em;
+    display: flex;
+    gap: 0;
+    align-items: center;
+    height: 3.8em;
+    z-index: 10001;
+    background: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.slide-nav a {
+    background: #ffffff;
+    color: #000000;
+    padding: 0.6em 0.9em;
+    text-decoration: none;
+    font-size: 0.8em;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    display: inline-block;
+    border: none;
+    border-right: 1px solid #e0e0e0;
+}
+
+.slide-nav a:last-child {
+    border-right: none;
+}
+
+.slide-nav a:hover {
+    background: #f5f5f5;
+    color: #000000;
+}
+
+.slide-nav a:active {
+    transform: scale(0.95);
+    background: #e0e0e0;
 }
 
 /* Scrollable content area below fixed header */
@@ -89,12 +131,12 @@
 }
 
 /* Content wrapper with padding */
-.reveal .slides section:not(.title-slide) > * {
-    margin-left: 3em;
-    margin-right: 3em;
+.reveal .slides section:not(.title-slide)>* {
+    margin-left: 2em;
+    margin-right: 2em;
 }
 
-.reveal .slides section:not(.title-slide) > *:last-child {
+.reveal .slides section:not(.title-slide)>*:last-child {
     margin-bottom: 2em;
 }
 
@@ -111,7 +153,7 @@
 }
 
 /* Hide the first h2 on slides with data-slide-title (avoid duplication) */
-.reveal .slides section[data-slide-title]:not(.title-slide) > h2:first-of-type {
+.reveal .slides section[data-slide-title]:not(.title-slide)>h2:first-of-type {
     display: none;
 }
 
@@ -265,7 +307,7 @@
     background: #1e1e1e;
     border: 1px solid #333;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .reveal code {
@@ -280,7 +322,7 @@
 
 .reveal pre code {
     display: block;
-    padding: 1.5em;
+    padding: 1em;
     overflow: auto;
     max-height: 500px;
     word-wrap: normal;
@@ -291,7 +333,7 @@
 
 /* Code highlighting enhancements */
 .reveal pre code.hljs {
-    padding: 1.5em;
+    padding: 1em;
     background: #1e1e1e;
 }
 
@@ -496,4 +538,27 @@
     color: var(--r-selection-color);
     background: var(--r-selection-background-color);
     text-shadow: none;
+}
+
+/*********************************************
+ * SCROLLING FIX
+ *********************************************/
+
+/* Prevent wheel events from changing slides when scrolling within content */
+.reveal .slides section {
+    pointer-events: auto;
+}
+
+.reveal pre,
+.reveal .code-example,
+.reveal .task-box,
+.reveal .info-box,
+.reveal .warning-box,
+.reveal .highlight,
+.reveal ul,
+.reveal ol,
+.reveal div[style*="overflow"] {
+    /* Allow scrolling but stop propagation to prevent slide changes */
+    -ms-overflow-style: auto;
+    scrollbar-width: auto;
 }

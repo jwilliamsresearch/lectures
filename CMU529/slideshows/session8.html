@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 8: Session Management & User Authentication</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style>
         .reveal .slides section {
             text-align: left;
@@ -14,7 +18,6 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        .reveal .slides section.center { text-align: center; }
         .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
         .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
         .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
@@ -31,16 +34,13 @@
             overflow-y: auto;
         }
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
         .highlight {
             background: #fff3cd;
@@ -78,76 +78,41 @@
         /* Custom scrollbar styling */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-    </style>
+        </style>
 </head>
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease;
-            display: inline-block;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" 
-           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-            ← Back to Module
-        </a>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session7.html" title="Previous Session">&lt;</a>
+        <a href="session9.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 8</div>
                 <h1>Session Management & User Authentication</h1>
-                <h3>CMU529: Advanced Web Development - Session 8</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>User registration, login systems, session handling, and security</p>
-                <p><small>3-hour session • 22 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Implement user registration and login systems</li>
                     <li>Manage user sessions securely</li>
@@ -158,24 +123,20 @@
             </section>
 
             <!-- Slide 3: Session Basics -->
-            <section>
-                <h2>Session Basics</h2>
+            <section data-slide-title="Session Basics"><h2>Session Basics</h2>
                 <div class="code-example">
-                    Starting Sessions:<br><br>
-                    
-                    &lt;?php<br>
-                    // Start session at beginning of script<br>
-                    session_start();<br><br>
-                    
-                    // Store data in session<br>
-                    $_SESSION['user_id'] = 123;<br>
-                    $_SESSION['username'] = 'john_doe';<br>
-                    $_SESSION['logged_in'] = true;<br><br>
-                    
-                    // Access session data<br>
-                    echo "Welcome " . $_SESSION['username'];<br>
-                    ?&gt;
-                </div>
+                <pre><code class="language-php">Starting Sessions:
+&lt;?php
+// Start session at beginning of script
+session_start();
+// Store data in session
+$_SESSION['user_id'] = 123;
+$_SESSION['username'] = 'john_doe';
+$_SESSION['logged_in'] = true;
+// Access session data
+echo "Welcome " . $_SESSION['username'];
+?&gt;</code></pre>
+            </div>
                 <ul>
                     <li>Sessions store data on server</li>
                     <li>Session ID stored in browser cookie</li>
@@ -184,26 +145,21 @@
             </section>
 
             <!-- Slide 4: User Registration -->
-            <section>
-                <h2>User Registration</h2>
+            <section data-slide-title="User Registration"><h2>User Registration</h2>
                 <div class="code-example">
-                    Registration Process:<br><br>
-                    
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") {<br>
-                    &nbsp;&nbsp;$username = trim($_POST['username']);<br>
-                    &nbsp;&nbsp;$email = trim($_POST['email']);<br>
-                    &nbsp;&nbsp;$password = $_POST['password'];<br><br>
-                    
-                    &nbsp;&nbsp;// Hash password<br>
-                    &nbsp;&nbsp;$hashedPassword = password_hash($password, PASSWORD_DEFAULT);<br><br>
-                    
-                    &nbsp;&nbsp;// Insert user into database<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");<br>
-                    &nbsp;&nbsp;$stmt->execute([$username, $email, $hashedPassword]);<br><br>
-                    
-                    &nbsp;&nbsp;echo "Registration successful!";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Registration Process:
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $username = trim($_POST['username']);
+  $email = trim($_POST['email']);
+  $password = $_POST['password'];
+  // Hash password
+  $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+  // Insert user into database
+  $stmt = $pdo-&gt;prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+  $stmt-&gt;execute([$username, $email, $hashedPassword]);
+  echo "Registration successful!";
+}</code></pre>
+            </div>
                 <ul>
                     <li>Always hash passwords</li>
                     <li>Validate input data</li>
@@ -212,27 +168,23 @@
             </section>
 
             <!-- Slide 5: User Login -->
-            <section>
-                <h2>User Login</h2>
+            <section data-slide-title="User Login"><h2>User Login</h2>
                 <div class="code-example">
-                    Login Verification:<br><br>
-                    
-                    function authenticateUser($email, $password) {<br>
-                    &nbsp;&nbsp;global $pdo;<br><br>
-                    
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT id, username, password FROM users WHERE email = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$email]);<br>
-                    &nbsp;&nbsp;$user = $stmt->fetch();<br><br>
-                    
-                    &nbsp;&nbsp;if ($user && password_verify($password, $user['password'])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['user_id'] = $user['id'];<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['username'] = $user['username'];<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['logged_in'] = true;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return true;<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;return false;<br>
-                    }
-                </div>
+                <pre><code class="language-php">Login Verification:
+function authenticateUser($email, $password) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT id, username, password FROM users WHERE email = ?");
+  $stmt-&gt;execute([$email]);
+  $user = $stmt-&gt;fetch();
+  if ($user &amp;&amp; password_verify($password, $user['password'])) {
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['logged_in'] = true;
+    return true;
+  }
+  return false;
+}</code></pre>
+            </div>
                 <ul>
                     <li>Use password_verify() for comparison</li>
                     <li>Store user data in session</li>
@@ -241,30 +193,26 @@
             </section>
 
             <!-- Slide 6: Session Management -->
-            <section>
-                <h2>Session Management</h2>
+            <section data-slide-title="Session Management"><h2>Session Management</h2>
                 <div class="code-example">
-                    Session Functions:<br><br>
-                    
-                    // Check if user is logged in<br>
-                    function isLoggedIn() {<br>
-                    &nbsp;&nbsp;return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;<br>
-                    }<br><br>
-                    
-                    // Logout function<br>
-                    function logout() {<br>
-                    &nbsp;&nbsp;session_start();<br>
-                    &nbsp;&nbsp;session_destroy();<br>
-                    &nbsp;&nbsp;header("Location: login.php");<br>
-                    &nbsp;&nbsp;exit();<br>
-                    }<br><br>
-                    
-                    // Protect pages<br>
-                    if (!isLoggedIn()) {<br>
-                    &nbsp;&nbsp;header("Location: login.php");<br>
-                    &nbsp;&nbsp;exit();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Session Functions:
+// Check if user is logged in
+function isLoggedIn() {
+  return isset($_SESSION['logged_in']) &amp;&amp; $_SESSION['logged_in'] === true;
+}
+// Logout function
+function logout() {
+  session_start();
+  session_destroy();
+  header("Location: login.php");
+  exit();
+}
+// Protect pages
+if (!isLoggedIn()) {
+  header("Location: login.php");
+  exit();
+}</code></pre>
+            </div>
                 <ul>
                     <li>Check login status on protected pages</li>
                     <li>Destroy session on logout</li>
@@ -273,29 +221,23 @@
             </section>
 
             <!-- Slide 7: Password Security -->
-            <section>
-                <h2>Password Security</h2>
+            <section data-slide-title="Password Security"><h2>Password Security</h2>
                 <div class="code-example">
-                    Password Validation:<br><br>
-                    
-                    function validatePassword($password) {<br>
-                    &nbsp;&nbsp;$errors = [];<br><br>
-                    
-                    &nbsp;&nbsp;if (strlen($password) < 8) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "Password must be at least 8 characters";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;if (!preg_match("/[A-Z]/", $password)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "Password must contain uppercase letter";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;if (!preg_match("/[0-9]/", $password)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "Password must contain number";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return $errors;<br>
-                    }
-                </div>
+                <pre><code class="language-php">Password Validation:
+function validatePassword($password) {
+  $errors = [];
+  if (strlen($password) &lt; 8) {
+    $errors[] = "Password must be at least 8 characters";
+  }
+  if (!preg_match("/[A-Z]/", $password)) {
+    $errors[] = "Password must contain uppercase letter";
+  }
+  if (!preg_match("/[0-9]/", $password)) {
+    $errors[] = "Password must contain number";
+  }
+  return $errors;
+}</code></pre>
+            </div>
                 <ul>
                     <li>Enforce strong password requirements</li>
                     <li>Use regex for pattern matching</li>
@@ -304,28 +246,23 @@
             </section>
 
             <!-- Slide 8: Password Reset -->
-            <section>
-                <h2>Password Reset</h2>
+            <section data-slide-title="Password Reset"><h2>Password Reset</h2>
                 <div class="code-example">
-                    Reset Token System:<br><br>
-                    
-                    // Generate reset token<br>
-                    $token = bin2hex(random_bytes(32));<br>
-                    $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));<br><br>
-                    
-                    // Store token in database<br>
-                    $stmt = $pdo->prepare("INSERT INTO password_resets (email, token, expires) VALUES (?, ?, ?)");<br>
-                    $stmt->execute([$email, $token, $expires]);<br><br>
-                    
-                    // Send email with reset link<br>
-                    $resetLink = "https://example.com/reset.php?token=" . $token;<br>
-                    mail($email, "Password Reset", "Click here to reset: " . $resetLink);<br><br>
-                    
-                    // Verify token<br>
-                    $stmt = $pdo->prepare("SELECT * FROM password_resets WHERE token = ? AND expires > NOW()");<br>
-                    $stmt->execute([$token]);<br>
-                    $reset = $stmt->fetch();
-                </div>
+                <pre><code class="language-php">Reset Token System:
+// Generate reset token
+$token = bin2hex(random_bytes(32));
+$expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
+// Store token in database
+$stmt = $pdo-&gt;prepare("INSERT INTO password_resets (email, token, expires) VALUES (?, ?, ?)");
+$stmt-&gt;execute([$email, $token, $expires]);
+// Send email with reset link
+$resetLink = "https://example.com/reset.php?token=" . $token;
+mail($email, "Password Reset", "Click here to reset: " . $resetLink);
+// Verify token
+$stmt = $pdo-&gt;prepare("SELECT * FROM password_resets WHERE token = ? AND expires &gt; NOW()");
+$stmt-&gt;execute([$token]);
+$reset = $stmt-&gt;fetch();</code></pre>
+            </div>
                 <ul>
                     <li>Generate secure random tokens</li>
                     <li>Set expiration times</li>
@@ -334,29 +271,24 @@
             </section>
 
             <!-- Slide 9: User Profiles -->
-            <section>
-                <h2>User Profiles</h2>
+            <section data-slide-title="User Profiles"><h2>User Profiles</h2>
                 <div class="code-example">
-                    Profile Management:<br><br>
-                    
-                    // Get user profile<br>
-                    $userId = $_SESSION['user_id'];<br>
-                    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");<br>
-                    $stmt->execute([$userId]);<br>
-                    $user = $stmt->fetch();<br><br>
-                    
-                    // Update profile<br>
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") {<br>
-                    &nbsp;&nbsp;$firstName = trim($_POST['first_name']);<br>
-                    &nbsp;&nbsp;$lastName = trim($_POST['last_name']);<br>
-                    &nbsp;&nbsp;$phone = trim($_POST['phone']);<br><br>
-                    
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE users SET first_name = ?, last_name = ?, phone = ? WHERE id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$firstName, $lastName, $phone, $userId]);<br><br>
-                    
-                    &nbsp;&nbsp;echo "Profile updated successfully";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Profile Management:
+// Get user profile
+$userId = $_SESSION['user_id'];
+$stmt = $pdo-&gt;prepare("SELECT * FROM users WHERE id = ?");
+$stmt-&gt;execute([$userId]);
+$user = $stmt-&gt;fetch();
+// Update profile
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $firstName = trim($_POST['first_name']);
+  $lastName = trim($_POST['last_name']);
+  $phone = trim($_POST['phone']);
+  $stmt = $pdo-&gt;prepare("UPDATE users SET first_name = ?, last_name = ?, phone = ? WHERE id = ?");
+  $stmt-&gt;execute([$firstName, $lastName, $phone, $userId]);
+  echo "Profile updated successfully";
+}</code></pre>
+            </div>
                 <ul>
                     <li>Display user information</li>
                     <li>Allow profile updates</li>
@@ -365,29 +297,24 @@
             </section>
 
             <!-- Slide 10: Authorization -->
-            <section>
-                <h2>Authorization</h2>
+            <section data-slide-title="Authorization"><h2>Authorization</h2>
                 <div class="code-example">
-                    Role-Based Access:<br><br>
-                    
-                    // Check user role<br>
-                    function hasRole($role) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$userId = $_SESSION['user_id'];<br><br>
-                    
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT role FROM users WHERE id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId]);<br>
-                    &nbsp;&nbsp;$user = $stmt->fetch();<br><br>
-                    
-                    &nbsp;&nbsp;return $user['role'] === $role;<br>
-                    }<br><br>
-                    
-                    // Protect admin pages<br>
-                    if (!hasRole('admin')) {<br>
-                    &nbsp;&nbsp;header("Location: access-denied.php");<br>
-                    &nbsp;&nbsp;exit();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Role-Based Access:
+// Check user role
+function hasRole($role) {
+  global $pdo;
+  $userId = $_SESSION['user_id'];
+  $stmt = $pdo-&gt;prepare("SELECT role FROM users WHERE id = ?");
+  $stmt-&gt;execute([$userId]);
+  $user = $stmt-&gt;fetch();
+  return $user['role'] === $role;
+}
+// Protect admin pages
+if (!hasRole('admin')) {
+  header("Location: access-denied.php");
+  exit();
+}</code></pre>
+            </div>
                 <ul>
                     <li>Check user permissions</li>
                     <li>Restrict access to features</li>
@@ -396,8 +323,7 @@
             </section>
 
             <!-- Slide 11: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: User Authentication System</h2>
+            <section data-slide-title="Task 1: User Authentication System" class="center"><h2>Task 1: User Authentication System</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -420,8 +346,7 @@
             </section>
 
             <!-- Slide 12: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -430,257 +355,215 @@
             </section>
 
             <!-- Slide 13: Remember Me -->
-            <section>
-                <h2>Remember Me Functionality</h2>
+            <section data-slide-title="Remember Me Functionality"><h2>Remember Me Functionality</h2>
                 <div class="code-example">
-                    Persistent Login:<br><br>
-                    
-                    // Set remember me cookie<br>
-                    if (isset($_POST['remember_me'])) {<br>
-                    &nbsp;&nbsp;$token = bin2hex(random_bytes(32));<br>
-                    &nbsp;&nbsp;$expires = time() + (30 * 24 * 60 * 60); // 30 days<br><br>
-                    
-                    &nbsp;&nbsp;// Store token in database<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO remember_tokens (user_id, token, expires) VALUES (?, ?, ?)");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId, $token, date('Y-m-d H:i:s', $expires)]);<br><br>
-                    
-                    &nbsp;&nbsp;// Set cookie<br>
-                    &nbsp;&nbsp;setcookie('remember_token', $token, $expires, '/', '', true, true);<br>
-                    }<br><br>
-                    
-                    // Check remember me token<br>
-                    if (isset($_COOKIE['remember_token'])) {<br>
-                    &nbsp;&nbsp;$token = $_COOKIE['remember_token'];<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT user_id FROM remember_tokens WHERE token = ? AND expires > NOW()");<br>
-                    &nbsp;&nbsp;$stmt->execute([$token]);<br>
-                    &nbsp;&nbsp;$result = $stmt->fetch();<br><br>
-                    
-                    &nbsp;&nbsp;if ($result) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['user_id'] = $result['user_id'];<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['logged_in'] = true;<br>
-                    &nbsp;&nbsp;}<br>
-                    }
-                </div>
+                <pre><code class="language-php">Persistent Login:
+// Set remember me cookie
+if (isset($_POST['remember_me'])) {
+  $token = bin2hex(random_bytes(32));
+  $expires = time() + (30 * 24 * 60 * 60); // 30 days
+  // Store token in database
+  $stmt = $pdo-&gt;prepare("INSERT INTO remember_tokens (user_id, token, expires) VALUES (?, ?, ?)");
+  $stmt-&gt;execute([$userId, $token, date('Y-m-d H:i:s', $expires)]);
+  // Set cookie
+  setcookie('remember_token', $token, $expires, '/', '', true, true);
+}
+// Check remember me token
+if (isset($_COOKIE['remember_token'])) {
+  $token = $_COOKIE['remember_token'];
+  $stmt = $pdo-&gt;prepare("SELECT user_id FROM remember_tokens WHERE token = ? AND expires &gt; NOW()");
+  $stmt-&gt;execute([$token]);
+  $result = $stmt-&gt;fetch();
+  if ($result) {
+    $_SESSION['user_id'] = $result['user_id'];
+    $_SESSION['logged_in'] = true;
+  }
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 14: Session Security -->
-            <section>
-                <h2>Session Security</h2>
+            <section data-slide-title="Session Security"><h2>Session Security</h2>
                 <div class="code-example">
-                    Security Measures:<br><br>
-                    
-                    // Secure session configuration<br>
-                    ini_set('session.cookie_httponly', 1);<br>
-                    ini_set('session.cookie_secure', 1);<br>
-                    ini_set('session.use_strict_mode', 1);<br><br>
-                    
-                    // Regenerate session ID<br>
-                    if (!isset($_SESSION['initialized'])) {<br>
-                    &nbsp;&nbsp;session_regenerate_id(true);<br>
-                    &nbsp;&nbsp;$_SESSION['initialized'] = true;<br>
-                    }<br><br>
-                    
-                    // Check session timeout<br>
-                    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {<br>
-                    &nbsp;&nbsp;session_unset();<br>
-                    &nbsp;&nbsp;session_destroy();<br>
-                    &nbsp;&nbsp;header("Location: login.php");<br>
-                    &nbsp;&nbsp;exit();<br>
-                    }<br>
-                    $_SESSION['last_activity'] = time();
-                </div>
+                <pre><code class="language-php">Security Measures:
+// Secure session configuration
+ini_set('session.cookie_httponly', 1);
+ini_set('session.cookie_secure', 1);
+ini_set('session.use_strict_mode', 1);
+// Regenerate session ID
+if (!isset($_SESSION['initialized'])) {
+  session_regenerate_id(true);
+  $_SESSION['initialized'] = true;
+}
+// Check session timeout
+if (isset($_SESSION['last_activity']) &amp;&amp; (time() - $_SESSION['last_activity'] &gt; 1800)) {
+  session_unset();
+  session_destroy();
+  header("Location: login.php");
+  exit();
+}
+$_SESSION['last_activity'] = time();</code></pre>
+            </div>
             </section>
 
             <!-- Slide 15: Two-Factor Authentication -->
-            <section>
-                <h2>Two-Factor Authentication</h2>
+            <section data-slide-title="Two-Factor Authentication"><h2>Two-Factor Authentication</h2>
                 <div class="code-example">
-                    SMS Verification:<br><br>
-                    
-                    // Generate verification code<br>
-                    $verificationCode = sprintf("%06d", mt_rand(0, 999999));<br>
-                    $_SESSION['verification_code'] = $verificationCode;<br>
-                    $_SESSION['verification_time'] = time();<br><br>
-                    
-                    // Send SMS (mock implementation)<br>
-                    $message = "Your verification code is: " . $verificationCode;<br>
-                    // sendSMS($phone, $message);<br><br>
-                    
-                    // Verify code<br>
-                    if (isset($_POST['verification_code'])) {<br>
-                    &nbsp;&nbsp;$inputCode = $_POST['verification_code'];<br>
-                    &nbsp;&nbsp;$storedCode = $_SESSION['verification_code'];<br>
-                    &nbsp;&nbsp;$verificationTime = $_SESSION['verification_time'];<br><br>
-                    
-                    &nbsp;&nbsp;if ($inputCode === $storedCode && (time() - $verificationTime) < 300) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['two_factor_verified'] = true;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Verification successful";<br>
-                    &nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Invalid or expired code";<br>
-                    &nbsp;&nbsp;}<br>
-                    }
-                </div>
+                <pre><code class="language-php">SMS Verification:
+// Generate verification code
+$verificationCode = sprintf("%06d", mt_rand(0, 999999));
+$_SESSION['verification_code'] = $verificationCode;
+$_SESSION['verification_time'] = time();
+// Send SMS (mock implementation)
+$message = "Your verification code is: " . $verificationCode;
+// sendSMS($phone, $message);
+// Verify code
+if (isset($_POST['verification_code'])) {
+  $inputCode = $_POST['verification_code'];
+  $storedCode = $_SESSION['verification_code'];
+  $verificationTime = $_SESSION['verification_time'];
+  if ($inputCode === $storedCode &amp;&amp; (time() - $verificationTime) &lt; 300) {
+    $_SESSION['two_factor_verified'] = true;
+    echo "Verification successful";
+  } else {
+    echo "Invalid or expired code";
+  }
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 16: Account Lockout -->
-            <section>
-                <h2>Account Lockout</h2>
+            <section data-slide-title="Account Lockout"><h2>Account Lockout</h2>
                 <div class="code-example">
-                    Failed Login Protection:<br><br>
-                    
-                    // Track failed login attempts<br>
-                    function recordFailedLogin($email) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO failed_logins (email, ip_address, timestamp) VALUES (?, ?, NOW())");<br>
-                    &nbsp;&nbsp;$stmt->execute([$email, $_SERVER['REMOTE_ADDR']]);<br>
-                    }<br><br>
-                    
-                    // Check if account is locked<br>
-                    function isAccountLocked($email) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT COUNT(*) FROM failed_logins WHERE email = ? AND timestamp > DATE_SUB(NOW(), INTERVAL 15 MINUTE)");<br>
-                    &nbsp;&nbsp;$stmt->execute([$email]);<br>
-                    &nbsp;&nbsp;$failedAttempts = $stmt->fetchColumn();<br><br>
-                    
-                    &nbsp;&nbsp;return $failedAttempts >= 5;<br>
-                    }<br><br>
-                    
-                    // Check before login<br>
-                    if (isAccountLocked($email)) {<br>
-                    &nbsp;&nbsp;echo "Account temporarily locked. Try again in 15 minutes.";<br>
-                    &nbsp;&nbsp;exit();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Failed Login Protection:
+// Track failed login attempts
+function recordFailedLogin($email) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("INSERT INTO failed_logins (email, ip_address, timestamp) VALUES (?, ?, NOW())");
+  $stmt-&gt;execute([$email, $_SERVER['REMOTE_ADDR']]);
+}
+// Check if account is locked
+function isAccountLocked($email) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT COUNT(*) FROM failed_logins WHERE email = ? AND timestamp &gt; DATE_SUB(NOW(), INTERVAL 15 MINUTE)");
+  $stmt-&gt;execute([$email]);
+  $failedAttempts = $stmt-&gt;fetchColumn();
+  return $failedAttempts &gt;= 5;
+}
+// Check before login
+if (isAccountLocked($email)) {
+  echo "Account temporarily locked. Try again in 15 minutes.";
+  exit();
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 17: User Activity Logging -->
-            <section>
-                <h2>User Activity Logging</h2>
+            <section data-slide-title="User Activity Logging"><h2>User Activity Logging</h2>
                 <div class="code-example">
-                    Activity Tracking:<br><br>
-                    
-                    function logUserActivity($userId, $action, $details = '') {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO user_activity (user_id, action, details, ip_address, timestamp) VALUES (?, ?, ?, ?, NOW())");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId, $action, $details, $_SERVER['REMOTE_ADDR']]);<br>
-                    }<br><br>
-                    
-                    // Log login<br>
-                    logUserActivity($userId, 'login', 'User logged in successfully');<br><br>
-                    
-                    // Log profile update<br>
-                    logUserActivity($userId, 'profile_update', 'Updated personal information');<br><br>
-                    
-                    // Log password change<br>
-                    logUserActivity($userId, 'password_change', 'Password changed successfully');<br><br>
-                    
-                    // Get user activity<br>
-                    $stmt = $pdo->prepare("SELECT * FROM user_activity WHERE user_id = ? ORDER BY timestamp DESC LIMIT 10");<br>
-                    $stmt->execute([$userId]);<br>
-                    $activities = $stmt->fetchAll();
-                </div>
+                <pre><code class="language-php">Activity Tracking:
+function logUserActivity($userId, $action, $details = '') {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("INSERT INTO user_activity (user_id, action, details, ip_address, timestamp) VALUES (?, ?, ?, ?, NOW())");
+  $stmt-&gt;execute([$userId, $action, $details, $_SERVER['REMOTE_ADDR']]);
+}
+// Log login
+logUserActivity($userId, 'login', 'User logged in successfully');
+// Log profile update
+logUserActivity($userId, 'profile_update', 'Updated personal information');
+// Log password change
+logUserActivity($userId, 'password_change', 'Password changed successfully');
+// Get user activity
+$stmt = $pdo-&gt;prepare("SELECT * FROM user_activity WHERE user_id = ? ORDER BY timestamp DESC LIMIT 10");
+$stmt-&gt;execute([$userId]);
+$activities = $stmt-&gt;fetchAll();</code></pre>
+            </div>
             </section>
 
             <!-- Slide 18: Social Login -->
-            <section>
-                <h2>Social Login Integration</h2>
+            <section data-slide-title="Social Login Integration"><h2>Social Login Integration</h2>
                 <div class="code-example">
-                    OAuth Implementation:<br><br>
-                    
-                    // Google OAuth callback<br>
-                    if (isset($_GET['code'])) {<br>
-                    &nbsp;&nbsp;$code = $_GET['code'];<br>
-                    &nbsp;&nbsp;$clientId = 'your_google_client_id';<br>
-                    &nbsp;&nbsp;$clientSecret = 'your_google_client_secret';<br><br>
-                    
-                    &nbsp;&nbsp;// Exchange code for token<br>
-                    &nbsp;&nbsp;$tokenUrl = 'https://oauth2.googleapis.com/token';<br>
-                    &nbsp;&nbsp;$data = [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'code' => $code,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'client_id' => $clientId,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'client_secret' => $clientSecret,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'redirect_uri' => 'https://yoursite.com/callback.php',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'grant_type' => 'authorization_code'<br>
-                    &nbsp;&nbsp;];<br><br>
-                    
-                    &nbsp;&nbsp;// Get user info from Google<br>
-                    &nbsp;&nbsp;$userInfo = getUserInfoFromGoogle($accessToken);<br><br>
-                    
-                    &nbsp;&nbsp;// Create or login user<br>
-                    &nbsp;&nbsp;handleSocialLogin($userInfo);<br>
-                    }
-                </div>
+                <pre><code class="language-php">OAuth Implementation:
+// Google OAuth callback
+if (isset($_GET['code'])) {
+  $code = $_GET['code'];
+  $clientId = 'your_google_client_id';
+  $clientSecret = 'your_google_client_secret';
+  // Exchange code for token
+  $tokenUrl = 'https://oauth2.googleapis.com/token';
+  $data = [
+    'code' =&gt; $code,
+    'client_id' =&gt; $clientId,
+    'client_secret' =&gt; $clientSecret,
+    'redirect_uri' =&gt; 'https://yoursite.com/callback.php',
+    'grant_type' =&gt; 'authorization_code'
+  ];
+  // Get user info from Google
+  $userInfo = getUserInfoFromGoogle($accessToken);
+  // Create or login user
+  handleSocialLogin($userInfo);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 19: Email Verification -->
-            <section>
-                <h2>Email Verification</h2>
+            <section data-slide-title="Email Verification"><h2>Email Verification</h2>
                 <div class="code-example">
-                    Email Confirmation:<br><br>
-                    
-                    // Generate verification token<br>
-                    $verificationToken = bin2hex(random_bytes(32));<br>
-                    $stmt = $pdo->prepare("UPDATE users SET email_verified = 0, verification_token = ? WHERE id = ?");<br>
-                    $stmt->execute([$verificationToken, $userId]);<br><br>
-                    
-                    // Send verification email<br>
-                    $verificationLink = "https://example.com/verify.php?token=" . $verificationToken;<br>
-                    $to = $email;<br>
-                    $subject = "Verify Your Email Address";<br>
-                    $message = "Click the following link to verify your email: " . $verificationLink;<br>
-                    $headers = "From: noreply@example.com";<br><br>
-                    
-                    mail($to, $subject, $message, $headers);<br><br>
-                    
-                    // Verify email<br>
-                    if (isset($_GET['token'])) {<br>
-                    &nbsp;&nbsp;$token = $_GET['token'];<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE users SET email_verified = 1, verification_token = NULL WHERE verification_token = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$token]);<br><br>
-                    &nbsp;&nbsp;if ($stmt->rowCount() > 0) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Email verified successfully";<br>
-                    &nbsp;&nbsp;}<br>
-                    }
-                </div>
+                <pre><code class="language-php">Email Confirmation:
+// Generate verification token
+$verificationToken = bin2hex(random_bytes(32));
+$stmt = $pdo-&gt;prepare("UPDATE users SET email_verified = 0, verification_token = ? WHERE id = ?");
+$stmt-&gt;execute([$verificationToken, $userId]);
+// Send verification email
+$verificationLink = "https://example.com/verify.php?token=" . $verificationToken;
+$to = $email;
+$subject = "Verify Your Email Address";
+$message = "Click the following link to verify your email: " . $verificationLink;
+$headers = "From: noreply@example.com";
+mail($to, $subject, $message, $headers);
+// Verify email
+if (isset($_GET['token'])) {
+  $token = $_GET['token'];
+  $stmt = $pdo-&gt;prepare("UPDATE users SET email_verified = 1, verification_token = NULL WHERE verification_token = ?");
+  $stmt-&gt;execute([$token]);
+  if ($stmt-&gt;rowCount() &gt; 0) {
+    echo "Email verified successfully";
+  }
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 20: Session Hijacking Protection -->
-            <section>
-                <h2>Session Hijacking Protection</h2>
+            <section data-slide-title="Session Hijacking Protection"><h2>Session Hijacking Protection</h2>
                 <div class="code-example">
-                    Security Measures:<br><br>
-                    
-                    // Store user agent in session<br>
-                    if (!isset($_SESSION['user_agent'])) {<br>
-                    &nbsp;&nbsp;$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];<br>
-                    }<br><br>
-                    
-                    // Check for session hijacking<br>
-                    if ($_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {<br>
-                    &nbsp;&nbsp;session_unset();<br>
-                    &nbsp;&nbsp;session_destroy();<br>
-                    &nbsp;&nbsp;header("Location: login.php?error=hijacking");<br>
-                    &nbsp;&nbsp;exit();<br>
-                    }<br><br>
-                    
-                    // Store IP address<br>
-                    if (!isset($_SESSION['ip_address'])) {<br>
-                    &nbsp;&nbsp;$_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];<br>
-                    }<br><br>
-                    
-                    // Check IP changes<br>
-                    if ($_SESSION['ip_address'] !== $_SERVER['REMOTE_ADDR']) {<br>
-                    &nbsp;&nbsp;session_unset();<br>
-                    &nbsp;&nbsp;session_destroy();<br>
-                    &nbsp;&nbsp;header("Location: login.php?error=ip_change");<br>
-                    &nbsp;&nbsp;exit();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Security Measures:
+// Store user agent in session
+if (!isset($_SESSION['user_agent'])) {
+  $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+}
+// Check for session hijacking
+if ($_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
+  session_unset();
+  session_destroy();
+  header("Location: login.php?error=hijacking");
+  exit();
+}
+// Store IP address
+if (!isset($_SESSION['ip_address'])) {
+  $_SESSION['ip_address'] = $_SERVER['REMOTE_ADDR'];
+}
+// Check IP changes
+if ($_SESSION['ip_address'] !== $_SERVER['REMOTE_ADDR']) {
+  session_unset();
+  session_destroy();
+  header("Location: login.php?error=ip_change");
+  exit();
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 21: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Advanced Authentication System</h2>
+            <section data-slide-title="Task 2: Advanced Authentication System" class="center"><h2>Task 2: Advanced Authentication System</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -704,8 +587,7 @@
             </section>
 
             <!-- Slide 22: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>User authentication is essential for web applications</li>
                     <li>Session management maintains user state</li>
@@ -724,51 +606,30 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            fitToParent: true,
-            responsive: true,
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
     </script>
 </body>

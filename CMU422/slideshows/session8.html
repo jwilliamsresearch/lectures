@@ -5,54 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 8: JavaScript Advanced Concepts</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+        /* Preserve existing custom component styles */
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
-
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
+        
 
         /* Task box styling */
         .task-box {
@@ -67,16 +29,13 @@
 
         /* Code example styling */
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
 
         /* Highlight styling */
@@ -105,6 +64,13 @@
 
         .timeline-info li {
             margin-bottom: 0.2em;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Responsive design */
@@ -305,51 +271,32 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session7.html" title="Previous Session">&lt;</a>
+        <a href="session9.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU422: Web Design - Session 8</div>
                 <h1>JavaScript Advanced Concepts</h1>
-                <h3>CMU422: Fundamentals of Web Design - Session 8</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Functions, objects, and modern JavaScript</p>
-                <p><small>3-hour session • 26 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Professional Web Design and Development</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Master advanced function concepts</li>
                     <li>Understand object-oriented programming</li>
@@ -360,20 +307,19 @@
             </section>
 
             <!-- Slide 3: Function Types -->
-            <section>
-                <h2>Advanced Function Concepts</h2>
+            <section data-slide-title="Advanced Function Concepts"><h2>Advanced Function Concepts</h2>
                 <div class="highlight">
                     <strong>Functions</strong> are first-class citizens in JavaScript
                 </div>
                 <div class="code-example">
-                    // Function declaration<br>
-                    function greet(name) { return `Hello ${name}`; }<br><br>
-                    // Function expression<br>
-                    const greet = function(name) { return `Hello ${name}`; };<br><br>
-                    // Arrow function<br>
-                    const greet = (name) => `Hello ${name}`;<br><br>
-                    // Immediately Invoked Function Expression (IIFE)<br>
-                    (function() { console.log('IIFE'); })();
+                    <pre><code class="language-php">// Function declaration
+function greet(name) { return `Hello ${name}`; }
+// Function expression
+const greet = function(name) { return `Hello ${name}`; };
+// Arrow function
+const greet = (name) =&gt; `Hello ${name}`;
+// Immediately Invoked Function Expression (IIFE)
+(function() { console.log('IIFE'); })();</code></pre>
                 </div>
                 <ul>
                     <li>Multiple ways to define functions</li>
@@ -384,23 +330,22 @@
             </section>
 
             <!-- Slide 4: Higher-Order Functions -->
-            <section>
-                <h2>Higher-Order Functions</h2>
+            <section data-slide-title="Higher-Order Functions"><h2>Higher-Order Functions</h2>
                 <div class="code-example">
-                    // Function that returns a function<br>
-                    function multiply(x) {<br>
-                    &nbsp;&nbsp;return function(y) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return x * y;<br>
-                    &nbsp;&nbsp;};<br>
-                    }<br><br>
-                    const multiplyByTwo = multiply(2);<br>
-                    console.log(multiplyByTwo(5)); // 10<br><br>
-                    // Function that takes a function as argument<br>
-                    function processArray(arr, callback) {<br>
-                    &nbsp;&nbsp;return arr.map(callback);<br>
-                    }<br><br>
-                    const numbers = [1, 2, 3, 4];<br>
-                    const doubled = processArray(numbers, x => x * 2);
+                    <pre><code class="language-php">// Function that returns a function
+function multiply(x) {
+return function(y) {
+return x * y;
+};
+}
+const multiplyByTwo = multiply(2);
+console.log(multiplyByTwo(5)); // 10
+// Function that takes a function as argument
+function processArray(arr, callback) {
+return arr.map(callback);
+}
+const numbers = [1, 2, 3, 4];
+const doubled = processArray(numbers, x =&gt; x * 2);</code></pre>
                 </div>
                 <ul>
                     <li>Functions that return functions</li>
@@ -494,35 +439,34 @@
             </section>
 
             <!-- Slide 5: Closures -->
-            <section>
-                <h2>Closures</h2>
+            <section data-slide-title="Closures"><h2>Closures</h2>
                 <div class="code-example">
-                    function createCounter() {<br>
-                    &nbsp;&nbsp;let count = 0;<br>
-                    &nbsp;&nbsp;return function() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return count;<br>
-                    &nbsp;&nbsp;};<br>
-                    }<br><br>
-                    const counter = createCounter();<br>
-                    console.log(counter()); // 1<br>
-                    console.log(counter()); // 2<br>
-                    console.log(counter()); // 3<br><br>
-                    // Private variables<br>
-                    function createWallet(initialBalance) {<br>
-                    &nbsp;&nbsp;let balance = initialBalance;<br>
-                    &nbsp;&nbsp;return {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;getBalance: () => balance,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;deposit: (amount) => { balance += amount; },<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;withdraw: (amount) => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (amount <= balance) {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;balance -= amount;<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true;<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;};<br>
-                        }
+                    <pre><code class="language-php">function createCounter() {
+let count = 0;
+return function() {
+count++;
+return count;
+};
+}
+const counter = createCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+// Private variables
+function createWallet(initialBalance) {
+let balance = initialBalance;
+return {
+getBalance: () =&gt; balance,
+deposit: (amount) =&gt; { balance += amount; },
+withdraw: (amount) =&gt; {
+if (amount &lt;= balance) {
+balance -= amount;
+return true;
+}
+return false;
+}
+};
+}</code></pre>
                 </div>
                 <ul>
                     <li>Functions that remember their lexical scope</li>
@@ -533,29 +477,28 @@
             </section>
 
             <!-- Slide 6: Object-Oriented Programming -->
-            <section>
-                <h2>Object-Oriented Programming</h2>
+            <section data-slide-title="Object-Oriented Programming"><h2>Object-Oriented Programming</h2>
                 <div class="code-example">
-                    // Constructor function<br>
-                    function Person(name, age) {<br>
-                    &nbsp;&nbsp;this.name = name;<br>
-                    &nbsp;&nbsp;this.age = age;<br>
-                    }<br><br>
-                    Person.prototype.greet = function() {<br>
-                    &nbsp;&nbsp;return `Hello, I'm ${this.name}`;<br>
-                    };<br><br>
-                    const person = new Person('John', 30);<br>
-                    console.log(person.greet()); // "Hello, I'm John"<br><br>
-                    // ES6 Classes<br>
-                    class Person {<br>
-                    &nbsp;&nbsp;constructor(name, age) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.name = name;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.age = age;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;greet() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return `Hello, I'm ${this.name}`;<br>
-                    &nbsp;&nbsp;}<br>
-                    }
+                    <pre><code class="language-php">// Constructor function
+function Person(name, age) {
+this.name = name;
+this.age = age;
+}
+Person.prototype.greet = function() {
+return `Hello, I'm ${this.name}`;
+};
+const person = new Person('John', 30);
+console.log(person.greet()); // "Hello, I'm John"
+// ES6 Classes
+class Person {
+constructor(name, age) {
+this.name = name;
+this.age = age;
+}
+greet() {
+return `Hello, I'm ${this.name}`;
+}
+}</code></pre>
                 </div>
                 <ul>
                     <li>Constructor functions and prototypes</li>
@@ -566,31 +509,30 @@
             </section>
 
             <!-- Slide 7: Inheritance -->
-            <section>
-                <h2>Inheritance</h2>
+            <section data-slide-title="Inheritance"><h2>Inheritance</h2>
                 <div class="code-example">
-                    class Animal {<br>
-                    &nbsp;&nbsp;constructor(name) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.name = name;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;speak() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return `${this.name} makes a sound`;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    class Dog extends Animal {<br>
-                    &nbsp;&nbsp;constructor(name, breed) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;super(name);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.breed = breed;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;speak() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return `${this.name} barks`;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;fetch() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return `${this.name} fetches the ball`;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    const dog = new Dog('Buddy', 'Golden Retriever');<br>
-                    console.log(dog.speak()); // "Buddy barks"
+                    <pre><code class="language-php">class Animal {
+constructor(name) {
+this.name = name;
+}
+speak() {
+return `${this.name} makes a sound`;
+}
+}
+class Dog extends Animal {
+constructor(name, breed) {
+super(name);
+this.breed = breed;
+}
+speak() {
+return `${this.name} barks`;
+}
+fetch() {
+return `${this.name} fetches the ball`;
+}
+}
+const dog = new Dog('Buddy', 'Golden Retriever');
+console.log(dog.speak()); // "Buddy barks"</code></pre>
                 </div>
                 <ul>
                     <li>Use <code>extends</code> for inheritance</li>
@@ -601,25 +543,24 @@
             </section>
 
             <!-- Slide 8: Modern JavaScript Features -->
-            <section>
-                <h2>Modern JavaScript Features</h2>
+            <section data-slide-title="Modern JavaScript Features"><h2>Modern JavaScript Features</h2>
                 <div class="code-example">
-                    // Destructuring<br>
-                    const { name, age } = person;<br>
-                    const [first, second, ...rest] = array;<br><br>
-                    // Spread operator<br>
-                    const newArray = [...oldArray, newItem];<br>
-                    const newObject = { ...oldObject, newProperty: value };<br><br>
-                    // Template literals<br>
-                    const message = `Hello ${name}, you are ${age} years old`;<br><br>
-                    // Default parameters<br>
-                    function greet(name = 'Guest') {<br>
-                    &nbsp;&nbsp;return `Hello ${name}`;<br>
-                    }<br><br>
-                    // Rest parameters<br>
-                    function sum(...numbers) {<br>
-                    &nbsp;&nbsp;return numbers.reduce((a, b) => a + b, 0);<br>
-                    }
+                    <pre><code class="language-php">// Destructuring
+const { name, age } = person;
+const [first, second, ...rest] = array;
+// Spread operator
+const newArray = [...oldArray, newItem];
+const newObject = { ...oldObject, newProperty: value };
+// Template literals
+const message = `Hello ${name}, you are ${age} years old`;
+// Default parameters
+function greet(name = 'Guest') {
+return `Hello ${name}`;
+}
+// Rest parameters
+function sum(...numbers) {
+return numbers.reduce((a, b) =&gt; a + b, 0);
+}</code></pre>
                 </div>
                 <ul>
                     <li>Destructuring for cleaner code</li>
@@ -630,29 +571,28 @@
             </section>
 
             <!-- Slide 9: Promises -->
-            <section>
-                <h2>Promises</h2>
+            <section data-slide-title="Promises"><h2>Promises</h2>
                 <div class="code-example">
-                    // Creating a promise<br>
-                    const myPromise = new Promise((resolve, reject) => {<br>
-                    &nbsp;&nbsp;setTimeout(() => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const random = Math.random();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (random > 0.5) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve('Success!');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject('Failed!');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;}, 1000);<br>
-                    });<br><br>
-                    // Using promises<br>
-                    myPromise<br>
-                    &nbsp;&nbsp;.then(result => console.log(result))<br>
-                    &nbsp;&nbsp;.catch(error => console.error(error));<br><br>
-                    // Promise chaining<br>
-                    fetch('/api/data')<br>
-                    &nbsp;&nbsp;.then(response => response.json())<br>
-                    &nbsp;&nbsp;.then(data => processData(data))<br>
-                    &nbsp;&nbsp;.catch(error => handleError(error));
+                    <pre><code class="language-javascript">// Creating a promise
+const myPromise = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    const random = Math.random();
+    if (random &gt; 0.5) {
+      resolve('Success!');
+    } else {
+    reject('Failed!');
+  }
+}, 1000);
+});
+// Using promises
+myPromise
+.then(result =&gt; console.log(result))
+.catch(error =&gt; console.error(error));
+// Promise chaining
+fetch('/api/data')
+.then(response =&gt; response.json())
+.then(data =&gt; processData(data))
+.catch(error =&gt; handleError(error));</code></pre>
                 </div>
                 <ul>
                     <li>Handle asynchronous operations</li>
@@ -663,34 +603,33 @@
             </section>
 
             <!-- Slide 10: Async/Await -->
-            <section>
-                <h2>Async/Await</h2>
+            <section data-slide-title="Async/Await"><h2>Async/Await</h2>
                 <div class="code-example">
-                    // Async function<br>
-                    async function fetchUserData(userId) {<br>
-                    &nbsp;&nbsp;try {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await
-                    fetch(`/api/users/${userId}`);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('User not found');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const userData = await response.json();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return userData;<br>
-                    &nbsp;&nbsp;} catch (error) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error fetching user:', error);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;throw error;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    // Using async function<br>
-                    async function displayUser(userId) {<br>
-                    &nbsp;&nbsp;const user = await fetchUserData(userId);<br>
-                    &nbsp;&nbsp;console.log(`User: ${user.name}`);<br>
-                    }<br><br>
-                    // Arrow function with async<br>
-                    const loadData = async () => {<br>
-                    &nbsp;&nbsp;const data = await fetch('/api/data');<br>
-                    &nbsp;&nbsp;return data.json();<br>
-                    };
+                    <pre><code class="language-php">// Async function
+async function fetchUserData(userId) {
+try {
+const response = await
+fetch(`/api/users/${userId}`);
+if (!response.ok) {
+throw new Error('User not found');
+}
+const userData = await response.json();
+return userData;
+} catch (error) {
+console.error('Error fetching user:', error);
+throw error;
+}
+}
+// Using async function
+async function displayUser(userId) {
+const user = await fetchUserData(userId);
+console.log(`User: ${user.name}`);
+}
+// Arrow function with async
+const loadData = async () =&gt; {
+const data = await fetch('/api/data');
+return data.json();
+};</code></pre>
                 </div>
                 <ul>
                     <li>Syntactic sugar over promises</li>
@@ -701,22 +640,21 @@
             </section>
 
             <!-- Slide 11: Modules -->
-            <section>
-                <h2>ES6 Modules</h2>
+            <section data-slide-title="ES6 Modules"><h2>ES6 Modules</h2>
                 <div class="code-example">
-                    // math.js (exporting)<br>
-                    export const add = (a, b) => a + b;<br>
-                    export const subtract = (a, b) => a - b;<br><br>
-                    export default class Calculator {<br>
-                    &nbsp;&nbsp;multiply(a, b) { return a * b; }<br>
-                    }<br><br>
-                    // app.js (importing)<br>
-                    import Calculator, { add, subtract } from './math.js';<br><br>
-                    const calc = new Calculator();<br>
-                    console.log(add(5, 3)); // 8<br>
-                    console.log(calc.multiply(4, 2)); // 8<br><br>
-                    // Dynamic imports<br>
-                    const module = await import('./dynamic-module.js');
+                    <pre><code class="language-javascript">// math.js (exporting)
+export const add = (a, b) =&gt; a + b;
+export const subtract = (a, b) =&gt; a - b;
+export default class Calculator {
+  multiply(a, b) { return a * b; }
+}
+// app.js (importing)
+import Calculator, { add, subtract } from './math.js';
+const calc = new Calculator();
+console.log(add(5, 3)); // 8
+console.log(calc.multiply(4, 2)); // 8
+// Dynamic imports
+const module = await import('./dynamic-module.js');</code></pre>
                 </div>
                 <ul>
                     <li>Organize code into separate files</li>
@@ -727,23 +665,22 @@
             </section>
 
             <!-- Slide 12: Functional Programming -->
-            <section>
-                <h2>Functional Programming Concepts</h2>
+            <section data-slide-title="Functional Programming Concepts"><h2>Functional Programming Concepts</h2>
                 <div class="code-example">
-                    // Pure functions<br>
-                    const add = (a, b) => a + b;<br>
-                    const multiply = (a, b) => a * b;<br><br>
-                    // Function composition<br>
-                    const compose = (...fns) => x =><br>
-                    &nbsp;&nbsp;fns.reduceRight((acc, fn) => fn(acc), x);<br><br>
-                    const addOne = x => x + 1;<br>
-                    const double = x => x * 2;<br>
-                    const addOneAndDouble = compose(double, addOne);<br><br>
-                    console.log(addOneAndDouble(5)); // 12<br><br>
-                    // Immutability<br>
-                    const original = [1, 2, 3];<br>
-                    const doubled = original.map(x => x * 2);<br>
-                    // original is unchanged
+                    <pre><code class="language-php">// Pure functions
+const add = (a, b) =&gt; a + b;
+const multiply = (a, b) =&gt; a * b;
+// Function composition
+const compose = (...fns) =&gt; x =&gt;
+fns.reduceRight((acc, fn) =&gt; fn(acc), x);
+const addOne = x =&gt; x + 1;
+const double = x =&gt; x * 2;
+const addOneAndDouble = compose(double, addOne);
+console.log(addOneAndDouble(5)); // 12
+// Immutability
+const original = [1, 2, 3];
+const doubled = original.map(x =&gt; x * 2);
+// original is unchanged</code></pre>
                 </div>
                 <ul>
                     <li>Pure functions (no side effects)</li>
@@ -754,28 +691,27 @@
             </section>
 
             <!-- Slide 13: Array Methods -->
-            <section>
-                <h2>Modern Array Methods</h2>
+            <section data-slide-title="Modern Array Methods"><h2>Modern Array Methods</h2>
                 <div class="code-example">
-                    const numbers = [1, 2, 3, 4, 5];<br><br>
-                    // Map<br>
-                    const doubled = numbers.map(x => x * 2);<br>
-                    // [2, 4, 6, 8, 10]<br><br>
-                    // Filter<br>
-                    const evens = numbers.filter(x => x % 2 === 0);<br>
-                    // [2, 4]<br><br>
-                    // Reduce<br>
-                    const sum = numbers.reduce((acc, x) => acc + x, 0);<br>
-                    // 15<br><br>
-                    // Find<br>
-                    const firstEven = numbers.find(x => x % 2 === 0);<br>
-                    // 2<br><br>
-                    // Some<br>
-                    const hasEven = numbers.some(x => x % 2 === 0);<br>
-                    // true<br><br>
-                    // Every<br>
-                    const allPositive = numbers.every(x => x > 0);<br>
-                    // true
+                    <pre><code class="language-javascript">const numbers = [1, 2, 3, 4, 5];
+// Map
+const doubled = numbers.map(x =&gt; x * 2);
+// [2, 4, 6, 8, 10]
+// Filter
+const evens = numbers.filter(x =&gt; x % 2 === 0);
+// [2, 4]
+// Reduce
+const sum = numbers.reduce((acc, x) =&gt; acc + x, 0);
+// 15
+// Find
+const firstEven = numbers.find(x =&gt; x % 2 === 0);
+// 2
+// Some
+const hasEven = numbers.some(x =&gt; x % 2 === 0);
+// true
+// Every
+const allPositive = numbers.every(x =&gt; x &gt; 0);
+// true</code></pre>
                 </div>
                 <ul>
                     <li>Functional programming approach</li>
@@ -786,37 +722,36 @@
             </section>
 
             <!-- Slide 14: Error Handling -->
-            <section>
-                <h2>Advanced Error Handling</h2>
+            <section data-slide-title="Advanced Error Handling"><h2>Advanced Error Handling</h2>
                 <div class="code-example">
-                    // Custom error classes<br>
-                    class ValidationError extends Error {<br>
-                    &nbsp;&nbsp;constructor(message, field) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;super(message);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.name = 'ValidationError';<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.field = field;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    // Error handling with async/await<br>
-                    async function processData(data) {<br>
-                    &nbsp;&nbsp;try {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (!data) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new ValidationError('Data is
-                    required', 'data');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const result = await validateAndProcess(data);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
-                    &nbsp;&nbsp;} catch (error) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (error instanceof ValidationError) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(`Validation error in
-                    ${error.field}:`, error.message);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('Unexpected error:',
-                    error);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;throw error;<br>
-                    &nbsp;&nbsp;}<br>
-                    }
+                    <pre><code class="language-php">// Custom error classes
+class ValidationError extends Error {
+constructor(message, field) {
+super(message);
+this.name = 'ValidationError';
+this.field = field;
+}
+}
+// Error handling with async/await
+async function processData(data) {
+try {
+if (!data) {
+throw new ValidationError('Data is
+required', 'data');
+}
+const result = await validateAndProcess(data);
+return result;
+} catch (error) {
+if (error instanceof ValidationError) {
+console.error(`Validation error in
+${error.field}:`, error.message);
+} else {
+console.error('Unexpected error:',
+error);
+}
+throw error;
+}
+}</code></pre>
                 </div>
                 <ul>
                     <li>Custom error classes</li>
@@ -827,8 +762,7 @@
             </section>
 
             <!-- Slide 15: Performance Optimization -->
-            <section>
-                <h2>Performance Optimization</h2>
+            <section data-slide-title="Performance Optimization"><h2>Performance Optimization</h2>
                 <ul>
                     <li>Memoization for expensive calculations</li>
                     <li>Debouncing and throttling</li>
@@ -837,37 +771,36 @@
                     <li>Memory leak prevention</li>
                 </ul>
                 <div class="code-example">
-                    // Memoization<br>
-                    function memoize(fn) {<br>
-                    &nbsp;&nbsp;const cache = new Map();<br>
-                    &nbsp;&nbsp;return function(...args) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const key = JSON.stringify(args);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (cache.has(key)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return cache.get(key);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const result = fn.apply(this, args);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;cache.set(key, result);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return result;<br>
-                    &nbsp;&nbsp;};<br>
-                    }<br><br>
-                    // Debouncing<br>
-                    function debounce(func, wait) {<br>
-                    &nbsp;&nbsp;let timeout;<br>
-                    &nbsp;&nbsp;return function executedFunction(...args) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const later = () => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clearTimeout(timeout);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;func(...args);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;};<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;clearTimeout(timeout);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;timeout = setTimeout(later, wait);<br>
-                    &nbsp;&nbsp;};<br>
-                    }
+                    <pre><code class="language-php">// Memoization
+function memoize(fn) {
+const cache = new Map();
+return function(...args) {
+const key = JSON.stringify(args);
+if (cache.has(key)) {
+return cache.get(key);
+}
+const result = fn.apply(this, args);
+cache.set(key, result);
+return result;
+};
+}
+// Debouncing
+function debounce(func, wait) {
+let timeout;
+return function executedFunction(...args) {
+const later = () =&gt; {
+clearTimeout(timeout);
+func(...args);
+};
+clearTimeout(timeout);
+timeout = setTimeout(later, wait);
+};
+}</code></pre>
                 </div>
             </section>
 
             <!-- Slide 16: Testing -->
-            <section>
-                <h2>Testing JavaScript Code</h2>
+            <section data-slide-title="Testing JavaScript Code"><h2>Testing JavaScript Code</h2>
                 <ul>
                     <li>Unit testing with Jest or Mocha</li>
                     <li>Test-driven development (TDD)</li>
@@ -876,28 +809,27 @@
                     <li>Code coverage</li>
                 </ul>
                 <div class="code-example">
-                    // Example test with Jest<br>
-                    function add(a, b) {<br>
-                    &nbsp;&nbsp;return a + b;<br>
-                    }<br><br>
-                    // test.js<br>
-                    describe('add function', () => {<br>
-                    &nbsp;&nbsp;test('adds two positive numbers', () => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(2, 3)).toBe(5);<br>
-                    &nbsp;&nbsp;});<br><br>
-                    &nbsp;&nbsp;test('adds negative numbers', () => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(-1, -2)).toBe(-3);<br>
-                    &nbsp;&nbsp;});<br><br>
-                    &nbsp;&nbsp;test('handles zero', () => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;expect(add(0, 5)).toBe(5);<br>
-                    &nbsp;&nbsp;});<br>
-                    });
+                    <pre><code class="language-php">// Example test with Jest
+function add(a, b) {
+return a + b;
+}
+// test.js
+describe('add function', () =&gt; {
+test('adds two positive numbers', () =&gt; {
+expect(add(2, 3)).toBe(5);
+});
+test('adds negative numbers', () =&gt; {
+expect(add(-1, -2)).toBe(-3);
+});
+test('handles zero', () =&gt; {
+expect(add(0, 5)).toBe(5);
+});
+});</code></pre>
                 </div>
             </section>
 
             <!-- Slide 17: Debugging -->
-            <section>
-                <h2>Advanced Debugging</h2>
+            <section data-slide-title="Advanced Debugging"><h2>Advanced Debugging</h2>
                 <ul>
                     <li>Browser developer tools</li>
                     <li>Console methods (log, warn, error, table)</li>
@@ -906,26 +838,25 @@
                     <li>Memory leak detection</li>
                 </ul>
                 <div class="code-example">
-                    // Debugging techniques<br>
-                    console.log('Debug info:', { user, data });<br>
-                    console.table(arrayOfObjects);<br>
-                    console.trace('Function call stack');<br><br>
-                    // Performance measurement<br>
-                    console.time('operation');<br>
-                    // ... expensive operation<br>
-                    console.timeEnd('operation');<br><br>
-                    // Debugger statement<br>
-                    function complexFunction() {<br>
-                    &nbsp;&nbsp;let result = 0;<br>
-                    &nbsp;&nbsp;debugger; // Execution stops here<br>
-                    &nbsp;&nbsp;return result;<br>
-                    }
+                    <pre><code class="language-php">// Debugging techniques
+console.log('Debug info:', { user, data });
+console.table(arrayOfObjects);
+console.trace('Function call stack');
+// Performance measurement
+console.time('operation');
+// ... expensive operation
+console.timeEnd('operation');
+// Debugger statement
+function complexFunction() {
+let result = 0;
+debugger; // Execution stops here
+return result;
+}</code></pre>
                 </div>
             </section>
 
             <!-- Slide 18: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Advanced JavaScript Library</h2>
+            <section data-slide-title="Task 1: Advanced JavaScript Library" class="center"><h2>Task 1: Advanced JavaScript Library</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -960,8 +891,7 @@
             </section>
 
             <!-- Slide 19: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -970,8 +900,7 @@
             </section>
 
             <!-- Slide 20: Design Patterns -->
-            <section>
-                <h2>Common Design Patterns</h2>
+            <section data-slide-title="Common Design Patterns"><h2>Common Design Patterns</h2>
                 <ul>
                     <li><strong>Singleton:</strong> Single instance pattern</li>
                     <li><strong>Factory:</strong> Object creation pattern</li>
@@ -980,32 +909,31 @@
                     <li><strong>Decorator:</strong> Function enhancement pattern</li>
                 </ul>
                 <div class="code-example">
-                    // Singleton pattern<br>
-                    class Database {<br>
-                    &nbsp;&nbsp;constructor() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (Database.instance) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Database.instance;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Database.instance = this;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    // Factory pattern<br>
-                    class UserFactory {<br>
-                    &nbsp;&nbsp;createUser(type, data) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;switch(type) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'admin': return new
-                    AdminUser(data);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 'regular': return new
-                    RegularUser(data);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;}<br>
-                    }
+                    <pre><code class="language-javascript">// Singleton pattern
+class Database {
+  constructor() {
+    if (Database.instance) {
+      return Database.instance;
+    }
+    Database.instance = this;
+  }
+}
+// Factory pattern
+class UserFactory {
+  createUser(type, data) {
+    switch(type) {
+      case 'admin': return new
+      AdminUser(data);
+      case 'regular': return new
+      RegularUser(data);
+    }
+  }
+}</code></pre>
                 </div>
             </section>
 
             <!-- Slide 21: Memory Management -->
-            <section>
-                <h2>Memory Management</h2>
+            <section data-slide-title="Memory Management"><h2>Memory Management</h2>
                 <ul>
                     <li>Garbage collection</li>
                     <li>Memory leaks prevention</li>
@@ -1014,35 +942,34 @@
                     <li>WeakMap and WeakSet usage</li>
                 </ul>
                 <div class="code-example">
-                    // Memory leak prevention<br>
-                    class EventManager {<br>
-                    &nbsp;&nbsp;constructor() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.listeners = new Map();<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;addListener(element, event, handler) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;element.addEventListener(event, handler);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.listeners.set(element, { event, handler });<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;removeListener(element) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const listener = this.listeners.get(element);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (listener) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;element.removeEventListener(listener.event,
-                    listener.handler);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.listeners.delete(element);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;cleanup() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.listeners.forEach((listener, element) => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.removeListener(element);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;});<br>
-                    &nbsp;&nbsp;}<br>
-                    }
+                    <pre><code class="language-javascript">// Memory leak prevention
+class EventManager {
+  constructor() {
+    this.listeners = new Map();
+  }
+  addListener(element, event, handler) {
+    element.addEventListener(event, handler);
+    this.listeners.set(element, { event, handler });
+  }
+  removeListener(element) {
+    const listener = this.listeners.get(element);
+    if (listener) {
+      element.removeEventListener(listener.event,
+      listener.handler);
+      this.listeners.delete(element);
+    }
+  }
+  cleanup() {
+    this.listeners.forEach((listener, element) =&gt; {
+      this.removeListener(element);
+    });
+  }
+}</code></pre>
                 </div>
             </section>
 
             <!-- Slide 22: Security Best Practices -->
-            <section>
-                <h2>Security Best Practices</h2>
+            <section data-slide-title="Security Best Practices"><h2>Security Best Practices</h2>
                 <ul>
                     <li>Input validation and sanitization</li>
                     <li>XSS prevention</li>
@@ -1051,26 +978,25 @@
                     <li>Content Security Policy (CSP)</li>
                 </ul>
                 <div class="code-example">
-                    // Input validation<br>
-                    function validateInput(input) {<br>
-                    &nbsp;&nbsp;if (typeof input !== 'string') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Input must be a string');<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;return input.replace(/[<>]/g, ''); // Basic XSS prevention<br>
-                        }<br><br>
-                        // Secure object property access<br>
-                        const safeGet = (obj, path) => {<br>
-                        &nbsp;&nbsp;return path.split('.').reduce((current, key) => {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;return current && current[key] !== undefined ?
-                        current[key] : null;<br>
-                        &nbsp;&nbsp;}, obj);<br>
-                        };
+                    <pre><code class="language-php">// Input validation
+function validateInput(input) {
+if (typeof input !== 'string') {
+throw new Error('Input must be a string');
+}
+return input.replace(/[&lt;&gt;]/g, ''); // Basic XSS prevention
+}
+// Secure object property access
+const safeGet = (obj, path) =&gt; {
+return path.split('.').reduce((current, key) =&gt; {
+return current &amp;&amp; current[key] !== undefined ?
+current[key] : null;
+}, obj);
+};</code></pre>
                 </div>
             </section>
 
             <!-- Slide 23: Code Quality -->
-            <section>
-                <h2>Code Quality and Standards</h2>
+            <section data-slide-title="Code Quality and Standards"><h2>Code Quality and Standards</h2>
                 <ul>
                     <li>ESLint for code linting</li>
                     <li>Prettier for code formatting</li>
@@ -1079,29 +1005,28 @@
                     <li>Code review practices</li>
                 </ul>
                 <div class="code-example">
-                    // JSDoc documentation<br>
-                    /**<br>
-                    * Calculates the factorial of a number<br>
-                    * @param {number} n - The number to calculate factorial for<br>
-                    * @returns {number} The factorial of n<br>
-                    * @throws {Error} If n is negative<br>
-                    */<br>
-                    function factorial(n) {<br>
-                    &nbsp;&nbsp;if (n < 0) {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Factorial is not defined for
-                        negative numbers');<br>
-                        &nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;if (n === 0 || n === 1) {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
-                        &nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;return n * factorial(n - 1);<br>
-                        }
+                    <pre><code class="language-php">// JSDoc documentation
+/**
+* Calculates the factorial of a number
+* @param {number} n - The number to calculate factorial for
+* @returns {number} The factorial of n
+* @throws {Error} If n is negative
+*/
+function factorial(n) {
+if (n &lt; 0) {
+throw new Error('Factorial is not defined for
+negative numbers');
+}
+if (n === 0 || n === 1) {
+return 1;
+}
+return n * factorial(n - 1);
+}</code></pre>
                 </div>
             </section>
 
             <!-- Slide 24: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Complete Web Application</h2>
+            <section data-slide-title="Task 2: Complete Web Application" class="center"><h2>Task 2: Complete Web Application</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -1137,8 +1062,7 @@
             </section>
 
             <!-- Slide 25: Troubleshooting -->
-            <section>
-                <h2>Common Advanced Issues</h2>
+            <section data-slide-title="Common Advanced Issues"><h2>Common Advanced Issues</h2>
                 <ul>
                     <li><strong>Scope issues:</strong> Check closure and context</li>
                     <li><strong>Async problems:</strong> Promise rejection handling</li>
@@ -1148,24 +1072,23 @@
                     <li><strong>Type errors:</strong> Runtime type checking</li>
                 </ul>
                 <div class="code-example">
-                    // Common debugging patterns<br>
-                    // Check if function is called<br>
-                    console.log('Function called with:', arguments);<br><br>
-                    // Check promise state<br>
-                    promise.then(result => {<br>
-                    &nbsp;&nbsp;console.log('Promise resolved:', result);<br>
-                    }).catch(error => {<br>
-                    &nbsp;&nbsp;console.error('Promise rejected:', error);<br>
-                    });<br><br>
-                    // Check object structure<br>
-                    console.log('Object keys:', Object.keys(obj));<br>
-                    console.log('Object values:', Object.values(obj));
+                    <pre><code class="language-php">// Common debugging patterns
+// Check if function is called
+console.log('Function called with:', arguments);
+// Check promise state
+promise.then(result =&gt; {
+console.log('Promise resolved:', result);
+}).catch(error =&gt; {
+console.error('Promise rejected:', error);
+});
+// Check object structure
+console.log('Object keys:', Object.keys(obj));
+console.log('Object values:', Object.values(obj));</code></pre>
                 </div>
             </section>
 
             <!-- Slide 26: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>Master advanced function concepts and closures</li>
                     <li>Understand object-oriented programming</li>
@@ -1182,54 +1105,30 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            // Ensure content is always visible
-            fitToParent: true,
-            // Better responsive behavior
-            responsive: true,
-            // Allow content to scroll within slides
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
 
         // Advanced JavaScript Concepts Demo Functions

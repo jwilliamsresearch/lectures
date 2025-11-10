@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMU529 - Session 11: Modern JavaScript Libraries</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style>
         .reveal .slides section {
             text-align: left;
@@ -14,7 +18,6 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        .reveal .slides section.center { text-align: center; }
         .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
         .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
         .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
@@ -31,16 +34,13 @@
             overflow-y: auto;
         }
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
         .highlight {
             background: #fff3cd;
@@ -78,59 +78,45 @@
         /* Custom scrollbar styling */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-    </style>
+        </style>
 </head>
 <body>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session10.html" title="Previous Session">&lt;</a>
+        <a href="session12.html" title="Next Session">&gt;</a>
+    </div>
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section>
-                <h1>CMU529: Full-Stack Web Development</h1>
-                <h2>Session 11: Modern JavaScript Libraries</h2>
-                <p><strong>Duration:</strong> 3 hours</p>
-                <p><strong>Topics:</strong> Modern JavaScript libraries, AJAX, DOM manipulation, interactive features</p>
-            </section>
-
-            <!-- Slide 2: Session Timeline -->
-            <section>
-                <h2>Session Timeline</h2>
-                <div class="timeline-info">
-                    <p><strong>10 min:</strong> Registration & waiting</p>
-                    <p><strong>20 min:</strong> Opening slides</p>
-                    <p><strong>45 min:</strong> Task 1</p>
-                    <p><strong>15 min:</strong> Break/Catch up</p>
-                    <p><strong>20 min:</strong> Secondary slides</p>
-                    <p><strong>45 min:</strong> Task 2</p>
-                    <p><strong>Remaining:</strong> Self-study</p>
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 11</div>
+                <h1>Session 11</h1>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline"><h2>Session Timeline</h2>
+                
+            </section>
+
             <!-- Slide 3: Modern JavaScript Overview -->
-            <section>
-                <h2>Modern JavaScript Overview</h2>
+            <section data-slide-title="Modern JavaScript Overview"><h2>Modern JavaScript Overview</h2>
                 <div class="highlight">
                     <h4>Key Areas:</h4>
                     <ul>
@@ -144,138 +130,121 @@
             </section>
 
             <!-- Slide 4: ES6+ Features -->
-            <section>
-                <h2>ES6+ Features</h2>
+            <section data-slide-title="ES6+ Features"><h2>ES6+ Features</h2>
                 <div class="code-example">
-                    // Arrow Functions<br>
-                    const add = (a, b) => a + b;<br>
-                    <br>
-                    // Template Literals<br>
-                    const name = "John";<br>
-                    const greeting = `Hello, ${name}!`;<br>
-                    <br>
-                    // Destructuring<br>
-                    const user = { name: "John", age: 30 };<br>
-                    const { name, age } = user;<br>
-                    <br>
-                    // Spread Operator<br>
-                    const numbers = [1, 2, 3];<br>
-                    const newNumbers = [...numbers, 4, 5];<br>
-                    <br>
-                    // Classes<br>
-                    class User {<br>
-                    &nbsp;&nbsp;constructor(name) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.name = name;<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;greet() {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return `Hello, ${this.name}!`;<br>
-                    &nbsp;&nbsp;}<br>
-                    }
-                </div>
+                <pre><code class="language-php">// Arrow Functions
+const add = (a, b) =&gt; a + b;
+// Template Literals
+const name = "John";
+const greeting = `Hello, ${name}!`;
+// Destructuring
+const user = { name: "John", age: 30 };
+const { name, age } = user;
+// Spread Operator
+const numbers = [1, 2, 3];
+const newNumbers = [...numbers, 4, 5];
+// Classes
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  greet() {
+    return `Hello, ${this.name}!`;
+  }
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 5: AJAX & Fetch API -->
-            <section>
-                <h2>AJAX & Fetch API</h2>
+            <section data-slide-title="AJAX & Fetch API"><h2>AJAX & Fetch API</h2>
                 <div class="code-example">
-                    // Fetch API - GET request<br>
-                    fetch('/api/users')<br>
-                    &nbsp;&nbsp;.then(response => response.json())<br>
-                    &nbsp;&nbsp;.then(data => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(data);<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.catch(error => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);<br>
-                    &nbsp;&nbsp;});<br>
-                    <br>
-                    // POST request<br>
-                    fetch('/api/users', {<br>
-                    &nbsp;&nbsp;method: 'POST',<br>
-                    &nbsp;&nbsp;headers: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'Content-Type': 'application/json',<br>
-                    &nbsp;&nbsp;},<br>
-                    &nbsp;&nbsp;body: JSON.stringify({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;name: 'John',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;email: 'john@example.com'<br>
-                    &nbsp;&nbsp;})<br>
-                    })
-                </div>
+                <pre><code class="language-javascript">// Fetch API - GET request
+fetch('/api/users')
+  .then(response =&gt; response.json())
+  .then(data =&gt; {
+    console.log(data);
+  })
+  .catch(error =&gt; {
+    console.error('Error:', error);
+  });
+// POST request
+fetch('/api/users', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name: 'John',
+    email: 'john@example.com'
+  })
+})</code></pre>
+            </div>
             </section>
 
             <!-- Slide 6: Async/Await -->
-            <section>
-                <h2>Async/Await</h2>
+            <section data-slide-title="Async/Await"><h2>Async/Await</h2>
                 <div class="code-example">
-                    // Async function<br>
-                    async function fetchUserData() {<br>
-                    &nbsp;&nbsp;try {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch('/api/users/1');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const user = await response.json();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return user;<br>
-                    &nbsp;&nbsp;} catch (error) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br>
-                    <br>
-                    // Using the async function<br>
-                    fetchUserData().then(user => {<br>
-                    &nbsp;&nbsp;console.log(user);<br>
-                    });
-                </div>
+                <pre><code class="language-javascript">// Async function
+async function fetchUserData() {
+  try {
+    const response = await fetch('/api/users/1');
+    const user = await response.json();
+    return user;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+// Using the async function
+fetchUserData().then(user =&gt; {
+  console.log(user);
+});</code></pre>
+            </div>
             </section>
 
             <!-- Slide 7: DOM Manipulation -->
-            <section>
-                <h2>DOM Manipulation</h2>
+            <section data-slide-title="DOM Manipulation"><h2>DOM Manipulation</h2>
                 <div class="code-example">
-                    // Selecting elements<br>
-                    const element = document.getElementById('myElement');<br>
-                    const elements = document.querySelectorAll('.myClass');<br>
-                    <br>
-                    // Creating elements<br>
-                    const newDiv = document.createElement('div');<br>
-                    newDiv.textContent = 'New Element';<br>
-                    newDiv.className = 'new-class';<br>
-                    <br>
-                    // Adding to DOM<br>
-                    document.body.appendChild(newDiv);<br>
-                    <br>
-                    // Modifying content<br>
-                    element.innerHTML = '&lt;strong&gt;Updated content&lt;/strong&gt;';<br>
-                    element.setAttribute('data-id', '123');
-                </div>
+                <pre><code class="language-javascript">// Selecting elements
+const element = document.getElementById('myElement');
+const elements = document.querySelectorAll('.myClass');
+// Creating elements
+const newDiv = document.createElement('div');
+newDiv.textContent = 'New Element';
+newDiv.className = 'new-class';
+// Adding to DOM
+document.body.appendChild(newDiv);
+// Modifying content
+element.innerHTML = '&lt;strong&gt;Updated content&lt;/strong&gt;';
+element.setAttribute('data-id', '123');</code></pre>
+            </div>
             </section>
 
             <!-- Slide 8: Event Handling -->
-            <section>
-                <h2>Event Handling</h2>
+            <section data-slide-title="Event Handling"><h2>Event Handling</h2>
                 <div class="code-example">
-                    // Event listener<br>
-                    document.getElementById('myButton').addEventListener('click', function(e) {<br>
-                    &nbsp;&nbsp;e.preventDefault();<br>
-                    &nbsp;&nbsp;console.log('Button clicked!');<br>
-                    });<br>
-                    <br>
-                    // Form submission<br>
-                    document.getElementById('myForm').addEventListener('submit', async function(e) {<br>
-                    &nbsp;&nbsp;e.preventDefault();<br>
-                    &nbsp;&nbsp;const formData = new FormData(this);<br>
-                    &nbsp;&nbsp;const data = Object.fromEntries(formData);<br>
-                    &nbsp;&nbsp;console.log(data);<br>
-                    });<br>
-                    <br>
-                    // Keyboard events<br>
-                    document.addEventListener('keydown', function(e) {<br>
-                    &nbsp;&nbsp;if (e.key === 'Enter') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Enter pressed');<br>
-                    &nbsp;&nbsp;}<br>
-                    });
-                </div>
+                <pre><code class="language-javascript">// Event listener
+document.getElementById('myButton').addEventListener('click', function(e) {
+  e.preventDefault();
+  console.log('Button clicked!');
+});
+// Form submission
+document.getElementById('myForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData);
+  console.log(data);
+});
+// Keyboard events
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    console.log('Enter pressed');
+  }
+});</code></pre>
+            </div>
             </section>
 
             <!-- Slide 9: Popular JavaScript Libraries -->
-            <section>
-                <h2>Popular JavaScript Libraries</h2>
+            <section data-slide-title="Popular JavaScript Libraries"><h2>Popular JavaScript Libraries</h2>
                 <div class="highlight">
                     <h4>Essential Libraries:</h4>
                     <ul>
@@ -289,168 +258,145 @@
             </section>
 
             <!-- Slide 10: jQuery Basics -->
-            <section>
-                <h2>jQuery Basics</h2>
+            <section data-slide-title="jQuery Basics"><h2>jQuery Basics</h2>
                 <div class="code-example">
-                    // Include jQuery<br>
-                    &lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;<br>
-                    <br>
-                    // Document ready<br>
-                    $(document).ready(function() {<br>
-                    &nbsp;&nbsp;console.log('jQuery loaded!');<br>
-                    });<br>
-                    <br>
-                    // Selecting elements<br>
-                    $('#myElement').hide();<br>
-                    $('.myClass').show();<br>
-                    <br>
-                    // AJAX with jQuery<br>
-                    $.ajax({<br>
-                    &nbsp;&nbsp;url: '/api/data',<br>
-                    &nbsp;&nbsp;method: 'GET',<br>
-                    &nbsp;&nbsp;success: function(data) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(data);<br>
-                    &nbsp;&nbsp;}<br>
-                    });
-                </div>
+                <pre><code class="language-php">// Include jQuery
+&lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+// Document ready
+$(document).ready(function() {
+  console.log('jQuery loaded!');
+});
+// Selecting elements
+$('#myElement').hide();
+$('.myClass').show();
+// AJAX with jQuery
+$.ajax({
+  url: '/api/data',
+  method: 'GET',
+  success: function(data) {
+    console.log(data);
+  }
+});</code></pre>
+            </div>
             </section>
 
             <!-- Slide 11: Axios HTTP Client -->
-            <section>
-                <h2>Axios HTTP Client</h2>
+            <section data-slide-title="Axios HTTP Client"><h2>Axios HTTP Client</h2>
                 <div class="code-example">
-                    // Include Axios<br>
-                    &lt;script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"&gt;&lt;/script&gt;<br>
-                    <br>
-                    // GET request<br>
-                    axios.get('/api/users')<br>
-                    &nbsp;&nbsp;.then(response => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(response.data);<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.catch(error => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
-                    &nbsp;&nbsp;});<br>
-                    <br>
-                    // POST request<br>
-                    axios.post('/api/users', {<br>
-                    &nbsp;&nbsp;name: 'John',<br>
-                    &nbsp;&nbsp;email: 'john@example.com'<br>
-                    })<br>
-                    &nbsp;&nbsp;.then(response => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(response.data);<br>
-                    &nbsp;&nbsp;});
-                </div>
+                <pre><code class="language-javascript">// Include Axios
+&lt;script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"&gt;&lt;/script&gt;
+// GET request
+axios.get('/api/users')
+  .then(response =&gt; {
+    console.log(response.data);
+  })
+  .catch(error =&gt; {
+    console.error(error);
+  });
+// POST request
+axios.post('/api/users', {
+  name: 'John',
+  email: 'john@example.com'
+})
+  .then(response =&gt; {
+    console.log(response.data);
+  });</code></pre>
+            </div>
             </section>
 
             <!-- Slide 12: Chart.js -->
-            <section>
-                <h2>Chart.js</h2>
+            <section data-slide-title="Chart.js"><h2>Chart.js</h2>
                 <div class="code-example">
-                    // Include Chart.js<br>
-                    &lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;<br>
-                    <br>
-                    // Create chart<br>
-                    const ctx = document.getElementById('myChart').getContext('2d');<br>
-                    const myChart = new Chart(ctx, {<br>
-                    &nbsp;&nbsp;type: 'bar',<br>
-                    &nbsp;&nbsp;data: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;labels: ['Red', 'Blue', 'Yellow'],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;datasets: [{<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: 'Sales',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data: [12, 19, 3],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundColor: ['red', 'blue', 'yellow']<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}]<br>
-                    &nbsp;&nbsp;}<br>
-                    });
-                </div>
+                <pre><code class="language-javascript">// Include Chart.js
+&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;
+// Create chart
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Red', 'Blue', 'Yellow'],
+    datasets: [{
+      label: 'Sales',
+      data: [12, 19, 3],
+      backgroundColor: ['red', 'blue', 'yellow']
+    }]
+  }
+});</code></pre>
+            </div>
             </section>
 
             <!-- Slide 13: SweetAlert2 -->
-            <section>
-                <h2>SweetAlert2</h2>
+            <section data-slide-title="SweetAlert2"><h2>SweetAlert2</h2>
                 <div class="code-example">
-                    // Include SweetAlert2<br>
-                    &lt;script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"&gt;&lt;/script&gt;<br>
-                    <br>
-                    // Basic alert<br>
-                    Swal.fire('Hello world!');<br>
-                    <br>
-                    // Confirmation dialog<br>
-                    Swal.fire({<br>
-                    &nbsp;&nbsp;title: 'Are you sure?',<br>
-                    &nbsp;&nbsp;text: "You won't be able to revert this!",<br>
-                    &nbsp;&nbsp;icon: 'warning',<br>
-                    &nbsp;&nbsp;showCancelButton: true,<br>
-                    &nbsp;&nbsp;confirmButtonText: 'Yes, delete it!'<br>
-                    }).then((result) => {<br>
-                    &nbsp;&nbsp;if (result.isConfirmed) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Swal.fire('Deleted!', 'Your file has been deleted.', 'success');<br>
-                    &nbsp;&nbsp;}<br>
-                    });
-                </div>
+                <pre><code class="language-javascript">// Include SweetAlert2
+&lt;script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"&gt;&lt;/script&gt;
+// Basic alert
+Swal.fire('Hello world!');
+// Confirmation dialog
+Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) =&gt; {
+  if (result.isConfirmed) {
+    Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+  }
+});</code></pre>
+            </div>
             </section>
 
             <!-- Slide 14: Form Validation -->
-            <section>
-                <h2>Form Validation</h2>
+            <section data-slide-title="Form Validation"><h2>Form Validation</h2>
                 <div class="code-example">
-                    // Client-side validation<br>
-                    function validateForm() {<br>
-                    &nbsp;&nbsp;const email = document.getElementById('email').value;<br>
-                    &nbsp;&nbsp;const password = document.getElementById('password').value;<br>
-                    <br>
-                    &nbsp;&nbsp;if (!email.includes('@')) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;alert('Please enter a valid email');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
-                    &nbsp;&nbsp;}<br>
-                    <br>
-                    &nbsp;&nbsp;if (password.length < 6) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;alert('Password must be at least 6 characters');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
-                    &nbsp;&nbsp;}<br>
-                    <br>
-                    &nbsp;&nbsp;return true;<br>
-                    }<br>
-                    <br>
-                    // Real-time validation<br>
-                    document.getElementById('email').addEventListener('blur', function() {<br>
-                    &nbsp;&nbsp;if (!this.value.includes('@')) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.style.borderColor = 'red';<br>
-                    &nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;this.style.borderColor = 'green';<br>
-                    &nbsp;&nbsp;}<br>
-                    });
-                </div>
+                <pre><code class="language-javascript">// Client-side validation
+function validateForm() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  if (!email.includes('@')) {
+    alert('Please enter a valid email');
+    return false;
+  }
+  if (password.length &lt; 6) {
+    alert('Password must be at least 6 characters');
+    return false;
+  }
+  return true;
+}
+// Real-time validation
+document.getElementById('email').addEventListener('blur', function() {
+  if (!this.value.includes('@')) {
+    this.style.borderColor = 'red';
+  } else {
+    this.style.borderColor = 'green';
+  }
+});</code></pre>
+            </div>
             </section>
 
             <!-- Slide 15: Local Storage -->
-            <section>
-                <h2>Local Storage</h2>
+            <section data-slide-title="Local Storage"><h2>Local Storage</h2>
                 <div class="code-example">
-                    // Store data<br>
-                    localStorage.setItem('user', JSON.stringify({<br>
-                    &nbsp;&nbsp;name: 'John',<br>
-                    &nbsp;&nbsp;email: 'john@example.com'<br>
-                    }));<br>
-                    <br>
-                    // Retrieve data<br>
-                    const user = JSON.parse(localStorage.getItem('user'));<br>
-                    console.log(user.name); // John<br>
-                    <br>
-                    // Remove data<br>
-                    localStorage.removeItem('user');<br>
-                    <br>
-                    // Clear all data<br>
-                    localStorage.clear();<br>
-                    <br>
-                    // Session storage (temporary)<br>
-                    sessionStorage.setItem('temp', 'temporary data');
-                </div>
+                <pre><code class="language-javascript">// Store data
+localStorage.setItem('user', JSON.stringify({
+  name: 'John',
+  email: 'john@example.com'
+}));
+// Retrieve data
+const user = JSON.parse(localStorage.getItem('user'));
+console.log(user.name); // John
+// Remove data
+localStorage.removeItem('user');
+// Clear all data
+localStorage.clear();
+// Session storage (temporary)
+sessionStorage.setItem('temp', 'temporary data');</code></pre>
+            </div>
             </section>
 
             <!-- Slide 16: Task 1 -->
-            <section>
-                <h2>Task 1: Interactive Form</h2>
+            <section data-slide-title="Task 1: Interactive Form"><h2>Task 1: Interactive Form</h2>
                 <div class="task-box">
                     <h4>Create an interactive contact form:</h4>
                     <ul>
@@ -466,8 +412,7 @@
             </section>
 
             <!-- Slide 17: Advanced Features -->
-            <section>
-                <h2>Advanced Features</h2>
+            <section data-slide-title="Advanced Features"><h2>Advanced Features</h2>
                 <div class="highlight">
                     <h4>Additional Advanced Topics:</h4>
                     <ul>
@@ -480,84 +425,76 @@
             </section>
 
             <!-- Slide 18: Geolocation API -->
-            <section>
-                <h2>Geolocation API</h2>
+            <section data-slide-title="Geolocation API"><h2>Geolocation API</h2>
                 <div class="code-example">
-                    // Get user location<br>
-                    if (navigator.geolocation) {<br>
-                    &nbsp;&nbsp;navigator.geolocation.getCurrentPosition(<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;function(position) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const latitude = position.coords.latitude;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const longitude = position.coords.longitude;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(`Lat: ${latitude}, Lng: ${longitude}`);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;},<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;function(error) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('Error getting location:', error);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;);<br>
-                    } else {<br>
-                    &nbsp;&nbsp;console.log('Geolocation not supported');<br>
-                    }
-                </div>
+                <pre><code class="language-php">// Get user location
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log(`Lat: ${latitude}, Lng: ${longitude}`);
+    },
+    function(error) {
+      console.error('Error getting location:', error);
+    }
+  );
+} else {
+  console.log('Geolocation not supported');
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 19: Canvas API -->
-            <section>
-                <h2>Canvas API</h2>
+            <section data-slide-title="Canvas API"><h2>Canvas API</h2>
                 <div class="code-example">
-                    // Get canvas context<br>
-                    const canvas = document.getElementById('myCanvas');<br>
-                    const ctx = canvas.getContext('2d');<br>
-                    <br>
-                    // Draw shapes<br>
-                    ctx.fillStyle = 'red';<br>
-                    ctx.fillRect(10, 10, 100, 100);<br>
-                    <br>
-                    ctx.beginPath();<br>
-                    ctx.arc(200, 60, 50, 0, 2 * Math.PI);<br>
-                    ctx.fillStyle = 'blue';<br>
-                    ctx.fill();<br>
-                    <br>
-                    // Draw text<br>
-                    ctx.font = '20px Arial';<br>
-                    ctx.fillStyle = 'black';<br>
-                    ctx.fillText('Hello Canvas!', 10, 150);
-                </div>
+                <pre><code class="language-javascript">// Get canvas context
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+// Draw shapes
+ctx.fillStyle = 'red';
+ctx.fillRect(10, 10, 100, 100);
+ctx.beginPath();
+ctx.arc(200, 60, 50, 0, 2 * Math.PI);
+ctx.fillStyle = 'blue';
+ctx.fill();
+// Draw text
+ctx.font = '20px Arial';
+ctx.fillStyle = 'black';
+ctx.fillText('Hello Canvas!', 10, 150);</code></pre>
+            </div>
             </section>
 
             <!-- Slide 20: Service Workers -->
-            <section>
-                <h2>Service Workers</h2>
+            <section data-slide-title="Service Workers"><h2>Service Workers</h2>
                 <div class="code-example">
-                    // Register service worker<br>
-                    if ('serviceWorker' in navigator) {<br>
-                    &nbsp;&nbsp;navigator.serviceWorker.register('/sw.js')<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;.then(registration => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('SW registered');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;.catch(error => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('SW registration failed');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;});<br>
-                    }<br>
-                    <br>
-                    // sw.js - Cache files<br>
-                    self.addEventListener('install', event => {<br>
-                    &nbsp;&nbsp;event.waitUntil(<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;caches.open('v1').then(cache => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return cache.addAll([<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'/',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'/styles.css',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'/script.js'<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;);<br>
-                    });
-                </div>
+                <pre><code class="language-javascript">// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(registration =&gt; {
+      console.log('SW registered');
+    })
+    .catch(error =&gt; {
+      console.log('SW registration failed');
+    });
+}
+// sw.js - Cache files
+self.addEventListener('install', event =&gt; {
+  event.waitUntil(
+    caches.open('v1').then(cache =&gt; {
+      return cache.addAll([
+        '/',
+        '/styles.css',
+        '/script.js'
+      ]);
+    })
+  );
+});</code></pre>
+            </div>
             </section>
 
             <!-- Slide 21: Task 2 -->
-            <section>
-                <h2>Task 2: Interactive Dashboard</h2>
+            <section data-slide-title="Task 2: Interactive Dashboard"><h2>Task 2: Interactive Dashboard</h2>
                 <div class="task-box">
                     <h4>Create an interactive dashboard:</h4>
                     <ul>
@@ -573,8 +510,7 @@
             </section>
 
             <!-- Slide 22: Summary -->
-            <section>
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary"><h2>Session Summary</h2>
                 <div class="highlight">
                     <h4>Key Takeaways:</h4>
                     <ul>
@@ -590,51 +526,30 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            fitToParent: true,
-            responsive: true,
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
     </script>
 </body>

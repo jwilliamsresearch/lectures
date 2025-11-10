@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 5: PHP Forms & Data Processing</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style>
         .reveal .slides section {
             text-align: left;
@@ -14,7 +18,6 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        .reveal .slides section.center { text-align: center; }
         .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
         .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
         .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
@@ -31,16 +34,13 @@
             overflow-y: auto;
         }
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
         .highlight {
             background: #fff3cd;
@@ -78,76 +78,41 @@
         /* Custom scrollbar styling */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-    </style>
+        </style>
 </head>
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease;
-            display: inline-block;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" 
-           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-            ← Back to Module
-        </a>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session4.html" title="Previous Session">&lt;</a>
+        <a href="session6.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 5</div>
                 <h1>PHP Forms & Data Processing</h1>
-                <h3>CMU529: Advanced Web Development - Session 5</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Advanced form handling and validation techniques</p>
-                <p><small>3-hour session • 27 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Master advanced form handling techniques</li>
                     <li>Implement comprehensive input validation</li>
@@ -159,8 +124,7 @@
             </section>
 
             <!-- Slide 3: Form Processing Overview -->
-            <section>
-                <h2>Form Processing Overview</h2>
+            <section data-slide-title="Form Processing Overview"><h2>Form Processing Overview</h2>
                 <div class="diagram">
                     <h4>Form Processing Flow</h4>
                     <p><strong>1.</strong> User submits form</p>
@@ -179,336 +143,281 @@
             </section>
 
             <!-- Slide 4: HTML Form Structure -->
-            <section>
-                <h2>HTML Form Structure</h2>
+            <section data-slide-title="HTML Form Structure"><h2>HTML Form Structure</h2>
                 <div class="code-example">
-                    Complete Form Example:<br><br>
-                    
-                    &lt;form method="POST" action="process.php" enctype="multipart/form-data"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="form-group"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="username"&gt;Username:&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="text" name="username" id="username" required&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br><br>
-                    
-                    &nbsp;&nbsp;&lt;div class="form-group"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email"&gt;Email:&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email" name="email" id="email" required&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br><br>
-                    
-                    &nbsp;&nbsp;&lt;div class="form-group"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="password"&gt;Password:&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="password" name="password" id="password" required&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br><br>
-                    
-                    &nbsp;&nbsp;&lt;div class="form-group"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="avatar"&gt;Profile Picture:&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="file" name="avatar" id="avatar" accept="image/*"&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br><br>
-                    
-                    &nbsp;&nbsp;&lt;button type="submit"&gt;Register&lt;/button&gt;<br>
-                    &lt;/form&gt;
-                </div>
+                <pre><code class="language-php">Complete Form Example:
+&lt;form method="POST" action="process.php" enctype="multipart/form-data"&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="username"&gt;Username:&lt;/label&gt;
+    &lt;input type="text" name="username" id="username" required&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" name="email" id="email" required&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="password"&gt;Password:&lt;/label&gt;
+    &lt;input type="password" name="password" id="password" required&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="avatar"&gt;Profile Picture:&lt;/label&gt;
+    &lt;input type="file" name="avatar" id="avatar" accept="image/*"&gt;
+  &lt;/div&gt;
+  &lt;button type="submit"&gt;Register&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 5: Basic Form Processing -->
-            <section>
-                <h2>Basic Form Processing</h2>
+            <section data-slide-title="Basic Form Processing"><h2>Basic Form Processing</h2>
                 <div class="code-example">
-                    Basic Processing (process.php):<br><br>
-                    
-                    &lt;?php<br>
-                    // Check if form was submitted<br>
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") {<br><br>
-                    
-                    &nbsp;&nbsp;// Get form data<br>
-                    &nbsp;&nbsp;$username = $_POST["username"];<br>
-                    &nbsp;&nbsp;$email = $_POST["email"];<br>
-                    &nbsp;&nbsp;$password = $_POST["password"];<br><br>
-                    
-                    &nbsp;&nbsp;// Basic validation<br>
-                    &nbsp;&nbsp;if (empty($username) || empty($email) || empty($password)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$error = "All fields are required";<br>
-                    &nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;// Process the data<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Username: " . htmlspecialchars($username) . "&lt;br&gt;";<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Email: " . htmlspecialchars($email) . "&lt;br&gt;";<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Registration successful!";<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br>
-                    ?&gt;
-                </div>
+                <pre><code class="language-php">Basic Processing (process.php):
+&lt;?php
+// Check if form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Get form data
+  $username = $_POST["username"];
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+  // Basic validation
+  if (empty($username) || empty($email) || empty($password)) {
+    $error = "All fields are required";
+  } else {
+    // Process the data
+    echo "Username: " . htmlspecialchars($username) . "&lt;br&gt;";
+    echo "Email: " . htmlspecialchars($email) . "&lt;br&gt;";
+    echo "Registration successful!";
+  }
+}
+?&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 6: Input Validation Functions -->
-            <section>
-                <h2>Input Validation Functions</h2>
+            <section data-slide-title="Input Validation Functions"><h2>Input Validation Functions</h2>
                 <div class="code-example">
-                    Validation Functions:<br><br>
-                    
-                    function validateEmail($email) {<br>
-                    &nbsp;&nbsp;return filter_var($email, FILTER_VALIDATE_EMAIL);<br>
-                    }<br><br>
-                    
-                    function validateUsername($username) {<br>
-                    &nbsp;&nbsp;// Username: 3-20 characters, alphanumeric and underscore<br>
-                    &nbsp;&nbsp;return preg_match("/^[a-zA-Z0-9_]{3,20}$/", $username);<br>
-                    }<br><br>
-                    
-                    function validatePassword($password) {<br>
-                    &nbsp;&nbsp;// Password: minimum 8 characters, at least one letter and number<br>
-                    &nbsp;&nbsp;return strlen($password) >= 8 &&<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preg_match("/[a-zA-Z]/", $password) &&<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preg_match("/[0-9]/", $password);<br>
-                    }<br><br>
-                    
-                    function sanitizeInput($input) {<br>
-                    &nbsp;&nbsp;return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');<br>
-                    }
-                </div>
+                <pre><code class="language-php">Validation Functions:
+function validateEmail($email) {
+  return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
+function validateUsername($username) {
+  // Username: 3-20 characters, alphanumeric and underscore
+  return preg_match("/^[a-zA-Z0-9_]{3,20}$/", $username);
+}
+function validatePassword($password) {
+  // Password: minimum 8 characters, at least one letter and number
+  return strlen($password) &gt;= 8 &amp;&amp;
+      preg_match("/[a-zA-Z]/", $password) &amp;&amp;
+      preg_match("/[0-9]/", $password);
+}
+function sanitizeInput($input) {
+  return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 7: Advanced Form Validation -->
-            <section>
-                <h2>Advanced Form Validation</h2>
+            <section data-slide-title="Advanced Form Validation"><h2>Advanced Form Validation</h2>
                 <div class="code-example">
-                    Comprehensive Validation:<br><br>
-                    
-                    function validateRegistration($data) {<br>
-                    &nbsp;&nbsp;$errors = [];<br><br>
-                    
-                    &nbsp;&nbsp;// Username validation<br>
-                    &nbsp;&nbsp;if (empty($data["username"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors["username"] = "Username is required";<br>
-                    &nbsp;&nbsp;} elseif (!validateUsername($data["username"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors["username"] = "Username must be 3-20 characters";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Email validation<br>
-                    &nbsp;&nbsp;if (empty($data["email"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors["email"] = "Email is required";<br>
-                    &nbsp;&nbsp;} elseif (!validateEmail($data["email"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors["email"] = "Invalid email format";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Password validation<br>
-                    &nbsp;&nbsp;if (empty($data["password"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors["password"] = "Password is required";<br>
-                    &nbsp;&nbsp;} elseif (!validatePassword($data["password"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors["password"] = "Password must be at least 8 characters";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return $errors;<br>
-                    }
-                </div>
+                <pre><code class="language-php">Comprehensive Validation:
+function validateRegistration($data) {
+  $errors = [];
+  // Username validation
+  if (empty($data["username"])) {
+    $errors["username"] = "Username is required";
+  } elseif (!validateUsername($data["username"])) {
+    $errors["username"] = "Username must be 3-20 characters";
+  }
+  // Email validation
+  if (empty($data["email"])) {
+    $errors["email"] = "Email is required";
+  } elseif (!validateEmail($data["email"])) {
+    $errors["email"] = "Invalid email format";
+  }
+  // Password validation
+  if (empty($data["password"])) {
+    $errors["password"] = "Password is required";
+  } elseif (!validatePassword($data["password"])) {
+    $errors["password"] = "Password must be at least 8 characters";
+  }
+  return $errors;
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 8: File Upload Handling -->
-            <section>
-                <h2>File Upload Handling</h2>
+            <section data-slide-title="File Upload Handling"><h2>File Upload Handling</h2>
                 <div class="code-example">
-                    File Upload Processing:<br><br>
-                    
-                    function handleFileUpload($file) {<br>
-                    &nbsp;&nbsp;$errors = [];<br>
-                    &nbsp;&nbsp;$uploadDir = "uploads/";<br><br>
-                    
-                    &nbsp;&nbsp;// Check if file was uploaded<br>
-                    &nbsp;&nbsp;if ($file["error"] !== UPLOAD_ERR_OK) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "File upload failed";<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return $errors;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Validate file type<br>
-                    &nbsp;&nbsp;$allowedTypes = ["image/jpeg", "image/png", "image/gif"];<br>
-                    &nbsp;&nbsp;if (!in_array($file["type"], $allowedTypes)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "Invalid file type";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Validate file size (5MB max)<br>
-                    &nbsp;&nbsp;if ($file["size"] > 5 * 1024 * 1024) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "File too large (max 5MB)";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Generate unique filename<br>
-                    &nbsp;&nbsp;$extension = pathinfo($file["name"], PATHINFO_EXTENSION);<br>
-                    &nbsp;&nbsp;$filename = uniqid() . "." . $extension;<br>
-                    &nbsp;&nbsp;$filepath = $uploadDir . $filename;<br><br>
-                    
-                    &nbsp;&nbsp;// Move uploaded file<br>
-                    &nbsp;&nbsp;if (!move_uploaded_file($file["tmp_name"], $filepath)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$errors[] = "Failed to save file";<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return $errors;<br>
-                    }
-                </div>
+                <pre><code class="language-php">File Upload Processing:
+function handleFileUpload($file) {
+  $errors = [];
+  $uploadDir = "uploads/";
+  // Check if file was uploaded
+  if ($file["error"] !== UPLOAD_ERR_OK) {
+    $errors[] = "File upload failed";
+    return $errors;
+  }
+  // Validate file type
+  $allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+  if (!in_array($file["type"], $allowedTypes)) {
+    $errors[] = "Invalid file type";
+  }
+  // Validate file size (5MB max)
+  if ($file["size"] &gt; 5 * 1024 * 1024) {
+    $errors[] = "File too large (max 5MB)";
+  }
+  // Generate unique filename
+  $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
+  $filename = uniqid() . "." . $extension;
+  $filepath = $uploadDir . $filename;
+  // Move uploaded file
+  if (!move_uploaded_file($file["tmp_name"], $filepath)) {
+    $errors[] = "Failed to save file";
+  }
+  return $errors;
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 9: CSRF Protection -->
-            <section>
-                <h2>CSRF Protection</h2>
+            <section data-slide-title="CSRF Protection"><h2>CSRF Protection</h2>
                 <div class="code-example">
-                    CSRF Token Implementation:<br><br>
-                    
-                    // Generate CSRF token<br>
-                    function generateCSRFToken() {<br>
-                    &nbsp;&nbsp;if (empty($_SESSION["csrf_token"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION["csrf_token"] = bin2hex(random_bytes(32));<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;return $_SESSION["csrf_token"];<br>
-                    }<br><br>
-                    
-                    // Verify CSRF token<br>
-                    function verifyCSRFToken($token) {<br>
-                    &nbsp;&nbsp;return isset($_SESSION["csrf_token"]) &&<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash_equals($_SESSION["csrf_token"], $token);<br>
-                    }<br><br>
-                    
-                    // Add token to form<br>
-                    &lt;form method="POST" action="process.php"&gt;<br>
-                    &nbsp;&nbsp;&lt;input type="hidden" name="csrf_token" value="&lt;?php echo generateCSRFToken(); ?&gt;"&gt;<br>
-                    &nbsp;&nbsp;&lt;!-- form fields --&gt;<br>
-                    &lt;/form&gt;<br><br>
-                    
-                    // Verify in processing<br>
-                    if (!verifyCSRFToken($_POST["csrf_token"])) {<br>
-                    &nbsp;&nbsp;die("CSRF token validation failed");<br>
-                    }
-                </div>
+                <pre><code class="language-php">CSRF Token Implementation:
+// Generate CSRF token
+function generateCSRFToken() {
+  if (empty($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+  }
+  return $_SESSION["csrf_token"];
+}
+// Verify CSRF token
+function verifyCSRFToken($token) {
+  return isset($_SESSION["csrf_token"]) &amp;&amp;
+      hash_equals($_SESSION["csrf_token"], $token);
+}
+// Add token to form
+&lt;form method="POST" action="process.php"&gt;
+  &lt;input type="hidden" name="csrf_token" value="&lt;?php echo generateCSRFToken(); ?&gt;"&gt;
+  &lt;!-- form fields --&gt;
+&lt;/form&gt;
+// Verify in processing
+if (!verifyCSRFToken($_POST["csrf_token"])) {
+  die("CSRF token validation failed");
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 10: User Registration System -->
-            <section>
-                <h2>User Registration System</h2>
+            <section data-slide-title="User Registration System"><h2>User Registration System</h2>
                 <div class="code-example">
-                    Registration Processing:<br><br>
-                    
-                    function registerUser($data) {<br>
-                    &nbsp;&nbsp;// Validate input<br>
-                    &nbsp;&nbsp;$errors = validateRegistration($data);<br>
-                    &nbsp;&nbsp;if (!empty($errors)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return ["success" => false, "errors" => $errors];<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Check if user already exists<br>
-                    &nbsp;&nbsp;if (userExists($data["email"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return ["success" => false, "errors" => ["email" => "Email already registered"]];<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Hash password<br>
-                    &nbsp;&nbsp;$hashedPassword = password_hash($data["password"], PASSWORD_DEFAULT);<br><br>
-                    
-                    &nbsp;&nbsp;// Create user<br>
-                    &nbsp;&nbsp;$userId = createUser([<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"username" => $data["username"],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"email" => $data["email"],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"password" => $hashedPassword<br>
-                    &nbsp;&nbsp;]);<br><br>
-                    
-                    &nbsp;&nbsp;return ["success" => true, "user_id" => $userId];<br>
-                    }
-                </div>
+                <pre><code class="language-php">Registration Processing:
+function registerUser($data) {
+  // Validate input
+  $errors = validateRegistration($data);
+  if (!empty($errors)) {
+    return ["success" =&gt; false, "errors" =&gt; $errors];
+  }
+  // Check if user already exists
+  if (userExists($data["email"])) {
+    return ["success" =&gt; false, "errors" =&gt; ["email" =&gt; "Email already registered"]];
+  }
+  // Hash password
+  $hashedPassword = password_hash($data["password"], PASSWORD_DEFAULT);
+  // Create user
+  $userId = createUser([
+    "username" =&gt; $data["username"],
+    "email" =&gt; $data["email"],
+    "password" =&gt; $hashedPassword
+  ]);
+  return ["success" =&gt; true, "user_id" =&gt; $userId];
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 11: User Login System -->
-            <section>
-                <h2>User Login System</h2>
+            <section data-slide-title="User Login System"><h2>User Login System</h2>
                 <div class="code-example">
-                    Login Processing:<br><br>
-                    
-                    function loginUser($email, $password) {<br>
-                    &nbsp;&nbsp;// Validate input<br>
-                    &nbsp;&nbsp;if (empty($email) || empty($password)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return ["success" => false, "error" => "Email and password required"];<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Get user from database<br>
-                    &nbsp;&nbsp;$user = getUserByEmail($email);<br>
-                    &nbsp;&nbsp;if (!$user) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return ["success" => false, "error" => "Invalid credentials"];<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Verify password<br>
-                    &nbsp;&nbsp;if (!password_verify($password, $user["password"])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return ["success" => false, "error" => "Invalid credentials"];<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Start session and store user data<br>
-                    &nbsp;&nbsp;session_start();<br>
-                    &nbsp;&nbsp;$_SESSION["user_id"] = $user["id"];<br>
-                    &nbsp;&nbsp;$_SESSION["username"] = $user["username"];<br>
-                    &nbsp;&nbsp;$_SESSION["logged_in"] = true;<br><br>
-                    
-                    &nbsp;&nbsp;return ["success" => true, "user" => $user];<br>
-                    }
-                </div>
+                <pre><code class="language-php">Login Processing:
+function loginUser($email, $password) {
+  // Validate input
+  if (empty($email) || empty($password)) {
+    return ["success" =&gt; false, "error" =&gt; "Email and password required"];
+  }
+  // Get user from database
+  $user = getUserByEmail($email);
+  if (!$user) {
+    return ["success" =&gt; false, "error" =&gt; "Invalid credentials"];
+  }
+  // Verify password
+  if (!password_verify($password, $user["password"])) {
+    return ["success" =&gt; false, "error" =&gt; "Invalid credentials"];
+  }
+  // Start session and store user data
+  session_start();
+  $_SESSION["user_id"] = $user["id"];
+  $_SESSION["username"] = $user["username"];
+  $_SESSION["logged_in"] = true;
+  return ["success" =&gt; true, "user" =&gt; $user];
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 12: Form Error Handling -->
-            <section>
-                <h2>Form Error Handling</h2>
+            <section data-slide-title="Form Error Handling"><h2>Form Error Handling</h2>
                 <div class="code-example">
-                    Error Display System:<br><br>
-                    
-                    // Display errors function<br>
-                    function displayErrors($errors, $field) {<br>
-                    &nbsp;&nbsp;if (isset($errors[$field])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return "&lt;span class='error'&gt;" . htmlspecialchars($errors[$field]) . "&lt;/span&gt;";<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;return "";<br>
-                    }<br><br>
-                    
-                    // Form with error display<br>
-                    &lt;form method="POST" action="register.php"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="form-group"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="username"&gt;Username:&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="text" name="username" id="username"<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value="&lt;?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?&gt;"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;?php echo displayErrors($errors, 'username'); ?&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br><br>
-                    
-                    &nbsp;&nbsp;&lt;div class="form-group"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email"&gt;Email:&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email" name="email" id="email"<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value="&lt;?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?&gt;"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;?php echo displayErrors($errors, 'email'); ?&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/form&gt;
-                </div>
+                <pre><code class="language-php">Error Display System:
+// Display errors function
+function displayErrors($errors, $field) {
+  if (isset($errors[$field])) {
+    return "&lt;span class='error'&gt;" . htmlspecialchars($errors[$field]) . "&lt;/span&gt;";
+  }
+  return "";
+}
+// Form with error display
+&lt;form method="POST" action="register.php"&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="username"&gt;Username:&lt;/label&gt;
+    &lt;input type="text" name="username" id="username"
+      value="&lt;?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?&gt;"&gt;
+    &lt;?php echo displayErrors($errors, 'username'); ?&gt;
+  &lt;/div&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" name="email" id="email"
+      value="&lt;?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?&gt;"&gt;
+    &lt;?php echo displayErrors($errors, 'email'); ?&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 13: E-commerce Form Examples -->
-            <section>
-                <h2>E-commerce Form Examples</h2>
+            <section data-slide-title="E-commerce Form Examples"><h2>E-commerce Form Examples</h2>
                 <div class="code-example">
-                    Product Search Form:<br><br>
-                    
-                    &lt;form method="GET" action="search.php"&gt;<br>
-                    &nbsp;&nbsp;&lt;input type="text" name="q" placeholder="Search products..."<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;value="&lt;?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?&gt;"&gt;<br>
-                    &nbsp;&nbsp;&lt;select name="category"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;option value=""&gt;All Categories&lt;/option&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;option value="electronics"&gt;Electronics&lt;/option&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;option value="clothing"&gt;Clothing&lt;/option&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;option value="books"&gt;Books&lt;/option&gt;<br>
-                    &nbsp;&nbsp;&lt;/select&gt;<br>
-                    &nbsp;&nbsp;&lt;button type="submit"&gt;Search&lt;/button&gt;<br>
-                    &lt;/form&gt;<br><br>
-                    
-                    Contact Form:<br><br>
-                    
-                    &lt;form method="POST" action="contact.php"&gt;<br>
-                    &nbsp;&nbsp;&lt;input type="text" name="name" placeholder="Your Name" required&gt;<br>
-                    &nbsp;&nbsp;&lt;input type="email" name="email" placeholder="Your Email" required&gt;<br>
-                    &nbsp;&nbsp;&lt;textarea name="message" placeholder="Your Message" required&gt;&lt;/textarea&gt;<br>
-                    &nbsp;&nbsp;&lt;button type="submit"&gt;Send Message&lt;/button&gt;<br>
-                    &lt;/form&gt;
-                </div>
+                <pre><code class="language-php">Product Search Form:
+&lt;form method="GET" action="search.php"&gt;
+  &lt;input type="text" name="q" placeholder="Search products..."
+    value="&lt;?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q']) : ''; ?&gt;"&gt;
+  &lt;select name="category"&gt;
+    &lt;option value=""&gt;All Categories&lt;/option&gt;
+    &lt;option value="electronics"&gt;Electronics&lt;/option&gt;
+    &lt;option value="clothing"&gt;Clothing&lt;/option&gt;
+    &lt;option value="books"&gt;Books&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;button type="submit"&gt;Search&lt;/button&gt;
+&lt;/form&gt;
+Contact Form:
+&lt;form method="POST" action="contact.php"&gt;
+  &lt;input type="text" name="name" placeholder="Your Name" required&gt;
+  &lt;input type="email" name="email" placeholder="Your Email" required&gt;
+  &lt;textarea name="message" placeholder="Your Message" required&gt;&lt;/textarea&gt;
+  &lt;button type="submit"&gt;Send Message&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 14: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Advanced Form Processing</h2>
+            <section data-slide-title="Task 1: Advanced Form Processing" class="center"><h2>Task 1: Advanced Form Processing</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -532,8 +441,7 @@
             </section>
 
             <!-- Slide 15: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -542,8 +450,7 @@
             </section>
 
             <!-- Slide 16: Form Security Best Practices -->
-            <section>
-                <h2>Form Security Best Practices</h2>
+            <section data-slide-title="Form Security Best Practices"><h2>Form Security Best Practices</h2>
                 <ul>
                     <li><strong>Input Validation:</strong> Validate all inputs on server-side</li>
                     <li><strong>Output Escaping:</strong> Escape all output with htmlspecialchars()</li>
@@ -553,166 +460,140 @@
                     <li><strong>Rate Limiting:</strong> Prevent form spam and attacks</li>
                 </ul>
                 <div class="code-example">
-                    Security Checklist:<br><br>
-                    
-                    ✓ Validate all input data<br>
-                    ✓ Escape all output data<br>
-                    ✓ Use CSRF tokens<br>
-                    ✓ Hash passwords with password_hash()<br>
-                    ✓ Validate file uploads<br>
-                    ✓ Use HTTPS in production<br>
-                    ✓ Implement rate limiting<br>
-                    ✓ Log security events<br>
-                    ✓ Keep PHP and dependencies updated
-                </div>
+                <pre><code class="language-php">Security Checklist:
+✓ Validate all input data
+✓ Escape all output data
+✓ Use CSRF tokens
+✓ Hash passwords with password_hash()
+✓ Validate file uploads
+✓ Use HTTPS in production
+✓ Implement rate limiting
+✓ Log security events
+✓ Keep PHP and dependencies updated</code></pre>
+            </div>
             </section>
 
             <!-- Slide 17: AJAX Form Submission -->
-            <section>
-                <h2>AJAX Form Submission</h2>
+            <section data-slide-title="AJAX Form Submission"><h2>AJAX Form Submission</h2>
                 <div class="code-example">
-                    JavaScript AJAX Example:<br><br>
-                    
-                    document.getElementById('registerForm').addEventListener('submit', function(e) {<br>
-                    &nbsp;&nbsp;e.preventDefault();<br><br>
-                    
-                    &nbsp;&nbsp;const formData = new FormData(this);<br><br>
-                    
-                    &nbsp;&nbsp;fetch('register.php', {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;body: formData<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.then(response => response.json())<br>
-                    &nbsp;&nbsp;.then(data => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (data.success) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert('Registration successful!');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayErrors(data.errors);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.catch(error => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);<br>
-                    &nbsp;&nbsp;});<br>
-                    });<br><br>
-                    
-                    PHP Response (register.php):<br><br>
-                    
-                    header('Content-Type: application/json');<br>
-                    echo json_encode($result);
-                </div>
+                <pre><code class="language-php">JavaScript AJAX Example:
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  fetch('register.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response =&gt; response.json())
+  .then(data =&gt; {
+    if (data.success) {
+      alert('Registration successful!');
+    } else {
+      displayErrors(data.errors);
+    }
+  })
+  .catch(error =&gt; {
+    console.error('Error:', error);
+  });
+});
+PHP Response (register.php):
+header('Content-Type: application/json');
+echo json_encode($result);</code></pre>
+            </div>
             </section>
 
             <!-- Slide 18: Form Validation with JavaScript -->
-            <section>
-                <h2>Form Validation with JavaScript</h2>
+            <section data-slide-title="Form Validation with JavaScript"><h2>Form Validation with JavaScript</h2>
                 <div class="code-example">
-                    Client-side Validation:<br><br>
-                    
-                    function validateForm() {<br>
-                    &nbsp;&nbsp;let isValid = true;<br>
-                    &nbsp;&nbsp;const errors = {};<br><br>
-                    
-                    &nbsp;&nbsp;// Username validation<br>
-                    &nbsp;&nbsp;const username = document.getElementById('username').value;<br>
-                    &nbsp;&nbsp;if (username.length < 3 || username.length > 20) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;errors.username = 'Username must be 3-20 characters';<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;isValid = false;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Email validation<br>
-                    &nbsp;&nbsp;const email = document.getElementById('email').value;<br>
-                    &nbsp;&nbsp;const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;<br>
-                    &nbsp;&nbsp;if (!emailRegex.test(email)) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;errors.email = 'Invalid email format';<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;isValid = false;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;// Password validation<br>
-                    &nbsp;&nbsp;const password = document.getElementById('password').value;<br>
-                    &nbsp;&nbsp;if (password.length < 8) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;errors.password = 'Password must be at least 8 characters';<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;isValid = false;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return { isValid, errors };<br>
-                    }
-                </div>
+                <pre><code class="language-php">Client-side Validation:
+function validateForm() {
+  let isValid = true;
+  const errors = {};
+  // Username validation
+  const username = document.getElementById('username').value;
+  if (username.length &lt; 3 || username.length &gt; 20) {
+    errors.username = 'Username must be 3-20 characters';
+    isValid = false;
+  }
+  // Email validation
+  const email = document.getElementById('email').value;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    errors.email = 'Invalid email format';
+    isValid = false;
+  }
+  // Password validation
+  const password = document.getElementById('password').value;
+  if (password.length &lt; 8) {
+    errors.password = 'Password must be at least 8 characters';
+    isValid = false;
+  }
+  return { isValid, errors };
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 19: Database Integration -->
-            <section>
-                <h2>Database Integration</h2>
+            <section data-slide-title="Database Integration"><h2>Database Integration</h2>
                 <div class="code-example">
-                    Database Functions:<br><br>
-                    
-                    function createUser($userData) {<br>
-                    &nbsp;&nbsp;global $pdo;<br><br>
-                    
-                    &nbsp;&nbsp;$sql = "INSERT INTO users (username, email, password, created_at) VALUES (?, ?, ?, NOW())";<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare($sql);<br><br>
-                    
-                    &nbsp;&nbsp;try {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute([<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$userData['username'],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$userData['email'],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$userData['password']<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;]);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return $pdo->lastInsertId();<br>
-                    &nbsp;&nbsp;} catch (PDOException $e) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;error_log("Database error: " . $e->getMessage());<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    
-                    function getUserByEmail($email) {<br>
-                    &nbsp;&nbsp;global $pdo;<br><br>
-                    &nbsp;&nbsp;$sql = "SELECT * FROM users WHERE email = ?";<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare($sql);<br>
-                    &nbsp;&nbsp;$stmt->execute([$email]);<br><br>
-                    &nbsp;&nbsp;return $stmt->fetch(PDO::FETCH_ASSOC);<br>
-                    }
-                </div>
+                <pre><code class="language-php">Database Functions:
+function createUser($userData) {
+  global $pdo;
+  $sql = "INSERT INTO users (username, email, password, created_at) VALUES (?, ?, ?, NOW())";
+  $stmt = $pdo-&gt;prepare($sql);
+  try {
+    $stmt-&gt;execute([
+      $userData['username'],
+      $userData['email'],
+      $userData['password']
+    ]);
+    return $pdo-&gt;lastInsertId();
+  } catch (PDOException $e) {
+    error_log("Database error: " . $e-&gt;getMessage());
+    return false;
+  }
+}
+function getUserByEmail($email) {
+  global $pdo;
+  $sql = "SELECT * FROM users WHERE email = ?";
+  $stmt = $pdo-&gt;prepare($sql);
+  $stmt-&gt;execute([$email]);
+  return $stmt-&gt;fetch(PDO::FETCH_ASSOC);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 20: Email Integration -->
-            <section>
-                <h2>Email Integration</h2>
+            <section data-slide-title="Email Integration"><h2>Email Integration</h2>
                 <div class="code-example">
-                    Email Functions:<br><br>
-                    
-                    function sendWelcomeEmail($email, $username) {<br>
-                    &nbsp;&nbsp;$to = $email;<br>
-                    &nbsp;&nbsp;$subject = "Welcome to Our E-commerce Site";<br>
-                    &nbsp;&nbsp;$message = "Hello $username,\n\nWelcome to our store!";<br>
-                    &nbsp;&nbsp;$headers = "From: noreply@example.com";<br><br>
-                    
-                    &nbsp;&nbsp;return mail($to, $subject, $message, $headers);<br>
-                    }<br><br>
-                    
-                    function sendPasswordReset($email, $token) {<br>
-                    &nbsp;&nbsp;$resetLink = "https://example.com/reset.php?token=" . $token;<br>
-                    &nbsp;&nbsp;$to = $email;<br>
-                    &nbsp;&nbsp;$subject = "Password Reset Request";<br>
-                    &nbsp;&nbsp;$message = "Click the following link to reset your password:\n$resetLink";<br>
-                    &nbsp;&nbsp;$headers = "From: noreply@example.com";<br><br>
-                    
-                    &nbsp;&nbsp;return mail($to, $subject, $message, $headers);<br>
-                    }<br><br>
-                    
-                    function sendOrderConfirmation($email, $orderDetails) {<br>
-                    &nbsp;&nbsp;$to = $email;<br>
-                    &nbsp;&nbsp;$subject = "Order Confirmation";<br>
-                    &nbsp;&nbsp;$message = "Thank you for your order!\n\nOrder ID: " . $orderDetails['id'];<br>
-                    &nbsp;&nbsp;$headers = "From: orders@example.com";<br><br>
-                    
-                    &nbsp;&nbsp;return mail($to, $subject, $message, $headers);<br>
-                    }
-                </div>
+                <pre><code class="language-php">Email Functions:
+function sendWelcomeEmail($email, $username) {
+  $to = $email;
+  $subject = "Welcome to Our E-commerce Site";
+  $message = "Hello $username,\n\nWelcome to our store!";
+  $headers = "From: noreply@example.com";
+  return mail($to, $subject, $message, $headers);
+}
+function sendPasswordReset($email, $token) {
+  $resetLink = "https://example.com/reset.php?token=" . $token;
+  $to = $email;
+  $subject = "Password Reset Request";
+  $message = "Click the following link to reset your password:\n$resetLink";
+  $headers = "From: noreply@example.com";
+  return mail($to, $subject, $message, $headers);
+}
+function sendOrderConfirmation($email, $orderDetails) {
+  $to = $email;
+  $subject = "Order Confirmation";
+  $message = "Thank you for your order!\n\nOrder ID: " . $orderDetails['id'];
+  $headers = "From: orders@example.com";
+  return mail($to, $subject, $message, $headers);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 21: Form Analytics and Tracking -->
-            <section>
-                <h2>Form Analytics and Tracking</h2>
+            <section data-slide-title="Form Analytics and Tracking"><h2>Form Analytics and Tracking</h2>
                 <ul>
                     <li><strong>Conversion Tracking:</strong> Monitor form completion rates</li>
                     <li><strong>Error Tracking:</strong> Log validation errors for improvement</li>
@@ -721,27 +602,24 @@
                     <li><strong>A/B Testing:</strong> Test different form layouts</li>
                 </ul>
                 <div class="code-example">
-                    Analytics Implementation:<br><br>
-                    
-                    function logFormSubmission($formType, $success, $errors = []) {<br>
-                    &nbsp;&nbsp;$logData = [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'timestamp' => date('Y-m-d H:i:s'),<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'form_type' => $formType,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'success' => $success,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'errors' => json_encode($errors),<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'ip_address' => $_SERVER['REMOTE_ADDR'],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'user_agent' => $_SERVER['HTTP_USER_AGENT']<br>
-                    &nbsp;&nbsp;];<br><br>
-                    
-                    &nbsp;&nbsp;// Log to database or file<br>
-                    &nbsp;&nbsp;logToDatabase('form_submissions', $logData);<br>
-                    }
-                </div>
+                <pre><code class="language-php">Analytics Implementation:
+function logFormSubmission($formType, $success, $errors = []) {
+  $logData = [
+    'timestamp' =&gt; date('Y-m-d H:i:s'),
+    'form_type' =&gt; $formType,
+    'success' =&gt; $success,
+    'errors' =&gt; json_encode($errors),
+    'ip_address' =&gt; $_SERVER['REMOTE_ADDR'],
+    'user_agent' =&gt; $_SERVER['HTTP_USER_AGENT']
+  ];
+  // Log to database or file
+  logToDatabase('form_submissions', $logData);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 22: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Complete E-commerce Form System</h2>
+            <section data-slide-title="Task 2: Complete E-commerce Form System" class="center"><h2>Task 2: Complete E-commerce Form System</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -765,8 +643,7 @@
             </section>
 
             <!-- Slide 23: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>Advanced form processing requires comprehensive validation</li>
                     <li>Security measures are essential for all forms</li>
@@ -785,51 +662,30 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            fitToParent: true,
-            responsive: true,
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
     </script>
 </body>

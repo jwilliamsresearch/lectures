@@ -1,295 +1,41 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 4: WEB-SQL-01 - SQL Injection</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+    <title>CMU540 - Session 4: WEB-SQL-01 - SQL Injection</title>
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
 
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
-
-        /* Task box styling */
-        .task-box {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Code example styling */
-        .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
-        }
-
-        /* Highlight styling */
-        .highlight {
-            background: #fff3cd;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #ffc107;
-            margin: 10px 0;
-        }
-
-        /* Timeline info styling */
-        .timeline-info {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-
-        .timeline-info ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .timeline-info li {
-            margin-bottom: 0.2em;
-        }
-
-        /* OS³ Studio specific styling */
-        .os3-studio {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Vulnerability examples */
-        .vulnerability {
-            background: #ffebee;
-            border: 2px solid #f44336;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Career focus styling */
-        .career-box {
-            background: #f0f8ff;
-            border: 2px solid #007bff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Demo links styling */
-        .demo-link {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .reveal .slides section {
-                padding: 15px;
-            }
-
-            .reveal .slides section h1 {
-                font-size: 2em;
-            }
-
-            .reveal .slides section h2 {
-                font-size: 1.6em;
-            }
-
-            .reveal .slides section h3 {
-                font-size: 1.3em;
-            }
-
-            .task-box,
-            .code-example {
-                font-size: 0.9em;
-                padding: 15px;
-            }
-        }
-
-        /* Custom scrollbar for better UX */
-        .reveal .slides section::-webkit-scrollbar,
-        .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-track,
-        .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb,
-        .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb:hover,
-        .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Interactive content styling */
-        .interactive-content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .interactive-content h3 {
-            color: #2196f3;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .video-container,
-        .codepen-container {
-            position: relative;
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .video-container iframe,
-        .codepen-container iframe {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container iframe:hover,
-        .codepen-container iframe:hover {
-            transform: scale(1.02);
-        }
-
-        .interactive-description {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-            font-style: italic;
-        }
-    </style>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session3.html" title="Previous Session">&lt;</a>
+        <a href="session5.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <!-- Slide 1: Title -->
-            <section class="center">
-                <h1>WEB-SQL-01</h1>
-                <h2>SQL Injection</h2>
-                <h3>CMU540: Cyber Security - Session 4</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Understanding SQL injection vulnerabilities and secure database practices</p>
-                <p><small>3-hour session • 30 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>WEB-SQL-01 - SQL Injection</h1>
+                <h2>Session 4</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand OWASP A03: SQL Injection</li>
@@ -301,8 +47,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 3: OWASP A03 Overview -->
-            <section>
+            <section data-slide-title="OWASP A03: SQL Injection">
                 <h2>OWASP A03: SQL Injection</h2>
                 <div class="highlight">
                     <p><strong>Definition:</strong> SQL injection occurs when malicious SQL code is inserted into application queries, allowing attackers to manipulate databases.</p>
@@ -316,8 +61,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 4: Real-World Impact -->
-            <section>
+            <section data-slide-title="Real-World Impact">
                 <h2>Real-World Impact</h2>
                 <div class="vulnerability">
                     <h3>Notable Breaches:</h3>
@@ -330,123 +74,115 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Common SQL Injection Vulnerabilities -->
-            <section>
+            <section data-slide-title="Common SQL Injection Vulnerabilities">
                 <h2>Common SQL Injection Vulnerabilities</h2>
                 <h3>1. String Concatenation</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: String concatenation --&gt;<br>
-String query = "SELECT * FROM users WHERE username = '" + username + "'";<br><br>
-// Input: admin' OR '1'='1<br>
-// Result: SELECT * FROM users WHERE username = 'admin' OR '1'='1'
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: String concatenation --&gt;
+String query = "SELECT * FROM users WHERE username = '" + username + "'";
+// Input: admin' OR '1'='1
+// Result: SELECT * FROM users WHERE username = 'admin' OR '1'='1'</code></pre>
                 </div>
                 <h3>2. Dynamic Query Building</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Dynamic queries --&gt;<br>
-String query = "SELECT * FROM products WHERE category = " + categoryId;<br><br>
-// Input: 1; DROP TABLE users; --<br>
-// Result: SELECT * FROM products WHERE category = 1; DROP TABLE users; --
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Dynamic queries --&gt;
+String query = "SELECT * FROM products WHERE category = " + categoryId;
+// Input: 1; DROP TABLE users; --
+// Result: SELECT * FROM products WHERE category = 1; DROP TABLE users; --</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 6: Union-Based Injection -->
-            <section>
+            <section data-slide-title="Union-Based Injection">
                 <h2>Union-Based Injection</h2>
                 <h3>Attack Technique:</h3>
                 <div class="code-example">
-&lt;!-- Original query --&gt;<br>
-SELECT name, email FROM users WHERE id = 1<br><br>
-&lt;!-- Injected query --&gt;<br>
-SELECT name, email FROM users WHERE id = 1 UNION SELECT username, password FROM admin_users<br><br>
-&lt;!-- Result: Data from both tables --&gt;
+                    <pre><code class="language-plaintext">&lt;!-- Original query --&gt;
+SELECT name, email FROM users WHERE id = 1
+&lt;!-- Injected query --&gt;
+SELECT name, email FROM users WHERE id = 1 UNION SELECT username, password FROM admin_users
+&lt;!-- Result: Data from both tables --&gt;</code></pre>
                 </div>
                 <div class="highlight">
                     <p><strong>Impact:</strong> Unauthorized data access, information disclosure</p>
                 </div>
             </section>
 
-            <!-- Slide 7: Boolean-Based Blind Injection -->
-            <section>
+            <section data-slide-title="Boolean-Based Blind Injection">
                 <h2>Boolean-Based Blind Injection</h2>
                 <h3>Attack Technique:</h3>
                 <div class="code-example">
-&lt;!-- Testing for vulnerability --&gt;<br>
-SELECT * FROM users WHERE id = 1 AND 1=1  -- Returns data<br>
-SELECT * FROM users WHERE id = 1 AND 1=2  -- Returns no data<br><br>
-&lt;!-- Extracting data character by character --&gt;<br>
-SELECT * FROM users WHERE id = 1 AND ASCII(SUBSTRING(password,1,1)) > 65<br>
-SELECT * FROM users WHERE id = 1 AND ASCII(SUBSTRING(password,1,1)) > 66
+                    <pre><code class="language-plaintext">&lt;!-- Testing for vulnerability --&gt;
+SELECT * FROM users WHERE id = 1 AND 1=1  -- Returns data
+SELECT * FROM users WHERE id = 1 AND 1=2  -- Returns no data
+&lt;!-- Extracting data character by character --&gt;
+SELECT * FROM users WHERE id = 1 AND ASCII(SUBSTRING(password,1,1)) &gt; 65
+SELECT * FROM users WHERE id = 1 AND ASCII(SUBSTRING(password,1,1)) &gt; 66</code></pre>
                 </div>
                 <div class="vulnerability">
                     <p><strong>Method:</strong> Use boolean conditions to extract data without direct output</p>
                 </div>
             </section>
 
-            <!-- Slide 8: Time-Based Blind Injection -->
-            <section>
+            <section data-slide-title="Time-Based Blind Injection">
                 <h2>Time-Based Blind Injection</h2>
                 <h3>Attack Technique:</h3>
                 <div class="code-example">
-&lt;!-- Testing for vulnerability --&gt;<br>
-SELECT * FROM users WHERE id = 1; WAITFOR DELAY '00:00:05'  -- 5 second delay<br><br>
-&lt;!-- Extracting data with timing --&gt;<br>
-SELECT * FROM users WHERE id = 1 AND IF(ASCII(SUBSTRING(password,1,1)) > 65, SLEEP(5), 0)<br><br>
-&lt;!-- If condition is true, response is delayed --&gt;
+                    <pre><code class="language-plaintext">&lt;!-- Testing for vulnerability --&gt;
+SELECT * FROM users WHERE id = 1; WAITFOR DELAY '00:00:05'  -- 5 second delay
+&lt;!-- Extracting data with timing --&gt;
+SELECT * FROM users WHERE id = 1 AND IF(ASCII(SUBSTRING(password,1,1)) &gt; 65, SLEEP(5), 0)
+&lt;!-- If condition is true, response is delayed --&gt;</code></pre>
                 </div>
                 <div class="highlight">
                     <p><strong>Method:</strong> Use time delays to infer data without direct output</p>
                 </div>
             </section>
 
-            <!-- Slide 9: Error-Based Injection -->
-            <section>
+            <section data-slide-title="Error-Based Injection">
                 <h2>Error-Based Injection</h2>
                 <h3>Attack Technique:</h3>
                 <div class="code-example">
-&lt;!-- Triggering database errors --&gt;<br>
-SELECT * FROM users WHERE id = 1 AND (SELECT * FROM (SELECT COUNT(*),CONCAT(version(),FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)<br><br>
-&lt;!-- Error reveals database version --&gt;<br>
-Duplicate entry '5.7.29-0ubuntu0.18.04.1' for key 'group_key'
+                    <pre><code class="language-plaintext">&lt;!-- Triggering database errors --&gt;
+SELECT * FROM users WHERE id = 1 AND (SELECT * FROM (SELECT COUNT(*),CONCAT(version(),FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)
+&lt;!-- Error reveals database version --&gt;
+Duplicate entry '5.7.29-0ubuntu0.18.04.1' for key 'group_key'</code></pre>
                 </div>
                 <div class="vulnerability">
                     <p><strong>Method:</strong> Exploit error messages to extract sensitive information</p>
                 </div>
             </section>
 
-            <!-- Slide 10: Second-Order SQL Injection -->
-            <section>
+            <section data-slide-title="Second-Order SQL Injection">
                 <h2>Second-Order SQL Injection</h2>
                 <h3>Attack Scenario:</h3>
                 <div class="code-example">
-&lt;!-- Step 1: Store malicious input --&gt;<br>
-INSERT INTO comments (text) VALUES ('admin''--');<br><br>
-&lt;!-- Step 2: Later query uses stored data --&gt;<br>
-SELECT * FROM users WHERE username = 'admin'--' AND password = 'password'<br><br>
-&lt;!-- Result: Bypasses password check --&gt;
+                    <pre><code class="language-plaintext">&lt;!-- Step 1: Store malicious input --&gt;
+INSERT INTO comments (text) VALUES ('admin''--');
+&lt;!-- Step 2: Later query uses stored data --&gt;
+SELECT * FROM users WHERE username = 'admin'--' AND password = 'password'
+&lt;!-- Result: Bypasses password check --&gt;</code></pre>
                 </div>
                 <div class="highlight">
                     <p><strong>Risk:</strong> Input validation doesn't prevent stored malicious data from being executed</p>
                 </div>
             </section>
 
-            <!-- Slide 11: NoSQL Injection -->
-            <section>
+            <section data-slide-title="NoSQL Injection">
                 <h2>NoSQL Injection</h2>
                 <h3>MongoDB Example:</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Direct object injection --&gt;<br>
-db.users.find({username: req.body.username, password: req.body.password})<br><br>
-&lt;!-- Malicious input --&gt;<br>
-{"username": {"$ne": null}, "password": {"$ne": null}}<br><br>
-&lt;!-- Result: Matches any user with non-null username/password --&gt;
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Direct object injection --&gt;
+db.users.find({username: req.body.username, password: req.body.password})
+&lt;!-- Malicious input --&gt;
+{"username": {"$ne": null}, "password": {"$ne": null}}
+&lt;!-- Result: Matches any user with non-null username/password --&gt;</code></pre>
                 </div>
                 <div class="vulnerability">
                     <p><strong>Risk:</strong> NoSQL databases are also vulnerable to injection attacks</p>
                 </div>
             </section>
 
-            <!-- Slide 12: Career Opportunities -->
-            <section>
+            <section data-slide-title="Career Opportunities in Database Security">
                 <h2>Career Opportunities in Database Security</h2>
                 <div class="career-box">
                     <h3>Database Security Roles:</h3>
@@ -461,8 +197,7 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Slide 13: Industry Certifications -->
-            <section>
+            <section data-slide-title="Industry Certifications">
                 <h2>Industry Certifications</h2>
                 <h3>Database Security Certifications:</h3>
                 <ul>
@@ -477,8 +212,7 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Slide 14: OS³ Studio Introduction -->
-            <section>
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
                 <h2>OS³ Newman Cyber Security Lab</h2>
                 <div class="os3-studio">
                     <h3>WEB-SQL-01 Lab Environment</h3>
@@ -493,8 +227,7 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Slide 15: Practical Examples -->
-            <section>
+            <section data-slide-title="Practical Examples">
                 <h2>Practical Examples</h2>
                 <div class="interactive-content">
                     <h3>Watch: SQL Injection Explained</h3>
@@ -505,8 +238,7 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Slide 16: Web Demos and Tools -->
-            <section>
+            <section data-slide-title="Web Demos and Tools">
                 <h2>Web Demos and Tools</h2>
                 <div class="demo-link">
                     <h3>SQL Injection Testing Tools:</h3>
@@ -520,8 +252,7 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Slide 17: Case Study -->
-            <section>
+            <section data-slide-title="Case Study: Heartland Payment Systems">
                 <h2>Case Study: Heartland Payment Systems</h2>
                 <div class="vulnerability">
                     <h3>2008 Data Breach</h3>
@@ -535,8 +266,7 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Slide 18: Summary of Vulnerabilities -->
-            <section>
+            <section data-slide-title="Summary: Common SQL Injection Vulnerabilities">
                 <h2>Summary: Common SQL Injection Vulnerabilities</h2>
                 <div class="highlight">
                     <h3>Key Vulnerabilities to Look For:</h3>
@@ -552,8 +282,7 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Task 1: Vulnerability Discovery -->
-            <section>
+            <section data-slide-title="Task 1: SQL Injection Vulnerability Discovery">
                 <h2>Task 1: SQL Injection Vulnerability Discovery</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -575,8 +304,7 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Slide 19: Break/Catch Up -->
-            <section class="center">
+            <section class="center" data-slide-title="Break Time">
                 <h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
@@ -585,51 +313,50 @@ db.users.find({username: req.body.username, password: req.body.password})<br><br
                 </div>
             </section>
 
-            <!-- Slide 20: Secure Database Implementation -->
-            <section>
+            <section data-slide-title="Secure Database Implementation">
                 <h2>Secure Database Implementation</h2>
                 
                 <h3>1. Parameterized Queries (Prepared Statements)</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Parameterized queries --&gt;<br>
-String query = "SELECT * FROM users WHERE username = ? AND password = ?";<br>
-PreparedStatement stmt = connection.prepareStatement(query);<br>
-stmt.setString(1, username);<br>
-stmt.setString(2, password);<br>
-ResultSet rs = stmt.executeQuery();
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Parameterized queries --&gt;
+String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+PreparedStatement stmt = connection.prepareStatement(query);
+stmt.setString(1, username);
+stmt.setString(2, password);
+ResultSet rs = stmt.executeQuery();</code></pre>
                 </div>
 
                 <h3>2. Input Validation</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Input validation --&gt;<br>
-public boolean isValidInput(String input) {<br>
-&nbsp;&nbsp;if (input == null || input.trim().isEmpty()) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
-&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;// Check for SQL injection patterns<br>
-&nbsp;&nbsp;String[] dangerousPatterns = {"'", "\"", ";", "--", "/*", "*/", "xp_", "sp_"};<br>
-&nbsp;&nbsp;for (String pattern : dangerousPatterns) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if (input.toLowerCase().contains(pattern)) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;return true;<br>}
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Input validation --&gt;
+public boolean isValidInput(String input) {
+  if (input == null || input.trim().isEmpty()) {
+    return false;
+  }
+  // Check for SQL injection patterns
+  String[] dangerousPatterns = {"'", "\"", ";", "--", "/*", "*/", "xp_", "sp_"};
+  for (String pattern : dangerousPatterns) {
+    if (input.toLowerCase().contains(pattern)) {
+      return false;
+    }
+  }
+  return true;
+}</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 21: Database Security Best Practices -->
-            <section>
+            <section data-slide-title="Database Security Best Practices">
                 <h2>Database Security Best Practices</h2>
                 
                 <h3>1. Principle of Least Privilege</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Limited database user permissions --&gt;<br>
--- Create application-specific user<br>
-CREATE USER 'webapp'@'localhost' IDENTIFIED BY 'strong_password';<br><br>
--- Grant only necessary permissions<br>
-GRANT SELECT, INSERT, UPDATE ON webapp_db.users TO 'webapp'@'localhost';<br>
-GRANT SELECT ON webapp_db.products TO 'webapp'@'localhost';<br><br>
--- No DROP, CREATE, or ALTER permissions
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Limited database user permissions --&gt;
+-- Create application-specific user
+CREATE USER 'webapp'@'localhost' IDENTIFIED BY 'strong_password';
+-- Grant only necessary permissions
+GRANT SELECT, INSERT, UPDATE ON webapp_db.users TO 'webapp'@'localhost';
+GRANT SELECT ON webapp_db.products TO 'webapp'@'localhost';
+-- No DROP, CREATE, or ALTER permissions</code></pre>
                 </div>
 
                 <h3>2. Database Connection Security</h3>
@@ -641,20 +368,19 @@ GRANT SELECT ON webapp_db.products TO 'webapp'@'localhost';<br><br>
                 </ul>
             </section>
 
-            <!-- Slide 22: ORM Security -->
-            <section>
+            <section data-slide-title="ORM Security">
                 <h2>ORM Security</h2>
                 
                 <h3>1. Safe ORM Usage</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Using ORM safely --&gt;<br>
-// Good: Parameterized query<br>
-User user = session.createQuery("FROM User WHERE username = :username")<br>
-&nbsp;&nbsp;.setParameter("username", username)<br>
-&nbsp;&nbsp;.uniqueResult();<br><br>
-// Bad: String concatenation<br>
-String hql = "FROM User WHERE username = '" + username + "'";<br>
-User user = session.createQuery(hql).uniqueResult();
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Using ORM safely --&gt;
+// Good: Parameterized query
+User user = session.createQuery("FROM User WHERE username = :username")
+  .setParameter("username", username)
+  .uniqueResult();
+// Bad: String concatenation
+String hql = "FROM User WHERE username = '" + username + "'";
+User user = session.createQuery(hql).uniqueResult();</code></pre>
                 </div>
 
                 <h3>2. ORM-Specific Protections</h3>
@@ -666,19 +392,18 @@ User user = session.createQuery(hql).uniqueResult();
                 </ul>
             </section>
 
-            <!-- Slide 23: Web Application Firewall -->
-            <section>
+            <section data-slide-title="Web Application Firewall (WAF)">
                 <h2>Web Application Firewall (WAF)</h2>
                 
                 <h3>1. WAF Configuration</h3>
                 <div class="code-example">
-&lt;!-- SECURE: WAF rules for SQL injection --&gt;<br>
-# ModSecurity rules<br>
-SecRule ARGS "@detectSQLi" \<br>
-&nbsp;&nbsp;"id:1001,phase:2,block,msg:'SQL Injection Attack Detected',\<br>
-&nbsp;&nbsp;logdata:'Matched Data: %{MATCHED_VAR} found within %{MATCHED_VAR_NAME}',\<br>
-&nbsp;&nbsp;tag:'application-multi',tag:'language-multi',tag:'platform-multi',\<br>
-&nbsp;&nbsp;tag:'attack-sqli',severity:'CRITICAL'"
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: WAF rules for SQL injection --&gt;
+# ModSecurity rules
+SecRule ARGS "@detectSQLi" \
+  "id:1001,phase:2,block,msg:'SQL Injection Attack Detected',\
+  logdata:'Matched Data: %{MATCHED_VAR} found within %{MATCHED_VAR_NAME}',\
+  tag:'application-multi',tag:'language-multi',tag:'platform-multi',\
+  tag:'attack-sqli',severity:'CRITICAL'"</code></pre>
                 </div>
 
                 <h3>2. Additional Protections</h3>
@@ -690,21 +415,21 @@ SecRule ARGS "@detectSQLi" \<br>
                 </ul>
             </section>
 
-            <!-- Slide 24: Database Monitoring -->
-            <section>
+            <section data-slide-title="Database Monitoring">
                 <h2>Database Monitoring</h2>
                 
                 <h3>1. Query Logging</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Database query monitoring --&gt;<br>
-// Log all database queries<br>
-logger.info("Database Query", {<br>
-&nbsp;&nbsp;query: query,<br>
-&nbsp;&nbsp;parameters: parameters,<br>
-&nbsp;&nbsp;executionTime: executionTime,<br>
-&nbsp;&nbsp;userId: userId,<br>
-&nbsp;&nbsp;ip: request.ip,<br>
-&nbsp;&nbsp;timestamp: new Date()<br>});
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Database query monitoring --&gt;
+// Log all database queries
+logger.info("Database Query", {
+  query: query,
+  parameters: parameters,
+  executionTime: executionTime,
+  userId: userId,
+  ip: request.ip,
+  timestamp: new Date()
+});</code></pre>
                 </div>
 
                 <h3>2. Anomaly Detection</h3>
@@ -716,8 +441,7 @@ logger.info("Database Query", {<br>
                 </ul>
             </section>
 
-            <!-- Slide 25: Secure Coding Practices -->
-            <section>
+            <section data-slide-title="Secure Coding Practices">
                 <h2>Secure Coding Practices</h2>
                 
                 <h3>1. Code Review Checklist</h3>
@@ -731,17 +455,16 @@ logger.info("Database Query", {<br>
 
                 <h3>2. Automated Security Testing</h3>
                 <div class="code-example">
-&lt;!-- Security testing tools --&gt;<br>
-npm install --save-dev eslint-plugin-security<br>
-npm install --save-dev sqlmap<br><br>
-// Run security audit<br>
-npm audit<br>
-sqlmap -u "http://example.com/login" --batch
+                    <pre><code class="language-plaintext">&lt;!-- Security testing tools --&gt;
+npm install --save-dev eslint-plugin-security
+npm install --save-dev sqlmap
+// Run security audit
+npm audit
+sqlmap -u "http://example.com/login" --batch</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 26: Compliance and Standards -->
-            <section>
+            <section data-slide-title="Compliance and Standards">
                 <h2>Compliance and Standards</h2>
                 
                 <h3>1. Industry Standards</h3>
@@ -763,8 +486,7 @@ sqlmap -u "http://example.com/login" --batch
                 </div>
             </section>
 
-            <!-- Slide 27: Career Development -->
-            <section>
+            <section data-slide-title="Career Development in Database Security">
                 <h2>Career Development in Database Security</h2>
                 <div class="career-box">
                     <h3>Next Steps:</h3>
@@ -779,8 +501,7 @@ sqlmap -u "http://example.com/login" --batch
                 </div>
             </section>
 
-            <!-- Task 2: Secure Implementation -->
-            <section>
+            <section data-slide-title="Task 2: Secure Database Implementation">
                 <h2>Task 2: Secure Database Implementation</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -802,8 +523,7 @@ sqlmap -u "http://example.com/login" --batch
                 </div>
             </section>
 
-            <!-- Slide 28: Further Activity -->
-            <section>
+            <section data-slide-title="Further Activity: Code Inspection">
                 <h2>Further Activity: Code Inspection</h2>
                 <div class="os3-studio">
                     <h3>Advanced Students - Code Analysis:</h3>
@@ -819,8 +539,7 @@ sqlmap -u "http://example.com/login" --batch
                 </div>
             </section>
 
-            <!-- Slide 29: Summary -->
-            <section>
+            <section data-slide-title="Session Summary">
                 <h2>Session Summary</h2>
                 <div class="highlight">
                     <h3>Key Takeaways:</h3>
@@ -835,66 +554,39 @@ sqlmap -u "http://example.com/login" --batch
                 </div>
             </section>
 
-            <!-- Slide 30: Next Steps -->
-            <section class="center">
+            <section class="center" data-slide-title="Next Steps">
                 <h2>Next Steps</h2>
-                <div class="timeline-info">
-                    <h3>Continue Learning:</h3>
-                    <ul>
-                        <li>Complete the OS³ Studio tasks</li>
-                        <li>Explore additional SQL injection techniques</li>
-                        <li>Practice with security testing tools</li>
-                        <li>Consider industry certifications</li>
-                        <li>Join cybersecurity communities</li>
-                    </ul>
-                    <p><strong>Next Session:</strong> Advanced Web Security Topics</p>
-                </div>
+                
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: false,
-            preloadIframes: null,
-            autoAnimate: true,
-            autoAnimateMatcher: null,
-            autoAnimateEasing: 'ease',
-            autoAnimateDuration: 1.0,
-            autoAnimateUnmatched: true,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: null,
-            defaultTiming: null,
-            mouseWheel: false,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            disableLayout: false
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

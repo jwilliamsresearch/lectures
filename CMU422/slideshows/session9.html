@@ -5,58 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 9: Web APIs and External Libraries</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+        /* Preserve existing custom component styles */
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
-
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
+        
 
         /* Task box styling */
         .task-box {
@@ -71,16 +33,13 @@
 
         /* Code example styling */
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
 
         /* Highlight styling */
@@ -109,6 +68,13 @@
 
         .timeline-info li {
             margin-bottom: 0.2em;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Responsive design */
@@ -301,51 +267,32 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session8.html" title="Previous Session">&lt;</a>
+        <a href="session10.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU422: Web Design - Session 9</div>
                 <h1>Web APIs and External Libraries</h1>
-                <h3>CMU422: Fundamentals of Web Design - Session 9</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Working with third-party services and libraries</p>
-                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Professional Web Design and Development</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand Web APIs and their usage</li>
                     <li>Work with external libraries and frameworks</li>
@@ -356,8 +303,7 @@
             </section>
 
             <!-- Slide 3: What are Web APIs? -->
-            <section>
-                <h2>What are Web APIs?</h2>
+            <section data-slide-title="What are Web APIs?"><h2>What are Web APIs?</h2>
                 <div class="highlight">
                     <strong>Web APIs</strong> are interfaces that allow applications to communicate
                     with external services
@@ -369,30 +315,29 @@
                     <li>Social media and payment APIs</li>
                 </ul>
                 <div class="code-example">
-                    // Example: Fetching data from a REST API<br>
-                    fetch('https://api.example.com/data')<br>
-                    &nbsp;&nbsp;.then(response => response.json())<br>
-                    &nbsp;&nbsp;.then(data => console.log(data))<br>
-                    &nbsp;&nbsp;.catch(error => console.error(error));
+                    <pre><code class="language-javascript">// Example: Fetching data from a REST API
+fetch('https://api.example.com/data')
+.then(response =&gt; response.json())
+.then(data =&gt; console.log(data))
+.catch(error =&gt; console.error(error));</code></pre>
                 </div>
             </section>
 
             <!-- Slide 4: REST API Basics -->
-            <section>
-                <h2>REST API Basics</h2>
+            <section data-slide-title="REST API Basics"><h2>REST API Basics</h2>
                 <div class="code-example">
-                    // HTTP Methods<br>
-                    GET /api/users // Retrieve data<br>
-                    POST /api/users // Create new data<br>
-                    PUT /api/users/123 // Update data<br>
-                    DELETE /api/users/123 // Delete data<br><br>
-                    // Status Codes<br>
-                    200 - OK<br>
-                    201 - Created<br>
-                    400 - Bad Request<br>
-                    401 - Unauthorized<br>
-                    404 - Not Found<br>
-                    500 - Internal Server Error
+                    <pre><code class="language-javascript">// HTTP Methods
+GET /api/users // Retrieve data
+POST /api/users // Create new data
+PUT /api/users/123 // Update data
+DELETE /api/users/123 // Delete data
+// Status Codes
+200 - OK
+201 - Created
+400 - Bad Request
+401 - Unauthorized
+404 - Not Found
+500 - Internal Server Error</code></pre>
                 </div>
                 <ul>
                     <li>Standard HTTP methods for CRUD operations</li>
@@ -403,31 +348,30 @@
             </section>
 
             <!-- Slide 5: Fetch API -->
-            <section>
-                <h2>Fetch API</h2>
+            <section data-slide-title="Fetch API"><h2>Fetch API</h2>
                 <div class="code-example">
-                    // Basic GET request<br>
-                    fetch('https://api.example.com/users')<br>
-                    &nbsp;&nbsp;.then(response => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Network response was not
-                    ok');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return response.json();<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.then(data => console.log(data))<br>
-                    &nbsp;&nbsp;.catch(error => console.error(error));<br><br>
-                    // POST request with data<br>
-                    fetch('https://api.example.com/users', {<br>
-                    &nbsp;&nbsp;method: 'POST',<br>
-                    &nbsp;&nbsp;headers: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'Content-Type': 'application/json',<br>
-                    &nbsp;&nbsp;},<br>
-                    &nbsp;&nbsp;body: JSON.stringify({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;name: 'John Doe',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;email: 'john@example.com'<br>
-                    &nbsp;&nbsp;})<br>
-                    });
+                    <pre><code class="language-javascript">// Basic GET request
+fetch('https://api.example.com/users')
+.then(response =&gt; {
+  if (!response.ok) {
+    throw new Error('Network response was not
+    ok');
+  }
+  return response.json();
+})
+.then(data =&gt; console.log(data))
+.catch(error =&gt; console.error(error));
+// POST request with data
+fetch('https://api.example.com/users', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name: 'John Doe',
+    email: 'john@example.com'
+  })
+});</code></pre>
                 </div>
                 <ul>
                     <li>Modern way to make HTTP requests</li>
@@ -438,21 +382,20 @@
             </section>
 
             <!-- Slide 6: API Authentication -->
-            <section>
-                <h2>API Authentication</h2>
+            <section data-slide-title="API Authentication"><h2>API Authentication</h2>
                 <div class="code-example">
-                    // API Key authentication<br>
-                    fetch('https://api.example.com/data', {<br>
-                    &nbsp;&nbsp;headers: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'Authorization': 'Bearer YOUR_API_KEY',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'X-API-Key': 'your-api-key'<br>
-                    &nbsp;&nbsp;}<br>
-                    });<br><br>
-                    // OAuth 2.0 flow<br>
-                    const clientId = 'your-client-id';<br>
-                    const redirectUri = 'https://yourapp.com/callback';<br>
-                    const authUrl =
-                    `https://api.example.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+                    <pre><code class="language-php">// API Key authentication
+fetch('https://api.example.com/data', {
+headers: {
+'Authorization': 'Bearer YOUR_API_KEY',
+'X-API-Key': 'your-api-key'
+}
+});
+// OAuth 2.0 flow
+const clientId = 'your-client-id';
+const redirectUri = 'https://yourapp.com/callback';
+const authUrl =
+`https://api.example.com/oauth/authorize?client_id=${clientId}&amp;redirect_uri=${redirectUri}&amp;response_type=code`;</code></pre>
                 </div>
                 <ul>
                     <li>API keys for simple authentication</li>
@@ -463,24 +406,23 @@
             </section>
 
             <!-- Slide 7: Browser APIs -->
-            <section>
-                <h2>Browser APIs</h2>
+            <section data-slide-title="Browser APIs"><h2>Browser APIs</h2>
                 <div class="code-example">
-                    // Geolocation API<br>
-                    navigator.geolocation.getCurrentPosition(<br>
-                    &nbsp;&nbsp;position => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Latitude:', position.coords.latitude);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Longitude:',
-                    position.coords.longitude);<br>
-                    &nbsp;&nbsp;},<br>
-                    &nbsp;&nbsp;error => console.error('Error:', error)<br>
-                    );<br><br>
-                    // Local Storage API<br>
-                    localStorage.setItem('user', JSON.stringify(userData));<br>
-                    const user = JSON.parse(localStorage.getItem('user'));<br><br>
-                    // Web Audio API<br>
-                    const audioContext = new AudioContext();<br>
-                    const oscillator = audioContext.createOscillator();
+                    <pre><code class="language-javascript">// Geolocation API
+navigator.geolocation.getCurrentPosition(
+position =&gt; {
+  console.log('Latitude:', position.coords.latitude);
+  console.log('Longitude:',
+  position.coords.longitude);
+},
+error =&gt; console.error('Error:', error)
+);
+// Local Storage API
+localStorage.setItem('user', JSON.stringify(userData));
+const user = JSON.parse(localStorage.getItem('user'));
+// Web Audio API
+const audioContext = new AudioContext();
+const oscillator = audioContext.createOscillator();</code></pre>
                 </div>
                 <ul>
                     <li>Geolocation for location services</li>
@@ -491,8 +433,7 @@
             </section>
 
             <!-- Slide 8: External Libraries -->
-            <section>
-                <h2>External Libraries</h2>
+            <section data-slide-title="External Libraries"><h2>External Libraries</h2>
                 <div class="highlight">
                     <strong>Libraries</strong> provide pre-built functionality to speed up
                     development
@@ -505,42 +446,41 @@
                     <li>Moment.js for date handling</li>
                 </ul>
                 <div class="code-example">
-                    // Including libraries<br>
-                    &lt;script
-                    src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"&gt;&lt;/script&gt;<br>
-                    &lt;script
-                    src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"&gt;&lt;/script&gt;<br><br>
-                    // Using jQuery<br>
-                    $('#element').hide().fadeIn(1000);<br><br>
-                    // Using Lodash<br>
-                    const uniqueItems = _.uniq(array);
+                    <pre><code class="language-php">// Including libraries
+&lt;script
+src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script
+src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"&gt;&lt;/script&gt;
+// Using jQuery
+$('#element').hide().fadeIn(1000);
+// Using Lodash
+const uniqueItems = _.uniq(array);</code></pre>
                 </div>
             </section>
 
             <!-- Slide 9: jQuery -->
-            <section>
-                <h2>jQuery Library</h2>
+            <section data-slide-title="jQuery Library"><h2>jQuery Library</h2>
                 <div class="code-example">
-                    // DOM manipulation<br>
-                    $('#myElement').addClass('highlight');<br>
-                    $('.items').each(function(index, element) {<br>
-                    &nbsp;&nbsp;$(element).text('Item ' + (index + 1));<br>
-                    });<br><br>
-                    // Event handling<br>
-                    $('#button').on('click', function() {<br>
-                    &nbsp;&nbsp;console.log('Button clicked!');<br>
-                    });<br><br>
-                    // AJAX requests<br>
-                    $.ajax({<br>
-                    &nbsp;&nbsp;url: 'https://api.example.com/data',<br>
-                    &nbsp;&nbsp;method: 'GET',<br>
-                    &nbsp;&nbsp;success: function(data) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(data);<br>
-                    &nbsp;&nbsp;},<br>
-                    &nbsp;&nbsp;error: function(xhr, status, error) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
-                    &nbsp;&nbsp;}<br>
-                    });
+                    <pre><code class="language-php">// DOM manipulation
+$('#myElement').addClass('highlight');
+$('.items').each(function(index, element) {
+$(element).text('Item ' + (index + 1));
+});
+// Event handling
+$('#button').on('click', function() {
+console.log('Button clicked!');
+});
+// AJAX requests
+$.ajax({
+url: 'https://api.example.com/data',
+method: 'GET',
+success: function(data) {
+console.log(data);
+},
+error: function(xhr, status, error) {
+console.error(error);
+}
+});</code></pre>
                 </div>
                 <ul>
                     <li>Simplified DOM manipulation</li>
@@ -551,26 +491,25 @@
             </section>
 
             <!-- Slide 10: Axios -->
-            <section>
-                <h2>Axios HTTP Client</h2>
+            <section data-slide-title="Axios HTTP Client"><h2>Axios HTTP Client</h2>
                 <div class="code-example">
-                    // Basic GET request<br>
-                    axios.get('https://api.example.com/users')<br>
-                    &nbsp;&nbsp;.then(response => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(response.data);<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.catch(error => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
-                    &nbsp;&nbsp;});<br><br>
-                    // POST request<br>
-                    axios.post('https://api.example.com/users', {<br>
-                    &nbsp;&nbsp;name: 'John Doe',<br>
-                    &nbsp;&nbsp;email: 'john@example.com'<br>
-                    })<br>
-                    &nbsp;&nbsp;.then(response => console.log(response.data));<br><br>
-                    // Request configuration<br>
-                    axios.defaults.baseURL = 'https://api.example.com';<br>
-                    axios.defaults.headers.common['Authorization'] = 'Bearer token';
+                    <pre><code class="language-javascript">// Basic GET request
+axios.get('https://api.example.com/users')
+.then(response =&gt; {
+  console.log(response.data);
+})
+.catch(error =&gt; {
+  console.error(error);
+});
+// POST request
+axios.post('https://api.example.com/users', {
+  name: 'John Doe',
+  email: 'john@example.com'
+})
+.then(response =&gt; console.log(response.data));
+// Request configuration
+axios.defaults.baseURL = 'https://api.example.com';
+axios.defaults.headers.common['Authorization'] = 'Bearer token';</code></pre>
                 </div>
                 <ul>
                     <li>Promise-based HTTP client</li>
@@ -581,35 +520,34 @@
             </section>
 
             <!-- Slide 11: Chart.js -->
-            <section>
-                <h2>Chart.js for Data Visualization</h2>
+            <section data-slide-title="Chart.js for Data Visualization"><h2>Chart.js for Data Visualization</h2>
                 <div class="code-example">
-                    // HTML<br>
-                    &lt;canvas id="myChart"&gt;&lt;/canvas&gt;<br><br>
-                    // JavaScript<br>
-                    const ctx = document.getElementById('myChart').getContext('2d');<br>
-                    const myChart = new Chart(ctx, {<br>
-                    &nbsp;&nbsp;type: 'bar',<br>
-                    &nbsp;&nbsp;data: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;labels: ['Red', 'Blue', 'Yellow', 'Green'],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;datasets: [{<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label: 'Dataset 1',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data: [12, 19, 3, 5],<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundColor: [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'rgba(255, 99, 132, 0.2)',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'rgba(54, 162, 235, 0.2)'<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}]<br>
-                    &nbsp;&nbsp;},<br>
-                    &nbsp;&nbsp;options: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;responsive: true,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;scales: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y: {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beginAtZero: true<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;}<br>
-                    });
+                    <pre><code class="language-javascript">// HTML
+&lt;canvas id="myChart"&gt;&lt;/canvas&gt;
+// JavaScript
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Red', 'Blue', 'Yellow', 'Green'],
+    datasets: [{
+      label: 'Dataset 1',
+      data: [12, 19, 3, 5],
+      backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)'
+      ]
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});</code></pre>
                 </div>
                 <ul>
                     <li>Multiple chart types (bar, line, pie, etc.)</li>
@@ -656,8 +594,7 @@
             </section>
 
             <!-- Slide 12: Interactive Map with Leaflet -->
-            <section>
-                <h2>Interactive Map with Leaflet</h2>
+            <section data-slide-title="Interactive Map with Leaflet"><h2>Interactive Map with Leaflet</h2>
                 <div class="highlight">
                     <strong>Leaflet</strong> is a lightweight, open-source JavaScript library for
                     interactive maps
@@ -695,25 +632,24 @@
             </section>
 
             <!-- Slide 13: Weather API Example -->
-            <section>
-                <h2>Weather API Integration</h2>
+            <section data-slide-title="Weather API Integration"><h2>Weather API Integration</h2>
                 <div class="code-example">
-                    // OpenWeatherMap API<br>
-                    const apiKey = 'your-api-key';<br>
-                    const city = 'London';<br><br>
-                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)<br>
-                    &nbsp;&nbsp;.then(response => response.json())<br>
-                    &nbsp;&nbsp;.then(data => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const temperature = data.main.temp;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const description = data.weather[0].description;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const humidity = data.main.humidity;<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;document.getElementById('weather').innerHTML = `<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Temperature: ${temperature}°C<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description: ${description}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Humidity: ${humidity}%<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;`;<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.catch(error => console.error('Error:', error));
+                    <pre><code class="language-php">// OpenWeatherMap API
+const apiKey = 'your-api-key';
+const city = 'London';
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&amp;appid=${apiKey}&amp;units=metric`)
+.then(response =&gt; response.json())
+.then(data =&gt; {
+const temperature = data.main.temp;
+const description = data.weather[0].description;
+const humidity = data.main.humidity;
+document.getElementById('weather').innerHTML = `
+Temperature: ${temperature}°C
+Description: ${description}
+Humidity: ${humidity}%
+`;
+})
+.catch(error =&gt; console.error('Error:', error));</code></pre>
                 </div>
                 <ul>
                     <li>Real-world API integration</li>
@@ -724,23 +660,22 @@
             </section>
 
             <!-- Slide 13: Social Media APIs -->
-            <section>
-                <h2>Social Media APIs</h2>
+            <section data-slide-title="Social Media APIs"><h2>Social Media APIs</h2>
                 <div class="code-example">
-                    // Twitter API (example)<br>
-                    const twitterApi = {<br>
-                    &nbsp;&nbsp;consumerKey: 'your-consumer-key',<br>
-                    &nbsp;&nbsp;consumerSecret: 'your-consumer-secret',<br>
-                    &nbsp;&nbsp;accessToken: 'your-access-token',<br>
-                    &nbsp;&nbsp;accessTokenSecret: 'your-access-token-secret'<br>
-                    };<br><br>
-                    // Facebook Graph API<br>
-                    fetch('https://graph.facebook.com/me?access_token=your-token')<br>
-                    &nbsp;&nbsp;.then(response => response.json())<br>
-                    &nbsp;&nbsp;.then(data => console.log(data));<br><br>
-                    // Instagram Basic Display API<br>
-                    const instagramUrl =
-                    'https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url&access_token=your-token';
+                    <pre><code class="language-javascript">// Twitter API (example)
+const twitterApi = {
+  consumerKey: 'your-consumer-key',
+  consumerSecret: 'your-consumer-secret',
+  accessToken: 'your-access-token',
+  accessTokenSecret: 'your-access-token-secret'
+};
+// Facebook Graph API
+fetch('https://graph.facebook.com/me?access_token=your-token')
+.then(response =&gt; response.json())
+.then(data =&gt; console.log(data));
+// Instagram Basic Display API
+const instagramUrl =
+'https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url&amp;access_token=your-token';</code></pre>
                 </div>
                 <ul>
                     <li>OAuth 2.0 authentication</li>
@@ -751,30 +686,29 @@
             </section>
 
             <!-- Slide 14: Payment APIs -->
-            <section>
-                <h2>Payment APIs</h2>
+            <section data-slide-title="Payment APIs"><h2>Payment APIs</h2>
                 <div class="code-example">
-                    // Stripe payment integration<br>
-                    const stripe = Stripe('your-publishable-key');<br>
-                    const elements = stripe.elements();<br><br>
-                    // Create card element<br>
-                    const card = elements.create('card');<br>
-                    card.mount('#card-element');<br><br>
-                    // Handle payment<br>
-                    const form = document.getElementById('payment-form');<br>
-                    form.addEventListener('submit', async (event) => {<br>
-                    &nbsp;&nbsp;event.preventDefault();<br><br>
-                    &nbsp;&nbsp;const {error, paymentMethod} = await
-                    stripe.createPaymentMethod({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;type: 'card',<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;card: card,<br>
-                    &nbsp;&nbsp;});<br><br>
-                    &nbsp;&nbsp;if (error) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error(error);<br>
-                    &nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Payment method:', paymentMethod);<br>
-                    &nbsp;&nbsp;}<br>
-                    });
+                    <pre><code class="language-javascript">// Stripe payment integration
+const stripe = Stripe('your-publishable-key');
+const elements = stripe.elements();
+// Create card element
+const card = elements.create('card');
+card.mount('#card-element');
+// Handle payment
+const form = document.getElementById('payment-form');
+form.addEventListener('submit', async (event) =&gt; {
+  event.preventDefault();
+  const {error, paymentMethod} = await
+  stripe.createPaymentMethod({
+    type: 'card',
+    card: card,
+  });
+  if (error) {
+    console.error(error);
+  } else {
+  console.log('Payment method:', paymentMethod);
+}
+});</code></pre>
                 </div>
                 <ul>
                     <li>Secure payment processing</li>
@@ -785,33 +719,32 @@
             </section>
 
             <!-- Slide 15: Error Handling -->
-            <section>
-                <h2>API Error Handling</h2>
+            <section data-slide-title="API Error Handling"><h2>API Error Handling</h2>
                 <div class="code-example">
-                    // Comprehensive error handling<br>
-                    async function fetchData(url) {<br>
-                    &nbsp;&nbsp;try {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(url);<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error(`HTTP error! status:
-                    ${response.status}`);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const data = await response.json();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return data;<br>
-                    &nbsp;&nbsp;} catch (error) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (error.name === 'TypeError') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('Network error:',
-                    error.message);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error('API error:',
-                    error.message);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;// Show user-friendly error message<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;showErrorMessage('Failed to load data. Please try
-                    again.');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;throw error;<br>
-                    &nbsp;&nbsp;}<br>
-                    }
+                    <pre><code class="language-php">// Comprehensive error handling
+async function fetchData(url) {
+try {
+const response = await fetch(url);
+if (!response.ok) {
+throw new Error(`HTTP error! status:
+${response.status}`);
+}
+const data = await response.json();
+return data;
+} catch (error) {
+if (error.name === 'TypeError') {
+console.error('Network error:',
+error.message);
+} else {
+console.error('API error:',
+error.message);
+}
+// Show user-friendly error message
+showErrorMessage('Failed to load data. Please try
+again.');
+throw error;
+}
+}</code></pre>
                 </div>
                 <ul>
                     <li>Network error handling</li>
@@ -822,8 +755,7 @@
             </section>
 
             <!-- Slide 16: Security Best Practices -->
-            <section>
-                <h2>API Security Best Practices</h2>
+            <section data-slide-title="API Security Best Practices"><h2>API Security Best Practices</h2>
                 <ul>
                     <li>Never expose API keys in client-side code</li>
                     <li>Use HTTPS for all API requests</li>
@@ -833,26 +765,25 @@
                     <li>Implement proper authentication</li>
                 </ul>
                 <div class="code-example">
-                    // Secure API key handling<br>
-                    // ❌ Bad: Exposing API key in frontend<br>
-                    const apiKey = 'sk-1234567890abcdef';<br><br>
-                    // ✅ Good: Use environment variables<br>
-                    const apiKey = process.env.API_KEY;<br><br>
-                    // ✅ Good: Use backend proxy<br>
-                    fetch('/api/weather?city=London') // Backend handles API key<br><br>
-                    // Input validation<br>
-                    function validateInput(input) {<br>
-                    &nbsp;&nbsp;if (typeof input !== 'string' || input.length > 100) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Invalid input');<br>
-                    &nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;return input.trim();<br>
-                    }
+                    <pre><code class="language-php">// Secure API key handling
+// ❌ Bad: Exposing API key in frontend
+const apiKey = 'sk-1234567890abcdef';
+// ✅ Good: Use environment variables
+const apiKey = process.env.API_KEY;
+// ✅ Good: Use backend proxy
+fetch('/api/weather?city=London') // Backend handles API key
+// Input validation
+function validateInput(input) {
+if (typeof input !== 'string' || input.length &gt; 100) {
+throw new Error('Invalid input');
+}
+return input.trim();
+}</code></pre>
                 </div>
             </section>
 
             <!-- Slide 17: Performance Optimization -->
-            <section>
-                <h2>API Performance Optimization</h2>
+            <section data-slide-title="API Performance Optimization"><h2>API Performance Optimization</h2>
                 <ul>
                     <li>Implement caching strategies</li>
                     <li>Use request batching</li>
@@ -861,27 +792,26 @@
                     <li>Use CDNs for libraries</li>
                 </ul>
                 <div class="code-example">
-                    // Caching with localStorage<br>
-                    function getCachedData(key, ttl = 300000) { // 5 minutes<br>
-                    &nbsp;&nbsp;const cached = localStorage.getItem(key);<br>
-                    &nbsp;&nbsp;if (cached) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const { data, timestamp } = JSON.parse(cached);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (Date.now() - timestamp < ttl) {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return data;<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;return null;<br>
-                        }<br><br>
-                        // Request batching<br>
-                        const batchRequests = (requests) => {<br>
-                        &nbsp;&nbsp;return Promise.all(requests.map(req => fetch(req)));<br>
-                        };
+                    <pre><code class="language-php">// Caching with localStorage
+function getCachedData(key, ttl = 300000) { // 5 minutes
+const cached = localStorage.getItem(key);
+if (cached) {
+const { data, timestamp } = JSON.parse(cached);
+if (Date.now() - timestamp &lt; ttl) {
+return data;
+}
+}
+return null;
+}
+// Request batching
+const batchRequests = (requests) =&gt; {
+return Promise.all(requests.map(req =&gt; fetch(req)));
+};</code></pre>
                 </div>
             </section>
 
             <!-- Slide 18: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Weather Dashboard</h2>
+            <section data-slide-title="Task 1: Weather Dashboard" class="center"><h2>Task 1: Weather Dashboard</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -915,8 +845,7 @@
             </section>
 
             <!-- Slide 19: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -925,8 +854,7 @@
             </section>
 
             <!-- Slide 20: Advanced API Patterns -->
-            <section>
-                <h2>Advanced API Patterns</h2>
+            <section data-slide-title="Advanced API Patterns"><h2>Advanced API Patterns</h2>
                 <ul>
                     <li>API versioning strategies</li>
                     <li>Request/response interceptors</li>
@@ -935,49 +863,48 @@
                     <li>API mocking for development</li>
                 </ul>
                 <div class="code-example">
-                    // Retry mechanism<br>
-                    async function fetchWithRetry(url, maxRetries = 3) {<br>
-                    &nbsp;&nbsp;for (let i = 0; i < maxRetries; i++) {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;try {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const response = await fetch(url);<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (response.ok) return
-                        response.json();<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;} catch (error) {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (i === maxRetries - 1) throw
-                        error;<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await new Promise(resolve =>
-                        setTimeout(resolve, 1000 * (i + 1)));<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;}<br>
-                        }<br><br>
-                        // API mocking<br>
-                        const mockApi = {<br>
-                        &nbsp;&nbsp;get: (url) => Promise.resolve({ data: mockData[url] }),<br>
-                        &nbsp;&nbsp;post: (url, data) => Promise.resolve({ data: { id: Date.now(),
-                        ...data } })<br>
-                        };
+                    <pre><code class="language-php">// Retry mechanism
+async function fetchWithRetry(url, maxRetries = 3) {
+for (let i = 0; i &lt; maxRetries; i++) {
+try {
+const response = await fetch(url);
+if (response.ok) return
+response.json();
+} catch (error) {
+if (i === maxRetries - 1) throw
+error;
+await new Promise(resolve =&gt;
+setTimeout(resolve, 1000 * (i + 1)));
+}
+}
+}
+// API mocking
+const mockApi = {
+get: (url) =&gt; Promise.resolve({ data: mockData[url] }),
+post: (url, data) =&gt; Promise.resolve({ data: { id: Date.now(),
+...data } })
+};</code></pre>
                 </div>
             </section>
 
             <!-- Slide 21: WebSocket APIs -->
-            <section>
-                <h2>WebSocket APIs</h2>
+            <section data-slide-title="WebSocket APIs"><h2>WebSocket APIs</h2>
                 <div class="code-example">
-                    // WebSocket connection<br>
-                    const socket = new WebSocket('wss://echo.websocket.org');<br><br>
-                    socket.onopen = function(event) {<br>
-                    &nbsp;&nbsp;console.log('Connection established');<br>
-                    &nbsp;&nbsp;socket.send('Hello Server!');<br>
-                    };<br><br>
-                    socket.onmessage = function(event) {<br>
-                    &nbsp;&nbsp;console.log('Message from server:', event.data);<br>
-                    };<br><br>
-                    socket.onclose = function(event) {<br>
-                    &nbsp;&nbsp;console.log('Connection closed:', event.code, event.reason);<br>
-                    };<br><br>
-                    socket.onerror = function(error) {<br>
-                    &nbsp;&nbsp;console.error('WebSocket error:', error);<br>
-                    };
+                    <pre><code class="language-php">// WebSocket connection
+const socket = new WebSocket('wss://echo.websocket.org');
+socket.onopen = function(event) {
+console.log('Connection established');
+socket.send('Hello Server!');
+};
+socket.onmessage = function(event) {
+console.log('Message from server:', event.data);
+};
+socket.onclose = function(event) {
+console.log('Connection closed:', event.code, event.reason);
+};
+socket.onerror = function(error) {
+console.error('WebSocket error:', error);
+};</code></pre>
                 </div>
                 <ul>
                     <li>Real-time bidirectional communication</li>
@@ -988,32 +915,31 @@
             </section>
 
             <!-- Slide 22: GraphQL APIs -->
-            <section>
-                <h2>GraphQL APIs</h2>
+            <section data-slide-title="GraphQL APIs"><h2>GraphQL APIs</h2>
                 <div class="code-example">
-                    // GraphQL query<br>
-                    const query = `<br>
-                    &nbsp;&nbsp;query GetUser($id: ID!) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;user(id: $id) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;email<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posts {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;}<br>
-                    `;<br><br>
-                    // Fetch GraphQL data<br>
-                    fetch('/graphql', {<br>
-                    &nbsp;&nbsp;method: 'POST',<br>
-                    &nbsp;&nbsp;headers: { 'Content-Type': 'application/json' },<br>
-                    &nbsp;&nbsp;body: JSON.stringify({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;query: query,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;variables: { id: '123' }<br>
-                    &nbsp;&nbsp;})<br>
-                    });
+                    <pre><code class="language-php">// GraphQL query
+const query = `
+query GetUser($id: ID!) {
+user(id: $id) {
+id
+name
+email
+posts {
+title
+content
+}
+}
+}
+`;
+// Fetch GraphQL data
+fetch('/graphql', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+query: query,
+variables: { id: '123' }
+})
+});</code></pre>
                 </div>
                 <ul>
                     <li>Single endpoint for all data</li>
@@ -1024,8 +950,7 @@
             </section>
 
             <!-- Slide 23: API Testing -->
-            <section>
-                <h2>API Testing</h2>
+            <section data-slide-title="API Testing"><h2>API Testing</h2>
                 <ul>
                     <li>Unit testing API calls</li>
                     <li>Integration testing</li>
@@ -1034,29 +959,28 @@
                     <li>Performance testing</li>
                 </ul>
                 <div class="code-example">
-                    // Jest test example<br>
-                    describe('Weather API', () => {<br>
-                    &nbsp;&nbsp;test('fetches weather data successfully', async () => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const mockResponse = {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main: { temp: 20, humidity: 65 },<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;weather: [{ description: 'sunny' }]<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;};<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;global.fetch = jest.fn(() =><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Promise.resolve({<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;json: () =>
-                    Promise.resolve(mockResponse)<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;);<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const weather = await fetchWeather('London');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;expect(weather.temperature).toBe(20);<br>
-                    &nbsp;&nbsp;});<br>
-                    });
+                    <pre><code class="language-javascript">// Jest test example
+describe('Weather API', () =&gt; {
+  test('fetches weather data successfully', async () =&gt; {
+    const mockResponse = {
+      main: { temp: 20, humidity: 65 },
+      weather: [{ description: 'sunny' }]
+    };
+    global.fetch = jest.fn(() =&gt;
+    Promise.resolve({
+      json: () =&gt;
+      Promise.resolve(mockResponse)
+    })
+    );
+    const weather = await fetchWeather('London');
+    expect(weather.temperature).toBe(20);
+  });
+});</code></pre>
                 </div>
             </section>
 
             <!-- Slide 24: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Social Media Integration App</h2>
+            <section data-slide-title="Task 2: Social Media Integration App" class="center"><h2>Task 2: Social Media Integration App</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -1097,8 +1021,7 @@
             </section>
 
             <!-- Slide 25: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>Web APIs enable powerful integrations</li>
                     <li>External libraries accelerate development</li>
@@ -1115,56 +1038,32 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            // Ensure content is always visible
-            fitToParent: true,
-            // Better responsive behavior
-            responsive: true,
-            // Allow content to scroll within slides
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
 
         // Chart.js Demo Functions

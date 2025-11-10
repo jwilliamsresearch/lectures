@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 9: E-commerce Core Features</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style>
         .reveal .slides section {
             text-align: left;
@@ -14,7 +18,6 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        .reveal .slides section.center { text-align: center; }
         .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
         .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
         .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
@@ -31,16 +34,13 @@
             overflow-y: auto;
         }
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
         .highlight {
             background: #fff3cd;
@@ -78,76 +78,41 @@
         /* Custom scrollbar styling */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-        
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-    </style>
+        </style>
 </head>
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease;
-            display: inline-block;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" 
-           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-            ← Back to Module
-        </a>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session8.html" title="Previous Session">&lt;</a>
+        <a href="session10.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 9</div>
                 <h1>E-commerce Core Features</h1>
-                <h3>CMU529: Advanced Web Development - Session 9</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Product catalogues, shopping cart implementation, and order management systems</p>
-                <p><small>3-hour session • 22 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Build product catalogue systems</li>
                     <li>Implement shopping cart functionality</li>
@@ -158,30 +123,26 @@
             </section>
 
             <!-- Slide 3: Product Catalogue -->
-            <section>
-                <h2>Product Catalogue</h2>
+            <section data-slide-title="Product Catalogue"><h2>Product Catalogue</h2>
                 <div class="code-example">
-                    Product Display System:<br><br>
-                    
-                    // Get products with pagination<br>
-                    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;<br>
-                    $limit = 12;<br>
-                    $offset = ($page - 1) * $limit;<br><br>
-                    
-                    $stmt = $pdo->prepare("SELECT * FROM products WHERE active = 1 ORDER BY created_at DESC LIMIT ? OFFSET ?");<br>
-                    $stmt->execute([$limit, $offset]);<br>
-                    $products = $stmt->fetchAll();<br><br>
-                    
-                    // Display products<br>
-                    foreach ($products as $product) {<br>
-                    &nbsp;&nbsp;echo "&lt;div class='product-card'&gt;";<br>
-                    &nbsp;&nbsp;echo "&lt;img src='" . $product['image'] . "' alt='" . $product['name'] . "'&gt;";<br>
-                    &nbsp;&nbsp;echo "&lt;h3&gt;" . $product['name'] . "&lt;/h3&gt;";<br>
-                    &nbsp;&nbsp;echo "&lt;p&gt;$" . number_format($product['price'], 2) . "&lt;/p&gt;";<br>
-                    &nbsp;&nbsp;echo "&lt;button onclick='addToCart(" . $product['id'] . ")&gt;Add to Cart&lt;/button&gt;";<br>
-                    &nbsp;&nbsp;echo "&lt;/div&gt;";<br>
-                    }
-                </div>
+                <pre><code class="language-php">Product Display System:
+// Get products with pagination
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 12;
+$offset = ($page - 1) * $limit;
+$stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE active = 1 ORDER BY created_at DESC LIMIT ? OFFSET ?");
+$stmt-&gt;execute([$limit, $offset]);
+$products = $stmt-&gt;fetchAll();
+// Display products
+foreach ($products as $product) {
+  echo "&lt;div class='product-card'&gt;";
+  echo "&lt;img src='" . $product['image'] . "' alt='" . $product['name'] . "'&gt;";
+  echo "&lt;h3&gt;" . $product['name'] . "&lt;/h3&gt;";
+  echo "&lt;p&gt;$" . number_format($product['price'], 2) . "&lt;/p&gt;";
+  echo "&lt;button onclick='addToCart(" . $product['id'] . ")&gt;Add to Cart&lt;/button&gt;";
+  echo "&lt;/div&gt;";
+}</code></pre>
+            </div>
                 <ul>
                     <li>Display products with pagination</li>
                     <li>Show product images and details</li>
@@ -190,30 +151,26 @@
             </section>
 
             <!-- Slide 4: Product Categories -->
-            <section>
-                <h2>Product Categories</h2>
+            <section data-slide-title="Product Categories"><h2>Product Categories</h2>
                 <div class="code-example">
-                    Category System:<br><br>
-                    
-                    // Get categories<br>
-                    $stmt = $pdo->query("SELECT * FROM categories ORDER BY name");<br>
-                    $categories = $stmt->fetchAll();<br><br>
-                    
-                    // Display category menu<br>
-                    echo "&lt;div class='category-menu'&gt;";<br>
-                    foreach ($categories as $category) {<br>
-                    &nbsp;&nbsp;echo "&lt;a href='?category=" . $category['id'] . "'&gt;" . $category['name'] . "&lt;/a&gt;";<br>
-                    }<br>
-                    echo "&lt;/div&gt;";<br><br>
-                    
-                    // Filter by category<br>
-                    if (isset($_GET['category'])) {<br>
-                    &nbsp;&nbsp;$categoryId = (int)$_GET['category'];<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT * FROM products WHERE category_id = ? AND active = 1");<br>
-                    &nbsp;&nbsp;$stmt->execute([$categoryId]);<br>
-                    &nbsp;&nbsp;$products = $stmt->fetchAll();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Category System:
+// Get categories
+$stmt = $pdo-&gt;query("SELECT * FROM categories ORDER BY name");
+$categories = $stmt-&gt;fetchAll();
+// Display category menu
+echo "&lt;div class='category-menu'&gt;";
+foreach ($categories as $category) {
+  echo "&lt;a href='?category=" . $category['id'] . "'&gt;" . $category['name'] . "&lt;/a&gt;";
+}
+echo "&lt;/div&gt;";
+// Filter by category
+if (isset($_GET['category'])) {
+  $categoryId = (int)$_GET['category'];
+  $stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE category_id = ? AND active = 1");
+  $stmt-&gt;execute([$categoryId]);
+  $products = $stmt-&gt;fetchAll();
+}</code></pre>
+            </div>
                 <ul>
                     <li>Organize products by categories</li>
                     <li>Filter products by category</li>
@@ -222,47 +179,40 @@
             </section>
 
             <!-- Slide 5: Shopping Cart -->
-            <section>
-                <h2>Shopping Cart</h2>
+            <section data-slide-title="Shopping Cart"><h2>Shopping Cart</h2>
                 <div class="code-example">
-                    Cart Implementation:<br><br>
-                    
-                    // Add to cart<br>
-                    function addToCart($productId, $quantity = 1) {<br>
-                    &nbsp;&nbsp;if (!isset($_SESSION['cart'])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['cart'] = [];<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;if (isset($_SESSION['cart'][$productId])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['cart'][$productId] += $quantity;<br>
-                    &nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['cart'][$productId] = $quantity;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    
-                    // Get cart items<br>
-                    function getCartItems() {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$cartItems = [];<br><br>
-                    
-                    &nbsp;&nbsp;if (isset($_SESSION['cart'])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$productIds = array_keys($_SESSION['cart']);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$placeholders = str_repeat('?,', count($productIds) - 1) . '?';<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt = $pdo->prepare("SELECT * FROM products WHERE id IN ($placeholders)");<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute($productIds);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$products = $stmt->fetchAll();<br><br>
-                    
-                    &nbsp;&nbsp;&nbsp;&nbsp;foreach ($products as $product) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$cartItems[] = [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'product' => $product,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'quantity' => $_SESSION['cart'][$product['id']]<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;];<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return $cartItems;<br>
-                    }
-                </div>
+                <pre><code class="language-php">Cart Implementation:
+// Add to cart
+function addToCart($productId, $quantity = 1) {
+  if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+  }
+  if (isset($_SESSION['cart'][$productId])) {
+    $_SESSION['cart'][$productId] += $quantity;
+  } else {
+    $_SESSION['cart'][$productId] = $quantity;
+  }
+}
+// Get cart items
+function getCartItems() {
+  global $pdo;
+  $cartItems = [];
+  if (isset($_SESSION['cart'])) {
+    $productIds = array_keys($_SESSION['cart']);
+    $placeholders = str_repeat('?,', count($productIds) - 1) . '?';
+    $stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE id IN ($placeholders)");
+    $stmt-&gt;execute($productIds);
+    $products = $stmt-&gt;fetchAll();
+    foreach ($products as $product) {
+      $cartItems[] = [
+        'product' =&gt; $product,
+        'quantity' =&gt; $_SESSION['cart'][$product['id']]
+      ];
+    }
+  }
+  return $cartItems;
+}</code></pre>
+            </div>
                 <ul>
                     <li>Store cart in session</li>
                     <li>Add/remove items</li>
@@ -271,42 +221,35 @@
             </section>
 
             <!-- Slide 6: Cart Management -->
-            <section>
-                <h2>Cart Management</h2>
+            <section data-slide-title="Cart Management"><h2>Cart Management</h2>
                 <div class="code-example">
-                    Cart Operations:<br><br>
-                    
-                    // Update cart quantity<br>
-                    function updateCartQuantity($productId, $quantity) {<br>
-                    &nbsp;&nbsp;if ($quantity <= 0) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;unset($_SESSION['cart'][$productId]);<br>
-                    &nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$_SESSION['cart'][$productId] = $quantity;<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    
-                    // Remove from cart<br>
-                    function removeFromCart($productId) {<br>
-                    &nbsp;&nbsp;unset($_SESSION['cart'][$productId]);<br>
-                    }<br><br>
-                    
-                    // Clear cart<br>
-                    function clearCart() {<br>
-                    &nbsp;&nbsp;$_SESSION['cart'] = [];<br>
-                    }<br><br>
-                    
-                    // Get cart total<br>
-                    function getCartTotal() {<br>
-                    &nbsp;&nbsp;$cartItems = getCartItems();<br>
-                    &nbsp;&nbsp;$total = 0;<br><br>
-                    
-                    &nbsp;&nbsp;foreach ($cartItems as $item) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$total += $item['product']['price'] * $item['quantity'];<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return $total;<br>
-                    }
-                </div>
+                <pre><code class="language-php">Cart Operations:
+// Update cart quantity
+function updateCartQuantity($productId, $quantity) {
+  if ($quantity &lt;= 0) {
+    unset($_SESSION['cart'][$productId]);
+  } else {
+    $_SESSION['cart'][$productId] = $quantity;
+  }
+}
+// Remove from cart
+function removeFromCart($productId) {
+  unset($_SESSION['cart'][$productId]);
+}
+// Clear cart
+function clearCart() {
+  $_SESSION['cart'] = [];
+}
+// Get cart total
+function getCartTotal() {
+  $cartItems = getCartItems();
+  $total = 0;
+  foreach ($cartItems as $item) {
+    $total += $item['product']['price'] * $item['quantity'];
+  }
+  return $total;
+}</code></pre>
+            </div>
                 <ul>
                     <li>Update item quantities</li>
                     <li>Remove items from cart</li>
@@ -315,40 +258,34 @@
             </section>
 
             <!-- Slide 7: Checkout Process -->
-            <section>
-                <h2>Checkout Process</h2>
+            <section data-slide-title="Checkout Process"><h2>Checkout Process</h2>
                 <div class="code-example">
-                    Checkout System:<br><br>
-                    
-                    // Process checkout<br>
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") {<br>
-                    &nbsp;&nbsp;$userId = $_SESSION['user_id'];<br>
-                    &nbsp;&nbsp;$cartItems = getCartItems();<br>
-                    &nbsp;&nbsp;$total = getCartTotal();<br><br>
-                    
-                    &nbsp;&nbsp;try {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$pdo->beginTransaction();<br><br>
-                    
-                    &nbsp;&nbsp;&nbsp;&nbsp;// Create order<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO orders (user_id, total, status) VALUES (?, ?, 'pending')");<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute([$userId, $total]);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$orderId = $pdo->lastInsertId();<br><br>
-                    
-                    &nbsp;&nbsp;&nbsp;&nbsp;// Add order items<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;foreach ($cartItems as $item) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute([$orderId, $item['product']['id'], $item['quantity'], $item['product']['price']]);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;&nbsp;&nbsp;$pdo->commit();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;clearCart();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Order placed successfully!";<br>
-                    } catch(PDOException $e) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$pdo->rollback();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Order failed: " . $e->getMessage();<br>
-                    &nbsp;&nbsp;}<br>
-                    }
-                </div>
+                <pre><code class="language-php">Checkout System:
+// Process checkout
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $userId = $_SESSION['user_id'];
+  $cartItems = getCartItems();
+  $total = getCartTotal();
+  try {
+    $pdo-&gt;beginTransaction();
+    // Create order
+    $stmt = $pdo-&gt;prepare("INSERT INTO orders (user_id, total, status) VALUES (?, ?, 'pending')");
+    $stmt-&gt;execute([$userId, $total]);
+    $orderId = $pdo-&gt;lastInsertId();
+    // Add order items
+    foreach ($cartItems as $item) {
+      $stmt = $pdo-&gt;prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+      $stmt-&gt;execute([$orderId, $item['product']['id'], $item['quantity'], $item['product']['price']]);
+    }
+    $pdo-&gt;commit();
+    clearCart();
+    echo "Order placed successfully!";
+} catch(PDOException $e) {
+    $pdo-&gt;rollback();
+    echo "Order failed: " . $e-&gt;getMessage();
+  }
+}</code></pre>
+            </div>
                 <ul>
                     <li>Create orders in database</li>
                     <li>Use transactions for data integrity</li>
@@ -357,34 +294,30 @@
             </section>
 
             <!-- Slide 8: Order Management -->
-            <section>
-                <h2>Order Management</h2>
+            <section data-slide-title="Order Management"><h2>Order Management</h2>
                 <div class="code-example">
-                    Order System:<br><br>
-                    
-                    // Get user orders<br>
-                    function getUserOrders($userId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId]);<br>
-                    &nbsp;&nbsp;return $stmt->fetchAll();<br>
-                    }<br><br>
-                    
-                    // Get order details<br>
-                    function getOrderDetails($orderId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT oi.*, p.name, p.image FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$orderId]);<br>
-                    &nbsp;&nbsp;return $stmt->fetchAll();<br>
-                    }<br><br>
-                    
-                    // Update order status<br>
-                    function updateOrderStatus($orderId, $status) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE orders SET status = ? WHERE id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$status, $orderId]);<br>
-                    }
-                </div>
+                <pre><code class="language-php">Order System:
+// Get user orders
+function getUserOrders($userId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC");
+  $stmt-&gt;execute([$userId]);
+  return $stmt-&gt;fetchAll();
+}
+// Get order details
+function getOrderDetails($orderId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT oi.*, p.name, p.image FROM order_items oi JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?");
+  $stmt-&gt;execute([$orderId]);
+  return $stmt-&gt;fetchAll();
+}
+// Update order status
+function updateOrderStatus($orderId, $status) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("UPDATE orders SET status = ? WHERE id = ?");
+  $stmt-&gt;execute([$status, $orderId]);
+}</code></pre>
+            </div>
                 <ul>
                     <li>Track order status</li>
                     <li>View order history</li>
@@ -393,37 +326,32 @@
             </section>
 
             <!-- Slide 9: Inventory Management -->
-            <section>
-                <h2>Inventory Management</h2>
+            <section data-slide-title="Inventory Management"><h2>Inventory Management</h2>
                 <div class="code-example">
-                    Stock Control:<br><br>
-                    
-                    // Check stock availability<br>
-                    function checkStock($productId, $quantity) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT stock FROM products WHERE id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$productId]);<br>
-                    &nbsp;&nbsp;$product = $stmt->fetch();<br><br>
-                    
-                    &nbsp;&nbsp;return $product['stock'] >= $quantity;<br>
-                    }<br><br>
-                    
-                    // Update stock<br>
-                    function updateStock($productId, $quantity) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$quantity, $productId]);<br>
-                    }<br><br>
-                    
-                    // Check stock before checkout<br>
-                    $cartItems = getCartItems();<br>
-                    foreach ($cartItems as $item) {<br>
-                    &nbsp;&nbsp;if (!checkStock($item['product']['id'], $item['quantity'])) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;echo "Insufficient stock for " . $item['product']['name'];<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;exit();<br>
-                    &nbsp;&nbsp;}<br>
-                    }
-                </div>
+                <pre><code class="language-php">Stock Control:
+// Check stock availability
+function checkStock($productId, $quantity) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT stock FROM products WHERE id = ?");
+  $stmt-&gt;execute([$productId]);
+  $product = $stmt-&gt;fetch();
+  return $product['stock'] &gt;= $quantity;
+}
+// Update stock
+function updateStock($productId, $quantity) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
+  $stmt-&gt;execute([$quantity, $productId]);
+}
+// Check stock before checkout
+$cartItems = getCartItems();
+foreach ($cartItems as $item) {
+  if (!checkStock($item['product']['id'], $item['quantity'])) {
+    echo "Insufficient stock for " . $item['product']['name'];
+    exit();
+  }
+}</code></pre>
+            </div>
                 <ul>
                     <li>Check stock availability</li>
                     <li>Update inventory levels</li>
@@ -432,34 +360,29 @@
             </section>
 
             <!-- Slide 10: Product Search -->
-            <section>
-                <h2>Product Search</h2>
+            <section data-slide-title="Product Search"><h2>Product Search</h2>
                 <div class="code-example">
-                    Search Functionality:<br><br>
-                    
-                    // Search products<br>
-                    function searchProducts($query, $category = null) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$searchTerm = "%$query%";<br><br>
-                    
-                    &nbsp;&nbsp;if ($category) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt = $pdo->prepare("SELECT * FROM products WHERE (name LIKE ? OR description LIKE ?) AND category_id = ? AND active = 1");<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute([$searchTerm, $searchTerm, $category]);<br>
-                    &nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt = $pdo->prepare("SELECT * FROM products WHERE (name LIKE ? OR description LIKE ?) AND active = 1");<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$stmt->execute([$searchTerm, $searchTerm]);<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return $stmt->fetchAll();<br>
-                    }<br><br>
-                    
-                    // Handle search form<br>
-                    if (isset($_GET['search'])) {<br>
-                    &nbsp;&nbsp;$searchQuery = trim($_GET['search']);<br>
-                    &nbsp;&nbsp;$category = isset($_GET['category']) ? (int)$_GET['category'] : null;<br>
-                    &nbsp;&nbsp;$products = searchProducts($searchQuery, $category);<br>
-                    }
-                </div>
+                <pre><code class="language-php">Search Functionality:
+// Search products
+function searchProducts($query, $category = null) {
+  global $pdo;
+  $searchTerm = "%$query%";
+  if ($category) {
+    $stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE (name LIKE ? OR description LIKE ?) AND category_id = ? AND active = 1");
+    $stmt-&gt;execute([$searchTerm, $searchTerm, $category]);
+  } else {
+    $stmt = $pdo-&gt;prepare("SELECT * FROM products WHERE (name LIKE ? OR description LIKE ?) AND active = 1");
+    $stmt-&gt;execute([$searchTerm, $searchTerm]);
+  }
+  return $stmt-&gt;fetchAll();
+}
+// Handle search form
+if (isset($_GET['search'])) {
+  $searchQuery = trim($_GET['search']);
+  $category = isset($_GET['category']) ? (int)$_GET['category'] : null;
+  $products = searchProducts($searchQuery, $category);
+}</code></pre>
+            </div>
                 <ul>
                     <li>Search by product name</li>
                     <li>Search by description</li>
@@ -468,8 +391,7 @@
             </section>
 
             <!-- Slide 11: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Basic E-commerce System</h2>
+            <section data-slide-title="Task 1: Basic E-commerce System" class="center"><h2>Task 1: Basic E-commerce System</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -492,8 +414,7 @@
             </section>
 
             <!-- Slide 12: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -502,282 +423,239 @@
             </section>
 
             <!-- Slide 13: Product Reviews -->
-            <section>
-                <h2>Product Reviews</h2>
+            <section data-slide-title="Product Reviews"><h2>Product Reviews</h2>
                 <div class="code-example">
-                    Review System:<br><br>
-                    
-                    // Add product review<br>
-                    function addReview($productId, $userId, $rating, $comment) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO reviews (product_id, user_id, rating, comment, created_at) VALUES (?, ?, ?, ?, NOW())");<br>
-                    &nbsp;&nbsp;$stmt->execute([$productId, $userId, $rating, $comment]);<br><br>
-                    
-                    &nbsp;&nbsp;// Update product average rating<br>
-                    &nbsp;&nbsp;updateProductRating($productId);<br>
-                    }<br><br>
-                    
-                    // Get product reviews<br>
-                    function getProductReviews($productId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT r.*, u.username FROM reviews r JOIN users u ON r.user_id = u.id WHERE r.product_id = ? ORDER BY r.created_at DESC");<br>
-                    &nbsp;&nbsp;$stmt->execute([$productId]);<br>
-                    &nbsp;&nbsp;return $stmt->fetchAll();<br>
-                    }<br><br>
-                    
-                    // Update product rating<br>
-                    function updateProductRating($productId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE products SET avg_rating = (SELECT AVG(rating) FROM reviews WHERE product_id = ?) WHERE id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$productId, $productId]);<br>
-                    }
-                </div>
+                <pre><code class="language-php">Review System:
+// Add product review
+function addReview($productId, $userId, $rating, $comment) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("INSERT INTO reviews (product_id, user_id, rating, comment, created_at) VALUES (?, ?, ?, ?, NOW())");
+  $stmt-&gt;execute([$productId, $userId, $rating, $comment]);
+  // Update product average rating
+  updateProductRating($productId);
+}
+// Get product reviews
+function getProductReviews($productId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT r.*, u.username FROM reviews r JOIN users u ON r.user_id = u.id WHERE r.product_id = ? ORDER BY r.created_at DESC");
+  $stmt-&gt;execute([$productId]);
+  return $stmt-&gt;fetchAll();
+}
+// Update product rating
+function updateProductRating($productId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("UPDATE products SET avg_rating = (SELECT AVG(rating) FROM reviews WHERE product_id = ?) WHERE id = ?");
+  $stmt-&gt;execute([$productId, $productId]);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 14: Wishlist -->
-            <section>
-                <h2>Wishlist System</h2>
+            <section data-slide-title="Wishlist System"><h2>Wishlist System</h2>
                 <div class="code-example">
-                    Wishlist Management:<br><br>
-                    
-                    // Add to wishlist<br>
-                    function addToWishlist($userId, $productId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT IGNORE INTO wishlist (user_id, product_id, created_at) VALUES (?, ?, NOW())");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId, $productId]);<br>
-                    }<br><br>
-                    
-                    // Get user wishlist<br>
-                    function getWishlist($userId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT p.* FROM wishlist w JOIN products p ON w.product_id = p.id WHERE w.user_id = ? ORDER BY w.created_at DESC");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId]);<br>
-                    &nbsp;&nbsp;return $stmt->fetchAll();<br>
-                    }<br><br>
-                    
-                    // Remove from wishlist<br>
-                    function removeFromWishlist($userId, $productId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("DELETE FROM wishlist WHERE user_id = ? AND product_id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$userId, $productId]);<br>
-                    }
-                </div>
+                <pre><code class="language-php">Wishlist Management:
+// Add to wishlist
+function addToWishlist($userId, $productId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("INSERT IGNORE INTO wishlist (user_id, product_id, created_at) VALUES (?, ?, NOW())");
+  $stmt-&gt;execute([$userId, $productId]);
+}
+// Get user wishlist
+function getWishlist($userId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT p.* FROM wishlist w JOIN products p ON w.product_id = p.id WHERE w.user_id = ? ORDER BY w.created_at DESC");
+  $stmt-&gt;execute([$userId]);
+  return $stmt-&gt;fetchAll();
+}
+// Remove from wishlist
+function removeFromWishlist($userId, $productId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("DELETE FROM wishlist WHERE user_id = ? AND product_id = ?");
+  $stmt-&gt;execute([$userId, $productId]);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 15: Discount System -->
-            <section>
-                <h2>Discount System</h2>
+            <section data-slide-title="Discount System"><h2>Discount System</h2>
                 <div class="code-example">
-                    Coupon Management:<br><br>
-                    
-                    // Apply discount<br>
-                    function applyDiscount($code, $total) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT * FROM coupons WHERE code = ? AND active = 1 AND expires_at > NOW()");<br>
-                    &nbsp;&nbsp;$stmt->execute([$code]);<br>
-                    &nbsp;&nbsp;$coupon = $stmt->fetch();<br><br>
-                    
-                    &nbsp;&nbsp;if ($coupon) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if ($coupon['type'] == 'percentage') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$discount = $total * ($coupon['value'] / 100);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$discount = $coupon['value'];<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return min($discount, $total);<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return 0;<br>
-                    }<br><br>
-                    
-                    // Calculate final total<br>
-                    $subtotal = getCartTotal();<br>
-                    $discount = applyDiscount($_POST['coupon_code'], $subtotal);<br>
-                    $finalTotal = $subtotal - $discount;
-                </div>
+                <pre><code class="language-php">Coupon Management:
+// Apply discount
+function applyDiscount($code, $total) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT * FROM coupons WHERE code = ? AND active = 1 AND expires_at &gt; NOW()");
+  $stmt-&gt;execute([$code]);
+  $coupon = $stmt-&gt;fetch();
+  if ($coupon) {
+    if ($coupon['type'] == 'percentage') {
+      $discount = $total * ($coupon['value'] / 100);
+    } else {
+      $discount = $coupon['value'];
+    }
+    return min($discount, $total);
+  }
+  return 0;
+}
+// Calculate final total
+$subtotal = getCartTotal();
+$discount = applyDiscount($_POST['coupon_code'], $subtotal);
+$finalTotal = $subtotal - $discount;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 16: Shipping Calculator -->
-            <section>
-                <h2>Shipping Calculator</h2>
+            <section data-slide-title="Shipping Calculator"><h2>Shipping Calculator</h2>
                 <div class="code-example">
-                    Shipping System:<br><br>
-                    
-                    // Calculate shipping cost<br>
-                    function calculateShipping($weight, $destination) {<br>
-                    &nbsp;&nbsp;$baseCost = 5.00;<br>
-                    &nbsp;&nbsp;$perKg = 2.00;<br><br>
-                    
-                    &nbsp;&nbsp;$shippingCost = $baseCost + ($weight * $perKg);<br><br>
-                    
-                    &nbsp;&nbsp;// Add destination surcharge<br>
-                    &nbsp;&nbsp;switch ($destination) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;case 'international':<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$shippingCost += 15.00;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;case 'remote':<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$shippingCost += 8.00;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return $shippingCost;<br>
-                    }<br><br>
-                    
-                    // Get cart weight<br>
-                    function getCartWeight() {<br>
-                    &nbsp;&nbsp;$cartItems = getCartItems();<br>
-                    &nbsp;&nbsp;$totalWeight = 0;<br><br>
-                    
-                    &nbsp;&nbsp;foreach ($cartItems as $item) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;$totalWeight += $item['product']['weight'] * $item['quantity'];<br>
-                    &nbsp;&nbsp;}<br><br>
-                    
-                    &nbsp;&nbsp;return $totalWeight;<br>
-                    }
-                </div>
+                <pre><code class="language-php">Shipping System:
+// Calculate shipping cost
+function calculateShipping($weight, $destination) {
+  $baseCost = 5.00;
+  $perKg = 2.00;
+  $shippingCost = $baseCost + ($weight * $perKg);
+  // Add destination surcharge
+  switch ($destination) {
+    case 'international':
+      $shippingCost += 15.00;
+      break;
+    case 'remote':
+      $shippingCost += 8.00;
+      break;
+  }
+  return $shippingCost;
+}
+// Get cart weight
+function getCartWeight() {
+  $cartItems = getCartItems();
+  $totalWeight = 0;
+  foreach ($cartItems as $item) {
+    $totalWeight += $item['product']['weight'] * $item['quantity'];
+  }
+  return $totalWeight;
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 17: Order Tracking -->
-            <section>
-                <h2>Order Tracking</h2>
+            <section data-slide-title="Order Tracking"><h2>Order Tracking</h2>
                 <div class="code-example">
-                    Tracking System:<br><br>
-                    
-                    // Generate tracking number<br>
-                    function generateTrackingNumber() {<br>
-                    &nbsp;&nbsp;return 'TRK' . date('Ymd') . strtoupper(substr(md5(uniqid()), 0, 8));<br>
-                    }<br><br>
-                    
-                    // Update order status<br>
-                    function updateOrderStatus($orderId, $status, $trackingNumber = null) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE orders SET status = ?, tracking_number = ?, updated_at = NOW() WHERE id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$status, $trackingNumber, $orderId]);<br><br>
-                    
-                    &nbsp;&nbsp;// Log status change<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("INSERT INTO order_status_log (order_id, status, created_at) VALUES (?, ?, NOW())");<br>
-                    &nbsp;&nbsp;$stmt->execute([$orderId, $status]);<br>
-                    }<br><br>
-                    
-                    // Get order status history<br>
-                    function getOrderStatusHistory($orderId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT * FROM order_status_log WHERE order_id = ? ORDER BY created_at DESC");<br>
-                    &nbsp;&nbsp;$stmt->execute([$orderId]);<br>
-                    &nbsp;&nbsp;return $stmt->fetchAll();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Tracking System:
+// Generate tracking number
+function generateTrackingNumber() {
+  return 'TRK' . date('Ymd') . strtoupper(substr(md5(uniqid()), 0, 8));
+}
+// Update order status
+function updateOrderStatus($orderId, $status, $trackingNumber = null) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("UPDATE orders SET status = ?, tracking_number = ?, updated_at = NOW() WHERE id = ?");
+  $stmt-&gt;execute([$status, $trackingNumber, $orderId]);
+  // Log status change
+  $stmt = $pdo-&gt;prepare("INSERT INTO order_status_log (order_id, status, created_at) VALUES (?, ?, NOW())");
+  $stmt-&gt;execute([$orderId, $status]);
+}
+// Get order status history
+function getOrderStatusHistory($orderId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT * FROM order_status_log WHERE order_id = ? ORDER BY created_at DESC");
+  $stmt-&gt;execute([$orderId]);
+  return $stmt-&gt;fetchAll();
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 18: Email Notifications -->
-            <section>
-                <h2>Email Notifications</h2>
+            <section data-slide-title="Email Notifications"><h2>Email Notifications</h2>
                 <div class="code-example">
-                    Email System:<br><br>
-                    
-                    // Send order confirmation<br>
-                    function sendOrderConfirmation($orderId) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("SELECT o.*, u.email, u.username FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$orderId]);<br>
-                    &nbsp;&nbsp;$order = $stmt->fetch();<br><br>
-                    
-                    &nbsp;&nbsp;$to = $order['email'];<br>
-                    &nbsp;&nbsp;$subject = "Order Confirmation #" . $orderId;<br>
-                    &nbsp;&nbsp;$message = "Dear " . $order['username'] . ",\n\n";<br>
-                    &nbsp;&nbsp;$message .= "Your order has been confirmed.\n";<br>
-                    &nbsp;&nbsp;$message .= "Order ID: " . $orderId . "\n";<br>
-                    &nbsp;&nbsp;$message .= "Total: $" . number_format($order['total'], 2) . "\n\n";<br>
-                    &nbsp;&nbsp;$message .= "Thank you for your purchase!";<br><br>
-                    
-                    &nbsp;&nbsp;mail($to, $subject, $message);<br>
-                    }<br><br>
-                    
-                    // Send shipping notification<br>
-                    function sendShippingNotification($orderId, $trackingNumber) {<br>
-                    &nbsp;&nbsp;$to = $order['email'];<br>
-                    &nbsp;&nbsp;$subject = "Your Order Has Been Shipped";<br>
-                    &nbsp;&nbsp;$message = "Your order #$orderId has been shipped.\n";<br>
-                    &nbsp;&nbsp;$message .= "Tracking Number: $trackingNumber";<br><br>
-                    
-                    &nbsp;&nbsp;mail($to, $subject, $message);<br>
-                    }
-                </div>
+                <pre><code class="language-php">Email System:
+// Send order confirmation
+function sendOrderConfirmation($orderId) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT o.*, u.email, u.username FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ?");
+  $stmt-&gt;execute([$orderId]);
+  $order = $stmt-&gt;fetch();
+  $to = $order['email'];
+  $subject = "Order Confirmation #" . $orderId;
+  $message = "Dear " . $order['username'] . ",\n\n";
+  $message .= "Your order has been confirmed.\n";
+  $message .= "Order ID: " . $orderId . "\n";
+  $message .= "Total: $" . number_format($order['total'], 2) . "\n\n";
+  $message .= "Thank you for your purchase!";
+  mail($to, $subject, $message);
+}
+// Send shipping notification
+function sendShippingNotification($orderId, $trackingNumber) {
+  $to = $order['email'];
+  $subject = "Your Order Has Been Shipped";
+  $message = "Your order #$orderId has been shipped.\n";
+  $message .= "Tracking Number: $trackingNumber";
+  mail($to, $subject, $message);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 19: Admin Panel -->
-            <section>
-                <h2>Admin Panel</h2>
+            <section data-slide-title="Admin Panel"><h2>Admin Panel</h2>
                 <div class="code-example">
-                    Admin Functions:<br><br>
-                    
-                    // Get all orders for admin<br>
-                    function getAllOrders() {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->query("SELECT o.*, u.username FROM orders o JOIN users u ON o.user_id = u.id ORDER BY o.created_at DESC");<br>
-                    &nbsp;&nbsp;return $stmt->fetchAll();<br>
-                    }<br><br>
-                    
-                    // Update product stock<br>
-                    function updateProductStock($productId, $newStock) {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->prepare("UPDATE products SET stock = ? WHERE id = ?");<br>
-                    &nbsp;&nbsp;$stmt->execute([$newStock, $productId]);<br>
-                    }<br><br>
-                    
-                    // Get sales statistics<br>
-                    function getSalesStats() {<br>
-                    &nbsp;&nbsp;global $pdo;<br>
-                    &nbsp;&nbsp;$stmt = $pdo->query("SELECT COUNT(*) as total_orders, SUM(total) as total_revenue FROM orders WHERE status = 'completed'");<br>
-                    &nbsp;&nbsp;return $stmt->fetch();<br>
-                    }<br><br>
-                    
-                    // Check admin access<br>
-                    if (!hasRole('admin')) {<br>
-                    &nbsp;&nbsp;header("Location: access-denied.php");<br>
-                    &nbsp;&nbsp;exit();<br>
-                    }
-                </div>
+                <pre><code class="language-php">Admin Functions:
+// Get all orders for admin
+function getAllOrders() {
+  global $pdo;
+  $stmt = $pdo-&gt;query("SELECT o.*, u.username FROM orders o JOIN users u ON o.user_id = u.id ORDER BY o.created_at DESC");
+  return $stmt-&gt;fetchAll();
+}
+// Update product stock
+function updateProductStock($productId, $newStock) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("UPDATE products SET stock = ? WHERE id = ?");
+  $stmt-&gt;execute([$newStock, $productId]);
+}
+// Get sales statistics
+function getSalesStats() {
+  global $pdo;
+  $stmt = $pdo-&gt;query("SELECT COUNT(*) as total_orders, SUM(total) as total_revenue FROM orders WHERE status = 'completed'");
+  return $stmt-&gt;fetch();
+}
+// Check admin access
+if (!hasRole('admin')) {
+  header("Location: access-denied.php");
+  exit();
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 20: Payment Integration -->
-            <section>
-                <h2>Payment Integration</h2>
+            <section data-slide-title="Payment Integration"><h2>Payment Integration</h2>
                 <div class="code-example">
-                    Payment Processing:<br><br>
-                    
-                    // Mock payment processing<br>
-                    function processPayment($amount, $cardNumber, $expiryDate, $cvv) {<br>
-                    &nbsp;&nbsp;// In real implementation, integrate with payment gateway<br>
-                    &nbsp;&nbsp;$paymentId = 'PAY' . time() . rand(1000, 9999);<br><br>
-                    
-                    &nbsp;&nbsp;// Simulate payment processing<br>
-                    &nbsp;&nbsp;if (strlen($cardNumber) == 16 && strlen($cvv) == 3) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'success' => true,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'payment_id' => $paymentId,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'amount' => $amount<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;];<br>
-                    &nbsp;&nbsp;} else {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'success' => false,<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'error' => 'Invalid payment details'<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;];<br>
-                    &nbsp;&nbsp;}<br>
-                    }<br><br>
-                    
-                    // Process payment in checkout<br>
-                    $paymentResult = processPayment($finalTotal, $_POST['card_number'], $_POST['expiry'], $_POST['cvv']);<br>
-                    if ($paymentResult['success']) {<br>
-                    &nbsp;&nbsp;// Continue with order creation<br>
-                    } else {<br>
-                    &nbsp;&nbsp;echo "Payment failed: " . $paymentResult['error'];<br>
-                    }
-                </div>
+                <pre><code class="language-php">Payment Processing:
+// Mock payment processing
+function processPayment($amount, $cardNumber, $expiryDate, $cvv) {
+  // In real implementation, integrate with payment gateway
+  $paymentId = 'PAY' . time() . rand(1000, 9999);
+  // Simulate payment processing
+  if (strlen($cardNumber) == 16 &amp;&amp; strlen($cvv) == 3) {
+    return [
+      'success' =&gt; true,
+      'payment_id' =&gt; $paymentId,
+      'amount' =&gt; $amount
+    ];
+  } else {
+    return [
+      'success' =&gt; false,
+      'error' =&gt; 'Invalid payment details'
+    ];
+  }
+}
+// Process payment in checkout
+$paymentResult = processPayment($finalTotal, $_POST['card_number'], $_POST['expiry'], $_POST['cvv']);
+if ($paymentResult['success']) {
+  // Continue with order creation
+} else {
+  echo "Payment failed: " . $paymentResult['error'];
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 21: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Complete E-commerce Platform</h2>
+            <section data-slide-title="Task 2: Complete E-commerce Platform" class="center"><h2>Task 2: Complete E-commerce Platform</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -803,8 +681,7 @@
             </section>
 
             <!-- Slide 22: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>Product catalogues organize and display products effectively</li>
                     <li>Shopping carts manage user selections</li>
@@ -823,51 +700,30 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            fitToParent: true,
-            responsive: true,
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
     </script>
 </body>

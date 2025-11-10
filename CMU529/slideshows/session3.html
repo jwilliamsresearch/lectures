@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 3: Bootstrap Components & Customization</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <!-- Bootstrap CSS for live demos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -16,7 +20,6 @@
             overflow-y: auto;
             max-height: 100vh;
         }
-        .reveal .slides section.center { text-align: center; }
         .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
         .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
         .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
@@ -33,16 +36,13 @@
             overflow-y: auto;
         }
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
         .highlight {
             background: #fff3cd;
@@ -102,50 +102,32 @@
     </style>
 </head>
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease;
-            display: inline-block;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'" 
-           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-            ← Back to Module
-        </a>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session2.html" title="Previous Session">&lt;</a>
+        <a href="session4.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 3</div>
                 <h1>Bootstrap Components & Customization</h1>
-                <h3>CMU529: Advanced Web Development - Session 3</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Advanced styling and component usage for e-commerce</p>
-                <p><small>3-hour session • 30+ slides • 6 live demos • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Master advanced Bootstrap components and layouts</li>
                     <li>Learn Bootstrap customization techniques</li>
@@ -158,22 +140,20 @@
             </section>
 
             <!-- Slide 3: Advanced Bootstrap Components -->
-            <section>
-                <h2>Advanced Bootstrap Components</h2>
+            <section data-slide-title="Advanced Bootstrap Components"><h2>Advanced Bootstrap Components</h2>
                 <div class="code-example">
-                    Advanced Components:<br><br>
-                    
-                    Modal Dialogs<br>
-                    Carousel/Slideshow<br>
-                    Accordion/Collapse<br>
-                    Tabs & Pills<br>
-                    Progress Bars<br>
-                    Spinners & Loaders<br>
-                    Toast Notifications<br>
-                    Offcanvas Sidebar<br>
-                    Dropdown Menus<br>
-                    Tooltips & Popovers
-                </div>
+                <pre><code class="language-html">Advanced Components:
+Modal Dialogs
+Carousel/Slideshow
+Accordion/Collapse
+Tabs &amp; Pills
+Progress Bars
+Spinners &amp; Loaders
+Toast Notifications
+Offcanvas Sidebar
+Dropdown Menus
+Tooltips &amp; Popovers</code></pre>
+            </div>
                 <ul>
                     <li>Interactive components with JavaScript</li>
                     <li>Data attributes for initialization</li>
@@ -183,34 +163,31 @@
             </section>
 
             <!-- Slide 4: Bootstrap Modal -->
-            <section>
-                <h2>Bootstrap Modal</h2>
+            <section data-slide-title="Bootstrap Modal"><h2>Bootstrap Modal</h2>
                 <div class="code-example">
-                    &lt;!-- Modal Trigger --&gt;<br>
-                    &lt;button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal"&gt;<br>
-                    &nbsp;&nbsp;View Product Details<br>
-                    &lt;/button&gt;<br><br>
-                    
-                    &lt;!-- Modal --&gt;<br>
-                    &lt;div class="modal fade" id="productModal" tabindex="-1"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="modal-dialog modal-lg"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="modal-content"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="modal-header"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="modal-title"&gt;Product Details&lt;/h5&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="button" class="btn-close" data-bs-dismiss="modal"&gt;&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="modal-body"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Product content here...<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">&lt;!-- Modal Trigger --&gt;
+&lt;button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal"&gt;
+  View Product Details
+&lt;/button&gt;
+&lt;!-- Modal --&gt;
+&lt;div class="modal fade" id="productModal" tabindex="-1"&gt;
+  &lt;div class="modal-dialog modal-lg"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title"&gt;Product Details&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        Product content here...
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 4b: LIVE DEMO - Bootstrap Modal -->
-            <section>
-                <h2>🎯 Live Demo: Bootstrap Modal</h2>
+            <section data-slide-title="🎯 Live Demo: Bootstrap Modal"><h2>🎯 Live Demo: Bootstrap Modal</h2>
                 <span class="demo-badge">INTERACTIVE DEMO</span>
                 <div class="live-demo">
                     <p><strong>Try it yourself:</strong> Click the button below to see a modal in action!</p>
@@ -257,29 +234,27 @@
             </section>
 
             <!-- Slide 5: Bootstrap Carousel -->
-            <section>
-                <h2>Bootstrap Carousel</h2>
+            <section data-slide-title="Bootstrap Carousel"><h2>Bootstrap Carousel</h2>
                 <div class="code-example">
-                    &lt;div id="productCarousel" class="carousel slide" data-bs-ride="carousel"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="carousel-indicators"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active"&gt;&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1"&gt;&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="carousel-inner"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="carousel-item active"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="product1.jpg" class="d-block w-100" alt="Product 1"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="carousel-item"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="product2.jpg" class="d-block w-100" alt="Product 2"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">&lt;div id="productCarousel" class="carousel slide" data-bs-ride="carousel"&gt;
+  &lt;div class="carousel-indicators"&gt;
+    &lt;button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active"&gt;&lt;/button&gt;
+    &lt;button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="carousel-inner"&gt;
+    &lt;div class="carousel-item active"&gt;
+      &lt;img src="product1.jpg" class="d-block w-100" alt="Product 1"&gt;
+    &lt;/div&gt;
+    &lt;div class="carousel-item"&gt;
+      &lt;img src="product2.jpg" class="d-block w-100" alt="Product 2"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 5b: LIVE DEMO - Bootstrap Carousel -->
-            <section>
-                <h2>🎯 Live Demo: Bootstrap Carousel</h2>
+            <section data-slide-title="🎯 Live Demo: Bootstrap Carousel"><h2>🎯 Live Demo: Bootstrap Carousel</h2>
                 <span class="demo-badge">INTERACTIVE DEMO</span>
                 <div class="live-demo">
                     <p><strong>Try it yourself:</strong> Use the arrows or indicators to navigate through product images!</p>
@@ -326,29 +301,27 @@
             </section>
 
             <!-- Slide 6: Bootstrap Accordion -->
-            <section>
-                <h2>Bootstrap Accordion</h2>
+            <section data-slide-title="Bootstrap Accordion"><h2>Bootstrap Accordion</h2>
                 <div class="code-example">
-                    &lt;div class="accordion" id="productAccordion"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="accordion-item"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;h2 class="accordion-header"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Product Description<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/h2&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#productAccordion"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="accordion-body"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Product details here...<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">&lt;div class="accordion" id="productAccordion"&gt;
+  &lt;div class="accordion-item"&gt;
+    &lt;h2 class="accordion-header"&gt;
+      &lt;button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"&gt;
+        Product Description
+      &lt;/button&gt;
+    &lt;/h2&gt;
+    &lt;div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#productAccordion"&gt;
+      &lt;div class="accordion-body"&gt;
+        Product details here...
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 6b: LIVE DEMO - Bootstrap Accordion -->
-            <section>
-                <h2>🎯 Live Demo: Bootstrap Accordion</h2>
+            <section data-slide-title="🎯 Live Demo: Bootstrap Accordion"><h2>🎯 Live Demo: Bootstrap Accordion</h2>
                 <span class="demo-badge">INTERACTIVE DEMO</span>
                 <div class="live-demo">
                     <p><strong>Try it yourself:</strong> Click on the sections to expand/collapse product information!</p>
@@ -429,27 +402,25 @@
             </section>
 
             <!-- Slide 7: Bootstrap Tabs -->
-            <section>
-                <h2>Bootstrap Tabs</h2>
+            <section data-slide-title="Bootstrap Tabs"><h2>Bootstrap Tabs</h2>
                 <div class="code-example">
-                    &lt;ul class="nav nav-tabs" id="productTabs" role="tablist"&gt;<br>
-                    &nbsp;&nbsp;&lt;li class="nav-item" role="presentation"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"&gt;Details&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&lt;/li&gt;<br>
-                    &nbsp;&nbsp;&lt;li class="nav-item" role="presentation"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"&gt;Reviews&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&lt;/li&gt;<br>
-                    &lt;/ul&gt;<br>
-                    &lt;div class="tab-content" id="productTabsContent"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="tab-pane fade show active" id="details"&gt;Details content...&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="tab-pane fade" id="reviews"&gt;Reviews content...&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">&lt;ul class="nav nav-tabs" id="productTabs" role="tablist"&gt;
+  &lt;li class="nav-item" role="presentation"&gt;
+    &lt;button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"&gt;Details&lt;/button&gt;
+  &lt;/li&gt;
+  &lt;li class="nav-item" role="presentation"&gt;
+    &lt;button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"&gt;Reviews&lt;/button&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="tab-content" id="productTabsContent"&gt;
+  &lt;div class="tab-pane fade show active" id="details"&gt;Details content...&lt;/div&gt;
+  &lt;div class="tab-pane fade" id="reviews"&gt;Reviews content...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 7b: LIVE DEMO - Bootstrap Tabs -->
-            <section>
-                <h2>🎯 Live Demo: Bootstrap Tabs</h2>
+            <section data-slide-title="🎯 Live Demo: Bootstrap Tabs"><h2>🎯 Live Demo: Bootstrap Tabs</h2>
                 <span class="demo-badge">INTERACTIVE DEMO</span>
                 <div class="live-demo">
                     <p><strong>Try it yourself:</strong> Click on different tabs to switch between content sections!</p>
@@ -559,22 +530,20 @@
             </section>
 
             <!-- Slide 8: Bootstrap Customization -->
-            <section>
-                <h2>Bootstrap Customization</h2>
+            <section data-slide-title="Bootstrap Customization"><h2>Bootstrap Customization</h2>
                 <div class="code-example">
-                    CSS Custom Properties:<br><br>
-                    
-                    :root {<br>
-                    &nbsp;&nbsp;--bs-primary: #ff6b6b;<br>
-                    &nbsp;&nbsp;--bs-secondary: #ee5a24;<br>
-                    &nbsp;&nbsp;--bs-success: #28a745;<br>
-                    &nbsp;&nbsp;--bs-info: #17a2b8;<br>
-                    &nbsp;&nbsp;--bs-warning: #ffc107;<br>
-                    &nbsp;&nbsp;--bs-danger: #dc3545;<br>
-                    &nbsp;&nbsp;--bs-light: #f8f9fa;<br>
-                    &nbsp;&nbsp;--bs-dark: #343a40;<br>
-                    }
-                </div>
+                <pre><code class="language-html">CSS Custom Properties:
+:root {
+  --bs-primary: #ff6b6b;
+  --bs-secondary: #ee5a24;
+  --bs-success: #28a745;
+  --bs-info: #17a2b8;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #343a40;
+}</code></pre>
+            </div>
                 <ul>
                     <li>Override Bootstrap's default colors</li>
                     <li>Use CSS custom properties for theming</li>
@@ -584,75 +553,65 @@
             </section>
 
             <!-- Slide 9: Custom Component Classes -->
-            <section>
-                <h2>Custom Component Classes</h2>
+            <section data-slide-title="Custom Component Classes"><h2>Custom Component Classes</h2>
                 <div class="code-example">
-                    Custom Button Styles:<br><br>
-                    
-                    .btn-ecommerce {<br>
-                    &nbsp;&nbsp;background: linear-gradient(135deg, #ff6b6b, #ee5a24);<br>
-                    &nbsp;&nbsp;border: none;<br>
-                    &nbsp;&nbsp;color: white;<br>
-                    &nbsp;&nbsp;padding: 12px 24px;<br>
-                    &nbsp;&nbsp;border-radius: 25px;<br>
-                    &nbsp;&nbsp;font-weight: 600;<br>
-                    &nbsp;&nbsp;transition: all 0.3s ease;<br>
-                    }<br><br>
-                    
-                    .btn-ecommerce:hover {<br>
-                    &nbsp;&nbsp;transform: translateY(-2px);<br>
-                    &nbsp;&nbsp;box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);<br>
-                    }
-                </div>
+                <pre><code class="language-html">Custom Button Styles:
+.btn-ecommerce {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-ecommerce:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 10: Responsive Utilities -->
-            <section>
-                <h2>Responsive Utilities</h2>
+            <section data-slide-title="Responsive Utilities"><h2>Responsive Utilities</h2>
                 <div class="code-example">
-                    Responsive Display Classes:<br><br>
-                    
-                    d-none d-md-block<br>
-                    d-block d-md-none<br>
-                    d-flex d-md-none<br>
-                    d-none d-md-flex<br><br>
-                    
-                    Responsive Spacing:<br>
-                    mt-0 mt-md-3<br>
-                    p-2 p-md-4<br>
-                    mx-auto mx-md-0<br><br>
-                    
-                    Responsive Text:<br>
-                    text-center text-md-start<br>
-                    fs-6 fs-md-4<br>
-                    fw-normal fw-md-bold
-                </div>
+                <pre><code class="language-html">Responsive Display Classes:
+d-none d-md-block
+d-block d-md-none
+d-flex d-md-none
+d-none d-md-flex
+Responsive Spacing:
+mt-0 mt-md-3
+p-2 p-md-4
+mx-auto mx-md-0
+Responsive Text:
+text-center text-md-start
+fs-6 fs-md-4
+fw-normal fw-md-bold</code></pre>
+            </div>
             </section>
 
             <!-- Slide 11: E-commerce Layout Patterns -->
-            <section>
-                <h2>E-commerce Layout Patterns</h2>
+            <section data-slide-title="E-commerce Layout Patterns"><h2>E-commerce Layout Patterns</h2>
                 <div class="code-example">
-                    Product Grid Layout:<br><br>
-                    
-                    &lt;div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="col"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card h-100"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img src="product.jpg" class="card-img-top" alt="Product"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card-body d-flex flex-column"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;Product Name&lt;/h5&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p class="card-text flex-grow-1"&gt;Description...&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button class="btn btn-primary mt-auto"&gt;Add to Cart&lt;/button&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">Product Grid Layout:
+&lt;div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"&gt;
+  &lt;div class="col"&gt;
+    &lt;div class="card h-100"&gt;
+      &lt;img src="product.jpg" class="card-img-top" alt="Product"&gt;
+      &lt;div class="card-body d-flex flex-column"&gt;
+        &lt;h5 class="card-title"&gt;Product Name&lt;/h5&gt;
+        &lt;p class="card-text flex-grow-1"&gt;Description...&lt;/p&gt;
+        &lt;button class="btn btn-primary mt-auto"&gt;Add to Cart&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 11b: LIVE DEMO - Product Cards -->
-            <section>
-                <h2>🎯 Live Demo: Interactive Product Cards</h2>
+            <section data-slide-title="🎯 Live Demo: Interactive Product Cards"><h2>🎯 Live Demo: Interactive Product Cards</h2>
                 <span class="demo-badge">INTERACTIVE DEMO</span>
                 <div class="live-demo">
                     <p><strong>Try it yourself:</strong> Hover over cards to see effects and click buttons to interact!</p>
@@ -764,8 +723,7 @@
             </section>
 
             <!-- Slide 11c: LIVE DEMO - Interactive Shopping Cart -->
-            <section>
-                <h2>🎯 Live Demo: Shopping Cart with JavaScript</h2>
+            <section data-slide-title="🎯 Live Demo: Shopping Cart with JavaScript"><h2>🎯 Live Demo: Shopping Cart with JavaScript</h2>
                 <span class="demo-badge">INTERACTIVE DEMO</span>
                 <div class="live-demo">
                     <p><strong>Try it yourself:</strong> Adjust quantities and see the total update in real-time!</p>
@@ -887,68 +845,63 @@
             </section>
 
             <!-- Slide 12: Shopping Cart Interface -->
-            <section>
-                <h2>Shopping Cart Interface</h2>
+            <section data-slide-title="Shopping Cart Interface"><h2>Shopping Cart Interface</h2>
                 <div class="code-example">
-                    Cart Layout Structure:<br><br>
-                    
-                    &lt;div class="container"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="row"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-lg-8"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Cart Items --&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card-body"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;Shopping Cart&lt;/h5&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Cart items list --&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="col-lg-4"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Order Summary --&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card-body"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;Order Summary&lt;/h5&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Summary details --&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">Cart Layout Structure:
+&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-lg-8"&gt;
+      &lt;!-- Cart Items --&gt;
+      &lt;div class="card"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Shopping Cart&lt;/h5&gt;
+          &lt;!-- Cart items list --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-lg-4"&gt;
+      &lt;!-- Order Summary --&gt;
+      &lt;div class="card"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Order Summary&lt;/h5&gt;
+          &lt;!-- Summary details --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 13: Product Filter Sidebar -->
-            <section>
-                <h2>Product Filter Sidebar</h2>
+            <section data-slide-title="Product Filter Sidebar"><h2>Product Filter Sidebar</h2>
                 <div class="code-example">
-                    Filter Sidebar Structure:<br><br>
-                    
-                    &lt;div class="col-md-3"&gt;<br>
-                    &nbsp;&nbsp;&lt;div class="card"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card-body"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h5 class="card-title"&gt;Filters&lt;/h5&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Price Range --&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="mb-3"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label class="form-label"&gt;Price Range&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="range" class="form-range" min="0" max="1000"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Categories --&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="mb-3"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label class="form-label"&gt;Categories&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="form-check"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input class="form-check-input" type="checkbox"&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label class="form-check-label"&gt;Electronics&lt;/label&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
-                    &nbsp;&nbsp;&lt;/div&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">Filter Sidebar Structure:
+&lt;div class="col-md-3"&gt;
+  &lt;div class="card"&gt;
+    &lt;div class="card-body"&gt;
+      &lt;h5 class="card-title"&gt;Filters&lt;/h5&gt;
+      &lt;!-- Price Range --&gt;
+      &lt;div class="mb-3"&gt;
+        &lt;label class="form-label"&gt;Price Range&lt;/label&gt;
+        &lt;input type="range" class="form-range" min="0" max="1000"&gt;
+      &lt;/div&gt;
+      &lt;!-- Categories --&gt;
+      &lt;div class="mb-3"&gt;
+        &lt;label class="form-label"&gt;Categories&lt;/label&gt;
+        &lt;div class="form-check"&gt;
+          &lt;input class="form-check-input" type="checkbox"&gt;
+          &lt;label class="form-check-label"&gt;Electronics&lt;/label&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 14: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Advanced E-commerce Components</h2>
+            <section data-slide-title="Task 1: Advanced E-commerce Components" class="center"><h2>Task 1: Advanced E-commerce Components</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -970,8 +923,7 @@
             </section>
 
             <!-- Slide 15: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -980,30 +932,26 @@
             </section>
 
             <!-- Slide 16: JavaScript Integration -->
-            <section>
-                <h2>JavaScript Integration</h2>
+            <section data-slide-title="JavaScript Integration"><h2>JavaScript Integration</h2>
                 <div class="code-example">
-                    Custom JavaScript for E-commerce:<br><br>
-                    
-                    // Shopping cart functionality<br>
-                    function addToCart(productId, quantity) {<br>
-                    &nbsp;&nbsp;let cart = JSON.parse(localStorage.getItem('cart')) || [];<br>
-                    &nbsp;&nbsp;cart.push({ id: productId, quantity: quantity });<br>
-                    &nbsp;&nbsp;localStorage.setItem('cart', JSON.stringify(cart));<br>
-                    &nbsp;&nbsp;updateCartDisplay();<br>
-                    }<br><br>
-                    
-                    // Update cart display<br>
-                    function updateCartDisplay() {<br>
-                    &nbsp;&nbsp;let cart = JSON.parse(localStorage.getItem('cart')) || [];<br>
-                    &nbsp;&nbsp;document.getElementById('cart-count').textContent = cart.length;<br>
-                    }
-                </div>
+                <pre><code class="language-javascript">Custom JavaScript for E-commerce:
+// Shopping cart functionality
+function addToCart(productId, quantity) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push({ id: productId, quantity: quantity });
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartDisplay();
+}
+// Update cart display
+function updateCartDisplay() {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  document.getElementById('cart-count').textContent = cart.length;
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 17: Performance Optimization -->
-            <section>
-                <h2>Performance Optimization</h2>
+            <section data-slide-title="Performance Optimization"><h2>Performance Optimization</h2>
                 <ul>
                     <li><strong>Lazy Loading:</strong> Load images and components as needed</li>
                     <li><strong>CSS Minification:</strong> Reduce file sizes</li>
@@ -1012,20 +960,18 @@
                     <li><strong>Caching:</strong> Implement browser caching strategies</li>
                 </ul>
                 <div class="code-example">
-                    Lazy Loading Example:<br>
-                    &lt;img src="placeholder.jpg" data-src="product.jpg" class="lazy"&gt;<br><br>
-                    
-                    // Lazy loading script<br>
-                    document.addEventListener("DOMContentLoaded", function() {<br>
-                    &nbsp;&nbsp;var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));<br>
-                    &nbsp;&nbsp;// Implementation here...<br>
-                    });
-                </div>
+                <pre><code class="language-javascript">Lazy Loading Example:
+&lt;img src="placeholder.jpg" data-src="product.jpg" class="lazy"&gt;
+// Lazy loading script
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+  // Implementation here...
+});</code></pre>
+            </div>
             </section>
 
             <!-- Slide 18: Accessibility Best Practices -->
-            <section>
-                <h2>Accessibility Best Practices</h2>
+            <section data-slide-title="Accessibility Best Practices"><h2>Accessibility Best Practices</h2>
                 <ul>
                     <li><strong>Semantic HTML:</strong> Use proper HTML elements</li>
                     <li><strong>ARIA Labels:</strong> Provide descriptive labels</li>
@@ -1034,19 +980,17 @@
                     <li><strong>Screen Reader Support:</strong> Test with screen readers</li>
                 </ul>
                 <div class="code-example">
-                    Accessibility Examples:<br><br>
-                    
-                    &lt;button aria-label="Add product to cart"&gt;Add to Cart&lt;/button&gt;<br>
-                    &lt;img src="product.jpg" alt="Red running shoes with white sole"&gt;<br>
-                    &lt;div role="main" aria-label="Product catalog"&gt;<br>
-                    &nbsp;&nbsp;&lt;!-- Content --&gt;<br>
-                    &lt;/div&gt;
-                </div>
+                <pre><code class="language-html">Accessibility Examples:
+&lt;button aria-label="Add product to cart"&gt;Add to Cart&lt;/button&gt;
+&lt;img src="product.jpg" alt="Red running shoes with white sole"&gt;
+&lt;div role="main" aria-label="Product catalog"&gt;
+  &lt;!-- Content --&gt;
+&lt;/div&gt;</code></pre>
+            </div>
             </section>
 
             <!-- Slide 19: Cross-browser Compatibility -->
-            <section>
-                <h2>Cross-browser Compatibility</h2>
+            <section data-slide-title="Cross-browser Compatibility"><h2>Cross-browser Compatibility</h2>
                 <ul>
                     <li><strong>CSS Prefixes:</strong> Use vendor prefixes where needed</li>
                     <li><strong>Feature Detection:</strong> Check for browser support</li>
@@ -1054,21 +998,19 @@
                     <li><strong>Testing:</strong> Test on multiple browsers and devices</li>
                 </ul>
                 <div class="code-example">
-                    Feature Detection Example:<br><br>
-                    
-                    if ('IntersectionObserver' in window) {<br>
-                    &nbsp;&nbsp;// Use modern lazy loading<br>
-                    &nbsp;&nbsp;const observer = new IntersectionObserver(callback);<br>
-                    } else {<br>
-                    &nbsp;&nbsp;// Fallback for older browsers<br>
-                    &nbsp;&nbsp;loadAllImages();<br>
-                    }
-                </div>
+                <pre><code class="language-javascript">Feature Detection Example:
+if ('IntersectionObserver' in window) {
+  // Use modern lazy loading
+  const observer = new IntersectionObserver(callback);
+} else {
+  // Fallback for older browsers
+  loadAllImages();
+}</code></pre>
+            </div>
             </section>
 
             <!-- Slide 20: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Complete E-commerce Interface</h2>
+            <section data-slide-title="Task 2: Complete E-commerce Interface" class="center"><h2>Task 2: Complete E-commerce Interface</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -1112,7 +1054,10 @@
     <!-- Bootstrap JS for live demos -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
         // Cart items data
         const cartItems = {
@@ -1187,49 +1132,25 @@
             document.getElementById('cartCount').textContent = count;
         }
 
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            fitToParent: true,
-            responsive: true,
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
     </script>
 </body>

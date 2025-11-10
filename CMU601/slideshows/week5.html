@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 5: Beginning Your Development</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/white.css">
     <style>
         /* Three.js Canvas for first slide */
         #galaxyCanvas {
@@ -227,53 +229,30 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(243, 156, 18, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(243, 156, 18, 0.4)'">
-            ← Back to Module
-        </a>
+    <canvas id="galaxyCanvas"></canvas>
+    
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="../index.html" title="Previous Week">&lt;</a>
+        <a href="week6.html" title="Next Week">&gt;</a>
     </div>
-    <div class="reveal">
+<div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
-                <canvas id="galaxyCanvas"></canvas>
-                <div class="title-slide-content">
-                    <h1>Beginning Your Development</h1>
-                    <h3>CMU601: Dissertation - Week 5</h3>
-                    <p><strong>Birmingham Newman University</strong></p>
-                    <p><em>Lecturer: James Williams</em></p>
-                    <p>Undergraduate Final Year Project</p>
-                    <p><small>3-hour session • 28 slides • 2 practical tasks</small></p>
-                    <div class="timeline-info">
-                        <p><strong>Session Timeline:</strong></p>
-                        <ul>
-                            <li>10 min: Introduction & objectives</li>
-                            <li>40 min: Opening slides & project planning</li>
-                            <li>45 min: Task 1 - Project setup</li>
-                            <li>15 min: Break/Catch up</li>
-                            <li>30 min: Development practices slides</li>
-                            <li>40 min: Task 2 - Initial development</li>
-                            <li>Remaining: Self-directed work</li>
-                        </ul>
-                    </div>
+                        <!-- Title Slide with Galaxy Animation -->
+            <section class="title-slide custom-title-slide" data-slide-title="Title Slide">
+                <div class="module-code" style="color: white;">CMU601</div>
+                <h1 style="color: white;">Beginning Your Development</h1>
+                <h2 style="color: white;">Week 5</h2>
+                <div class="author">
+                    <p><strong style="color: white;">James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk" style="color: white;">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
             <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand how to effectively begin dissertation project development</li>
@@ -290,7 +269,7 @@
             </section>
 
             <!-- Slide 3: The Importance of Starting Early -->
-            <section>
+            <section data-slide-title="Why Start Development Now?">
                 <h2>Why Start Development Now?</h2>
                 <div class="highlight">
                     <strong>The earlier you start, the more time for refinement and polish</strong>
@@ -305,16 +284,16 @@
                     <li><strong>Quality Improvement:</strong> Iterate and refine your solution multiple times</li>
                 </ul>
                 <div class="code-example">
-                    Common Timeline:<br>
-                    Week 5-10: Initial development & core features<br>
-                    Week 11-15: Feature completion & integration<br>
-                    Week 16-20: Testing, refinement, & documentation<br>
-                    Week 21-25: Polish, final testing, & report writing
+                    <pre><code class="language-plaintext">Common Timeline:
+Week 5-10: Initial development &amp; core features
+Week 11-15: Feature completion &amp; integration
+Week 16-20: Testing, refinement, &amp; documentation
+Week 21-25: Polish, final testing, &amp; report writing</code></pre>
                 </div>
             </section>
 
             <!-- Slide 4: Common Mistakes to Avoid -->
-            <section>
+            <section data-slide-title="Common Mistakes to Avoid">
                 <h2>Common Mistakes to Avoid</h2>
                 <h3>Planning Forever Without Building</h3>
                 <ul>
@@ -337,7 +316,7 @@
             </section>
 
             <!-- Slide 5: Development Environment Setup -->
-            <section>
+            <section data-slide-title="Setting Up Your Development Environment">
                 <h2>Setting Up Your Development Environment</h2>
                 <h3>Essential Components:</h3>
                 <ul>
@@ -349,20 +328,19 @@
                     <li><strong>Testing Framework:</strong> pytest, Jest, JUnit (language-specific)</li>
                 </ul>
                 <div class="code-example">
-                    # Example: Python project setup<br>
-                    python -m venv venv<br>
-                    venv\Scripts\activate  # Windows<br>
-                    source venv/bin/activate  # Mac/Linux<br>
-                    pip install -r requirements.txt<br>
-                    <br>
-                    # Example: Node.js project setup<br>
-                    npm init -y<br>
-                    npm install express mongoose dotenv
+                    <pre><code class="language-bash"># Example: Python project setup
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Mac/Linux
+pip install -r requirements.txt
+# Example: Node.js project setup
+npm init -y
+npm install express mongoose dotenv</code></pre>
                 </div>
             </section>
 
             <!-- Slide 6: Project Structure -->
-            <section>
+            <section data-slide-title="Organizing Your Project Structure">
                 <h2>Organizing Your Project Structure</h2>
                 <h3>Well-Organized Structure Benefits:</h3>
                 <ul>
@@ -372,25 +350,25 @@
                     <li>Easier for others (and supervisors) to understand</li>
                 </ul>
                 <div class="code-example">
-                    my-dissertation-project/<br>
-                    ├── src/                    # Source code<br>
-                    │   ├── components/         # Reusable components<br>
-                    │   ├── models/             # Data models<br>
-                    │   ├── services/           # Business logic<br>
-                    │   ├── utils/              # Helper functions<br>
-                    │   └── main.py             # Entry point<br>
-                    ├── tests/                  # Test files<br>
-                    ├── docs/                   # Documentation<br>
-                    ├── config/                 # Configuration files<br>
-                    ├── .env.example            # Environment variables template<br>
-                    ├── .gitignore              # Git ignore rules<br>
-                    ├── README.md               # Project documentation<br>
-                    └── requirements.txt        # Dependencies
+                    <pre><code class="language-javascript">my-dissertation-project/
+├── src/                    # Source code
+│   ├── components/         # Reusable components
+│   ├── models/             # Data models
+│   ├── services/           # Business logic
+│   ├── utils/              # Helper functions
+│   └── main.py             # Entry point
+├── tests/                  # Test files
+├── docs/                   # Documentation
+├── config/                 # Configuration files
+├── .env.example            # Environment variables template
+├── .gitignore              # Git ignore rules
+├── README.md               # Project documentation
+└── requirements.txt        # Dependencies</code></pre>
                 </div>
             </section>
 
             <!-- Slide 7: The README File -->
-            <section>
+            <section data-slide-title="Creating a Professional README">
                 <h2>Creating a Professional README</h2>
                 <div class="highlight">
                     <strong>Your README is often the first thing people see - make it count!</strong>
@@ -409,41 +387,37 @@
             </section>
 
             <!-- Slide 8: README Example -->
-            <section>
+            <section data-slide-title="README.md Example">
                 <h2>README.md Example</h2>
                 <div class="code-example">
-                    # Student Performance Tracking System<br>
-                    <br>
-                    A web-based application for tracking student academic performance<br>
-                    and generating predictive analytics.<br>
-                    <br>
-                    ## Features<br>
-                    - Student grade tracking and visualization<br>
-                    - Performance prediction using machine learning<br>
-                    - Interactive dashboards for tutors<br>
-                    - Export reports to PDF/Excel<br>
-                    <br>
-                    ## Installation<br>
-                    ```bash<br>
-                    git clone https://github.com/username/project.git<br>
-                    cd project<br>
-                    python -m venv venv<br>
-                    source venv/bin/activate<br>
-                    pip install -r requirements.txt<br>
-                    python src/main.py<br>
-                    ```<br>
-                    <br>
-                    ## Technologies<br>
-                    - Python 3.11<br>
-                    - Django 4.2<br>
-                    - PostgreSQL<br>
-                    - Scikit-learn<br>
-                    - Chart.js
+                    <pre><code class="language-bash"># Student Performance Tracking System
+A web-based application for tracking student academic performance
+and generating predictive analytics.
+## Features
+- Student grade tracking and visualization
+- Performance prediction using machine learning
+- Interactive dashboards for tutors
+- Export reports to PDF/Excel
+## Installation
+```bash
+git clone https://github.com/username/project.git
+cd project
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python src/main.py
+```
+## Technologies
+- Python 3.11
+- Django 4.2
+- PostgreSQL
+- Scikit-learn
+- Chart.js</code></pre>
                 </div>
             </section>
 
             <!-- Slide 9: Version Control Fundamentals -->
-            <section>
+            <section data-slide-title="Version Control from Day One">
                 <h2>Version Control from Day One</h2>
                 <div class="highlight">
                     <strong>Start using Git immediately - it's your safety net!</strong>
@@ -457,44 +431,42 @@
                     <li>Demonstrate systematic development for your report</li>
                 </ul>
                 <div class="code-example">
-                    # Initialize Git repository<br>
-                    git init<br>
-                    <br>
-                    # First commit<br>
-                    git add .<br>
-                    git commit -m "Initial project setup with basic structure"<br>
-                    <br>
-                    # Connect to GitHub<br>
-                    git remote add origin https://github.com/username/project.git<br>
-                    git branch -M main<br>
-                    git push -u origin main
+                    <pre><code class="language-bash"># Initialize Git repository
+git init
+# First commit
+git add .
+git commit -m "Initial project setup with basic structure"
+# Connect to GitHub
+git remote add origin https://github.com/username/project.git
+git branch -M main
+git push -u origin main</code></pre>
                 </div>
             </section>
 
             <!-- Slide 10: Commit Message Best Practices -->
-            <section>
+            <section data-slide-title="Writing Good Commit Messages">
                 <h2>Writing Good Commit Messages</h2>
                 <h3>❌ Bad Commit Messages:</h3>
                 <div class="code-example">
-                    git commit -m "fixed stuff"<br>
-                    git commit -m "update"<br>
-                    git commit -m "asdfasdf"<br>
-                    git commit -m "final version"<br>
-                    git commit -m "final version 2"
+                    <pre><code class="language-bash">git commit -m "fixed stuff"
+git commit -m "update"
+git commit -m "asdfasdf"
+git commit -m "final version"
+git commit -m "final version 2"</code></pre>
                 </div>
                 <h3>✅ Good Commit Messages:</h3>
                 <div class="code-example">
-                    git commit -m "Add user authentication with JWT tokens"<br>
-                    git commit -m "Fix database connection timeout issue"<br>
-                    git commit -m "Implement student grade calculation algorithm"<br>
-                    git commit -m "Refactor data validation in forms module"<br>
-                    git commit -m "Update README with installation instructions"
+                    <pre><code class="language-bash">git commit -m "Add user authentication with JWT tokens"
+git commit -m "Fix database connection timeout issue"
+git commit -m "Implement student grade calculation algorithm"
+git commit -m "Refactor data validation in forms module"
+git commit -m "Update README with installation instructions"</code></pre>
                 </div>
                 <p><strong>Format:</strong> Start with a verb, be specific, explain what and why</p>
             </section>
 
             <!-- Slide 11: Task 1 - Project Setup -->
-            <section>
+            <section data-slide-title="Task 1: Initial Project Setup">
                 <h2>Task 1: Initial Project Setup</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -521,7 +493,7 @@
             </section>
 
             <!-- Slide 12: MVP - Minimum Viable Product -->
-            <section>
+            <section data-slide-title="The MVP Approach">
                 <h2>The MVP Approach</h2>
                 <div class="highlight">
                     <strong>Build the simplest working version first, then iterate</strong>
@@ -545,38 +517,35 @@
             </section>
 
             <!-- Slide 13: Breaking Down Features -->
-            <section>
+            <section data-slide-title="Breaking Features into Iterations">
                 <h2>Breaking Features into Iterations</h2>
                 <h3>Example: Building a Study Planner App</h3>
                 <div class="code-example">
-                    <strong>Iteration 1 (MVP - Week 5-7):</strong><br>
-                    - Create account and login<br>
-                    - Add study tasks with title and due date<br>
-                    - Mark tasks as complete<br>
-                    - Basic list view<br>
-                    <br>
-                    <strong>Iteration 2 (Week 8-10):</strong><br>
-                    - Add task categories/subjects<br>
-                    - Calendar view of tasks<br>
-                    - Edit and delete tasks<br>
-                    - Basic statistics (tasks completed)<br>
-                    <br>
-                    <strong>Iteration 3 (Week 11-13):</strong><br>
-                    - Task priorities and reminders<br>
-                    - Study time tracking<br>
-                    - Progress visualization<br>
-                    - Export study schedule<br>
-                    <br>
-                    <strong>Iteration 4 (Week 14-16):</strong><br>
-                    - AI study recommendations<br>
-                    - Collaboration features<br>
-                    - Mobile responsive design<br>
-                    - Performance optimization
+                    <pre><code class="language-plaintext">&lt;strong&gt;Iteration 1 (MVP - Week 5-7):&lt;/strong&gt;
+- Create account and login
+- Add study tasks with title and due date
+- Mark tasks as complete
+- Basic list view
+&lt;strong&gt;Iteration 2 (Week 8-10):&lt;/strong&gt;
+- Add task categories/subjects
+- Calendar view of tasks
+- Edit and delete tasks
+- Basic statistics (tasks completed)
+&lt;strong&gt;Iteration 3 (Week 11-13):&lt;/strong&gt;
+- Task priorities and reminders
+- Study time tracking
+- Progress visualization
+- Export study schedule
+&lt;strong&gt;Iteration 4 (Week 14-16):&lt;/strong&gt;
+- AI study recommendations
+- Collaboration features
+- Mobile responsive design
+- Performance optimization</code></pre>
                 </div>
             </section>
 
             <!-- Slide 14: Coding Standards -->
-            <section>
+            <section data-slide-title="Establishing Coding Standards">
                 <h2>Establishing Coding Standards</h2>
                 <div class="highlight">
                     <strong>Consistency is key to maintainable code</strong>
@@ -599,44 +568,40 @@
             </section>
 
             <!-- Slide 15: Code Examples - Good vs Bad -->
-            <section>
+            <section data-slide-title="Code Quality Examples">
                 <h2>Code Quality Examples</h2>
                 <h3>❌ Poorly Written Code:</h3>
                 <div class="code-example">
-                    def calc(a,b,c):<br>
-                        x=a+b*c #calculate result<br>
-                        return x<br>
-                    <br>
-                    result=calc(5,10,2)
+                    <pre><code class="language-python">def calc(a,b,c):
+x=a+b*c #calculate result
+return x
+result=calc(5,10,2)</code></pre>
                 </div>
                 <h3>✅ Well-Written Code:</h3>
                 <div class="code-example">
-                    def calculate_total_with_tax(base_price, quantity, tax_rate):<br>
-                        """<br>
-                        Calculate total price including tax.<br>
-                        <br>
-                        Args:<br>
-                            base_price (float): Price per item<br>
-                            quantity (int): Number of items<br>
-                            tax_rate (float): Tax rate as decimal (e.g., 0.2 for 20%)<br>
-                        <br>
-                        Returns:<br>
-                            float: Total price including tax<br>
-                        """<br>
-                        subtotal = base_price * quantity<br>
-                        total = subtotal * (1 + tax_rate)<br>
-                        return total<br>
-                    <br>
-                    final_price = calculate_total_with_tax(<br>
-                        base_price=50.0,<br>
-                        quantity=3,<br>
-                        tax_rate=0.2<br>
-                    )
+                    <pre><code class="language-python">def calculate_total_with_tax(base_price, quantity, tax_rate):
+"""
+Calculate total price including tax.
+Args:
+base_price (float): Price per item
+quantity (int): Number of items
+tax_rate (float): Tax rate as decimal (e.g., 0.2 for 20%)
+Returns:
+float: Total price including tax
+"""
+subtotal = base_price * quantity
+total = subtotal * (1 + tax_rate)
+return total
+final_price = calculate_total_with_tax(
+base_price=50.0,
+quantity=3,
+tax_rate=0.2
+)</code></pre>
                 </div>
             </section>
 
             <!-- Slide 16: Testing Strategy -->
-            <section>
+            <section data-slide-title="Building in Testing from the Start">
                 <h2>Building in Testing from the Start</h2>
                 <div class="highlight">
                     <strong>Write tests as you develop, not at the end</strong>
@@ -650,22 +615,20 @@
                 </ul>
                 <h3>Simple Testing Example (Python):</h3>
                 <div class="code-example">
-                    # tests/test_calculator.py<br>
-                    import pytest<br>
-                    from src.calculator import calculate_total_with_tax<br>
-                    <br>
-                    def test_calculate_total_basic():<br>
-                        result = calculate_total_with_tax(50.0, 3, 0.2)<br>
-                        assert result == 180.0<br>
-                    <br>
-                    def test_calculate_total_no_tax():<br>
-                        result = calculate_total_with_tax(25.0, 2, 0.0)<br>
-                        assert result == 50.0
+                    <pre><code class="language-python"># tests/test_calculator.py
+import pytest
+from src.calculator import calculate_total_with_tax
+def test_calculate_total_basic():
+result = calculate_total_with_tax(50.0, 3, 0.2)
+assert result == 180.0
+def test_calculate_total_no_tax():
+result = calculate_total_with_tax(25.0, 2, 0.0)
+assert result == 50.0</code></pre>
                 </div>
             </section>
 
             <!-- Slide 17: Documentation While Building -->
-            <section>
+            <section data-slide-title="Documenting as You Develop">
                 <h2>Documenting as You Develop</h2>
                 <h3>Why Document Early?</h3>
                 <ul>
@@ -683,35 +646,34 @@
                     <li><strong>Development Log:</strong> Weekly progress notes</li>
                 </ul>
                 <div class="code-example">
-                    docs/<br>
-                    ├── architecture.md      # System design decisions<br>
-                    ├── api-reference.md     # API documentation<br>
-                    ├── development-log.md   # Weekly progress<br>
-                    └── setup-guide.md       # Installation instructions
+                    <pre><code class="language-plaintext">docs/
+├── architecture.md      # System design decisions
+├── api-reference.md     # API documentation
+├── development-log.md   # Weekly progress
+└── setup-guide.md       # Installation instructions</code></pre>
                 </div>
             </section>
 
             <!-- Slide 18: Development Workflow -->
-            <section>
+            <section data-slide-title="Establishing a Development Workflow">
                 <h2>Establishing a Development Workflow</h2>
                 <h3>Recommended Daily/Weekly Routine:</h3>
                 <div class="code-example">
-                    <strong>Daily (30-60 minutes minimum):</strong><br>
-                    1. Review yesterday's progress<br>
-                    2. Pick one task from backlog<br>
-                    3. Implement feature/fix<br>
-                    4. Write tests<br>
-                    5. Commit with clear message<br>
-                    6. Push to GitHub<br>
-                    7. Update documentation<br>
-                    <br>
-                    <strong>Weekly:</strong><br>
-                    1. Review all commits<br>
-                    2. Update project roadmap<br>
-                    3. Test full application<br>
-                    4. Plan next week's tasks<br>
-                    5. Write development log entry<br>
-                    6. Prepare supervisor update
+                    <pre><code class="language-plaintext">&lt;strong&gt;Daily (30-60 minutes minimum):&lt;/strong&gt;
+1. Review yesterday's progress
+2. Pick one task from backlog
+3. Implement feature/fix
+4. Write tests
+5. Commit with clear message
+6. Push to GitHub
+7. Update documentation
+&lt;strong&gt;Weekly:&lt;/strong&gt;
+1. Review all commits
+2. Update project roadmap
+3. Test full application
+4. Plan next week's tasks
+5. Write development log entry
+6. Prepare supervisor update</code></pre>
                 </div>
                 <div class="warning-box">
                     <h3>⏰ Time Management Tip</h3>
@@ -720,7 +682,7 @@
             </section>
 
             <!-- Slide 19: Using Configuration Files -->
-            <section>
+            <section data-slide-title="Environment Variables & Configuration">
                 <h2>Environment Variables & Configuration</h2>
                 <div class="highlight">
                     <strong>Never hardcode sensitive information!</strong>
@@ -734,44 +696,42 @@
                 </ul>
                 <h3>Example .env File:</h3>
                 <div class="code-example">
-                    # .env (DO NOT commit this file!)<br>
-                    DATABASE_URL=postgresql://user:pass@localhost/mydb<br>
-                    SECRET_KEY=your-secret-key-here<br>
-                    API_KEY=your-api-key-here<br>
-                    DEBUG=True<br>
-                    EMAIL_HOST=smtp.gmail.com<br>
-                    EMAIL_PORT=587
+                    <pre><code class="language-plaintext"># .env (DO NOT commit this file!)
+DATABASE_URL=postgresql://user:pass@localhost/mydb
+SECRET_KEY=your-secret-key-here
+API_KEY=your-api-key-here
+DEBUG=True
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587</code></pre>
                 </div>
                 <h3>Example .env.example File:</h3>
                 <div class="code-example">
-                    # .env.example (commit this as a template)<br>
-                    DATABASE_URL=<br>
-                    SECRET_KEY=<br>
-                    API_KEY=<br>
-                    DEBUG=True<br>
-                    EMAIL_HOST=<br>
-                    EMAIL_PORT=
+                    <pre><code class="language-plaintext"># .env.example (commit this as a template)
+DATABASE_URL=
+SECRET_KEY=
+API_KEY=
+DEBUG=True
+EMAIL_HOST=
+EMAIL_PORT=</code></pre>
                 </div>
             </section>
 
             <!-- Slide 20: Dependency Management -->
-            <section>
+            <section data-slide-title="Managing Project Dependencies">
                 <h2>Managing Project Dependencies</h2>
                 <h3>Python Projects:</h3>
                 <div class="code-example">
-                    # Create requirements.txt<br>
-                    pip freeze > requirements.txt<br>
-                    <br>
-                    # Install from requirements.txt<br>
-                    pip install -r requirements.txt
+                    <pre><code class="language-plaintext"># Create requirements.txt
+pip freeze &gt; requirements.txt
+# Install from requirements.txt
+pip install -r requirements.txt</code></pre>
                 </div>
                 <h3>Node.js Projects:</h3>
                 <div class="code-example">
-                    # package.json automatically manages dependencies<br>
-                    npm install package-name --save<br>
-                    <br>
-                    # Install all dependencies<br>
-                    npm install
+                    <pre><code class="language-bash"># package.json automatically manages dependencies
+npm install package-name --save
+# Install all dependencies
+npm install</code></pre>
                 </div>
                 <h3>Best Practices:</h3>
                 <ul>
@@ -784,7 +744,7 @@
             </section>
 
             <!-- Slide 21: Debugging Strategies -->
-            <section>
+            <section data-slide-title="Debugging Effectively">
                 <h2>Debugging Effectively</h2>
                 <div class="highlight">
                     <strong>Debugging is a skill - develop it systematically</strong>
@@ -808,7 +768,7 @@
             </section>
 
             <!-- Slide 22: Task 2 - Initial Development -->
-            <section>
+            <section data-slide-title="Task 2: Build Your MVP">
                 <h2>Task 2: Build Your MVP</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -839,7 +799,7 @@
             </section>
 
             <!-- Slide 23: Code Review & Refactoring -->
-            <section>
+            <section data-slide-title="Self-Review and Refactoring">
                 <h2>Self-Review and Refactoring</h2>
                 <h3>Review Your Own Code:</h3>
                 <ul>
@@ -863,7 +823,7 @@
             </section>
 
             <!-- Slide 24: Performance Considerations -->
-            <section>
+            <section data-slide-title="Early Performance Thinking">
                 <h2>Early Performance Thinking</h2>
                 <div class="highlight">
                     <strong>"Premature optimization is the root of all evil" - Donald Knuth</strong>
@@ -885,7 +845,7 @@
             </section>
 
             <!-- Slide 25: Handling Technical Challenges -->
-            <section>
+            <section data-slide-title="When You Get Stuck">
                 <h2>When You Get Stuck</h2>
                 <h3>Problem-Solving Strategy:</h3>
                 <ol>
@@ -907,7 +867,7 @@
             </section>
 
             <!-- Slide 26: Maintaining Motivation -->
-            <section>
+            <section data-slide-title="Staying Motivated Throughout Development">
                 <h2>Staying Motivated Throughout Development</h2>
                 <h3>Strategies for Sustained Progress:</h3>
                 <ul>
@@ -926,7 +886,7 @@
             </section>
 
             <!-- Slide 27: Next Steps & Action Plan -->
-            <section>
+            <section data-slide-title="Your Action Plan This Week">
                 <h2>Your Action Plan This Week</h2>
                 <div class="task-box">
                     <h3>Immediate Actions (Today):</h3>
@@ -954,7 +914,7 @@
             </section>
 
             <!-- Slide 28: Closing Reminders -->
-            <section class="center">
+            <section class="center" data-slide-title="Key Takeaways">
                 <h2>Key Takeaways</h2>
                 <div class="highlight">
                     <h3>Remember:</h3>
@@ -973,15 +933,26 @@
                     <p><strong>Consistent small progress beats sporadic heroic efforts every time!</strong></p>
                     <p>30 minutes daily = 3.5 hours weekly = 90+ hours by submission</p>
                 </div>
-                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Contact:</strong> <a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 <p><strong>Next Week:</strong> Using GitHub & Project Management Tools</p>
             </section>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
             slideNumber: true,
@@ -989,7 +960,7 @@
             controls: true,
             center: false,
             mouseWheel: true,
-            transition: 'slide',
+            transition: 'none',
             width: '100%',
             height: '100%',
             margin: 0.04,

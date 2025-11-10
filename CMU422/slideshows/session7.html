@@ -5,54 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 7: JavaScript Events and Interactivity</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+        /* Preserve existing custom component styles */
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
-
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
+        
 
         /* Task box styling */
         .task-box {
@@ -67,16 +29,13 @@
 
         /* Code example styling */
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
 
         /* Highlight styling */
@@ -105,6 +64,13 @@
 
         .timeline-info li {
             margin-bottom: 0.2em;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Responsive design */
@@ -303,51 +269,32 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session6.html" title="Previous Session">&lt;</a>
+        <a href="session8.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU422: Web Design - Session 7</div>
                 <h1>JavaScript Events and Interactivity</h1>
-                <h3>CMU422: Fundamentals of Web Design - Session 7</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Building responsive user interfaces</p>
-                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Professional Web Design and Development</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand JavaScript event handling</li>
                     <li>Master different types of events</li>
@@ -358,8 +305,7 @@
             </section>
 
             <!-- Slide 3: What are Events? -->
-            <section>
-                <h2>What are JavaScript Events?</h2>
+            <section data-slide-title="What are JavaScript Events?"><h2>What are JavaScript Events?</h2>
                 <div class="highlight">
                     <strong>Events</strong> are actions or occurrences that happen in the browser
                 </div>
@@ -370,25 +316,24 @@
                     <li>Network events (AJAX responses)</li>
                 </ul>
                 <div class="code-example">
-                    // Event example<br>
-                    button.addEventListener('click', function() {<br>
-                    &nbsp;&nbsp;console.log('Button clicked!');<br>
-                    });
+                    <pre><code class="language-php">// Event example
+button.addEventListener('click', function() {
+console.log('Button clicked!');
+});</code></pre>
                 </div>
             </section>
 
             <!-- Slide 4: Event Types -->
-            <section>
-                <h2>Common Event Types</h2>
+            <section data-slide-title="Common Event Types"><h2>Common Event Types</h2>
                 <div class="code-example">
-                    // Mouse events<br>
-                    'click', 'dblclick', 'mouseenter', 'mouseleave'<br><br>
-                    // Keyboard events<br>
-                    'keydown', 'keyup', 'keypress'<br><br>
-                    // Form events<br>
-                    'submit', 'change', 'input', 'focus', 'blur'<br><br>
-                    // Document events<br>
-                    'load', 'DOMContentLoaded', 'resize', 'scroll'
+                    <pre><code class="language-markup">// Mouse events
+'click', 'dblclick', 'mouseenter', 'mouseleave'
+// Keyboard events
+'keydown', 'keyup', 'keypress'
+// Form events
+'submit', 'change', 'input', 'focus', 'blur'
+// Document events
+'load', 'DOMContentLoaded', 'resize', 'scroll'</code></pre>
                 </div>
                 <ul>
                     <li>Mouse events for user interactions</li>
@@ -399,19 +344,18 @@
             </section>
 
             <!-- Slide 5: Event Handling Methods -->
-            <section>
-                <h2>Event Handling Methods</h2>
+            <section data-slide-title="Event Handling Methods"><h2>Event Handling Methods</h2>
                 <div class="code-example">
-                    // Method 1: addEventListener (recommended)<br>
-                    element.addEventListener('click', function(event) {<br>
-                    &nbsp;&nbsp;console.log('Clicked!');<br>
-                    });<br><br>
-                    // Method 2: Inline event handlers<br>
-                    &lt;button onclick="handleClick()"&gt;Click me&lt;/button&gt;<br><br>
-                    // Method 3: Event properties<br>
-                    element.onclick = function() {<br>
-                    &nbsp;&nbsp;console.log('Clicked!');<br>
-                    };
+                    <pre><code class="language-php">// Method 1: addEventListener (recommended)
+element.addEventListener('click', function(event) {
+console.log('Clicked!');
+});
+// Method 2: Inline event handlers
+&lt;button onclick="handleClick()"&gt;Click me&lt;/button&gt;
+// Method 3: Event properties
+element.onclick = function() {
+console.log('Clicked!');
+};</code></pre>
                 </div>
                 <ul>
                     <li><code>addEventListener</code> is the modern approach</li>
@@ -459,17 +403,16 @@
             </section>
 
             <!-- Slide 6: Event Object -->
-            <section>
-                <h2>The Event Object</h2>
+            <section data-slide-title="The Event Object"><h2>The Event Object</h2>
                 <div class="code-example">
-                    element.addEventListener('click', function(event) {<br>
-                    &nbsp;&nbsp;console.log(event.type); // 'click'<br>
-                    &nbsp;&nbsp;console.log(event.target); // Element that was clicked<br>
-                    &nbsp;&nbsp;console.log(event.clientX); // Mouse X position<br>
-                    &nbsp;&nbsp;console.log(event.clientY); // Mouse Y position<br>
-                    &nbsp;&nbsp;event.preventDefault(); // Prevent default behavior<br>
-                    &nbsp;&nbsp;event.stopPropagation(); // Stop event bubbling<br>
-                    });
+                    <pre><code class="language-php">element.addEventListener('click', function(event) {
+console.log(event.type); // 'click'
+console.log(event.target); // Element that was clicked
+console.log(event.clientX); // Mouse X position
+console.log(event.clientY); // Mouse Y position
+event.preventDefault(); // Prevent default behavior
+event.stopPropagation(); // Stop event bubbling
+});</code></pre>
                 </div>
                 <ul>
                     <li>Contains information about the event</li>
@@ -479,21 +422,20 @@
             </section>
 
             <!-- Slide 7: Event Bubbling and Capturing -->
-            <section>
-                <h2>Event Bubbling and Capturing</h2>
+            <section data-slide-title="Event Bubbling and Capturing"><h2>Event Bubbling and Capturing</h2>
                 <div class="code-example">
-                    // Event bubbling (default)<br>
-                    parent.addEventListener('click', function() {<br>
-                    &nbsp;&nbsp;console.log('Parent clicked');<br>
-                    });<br><br>
-                    // Event capturing<br>
-                    parent.addEventListener('click', function() {<br>
-                    &nbsp;&nbsp;console.log('Parent clicked');<br>
-                    }, true); // true enables capturing<br><br>
-                    // Stop propagation<br>
-                    child.addEventListener('click', function(event) {<br>
-                    &nbsp;&nbsp;event.stopPropagation();<br>
-                    });
+                    <pre><code class="language-php">// Event bubbling (default)
+parent.addEventListener('click', function() {
+console.log('Parent clicked');
+});
+// Event capturing
+parent.addEventListener('click', function() {
+console.log('Parent clicked');
+}, true); // true enables capturing
+// Stop propagation
+child.addEventListener('click', function(event) {
+event.stopPropagation();
+});</code></pre>
                 </div>
                 <ul>
                     <li>Events bubble up from child to parent</li>
@@ -503,23 +445,22 @@
             </section>
 
             <!-- Slide 8: Form Events -->
-            <section>
-                <h2>Form Events</h2>
+            <section data-slide-title="Form Events"><h2>Form Events</h2>
                 <div class="code-example">
-                    const form = document.querySelector('form');<br><br>
-                    // Form submission<br>
-                    form.addEventListener('submit', function(event) {<br>
-                    &nbsp;&nbsp;event.preventDefault();<br>
-                    &nbsp;&nbsp;// Handle form data<br>
-                    });<br><br>
-                    // Input changes<br>
-                    input.addEventListener('input', function(event) {<br>
-                    &nbsp;&nbsp;console.log('Input value:', event.target.value);<br>
-                    });<br><br>
-                    // Focus events<br>
-                    input.addEventListener('focus', function() {<br>
-                    &nbsp;&nbsp;this.style.borderColor = 'blue';<br>
-                    });
+                    <pre><code class="language-php">const form = document.querySelector('form');
+// Form submission
+form.addEventListener('submit', function(event) {
+event.preventDefault();
+// Handle form data
+});
+// Input changes
+input.addEventListener('input', function(event) {
+console.log('Input value:', event.target.value);
+});
+// Focus events
+input.addEventListener('focus', function() {
+this.style.borderColor = 'blue';
+});</code></pre>
                 </div>
                 <ul>
                     <li><code>submit</code>: Form submission</li>
@@ -530,22 +471,21 @@
             </section>
 
             <!-- Slide 9: Keyboard Events -->
-            <section>
-                <h2>Keyboard Events</h2>
+            <section data-slide-title="Keyboard Events"><h2>Keyboard Events</h2>
                 <div class="code-example">
-                    document.addEventListener('keydown', function(event) {<br>
-                    &nbsp;&nbsp;console.log('Key pressed:', event.key);<br>
-                    &nbsp;&nbsp;console.log('Key code:', event.code);<br><br>
-                    &nbsp;&nbsp;// Check for specific keys<br>
-                    &nbsp;&nbsp;if (event.key === 'Enter') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Enter pressed!');<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;// Check for modifier keys<br>
-                    &nbsp;&nbsp;if (event.ctrlKey && event.key === 's') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;event.preventDefault();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Save shortcut!');<br>
-                    &nbsp;&nbsp;}<br>
-                    });
+                    <pre><code class="language-php">document.addEventListener('keydown', function(event) {
+console.log('Key pressed:', event.key);
+console.log('Key code:', event.code);
+// Check for specific keys
+if (event.key === 'Enter') {
+console.log('Enter pressed!');
+}
+// Check for modifier keys
+if (event.ctrlKey &amp;&amp; event.key === 's') {
+event.preventDefault();
+console.log('Save shortcut!');
+}
+});</code></pre>
                 </div>
                 <ul>
                     <li><code>keydown</code>: Key pressed down</li>
@@ -556,21 +496,20 @@
             </section>
 
             <!-- Slide 10: Mouse Events -->
-            <section>
-                <h2>Mouse Events</h2>
+            <section data-slide-title="Mouse Events"><h2>Mouse Events</h2>
                 <div class="code-example">
-                    element.addEventListener('click', function(event) {<br>
-                    &nbsp;&nbsp;console.log('Click at:', event.clientX, event.clientY);<br>
-                    });<br><br>
-                    element.addEventListener('mouseenter', function() {<br>
-                    &nbsp;&nbsp;this.style.backgroundColor = 'yellow';<br>
-                    });<br><br>
-                    element.addEventListener('mouseleave', function() {<br>
-                    &nbsp;&nbsp;this.style.backgroundColor = 'white';<br>
-                    });<br><br>
-                    element.addEventListener('mousemove', function(event) {<br>
-                    &nbsp;&nbsp;// Track mouse movement<br>
-                    });
+                    <pre><code class="language-php">element.addEventListener('click', function(event) {
+console.log('Click at:', event.clientX, event.clientY);
+});
+element.addEventListener('mouseenter', function() {
+this.style.backgroundColor = 'yellow';
+});
+element.addEventListener('mouseleave', function() {
+this.style.backgroundColor = 'white';
+});
+element.addEventListener('mousemove', function(event) {
+// Track mouse movement
+});</code></pre>
                 </div>
                 <ul>
                     <li><code>click</code>: Single click</li>
@@ -581,18 +520,17 @@
             </section>
 
             <!-- Slide 11: Event Delegation -->
-            <section>
-                <h2>Event Delegation</h2>
+            <section data-slide-title="Event Delegation"><h2>Event Delegation</h2>
                 <div class="code-example">
-                    // Instead of adding listeners to each item<br>
-                    const list = document.querySelector('ul');<br><br>
-                    list.addEventListener('click', function(event) {<br>
-                    &nbsp;&nbsp;if (event.target.tagName === 'LI') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('List item clicked:',
-                    event.target.textContent);<br>
-                    &nbsp;&nbsp;}<br>
-                    });<br><br>
-                    // Works for dynamically added items too
+                    <pre><code class="language-php">// Instead of adding listeners to each item
+const list = document.querySelector('ul');
+list.addEventListener('click', function(event) {
+if (event.target.tagName === 'LI') {
+console.log('List item clicked:',
+event.target.textContent);
+}
+});
+// Works for dynamically added items too</code></pre>
                 </div>
                 <ul>
                     <li>Attach event listener to parent element</li>
@@ -603,25 +541,24 @@
             </section>
 
             <!-- Slide 12: Form Validation -->
-            <section>
-                <h2>Client-Side Form Validation</h2>
+            <section data-slide-title="Client-Side Form Validation"><h2>Client-Side Form Validation</h2>
                 <div class="code-example">
-                    form.addEventListener('submit', function(event) {<br>
-                    &nbsp;&nbsp;event.preventDefault();<br><br>
-                    &nbsp;&nbsp;const email = document.getElementById('email').value;<br>
-                    &nbsp;&nbsp;const password = document.getElementById('password').value;<br><br>
-                    &nbsp;&nbsp;if (!email.includes('@')) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;showError('Please enter a valid email');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return;<br>
-                    &nbsp;&nbsp;}<br><br>
-                    &nbsp;&nbsp;if (password.length < 8) {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;showError('Password must be at least 8
-                        characters');<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;return;<br>
-                        &nbsp;&nbsp;}<br><br>
-                        &nbsp;&nbsp;// Form is valid, submit it<br>
-                        &nbsp;&nbsp;this.submit();<br>
-                        });
+                    <pre><code class="language-php">form.addEventListener('submit', function(event) {
+event.preventDefault();
+const email = document.getElementById('email').value;
+const password = document.getElementById('password').value;
+if (!email.includes('@')) {
+showError('Please enter a valid email');
+return;
+}
+if (password.length &lt; 8) {
+showError('Password must be at least 8
+characters');
+return;
+}
+// Form is valid, submit it
+this.submit();
+});</code></pre>
                 </div>
                 <ul>
                     <li>Validate before form submission</li>
@@ -632,25 +569,24 @@
             </section>
 
             <!-- Slide 13: AJAX and Fetch -->
-            <section>
-                <h2>AJAX and Fetch API</h2>
+            <section data-slide-title="AJAX and Fetch API"><h2>AJAX and Fetch API</h2>
                 <div class="code-example">
-                    // Fetch data from server<br>
-                    fetch('/api/data')<br>
-                    &nbsp;&nbsp;.then(response => response.json())<br>
-                    &nbsp;&nbsp;.then(data => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.log('Data received:', data);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;updateUI(data);<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.catch(error => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);<br>
-                    &nbsp;&nbsp;});<br><br>
-                    // POST data to server<br>
-                    fetch('/api/submit', {<br>
-                    &nbsp;&nbsp;method: 'POST',<br>
-                    &nbsp;&nbsp;headers: { 'Content-Type': 'application/json' },<br>
-                    &nbsp;&nbsp;body: JSON.stringify(data)<br>
-                    });
+                    <pre><code class="language-javascript">// Fetch data from server
+fetch('/api/data')
+.then(response =&gt; response.json())
+.then(data =&gt; {
+  console.log('Data received:', data);
+  updateUI(data);
+})
+.catch(error =&gt; {
+  console.error('Error:', error);
+});
+// POST data to server
+fetch('/api/submit', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data)
+});</code></pre>
                 </div>
                 <ul>
                     <li>Fetch API for HTTP requests</li>
@@ -661,20 +597,19 @@
             </section>
 
             <!-- Slide 14: Local Storage -->
-            <section>
-                <h2>Local Storage</h2>
+            <section data-slide-title="Local Storage"><h2>Local Storage</h2>
                 <div class="code-example">
-                    // Store data<br>
-                    localStorage.setItem('username', 'john');<br>
-                    localStorage.setItem('preferences', JSON.stringify({theme: 'dark'}));<br><br>
-                    // Retrieve data<br>
-                    const username = localStorage.getItem('username');<br>
-                    const preferences = JSON.parse(localStorage.getItem('preferences'));<br><br>
-                    // Remove data<br>
-                    localStorage.removeItem('username');<br>
-                    localStorage.clear(); // Remove all<br><br>
-                    // Session storage (cleared when tab closes)<br>
-                    sessionStorage.setItem('temp', 'value');
+                    <pre><code class="language-javascript">// Store data
+localStorage.setItem('username', 'john');
+localStorage.setItem('preferences', JSON.stringify({theme: 'dark'}));
+// Retrieve data
+const username = localStorage.getItem('username');
+const preferences = JSON.parse(localStorage.getItem('preferences'));
+// Remove data
+localStorage.removeItem('username');
+localStorage.clear(); // Remove all
+// Session storage (cleared when tab closes)
+sessionStorage.setItem('temp', 'value');</code></pre>
                 </div>
                 <ul>
                     <li>Store data in browser</li>
@@ -685,25 +620,24 @@
             </section>
 
             <!-- Slide 15: Animation and Transitions -->
-            <section>
-                <h2>Animation and Transitions</h2>
+            <section data-slide-title="Animation and Transitions"><h2>Animation and Transitions</h2>
                 <div class="code-example">
-                    // CSS transitions<br>
-                    element.style.transition = 'all 0.3s ease';<br>
-                    element.style.transform = 'scale(1.1)';<br><br>
-                    // JavaScript animations<br>
-                    function animate(element, duration) {<br>
-                    &nbsp;&nbsp;const start = performance.now();<br>
-                    &nbsp;&nbsp;function update(currentTime) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const elapsed = currentTime - start;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;const progress = Math.min(elapsed / duration, 1);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;element.style.opacity = progress;<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (progress < 1) {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;requestAnimationFrame(update);<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;}<br>
-                        &nbsp;&nbsp;requestAnimationFrame(update);<br>
-                        }
+                    <pre><code class="language-php">// CSS transitions
+element.style.transition = 'all 0.3s ease';
+element.style.transform = 'scale(1.1)';
+// JavaScript animations
+function animate(element, duration) {
+const start = performance.now();
+function update(currentTime) {
+const elapsed = currentTime - start;
+const progress = Math.min(elapsed / duration, 1);
+element.style.opacity = progress;
+if (progress &lt; 1) {
+requestAnimationFrame(update);
+}
+}
+requestAnimationFrame(update);
+}</code></pre>
                 </div>
                 <ul>
                     <li>CSS transitions for simple animations</li>
@@ -714,8 +648,7 @@
             </section>
 
             <!-- Slide 16: Accessibility -->
-            <section>
-                <h2>Accessibility Best Practices</h2>
+            <section data-slide-title="Accessibility Best Practices"><h2>Accessibility Best Practices</h2>
                 <ul>
                     <li>Use semantic HTML elements</li>
                     <li>Provide keyboard navigation</li>
@@ -726,44 +659,43 @@
                     <li>Use sufficient color contrast</li>
                 </ul>
                 <div class="code-example">
-                    // Keyboard navigation<br>
-                    element.addEventListener('keydown', function(event) {<br>
-                    &nbsp;&nbsp;if (event.key === 'Enter' || event.key === ' ') {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;event.preventDefault();<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;handleClick();<br>
-                    &nbsp;&nbsp;}<br>
-                    });<br><br>
-                    // ARIA attributes<br>
-                    element.setAttribute('aria-label', 'Close dialog');<br>
-                    element.setAttribute('role', 'button');
+                    <pre><code class="language-php">// Keyboard navigation
+element.addEventListener('keydown', function(event) {
+if (event.key === 'Enter' || event.key === ' ') {
+event.preventDefault();
+handleClick();
+}
+});
+// ARIA attributes
+element.setAttribute('aria-label', 'Close dialog');
+element.setAttribute('role', 'button');</code></pre>
                 </div>
             </section>
 
             <!-- Slide 17: Error Handling -->
-            <section>
-                <h2>Error Handling</h2>
+            <section data-slide-title="Error Handling"><h2>Error Handling</h2>
                 <div class="code-example">
-                    // Try-catch for synchronous code<br>
-                    try {<br>
-                    &nbsp;&nbsp;const result = riskyOperation();<br>
-                    &nbsp;&nbsp;console.log(result);<br>
-                    } catch (error) {<br>
-                    &nbsp;&nbsp;console.error('Error occurred:', error.message);<br>
-                    &nbsp;&nbsp;showUserFriendlyError();<br>
-                    }<br><br>
-                    // Promise error handling<br>
-                    fetch('/api/data')<br>
-                    &nbsp;&nbsp;.then(response => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (!response.ok) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('Network response was not
-                    ok');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return response.json();<br>
-                    &nbsp;&nbsp;})<br>
-                    &nbsp;&nbsp;.catch(error => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;console.error('Fetch error:', error);<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;showErrorMessage(error.message);<br>
-                    &nbsp;&nbsp;});
+                    <pre><code class="language-javascript">// Try-catch for synchronous code
+try {
+  const result = riskyOperation();
+  console.log(result);
+} catch (error) {
+console.error('Error occurred:', error.message);
+showUserFriendlyError();
+}
+// Promise error handling
+fetch('/api/data')
+.then(response =&gt; {
+  if (!response.ok) {
+    throw new Error('Network response was not
+    ok');
+  }
+  return response.json();
+})
+.catch(error =&gt; {
+  console.error('Fetch error:', error);
+  showErrorMessage(error.message);
+});</code></pre>
                 </div>
                 <ul>
                     <li>Handle errors gracefully</li>
@@ -774,8 +706,7 @@
             </section>
 
             <!-- Slide 18: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Interactive Form</h2>
+            <section data-slide-title="Task 1: Interactive Form" class="center"><h2>Task 1: Interactive Form</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -802,8 +733,7 @@
             </section>
 
             <!-- Slide 19: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -812,8 +742,7 @@
             </section>
 
             <!-- Slide 20: Event Best Practices -->
-            <section>
-                <h2>Event Handling Best Practices</h2>
+            <section data-slide-title="Event Handling Best Practices"><h2>Event Handling Best Practices</h2>
                 <ul>
                     <li>Use <code>addEventListener</code> instead of inline handlers</li>
                     <li>Remove event listeners when elements are destroyed</li>
@@ -824,22 +753,21 @@
                     <li>Test across different browsers</li>
                 </ul>
                 <div class="code-example">
-                    // Remove event listener<br>
-                    const handler = function() { console.log('clicked'); };<br>
-                    element.addEventListener('click', handler);<br>
-                    element.removeEventListener('click', handler);<br><br>
-                    // Throttle frequent events<br>
-                    let timeout;<br>
-                    element.addEventListener('scroll', function() {<br>
-                    &nbsp;&nbsp;clearTimeout(timeout);<br>
-                    &nbsp;&nbsp;timeout = setTimeout(handleScroll, 100);<br>
-                    });
+                    <pre><code class="language-php">// Remove event listener
+const handler = function() { console.log('clicked'); };
+element.addEventListener('click', handler);
+element.removeEventListener('click', handler);
+// Throttle frequent events
+let timeout;
+element.addEventListener('scroll', function() {
+clearTimeout(timeout);
+timeout = setTimeout(handleScroll, 100);
+});</code></pre>
                 </div>
             </section>
 
             <!-- Slide 21: Performance Considerations -->
-            <section>
-                <h2>Performance Considerations</h2>
+            <section data-slide-title="Performance Considerations"><h2>Performance Considerations</h2>
                 <ul>
                     <li>Throttle or debounce frequent events</li>
                     <li>Use event delegation for many elements</li>
@@ -849,22 +777,21 @@
                     <li>Consider using Intersection Observer for scroll events</li>
                 </ul>
                 <div class="code-example">
-                    // Passive event listener<br>
-                    element.addEventListener('touchstart', handler, { passive: true });<br><br>
-                    // Intersection Observer<br>
-                    const observer = new IntersectionObserver(entries => {<br>
-                    &nbsp;&nbsp;entries.forEach(entry => {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if (entry.isIntersecting) {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entry.target.classList.add('visible');<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                    &nbsp;&nbsp;});<br>
-                    });
+                    <pre><code class="language-javascript">// Passive event listener
+element.addEventListener('touchstart', handler, { passive: true });
+// Intersection Observer
+const observer = new IntersectionObserver(entries =&gt; {
+  entries.forEach(entry =&gt; {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+});</code></pre>
                 </div>
             </section>
 
             <!-- Slide 22: Debugging Events -->
-            <section>
-                <h2>Debugging Event Issues</h2>
+            <section data-slide-title="Debugging Event Issues"><h2>Debugging Event Issues</h2>
                 <ul>
                     <li>Use browser developer tools</li>
                     <li>Check event listener attachment</li>
@@ -874,42 +801,41 @@
                     <li>Test event timing</li>
                 </ul>
                 <div class="code-example">
-                    // Debug event listeners<br>
-                    element.addEventListener('click', function(event) {<br>
-                    &nbsp;&nbsp;console.log('Event target:', event.target);<br>
-                    &nbsp;&nbsp;console.log('Current target:', event.currentTarget);<br>
-                    &nbsp;&nbsp;console.log('Event phase:', event.eventPhase);<br>
-                    &nbsp;&nbsp;console.trace('Event call stack');<br>
-                    });<br><br>
-                    // Monitor all events<br>
-                    const originalAddEventListener = EventTarget.prototype.addEventListener;<br>
-                    EventTarget.prototype.addEventListener = function(type, listener, options) {<br>
-                    &nbsp;&nbsp;console.log('Adding listener:', type, 'to', this);<br>
-                    &nbsp;&nbsp;return originalAddEventListener.call(this, type, listener,
-                    options);<br>
-                    };
+                    <pre><code class="language-php">// Debug event listeners
+element.addEventListener('click', function(event) {
+console.log('Event target:', event.target);
+console.log('Current target:', event.currentTarget);
+console.log('Event phase:', event.eventPhase);
+console.trace('Event call stack');
+});
+// Monitor all events
+const originalAddEventListener = EventTarget.prototype.addEventListener;
+EventTarget.prototype.addEventListener = function(type, listener, options) {
+console.log('Adding listener:', type, 'to', this);
+return originalAddEventListener.call(this, type, listener,
+options);
+};</code></pre>
                 </div>
             </section>
 
             <!-- Slide 23: Mobile Events -->
-            <section>
-                <h2>Mobile-Specific Events</h2>
+            <section data-slide-title="Mobile-Specific Events"><h2>Mobile-Specific Events</h2>
                 <div class="code-example">
-                    // Touch events<br>
-                    element.addEventListener('touchstart', function(event) {<br>
-                    &nbsp;&nbsp;console.log('Touch started');<br>
-                    &nbsp;&nbsp;event.preventDefault(); // Prevent default touch behavior<br>
-                    });<br><br>
-                    element.addEventListener('touchmove', function(event) {<br>
-                    &nbsp;&nbsp;console.log('Touch moved');<br>
-                    });<br><br>
-                    element.addEventListener('touchend', function(event) {<br>
-                    &nbsp;&nbsp;console.log('Touch ended');<br>
-                    });<br><br>
-                    // Device orientation<br>
-                    window.addEventListener('orientationchange', function() {<br>
-                    &nbsp;&nbsp;console.log('Orientation changed');<br>
-                    });
+                    <pre><code class="language-php">// Touch events
+element.addEventListener('touchstart', function(event) {
+console.log('Touch started');
+event.preventDefault(); // Prevent default touch behavior
+});
+element.addEventListener('touchmove', function(event) {
+console.log('Touch moved');
+});
+element.addEventListener('touchend', function(event) {
+console.log('Touch ended');
+});
+// Device orientation
+window.addEventListener('orientationchange', function() {
+console.log('Orientation changed');
+});</code></pre>
                 </div>
                 <ul>
                     <li>Touch events for mobile interactions</li>
@@ -920,8 +846,7 @@
             </section>
 
             <!-- Slide 24: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Interactive Dashboard</h2>
+            <section data-slide-title="Task 2: Interactive Dashboard" class="center"><h2>Task 2: Interactive Dashboard</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -955,8 +880,7 @@
             </section>
 
             <!-- Slide 25: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>Events are the foundation of interactive web applications</li>
                     <li>Use modern event handling methods</li>
@@ -973,54 +897,30 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            // Ensure content is always visible
-            fitToParent: true,
-            // Better responsive behavior
-            responsive: true,
-            // Allow content to scroll within slides
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
 
         // DOM Manipulation Demo Functions

@@ -2,305 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 12: NET-TRAFFIC-01, NET-FIREWALL-01 & Final Assessment</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+    <title>CMU540 - Session 12: NET-TRAFFIC-01, NET-FIREWALL-01 & Final Assessment</title>
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
 
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
-
-        /* Task box styling */
-        .task-box {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Code example styling */
-        .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
-        }
-
-        /* Highlight styling */
-        .highlight {
-            background: #fff3cd;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #ffc107;
-            margin: 10px 0;
-        }
-
-        /* Timeline info styling */
-        .timeline-info {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-
-        .timeline-info ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .timeline-info li {
-            margin-bottom: 0.2em;
-        }
-
-        /* OS³ Studio specific styling */
-        .os3-studio {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Vulnerability examples */
-        .vulnerability {
-            background: #ffebee;
-            border: 2px solid #f44336;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Career focus styling */
-        .career-box {
-            background: #f0f8ff;
-            border: 2px solid #007bff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Demo links styling */
-        .demo-link {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Assessment styling */
-        .assessment-box {
-            background: #e8f5e8;
-            border: 2px solid #4caf50;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .reveal .slides section {
-                padding: 15px;
-            }
-
-            .reveal .slides section h1 {
-                font-size: 2em;
-            }
-
-            .reveal .slides section h2 {
-                font-size: 1.6em;
-            }
-
-            .reveal .slides section h3 {
-                font-size: 1.3em;
-            }
-
-            .task-box,
-            .code-example {
-                font-size: 0.9em;
-                padding: 15px;
-            }
-        }
-
-        /* Custom scrollbar for better UX */
-        .reveal .slides section::-webkit-scrollbar,
-        .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-track,
-        .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb,
-        .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb:hover,
-        .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Interactive content styling */
-        .interactive-content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .interactive-content h3 {
-            color: #2196f3;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .video-container,
-        .codepen-container {
-            position: relative;
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .video-container iframe,
-        .codepen-container iframe {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container iframe:hover,
-        .codepen-container iframe:hover {
-            transform: scale(1.02);
-        }
-
-        .interactive-description {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-            font-style: italic;
-        }
-    </style>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session11.html" title="Previous Session">&lt;</a>
+        <a href="../index.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <!-- Slide 1: Title -->
-            <section class="center">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
                 <h1>NET-TRAFFIC-01, NET-FIREWALL-01 & Final Assessment</h1>
-                <h2>Traffic Analysis, Firewall Configuration & Comprehensive Security Assessment</h2>
-                <h3>CMU540: Cyber Security - Session 12</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Understanding traffic analysis, firewall configuration and comprehensive security assessment</p>
-                <p><small>3-hour session • 45 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Session 12</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand network traffic analysis techniques</li>
@@ -312,8 +47,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 3: Traffic Analysis Overview -->
-            <section>
+            <section data-slide-title="Network Traffic Analysis">
                 <h2>Network Traffic Analysis</h2>
                 <div class="highlight">
                     <p><strong>NET-TRAFFIC-01:</strong> Traffic analysis involves monitoring and analyzing network communications to detect threats</p>
@@ -329,8 +63,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 4: Real-World Impact -->
-            <section>
+            <section data-slide-title="Real-World Impact">
                 <h2>Real-World Impact</h2>
                 <div class="vulnerability">
                     <h3>Notable Security Incidents:</h3>
@@ -343,184 +76,179 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Traffic Analysis Techniques -->
-            <section>
+            <section data-slide-title="Traffic Analysis Techniques">
                 <h2>Traffic Analysis Techniques</h2>
                 <h3>1. Packet Capture and Analysis</h3>
                 <div class="code-example">
-&lt;!-- Wireshark Filters --&gt;<br>
-# HTTP traffic<br>
-http<br>
-# HTTPS traffic<br>
-ssl<br>
-# DNS queries<br>
-dns<br>
-# Suspicious patterns<br>
-tcp.flags.syn == 1 and tcp.flags.ack == 0<br>
-# Source IP analysis<br>
-ip.src == 192.168.1.100<br>
-# Port scanning detection<br>
-tcp.port == 22 and tcp.flags.syn == 1
+                    <pre><code class="language-plaintext">&lt;!-- Wireshark Filters --&gt;
+# HTTP traffic
+http
+# HTTPS traffic
+ssl
+# DNS queries
+dns
+# Suspicious patterns
+tcp.flags.syn == 1 and tcp.flags.ack == 0
+# Source IP analysis
+ip.src == 192.168.1.100
+# Port scanning detection
+tcp.port == 22 and tcp.flags.syn == 1</code></pre>
                 </div>
                 <h3>2. Flow Analysis</h3>
                 <div class="code-example">
-&lt;!-- NetFlow Analysis --&gt;<br>
-# High bandwidth flows<br>
-flow-export destination 192.168.1.100 2055<br>
-flow-export version 9<br>
-flow-export template timeout-rate 1<br><br>
-&lt;!-- sFlow Configuration --&gt;<br>
-sflow agent-ip 192.168.1.1<br>
-sflow collector-ip 192.168.1.100<br>
-sflow sampling-rate 1000<br>
-sflow polling-interval 20
+                    <pre><code class="language-plaintext">&lt;!-- NetFlow Analysis --&gt;
+# High bandwidth flows
+flow-export destination 192.168.1.100 2055
+flow-export version 9
+flow-export template timeout-rate 1
+&lt;!-- sFlow Configuration --&gt;
+sflow agent-ip 192.168.1.1
+sflow collector-ip 192.168.1.100
+sflow sampling-rate 1000
+sflow polling-interval 20</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 6: Anomaly Detection -->
-            <section>
+            <section data-slide-title="Anomaly Detection">
                 <h2>Anomaly Detection</h2>
                 <h3>1. Statistical Analysis</h3>
                 <div class="code-example">
-&lt;!-- Baseline Traffic Patterns --&gt;<br>
-# Normal business hours<br>
-08:00-18:00: 1000-5000 packets/min<br>
-18:00-08:00: 100-500 packets/min<br><br>
-# Anomaly thresholds<br>
-Bandwidth: >200% of baseline<br>
-Connections: >500% of baseline<br>
-Failed logins: >10 per minute<br><br>
-# Alert conditions<br>
-if (traffic > baseline * 2) {<br>
-&nbsp;&nbsp;trigger_alert("High traffic volume");<br>}
+                    <pre><code class="language-plaintext">&lt;!-- Baseline Traffic Patterns --&gt;
+# Normal business hours
+08:00-18:00: 1000-5000 packets/min
+18:00-08:00: 100-500 packets/min
+# Anomaly thresholds
+Bandwidth: &gt;200% of baseline
+Connections: &gt;500% of baseline
+Failed logins: &gt;10 per minute
+# Alert conditions
+if (traffic &gt; baseline * 2) {
+  trigger_alert("High traffic volume");
+}</code></pre>
                 </div>
                 <h3>2. Behavioral Analysis</h3>
                 <div class="code-example">
-&lt;!-- User Behavior Analysis --&gt;<br>
-# Normal user patterns<br>
-- Login during business hours<br>
-- Access to authorized resources<br>
-- Normal data transfer volumes<br><br>
-# Suspicious patterns<br>
-- Login outside business hours<br>
-- Access to unauthorized resources<br>
-- Unusual data transfer patterns<br>
-- Multiple failed login attempts
+                    <pre><code class="language-plaintext">&lt;!-- User Behavior Analysis --&gt;
+# Normal user patterns
+- Login during business hours
+- Access to authorized resources
+- Normal data transfer volumes
+# Suspicious patterns
+- Login outside business hours
+- Access to unauthorized resources
+- Unusual data transfer patterns
+- Multiple failed login attempts</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 7: Firewall Configuration -->
-            <section>
+            <section data-slide-title="Firewall Configuration">
                 <h2>Firewall Configuration</h2>
                 <h3>1. iptables Rules</h3>
                 <div class="code-example">
-&lt;!-- Basic Firewall Rules --&gt;<br>
-# Default policies<br>
-iptables -P INPUT DROP<br>
-iptables -P FORWARD DROP<br>
-iptables -P OUTPUT ACCEPT<br><br>
-# Allow loopback<br>
-iptables -A INPUT -i lo -j ACCEPT<br>
-iptables -A OUTPUT -o lo -j ACCEPT<br><br>
-# Allow established connections<br>
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT<br><br>
-# Allow SSH from specific network<br>
-iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+                    <pre><code class="language-plaintext">&lt;!-- Basic Firewall Rules --&gt;
+# Default policies
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+# Allow loopback
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+# Allow SSH from specific network
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT</code></pre>
                 </div>
                 <h3>2. Advanced Firewall Rules</h3>
                 <div class="code-example">
-&lt;!-- Rate Limiting --&gt;<br>
-iptables -A INPUT -p tcp --dport 22 -m recent --set --name SSH<br>
-iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4 --name SSH -j DROP<br><br>
-&lt;!-- Port Knocking --&gt;<br>
-iptables -A INPUT -p tcp --dport 1000 -m recent --set --name KNOCK1<br>
-iptables -A INPUT -p tcp --dport 2000 -m recent --rcheck --seconds 10 --name KNOCK1 -m recent --set --name KNOCK2<br>
-iptables -A INPUT -p tcp --dport 3000 -m recent --rcheck --seconds 10 --name KNOCK2 -j ACCEPT
+                    <pre><code class="language-plaintext">&lt;!-- Rate Limiting --&gt;
+iptables -A INPUT -p tcp --dport 22 -m recent --set --name SSH
+iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4 --name SSH -j DROP
+&lt;!-- Port Knocking --&gt;
+iptables -A INPUT -p tcp --dport 1000 -m recent --set --name KNOCK1
+iptables -A INPUT -p tcp --dport 2000 -m recent --rcheck --seconds 10 --name KNOCK1 -m recent --set --name KNOCK2
+iptables -A INPUT -p tcp --dport 3000 -m recent --rcheck --seconds 10 --name KNOCK2 -j ACCEPT</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 8: Firewall Management -->
-            <section>
+            <section data-slide-title="Firewall Management">
                 <h2>Firewall Management</h2>
                 <h3>1. Zone-Based Firewalls</h3>
                 <div class="code-example">
-&lt;!-- Cisco Zone-Based Firewall --&gt;<br>
-# Define zones<br>
-zone security INSIDE<br>
-zone security OUTSIDE<br>
-zone security DMZ<br><br>
-# Define zone pairs<br>
-zone-pair security INSIDE-OUTSIDE source INSIDE destination OUTSIDE<br>
-zone-pair security OUTSIDE-DMZ source OUTSIDE destination DMZ<br><br>
-# Apply policies<br>
-class-map type inspect INSIDE-OUTSIDE<br>
-match access-group 100<br>
-policy-map type inspect INSIDE-OUTSIDE-POLICY<br>
-class INSIDE-OUTSIDE<br>
-inspect
+                    <pre><code class="language-plaintext">&lt;!-- Cisco Zone-Based Firewall --&gt;
+# Define zones
+zone security INSIDE
+zone security OUTSIDE
+zone security DMZ
+# Define zone pairs
+zone-pair security INSIDE-OUTSIDE source INSIDE destination OUTSIDE
+zone-pair security OUTSIDE-DMZ source OUTSIDE destination DMZ
+# Apply policies
+class-map type inspect INSIDE-OUTSIDE
+match access-group 100
+policy-map type inspect INSIDE-OUTSIDE-POLICY
+class INSIDE-OUTSIDE
+inspect</code></pre>
                 </div>
                 <h3>2. Application-Aware Firewalls</h3>
                 <div class="code-example">
-&lt;!-- Application Control --&gt;<br>
-# Block specific applications<br>
-application-control<br>
-&nbsp;&nbsp;block facebook<br>
-&nbsp;&nbsp;block youtube<br>
-&nbsp;&nbsp;allow business-apps<br><br>
-# Deep Packet Inspection<br>
-dpi<br>
-&nbsp;&nbsp;inspect http<br>
-&nbsp;&nbsp;inspect https<br>
-&nbsp;&nbsp;inspect ftp<br>
-&nbsp;&nbsp;inspect smtp
+                    <pre><code class="language-plaintext">&lt;!-- Application Control --&gt;
+# Block specific applications
+application-control
+  block facebook
+  block youtube
+  allow business-apps
+# Deep Packet Inspection
+dpi
+  inspect http
+  inspect https
+  inspect ftp
+  inspect smtp</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 9: Security Assessment Methodology -->
-            <section>
+            <section data-slide-title="Security Assessment Methodology">
                 <h2>Security Assessment Methodology</h2>
                 <h3>1. Assessment Phases</h3>
                 <div class="code-example">
-&lt;!-- Security Assessment Process --&gt;<br>
-1. Planning and Preparation<br>
-&nbsp;&nbsp;- Define scope and objectives<br>
-&nbsp;&nbsp;- Obtain authorization<br>
-&nbsp;&nbsp;- Gather information<br><br>
-2. Reconnaissance<br>
-&nbsp;&nbsp;- Network discovery<br>
-&nbsp;&nbsp;- Service enumeration<br>
-&nbsp;&nbsp;- Vulnerability scanning<br><br>
-3. Vulnerability Assessment<br>
-&nbsp;&nbsp;- Manual testing<br>
-&nbsp;&nbsp;- Automated scanning<br>
-&nbsp;&nbsp;- Risk analysis<br><br>
-4. Reporting<br>
-&nbsp;&nbsp;- Document findings<br>
-&nbsp;&nbsp;- Risk prioritization<br>
-&nbsp;&nbsp;- Remediation recommendations
+                    <pre><code class="language-plaintext">&lt;!-- Security Assessment Process --&gt;
+1. Planning and Preparation
+  - Define scope and objectives
+  - Obtain authorization
+  - Gather information
+2. Reconnaissance
+  - Network discovery
+  - Service enumeration
+  - Vulnerability scanning
+3. Vulnerability Assessment
+  - Manual testing
+  - Automated scanning
+  - Risk analysis
+4. Reporting
+  - Document findings
+  - Risk prioritization
+  - Remediation recommendations</code></pre>
                 </div>
                 <h3>2. Testing Techniques</h3>
                 <div class="code-example">
-&lt;!-- Testing Techniques --&gt;<br>
-# Network Testing<br>
-- Port scanning<br>
-- Service enumeration<br>
-- Protocol analysis<br>
-- Traffic analysis<br><br>
-# Application Testing<br>
-- Web application scanning<br>
-- Authentication testing<br>
-- Input validation testing<br>
-- Session management testing<br><br>
-# Social Engineering<br>
-- Phishing simulations<br>
-- Physical security testing<br>
-- Awareness assessment
+                    <pre><code class="language-plaintext">&lt;!-- Testing Techniques --&gt;
+# Network Testing
+- Port scanning
+- Service enumeration
+- Protocol analysis
+- Traffic analysis
+# Application Testing
+- Web application scanning
+- Authentication testing
+- Input validation testing
+- Session management testing
+# Social Engineering
+- Phishing simulations
+- Physical security testing
+- Awareness assessment</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 10: Career Opportunities -->
-            <section>
+            <section data-slide-title="Career Opportunities in Cybersecurity">
                 <h2>Career Opportunities in Cybersecurity</h2>
                 <div class="career-box">
                     <h3>Cybersecurity Roles:</h3>
@@ -536,8 +264,7 @@ dpi<br>
                 </div>
             </section>
 
-            <!-- Slide 11: OS³ Studio Introduction -->
-            <section>
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
                 <h2>OS³ Newman Cyber Security Lab</h2>
                 <div class="os3-studio">
                     <h3>NET-TRAFFIC-01, NET-FIREWALL-01 & Final Assessment Lab Environment</h3>
@@ -552,8 +279,7 @@ dpi<br>
                 </div>
             </section>
 
-            <!-- Slide 12: Web Demos and Tools -->
-            <section>
+            <section data-slide-title="Web Demos and Tools">
                 <h2>Web Demos and Tools</h2>
                 <div class="demo-link">
                     <h3>Security Assessment Tools:</h3>
@@ -567,8 +293,7 @@ dpi<br>
                 </div>
             </section>
 
-            <!-- Slide 13: Case Study -->
-            <section>
+            <section data-slide-title="Case Study: SolarWinds Supply Chain Attack">
                 <h2>Case Study: SolarWinds Supply Chain Attack</h2>
                 <div class="vulnerability">
                     <h3>2020 SolarWinds Supply Chain Attack</h3>
@@ -582,8 +307,7 @@ dpi<br>
                 </div>
             </section>
 
-            <!-- Slide 14: Summary of Assessment Areas -->
-            <section>
+            <section data-slide-title="Summary: Comprehensive Security Assessment Areas">
                 <h2>Summary: Comprehensive Security Assessment Areas</h2>
                 <div class="highlight">
                     <h3>Key Assessment Areas:</h3>
@@ -599,8 +323,7 @@ dpi<br>
                 </div>
             </section>
 
-            <!-- Task 1: Traffic Analysis and Firewall Configuration -->
-            <section>
+            <section data-slide-title="Task 1: Traffic Analysis and Firewall Configuration">
                 <h2>Task 1: Traffic Analysis and Firewall Configuration</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -622,8 +345,7 @@ dpi<br>
                 </div>
             </section>
 
-            <!-- Slide 15: Break/Catch Up -->
-            <section class="center">
+            <section class="center" data-slide-title="Break Time">
                 <h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
@@ -632,157 +354,154 @@ dpi<br>
                 </div>
             </section>
 
-            <!-- Slide 16: Incident Response -->
-            <section>
+            <section data-slide-title="Incident Response">
                 <h2>Incident Response</h2>
                 
                 <h3>1. Incident Response Process</h3>
                 <div class="code-example">
-&lt;!-- Incident Response Phases --&gt;<br>
-1. Preparation<br>
-&nbsp;&nbsp;- Incident response plan<br>
-&nbsp;&nbsp;- Team roles and responsibilities<br>
-&nbsp;&nbsp;- Communication procedures<br><br>
-2. Identification<br>
-&nbsp;&nbsp;- Detect security incidents<br>
-&nbsp;&nbsp;- Analyze indicators of compromise<br>
-&nbsp;&nbsp;- Assess impact and scope<br><br>
-3. Containment<br>
-&nbsp;&nbsp;- Isolate affected systems<br>
-&nbsp;&nbsp;- Prevent further damage<br>
-&nbsp;&nbsp;- Preserve evidence<br><br>
-4. Eradication<br>
-&nbsp;&nbsp;- Remove threats<br>
-&nbsp;&nbsp;- Patch vulnerabilities<br>
-&nbsp;&nbsp;- Strengthen defenses<br><br>
-5. Recovery<br>
-&nbsp;&nbsp;- Restore systems<br>
-&nbsp;&nbsp;- Monitor for reoccurrence<br>
-&nbsp;&nbsp;- Validate security<br><br>
-6. Lessons Learned<br>
-&nbsp;&nbsp;- Document incident<br>
-&nbsp;&nbsp;- Update procedures<br>
-&nbsp;&nbsp;- Improve security
+                    <pre><code class="language-plaintext">&lt;!-- Incident Response Phases --&gt;
+1. Preparation
+  - Incident response plan
+  - Team roles and responsibilities
+  - Communication procedures
+2. Identification
+  - Detect security incidents
+  - Analyze indicators of compromise
+  - Assess impact and scope
+3. Containment
+  - Isolate affected systems
+  - Prevent further damage
+  - Preserve evidence
+4. Eradication
+  - Remove threats
+  - Patch vulnerabilities
+  - Strengthen defenses
+5. Recovery
+  - Restore systems
+  - Monitor for reoccurrence
+  - Validate security
+6. Lessons Learned
+  - Document incident
+  - Update procedures
+  - Improve security</code></pre>
                 </div>
 
                 <h3>2. Digital Forensics</h3>
                 <div class="code-example">
-&lt;!-- Forensic Analysis --&gt;<br>
-# Memory analysis<br>
-volatility -f memory.dump --profile=Win7SP1x64 pslist<br>
-volatility -f memory.dump --profile=Win7SP1x64 netscan<br><br>
-# Disk analysis<br>
-autopsy<br>
-sleuthkit<br><br>
-# Network forensics<br>
-wireshark<br>
-tshark -r capture.pcap -T fields -e ip.src -e ip.dst<br><br>
-# Timeline analysis<br>
-log2timeline.py timeline.csv /path/to/evidence
+                    <pre><code class="language-plaintext">&lt;!-- Forensic Analysis --&gt;
+# Memory analysis
+volatility -f memory.dump --profile=Win7SP1x64 pslist
+volatility -f memory.dump --profile=Win7SP1x64 netscan
+# Disk analysis
+autopsy
+sleuthkit
+# Network forensics
+wireshark
+tshark -r capture.pcap -T fields -e ip.src -e ip.dst
+# Timeline analysis
+log2timeline.py timeline.csv /path/to/evidence</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 17: Security Monitoring -->
-            <section>
+            <section data-slide-title="Security Monitoring">
                 <h2>Security Monitoring</h2>
                 
                 <h3>1. SIEM Implementation</h3>
                 <div class="code-example">
-&lt;!-- ELK Stack Configuration --&gt;<br>
-# Elasticsearch configuration<br>
-cluster.name: security-cluster<br>
-node.name: security-node-1<br>
-network.host: 0.0.0.0<br>
-http.port: 9200<br><br>
-# Logstash configuration<br>
-input {<br>
-&nbsp;&nbsp;beats {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;port => 5044<br>
-&nbsp;&nbsp;}<br>
-}<br><br>
-filter {<br>
-&nbsp;&nbsp;if [fields][log_type] == "security" {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;grok {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{IP:source_ip} %{GREEDYDATA:message}" }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-&nbsp;&nbsp;}<br>}
+                    <pre><code class="language-javascript">&lt;!-- ELK Stack Configuration --&gt;
+# Elasticsearch configuration
+cluster.name: security-cluster
+node.name: security-node-1
+network.host: 0.0.0.0
+http.port: 9200
+# Logstash configuration
+input {
+  beats {
+    port =&gt; 5044
+  }
+}
+filter {
+  if [fields][log_type] == "security" {
+    grok {
+      match =&gt; { "message" =&gt; "%{SYSLOGTIMESTAMP:timestamp} %{IP:source_ip} %{GREEDYDATA:message}" }
+    }
+  }
+}</code></pre>
                 </div>
 
                 <h3>2. Threat Intelligence</h3>
                 <div class="code-example">
-&lt;!-- Threat Intelligence Feeds --&gt;<br>
-# IOC (Indicators of Compromise)<br>
-- IP addresses<br>
-- Domain names<br>
-- File hashes<br>
-- Email addresses<br><br>
-# Threat Intelligence Sources<br>
-- Commercial feeds<br>
-- Open source feeds<br>
-- Government sources<br>
-- Industry sharing<br><br>
-# Integration with SIEM<br>
-- Automated correlation<br>
-- Real-time alerts<br>
-- Historical analysis<br>
-- Trend analysis
+                    <pre><code class="language-plaintext">&lt;!-- Threat Intelligence Feeds --&gt;
+# IOC (Indicators of Compromise)
+- IP addresses
+- Domain names
+- File hashes
+- Email addresses
+# Threat Intelligence Sources
+- Commercial feeds
+- Open source feeds
+- Government sources
+- Industry sharing
+# Integration with SIEM
+- Automated correlation
+- Real-time alerts
+- Historical analysis
+- Trend analysis</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 18: Compliance and Governance -->
-            <section>
+            <section data-slide-title="Compliance and Governance">
                 <h2>Compliance and Governance</h2>
                 
                 <h3>1. Security Frameworks</h3>
                 <div class="code-example">
-&lt;!-- Security Frameworks --&gt;<br>
-# NIST Cybersecurity Framework<br>
-- Identify: Asset management, Risk assessment<br>
-- Protect: Access control, Data security<br>
-- Detect: Monitoring, Detection processes<br>
-- Respond: Response planning, Communications<br>
-- Recover: Recovery planning, Improvements<br><br>
-# ISO 27001<br>
-- Information security management system<br>
-- Risk management<br>
-- Security controls<br>
-- Continuous improvement<br><br>
-# COBIT<br>
-- IT governance framework<br>
-- Process management<br>
-- Control objectives<br>
-- Maturity models
+                    <pre><code class="language-plaintext">&lt;!-- Security Frameworks --&gt;
+# NIST Cybersecurity Framework
+- Identify: Asset management, Risk assessment
+- Protect: Access control, Data security
+- Detect: Monitoring, Detection processes
+- Respond: Response planning, Communications
+- Recover: Recovery planning, Improvements
+# ISO 27001
+- Information security management system
+- Risk management
+- Security controls
+- Continuous improvement
+# COBIT
+- IT governance framework
+- Process management
+- Control objectives
+- Maturity models</code></pre>
                 </div>
 
                 <h3>2. Risk Management</h3>
                 <div class="code-example">
-&lt;!-- Risk Assessment Process --&gt;<br>
-1. Asset Identification<br>
-&nbsp;&nbsp;- Hardware assets<br>
-&nbsp;&nbsp;- Software assets<br>
-&nbsp;&nbsp;- Data assets<br>
-&nbsp;&nbsp;- Human assets<br><br>
-2. Threat Analysis<br>
-&nbsp;&nbsp;- External threats<br>
-&nbsp;&nbsp;- Internal threats<br>
-&nbsp;&nbsp;- Threat likelihood<br>
-&nbsp;&nbsp;- Threat impact<br><br>
-3. Vulnerability Assessment<br>
-&nbsp;&nbsp;- Technical vulnerabilities<br>
-&nbsp;&nbsp;- Process vulnerabilities<br>
-&nbsp;&nbsp;- Human vulnerabilities<br><br>
-4. Risk Calculation<br>
-&nbsp;&nbsp;Risk = Threat × Vulnerability × Impact<br><br>
-5. Risk Treatment<br>
-&nbsp;&nbsp;- Accept<br>
-&nbsp;&nbsp;- Avoid<br>
-&nbsp;&nbsp;- Mitigate<br>
-&nbsp;&nbsp;- Transfer
+                    <pre><code class="language-plaintext">&lt;!-- Risk Assessment Process --&gt;
+1. Asset Identification
+  - Hardware assets
+  - Software assets
+  - Data assets
+  - Human assets
+2. Threat Analysis
+  - External threats
+  - Internal threats
+  - Threat likelihood
+  - Threat impact
+3. Vulnerability Assessment
+  - Technical vulnerabilities
+  - Process vulnerabilities
+  - Human vulnerabilities
+4. Risk Calculation
+  Risk = Threat × Vulnerability × Impact
+5. Risk Treatment
+  - Accept
+  - Avoid
+  - Mitigate
+  - Transfer</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 19: Career Development -->
-            <section>
+            <section data-slide-title="Career Development in Cybersecurity">
                 <h2>Career Development in Cybersecurity</h2>
                 <div class="career-box">
                     <h3>Next Steps:</h3>
@@ -797,8 +516,7 @@ filter {<br>
                 </div>
             </section>
 
-            <!-- Task 2: Final Assessment -->
-            <section>
+            <section data-slide-title="Task 2: Final Comprehensive Security Assessment">
                 <h2>Task 2: Final Comprehensive Security Assessment</h2>
                 <div class="assessment-box">
                     <h3>Objective:</h3>
@@ -820,8 +538,7 @@ filter {<br>
                 </div>
             </section>
 
-            <!-- Slide 20: Course Summary -->
-            <section>
+            <section data-slide-title="Course Summary">
                 <h2>Course Summary</h2>
                 <div class="highlight">
                     <h3>CMU540: Cyber Security - Complete Course Coverage:</h3>
@@ -835,8 +552,7 @@ filter {<br>
                 </div>
             </section>
 
-            <!-- Slide 21: Further Activity -->
-            <section>
+            <section data-slide-title="Further Activity: Advanced Security Analysis">
                 <h2>Further Activity: Advanced Security Analysis</h2>
                 <div class="os3-studio">
                     <h3>Advanced Students - Comprehensive Analysis:</h3>
@@ -852,8 +568,7 @@ filter {<br>
                 </div>
             </section>
 
-            <!-- Slide 22: Final Summary -->
-            <section>
+            <section data-slide-title="Final Session Summary">
                 <h2>Final Session Summary</h2>
                 <div class="highlight">
                     <h3>Key Takeaways:</h3>
@@ -868,67 +583,39 @@ filter {<br>
                 </div>
             </section>
 
-            <!-- Slide 23: Course Completion -->
-            <section class="center">
+            <section class="center" data-slide-title="Course Completion">
                 <h2>Course Completion</h2>
-                <div class="timeline-info">
-                    <h3>Congratulations!</h3>
-                    <ul>
-                        <li>CMU540: Cyber Security course completed</li>
-                        <li>Comprehensive understanding of cybersecurity</li>
-                        <li>Hands-on experience with OS³ Studio</li>
-                        <li>Industry-standard security practices learned</li>
-                        <li>Career pathways explored</li>
-                        <li>Ready for advanced cybersecurity roles</li>
-                    </ul>
-                    <p><strong>Next Steps:</strong> Continue learning, practice with tools, consider certifications</p>
-                </div>
+                
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: false,
-            preloadIframes: null,
-            autoAnimate: true,
-            autoAnimateMatcher: null,
-            autoAnimateEasing: 'ease',
-            autoAnimateDuration: 1.0,
-            autoAnimateUnmatched: true,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: null,
-            defaultTiming: null,
-            mouseWheel: false,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            disableLayout: false
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

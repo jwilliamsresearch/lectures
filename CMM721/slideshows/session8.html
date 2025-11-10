@@ -2,85 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 8: Django REST Framework</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        .reveal .slides section { text-align: left; padding: 20px; box-sizing: border-box; overflow-y: auto; max-height: 100vh; }
-        .reveal .slides section.center { text-align: center; }
-        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
-        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
-        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
-        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
-        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
-        .reveal .slides section li { margin-bottom: 0.3em; }
-        .task-box { background: linear-gradient(135deg, #f3e5f5 0%, #e1f5fe 100%); border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; max-height: 60vh; overflow-y: auto; box-shadow: 0 2px 8px rgba(155, 89, 182, 0.1); }
-        .code-example { background: #2c3e50; color: #ecf0f1; border: 1px solid #34495e; border-radius: 5px; padding: 15px; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; margin: 10px 0; font-size: 0.9em; line-height: 1.4; max-height: 40vh; overflow-y: auto; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
-        .highlight { background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); padding: 10px; border-radius: 5px; border-left: 4px solid #9b59b6; margin: 10px 0; box-shadow: 0 1px 4px rgba(155, 89, 182, 0.2); }
-        .timeline-info { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 0.9em; }
-        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
-        .timeline-info li { margin-bottom: 0.2em; }
-        .demo-container { background: #fff; border: 2px solid #9b59b6; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.2); }
-        .demo-container h3 { color: #9b59b6; margin-top: 0; }
-        .api-endpoint { background: #2c3e50; color: #ecf0f1; padding: 10px 15px; border-radius: 5px; font-family: monospace; margin: 10px 0; display: flex; align-items: center; gap: 10px; }
-        .method-badge { padding: 5px 10px; border-radius: 3px; font-weight: bold; font-size: 0.9em; }
-        .method-get { background: #27ae60; color: white; }
-        .method-post { background: #3498db; color: white; }
-        .method-put { background: #f39c12; color: white; }
-        .method-delete { background: #e74c3c; color: white; }
-        .json-example { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 0.85em; overflow-x: auto; }
-        .json-key { color: #9cdcfe; }
-        .json-string { color: #ce9178; }
-        .json-number { color: #b5cea8; }
-        .json-boolean { color: #569cd6; }
-        @media (max-width: 768px) {
-            .reveal .slides section { padding: 15px; }
-            .reveal .slides section h1 { font-size: 2em; }
-            .reveal .slides section h2 { font-size: 1.6em; }
-            .reveal .slides section h3 { font-size: 1.3em; }
-            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
-        }
-        .reveal .slides section::-webkit-scrollbar, .task-box::-webkit-scrollbar, .code-example::-webkit-scrollbar { width: 8px; }
-        .reveal .slides section::-webkit-scrollbar-track, .task-box::-webkit-scrollbar-track, .code-example::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        .reveal .slides section::-webkit-scrollbar-thumb, .task-box::-webkit-scrollbar-thumb, .code-example::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-        .reveal .slides section::-webkit-scrollbar-thumb:hover, .task-box::-webkit-scrollbar-thumb:hover, .code-example::-webkit-scrollbar-thumb:hover { background: #555; }
-    </style>
+    <title>CMM721 - Session 8: Django REST Framework</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%); color: white; padding: 12px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4); transition: all 0.3s ease; display: inline-block;"
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.6)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.4)'">
-            ← Back to Module
-        </a>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session7.html" title="Previous Session">&lt;</a>
+        <a href="session9.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <section class="center">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
                 <h1>Django REST Framework</h1>
-                <h3>CMM721: Web Application Development - Session 8</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Masters Level Conversion Course</p>
-                <p><small>3-hour session • 18 slides • 2 tasks • API testing demos</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Session 8</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand REST API principles</li>
@@ -92,7 +47,7 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="What is REST?">
                 <h2>What is REST?</h2>
                 <div class="highlight">
                     <strong>REST:</strong> Representational State Transfer
@@ -115,48 +70,44 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Django REST Framework (DRF)">
                 <h2>Django REST Framework (DRF)</h2>
                 <h3>Installation:</h3>
                 <div class="code-example">
-                    # Install DRF<br>
-                    pip install djangorestframework<br><br>
-                    
-                    # Add to INSTALLED_APPS in settings.py<br>
-                    INSTALLED_APPS = [<br>
-                    &nbsp;&nbsp;...<br>
-                    &nbsp;&nbsp;'rest_framework',<br>
-                    ]<br><br>
-                    
-                    # Add REST Framework settings<br>
-                    REST_FRAMEWORK = {<br>
-                    &nbsp;&nbsp;'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',<br>
-                    &nbsp;&nbsp;'PAGE_SIZE': 10<br>
-                    }
+                    <pre><code class="language-python"># Install DRF
+pip install djangorestframework
+# Add to INSTALLED_APPS in settings.py
+INSTALLED_APPS = [
+...
+'rest_framework',
+]
+# Add REST Framework settings
+REST_FRAMEWORK = {
+'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+'PAGE_SIZE': 10
+}</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Serializers">
                 <h2>Serializers</h2>
                 <div class="highlight">
                     <strong>Serializer:</strong> Converts complex data (models) ↔ JSON
                 </div>
                 <div class="code-example">
-                    # serializers.py<br>
-                    from rest_framework import serializers<br>
-                    from .models import Post<br><br>
-                    
-                    class PostSerializer(serializers.ModelSerializer):<br>
-                    &nbsp;&nbsp;author_name = serializers.CharField(source='author.username', read_only=True)<br><br>
-                    
-                    &nbsp;&nbsp;class Meta:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;model = Post<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;fields = ['id', 'title', 'content', 'author', 'author_name', 'created_at']<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;read_only_fields = ['id', 'created_at']
+                    <pre><code class="language-python"># serializers.py
+from rest_framework import serializers
+from .models import Post
+class PostSerializer(serializers.ModelSerializer):
+author_name = serializers.CharField(source='author.username', read_only=True)
+class Meta:
+model = Post
+fields = ['id', 'title', 'content', 'author', 'author_name', 'created_at']
+read_only_fields = ['id', 'created_at']</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 Serialization Example">
                 <h2>🎯 Serialization Example</h2>
                 <div class="demo-container">
                     <h3>Django Model → JSON</h3>
@@ -189,82 +140,73 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="API Views">
                 <h2>API Views</h2>
                 <h3>Function-Based View:</h3>
                 <div class="code-example">
-                    from rest_framework.decorators import api_view<br>
-                    from rest_framework.response import Response<br>
-                    from rest_framework import status<br><br>
-                    
-                    @api_view(['GET', 'POST'])<br>
-                    def post_list(request):<br>
-                    &nbsp;&nbsp;if request.method == 'GET':<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;posts = Post.objects.all()<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;serializer = PostSerializer(posts, many=True)<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return Response(serializer.data)<br><br>
-                    
-                    &nbsp;&nbsp;elif request.method == 'POST':<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;serializer = PostSerializer(data=request.data)<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if serializer.is_valid():<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serializer.save()<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return Response(serializer.data, status=status.HTTP_201_CREATED)<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    <pre><code class="language-python">from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+@api_view(['GET', 'POST'])
+def post_list(request):
+if request.method == 'GET':
+posts = Post.objects.all()
+serializer = PostSerializer(posts, many=True)
+return Response(serializer.data)
+elif request.method == 'POST':
+serializer = PostSerializer(data=request.data)
+if serializer.is_valid():
+serializer.save()
+return Response(serializer.data, status=status.HTTP_201_CREATED)
+return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Class-Based Views">
                 <h2>Class-Based Views</h2>
                 <div class="code-example">
-                    from rest_framework import generics<br><br>
-                    
-                    class PostListCreate(generics.ListCreateAPIView):<br>
-                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
-                    &nbsp;&nbsp;serializer_class = PostSerializer<br><br>
-                    
-                    class PostDetail(generics.RetrieveUpdateDestroyAPIView):<br>
-                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
-                    &nbsp;&nbsp;serializer_class = PostSerializer
+                    <pre><code class="language-python">from rest_framework import generics
+class PostListCreate(generics.ListCreateAPIView):
+queryset = Post.objects.all()
+serializer_class = PostSerializer
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+queryset = Post.objects.all()
+serializer_class = PostSerializer</code></pre>
                 </div>
                 <h3>URL Configuration:</h3>
                 <div class="code-example">
-                    from django.urls import path<br>
-                    from . import views<br><br>
-                    
-                    urlpatterns = [<br>
-                    &nbsp;&nbsp;path('api/posts/', views.PostListCreate.as_view()),<br>
-                    &nbsp;&nbsp;path('api/posts/&lt;int:pk&gt;/', views.PostDetail.as_view()),<br>
-                    ]
+                    <pre><code class="language-python">from django.urls import path
+from . import views
+urlpatterns = [
+path('api/posts/', views.PostListCreate.as_view()),
+path('api/posts/&lt;int:pk&gt;/', views.PostDetail.as_view()),
+]</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="ViewSets and Routers">
                 <h2>ViewSets and Routers</h2>
                 <div class="code-example">
-                    # views.py<br>
-                    from rest_framework import viewsets<br><br>
-                    
-                    class PostViewSet(viewsets.ModelViewSet):<br>
-                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
-                    &nbsp;&nbsp;serializer_class = PostSerializer<br><br>
-                    
-                    # urls.py<br>
-                    from rest_framework.routers import DefaultRouter<br>
-                    from . import views<br><br>
-                    
-                    router = DefaultRouter()<br>
-                    router.register(r'posts', views.PostViewSet)<br><br>
-                    
-                    urlpatterns = [<br>
-                    &nbsp;&nbsp;path('api/', include(router.urls)),<br>
-                    ]
+                    <pre><code class="language-python"># views.py
+from rest_framework import viewsets
+class PostViewSet(viewsets.ModelViewSet):
+queryset = Post.objects.all()
+serializer_class = PostSerializer
+# urls.py
+from rest_framework.routers import DefaultRouter
+from . import views
+router = DefaultRouter()
+router.register(r'posts', views.PostViewSet)
+urlpatterns = [
+path('api/', include(router.urls)),
+]</code></pre>
                 </div>
                 <div class="highlight">
                     <strong>Result:</strong> Automatic CRUD endpoints with minimal code!
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 API Endpoint Overview">
                 <h2>🎯 API Endpoint Overview</h2>
                 <div class="demo-container">
                     <h3>Generated Endpoints</h3>
@@ -296,7 +238,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Task 1: Build REST API">
                 <h2>Task 1: Build REST API</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -322,41 +264,37 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Authentication">
                 <h2>Authentication</h2>
                 <h3>Token Authentication:</h3>
                 <div class="code-example">
-                    # settings.py<br>
-                    INSTALLED_APPS = [<br>
-                    &nbsp;&nbsp;...<br>
-                    &nbsp;&nbsp;'rest_framework.authtoken',<br>
-                    ]<br><br>
-                    
-                    REST_FRAMEWORK = {<br>
-                    &nbsp;&nbsp;'DEFAULT_AUTHENTICATION_CLASSES': [<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;'rest_framework.authentication.TokenAuthentication',<br>
-                    &nbsp;&nbsp;]<br>
-                    }<br><br>
-                    
-                    # Generate token for user<br>
-                    from rest_framework.authtoken.models import Token<br>
-                    token = Token.objects.create(user=user)<br>
-                    print(token.key)
+                    <pre><code class="language-python"># settings.py
+INSTALLED_APPS = [
+...
+'rest_framework.authtoken',
+]
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES': [
+'rest_framework.authentication.TokenAuthentication',
+]
+}
+# Generate token for user
+from rest_framework.authtoken.models import Token
+token = Token.objects.create(user=user)
+print(token.key)</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Permissions">
                 <h2>Permissions</h2>
                 <div class="code-example">
-                    from rest_framework import permissions<br><br>
-                    
-                    class PostViewSet(viewsets.ModelViewSet):<br>
-                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
-                    &nbsp;&nbsp;serializer_class = PostSerializer<br>
-                    &nbsp;&nbsp;permission_classes = [permissions.IsAuthenticatedOrReadOnly]<br><br>
-                    
-                    &nbsp;&nbsp;def perform_create(self, serializer):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;serializer.save(author=self.request.user)
+                    <pre><code class="language-python">from rest_framework import permissions
+class PostViewSet(viewsets.ModelViewSet):
+queryset = Post.objects.all()
+serializer_class = PostSerializer
+permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+def perform_create(self, serializer):
+serializer.save(author=self.request.user)</code></pre>
                 </div>
                 <h3>Built-in Permissions:</h3>
                 <ul>
@@ -367,55 +305,49 @@
                 </ul>
             </section>
 
-            <section>
+            <section data-slide-title="Custom Permissions">
                 <h2>Custom Permissions</h2>
                 <div class="code-example">
-                    from rest_framework import permissions<br><br>
-                    
-                    class IsAuthorOrReadOnly(permissions.BasePermission):<br>
-                    &nbsp;&nbsp;"""<br>
-                    &nbsp;&nbsp;Custom permission: only author can edit/delete<br>
-                    &nbsp;&nbsp;"""<br>
-                    &nbsp;&nbsp;def has_object_permission(self, request, view, obj):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;# Read permissions allowed for any request<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;if request.method in permissions.SAFE_METHODS:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return True<br><br>
-                    
-                    &nbsp;&nbsp;&nbsp;&nbsp;# Write permissions only for author<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return obj.author == request.user<br><br>
-                    
-                    # Usage<br>
-                    class PostViewSet(viewsets.ModelViewSet):<br>
-                    &nbsp;&nbsp;permission_classes = [IsAuthorOrReadOnly]
+                    <pre><code class="language-python">from rest_framework import permissions
+class IsAuthorOrReadOnly(permissions.BasePermission):
+"""
+Custom permission: only author can edit/delete
+"""
+def has_object_permission(self, request, view, obj):
+# Read permissions allowed for any request
+if request.method in permissions.SAFE_METHODS:
+return True
+# Write permissions only for author
+return obj.author == request.user
+# Usage
+class PostViewSet(viewsets.ModelViewSet):
+permission_classes = [IsAuthorOrReadOnly]</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Filtering and Search">
                 <h2>Filtering and Search</h2>
                 <div class="code-example">
-                    # Install<br>
-                    pip install django-filter<br><br>
-                    
-                    # Add to INSTALLED_APPS<br>
-                    INSTALLED_APPS = [<br>
-                    &nbsp;&nbsp;...<br>
-                    &nbsp;&nbsp;'django_filters',<br>
-                    ]<br><br>
-                    
-                    # ViewSet with filtering<br>
-                    from rest_framework import filters<br>
-                    from django_filters.rest_framework import DjangoFilterBackend<br><br>
-                    
-                    class PostViewSet(viewsets.ModelViewSet):<br>
-                    &nbsp;&nbsp;queryset = Post.objects.all()<br>
-                    &nbsp;&nbsp;serializer_class = PostSerializer<br>
-                    &nbsp;&nbsp;filter_backends = [DjangoFilterBackend, filters.SearchFilter]<br>
-                    &nbsp;&nbsp;filterset_fields = ['author', 'published']<br>
-                    &nbsp;&nbsp;search_fields = ['title', 'content']
+                    <pre><code class="language-python"># Install
+pip install django-filter
+# Add to INSTALLED_APPS
+INSTALLED_APPS = [
+...
+'django_filters',
+]
+# ViewSet with filtering
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+class PostViewSet(viewsets.ModelViewSet):
+queryset = Post.objects.all()
+serializer_class = PostSerializer
+filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+filterset_fields = ['author', 'published']
+search_fields = ['title', 'content']</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Task 2: Authentication & Permissions">
                 <h2>Task 2: Authentication & Permissions</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -440,7 +372,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="🎯 Testing with Browsable API">
                 <h2>🎯 Testing with Browsable API</h2>
                 <div class="demo-container">
                     <h3>DRF Browsable API Features</h3>
@@ -458,53 +390,49 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Testing with Postman">
                 <h2>Testing with Postman</h2>
                 <h3>GET Request:</h3>
                 <div class="code-example">
-                    GET http://127.0.0.1:8000/api/posts/<br>
-                    Headers:<br>
-                    &nbsp;&nbsp;Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+                    <pre><code class="language-http">GET http://127.0.0.1:8000/api/posts/
+Headers:
+Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b</code></pre>
                 </div>
                 <h3>POST Request:</h3>
                 <div class="code-example">
-                    POST http://127.0.0.1:8000/api/posts/<br>
-                    Headers:<br>
-                    &nbsp;&nbsp;Content-Type: application/json<br>
-                    &nbsp;&nbsp;Authorization: Token 9944b09...<br>
-                    Body:<br>
-                    {<br>
-                    &nbsp;&nbsp;"title": "New Post",<br>
-                    &nbsp;&nbsp;"content": "Post content here",<br>
-                    &nbsp;&nbsp;"published": true<br>
-                    }
+                    <pre><code class="language-http">POST http://127.0.0.1:8000/api/posts/
+Headers:
+Content-Type: application/json
+Authorization: Token 9944b09...
+Body:
+{
+"title": "New Post",
+"content": "Post content here",
+"published": true
+}</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Nested Serializers">
                 <h2>Nested Serializers</h2>
                 <div class="code-example">
-                    class CommentSerializer(serializers.ModelSerializer):<br>
-                    &nbsp;&nbsp;author_name = serializers.CharField(source='author.username', read_only=True)<br><br>
-                    
-                    &nbsp;&nbsp;class Meta:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;model = Comment<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;fields = ['id', 'text', 'author', 'author_name', 'created_at']<br><br>
-                    
-                    class PostSerializer(serializers.ModelSerializer):<br>
-                    &nbsp;&nbsp;comments = CommentSerializer(many=True, read_only=True, source='comment_set')<br>
-                    &nbsp;&nbsp;comment_count = serializers.SerializerMethodField()<br><br>
-                    
-                    &nbsp;&nbsp;class Meta:<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;model = Post<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;fields = ['id', 'title', 'content', 'comments', 'comment_count']<br><br>
-                    
-                    &nbsp;&nbsp;def get_comment_count(self, obj):<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;return obj.comment_set.count()
+                    <pre><code class="language-python">class CommentSerializer(serializers.ModelSerializer):
+author_name = serializers.CharField(source='author.username', read_only=True)
+class Meta:
+model = Comment
+fields = ['id', 'text', 'author', 'author_name', 'created_at']
+class PostSerializer(serializers.ModelSerializer):
+comments = CommentSerializer(many=True, read_only=True, source='comment_set')
+comment_count = serializers.SerializerMethodField()
+class Meta:
+model = Post
+fields = ['id', 'title', 'content', 'comments', 'comment_count']
+def get_comment_count(self, obj):
+return obj.comment_set.count()</code></pre>
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Best Practices">
                 <h2>Best Practices</h2>
                 <ul>
                     <li><strong>Versioning:</strong> Use API versioning (/api/v1/)</li>
@@ -521,7 +449,7 @@
                 </div>
             </section>
 
-            <section>
+            <section data-slide-title="Next Session: React & State Management">
                 <h2>Next Session: React & State Management</h2>
                 <ul>
                     <li>Introduction to React</li>
@@ -534,21 +462,47 @@
                 <p><strong>Preparation:</strong> Install Node.js and create-react-app</p>
             </section>
 
-            <section class="center">
+            <section data-slide-title="Questions & Discussion" class="center">
                 <h2>Questions & Discussion</h2>
                 <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
                 <p><strong>Office Hours:</strong> By appointment</p>
                 <p><strong>Resources:</strong> DRF Documentation, Postman Learning Center</p>
                 <p>Thank you for your attention!</p>
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
         Reveal.initialize({
-            hash: true, slideNumber: true, progress: true, controls: true, center: false, mouseWheel: true, transition: 'slide',
-            width: '100%', height: '100%', margin: 0.04, minScale: 0.2, maxScale: 2.0, display: 'block', responsive: true, mobileViewDistance: 2, hideEmptyElements: true
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

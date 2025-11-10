@@ -5,54 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 1: Introduction to HTML</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
     <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+        /* Preserve existing custom component styles */
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
-
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
+        
 
         /* Task box styling */
         .task-box {
@@ -67,16 +29,13 @@
 
         /* Code example styling */
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
 
         /* Highlight styling */
@@ -105,6 +64,13 @@
 
         .timeline-info li {
             margin-bottom: 0.2em;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Responsive design */
@@ -201,51 +167,32 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="../index.html" title="Previous Session">&lt;</a>
+        <a href="session2.html" title="Next Session">&gt;</a>
     </div>
+    
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU422: Web Design - Session 1</div>
                 <h1>Introduction to HTML</h1>
-                <h3>CMU422: Fundamentals of Web Design - Session 1</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Understanding the foundation of web development</p>
-                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Professional Web Design and Development</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
                 </div>
             </section>
 
+            
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
-                <h2>Learning Objectives</h2>
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand what HTML is and its role in web development</li>
                     <li>Learn basic HTML document structure</li>
@@ -256,8 +203,7 @@
             </section>
 
             <!-- Slide 3: What is HTML? -->
-            <section>
-                <h2>What is HTML?</h2>
+            <section data-slide-title="What is HTML?"><h2>What is HTML?</h2>
                 <div class="highlight">
                     <strong>HTML</strong> = HyperText Markup Language
                 </div>
@@ -268,10 +214,10 @@
                     <li>Works with CSS and JavaScript</li>
                 </ul>
                 <div class="code-example">
-                    &lt;html&gt;<br>
-                    &nbsp;&nbsp;&lt;head&gt;...&lt;/head&gt;<br>
-                    &nbsp;&nbsp;&lt;body&gt;...&lt;/body&gt;<br>
-                    &lt;/html&gt;
+                    <pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;...&lt;/head&gt;
+  &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;</code></pre>
                 </div>
 
                 <!-- YouTube Video: HTML Basics -->
@@ -285,19 +231,18 @@
             </section>
 
             <!-- Slide 4: HTML Document Structure -->
-            <section>
-                <h2>Basic HTML Document Structure</h2>
+            <section data-slide-title="Basic HTML Document Structure"><h2>Basic HTML Document Structure</h2>
                 <div class="code-example">
-                    &lt;!DOCTYPE html&gt;<br>
-                    &lt;html lang="en"&gt;<br>
-                    &lt;head&gt;<br>
-                    &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
-                    &nbsp;&nbsp;&lt;title&gt;My First Page&lt;/title&gt;<br>
-                    &lt;/head&gt;<br>
-                    &lt;body&gt;<br>
-                    &nbsp;&nbsp;&lt;h1&gt;Hello World!&lt;/h1&gt;<br>
-                    &lt;/body&gt;<br>
-                    &lt;/html&gt;
+                    <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+      &lt;title&gt;My First Page&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;</code></pre>
                 </div>
 
                 <!-- YouTube Video: HTML Document Structure -->
@@ -311,11 +256,10 @@
             </section>
 
             <!-- Slide 5: DOCTYPE Declaration -->
-            <section>
-                <h2>DOCTYPE Declaration</h2>
+            <section data-slide-title="DOCTYPE Declaration"><h2>DOCTYPE Declaration</h2>
                 <p>The DOCTYPE tells the browser which version of HTML you're using.</p>
                 <div class="code-example">
-                    &lt;!DOCTYPE html&gt;
+                    <pre><code class="language-html">&lt;!DOCTYPE html&gt;</code></pre>
                 </div>
                 <ul>
                     <li>Must be the first line in your HTML document</li>
@@ -325,12 +269,11 @@
             </section>
 
             <!-- Slide 6: HTML Element -->
-            <section>
-                <h2>The HTML Element</h2>
+            <section data-slide-title="The HTML Element"><h2>The HTML Element</h2>
                 <div class="code-example">
-                    &lt;html lang="en"&gt;<br>
-                    &nbsp;&nbsp;... all content goes here ...<br>
-                    &lt;/html&gt;
+                    <pre><code class="language-html">&lt;html lang="en"&gt;
+  ... all content goes here ...
+&lt;/html&gt;</code></pre>
                 </div>
                 <ul>
                     <li>Root element of the HTML document</li>
@@ -341,15 +284,14 @@
             </section>
 
             <!-- Slide 7: Head Section -->
-            <section>
-                <h2>The Head Section</h2>
+            <section data-slide-title="The Head Section"><h2>The Head Section</h2>
                 <div class="code-example">
-                    &lt;head&gt;<br>
-                    &nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
-                    &nbsp;&nbsp;&lt;meta name="viewport" content="width=device-width,
-                    initial-scale=1.0"&gt;<br>
-                    &nbsp;&nbsp;&lt;title&gt;Page Title&lt;/title&gt;<br>
-                    &lt;/head&gt;
+                    <pre><code class="language-html">&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width,
+    initial-scale=1.0"&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+  &lt;/head&gt;</code></pre>
                 </div>
                 <ul>
                     <li>Contains metadata about the document</li>
@@ -359,14 +301,13 @@
             </section>
 
             <!-- Slide 8: Body Section -->
-            <section>
-                <h2>The Body Section</h2>
+            <section data-slide-title="The Body Section"><h2>The Body Section</h2>
                 <div class="code-example">
-                    &lt;body&gt;<br>
-                    &nbsp;&nbsp;&lt;h1&gt;Main Heading&lt;/h1&gt;<br>
-                    &nbsp;&nbsp;&lt;p&gt;This is a paragraph.&lt;/p&gt;<br>
-                    &nbsp;&nbsp;&lt;img src="image.jpg" alt="Description"&gt;<br>
-                    &lt;/body&gt;
+                    <pre><code class="language-html">&lt;body&gt;
+  &lt;h1&gt;Main Heading&lt;/h1&gt;
+  &lt;p&gt;This is a paragraph.&lt;/p&gt;
+  &lt;img src="image.jpg" alt="Description"&gt;
+  &lt;/body&gt;</code></pre>
                 </div>
                 <ul>
                     <li>Contains all visible content</li>
@@ -376,10 +317,9 @@
             </section>
 
             <!-- Slide 9: HTML Tags and Elements -->
-            <section>
-                <h2>HTML Tags and Elements</h2>
+            <section data-slide-title="HTML Tags and Elements"><h2>HTML Tags and Elements</h2>
                 <div class="code-example">
-                    &lt;tagname&gt;Content goes here&lt;/tagname&gt;
+                    <pre><code class="language-html">&lt;tagname&gt;Content goes here&lt;/tagname&gt;</code></pre>
                 </div>
                 <ul>
                     <li><strong>Opening tag:</strong> &lt;tagname&gt;</li>
@@ -390,15 +330,14 @@
             </section>
 
             <!-- Slide 10: Heading Elements -->
-            <section>
-                <h2>Heading Elements</h2>
+            <section data-slide-title="Heading Elements"><h2>Heading Elements</h2>
                 <div class="code-example">
-                    &lt;h1&gt;Main Heading (largest)&lt;/h1&gt;<br>
-                    &lt;h2&gt;Subheading&lt;/h2&gt;<br>
-                    &lt;h3&gt;Sub-subheading&lt;/h3&gt;<br>
-                    &lt;h4&gt;Level 4 heading&lt;/h4&gt;<br>
-                    &lt;h5&gt;Level 5 heading&lt;/h5&gt;<br>
-                    &lt;h6&gt;Level 6 heading (smallest)&lt;/h6&gt;
+                    <pre><code class="language-html">&lt;h1&gt;Main Heading (largest)&lt;/h1&gt;
+&lt;h2&gt;Subheading&lt;/h2&gt;
+&lt;h3&gt;Sub-subheading&lt;/h3&gt;
+&lt;h4&gt;Level 4 heading&lt;/h4&gt;
+&lt;h5&gt;Level 5 heading&lt;/h5&gt;
+&lt;h6&gt;Level 6 heading (smallest)&lt;/h6&gt;</code></pre>
                 </div>
                 <ul>
                     <li>Use for document structure and hierarchy</li>
@@ -408,13 +347,12 @@
             </section>
 
             <!-- Slide 11: Paragraph Element -->
-            <section>
-                <h2>Paragraph Element</h2>
+            <section data-slide-title="Paragraph Element"><h2>Paragraph Element</h2>
                 <div class="code-example">
-                    &lt;p&gt;This is a paragraph of text. It can contain multiple sentences and will
-                    be displayed as a block element with some spacing around it.&lt;/p&gt;<br><br>
-                    &lt;p&gt;This is another paragraph. Each paragraph is separated from others with
-                    some margin.&lt;/p&gt;
+                    <pre><code class="language-html">&lt;p&gt;This is a paragraph of text. It can contain multiple sentences and will
+  be displayed as a block element with some spacing around it.&lt;/p&gt;
+  &lt;p&gt;This is another paragraph. Each paragraph is separated from others with
+    some margin.&lt;/p&gt;</code></pre>
                 </div>
                 <ul>
                     <li>Used for blocks of text</li>
@@ -424,13 +362,12 @@
             </section>
 
             <!-- Slide 12: Line Breaks and Horizontal Rules -->
-            <section>
-                <h2>Line Breaks and Horizontal Rules</h2>
+            <section data-slide-title="Line Breaks and Horizontal Rules"><h2>Line Breaks and Horizontal Rules</h2>
                 <div class="code-example">
-                    &lt;p&gt;This is the first line.&lt;br&gt;This is the second
-                    line.&lt;/p&gt;<br><br>
-                    &lt;hr&gt;<br><br>
-                    &lt;p&gt;Content after the horizontal rule.&lt;/p&gt;
+                    <pre><code class="language-html">&lt;p&gt;This is the first line.&lt;br&gt;This is the second
+  line.&lt;/p&gt;
+  &lt;hr&gt;
+    &lt;p&gt;Content after the horizontal rule.&lt;/p&gt;</code></pre>
                 </div>
                 <ul>
                     <li><code>&lt;br&gt;</code> creates a line break</li>
@@ -440,41 +377,38 @@
             </section>
 
             <!-- Slide 13: Text Formatting -->
-            <section>
-                <h2>Text Formatting Elements</h2>
+            <section data-slide-title="Text Formatting Elements"><h2>Text Formatting Elements</h2>
                 <div class="code-example">
-                    &lt;p&gt;This is &lt;strong&gt;bold text&lt;/strong&gt; and this is
-                    &lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;<br>
-                    &lt;p&gt;This is &lt;mark&gt;highlighted text&lt;/mark&gt; and this is
-                    &lt;small&gt;smaller text&lt;/small&gt;.&lt;/p&gt;<br>
-                    &lt;p&gt;This is &lt;del&gt;deleted text&lt;/del&gt; and this is
-                    &lt;ins&gt;inserted text&lt;/ins&gt;.&lt;/p&gt;
+                    <pre><code class="language-javascript">&lt;p&gt;This is &lt;strong&gt;bold text&lt;/strong&gt; and this is
+&lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;This is &lt;mark&gt;highlighted text&lt;/mark&gt; and this is
+&lt;small&gt;smaller text&lt;/small&gt;.&lt;/p&gt;
+&lt;p&gt;This is &lt;del&gt;deleted text&lt;/del&gt; and this is
+&lt;ins&gt;inserted text&lt;/ins&gt;.&lt;/p&gt;</code></pre>
                 </div>
             </section>
 
             <!-- Slide 14: Lists -->
-            <section>
-                <h2>HTML Lists</h2>
+            <section data-slide-title="HTML Lists"><h2>HTML Lists</h2>
                 <div class="code-example">
-                    &lt;ul&gt;<br>
-                    &nbsp;&nbsp;&lt;li&gt;Unordered list item 1&lt;/li&gt;<br>
-                    &nbsp;&nbsp;&lt;li&gt;Unordered list item 2&lt;/li&gt;<br>
-                    &lt;/ul&gt;<br><br>
-                    &lt;ol&gt;<br>
-                    &nbsp;&nbsp;&lt;li&gt;Ordered list item 1&lt;/li&gt;<br>
-                    &nbsp;&nbsp;&lt;li&gt;Ordered list item 2&lt;/li&gt;<br>
-                    &lt;/ol&gt;
+                    <pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;Unordered list item 1&lt;/li&gt;
+  &lt;li&gt;Unordered list item 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+  &lt;li&gt;Ordered list item 1&lt;/li&gt;
+  &lt;li&gt;Ordered list item 2&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
                 </div>
             </section>
 
             <!-- Slide 15: Links -->
-            <section>
-                <h2>Creating Links</h2>
+            <section data-slide-title="Creating Links"><h2>Creating Links</h2>
                 <div class="code-example">
-                    &lt;a href="https://www.example.com"&gt;Visit Example.com&lt;/a&gt;<br><br>
-                    &lt;a href="page.html"&gt;Link to another page&lt;/a&gt;<br><br>
-                    &lt;a href="#section"&gt;Link to page section&lt;/a&gt;<br><br>
-                    &lt;a href="mailto:email@example.com"&gt;Send email&lt;/a&gt;
+                    <pre><code class="language-html">&lt;a href="https://www.example.com"&gt;Visit Example.com&lt;/a&gt;
+&lt;a href="page.html"&gt;Link to another page&lt;/a&gt;
+&lt;a href="#section"&gt;Link to page section&lt;/a&gt;
+&lt;a href="mailto:email@example.com"&gt;Send email&lt;/a&gt;</code></pre>
                 </div>
                 <ul>
                     <li><code>href</code> specifies the destination</li>
@@ -484,12 +418,11 @@
             </section>
 
             <!-- Slide 16: Images -->
-            <section>
-                <h2>Adding Images</h2>
+            <section data-slide-title="Adding Images"><h2>Adding Images</h2>
                 <div class="code-example">
-                    &lt;img src="image.jpg" alt="Description of the image"&gt;<br><br>
-                    &lt;img src="https://example.com/image.png" alt="External image"&gt;<br><br>
-                    &lt;img src="photo.jpg" alt="Photo" width="300" height="200"&gt;
+                    <pre><code class="language-html">&lt;img src="image.jpg" alt="Description of the image"&gt;
+  &lt;img src="https://example.com/image.png" alt="External image"&gt;
+    &lt;img src="photo.jpg" alt="Photo" width="300" height="200"&gt;</code></pre>
                 </div>
                 <ul>
                     <li><code>src</code> specifies the image source</li>
@@ -500,16 +433,15 @@
             </section>
 
             <!-- Slide 17: Semantic HTML -->
-            <section>
-                <h2>Semantic HTML</h2>
+            <section data-slide-title="Semantic HTML"><h2>Semantic HTML</h2>
                 <div class="code-example">
-                    &lt;header&gt;Page header&lt;/header&gt;<br>
-                    &lt;nav&gt;Navigation menu&lt;/nav&gt;<br>
-                    &lt;main&gt;Main content&lt;/main&gt;<br>
-                    &lt;section&gt;Content section&lt;/section&gt;<br>
-                    &lt;article&gt;Article content&lt;/article&gt;<br>
-                    &lt;aside&gt;Sidebar content&lt;/aside&gt;<br>
-                    &lt;footer&gt;Page footer&lt;/footer&gt;
+                    <pre><code class="language-html">&lt;header&gt;Page header&lt;/header&gt;
+&lt;nav&gt;Navigation menu&lt;/nav&gt;
+&lt;main&gt;Main content&lt;/main&gt;
+&lt;section&gt;Content section&lt;/section&gt;
+&lt;article&gt;Article content&lt;/article&gt;
+&lt;aside&gt;Sidebar content&lt;/aside&gt;
+&lt;footer&gt;Page footer&lt;/footer&gt;</code></pre>
                 </div>
                 <ul>
                     <li>Uses meaningful element names</li>
@@ -521,14 +453,13 @@
             </section>
 
             <!-- Slide 18: Comments -->
-            <section>
-                <h2>HTML Comments</h2>
+            <section data-slide-title="HTML Comments"><h2>HTML Comments</h2>
                 <div class="code-example">
-                    &lt;!-- This is a comment --&gt;<br><br>
-                    &lt;h1&gt;My Page&lt;/h1&gt;<br>
-                    &lt;!-- Navigation section --&gt;<br>
-                    &lt;nav&gt;...&lt;/nav&gt;<br><br>
-                    &lt;!-- TODO: Add more content here --&gt;
+                    <pre><code class="language-html">&lt;!-- This is a comment --&gt;
+&lt;h1&gt;My Page&lt;/h1&gt;
+&lt;!-- Navigation section --&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+&lt;!-- TODO: Add more content here --&gt;</code></pre>
                 </div>
                 <ul>
                     <li>Comments are not displayed in the browser</li>
@@ -538,8 +469,7 @@
             </section>
 
             <!-- Slide 19: TASK 1 - Halfway Point -->
-            <section class="center">
-                <h2>Task 1: Create Your First HTML Page</h2>
+            <section data-slide-title="Task 1: Create Your First HTML Page" class="center"><h2>Task 1: Create Your First HTML Page</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -559,8 +489,7 @@
             </section>
 
             <!-- Slide 20: Break/Catch Up -->
-            <section class="center">
-                <h2>Break Time</h2>
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
                     <p>Take a break, ask questions, or catch up on the previous task.</p>
@@ -569,8 +498,7 @@
             </section>
 
             <!-- Slide 21: HTML Validation -->
-            <section>
-                <h2>HTML Validation</h2>
+            <section data-slide-title="HTML Validation"><h2>HTML Validation</h2>
                 <ul>
                     <li>Check your HTML for errors</li>
                     <li>Use online validators like W3C Validator</li>
@@ -589,8 +517,7 @@
             </section>
 
             <!-- Slide 21: Best Practices -->
-            <section>
-                <h2>HTML Best Practices</h2>
+            <section data-slide-title="HTML Best Practices"><h2>HTML Best Practices</h2>
                 <ul>
                     <li>Use lowercase for all element names and attributes</li>
                     <li>Always close your tags</li>
@@ -603,23 +530,21 @@
             </section>
 
             <!-- Slide 22: Common Mistakes -->
-            <section>
-                <h2>Common HTML Mistakes</h2>
+            <section data-slide-title="Common HTML Mistakes"><h2>Common HTML Mistakes</h2>
                 <div class="code-example">
-                    &lt;!-- WRONG --&gt;<br>
-                    &lt;H1&gt;Title&lt;/H1&gt;<br>
-                    &lt;p&gt;Text&lt;br&gt;<br>
-                    &lt;img src="image.jpg"&gt;<br><br>
-                    &lt;!-- CORRECT --&gt;<br>
-                    &lt;h1&gt;Title&lt;/h1&gt;<br>
-                    &lt;p&gt;Text&lt;/p&gt;<br>
-                    &lt;img src="image.jpg" alt="Description"&gt;
+                    <pre><code class="language-html">&lt;!-- WRONG --&gt;
+&lt;H1&gt;Title&lt;/H1&gt;
+&lt;p&gt;Text&lt;br&gt;
+  &lt;img src="image.jpg"&gt;
+    &lt;!-- CORRECT --&gt;
+    &lt;h1&gt;Title&lt;/h1&gt;
+    &lt;p&gt;Text&lt;/p&gt;
+    &lt;img src="image.jpg" alt="Description"&gt;</code></pre>
                 </div>
             </section>
 
             <!-- Slide 23: HTML5 Features -->
-            <section>
-                <h2>HTML5 Features</h2>
+            <section data-slide-title="HTML5 Features"><h2>HTML5 Features</h2>
                 <ul>
                     <li><strong>New semantic elements:</strong> header, nav, main, section, article,
                         aside, footer</li>
@@ -631,8 +556,7 @@
             </section>
 
             <!-- Slide 24: TASK 2 - Final Task -->
-            <section class="center">
-                <h2>Task 2: Enhanced HTML Page</h2>
+            <section data-slide-title="Task 2: Enhanced HTML Page" class="center"><h2>Task 2: Enhanced HTML Page</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
                     <ol>
@@ -652,8 +576,7 @@
             </section>
 
             <!-- Slide 25: Summary -->
-            <section class="center">
-                <h2>Session Summary</h2>
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
                 <ul>
                     <li>HTML is the foundation of web development</li>
                     <li>Proper document structure is essential</li>
@@ -669,54 +592,30 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            // Ensure content is always visible
-            fitToParent: true,
-            // Better responsive behavior
-            responsive: true,
-            // Allow content to scroll within slides
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         });
     </script>
 </body>

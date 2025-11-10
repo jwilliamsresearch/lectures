@@ -1,295 +1,41 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 3: WEB-CRYPTO-01 - Cryptographic Failures</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
-    <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
+    <title>CMU540 - Session 3: WEB-CRYPTO-01 - Cryptographic Failures</title>
 
-        .reveal .slides section.center {
-            text-align: center;
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
 
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
-
-        /* Task box styling */
-        .task-box {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Code example styling */
-        .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
-        }
-
-        /* Highlight styling */
-        .highlight {
-            background: #fff3cd;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #ffc107;
-            margin: 10px 0;
-        }
-
-        /* Timeline info styling */
-        .timeline-info {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-
-        .timeline-info ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-
-        .timeline-info li {
-            margin-bottom: 0.2em;
-        }
-
-        /* OS³ Studio specific styling */
-        .os3-studio {
-            background: #e3f2fd;
-            border: 2px solid #2196f3;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Vulnerability examples */
-        .vulnerability {
-            background: #ffebee;
-            border: 2px solid #f44336;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Career focus styling */
-        .career-box {
-            background: #f0f8ff;
-            border: 2px solid #007bff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Demo links styling */
-        .demo-link {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .reveal .slides section {
-                padding: 15px;
-            }
-
-            .reveal .slides section h1 {
-                font-size: 2em;
-            }
-
-            .reveal .slides section h2 {
-                font-size: 1.6em;
-            }
-
-            .reveal .slides section h3 {
-                font-size: 1.3em;
-            }
-
-            .task-box,
-            .code-example {
-                font-size: 0.9em;
-                padding: 15px;
-            }
-        }
-
-        /* Custom scrollbar for better UX */
-        .reveal .slides section::-webkit-scrollbar,
-        .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-track,
-        .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb,
-        .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .reveal .slides section::-webkit-scrollbar-thumb:hover,
-        .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* Interactive content styling */
-        .interactive-content {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .interactive-content h3 {
-            color: #2196f3;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .video-container,
-        .codepen-container {
-            position: relative;
-            width: 100%;
-            max-width: 560px;
-            margin: 0 auto;
-        }
-
-        .video-container iframe,
-        .codepen-container iframe {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container iframe:hover,
-        .codepen-container iframe:hover {
-            transform: scale(1.02);
-        }
-
-        .interactive-description {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 10px;
-            font-style: italic;
-        }
-    </style>
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 25px;
-                text-decoration: none;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-                transition: all 0.3s ease;
-                display: inline-block;
-            "
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.3)'">
-            ← Back to Module
-        </a>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session2.html" title="Previous Session">&lt;</a>
+        <a href="session4.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
-            <!-- Slide 1: Title -->
-            <section class="center">
-                <h1>WEB-CRYPTO-01</h1>
-                <h2>Cryptographic Failures</h2>
-                <h3>CMU540: Cyber Security - Session 3</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Understanding cryptographic vulnerabilities and secure implementation</p>
-                <p><small>3-hour session • 30 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>WEB-CRYPTO-01 - Cryptographic Failures</h1>
+                <h2>Session 3</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
                 </div>
             </section>
 
-            <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand OWASP A02: Cryptographic Failures</li>
@@ -301,8 +47,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 3: OWASP A02 Overview -->
-            <section>
+            <section data-slide-title="OWASP A02: Cryptographic Failures">
                 <h2>OWASP A02: Cryptographic Failures</h2>
                 <div class="highlight">
                     <p><strong>Definition:</strong> Cryptographic failures occur when sensitive data is exposed due to weak or missing cryptographic controls.</p>
@@ -316,8 +61,7 @@
                 </ul>
             </section>
 
-            <!-- Slide 4: Real-World Impact -->
-            <section>
+            <section data-slide-title="Real-World Impact">
                 <h2>Real-World Impact</h2>
                 <div class="vulnerability">
                     <h3>Notable Breaches:</h3>
@@ -330,43 +74,40 @@
                 </div>
             </section>
 
-            <!-- Slide 5: Common Cryptographic Vulnerabilities -->
-            <section>
+            <section data-slide-title="Common Cryptographic Vulnerabilities">
                 <h2>Common Cryptographic Vulnerabilities</h2>
                 <h3>1. Weak Encryption Algorithms</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Using weak algorithms --&gt;<br>
-MD5(password)  // Easily cracked<br>
-DES(data)       // 56-bit key, broken<br>
-RC4(data)       // Vulnerable to attacks
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Using weak algorithms --&gt;
+MD5(password)  // Easily cracked
+DES(data)       // 56-bit key, broken
+RC4(data)       // Vulnerable to attacks</code></pre>
                 </div>
                 <h3>2. Hardcoded Keys</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Hardcoded encryption key --&gt;<br>
-const ENCRYPTION_KEY = "mysecretkey123";
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: Hardcoded encryption key --&gt;
+const ENCRYPTION_KEY = "mysecretkey123";</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 6: Insecure Data Transmission -->
-            <section>
+            <section data-slide-title="Insecure Data Transmission">
                 <h2>Insecure Data Transmission</h2>
                 <h3>HTTP vs HTTPS</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: HTTP transmission --&gt;<br>
-http://example.com/login<br>
-POST /login<br>
-username=admin&password=secret123<br><br>
-// SECURE: HTTPS transmission<br>
-https://example.com/login<br>
-POST /login (encrypted)
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: HTTP transmission --&gt;
+http://example.com/login
+POST /login
+username=admin&amp;password=secret123
+// SECURE: HTTPS transmission
+https://example.com/login
+POST /login (encrypted)</code></pre>
                 </div>
                 <div class="highlight">
                     <p><strong>Risk:</strong> Data intercepted in transit, credentials stolen</p>
                 </div>
             </section>
 
-            <!-- Slide 7: Poor Key Management -->
-            <section>
+            <section data-slide-title="Poor Key Management">
                 <h2>Poor Key Management</h2>
                 <h3>Common Mistakes:</h3>
                 <ul>
@@ -381,43 +122,40 @@ POST /login (encrypted)
                 </div>
             </section>
 
-            <!-- Slide 8: Inadequate Data Protection -->
-            <section>
+            <section data-slide-title="Inadequate Data Protection at Rest">
                 <h2>Inadequate Data Protection at Rest</h2>
                 <h3>Database Encryption Issues:</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Storing sensitive data unencrypted --&gt;<br>
-CREATE TABLE users (<br>
-&nbsp;&nbsp;id INT,<br>
-&nbsp;&nbsp;username VARCHAR(50),<br>
-&nbsp;&nbsp;password VARCHAR(50),  -- Should be hashed<br>
-&nbsp;&nbsp;ssn VARCHAR(20),       -- Should be encrypted<br>
-&nbsp;&nbsp;credit_card VARCHAR(20) -- Should be encrypted<br>
-);
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Storing sensitive data unencrypted --&gt;
+CREATE TABLE users (
+  id INT,
+  username VARCHAR(50),
+  password VARCHAR(50),  -- Should be hashed
+  ssn VARCHAR(20),       -- Should be encrypted
+  credit_card VARCHAR(20) -- Should be encrypted
+);</code></pre>
                 </div>
                 <div class="highlight">
                     <p><strong>Risk:</strong> Database breaches expose all sensitive data</p>
                 </div>
             </section>
 
-            <!-- Slide 9: Hash Function Vulnerabilities -->
-            <section>
+            <section data-slide-title="Hash Function Vulnerabilities">
                 <h2>Hash Function Vulnerabilities</h2>
                 <h3>Weak Hash Functions:</h3>
                 <div class="code-example">
-&lt;!-- VULNERABLE: Weak hash functions --&gt;<br>
-MD5(password)     // Collision attacks possible<br>
-SHA1(password)    // Vulnerable to attacks<br>
-CRC32(data)       // Not cryptographically secure<br><br>
-// SECURE: Strong hash functions<br>
-bcrypt(password, 12)  // Adaptive hashing<br>
-Argon2(password)     // Memory-hard function<br>
-scrypt(password)      // Memory-hard function
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: Weak hash functions --&gt;
+MD5(password)     // Collision attacks possible
+SHA1(password)    // Vulnerable to attacks
+CRC32(data)       // Not cryptographically secure
+// SECURE: Strong hash functions
+bcrypt(password, 12)  // Adaptive hashing
+Argon2(password)     // Memory-hard function
+scrypt(password)      // Memory-hard function</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 10: Certificate Issues -->
-            <section>
+            <section data-slide-title="Certificate and SSL/TLS Issues">
                 <h2>Certificate and SSL/TLS Issues</h2>
                 <h3>Common Problems:</h3>
                 <ul>
@@ -432,8 +170,7 @@ scrypt(password)      // Memory-hard function
                 </div>
             </section>
 
-            <!-- Slide 11: Career Opportunities -->
-            <section>
+            <section data-slide-title="Career Opportunities in Cryptography">
                 <h2>Career Opportunities in Cryptography</h2>
                 <div class="career-box">
                     <h3>Cryptographic Roles:</h3>
@@ -448,8 +185,7 @@ scrypt(password)      // Memory-hard function
                 </div>
             </section>
 
-            <!-- Slide 12: Industry Certifications -->
-            <section>
+            <section data-slide-title="Industry Certifications">
                 <h2>Industry Certifications</h2>
                 <h3>Cryptographic Certifications:</h3>
                 <ul>
@@ -464,8 +200,7 @@ scrypt(password)      // Memory-hard function
                 </div>
             </section>
 
-            <!-- Slide 13: OS³ Studio Introduction -->
-            <section>
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
                 <h2>OS³ Newman Cyber Security Lab</h2>
                 <div class="os3-studio">
                     <h3>WEB-CRYPTO-01 Lab Environment</h3>
@@ -480,8 +215,7 @@ scrypt(password)      // Memory-hard function
                 </div>
             </section>
 
-            <!-- Slide 14: Practical Examples -->
-            <section>
+            <section data-slide-title="Practical Examples">
                 <h2>Practical Examples</h2>
                 <div class="interactive-content">
                     <h3>Watch: Cryptographic Failures Explained</h3>
@@ -492,8 +226,7 @@ scrypt(password)      // Memory-hard function
                 </div>
             </section>
 
-            <!-- Slide 15: Web Demos and Tools -->
-            <section>
+            <section data-slide-title="Web Demos and Tools">
                 <h2>Web Demos and Tools</h2>
                 <div class="demo-link">
                     <h3>Cryptographic Testing Tools:</h3>
@@ -507,8 +240,7 @@ scrypt(password)      // Memory-hard function
                 </div>
             </section>
 
-            <!-- Slide 16: Case Study -->
-            <section>
+            <section data-slide-title="Case Study: Heartbleed Vulnerability">
                 <h2>Case Study: Heartbleed Vulnerability</h2>
                 <div class="vulnerability">
                     <h3>OpenSSL Heartbleed (CVE-2014-0160)</h3>
@@ -522,15 +254,14 @@ scrypt(password)      // Memory-hard function
                 </div>
             </section>
 
-            <!-- Slide 17: Secure Implementation Principles -->
-            <section>
+            <section data-slide-title="Secure Implementation Principles">
                 <h2>Secure Implementation Principles</h2>
                 <h3>1. Use Strong Algorithms</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Use approved algorithms --&gt;<br>
-AES-256-GCM for encryption<br>
-SHA-256 or SHA-3 for hashing<br>
-RSA-2048+ or ECDSA for signatures
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Use approved algorithms --&gt;
+AES-256-GCM for encryption
+SHA-256 or SHA-3 for hashing
+RSA-2048+ or ECDSA for signatures</code></pre>
                 </div>
                 <h3>2. Proper Key Management</h3>
                 <ul>
@@ -540,8 +271,7 @@ RSA-2048+ or ECDSA for signatures
                 </ul>
             </section>
 
-            <!-- Slide 18: Summary of Vulnerabilities -->
-            <section>
+            <section data-slide-title="Summary: Common Cryptographic Failures">
                 <h2>Summary: Common Cryptographic Failures</h2>
                 <div class="highlight">
                     <h3>Key Vulnerabilities to Look For:</h3>
@@ -557,8 +287,7 @@ RSA-2048+ or ECDSA for signatures
                 </div>
             </section>
 
-            <!-- Task 1: Vulnerability Discovery -->
-            <section>
+            <section data-slide-title="Task 1: Cryptographic Vulnerability Discovery">
                 <h2>Task 1: Cryptographic Vulnerability Discovery</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -580,8 +309,7 @@ RSA-2048+ or ECDSA for signatures
                 </div>
             </section>
 
-            <!-- Slide 19: Break/Catch Up -->
-            <section class="center">
+            <section class="center" data-slide-title="Break Time">
                 <h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
@@ -590,46 +318,47 @@ RSA-2048+ or ECDSA for signatures
                 </div>
             </section>
 
-            <!-- Slide 20: Secure Encryption Implementation -->
-            <section>
+            <section data-slide-title="Secure Encryption Implementation">
                 <h2>Secure Encryption Implementation</h2>
                 
                 <h3>1. Strong Password Hashing</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Use bcrypt with appropriate cost --&gt;<br>
-const bcrypt = require('bcrypt');<br>
-const saltRounds = 12;<br><br>
-const hashPassword = async (password) => {<br>
-&nbsp;&nbsp;return await bcrypt.hash(password, saltRounds);<br>};<br><br>
-const verifyPassword = async (password, hash) => {<br>
-&nbsp;&nbsp;return await bcrypt.compare(password, hash);<br>};
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Use bcrypt with appropriate cost --&gt;
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
+const hashPassword = async (password) =&gt; {
+  return await bcrypt.hash(password, saltRounds);
+};
+const verifyPassword = async (password, hash) =&gt; {
+  return await bcrypt.compare(password, hash);
+};</code></pre>
                 </div>
 
                 <h3>2. Data Encryption at Rest</h3>
                 <div class="code-example">
-&lt;!-- SECURE: AES-256-GCM encryption --&gt;<br>
-const crypto = require('crypto');<br><br>
-const encrypt = (text, key) => {<br>
-&nbsp;&nbsp;const iv = crypto.randomBytes(16);<br>
-&nbsp;&nbsp;const cipher = crypto.createCipher('aes-256-gcm', key);<br>
-&nbsp;&nbsp;let encrypted = cipher.update(text, 'utf8', 'hex');<br>
-&nbsp;&nbsp;encrypted += cipher.final('hex');<br>
-&nbsp;&nbsp;return { encrypted, iv: iv.toString('hex') };<br>};
+                    <pre><code class="language-javascript">&lt;!-- SECURE: AES-256-GCM encryption --&gt;
+const crypto = require('crypto');
+const encrypt = (text, key) =&gt; {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipher('aes-256-gcm', key);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return { encrypted, iv: iv.toString('hex') };
+};</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 21: Secure Key Management -->
-            <section>
+            <section data-slide-title="Secure Key Management">
                 <h2>Secure Key Management</h2>
                 
                 <h3>1. Environment Variables</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Store keys in environment variables --&gt;<br>
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;<br>
-const JWT_SECRET = process.env.JWT_SECRET;<br><br>
-// Use .env file for development<br>
-ENCRYPTION_KEY=your-256-bit-key-here<br>
-JWT_SECRET=your-jwt-secret-here
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Store keys in environment variables --&gt;
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
+const JWT_SECRET = process.env.JWT_SECRET;
+// Use .env file for development
+ENCRYPTION_KEY=your-256-bit-key-here
+JWT_SECRET=your-jwt-secret-here</code></pre>
                 </div>
 
                 <h3>2. Key Rotation Strategy</h3>
@@ -641,53 +370,52 @@ JWT_SECRET=your-jwt-secret-here
                 </ul>
             </section>
 
-            <!-- Slide 22: HTTPS Implementation -->
-            <section>
+            <section data-slide-title="HTTPS Implementation">
                 <h2>HTTPS Implementation</h2>
                 
                 <h3>1. SSL/TLS Configuration</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Express.js HTTPS setup --&gt;<br>
-const https = require('https');<br>
-const fs = require('fs');<br><br>
-const options = {<br>
-&nbsp;&nbsp;key: fs.readFileSync('private-key.pem'),<br>
-&nbsp;&nbsp;cert: fs.readFileSync('certificate.pem'),<br>
-&nbsp;&nbsp;ciphers: [<br>
-&nbsp;&nbsp;&nbsp;&nbsp;'ECDHE-RSA-AES256-GCM-SHA384',<br>
-&nbsp;&nbsp;&nbsp;&nbsp;'ECDHE-RSA-AES128-GCM-SHA256'<br>
-&nbsp;&nbsp;].join(':'),<br>
-&nbsp;&nbsp;honorCipherOrder: true<br>
-};<br><br>
-https.createServer(options, app).listen(443);
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Express.js HTTPS setup --&gt;
+const https = require('https');
+const fs = require('fs');
+const options = {
+  key: fs.readFileSync('private-key.pem'),
+  cert: fs.readFileSync('certificate.pem'),
+  ciphers: [
+    'ECDHE-RSA-AES256-GCM-SHA384',
+    'ECDHE-RSA-AES128-GCM-SHA256'
+  ].join(':'),
+  honorCipherOrder: true
+};
+https.createServer(options, app).listen(443);</code></pre>
                 </div>
 
                 <h3>2. Security Headers</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Security headers --&gt;<br>
-app.use((req, res, next) => {<br>
-&nbsp;&nbsp;res.setHeader('Strict-Transport-Security', 'max-age=31536000');<br>
-&nbsp;&nbsp;res.setHeader('X-Content-Type-Options', 'nosniff');<br>
-&nbsp;&nbsp;res.setHeader('X-Frame-Options', 'DENY');<br>
-&nbsp;&nbsp;next();<br>});
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Security headers --&gt;
+app.use((req, res, next) =&gt; {
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  next();
+});</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 23: Database Security -->
-            <section>
+            <section data-slide-title="Database Security">
                 <h2>Database Security</h2>
                 
                 <h3>1. Encrypted Database Fields</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Encrypt sensitive fields --&gt;<br>
-CREATE TABLE users (<br>
-&nbsp;&nbsp;id INT PRIMARY KEY,<br>
-&nbsp;&nbsp;username VARCHAR(50),<br>
-&nbsp;&nbsp;password_hash VARCHAR(255),  -- bcrypt hash<br>
-&nbsp;&nbsp;email_encrypted BLOB,        -- AES encrypted<br>
-&nbsp;&nbsp;ssn_encrypted BLOB,         -- AES encrypted<br>
-&nbsp;&nbsp;created_at TIMESTAMP<br>
-);
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Encrypt sensitive fields --&gt;
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  username VARCHAR(50),
+  password_hash VARCHAR(255),  -- bcrypt hash
+  email_encrypted BLOB,        -- AES encrypted
+  ssn_encrypted BLOB,         -- AES encrypted
+  created_at TIMESTAMP
+);</code></pre>
                 </div>
 
                 <h3>2. Database Connection Security</h3>
@@ -699,48 +427,49 @@ CREATE TABLE users (<br>
                 </ul>
             </section>
 
-            <!-- Slide 24: API Security -->
-            <section>
+            <section data-slide-title="API Security">
                 <h2>API Security</h2>
                 
                 <h3>1. JWT Token Security</h3>
                 <div class="code-example">
-&lt;!-- SECURE: JWT implementation --&gt;<br>
-const jwt = require('jsonwebtoken');<br><br>
-const generateToken = (user) => {<br>
-&nbsp;&nbsp;return jwt.sign(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{ userId: user.id, role: user.role },<br>
-&nbsp;&nbsp;&nbsp;&nbsp;process.env.JWT_SECRET,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{ expiresIn: '1h', algorithm: 'HS256' }<br>
-&nbsp;&nbsp;);<br>};<br><br>
-const verifyToken = (token) => {<br>
-&nbsp;&nbsp;return jwt.verify(token, process.env.JWT_SECRET);<br>};
+                    <pre><code class="language-javascript">&lt;!-- SECURE: JWT implementation --&gt;
+const jwt = require('jsonwebtoken');
+const generateToken = (user) =&gt; {
+  return jwt.sign(
+    { userId: user.id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h', algorithm: 'HS256' }
+  );
+};
+const verifyToken = (token) =&gt; {
+  return jwt.verify(token, process.env.JWT_SECRET);
+};</code></pre>
                 </div>
 
                 <h3>2. API Rate Limiting</h3>
                 <div class="code-example">
-&lt;!-- SECURE: Rate limiting --&gt;<br>
-const rateLimit = require('express-rate-limit');<br><br>
-const limiter = rateLimit({<br>
-&nbsp;&nbsp;windowMs: 15 * 60 * 1000, // 15 minutes<br>
-&nbsp;&nbsp;max: 100, // limit each IP to 100 requests per windowMs<br>
-&nbsp;&nbsp;message: 'Too many requests from this IP'<br>});<br><br>
-app.use('/api/', limiter);
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Rate limiting --&gt;
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP'
+});
+app.use('/api/', limiter);</code></pre>
                 </div>
             </section>
 
-            <!-- Slide 25: Security Testing -->
-            <section>
+            <section data-slide-title="Security Testing">
                 <h2>Security Testing</h2>
                 
                 <h3>1. Automated Security Scanning</h3>
                 <div class="code-example">
-&lt;!-- Security testing tools --&gt;<br>
-npm install --save-dev eslint-plugin-security<br>
-npm install --save-dev snyk<br><br>
-// Run security audit<br>
-npm audit<br>
-snyk test
+                    <pre><code class="language-plaintext">&lt;!-- Security testing tools --&gt;
+npm install --save-dev eslint-plugin-security
+npm install --save-dev snyk
+// Run security audit
+npm audit
+snyk test</code></pre>
                 </div>
 
                 <h3>2. Manual Testing Checklist</h3>
@@ -753,8 +482,7 @@ snyk test
                 </ul>
             </section>
 
-            <!-- Slide 26: Compliance and Standards -->
-            <section>
+            <section data-slide-title="Compliance and Standards">
                 <h2>Compliance and Standards</h2>
                 
                 <h3>1. Industry Standards</h3>
@@ -776,8 +504,7 @@ snyk test
                 </div>
             </section>
 
-            <!-- Slide 27: Career Development -->
-            <section>
+            <section data-slide-title="Career Development in Cryptography">
                 <h2>Career Development in Cryptography</h2>
                 <div class="career-box">
                     <h3>Next Steps:</h3>
@@ -792,8 +519,7 @@ snyk test
                 </div>
             </section>
 
-            <!-- Task 2: Secure Implementation -->
-            <section>
+            <section data-slide-title="Task 2: Secure Cryptographic Implementation">
                 <h2>Task 2: Secure Cryptographic Implementation</h2>
                 <div class="task-box">
                     <h3>Objective:</h3>
@@ -815,8 +541,7 @@ snyk test
                 </div>
             </section>
 
-            <!-- Slide 28: Further Activity -->
-            <section>
+            <section data-slide-title="Further Activity: Code Inspection">
                 <h2>Further Activity: Code Inspection</h2>
                 <div class="os3-studio">
                     <h3>Advanced Students - Code Analysis:</h3>
@@ -832,8 +557,7 @@ snyk test
                 </div>
             </section>
 
-            <!-- Slide 29: Summary -->
-            <section>
+            <section data-slide-title="Session Summary">
                 <h2>Session Summary</h2>
                 <div class="highlight">
                     <h3>Key Takeaways:</h3>
@@ -848,66 +572,39 @@ snyk test
                 </div>
             </section>
 
-            <!-- Slide 30: Next Steps -->
-            <section class="center">
+            <section class="center" data-slide-title="Next Steps">
                 <h2>Next Steps</h2>
-                <div class="timeline-info">
-                    <h3>Continue Learning:</h3>
-                    <ul>
-                        <li>Complete the OS³ Studio tasks</li>
-                        <li>Explore additional cryptographic vulnerabilities</li>
-                        <li>Practice with security testing tools</li>
-                        <li>Consider industry certifications</li>
-                        <li>Join cybersecurity communities</li>
-                    </ul>
-                    <p><strong>Next Session:</strong> WEB-SQL-01 - SQL Injection</p>
-                </div>
+                
             </section>
+
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: false,
-            preloadIframes: null,
-            autoAnimate: true,
-            autoAnimateMatcher: null,
-            autoAnimateEasing: 'ease',
-            autoAnimateDuration: 1.0,
-            autoAnimateUnmatched: true,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: null,
-            defaultTiming: null,
-            mouseWheel: false,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            disableLayout: false
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>

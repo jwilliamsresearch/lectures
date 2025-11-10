@@ -5,56 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session 1: Introduction to Full-stack Development</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+
     <style>
-        /* Global slide styling */
-        .reveal .slides section {
-            text-align: left;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
-
-        .reveal .slides section.center {
-            text-align: center;
-        }
-
-        /* Ensure content fits within viewport */
-        .reveal .slides section h1 {
-            font-size: 2.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h2 {
-            font-size: 2em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section h3 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .reveal .slides section p {
-            font-size: 1.1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section ul,
-        .reveal .slides section ol {
-            font-size: 1em;
-            line-height: 1.4;
-            margin-bottom: 0.8em;
-        }
-
-        .reveal .slides section li {
-            margin-bottom: 0.3em;
-        }
-
-        /* Task box styling */
+        /* Preserve existing custom component styles */
         .task-box {
             background: #fff5f5;
             border: 2px solid #ff6b6b;
@@ -67,16 +27,13 @@
 
         /* Code example styling */
         .code-example {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
             margin: 10px 0;
-            font-size: 0.9em;
-            line-height: 1.3;
-            max-height: 40vh;
-            overflow-y: auto;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
         }
 
         /* Highlight styling */
@@ -117,6 +74,14 @@
             text-align: center;
         }
 
+        /* Center content for title slides */
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
         /* Responsive design */
         @media (max-width: 768px) {
             .reveal .slides section {
@@ -145,30 +110,12 @@
         /* Custom scrollbar for better UX */
         .reveal .slides section::-webkit-scrollbar,
         .task-box::-webkit-scrollbar,
-        .code-example::-webkit-scrollbar {
-            width: 8px;
-        }
-
         .reveal .slides section::-webkit-scrollbar-track,
         .task-box::-webkit-scrollbar-track,
-        .code-example::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
         .reveal .slides section::-webkit-scrollbar-thumb,
         .task-box::-webkit-scrollbar-thumb,
-        .code-example::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
         .reveal .slides section::-webkit-scrollbar-thumb:hover,
         .task-box::-webkit-scrollbar-thumb:hover,
-        .code-example::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
         /* Interactive content styling */
         .interactive-content {
             margin-top: 20px;
@@ -211,49 +158,35 @@
 </head>
 
 <body>
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../index.html" style="
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            transition: all 0.3s ease;
-            display: inline-block;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 107, 107, 0.4)'"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 107, 107, 0.3)'">
-            ← Back to Module
-        </a>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="../index.html" title="Previous Session">&lt;</a>
+        <a href="session2.html" title="Next Session">&gt;</a>
     </div>
     <div class="reveal">
         <div class="slides">
             <!-- Slide 1: Title -->
-            <section class="center">
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 1</div>
                 <h1>Introduction to Full-stack Development</h1>
-                <h3>CMU529: Advanced Web Development - Session 1</h3>
-                <p><strong>Birmingham Newman University</strong></p>
-                <p><em>Lecturer: James Williams</em></p>
-                <p>Understanding client-server architecture and web development stack</p>
-                <p><small>3-hour session • 25 slides • 2 interactive tasks</small></p>
-                <div class="timeline-info">
-                    <p><strong>Session Timeline:</strong></p>
-                    <ul>
-                        <li>10 min: Registration & waiting</li>
-                        <li>20 min: Opening slides</li>
-                        <li>45 min: Task 1</li>
-                        <li>15 min: Break/Catch up</li>
-                        <li>20 min: Secondary slides</li>
-                        <li>45 min: Task 2</li>
-                        <li>Remaining: Self-study</li>
-                    </ul>
+                <h2>Understanding client-server architecture and web development stack</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 25 slides • 2 interactive tasks</p>
                 </div>
             </section>
 
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                
+            </section>
+
             <!-- Slide 2: Learning Objectives -->
-            <section>
+            <section data-slide-title="Learning Objectives">
                 <h2>Learning Objectives</h2>
                 <ul>
                     <li>Understand the concept of full-stack web development</li>
@@ -266,7 +199,7 @@
             </section>
 
             <!-- Slide 3: What is Full-stack Development? -->
-            <section>
+            <section data-slide-title="What is Full-stack Development?">
                 <h2>What is Full-stack Development?</h2>
                 <div class="highlight">
                     <strong>Full-stack development</strong> involves working on both the front-end
@@ -287,120 +220,17 @@
 
                 <!-- YouTube Video: Full-stack Development Explained -->
                 <div class="interactive-content">
-                    <h3>Watch: Full-stack Development Explained</h3>
-                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
-                    <p class="interactive-description">
-                        Understanding the complete web development stack and architecture
-                    </p>
-                </div>
-            </section>
-
-            <!-- Slide 4: Client-Server Architecture -->
-            <section>
-                <h2>Client-Server Architecture</h2>
-                <div class="code-example">
-                    Client (Browser) ←→ Server (Web Server)
-                </div>
-                <ul>
-                    <li><strong>Client:</strong> Web browser (Chrome, Firefox, Safari)</li>
-                    <li><strong>Server:</strong> Computer running web server software</li>
-                    <li><strong>Communication:</strong> HTTP/HTTPS protocol</li>
-                    <li><strong>Request-Response:</strong> Client requests, server responds</li>
-                </ul>
-                <div class="highlight">
-                    <strong>Example:</strong> When you visit a website, your browser (client)
-                    requests the page from a web server, which sends back HTML, CSS, and JavaScript
-                    files.
-                </div>
-            </section>
-
-            <!-- Slide 5: How Web Applications Work -->
-            <section>
-                <h2>How Web Applications Work</h2>
-                <ol>
-                    <li>User enters URL in browser</li>
-                    <li>Browser sends HTTP request to server</li>
-                    <li>Server processes request (PHP logic)</li>
-                    <li>Server queries database (MySQL)</li>
-                    <li>Server generates HTML response</li>
-                    <li>Browser receives and displays page</li>
-                    <li>User interacts with page (JavaScript)</li>
-                </ol>
-                <div class="diagram">
-                    <h4>Request-Response Cycle</h4>
-                    <p>User → Browser → Server → Database → Server → Browser → User</p>
-                </div>
-            </section>
-
-            <!-- Slide 6: Front-end Technologies -->
-            <section>
-                <h2>Front-end Technologies</h2>
-                <div class="code-example">
-                    HTML5 (Structure)<br>
-                    + CSS3 (Styling)<br>
-                    + JavaScript (Interactivity)<br>
-                    + Bootstrap (Framework)
-                </div>
-                <ul>
-                    <li><strong>HTML5:</strong> Structure and content of web pages</li>
-                    <li><strong>CSS3:</strong> Styling, layout, and visual design</li>
-                    <li><strong>JavaScript:</strong> Client-side interactivity and functionality
-                    </li>
-                    <li><strong>Bootstrap:</strong> CSS framework for responsive design</li>
-                </ul>
-                <div class="highlight">
-                    <strong>Front-end Goal:</strong> Create user-friendly, responsive, and
-                    interactive web interfaces
-                </div>
-
-                <!-- YouTube Video: Front-end Technologies -->
-                <div class="interactive-content">
-                    <h3>Watch: Front-end Technologies Explained</h3>
-                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
-                    <p class="interactive-description">
-                        Learn how HTML, CSS, and JavaScript work together in web development
-                    </p>
-                </div>
-            </section>
-
-            <!-- Slide 7: Back-end Technologies -->
-            <section>
-                <h2>Back-end Technologies</h2>
-                <div class="code-example">
-                    PHP (Server Logic)<br>
-                    + MySQL (Database)<br>
-                    + Apache/Nginx (Web Server)
-                </div>
-                <ul>
-                    <li><strong>PHP:</strong> Server-side programming language</li>
-                    <li><strong>MySQL:</strong> Relational database management system</li>
-                    <li><strong>Apache/Nginx:</strong> Web server software</li>
-                    <li><strong>File System:</strong> Storage for files and assets</li>
-                </ul>
-                <div class="highlight">
-                    <strong>Back-end Goal:</strong> Process data, manage business logic, and serve
-                    dynamic content
-                </div>
-
-                <!-- YouTube Video: PHP Fundamentals Explained -->
-                <div class="interactive-content">
-                    <h3>Watch: PHP Fundamentals Explained</h3>
-                    <div class="video-container">
-                        <iframe width="100%" height="315"
-                            src="https://www.youtube-nocookie.com/embed/OK_JCtrrv-c"
-                            title="PHP Fundamentals Explained" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <h3>Watch:Full-stack Development Explained</h3>
+                    <div class="video-notice"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;">
+                        <p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.
+                        </p>
                     </div>
-                    <p class="interactive-description">
-                        Comprehensive introduction to PHP - the server-side programming language
-                    </p>
                 </div>
             </section>
 
             <!-- Slide 8: Web Development Stack -->
-            <section>
+            <section data-slide-title="Web Development Stack">
                 <h2>Web Development Stack</h2>
                 <div class="diagram">
                     <h4>LAMP Stack (Linux, Apache, MySQL, PHP)</h4>
@@ -418,35 +248,32 @@
             </section>
 
             <!-- Slide 9: E-commerce Application Structure -->
-            <section>
+            <section data-slide-title="E-commerce Application Structure">
                 <h2>E-commerce Application Structure</h2>
                 <div class="code-example">
-                    E-commerce Website Structure:<br><br>
-
-                    ├── Front-end (User Interface)<br>
-                    │ ├── Product catalog pages<br>
-                    │ ├── Shopping cart interface<br>
-                    │ ├── User registration/login<br>
-                    │ ├── Checkout process<br>
-                    │ └── Order tracking<br><br>
-
-                    ├── Back-end (Server Logic)<br>
-                    │ ├── User authentication<br>
-                    │ ├── Product management<br>
-                    │ ├── Order processing<br>
-                    │ ├── Payment handling<br>
-                    │ └── Admin panel<br><br>
-
-                    └── Database (Data Storage)<br>
-                    ├── User accounts<br>
-                    ├── Product information<br>
-                    ├── Orders and transactions<br>
-                    └── System settings
+                    <pre><code class="language-html">E-commerce Website Structure:
+├── Front-end (User Interface)
+│ ├── Product catalog pages
+│ ├── Shopping cart interface
+│ ├── User registration/login
+│ ├── Checkout process
+│ └── Order tracking
+├── Back-end (Server Logic)
+│ ├── User authentication
+│ ├── Product management
+│ ├── Order processing
+│ ├── Payment handling
+│ └── Admin panel
+└── Database (Data Storage)
+├── User accounts
+├── Product information
+├── Orders and transactions
+└── System settings</code></pre>
                 </div>
             </section>
 
             <!-- Slide 10: Development Environment Setup -->
-            <section>
+            <section data-slide-title="Development Environment Setup">
                 <h2>Development Environment Setup</h2>
                 <ul>
                     <li><strong>XAMPP:</strong> All-in-one package (Apache, MySQL, PHP)</li>
@@ -461,7 +288,7 @@
             </section>
 
             <!-- Slide 11: Project Planning -->
-            <section>
+            <section data-slide-title="E-commerce Project Planning">
                 <h2>E-commerce Project Planning</h2>
                 <ul>
                     <li><strong>Requirements Analysis:</strong> Define features and functionality
@@ -472,25 +299,24 @@
                     <li><strong>Development Timeline:</strong> Set milestones and deadlines</li>
                 </ul>
                 <div class="code-example">
-                    Project Phases:<br>
-                    1. Planning & Design (Sessions 1-3)<br>
-                    2. Back-end Development (Sessions 4-8)<br>
-                    3. Front-end Integration (Sessions 9-11)<br>
-                    4. Testing & Deployment (Session 12)
+                    <pre><code class="language-html">Project Phases:
+1. Planning &amp; Design (Sessions 1-3)
+2. Back-end Development (Sessions 4-8)
+3. Front-end Integration (Sessions 9-11)
+4. Testing &amp; Deployment (Session 12)</code></pre>
                 </div>
             </section>
 
             <!-- Slide 12: Database Design Basics -->
-            <section>
+            <section data-slide-title="Database Design Basics">
                 <h2>Database Design Basics</h2>
                 <div class="code-example">
-                    E-commerce Database Tables:<br><br>
-
-                    users (id, username, email, password, created_at)<br>
-                    products (id, name, description, price, stock, category_id)<br>
-                    categories (id, name, description)<br>
-                    orders (id, user_id, total_amount, status, created_at)<br>
-                    order_items (id, order_id, product_id, quantity, price)
+                    <pre><code class="language-html">E-commerce Database Tables:
+users (id, username, email, password, created_at)
+products (id, name, description, price, stock, category_id)
+categories (id, name, description)
+orders (id, user_id, total_amount, status, created_at)
+order_items (id, order_id, product_id, quantity, price)</code></pre>
                 </div>
                 <ul>
                     <li>Tables store related data</li>
@@ -501,23 +327,17 @@
 
                 <!-- YouTube Video: MySQL Fundamentals Explained -->
                 <div class="interactive-content">
-                    <h3>Watch: MySQL Fundamentals Explained</h3>
-                    <div class="video-container">
-                        <iframe width="100%" height="315"
-                            src="https://www.youtube-nocookie.com/embed/7S_tz1z_5bA"
-                            title="MySQL Fundamentals Explained" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <h3>Watch:MySQL Fundamentals Explained</h3>
+                    <div class="video-notice"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;">
+                        <p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.
+                        </p>
                     </div>
-                    <p class="interactive-description">
-                        Comprehensive introduction to MySQL - the popular database management system
-                    </p>
                 </div>
             </section>
 
             <!-- Slide 13: Security Considerations -->
-            <section>
+            <section data-slide-title="Security Considerations">
                 <h2>Security Considerations</h2>
                 <ul>
                     <li><strong>Input Validation:</strong> Validate all user inputs</li>
@@ -534,7 +354,7 @@
             </section>
 
             <!-- Slide 14: Performance Optimization -->
-            <section>
+            <section data-slide-title="Performance Optimization">
                 <h2>Performance Optimization</h2>
                 <ul>
                     <li><strong>Database Optimization:</strong> Efficient queries and indexing</li>
@@ -544,16 +364,16 @@
                     <li><strong>CDN Usage:</strong> Distribute static content globally</li>
                 </ul>
                 <div class="code-example">
-                    Optimization Techniques:
-                    - Use database indexes for faster queries
-                    - Implement page caching
-                    - Optimize images for web
-                    - Minify CSS and JavaScript files
+                    <pre><code class="language-markup">Optimization Techniques:
+- Use database indexes for faster queries
+- Implement page caching
+- Optimize images for web
+- Minify CSS and JavaScript files</code></pre>
                 </div>
             </section>
 
             <!-- Slide 15: Testing Strategies -->
-            <section>
+            <section data-slide-title="Testing Strategies">
                 <h2>Testing Strategies</h2>
                 <ul>
                     <li><strong>Unit Testing:</strong> Test individual functions</li>
@@ -570,7 +390,7 @@
             </section>
 
             <!-- Slide 16: Deployment Process -->
-            <section>
+            <section data-slide-title="Deployment Process">
                 <h2>Deployment Process</h2>
                 <ol>
                     <li><strong>Code Review:</strong> Check code quality and security</li>
@@ -581,16 +401,16 @@
                     <li><strong>Monitoring:</strong> Monitor performance and errors</li>
                 </ol>
                 <div class="code-example">
-                    Deployment Platforms:<br>
-                    - Shared hosting (cPanel)<br>
-                    - VPS hosting (DigitalOcean, AWS)<br>
-                    - Cloud platforms (Heroku, Vercel)<br>
-                    - Dedicated servers
+                    <pre><code class="language-html">Deployment Platforms:
+- Shared hosting (cPanel)
+- VPS hosting (DigitalOcean, AWS)
+- Cloud platforms (Heroku, Vercel)
+- Dedicated servers</code></pre>
                 </div>
             </section>
 
             <!-- Slide 17: Industry Best Practices -->
-            <section>
+            <section data-slide-title="Industry Best Practices">
                 <h2>Industry Best Practices</h2>
                 <ul>
                     <li><strong>Version Control:</strong> Use Git for code management</li>
@@ -608,7 +428,7 @@
             </section>
 
             <!-- Slide 18: TASK 1 - Halfway Point -->
-            <section class="center">
+            <section data-slide-title="Task 1: Development Environment Setup" class="center">
                 <h2>Task 1: Development Environment Setup</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
@@ -629,7 +449,7 @@
             </section>
 
             <!-- Slide 19: Break/Catch Up -->
-            <section class="center">
+            <section data-slide-title="Break Time" class="center">
                 <h2>Break Time</h2>
                 <div class="highlight">
                     <h3>15 Minutes</h3>
@@ -639,7 +459,7 @@
             </section>
 
             <!-- Slide 20: Web Development Tools -->
-            <section>
+            <section data-slide-title="Essential Web Development Tools">
                 <h2>Essential Web Development Tools</h2>
                 <ul>
                     <li><strong>Browser Developer Tools:</strong> Chrome DevTools, Firefox Developer
@@ -657,7 +477,7 @@
             </section>
 
             <!-- Slide 21: Web Standards and Protocols -->
-            <section>
+            <section data-slide-title="Web Standards and Protocols">
                 <h2>Web Standards and Protocols</h2>
                 <ul>
                     <li><strong>HTTP/HTTPS:</strong> Communication protocol between client and
@@ -669,15 +489,15 @@
                     <li><strong>JSON:</strong> Data interchange format</li>
                 </ul>
                 <div class="code-example">
-                    HTTP Request Example:<br>
-                    GET /products.php HTTP/1.1<br>
-                    Host: example.com<br>
-                    User-Agent: Mozilla/5.0...
+                    <pre><code class="language-php">HTTP Request Example:
+GET /products.php HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0...</code></pre>
                 </div>
             </section>
 
             <!-- Slide 22: Responsive Design Principles -->
-            <section>
+            <section data-slide-title="Responsive Design Principles">
                 <h2>Responsive Design Principles</h2>
                 <ul>
                     <li><strong>Mobile-First:</strong> Design for mobile devices first</li>
@@ -694,7 +514,7 @@
             </section>
 
             <!-- Slide 23: Accessibility Guidelines -->
-            <section>
+            <section data-slide-title="Web Accessibility Guidelines">
                 <h2>Web Accessibility Guidelines</h2>
                 <ul>
                     <li><strong>Semantic HTML:</strong> Use proper HTML elements</li>
@@ -706,14 +526,14 @@
                     </li>
                 </ul>
                 <div class="code-example">
-                    Accessibility Example:<br>
-                    &lt;img src="product.jpg" alt="Red running shoes"&gt;<br>
-                    &lt;button aria-label="Add to cart"&gt;+&lt;/button&gt;
+                    <pre><code class="language-html">Accessibility Example:
+&lt;img src="product.jpg" alt="Red running shoes"&gt;
+&lt;button aria-label="Add to cart"&gt;+&lt;/button&gt;</code></pre>
                 </div>
             </section>
 
             <!-- Slide 24: TASK 2 - Final Task -->
-            <section class="center">
+            <section data-slide-title="Task 2: E-commerce Project Planning" class="center">
                 <h2>Task 2: E-commerce Project Planning</h2>
                 <div class="task-box">
                     <h3>Instructions:</h3>
@@ -736,7 +556,7 @@
             </section>
 
             <!-- Slide 25: Summary -->
-            <section class="center">
+            <section data-slide-title="Session Summary" class="center">
                 <h2>Session Summary</h2>
                 <ul>
                     <li>Full-stack development involves both front-end and back-end</li>
@@ -754,54 +574,31 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
     <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
         Reveal.initialize({
             hash: true,
-            transition: 'slide',
-            transitionSpeed: 'default',
-            backgroundTransition: 'fade',
-            controls: true,
-            progress: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
             center: false,
-            touch: true,
-            loop: false,
-            rtl: false,
-            navigationMode: 'default',
-            shuffle: false,
-            fragments: true,
-            fragmentInURL: false,
-            embedded: false,
-            help: true,
-            showNotes: false,
-            autoPlayMedia: null,
-            preloadIframes: null,
-            autoSlide: 0,
-            autoSlideStoppable: true,
-            autoSlideMethod: Reveal.navigateNext,
-            defaultTiming: null,
-            mouseWheel: false,
-            hideInactiveCursor: true,
-            hideCursorTime: 5000,
-            previewLinks: false,
-            postMessage: true,
-            postMessageEvents: false,
-            focusBodyOnPageVisibilityChange: true,
-            viewDistance: 3,
-            mobileViewDistance: 2,
-            display: 'block',
-            hideEmptyElements: true,
-            width: '100%',
-            height: '100%',
-            margin: 0.04,
-            minScale: 0.2,
-            maxScale: 2.0,
-            // Ensure content is always visible
-            fitToParent: true,
-            // Better responsive behavior
-            responsive: true,
-            // Allow content to scroll within slides
-            scrollBeyondOnePage: true
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>
