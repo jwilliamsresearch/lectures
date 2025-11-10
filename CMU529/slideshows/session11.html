@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMU529 - Session 11: Modern JavaScript Libraries</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
     <link rel="stylesheet" href="../../placeholder/academic-theme.css">
     
     <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
     <style>
         .reveal .slides section {
             text-align: left;
@@ -284,7 +284,7 @@ $.ajax({
             <section data-slide-title="Axios HTTP Client"><h2>Axios HTTP Client</h2>
                 <div class="code-example">
                 <pre><code class="language-javascript">// Include Axios
-&lt;script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"&gt;&lt;/script&gt;
+&lt;script src="../../libs/axios/axios.min.js"&gt;&lt;/script&gt;
 // GET request
 axios.get('/api/users')
   .then(response =&gt; {
@@ -308,7 +308,7 @@ axios.post('/api/users', {
             <section data-slide-title="Chart.js"><h2>Chart.js</h2>
                 <div class="code-example">
                 <pre><code class="language-javascript">// Include Chart.js
-&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;
+&lt;script src="../../libs/chart.js/chart.js"&gt;&lt;/script&gt;
 // Create chart
 const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {
@@ -329,7 +329,7 @@ const myChart = new Chart(ctx, {
             <section data-slide-title="SweetAlert2"><h2>SweetAlert2</h2>
                 <div class="code-example">
                 <pre><code class="language-javascript">// Include SweetAlert2
-&lt;script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"&gt;&lt;/script&gt;
+&lt;script src="../../libs/sweetalert2/sweetalert2.js"&gt;&lt;/script&gt;
 // Basic alert
 Swal.fire('Hello world!');
 // Confirmation dialog
@@ -526,10 +526,10 @@ self.addEventListener('install', event =&gt; {
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js"></script>
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
     <script>
         
         // Prevent wheel events from changing slides when scrolling within scrollable content
