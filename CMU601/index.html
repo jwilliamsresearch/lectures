@@ -1,733 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMU601: Dissertation | James Williams | Birmingham Newman University</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="CMU601 Dissertation module by James Williams at Birmingham Newman University. Comprehensive guidance for undergraduate final year project development, design, and implementation.">
-    <meta name="keywords" content="CMU601, dissertation, final year project, undergraduate, project management, design diagrams, GitHub, Trello, James Williams, Birmingham Newman University">
+    <title>CMU601: Dissertation Support | James Williams | Birmingham Newman University</title>
+    <meta name="description"
+        content="CMU601 Dissertation - Final year project guidance with GitHub workflows, UML diagrams, and project management.">
     <meta name="author" content="James Williams">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="English">
-    <meta name="revisit-after" content="7 days">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://jwilliams.science/lectures/CMU601/">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="CMU601: Dissertation | James Williams | Birmingham Newman University">
-    <meta property="og:description" content="Comprehensive guidance for undergraduate dissertation development, covering project initiation, management tools, and design methodologies.">
-    <meta property="og:url" content="https://jwilliams.science/lectures/CMU601/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="James Williams Teaching Portfolio">
-    <meta property="og:locale" content="en_GB">
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CMU601: Dissertation | James Williams | Birmingham Newman University">
-    <meta name="twitter:description" content="Comprehensive guidance for undergraduate dissertation development, covering project initiation, management tools, and design methodologies.">
-    <meta name="twitter:url" content="https://jwilliams.science/lectures/CMU601/">
-    
-    <!-- Additional SEO Meta Tags -->
-    <meta name="theme-color" content="#f39c12">
-    <meta name="msapplication-TileColor" content="#f39c12">
-    <meta name="application-name" content="CMU601 Dissertation Module">
-    
-    <!-- Performance Optimization -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- Preconnect to external domains for faster loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://www.newman.ac.uk" crossorigin>
-    
-    <!-- DNS Prefetch for external resources -->
-    <link rel="dns-prefetch" href="//github.com">
-    <link rel="dns-prefetch" href="//trello.com">
-    <link rel="dns-prefetch" href="//lucidchart.com">
-    
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Course",
-        "name": "CMU601: Dissertation",
-        "description": "Comprehensive undergraduate dissertation module providing guidance on project development, management tools, and design methodologies. Students work on their final year project with structured support through development phases.",
-        "provider": {
-            "@type": "EducationalOrganization",
-            "name": "Birmingham Newman University",
-            "url": "https://www.newman.ac.uk"
-        },
-        "instructor": {
-            "@type": "Person",
-            "name": "James Williams",
-            "jobTitle": "Lecturer in Computer Science"
-        },
-        "courseCode": "CMU601",
-        "educationalLevel": "Undergraduate",
-        "credits": "40",
-        "url": "https://jwilliams.science/lectures/CMU601/",
-        "hasCourseInstance": {
-            "@type": "CourseInstance",
-            "courseMode": "blended",
-            "courseWorkload": "PT400H"
-        },
-        "teaches": [
-            "Project Management",
-            "Software Development",
-            "Design Methodologies",
-            "Version Control",
-            "Project Documentation"
-        ]
-    }
-    </script>
+    <link rel="stylesheet" href="../base.css">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            color: white;
-            padding: 60px 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                linear-gradient(30deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
-                linear-gradient(150deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
-                linear-gradient(30deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
-                linear-gradient(150deg, rgba(255,255,255,.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.1) 87.5%, rgba(255,255,255,.1)),
-                linear-gradient(60deg, rgba(255,255,255,.05) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05)),
-                linear-gradient(60deg, rgba(255,255,255,.05) 25%, transparent 25.5%, transparent 75%, rgba(255,255,255,.05) 75%, rgba(255,255,255,.05));
-            background-size: 80px 140px;
-            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
-            opacity: 0.3;
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .module-code {
-            font-size: 1.2em;
-            font-weight: 600;
-            margin-bottom: 10px;
-            opacity: 0.9;
-            letter-spacing: 2px;
-        }
-        
-        .header h1 {
-            font-size: 3.5em;
-            margin: 0 0 20px 0;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .header-subtitle {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            opacity: 0.95;
-        }
-        
-        .header-details {
-            font-size: 1.1em;
-            opacity: 0.9;
-            margin-top: 20px;
-        }
-        
-        .module-description {
-            background: white;
-            padding: 50px 40px;
-            font-size: 1.15em;
-            line-height: 1.8;
-            color: #555;
-            border-bottom: 1px solid #e9ecef;
-        }
-        
-        .module-description h2 {
-            color: #f39c12;
-            font-size: 2em;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        
-        .module-description p {
-            margin-bottom: 15px;
-        }
-        
-        .tabs {
-            display: flex;
-            background: #f8f9fa;
-            border-bottom: 3px solid #f39c12;
-            overflow-x: auto;
-        }
-        
-        .tab {
-            flex: 1;
-            padding: 20px 30px;
-            background: #f8f9fa;
-            border: none;
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #666;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -3px;
-            white-space: nowrap;
-        }
-        
-        .tab:hover {
-            background: #e9ecef;
-            color: #f39c12;
-        }
-        
-        .tab.active {
-            background: white;
-            color: #f39c12;
-            border-bottom-color: #f39c12;
-        }
-        
-        .tab-content {
-            display: none;
-            padding: 40px;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .content-card {
-            background: linear-gradient(135deg, #fff7e6 0%, #ffe6cc 100%);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2);
-            transition: all 0.3s ease;
-            border: 2px solid #f39c12;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        
-        .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.3);
-        }
-        
-        .content-card h3 {
-            color: #f39c12;
-            font-size: 1.8em;
-            margin: 0 0 15px 0;
-            font-weight: 600;
-        }
-        
-        .content-card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .content-card-meta {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #888;
-            border-top: 1px solid rgba(243, 156, 18, 0.3);
-            padding-top: 15px;
-        }
-        
-        .content-card-meta span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .info-section {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 5px solid #f39c12;
-        }
-        
-        .info-section h3 {
-            color: #f39c12;
-            font-size: 1.6em;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        
-        .info-section ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .info-section li {
-            padding: 10px 0;
-            padding-left: 30px;
-            position: relative;
-            line-height: 1.6;
-        }
-        
-        .info-section li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #f39c12;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        
-        .further-reading-section {
-            margin-bottom: 40px;
-        }
-        
-        .further-reading-section h3 {
-            color: #f39c12;
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        
-        .further-reading-section p {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-        
-        .further-reading-section ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .further-reading-section li {
-            padding: 10px 0;
-            padding-left: 30px;
-            position: relative;
-            line-height: 1.6;
-            color: #666;
-        }
-        
-        .further-reading-section li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #f39c12;
-            font-weight: bold;
-        }
-        
-        .further-reading-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .resource-card {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border-top: 4px solid #f39c12;
-        }
-        
-        .resource-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-        
-        .resource-type {
-            color: #f39c12;
-            font-weight: 600;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-        
-        .resource-card h4 {
-            color: #333;
-            font-size: 1.3em;
-            margin: 0 0 10px 0;
-        }
-        
-        .resource-card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            font-size: 0.95em;
-        }
-        
-        .resource-card a {
-            color: #f39c12;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95em;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-        
-        .resource-card a:hover {
-            color: #e67e22;
-            transform: translateX(5px);
-        }
-        
-        .footer {
-            background: #f8f9fa;
-            padding: 30px 40px;
-            text-align: center;
-            color: #666;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        .footer p {
-            margin: 0;
-            font-size: 1em;
-        }
-        
         .back-link {
             display: inline-block;
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1em;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-        }
-        
-        .back-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.6);
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                margin: 0;
-            }
-            
-            .header {
-                padding: 40px 20px;
-            }
-            
-            .header h1 {
-                font-size: 2.5em;
-            }
-            
-            .header-subtitle {
-                font-size: 1.2em;
-            }
-            
-            .module-description {
-                padding: 30px 20px;
-            }
-            
-            .tabs {
-                flex-direction: column;
-            }
-            
-            .tab {
-                border-bottom: 1px solid #dee2e6;
-                border-left: 3px solid transparent;
-                margin-bottom: 0;
-                margin-left: -3px;
-            }
-            
-            .tab.active {
-                border-bottom: 1px solid #dee2e6;
-                border-left-color: #f39c12;
-            }
-            
-            .tab-content {
-                padding: 20px;
-            }
-            
-            .content-grid,
-            .further-reading-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-        }
-        
-        /* Scrollbar Styling */
-        body::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        body::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        body::-webkit-scrollbar-thumb {
-            background: #f39c12;
-            border-radius: 5px;
-        }
-        
-        body::-webkit-scrollbar-thumb:hover {
-            background: #e67e22;
+            margin-bottom: var(--spacing-md);
+            color: var(--text-muted);
+            font-size: 0.875rem;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <header class="header" role="banner">
-            <div class="header-content">
-                <div class="module-code">CMU601</div>
-                <h1>Dissertation</h1>
-                <div class="header-subtitle">Undergraduate Final Year Project</div>
-                <div class="header-details">
-                    <strong>Lecturer:</strong> James Williams | 
-                    <strong>Credits:</strong> 40 | 
-                    <strong>Level:</strong> Undergraduate Final Year
+        <a href="../index.html" class="back-link">← Back to Teaching Portfolio</a>
+        <header class="header">
+            <div class="module-code">CMU601</div>
+            <h1>Dissertation Support</h1>
+            <p class="subtitle">Final Year Project Guidance</p>
+            <p class="department">Birmingham Newman University | 40 Credits | Final Year</p>
+        </header>
+        <main>
+            <section class="info-box">
+                <h3>Module Overview</h3>
+                <p>Essential guidance for your final year project. Master development workflows,
+                    GitHub collaboration, project management tools, and professional design
+                    documentation.</p>
+            </section>
+            <nav class="tabs">
+                <button class="tab active" onclick="showTab('slides')">Slides</button>
+                <button class="tab" onclick="showTab('resources')">Resources</button>
+            </nav>
+            <div id="slides" class="tab-content active">
+                <h3>Support Sessions</h3>
+                <ul class="sessions-list">
+                    <li class="session-item"><span class="session-number">1.</span><a
+                            href="slideshows/week5.html">GitHub Workflows & Collaboration</a><span
+                            class="text-light"> — Version control and best practices</span></li>
+                    <li class="session-item"><span class="session-number">2.</span><a
+                            href="slideshows/week6.html">Project Management Tools</a><span
+                            class="text-light"> — Trello, Gantt charts, and organization</span></li>
+                    <li class="session-item"><span class="session-number">3.</span><a
+                            href="slideshows/week7.html">Design Diagrams & Documentation</a><span
+                            class="text-light"> — UML, wireframes, and technical docs</span></li>
+                </ul>
+            </div>
+            <div id="resources" class="tab-content">
+                <h3>Resources</h3>
+                <div class="content-section">
+                    <h4>Development Tools</h4>
+                    <ul>
+                        <li><a href="https://docs.github.com/" target="_blank">GitHub
+                                Documentation</a></li>
+                        <li><a href="https://trello.com/guide" target="_blank">Trello Guide</a></li>
+                        <li><a href="https://www.lucidchart.com/pages/uml-diagram"
+                                target="_blank">UML Diagrams Guide</a></li>
+                    </ul>
+                </div>
+                <div class="content-section">
+                    <h4>Project Management</h4>
+                    <ul>
+                        <li>Git and GitHub for version control</li>
+                        <li>Trello for task management</li>
+                        <li>Lucidchart for UML diagrams</li>
+                        <li>Figma for wireframing</li>
+                    </ul>
                 </div>
             </div>
-        </header>
-        
-        <section class="module-description">
-            <h2>Module Overview</h2>
-            <p>The dissertation module represents the culmination of your undergraduate degree, providing an opportunity to demonstrate your skills, knowledge, and creativity through an independent project. This module provides structured guidance and support throughout your project journey, from initial development through to final implementation.</p>
-            <p>These sessions focus on the practical aspects of managing and executing your dissertation project. You will learn essential development practices, project management tools, and design methodologies that are crucial for professional software development.</p>
-            <p><strong>Important:</strong> These sessions provide guidance and frameworks, but the success of your dissertation depends on your commitment to regular development work in your own time. Consistent effort throughout the year is essential.</p>
-        </section>
-        
-        <nav class="tabs" role="tablist">
-            <button class="tab active" onclick="showTab('lectures')" role="tab" aria-selected="true" aria-controls="lectures" id="tab-lectures">Lectures</button>
-            <button class="tab" onclick="showTab('further-reading')" role="tab" aria-selected="false" aria-controls="further-reading" id="tab-further-reading">Further Reading</button>
-        </nav>
-        
-        <main role="main">
-            <!-- Lectures Tab -->
-            <section id="lectures" class="tab-content active" role="tabpanel" aria-labelledby="tab-lectures">
-                <a href="../index.html" class="back-link">← Back to Module List</a>
-                
-                <div class="info-section">
-                    <h3>Module Structure</h3>
-                    <ul>
-                        <li>Three structured lectures covering key development phases</li>
-                        <li>Practical, hands-on guidance applicable to any project type</li>
-                        <li>Real-world tools and methodologies used in industry</li>
-                        <li>Interactive tasks to apply learning to your own project</li>
-                        <li>Self-directed learning and independent development expected</li>
-                    </ul>
-                </div>
-                
-                <h2 style="color: #f39c12; font-size: 2em; margin-bottom: 20px;">Dissertation Lecture Series</h2>
-                <p style="color: #666; margin-bottom: 30px;">Each session includes 25-30 slides with practical examples, interactive activities, and a final task to apply concepts to your own dissertation project.</p>
-                
-                <div class="content-grid">
-                    <a href="slideshows/week5.html" class="content-card">
-                        <h3>Week 5: Beginning Your Development</h3>
-                        <p>Learn how to effectively start your project development. Covers project setup, initial architecture decisions, development environment configuration, and establishing good coding practices from day one.</p>
-                        <div class="content-card-meta">
-                            <span>⏱️ ~3 hours</span>
-                            <span>📊 28 slides</span>
-                            <span>✏️ 2 tasks</span>
-                        </div>
-                    </a>
-                    
-                    <a href="slideshows/week6.html" class="content-card">
-                        <h3>Week 6: Using GitHub & Project Management Tools</h3>
-                        <p>Master version control with GitHub and explore project management tools including Trello, Jira, and others. Learn collaboration workflows, issue tracking, and how to maintain project momentum.</p>
-                        <div class="content-card-meta">
-                            <span>⏱️ ~3 hours</span>
-                            <span>📊 30 slides</span>
-                            <span>✏️ 2 tasks</span>
-                        </div>
-                    </a>
-                    
-                    <a href="slideshows/week7.html" class="content-card">
-                        <h3>Week 7: Doing Design Diagrams</h3>
-                        <p>Create professional design documentation including UML diagrams, ERDs, wireframes, and system architecture diagrams. Learn when and how to use different diagram types effectively.</p>
-                        <div class="content-card-meta">
-                            <span>⏱️ ~3 hours</span>
-                            <span>📊 29 slides</span>
-                            <span>✏️ 2 tasks</span>
-                        </div>
-                    </a>
-                </div>
-            </section>
-        
-            <!-- Further Reading Tab -->
-            <section id="further-reading" class="tab-content" role="tabpanel" aria-labelledby="tab-further-reading">
-                <div class="further-reading-section">
-                    <h3>Further Reading & Resources</h3>
-                    <p>Explore essential resources for dissertation project development. These materials cover project management, version control, design methodologies, and professional development practices.</p>
-                </div>
-                
-                <div class="further-reading-grid">
-                    <div class="resource-card">
-                        <div class="resource-type">Version Control</div>
-                        <h4>GitHub Official Documentation</h4>
-                        <p>Comprehensive guide to Git and GitHub, including repositories, branches, pull requests, and collaboration workflows.</p>
-                        <a href="https://docs.github.com/" target="_blank">Visit GitHub Docs</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Project Management</div>
-                        <h4>Trello Guide</h4>
-                        <p>Learn Kanban-style project management with Trello boards, cards, and automation for tracking dissertation progress.</p>
-                        <a href="https://trello.com/guide" target="_blank">Visit Trello Guide</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">UML Diagrams</div>
-                        <h4>UML Diagram Tutorial</h4>
-                        <p>Complete guide to UML diagrams including class diagrams, sequence diagrams, and use case diagrams for software design.</p>
-                        <a href="https://www.uml-diagrams.org/" target="_blank">Visit UML Diagrams</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Design Tools</div>
-                        <h4>Lucidchart Documentation</h4>
-                        <p>Professional diagramming tool for creating flowcharts, UML diagrams, ERDs, and system architecture diagrams.</p>
-                        <a href="https://www.lucidchart.com/pages/tutorial" target="_blank">Visit Lucidchart</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Wireframing</div>
-                        <h4>Figma Design Guide</h4>
-                        <p>Modern design tool for creating wireframes, mockups, and prototypes with collaborative features.</p>
-                        <a href="https://help.figma.com/" target="_blank">Visit Figma Help</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Database Design</div>
-                        <h4>Database Design Tutorial</h4>
-                        <p>Learn entity-relationship diagrams (ERD), normalization, and database schema design principles.</p>
-                        <a href="https://www.guru99.com/database-design.html" target="_blank">Visit Database Tutorial</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Agile Methodology</div>
-                        <h4>Agile Alliance Resources</h4>
-                        <p>Understand agile development methodologies, sprints, and iterative development for dissertation projects.</p>
-                        <a href="https://www.agilealliance.org/agile101/" target="_blank">Visit Agile Alliance</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Documentation</div>
-                        <h4>Technical Writing Guide</h4>
-                        <p>Best practices for writing clear, comprehensive technical documentation and README files.</p>
-                        <a href="https://www.writethedocs.org/guide/" target="_blank">Visit Write The Docs</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Code Quality</div>
-                        <h4>Clean Code Principles</h4>
-                        <p>Learn professional coding standards, refactoring techniques, and maintainable code practices.</p>
-                        <a href="https://clean-code-developer.com/" target="_blank">Visit Clean Code</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Testing</div>
-                        <h4>Software Testing Guide</h4>
-                        <p>Comprehensive guide to unit testing, integration testing, and test-driven development methodologies.</p>
-                        <a href="https://www.softwaretestinghelp.com/" target="_blank">Visit Testing Guide</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Deployment</div>
-                        <h4>Deployment Best Practices</h4>
-                        <p>Learn continuous integration, deployment strategies, and hosting options for your dissertation project.</p>
-                        <a href="https://www.digitalocean.com/community/tutorials" target="_blank">Visit DigitalOcean Tutorials</a>
-                    </div>
-                    
-                    <div class="resource-card">
-                        <div class="resource-type">Research Methods</div>
-                        <h4>Computer Science Research</h4>
-                        <p>Academic guidance for conducting research, evaluating your project, and writing the dissertation report.</p>
-                        <a href="https://www.cs.cmu.edu/~jrs/sins.html" target="_blank">Visit Research Guide</a>
-                    </div>
-                </div>
-                
-                <div class="further-reading-section">
-                    <h3>Recommended Tools</h3>
-                    <ul>
-                        <li><strong>Version Control:</strong> Git, GitHub, GitLab, Bitbucket</li>
-                        <li><strong>Project Management:</strong> Trello, Jira, Asana, Monday.com</li>
-                        <li><strong>Diagramming:</strong> Lucidchart, Draw.io, PlantUML, Mermaid</li>
-                        <li><strong>Wireframing:</strong> Figma, Adobe XD, Balsamiq, Sketch</li>
-                        <li><strong>Documentation:</strong> Markdown, LaTeX, Google Docs, Notion</li>
-                        <li><strong>Code Editors:</strong> Visual Studio Code, PyCharm, IntelliJ IDEA</li>
-                        <li><strong>Communication:</strong> Slack, Microsoft Teams, Discord</li>
-                        <li><strong>Time Tracking:</strong> Toggl, Clockify, RescueTime</li>
-                    </ul>
-                </div>
-            </section>
         </main>
-        
-        <footer class="footer" role="contentinfo">
-            <p>&copy; 2025 James Williams | Birmingham Newman University | School of Business and Law</p>
+        <footer class="footer">
+            <p>&copy; 2025 James Williams, Birmingham Newman University</p>
         </footer>
     </div>
-
-    <script>
-        function showTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-                tab.setAttribute('aria-selected', 'false');
-            });
-            
-            // Show selected tab content
-            document.getElementById(tabName).classList.add('active');
-            
-            // Add active class to clicked tab
-            event.target.classList.add('active');
-            event.target.setAttribute('aria-selected', 'true');
-        }
-    </script>
+    <script>function showTab(t) { document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active')); document.querySelectorAll('.tab').forEach(e => e.classList.remove('active')); document.getElementById(t).classList.add('active'); event.target.classList.add('active'); }</script>
 </body>
+
 </html>
