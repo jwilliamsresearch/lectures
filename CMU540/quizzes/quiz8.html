@@ -1,273 +1,193 @@
-    <link rel="stylesheet" href="../../placeholder/quiz.css"><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz 8: WEB-CSRF-01 & WEB-CONFIG-01 - CSRF & Security Misconfiguration - Birmingham Newman University</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        
+    <title>Quiz 8: WEB-CSRF-01 <title>Quiz 8: Session Management & User Authentication - Newman University</title>
+    <link rel="stylesheet" href="../../base.css">
+    <link rel="stylesheet" href="../../placeholder/quiz.css">    <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            max-width: 900px;
+            margin: 2em auto;
+            padding: 2em;
         }
         
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            min-height: 100vh;
-            box-shadow: 0 0 50px rgba(0,0,0,0.1);
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px 40px;
+        .quiz-header {
             text-align: center;
+            margin-bottom: 3em;
+            padding-bottom: 2em;
+            border-bottom: 1px solid #e0e0e0;
         }
         
-        .header h1 {
-            margin: 0;
-            font-size: 2.2em;
-            font-weight: 300;
+        .quiz-header h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
         }
         
-        .header .subtitle {
+        .quiz-header .subtitle {
+            color: #666;
             font-size: 1.1em;
-            margin-top: 10px;
-            opacity: 0.9;
-        }
-        
-        .quiz-content {
-            padding: 40px;
         }
         
         .quiz-info {
-            background: #e3f2fd;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 5px solid #2196f3;
+            background: #f8f8f8;
+            padding: 1.5em;
+            margin-bottom: 2em;
+            border-left: 3px solid #2c3e50;
         }
         
         .question {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border: 2px solid #e9ecef;
-            display: none;
+            background: #fff;
+            padding: 2em;
+            margin-bottom: 2em;
+            border: 1px solid #e0e0e0;
         }
         
-        .question.active {
-            display: block;
-            border-color: #667eea;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        .question-number {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 1em;
         }
         
-        .question h3 {
-            color: #333;
-            margin-top: 0;
-            margin-bottom: 20px;
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 1.5em;
+            line-height: 1.6;
         }
         
         .options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 0.8em;
         }
         
         .option {
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
+            padding: 1em;
+            border: 1px solid #ddd;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
+            transition: all 0.2s;
         }
         
         .option:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
+            background: #f8f8f8;
+            border-color: #2c3e50;
         }
         
         .option.selected {
-            border-color: #667eea;
-            background: #e3f2fd;
+            background: #e8f0f8;
+            border-color: #2c3e50;
         }
         
         .option.correct {
+            background: #e8f5e9;
             border-color: #4caf50;
-            background: #e8f5e8;
+            border-width: 2px;
         }
         
         .option.incorrect {
-            border-color: #f44336;
             background: #ffebee;
+            border-color: #f44336;
+            border-width: 2px;
         }
         
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding: 20px 0;
+        .explanation {
+            margin-top: 1em;
+            padding: 1em;
+            background: #f0f7ff;
+            border-left: 3px solid #2196f3;
+            display: none;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .submit-container {
+            text-align: center;
+            margin: 3em 0 2em 0;
         }
         
         .btn {
-            padding: 12px 25px;
+            padding: 1em 2.5em;
+            background: #2c3e50;
+            color: white;
             border: none;
-            border-radius: 8px;
             cursor: pointer;
             font-size: 1em;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            transition: background 0.2s;
         }
         
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
+        .btn:hover {
+            background: #1a252f;
         }
         
         .btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
-        }
-        
-        .progress-bar {
-            background: #e9ecef;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            height: 100%;
-            transition: width 0.3s ease;
         }
         
         .results {
             display: none;
             text-align: center;
-            padding: 40px;
+            padding: 3em;
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
         }
         
-        .score-display {
+        .results.show {
+            display: block;
+        }
+        
+        .score {
             font-size: 3em;
             font-weight: bold;
-            color: #667eea;
-            margin-bottom: 20px;
+            color: #2c3e50;
+            margin-bottom: 0.5em;
         }
         
         .feedback {
             font-size: 1.2em;
-            margin-bottom: 30px;
+            margin-bottom: 2em;
+            color: #666;
         }
         
-        .explanation {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 15px;
-            border-left: 4px solid #667eea;
-            display: none;
-        }
-        
-        .timer {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                margin: 0;
-            }
-            
-            .quiz-content {
-                padding: 20px;
-            }
-            
-            .navigation {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .timer {
-                position: static;
-                text-align: center;
-                margin-bottom: 20px;
-            }
+        .results-buttons {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            flex-wrap: wrap;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Quiz 8: WEB-CSRF-01 & WEB-CONFIG-01 - CSRF & Security Misconfiguration</h1>
-            <div class="subtitle">Birmingham Newman University | Cyber Security Module</div>
-        </div>
-        
-        <div class="quiz-content">
-            <div class="quiz-info">
-                <h3>Quiz Instructions</h3>
-                <p><strong>Questions:</strong> 15 | <strong>Time Limit:</strong> 20 minutes | <strong>Passing Score:</strong> 70%</p>
-                <p>Test your understanding of CSRF attacks and security misconfiguration (OWASP A04 & A05). Select the best answer for each question.</p>
-            </div>
-            
-            <div class="timer" id="timer">Time: 20:00</div>
-            
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress"></div>
-            </div>
-            
-            <div id="questions-container">
-                <!-- Questions will be populated by JavaScript -->
-            </div>
-            
-            <div class="navigation">
-                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
-                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
-            </div>
-        </div>
-        
-        <div class="results" id="results">
-            <div class="score-display" id="scoreDisplay"></div>
-            <div class="feedback" id="feedback"></div>
-            <button class="btn btn-primary" onclick="restartQuiz()">Take Quiz Again</button>
-            <button class="btn btn-secondary" onclick="window.location.href='../index.html'">Back to Module</button>
+    <div class="quiz-header">
+        <h1>Quiz</h1>
+        <div class="subtitle">Newman University | CMU540</div>
+    </div>
+    
+    <div class="quiz-info">
+        <p><strong>Instructions:</strong> Answer all questions below. Questions are randomized each time. Click "Submit Quiz" when finished to see your results.</p>
+    </div>
+    
+    <div id="quiz-container">
+        <!-- Questions will be populated by JavaScript -->
+    </div>
+    
+    <div class="submit-container">
+        <button class="btn" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+    </div>
+    
+    <div class="results" id="results">
+        <div class="score" id="scoreDisplay"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="results-buttons">
+            <button class="btn" onclick="location.reload()">Retake Quiz</button>
+            <button class="btn" onclick="window.location.href='../index.html'">Back to Module</button>
         </div>
     </div>
 
     <script>
-        const questions = [
+                                            const questionsData = [
             {
                 question: "What is CSRF?",
                 options: [
@@ -434,157 +354,127 @@
                 explanation: "CSRF forces users to perform unwanted actions, while SSRF forces servers to make requests to unintended locations."
             }
         ];
-
-        let currentQuestion = 0;
-        let userAnswers = new Array(questions.length).fill(null);
-        let timeLeft = 20 * 60; // 20 minutes in seconds
-        let timerInterval;
-
-        function initQuiz() {
-            displayQuestion();
-            startTimer();
-            updateProgress();
+        // Shuffle array function
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
         }
-
-        function displayQuestion() {
-            const container = document.getElementById('questions-container');
-            const question = questions[currentQuestion];
-            
-            container.innerHTML = `
-                <div class="question active">
-                    <h3>Question ${currentQuestion + 1} of ${questions.length}</h3>
-                    <p>${question.question}</p>
+        
+        // Randomize questions on page load
+        const questions = shuffleArray(questionsData);
+        let userAnswers = new Array(questions.length).fill(null);
+        
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = questions.map((q, qIndex) => `
+                <div class="question" id="question-${qIndex}">
+                    <div class="question-number">Question ${qIndex + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
                     <div class="options">
-                        ${question.options.map((option, index) => `
-                            <div class="option ${userAnswers[currentQuestion] === index ? 'selected' : ''}" 
-                                 onclick="selectOption(${index})">
+                        ${q.options.map((option, oIndex) => `
+                            <div class="option" data-question="${qIndex}" data-option="${oIndex}" onclick="selectOption(${qIndex}, ${oIndex})">
                                 ${option}
                             </div>
                         `).join('')}
                     </div>
-                    <div class="explanation" id="explanation"></div>
+                    <div class="explanation" id="explanation-${qIndex}">
+                        <strong>Explanation:</strong> ${q.explanation || 'No explanation provided.'}
+                    </div>
                 </div>
-            `;
-            
-            updateNavigation();
+            `).join('');
         }
-
-        function selectOption(optionIndex) {
-            userAnswers[currentQuestion] = optionIndex;
+        
+        function selectOption(questionIndex, optionIndex) {
+            console.log('selectOption called:', questionIndex, optionIndex);
             
-            // Update visual selection
-            const options = document.querySelectorAll('.option');
-            options.forEach((option, index) => {
-                option.classList.remove('selected');
-                if (index === optionIndex) {
-                    option.classList.add('selected');
-                }
+            // Deselect all options for this question
+            document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                opt.classList.remove('selected');
             });
             
-            updateNavigation();
-        }
-
-        function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                displayQuestion();
-                updateProgress();
+            // Select the clicked option using data attributes
+            const selectedOption = document.querySelector(`[data-question="${questionIndex}"][data-option="${optionIndex}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+                console.log('Option selected successfully');
             } else {
-                finishQuiz();
+                console.log('ERROR: Could not find option element');
             }
+            userAnswers[questionIndex] = optionIndex;
+            console.log('userAnswers updated:', userAnswers);
         }
-
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                displayQuestion();
-                updateProgress();
-            }
-        }
-
-        function updateNavigation() {
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
+        
+        function submitQuiz() {
+            console.log('submitQuiz called');
+            console.log('Current userAnswers:', userAnswers);
+            console.log('Questions length:', questions.length);
             
-            prevBtn.disabled = currentQuestion === 0;
-            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next';
-        }
-
-        function updateProgress() {
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progress').style.width = progress + '%';
-        }
-
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
+            // Check if all questions are answered
+            const unanswered = userAnswers.filter((ans, idx) => ans === null).length;
+            console.log('Unanswered count:', unanswered);
+            
+            if (unanswered > 0) {
+                alert(`Please answer all questions before submitting. ${unanswered} question(s) remaining.`);
+                console.log('User answers:', userAnswers);
+                console.log('Total questions:', questions.length);
+                return;
+            }
+            
+            console.log('All questions answered, calculating score...');
+            
+            // Calculate score
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const isCorrect = userAnswers[index] === q.correct;
+                if (isCorrect) correct++;
                 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    finishQuiz();
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            document.getElementById('timer').textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function finishQuiz() {
-            clearInterval(timerInterval);
+                // Show correct/incorrect
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                options.forEach((opt, oIndex) => {
+                    opt.style.cursor = 'default';
+                    opt.onclick = null;
+                    
+                    if (oIndex === q.correct) {
+                        opt.classList.add('correct');
+                    } else if (oIndex === userAnswers[index]) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+                
+                // Show explanation
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
             
-            const score = calculateScore();
-            const percentage = Math.round((score / questions.length) * 100);
+            // Display results
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('scoreDisplay').textContent = `${correct}/${questions.length} (${percentage}%)`;
             
-            document.querySelector('.quiz-content').style.display = 'none';
-            document.getElementById('timer').style.display = 'none';
-            
-            const resultsDiv = document.getElementById('results');
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            const feedback = document.getElementById('feedback');
-            
-            scoreDisplay.textContent = `${score}/${questions.length} (${percentage}%)`;
-            
+            let feedbackText = '';
             if (percentage >= 90) {
-                feedback.textContent = "Excellent! You have a strong understanding of CSRF and security misconfiguration.";
+                feedbackText = 'Excellent work! You have demonstrated mastery of this material.';
             } else if (percentage >= 80) {
-                feedback.textContent = "Great job! You have a good grasp of CSRF and security misconfiguration concepts.";
+                feedbackText = 'Very good! You have a strong understanding of the concepts.';
             } else if (percentage >= 70) {
-                feedback.textContent = "Good work! You understand the basics of CSRF and security misconfiguration.";
+                feedbackText = 'Good effort. You have grasped the fundamentals.';
+            } else if (percentage >= 60) {
+                feedbackText = 'Fair performance. Review the material to strengthen your understanding.';
             } else {
-                feedback.textContent = "Keep studying! Review CSRF and security misconfiguration concepts and try again.";
+                feedbackText = 'Additional study is recommended. Review the session materials carefully.';
             }
             
-            resultsDiv.style.display = 'block';
-        }
-
-        function calculateScore() {
-            let score = 0;
-            for (let i = 0; i < questions.length; i++) {
-                if (userAnswers[i] === questions[i].correct) {
-                    score++;
-                }
-            }
-            return score;
-        }
-
-        function restartQuiz() {
-            currentQuestion = 0;
-            userAnswers = new Array(questions.length).fill(null);
-            timeLeft = 20 * 60;
+            document.getElementById('feedback').textContent = feedbackText;
+            document.getElementById('results').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
             
-            document.querySelector('.quiz-content').style.display = 'block';
-            document.getElementById('timer').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            
-            initQuiz();
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
-
-        // Initialize quiz when page loads
+        
+        // Initialize quiz on page load
         window.onload = initQuiz;
     </script>
-    <script src="../../placeholder/quiz.js"></script></body>
 </html>

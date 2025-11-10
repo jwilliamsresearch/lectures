@@ -37,6 +37,54 @@
         return a;
     }
 
+    function addNavigationButtons() {
+        // Determine current quiz number and paths
+        const path = window.location.pathname;
+        const match = path.match(/\/(CMU\d+|CMM\d+)\/quizzes\/quiz(\d+)\.html/);
+        if (!match) return; // Can't determine module/quiz
+
+        const module = match[1];
+        const currentQuiz = parseInt(match[2]);
+        const totalQuizzes = 12; // Standard across modules
+
+        const nav = document.createElement('div');
+        nav.className = 'quiz-nav';
+
+        // Home button
+        const homeLink = document.createElement('a');
+        homeLink.href = '../../index.html';
+        homeLink.textContent = 'H';
+        homeLink.title = 'Home';
+        nav.appendChild(homeLink);
+
+        // Module button
+        const moduleLink = document.createElement('a');
+        moduleLink.href = '../index.html';
+        moduleLink.textContent = 'M';
+        moduleLink.title = 'Module Home';
+        nav.appendChild(moduleLink);
+
+        // Previous quiz button
+        if (currentQuiz > 1) {
+            const prevLink = document.createElement('a');
+            prevLink.href = `quiz${currentQuiz - 1}.html`;
+            prevLink.textContent = '<';
+            prevLink.title = 'Previous Quiz';
+            nav.appendChild(prevLink);
+        }
+
+        // Next quiz button
+        if (currentQuiz < totalQuizzes) {
+            const nextLink = document.createElement('a');
+            nextLink.href = `quiz${currentQuiz + 1}.html`;
+            nextLink.textContent = '>';
+            nextLink.title = 'Next Quiz';
+            nav.appendChild(nextLink);
+        }
+
+        document.body.appendChild(nav);
+    }
+
     function renderQuiz(questions) {
         // support either #quiz-container or #questions-container
         let container = document.getElementById('quiz-container');
@@ -48,6 +96,11 @@
             const el = document.createElement('div'); el.id = 'quiz-container'; wrapper.appendChild(el);
             document.body.insertBefore(wrapper, document.body.firstChild);
             container = document.getElementById('quiz-container');
+        }
+
+        // Add navigation buttons if not present
+        if (!document.querySelector('.quiz-nav')) {
+            addNavigationButtons();
         }
 
         // randomize questions

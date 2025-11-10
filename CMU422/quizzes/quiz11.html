@@ -161,8 +161,8 @@
 </head>
 <body>
     <div class="quiz-header">
-        <h1>Quiz 11: Advanced Topics and Future Trends</h1>
-        <div class="subtitle">Newman University | CMU422: Advanced Web Technologies</div>
+        <h1>Quiz</h1>
+        <div class="subtitle">Newman University | CMU422</div>
     </div>
     
     <div class="quiz-info">
@@ -187,7 +187,7 @@
     </div>
 
     <script>
-        const questionsData = [
+                                            const questionsData = [
         {
                 "question": "What is React?",
                 "options": [
@@ -339,7 +339,6 @@
                 "correct": 0
         }
 ];
-        
         // Shuffle array function
         function shuffleArray(array) {
             const shuffled = [...array];
@@ -375,22 +374,42 @@
         }
         
         function selectOption(questionIndex, optionIndex) {
+            console.log('selectOption called:', questionIndex, optionIndex);
+            
             // Deselect all options for this question
             document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
                 opt.classList.remove('selected');
             });
             
-            // Select the clicked option
-            event.target.classList.add('selected');
+            // Select the clicked option using data attributes
+            const selectedOption = document.querySelector(`[data-question="${questionIndex}"][data-option="${optionIndex}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+                console.log('Option selected successfully');
+            } else {
+                console.log('ERROR: Could not find option element');
+            }
             userAnswers[questionIndex] = optionIndex;
+            console.log('userAnswers updated:', userAnswers);
         }
         
         function submitQuiz() {
+            console.log('submitQuiz called');
+            console.log('Current userAnswers:', userAnswers);
+            console.log('Questions length:', questions.length);
+            
             // Check if all questions are answered
-            if (userAnswers.includes(null)) {
-                alert('Please answer all questions before submitting.');
+            const unanswered = userAnswers.filter((ans, idx) => ans === null).length;
+            console.log('Unanswered count:', unanswered);
+            
+            if (unanswered > 0) {
+                alert(`Please answer all questions before submitting. ${unanswered} question(s) remaining.`);
+                console.log('User answers:', userAnswers);
+                console.log('Total questions:', questions.length);
                 return;
             }
+            
+            console.log('All questions answered, calculating score...');
             
             // Calculate score
             let correct = 0;
@@ -443,5 +462,4 @@
         // Initialize quiz on page load
         window.onload = initQuiz;
     </script>
-    <script src="../../placeholder/quiz.js"></script></body>
 </html>
