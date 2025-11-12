@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
     <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
     <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    <!-- Demo libraries CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js@1.11.2/src/toastify.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     
     <!-- Syntax highlighting -->
     <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
@@ -705,6 +710,271 @@ fetch('/api/data')
                 </ul>
             </section>
 
+            <!-- Library Demo Slides -->
+            
+            <!-- Slide 17.1: Typed.js -->
+            <section data-slide-title="Demo: Typed.js"><h2>Typed.js</h2>
+                <p>Create animated typewriter text effects.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Initialize Typed.js
+new Typed('#typed-demo', {
+  strings: ['Hello World!', 'Welcome to Typed.js', 'Amazing typewriter effect!'],
+  typeSpeed: 50,
+  backSpeed: 30,
+  loop: true
+});</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Live Demo</h3>
+                    <div class="demo-container">
+                        <div id="typed-demo" style="font-size:2em;font-weight:700;color:#2c3e50;min-height:60px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.3: Tippy.js -->
+            <section data-slide-title="Demo: Tippy.js"><h2>Tippy.js</h2>
+                <p>Beautiful tooltips and popovers with custom styling.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Initialize Tippy.js
+tippy('#my-button', {
+  content: 'This is a tooltip!',
+  theme: 'light',
+  animation: 'scale'
+});</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Try It: Hover over the buttons</h3>
+                    <div class="demo-container">
+                        <button class="dom-button" id="tippy-btn1" style="margin:10px;">Default Tooltip</button>
+                        <button class="dom-button success" id="tippy-btn2" style="margin:10px;">Success Tooltip</button>
+                        <button class="dom-button danger" id="tippy-btn3" style="margin:10px;">Warning Tooltip</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.4: SweetAlert2 -->
+            <section data-slide-title="Demo: SweetAlert2"><h2>SweetAlert2</h2>
+                <p>Beautiful, responsive, customizable popup boxes.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Show a SweetAlert
+Swal.fire({
+  title: 'Success!',
+  text: 'Your action was completed.',
+  icon: 'success',
+  confirmButtonText: 'OK'
+});</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Try It: Click the buttons</h3>
+                    <div class="demo-container">
+                        <button class="dom-button success" id="swal-success" style="margin:10px;">Success Alert</button>
+                        <button class="dom-button danger" id="swal-error" style="margin:10px;">Error Alert</button>
+                        <button class="dom-button" id="swal-confirm" style="margin:10px;">Confirm Dialog</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.4: Lodash -->
+            <section data-slide-title="Demo: Lodash"><h2>Lodash</h2>
+                <p>Utility library for array/object manipulation and data processing.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Lodash utilities
+const arr = [1, 2, 2, 3, 3, 3, 4];
+_.uniq(arr);  // [1, 2, 3, 4]
+
+const users = [{name: 'John', age: 30}, {name: 'Jane', age: 25}];
+_.sortBy(users, 'age');  // Sort by age</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Live Examples</h3>
+                    <div class="demo-container">
+                        <div id="lodash-out1" style="padding:10px;background:#f5f5f5;margin:8px 0;border-radius:5px;"></div>
+                        <div id="lodash-out2" style="padding:10px;background:#f5f5f5;margin:8px 0;border-radius:5px;"></div>
+                        <div id="lodash-out3" style="padding:10px;background:#f5f5f5;margin:8px 0;border-radius:5px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.7: Day.js -->
+            <section data-slide-title="Demo: Day.js"><h2>Day.js (Moment.js alternative)</h2>
+                <p>Lightweight library for date formatting and manipulation.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Format dates with Day.js
+dayjs().format('MMMM D, YYYY');  // "January 15, 2024"
+dayjs().format('h:mm A');        // "3:45 PM"
+dayjs().add(7, 'day').format('MMM DD');  // Add 7 days</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Live Date Formatting</h3>
+                    <div class="demo-container">
+                        <div id="dayjs-out1" style="padding:10px;background:#e3f2fd;margin:8px 0;border-radius:5px;"></div>
+                        <div id="dayjs-out2" style="padding:10px;background:#f3e5f5;margin:8px 0;border-radius:5px;"></div>
+                        <div id="dayjs-out3" style="padding:10px;background:#e8f5e9;margin:8px 0;border-radius:5px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.8: Clipboard.js -->
+            <section data-slide-title="Demo: Clipboard.js"><h2>Clipboard.js</h2>
+                <p>Copy text to clipboard without Flash.</p>
+                <div class="code-example">
+                    <pre><code class="language-markup">&lt;!-- HTML --&gt;
+&lt;input id="copy-input" value="Copy this text" /&gt;
+&lt;button data-clipboard-target="#copy-input"&gt;Copy&lt;/button&gt;
+
+&lt;script&gt;
+// Initialize Clipboard.js
+new ClipboardJS('button');
+&lt;/script&gt;</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Try It: Click to copy</h3>
+                    <div class="demo-container">
+                        <input id="copy-input" value="Hello, I can be copied!" style="width:70%;padding:10px;margin:10px;border:2px solid #ddd;border-radius:5px;" />
+                        <button class="dom-button" data-clipboard-target="#copy-input" id="copy-btn">📋 Copy Text</button>
+                        <p id="copy-status" style="margin-top:10px;color:#4caf50;font-weight:bold;"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.9: Toastify.js -->
+            <section data-slide-title="Demo: Toastify.js"><h2>Toastify.js</h2>
+                <p>Simple toast notifications for user feedback.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Show a toast notification
+Toastify({
+  text: "This is a toast notification!",
+  duration: 3000,
+  gravity: "top",
+  position: "right",
+  backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+}).showToast();</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Try It: Click to show toast</h3>
+                    <div class="demo-container">
+                        <button class="dom-button success" id="toast-success" style="margin:10px;">Success Toast</button>
+                        <button class="dom-button" id="toast-info" style="margin:10px;">Info Toast</button>
+                        <button class="dom-button danger" id="toast-error" style="margin:10px;">Error Toast</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.10: Three.js -->
+            <section data-slide-title="Demo: Three.js"><h2>Three.js</h2>
+                <p>Create stunning 3D graphics and animations in the browser.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Create a 3D scene
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshStandardMaterial({ color: 0x2196f3 });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Live 3D Animation</h3>
+                    <div class="demo-container">
+                        <div id="threejs-demo" style="width:100%;height:300px;background:#000;border-radius:8px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.11: p5.js -->
+            <section data-slide-title="Demo: p5.js"><h2>p5.js</h2>
+                <p>Creative coding library for interactive art and animations.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// p5.js sketch
+function setup() {
+  createCanvas(400, 200);
+}
+
+function draw() {
+  background(30);
+  fill(255, 100, 150);
+  ellipse(mouseX, mouseY, 30, 30);
+}</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Try It: Move your mouse over the canvas</h3>
+                    <div class="demo-container">
+                        <div id="p5-container" style="width:100%;height:250px;background:#1e1e1e;border-radius:8px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.12: GSAP -->
+            <section data-slide-title="Demo: GSAP"><h2>GSAP (GreenSock Animation Platform)</h2>
+                <p>Professional-grade JavaScript animation library.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// GSAP animation
+gsap.to('#box', {
+  duration: 1.2,
+  y: -30,
+  repeat: -1,
+  yoyo: true,
+  ease: 'power1.inOut'
+});</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Live Animation</h3>
+                    <div class="demo-container">
+                        <div id="gsap-box" style="width:100px;height:100px;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);border-radius:10px;margin:40px auto;box-shadow:0 4px 15px rgba(0,0,0,0.2);"></div>
+                        <button class="dom-button" id="gsap-spin" style="margin:10px;">Spin It!</button>
+                        <button class="dom-button success" id="gsap-scale" style="margin:10px;">Scale It!</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.13: Leaflet -->
+            <section data-slide-title="Demo: Leaflet"><h2>Leaflet</h2>
+                <p>Interactive maps for mobile and desktop.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Create a map
+const map = L.map('map').setView([52.489, -1.898], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.marker([52.489, -1.898]).addTo(map)
+  .bindPopup('Birmingham Newman University');</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Interactive Map</h3>
+                    <div class="demo-container">
+                        <div id="leaflet-map" style="width:100%;height:300px;border-radius:8px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17.14: Chart.js -->
+            <section data-slide-title="Demo: Chart.js"><h2>Chart.js</h2>
+                <p>Simple yet flexible JavaScript charting library.</p>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Create a chart
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    datasets: [{
+      label: 'Sales',
+      data: [12, 19, 3, 5, 2]
+    }]
+  }
+});</code></pre>
+                </div>
+                <div class="interactive-demo">
+                    <h3>Live Chart</h3>
+                    <div class="demo-container">
+                        <canvas id="chart-demo" style="max-height:300px;"></canvas>
+                        <div style="margin-top:10px;">
+                            <button class="dom-button" id="chart-bar">Bar Chart</button>
+                            <button class="dom-button success" id="chart-line">Line Chart</button>
+                            <button class="dom-button danger" id="chart-pie">Pie Chart</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Slide 18: TASK 1 - Halfway Point -->
             <section data-slide-title="Task 1: Interactive Form" class="center"><h2>Task 1: Interactive Form</h2>
                 <div class="task-box">
@@ -901,6 +1171,20 @@ console.log('Orientation changed');
     <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
     <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
     <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <!-- Demo libraries JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.11.7/dayjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js@1.11.2/src/toastify.min.js"></script>
+    <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
         
         // Prevent wheel events from changing slides when scrolling within scrollable content
@@ -981,6 +1265,288 @@ console.log('Orientation changed');
                 }
             });
         }
+
+        // ========== Library Demos Initialization ==========
+        function initLibraryDemos() {
+            // 1. Typed.js - Animated typewriter
+            if (window.Typed && document.getElementById('typed-demo')) {
+                new Typed('#typed-demo', {
+                    strings: ['Hello World!', 'Welcome to Typed.js', 'Amazing typewriter effect!', 'Try it yourself!'],
+                    typeSpeed: 50,
+                    backSpeed: 30,
+                    loop: true
+                });
+            }
+
+            // 2. Tippy.js - Tooltips
+            if (window.tippy) {
+                tippy('#tippy-btn1', { content: 'This is a default tooltip!', theme: 'light' });
+                tippy('#tippy-btn2', { content: 'Success! Everything works.', theme: 'light-border' });
+                tippy('#tippy-btn3', { content: '⚠️ Warning: Be careful!', theme: 'light-border' });
+            }
+
+            // 3. SweetAlert2 - Beautiful alerts
+            if (window.Swal) {
+                const swalSuccess = document.getElementById('swal-success');
+                if (swalSuccess) {
+                    swalSuccess.addEventListener('click', () => {
+                        Swal.fire({ title: 'Success!', text: 'Your action was completed successfully.', icon: 'success', confirmButtonText: 'Great!' });
+                    });
+                }
+                const swalError = document.getElementById('swal-error');
+                if (swalError) {
+                    swalError.addEventListener('click', () => {
+                        Swal.fire({ title: 'Error!', text: 'Something went wrong.', icon: 'error', confirmButtonText: 'OK' });
+                    });
+                }
+                const swalConfirm = document.getElementById('swal-confirm');
+                if (swalConfirm) {
+                    swalConfirm.addEventListener('click', () => {
+                        Swal.fire({ title: 'Are you sure?', text: "You won't be able to revert this!", icon: 'warning', showCancelButton: true, confirmButtonText: 'Yes, do it!' });
+                    });
+                }
+            }
+
+            // 4. Lodash - Utility functions
+            if (window._ && document.getElementById('lodash-out1')) {
+                const arr = [1, 2, 2, 3, 3, 3, 4, 5, 6, 6];
+                document.getElementById('lodash-out1').textContent = `_.uniq([${arr}]) = [${_.uniq(arr)}]`;
+                
+                const numbers = [10, 5, 20, 15, 25];
+                document.getElementById('lodash-out2').textContent = `_.sortBy([${numbers}]) = [${_.sortBy(numbers)}]`;
+                
+                const items = _.chunk(['a', 'b', 'c', 'd', 'e'], 2);
+                document.getElementById('lodash-out3').textContent = `_.chunk(['a','b','c','d','e'], 2) = ${JSON.stringify(items)}`;
+            }
+
+            // 5. Day.js - Date formatting
+            if (window.dayjs && document.getElementById('dayjs-out1')) {
+                document.getElementById('dayjs-out1').textContent = `Current: ${dayjs().format('MMMM D, YYYY h:mm A')}`;
+                document.getElementById('dayjs-out2').textContent = `+7 days: ${dayjs().add(7, 'day').format('MMM DD, YYYY')}`;
+                document.getElementById('dayjs-out3').textContent = `-30 days: ${dayjs().subtract(30, 'day').format('MMMM D, YYYY')}`;
+            }
+
+            // 6. Clipboard.js - Copy to clipboard
+            if (window.ClipboardJS) {
+                const clipboard = new ClipboardJS('#copy-btn');
+                clipboard.on('success', function(e) {
+                    const status = document.getElementById('copy-status');
+                    if (status) {
+                        status.textContent = '✓ Copied to clipboard!';
+                        setTimeout(() => { status.textContent = ''; }, 2000);
+                    }
+                    e.clearSelection();
+                });
+            }
+
+            // 7. Toastify.js - Toast notifications
+            if (window.Toastify) {
+                const toastSuccess = document.getElementById('toast-success');
+                if (toastSuccess) {
+                    toastSuccess.addEventListener('click', () => {
+                        Toastify({ text: "✓ Success! Operation completed.", duration: 3000, gravity: "top", position: "right", backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" }).showToast();
+                    });
+                }
+                const toastInfo = document.getElementById('toast-info');
+                if (toastInfo) {
+                    toastInfo.addEventListener('click', () => {
+                        Toastify({ text: "ℹ️ This is an info message.", duration: 3000, gravity: "top", position: "right", backgroundColor: "linear-gradient(to right, #2196f3, #00bcd4)" }).showToast();
+                    });
+                }
+                const toastError = document.getElementById('toast-error');
+                if (toastError) {
+                    toastError.addEventListener('click', () => {
+                        Toastify({ text: "❌ Error occurred!", duration: 3000, gravity: "top", position: "right", backgroundColor: "linear-gradient(to right, #f44336, #e91e63)" }).showToast();
+                    });
+                }
+            }
+
+            // 8. Three.js - 3D graphics (Fixed to work with Reveal.js)
+            if (window.THREE && document.getElementById('threejs-demo')) {
+                // Wait a bit for Reveal to fully render the slide
+                setTimeout(() => {
+                    try {
+                        const container = document.getElementById('threejs-demo');
+                        if (!container || container.children.length > 0) return; // Already initialized
+                        
+                        const width = container.clientWidth || 600;
+                        const height = container.clientHeight || 300;
+                        
+                        const scene = new THREE.Scene();
+                        scene.background = new THREE.Color(0x1a1a2e);
+                        
+                        const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+                        camera.position.z = 3;
+                        
+                        const renderer = new THREE.WebGLRenderer({ antialias: true });
+                        renderer.setSize(width, height);
+                        container.appendChild(renderer.domElement);
+                        
+                        // Create cube
+                        const geometry = new THREE.BoxGeometry(1, 1, 1);
+                        const material = new THREE.MeshStandardMaterial({ 
+                            color: 0x2196f3,
+                            metalness: 0.5,
+                            roughness: 0.5
+                        });
+                        const cube = new THREE.Mesh(geometry, material);
+                        scene.add(cube);
+                        
+                        // Add lights
+                        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                        directionalLight.position.set(5, 5, 5);
+                        scene.add(directionalLight);
+                        
+                        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+                        scene.add(ambientLight);
+                        
+                        // Animation loop
+                        function animateThree() {
+                            requestAnimationFrame(animateThree);
+                            cube.rotation.x += 0.01;
+                            cube.rotation.y += 0.015;
+                            renderer.render(scene, camera);
+                        }
+                        animateThree();
+                        
+                        // Handle resize
+                        window.addEventListener('resize', () => {
+                            const newWidth = container.clientWidth;
+                            const newHeight = container.clientHeight;
+                            if (newWidth > 0 && newHeight > 0) {
+                                camera.aspect = newWidth / newHeight;
+                                camera.updateProjectionMatrix();
+                                renderer.setSize(newWidth, newHeight);
+                            }
+                        });
+                    } catch (e) {
+                        console.warn('Three.js init failed:', e);
+                    }
+                }, 500);
+            }
+
+            // 9. p5.js - Creative coding (Fixed initialization)
+            if (window.p5 && document.getElementById('p5-container')) {
+                setTimeout(() => {
+                    try {
+                        const container = document.getElementById('p5-container');
+                        if (!container || container.children.length > 0) return; // Already initialized
+                        
+                        new p5((p) => {
+                            p.setup = function() {
+                                const width = container.clientWidth || 600;
+                                const canvas = p.createCanvas(width, 250);
+                                canvas.parent('p5-container');
+                                p.background(30);
+                            };
+                            
+                            p.draw = function() {
+                                p.background(30, 30, 30, 25); // Trail effect
+                                p.noStroke();
+                                
+                                // Main circle
+                                p.fill(255, 100, 150);
+                                p.ellipse(p.mouseX, p.mouseY, 30, 30);
+                                
+                                // Trail circle
+                                p.fill(100, 200, 255, 150);
+                                p.ellipse(p.mouseX - 20, p.mouseY, 20, 20);
+                            };
+                            
+                            p.windowResized = function() {
+                                const container = document.getElementById('p5-container');
+                                if (container && container.clientWidth > 0) {
+                                    p.resizeCanvas(container.clientWidth, 250);
+                                }
+                            };
+                        });
+                    } catch (e) {
+                        console.warn('p5.js init failed:', e);
+                    }
+                }, 500);
+            }
+
+            // 10. GSAP - Animation
+            if (window.gsap && document.getElementById('gsap-box')) {
+                gsap.to('#gsap-box', { duration: 1.2, y: -30, repeat: -1, yoyo: true, ease: 'power1.inOut' });
+                
+                const spinBtn = document.getElementById('gsap-spin');
+                if (spinBtn) {
+                    spinBtn.addEventListener('click', () => {
+                        gsap.to('#gsap-box', { duration: 1, rotation: '+=360', ease: 'back.out' });
+                    });
+                }
+                
+                const scaleBtn = document.getElementById('gsap-scale');
+                if (scaleBtn) {
+                    scaleBtn.addEventListener('click', () => {
+                        gsap.to('#gsap-box', { duration: 0.5, scale: 1.5, yoyo: true, repeat: 1, ease: 'elastic.out' });
+                    });
+                }
+            }
+
+            // 11. Leaflet - Maps
+            if (window.L && document.getElementById('leaflet-map')) {
+                try {
+                    const map = L.map('leaflet-map').setView([52.489, -1.898], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(map);
+                    L.marker([52.489, -1.898]).addTo(map)
+                        .bindPopup('<b>Birmingham Newman University</b><br>Genners Lane, Bartley Green')
+                        .openPopup();
+                } catch (e) { console.warn('Leaflet init failed:', e); }
+            }
+
+            // 12. Chart.js - Charts
+            if (window.Chart && document.getElementById('chart-demo')) {
+                const ctx = document.getElementById('chart-demo').getContext('2d');
+                let chartInstance = null;
+                
+                const chartData = {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Monthly Sales',
+                        data: [12, 19, 8, 15, 22, 18],
+                        backgroundColor: 'rgba(33, 150, 243, 0.5)',
+                        borderColor: 'rgba(33, 150, 243, 1)',
+                        borderWidth: 2
+                    }]
+                };
+                
+                function createChart(type) {
+                    if (chartInstance) chartInstance.destroy();
+                    chartInstance = new Chart(ctx, { type: type, data: chartData, options: { responsive: true, maintainAspectRatio: true } });
+                }
+                
+                createChart('bar');
+                
+                document.getElementById('chart-bar')?.addEventListener('click', () => createChart('bar'));
+                document.getElementById('chart-line')?.addEventListener('click', () => createChart('line'));
+                document.getElementById('chart-pie')?.addEventListener('click', () => {
+                    if (chartInstance) chartInstance.destroy();
+                    chartInstance = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: chartData.labels,
+                            datasets: [{
+                                data: chartData.datasets[0].data,
+                                backgroundColor: ['#f44336', '#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#00bcd4']
+                            }]
+                        }
+                    });
+                });
+            }
+        }
+
+        // Initialize library demos when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                initLibraryDemos();
+            } catch (e) {
+                console.warn('Library demos initialization failed:', e);
+            }
+        });
     </script>
 </body>
 
