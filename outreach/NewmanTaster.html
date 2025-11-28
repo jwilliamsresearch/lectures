@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSc Computer Science Taster | Birmingham Newman University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bnu: {
+                            primary: '#003366', // Deep Blue
+                            accent: '#0055A4', // Brighter Blue
+                            gold: '#C5A900'    // Academic Gold hints
+                        },
+                        term: {
+                            bg: '#1e1e1e',
+                            text: '#00ff00'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8fafc; }
+        
+        /* JW Navigation Icon - Material Style */
+        .jw-nav {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+            user-select: none;
+        }
+        .jw-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .jw-nav:active { transform: scale(0.95); }
+
+        /* Terminal Typing Effect */
+        .typing-cursor::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Syntax Highlighting Mockup */
+        .code-keyword { color: #c678dd; } /* Purple */
+        .code-string { color: #98c379; }  /* Green */
+        .code-func { color: #61afef; }    /* Blue */
+        .code-comment { color: #5c6370; font-style: italic; }
+        .code-vuln { background-color: rgba(220, 38, 38, 0.2); border-bottom: 2px dashed #dc2626; cursor: pointer; }
+        .code-vuln-active { background-color: rgba(220, 38, 38, 0.4); border: 2px solid #ef4444; }
+
+        /* Animations */
+        .slide-in { animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-800">
+
+    <!-- University Header -->
+    <nav class="bg-bnu-primary text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <!-- JW Wordmark -->
+                <div class="jw-nav shadow-lg" onclick="app.reset()" title="Reset Session">JW</div>
+                
+                <div class="border-l border-blue-800 pl-6">
+                    <h1 class="font-bold text-xl tracking-tight">BSc Computer Science</h1>
+                    <div class="flex items-center gap-2 text-xs text-blue-200">
+                        <span class="material-icons text-[14px]">school</span>
+                        <span>Interactive Taster Session</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-4">
+                 <!-- Instructor Tool -->
+                <button onclick="app.autoSolve()" class="bg-yellow-500 hover:bg-yellow-400 text-bnu-primary font-bold py-1 px-3 rounded text-xs flex items-center gap-1 shadow-md transition mr-4" title="Fill in the correct answer automatically">
+                    <span class="material-icons text-[16px]">bolt</span> Demo: Auto-Solve
+                </button>
+
+                <div class="text-right">
+                    <div class="text-xs text-blue-300 uppercase tracking-widest font-semibold">Current Module</div>
+                    <div id="module-name" class="font-mono font-bold text-white">Introduction</div>
+                </div>
+                <div class="bg-blue-900/50 px-4 py-2 rounded-lg border border-blue-700/50 flex flex-col items-center min-w-[80px]">
+                    <span class="text-[10px] text-blue-300 uppercase">Score</span>
+                    <span id="score" class="font-mono text-xl font-bold text-green-400">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Interface -->
+    <main class="flex-grow p-4 md:p-8 flex items-center justify-center">
+        <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Left Panel: Context/Theory (Academic Side) -->
+            <div class="lg:col-span-4 space-y-4 slide-in">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-slate-50 border-b border-slate-100 p-4 flex items-center justify-between">
+                        <h2 class="font-bold text-slate-700 flex items-center gap-2">
+                            <span class="material-icons text-bnu-accent">menu_book</span> Theory
+                        </h2>
+                        <span id="progress-text" class="text-xs font-mono bg-slate-200 px-2 py-1 rounded text-slate-600">Step 1/12</span>
+                    </div>
+                    <div id="theory-content" class="p-6 text-slate-600 text-sm leading-relaxed">
+                        <!-- Dynamic Content -->
+                    </div>
+                </div>
+
+                <!-- Hints Panel -->
+                <div class="bg-blue-50 rounded-xl border border-blue-100 p-4">
+                    <div class="flex items-start gap-3">
+                        <span class="material-icons text-blue-600 mt-1">lightbulb</span>
+                        <div>
+                            <h3 class="font-bold text-blue-800 text-sm">Academic Hint</h3>
+                            <p id="hint-text" class="text-xs text-blue-700 mt-1">Read the briefing carefully to begin.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Interactive Lab (Practical Side) -->
+            <div class="lg:col-span-8">
+                <div id="lab-container" class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden h-full min-h-[500px] flex flex-col relative slide-in" style="animation-delay: 0.1s;">
+                    
+                    <!-- Lab Toolbar -->
+                    <div class="bg-slate-800 text-white p-3 flex items-center justify-between font-mono text-xs">
+                        <div class="flex gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                        </div>
+                        <div id="lab-title">environment.main</div>
+                        <div class="flex items-center gap-1 text-slate-400">
+                            <span class="material-icons text-[14px]">terminal</span>
+                            <span>bash</span>
+                        </div>
+                    </div>
+
+                    <!-- Lab Content Area -->
+                    <div id="lab-content" class="flex-grow relative bg-slate-50">
+                        <!-- Dynamic Interactive Content -->
+                    </div>
+
+                    <!-- Feedback Overlay (Pushes content up) -->
+                    <div id="feedback-overlay" class="bg-white border-t border-slate-200 shadow-2xl z-20 transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
+                        <div class="p-6 flex items-start gap-4">
+                            <div id="feedback-icon" class="p-3 rounded-full bg-green-100 text-green-600 shrink-0">
+                                <span class="material-icons">check</span>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 id="feedback-title" class="font-bold text-lg mb-1">Correct</h4>
+                                <p id="feedback-message" class="text-slate-600 text-sm">Explanation goes here.</p>
+                            </div>
+                            <button onclick="app.nextLevel()" id="next-btn" class="bg-bnu-primary hover:bg-bnu-accent text-white px-6 py-2 rounded-lg font-medium text-sm transition hidden shrink-0 whitespace-nowrap">
+                                Next Module
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const app = {
+            state: {
+                level: 0,
+                score: 0,
+                maxLevels: 12 // 10 Games + Intro + Outro
+            },
+            
+            levels: [
+                {
+                    id: 'intro',
+                    module: 'Welcome',
+                    title: 'Computer Science Orientation',
+                    theory: `
+                        <p class="mb-4">Welcome to the BSc Computer Science taster. You will encounter 10 micro-challenges simulating real undergraduate modules.</p>
+                        <ul class="list-disc pl-5 space-y-1 mb-4 text-xs">
+                            <li>Software Engineering</li>
+                            <li>Network Security</li>
+                            <li>Operating Systems</li>
+                            <li>Algorithms & Logic</li>
+                            <li>Computer Architecture</li>
+                        </ul>
+                        <p>Click 'Initialize Environment' to begin.</p>
+                    `,
+                    hint: "Ready to start?",
+                    solve: () => app.nextLevel(),
+                    renderLab: () => `
+                        <div class="flex flex-col items-center justify-center h-full p-8 text-center bg-white">
+                            <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-6 animate-bounce">
+                                <span class="material-icons text-5xl text-bnu-primary">rocket_launch</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-2">Virtual Lab Environment</h2>
+                            <p class="text-slate-500 mb-8 max-w-md">Initializing 10-Stage Assessment Protocol...</p>
+                            <button onclick="app.nextLevel()" class="bg-bnu-primary text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:bg-bnu-accent transition transform hover:scale-105">
+                                Initialize Environment
+                            </button>
+                        </div>
+                    `
+                },
+                // GAME 1: OS - Permissions
+                {
+                    id: 'os1',
+                    module: 'Operating Systems',
+                    title: '1. Linux Permissions',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> Secure <code>secret.sh</code> using the command line.</p>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded p-2 text-xs mb-2">
+                            <p><strong>Read(4) + Write(2) + Exec(1) = 7</strong></p>
+                        </div>
+                        <p class="text-xs">Give the <strong>Owner</strong> full access (7). Give <strong>Everyone Else</strong> zero access (0).</p>
+                    `,
+                    hint: "Command: chmod 700 secret.sh",
+                    type: 'terminal',
+                    correctCommand: 'chmod 700 secret.sh',
+                    solve: () => app.handleTerminal('chmod 700 secret.sh'),
+                    renderLab: () => app.templates.terminal(`
+                        student@bnu-lab:~$ ls -l<br>
+                        -rw-r--r-- 1 student student 4096 Nov 28 10:00 secret.sh<br>
+                        <span class="text-yellow-500"># TODO: Secure this file. Owner: Full(7). Others: None(0).</span>
+                    `)
+                },
+                // GAME 2: DEV - Infinite Loop
+                {
+                    id: 'dev1',
+                    module: 'Software Dev',
+                    title: '2. Debugging Logic',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> This code causes an Infinite Loop (it never stops running).</p>
+                        <p class="text-xs">Identify the line of code that prevents the loop condition from ever becoming false.</p>
+                    `,
+                    hint: "The variable 'i' is never changed inside the loop.",
+                    type: 'code',
+                    solve: () => app.handleCodeClick(document.getElementById('vuln-dev1'), true),
+                    renderLab: () => app.templates.code(`
+                        <div class="text-slate-400 mb-2">// process_data.c</div>
+                        <div><span class="code-keyword">int</span> i = 0;</div>
+                        <div><span class="code-keyword">while</span> (i < 10) {</div>
+                        <div class="pl-4"><span class="code-func">print_data</span>(i);</div>
+                        <div class="pl-4 code-comment">// Processing item...</div>
+                        <div id="vuln-dev1" onclick="app.handleCodeClick(this, true)" class="pl-4 hover:bg-white/10 cursor-pointer border border-transparent hover:border-red-500 transition group relative">
+                            <span class="code-comment">// ERROR: 'i' is not incremented here!</span>
+                            <span class="absolute right-2 text-red-400 opacity-0 group-hover:opacity-100 text-xs">Missing i++?</span>
+                        </div>
+                        <div>}</div>
+                    `)
+                },
+                // GAME 3: ARCH - Binary
+                {
+                    id: 'arch1',
+                    module: 'Comp Architecture',
+                    title: '3. Binary Systems',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> Computers store data in Binary (1s and 0s).</p>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded p-2 text-xs mb-2">
+                            <p><strong>1011</strong> = (1×8) + (0×4) + (1×2) + (1×1) = <strong>11</strong></p>
+                        </div>
+                        <p class="text-xs">Convert binary <code>00001101</code> to a Decimal number.</p>
+                    `,
+                    hint: "8 + 4 + 1 = ?",
+                    type: 'input',
+                    correctValue: '13',
+                    solve: () => { document.getElementById('gen-input').value = '13'; app.checkInput('13'); },
+                    renderLab: () => app.templates.visualInput('00001101', 'Enter Decimal Value')
+                },
+                // GAME 4: NET - Packets
+                {
+                    id: 'net1',
+                    module: 'Networks',
+                    title: '4. Packet Sniffing',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> Analyze the captured network traffic.</p>
+                        <p class="text-xs">The user logged in using <strong>Telnet</strong> (Insecure). Find the password in the packet payload.</p>
+                    `,
+                    hint: "Look at the 'Telnet Data' box.",
+                    type: 'input',
+                    correctValue: 'SuperSecret123',
+                    solve: () => { document.getElementById('packet-input').value = 'SuperSecret123'; app.checkPacket(); },
+                    renderLab: () => app.templates.packetViewer()
+                },
+                // GAME 5: OS - Process Kill
+                {
+                    id: 'os2',
+                    module: 'Operating Systems',
+                    title: '5. Process Management',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> A rogue process is consuming 99% CPU.</p>
+                        <p class="text-xs">Use the <code>kill</code> command followed by the PID (Process ID) to terminate the "crypto_miner".</p>
+                    `,
+                    hint: "PID is the number in the first column. Command: kill [PID]",
+                    type: 'terminal',
+                    correctCommand: 'kill 4444',
+                    solve: () => app.handleTerminal('kill 4444'),
+                    renderLab: () => app.templates.terminal(`
+                        student@bnu-lab:~$ top -n 1<br>
+                        <span class="text-slate-400">PID&nbsp;&nbsp;&nbsp;USER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPU%&nbsp;&nbsp;COMMAND</span><br>
+                        1022&nbsp;&nbsp;root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.1%&nbsp;&nbsp;systemd<br>
+                        <span class="text-red-400 font-bold">4444&nbsp;&nbsp;hacker&nbsp;&nbsp;&nbsp;&nbsp;99.0%&nbsp;&nbsp;crypto_miner</span><br>
+                        <span class="text-yellow-500"># TODO: Terminate the rogue process.</span>
+                    `)
+                },
+                // GAME 6: DEV - SQLi
+                {
+                    id: 'dev2',
+                    module: 'Cyber Security',
+                    title: '6. SQL Injection',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> Identify the vulnerable line allowing SQL Injection.</p>
+                        <p class="text-xs">Click the line where user input is directly concatenated (.) into the query string.</p>
+                    `,
+                    hint: "Look for '$sql = ...'",
+                    type: 'code',
+                    solve: () => app.handleCodeClick(document.getElementById('vuln-sql'), true),
+                    renderLab: () => app.templates.code(`
+                        <div class="text-slate-400 mb-2">// login.php</div>
+                        <div>$user = $_POST['u'];</div>
+                        <div>$pass = $_POST['p'];</div>
+                        <div class="h-2"></div>
+                        <div id="vuln-sql" onclick="app.handleCodeClick(this, true)" class="hover:bg-white/10 cursor-pointer border border-transparent hover:border-red-500 transition">
+                            $sql = <span class="code-string">"SELECT * FROM users WHERE u='"</span> . $user . <span class="code-string">"'"</span>;
+                        </div>
+                        <div onclick="app.handleCodeClick(this, false)" class="hover:bg-white/10 cursor-pointer border border-transparent hover:border-slate-500 transition">
+                            $db->query($sql);
+                        </div>
+                    `)
+                },
+                // GAME 7: ALGO - Array Index
+                {
+                    id: 'algo1',
+                    module: 'Algorithms',
+                    title: '7. Data Structures',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> Arrays are 0-indexed (counting starts at 0).</p>
+                        <div class="font-mono text-xs bg-slate-100 p-2 mb-2">
+                            arr = [10, 20, 30, 40]
+                        </div>
+                        <p class="text-xs">If you access <code>arr[2]</code>, what value do you get?</p>
+                    `,
+                    hint: "Index 0 is 10. Index 1 is 20...",
+                    type: 'input',
+                    correctValue: '30',
+                    solve: () => { document.getElementById('gen-input').value = '30'; app.checkInput('30'); },
+                    renderLab: () => app.templates.visualInput('int[] data = {10, 20, 30, 40, 50};', 'Value of data[2]?')
+                },
+                // GAME 8: WEB - HTML Fix
+                {
+                    id: 'web1',
+                    module: 'Web Development',
+                    title: '8. HTML Structure',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> Browsers require valid tag nesting.</p>
+                        <p class="text-xs">Identify the line with the mismatched closing tag.</p>
+                    `,
+                    hint: "An H1 tag cannot be closed by an H2 tag.",
+                    type: 'code',
+                    solve: () => app.handleCodeClick(document.getElementById('vuln-web'), true),
+                    renderLab: () => app.templates.code(`
+                        <div class="text-slate-400 mb-2">&lt;!-- index.html --&gt;</div>
+                        <div>&lt;body&gt;</div>
+                        <div class="pl-4">&lt;div class="container"&gt;</div>
+                        <div id="vuln-web" onclick="app.handleCodeClick(this, true)" class="pl-8 hover:bg-white/10 cursor-pointer border border-transparent hover:border-red-500 transition">
+                            &lt;h1&gt;Welcome to BNU&lt;/h2&gt; <span class="code-comment">&lt;-- Error?</span>
+                        </div>
+                        <div class="pl-4">&lt;/div&gt;</div>
+                        <div>&lt;/body&gt;</div>
+                    `)
+                },
+                // GAME 9: SEC - XOR
+                {
+                    id: 'sec1',
+                    module: 'Cyber Security',
+                    title: '9. XOR Logic',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> Perform an XOR operation.</p>
+                        <p class="text-xs">1 XOR 1 = 0.<br>0 XOR 1 = 1.</p>
+                    `,
+                    hint: "If bits are different, result is 1.",
+                    type: 'xor',
+                    solve: () => app.checkXOR('01100010'),
+                    renderLab: () => app.templates.xorGame()
+                },
+                // GAME 10: AI - Logic Gates
+                {
+                    id: 'ai1',
+                    module: 'Artificial Intelligence',
+                    title: '10. Boolean Logic',
+                    theory: `
+                        <p class="mb-2"><strong>Task:</strong> An <strong>AND</strong> gate only outputs 1 if BOTH inputs are 1.</p>
+                        <p class="text-xs">Input A = 1.<br>Input B = 0.<br>Gate = AND.</p>
+                        <p class="text-xs font-bold mt-2">What is the Output?</p>
+                    `,
+                    hint: "True AND False = False (0)",
+                    type: 'input',
+                    correctValue: '0',
+                    solve: () => { document.getElementById('gen-input').value = '0'; app.checkInput('0'); },
+                    renderLab: () => app.templates.visualInput('Input A: 1 | Input B: 0 | Gate: AND', 'Output (0 or 1)?')
+                },
+                // FINISH
+                {
+                    id: 'finish',
+                    module: 'Complete',
+                    title: 'Session Summary',
+                    theory: `
+                        <p>You have completed the full 10-module assessment.</p>
+                        <p class="mt-2">This session covered the breadth of a BSc Computer Science degree, from low-level architecture to high-level web dev.</p>
+                    `,
+                    hint: "Well done!",
+                    solve: () => app.reset(),
+                    renderLab: () => `
+                        <div class="flex flex-col items-center justify-center h-full p-8 text-center bg-white">
+                            <span class="material-icons text-6xl text-green-500 mb-4">verified</span>
+                            <h2 class="text-3xl font-bold text-slate-800 mb-2">Assessment Complete</h2>
+                            <p class="text-xl text-slate-600 mb-6">Final Score: <span class="font-bold text-bnu-primary">${app.state.score}/1000</span></p>
+                            
+                            <div class="grid grid-cols-2 gap-2 text-left text-xs bg-slate-50 p-4 rounded border border-slate-200 mb-6 w-full max-w-md">
+                                <div>1. OS: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>6. SQL: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>2. Dev: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>7. Algo: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>3. Arch: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>8. Web: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>4. Net: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>9. Sec: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>5. Ops: <span class="text-green-600 font-bold">Pass</span></div>
+                                <div>10. AI: <span class="text-green-600 font-bold">Pass</span></div>
+                            </div>
+                            
+                            <button onclick="app.reset()" class="text-slate-500 hover:text-bnu-primary font-bold underline">Restart Session</button>
+                        </div>
+                    `
+                }
+            ],
+
+            // Template Generators to reuse code
+            templates: {
+                terminal: (content) => `
+                    <div class="bg-term-bg h-full p-6 font-mono text-sm overflow-hidden flex flex-col">
+                        <div class="text-slate-400 mb-4">${content}</div>
+                        <div class="flex-grow overflow-y-auto" id="terminal-history"></div>
+                        <div class="flex items-center gap-2 border-t border-slate-700 pt-4 mt-auto">
+                            <span class="text-green-500 font-bold">student@bnu-lab:~$</span>
+                            <input type="text" id="term-input" autocomplete="off" 
+                                class="bg-transparent border-none outline-none text-white w-full font-mono" 
+                                placeholder="Type command..." 
+                                onkeydown="if(event.key === 'Enter') app.handleTerminal(this.value)">
+                        </div>
+                    </div>
+                `,
+                code: (content) => `
+                    <div class="h-full bg-[#282c34] p-6 font-mono text-sm overflow-y-auto text-slate-300">
+                        ${content}
+                    </div>
+                `,
+                visualInput: (display, placeholder) => `
+                    <div class="flex flex-col items-center justify-center h-full p-8 bg-slate-100">
+                        <div class="font-mono text-2xl font-bold text-slate-700 mb-8 bg-white p-6 rounded shadow border border-slate-300">
+                            ${display}
+                        </div>
+                        <div class="flex gap-2 w-full max-w-sm">
+                            <input type="text" id="gen-input" placeholder="${placeholder}" class="border p-3 rounded w-full text-center focus:border-bnu-primary outline-none shadow-sm">
+                            <button onclick="app.checkInput(document.getElementById('gen-input').value)" class="bg-bnu-primary hover:bg-bnu-accent text-white px-6 rounded font-bold shadow transition">Submit</button>
+                        </div>
+                    </div>
+                `,
+                packetViewer: () => `
+                    <div class="flex flex-col h-full bg-white">
+                        <div class="border-b border-slate-200">
+                            <table class="w-full text-left text-xs font-mono">
+                                <thead class="bg-slate-100 text-slate-500"><tr><th class="p-2">Time</th><th class="p-2">Protocol</th><th class="p-2">Info</th></tr></thead>
+                                <tbody>
+                                    <tr class="opacity-50"><td class="p-2">0.1s</td><td class="p-2">TCP</td><td class="p-2">SYN</td></tr>
+                                    <tr class="bg-blue-100 border-l-4 border-blue-500"><td class="p-2">0.2s</td><td class="p-2 font-bold text-red-600">TELNET</td><td class="p-2">Data: "login"</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex-grow bg-slate-50 p-4 font-mono text-xs overflow-y-auto">
+                            <div class="p-3 bg-white border border-slate-200 rounded shadow-sm">
+                                <div class="font-bold text-slate-700 border-b border-slate-100 mb-2 pb-1">Telnet Payload</div>
+                                <pre class="text-slate-500">User: admin\nPass: <span class="text-red-600 font-bold bg-yellow-100 px-1">SuperSecret123</span></pre>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-slate-100 border-t border-slate-200">
+                            <p class="text-sm font-bold mb-2">Enter the Password found:</p>
+                            <div class="flex gap-2">
+                                <input type="text" id="packet-input" class="border p-2 rounded w-full text-sm outline-none">
+                                <button onclick="app.checkPacket()" class="bg-bnu-primary text-white px-4 rounded text-sm font-bold">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                xorGame: () => `
+                    <div class="flex flex-col items-center justify-center h-full p-8 bg-slate-800 text-white">
+                        <div class="font-mono text-2xl tracking-[0.5em] text-slate-400">10110011</div>
+                        <div class="font-mono text-2xl tracking-[0.5em] mb-2 text-slate-400">11010001</div>
+                        <div class="w-64 h-px bg-slate-500 mb-6"></div>
+                        <div class="font-mono text-4xl text-yellow-400 mb-8 tracking-[0.5em]">????????</div>
+                        <div class="grid grid-cols-2 gap-4 w-full max-w-md font-mono">
+                            <button onclick="app.checkXOR('01100010')" class="p-4 border border-slate-600 rounded hover:bg-slate-700">01100010</button>
+                            <button onclick="app.checkXOR('00000000')" class="p-4 border border-slate-600 rounded hover:bg-slate-700">00000000</button>
+                            <button onclick="app.checkXOR('01111111')" class="p-4 border border-slate-600 rounded hover:bg-slate-700">01111111</button>
+                            <button onclick="app.checkXOR('11111111')" class="p-4 border border-slate-600 rounded hover:bg-slate-700">11111111</button>
+                        </div>
+                    </div>
+                `
+            },
+
+            init() {
+                this.renderLevel();
+            },
+
+            renderLevel() {
+                const lvl = this.levels[this.state.level];
+                document.getElementById('module-name').innerText = lvl.module;
+                document.getElementById('score').innerText = this.state.score;
+                document.getElementById('progress-text').innerText = `Step ${this.state.level}/${this.state.maxLevels - 1}`;
+                
+                document.getElementById('theory-content').innerHTML = `
+                    <h3 class="text-lg font-bold text-bnu-primary mb-3">${lvl.title}</h3>
+                    ${lvl.theory}
+                `;
+                document.getElementById('hint-text').innerText = lvl.hint;
+
+                const labContent = document.getElementById('lab-content');
+                labContent.innerHTML = lvl.renderLab();
+                document.getElementById('lab-title').innerText = `workspace/${lvl.id}`;
+
+                // Reset Feedback
+                const overlay = document.getElementById('feedback-overlay');
+                overlay.classList.add('max-h-0', 'opacity-0', 'border-t-0');
+                overlay.classList.remove('max-h-64', 'opacity-100', 'border-t');
+                document.getElementById('next-btn').classList.add('hidden');
+            },
+
+            autoSolve() {
+                const lvl = this.levels[this.state.level];
+                if (lvl.solve) lvl.solve();
+            },
+
+            // --- Handlers ---
+
+            handleTerminal(cmd) {
+                const history = document.getElementById('terminal-history');
+                const cleanCmd = cmd.trim();
+                const lvl = this.levels[this.state.level];
+                
+                history.innerHTML += `<div class="mb-1"><span class="text-green-500">student@bnu-lab:~$</span> ${cmd}</div>`;
+                document.getElementById('term-input').value = '';
+
+                if (cleanCmd === lvl.correctCommand) {
+                    this.showFeedback(true, "Command Successful. You have correctly applied the syntax to resolve the issue.");
+                } else {
+                    history.innerHTML += `<div class="mb-2 text-red-400">Error: Invalid syntax or logic. Try '${lvl.hint.split(': ')[1] || 'checking hint'}'</div>`;
+                    this.showFeedback(false, "Incorrect command. Check the hint above.");
+                }
+                history.scrollTop = history.scrollHeight;
+            },
+
+            handleCodeClick(el, isCorrect) {
+                if (isCorrect) {
+                    if (el.classList.contains('border-red-500') || el.classList.contains('border-transparent')) {
+                         el.className = "pl-4 bg-red-900/30 border border-red-500 text-white rounded";
+                    }
+                    this.showFeedback(true, "Issue Identified. In a real IDE, you would now patch this vulnerability.");
+                } else {
+                    el.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                    setTimeout(() => { el.style.backgroundColor = ''; }, 300);
+                    this.showFeedback(false, "That line looks okay. Look for the specific logical error described.");
+                }
+            },
+
+            checkInput(val) {
+                const lvl = this.levels[this.state.level];
+                if (val.trim() === lvl.correctValue) {
+                    this.showFeedback(true, "Calculation Correct.");
+                } else {
+                    this.showFeedback(false, "Incorrect value. Double check your logic.");
+                }
+            },
+
+            checkPacket() {
+                const val = document.getElementById('packet-input').value.trim();
+                if (val === 'SuperSecret123') {
+                    this.showFeedback(true, "Packet Decoded. Unencrypted protocols like Telnet expose sensitive data.");
+                } else {
+                    this.showFeedback(false, "Incorrect. Check the 'Telnet Payload' section again.");
+                }
+            },
+
+            checkXOR(val) {
+                if (val === '01100010') {
+                    this.showFeedback(true, "Logic Verified. XOR is fundamental to stream ciphers.");
+                } else {
+                    this.showFeedback(false, "Incorrect. Remember: 0^0=0, 1^1=0, 1^0=1.");
+                }
+            },
+
+            showFeedback(isSuccess, msg) {
+                const overlay = document.getElementById('feedback-overlay');
+                const title = document.getElementById('feedback-title');
+                const message = document.getElementById('feedback-message');
+                const icon = document.getElementById('feedback-icon');
+                const nextBtn = document.getElementById('next-btn');
+
+                overlay.classList.remove('max-h-0', 'opacity-0', 'border-t-0');
+                overlay.classList.add('max-h-64', 'opacity-100', 'border-t');
+
+                message.innerText = msg;
+
+                if (isSuccess) {
+                    title.innerText = "Task Completed";
+                    title.className = "font-bold text-lg mb-1 text-green-700";
+                    icon.className = "p-3 rounded-full bg-green-100 text-green-600 shrink-0";
+                    icon.innerHTML = '<span class="material-icons">check_circle</span>';
+                    nextBtn.classList.remove('hidden');
+                    
+                    if (!this.levels[this.state.level].completed) {
+                        this.state.score += 100;
+                        document.getElementById('score').innerText = this.state.score;
+                        this.levels[this.state.level].completed = true;
+                    }
+                } else {
+                    title.innerText = "Incorrect";
+                    title.className = "font-bold text-lg mb-1 text-red-700";
+                    icon.className = "p-3 rounded-full bg-red-100 text-red-600 shrink-0";
+                    icon.innerHTML = '<span class="material-icons">error</span>';
+                    nextBtn.classList.add('hidden');
+                    this.state.score = Math.max(0, this.state.score - 10);
+                    document.getElementById('score').innerText = this.state.score;
+                }
+            },
+
+            nextLevel() {
+                if (this.state.level < this.levels.length - 1) {
+                    this.state.level++;
+                    this.renderLevel();
+                }
+            },
+
+            reset() {
+                this.state.level = 0;
+                this.state.score = 0;
+                this.levels.forEach(l => l.completed = false);
+                this.renderLevel();
+            }
+        };
+
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>
