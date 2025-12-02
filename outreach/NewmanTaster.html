@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSc Computer Science Taster | Birmingham Newman University</title>
+    <title>Interactive CS Taster</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -31,8 +34,10 @@
         }
     </script>
     <style>
-        body { background-color: #f8fafc; }
-        
+        body {
+            background-color: #f8fafc;
+        }
+
         /* JW Navigation Icon - Material Style */
         .jw-nav {
             width: 48px;
@@ -47,39 +52,83 @@
             cursor: pointer;
             transition: all 0.2s ease;
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             user-select: none;
         }
+
         .jw-nav:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .jw-nav:active { transform: scale(0.95); }
+
+        .jw-nav:active {
+            transform: scale(0.95);
+        }
 
         /* Terminal Typing Effect */
         .typing-cursor::after {
             content: '█';
             animation: blink 1s step-end infinite;
         }
-        @keyframes blink { 50% { opacity: 0; } }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
 
         /* Syntax Highlighting Mockup */
-        .code-keyword { color: #c678dd; } /* Purple */
-        .code-string { color: #98c379; }  /* Green */
-        .code-func { color: #61afef; }    /* Blue */
-        .code-comment { color: #5c6370; font-style: italic; }
-        .code-vuln { background-color: rgba(220, 38, 38, 0.2); border-bottom: 2px dashed #dc2626; cursor: pointer; }
-        .code-vuln-active { background-color: rgba(220, 38, 38, 0.4); border: 2px solid #ef4444; }
+        .code-keyword {
+            color: #c678dd;
+        }
+
+        /* Purple */
+        .code-string {
+            color: #98c379;
+        }
+
+        /* Green */
+        .code-func {
+            color: #61afef;
+        }
+
+        /* Blue */
+        .code-comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .code-vuln {
+            background-color: rgba(220, 38, 38, 0.2);
+            border-bottom: 2px dashed #dc2626;
+            cursor: pointer;
+        }
+
+        .code-vuln-active {
+            background-color: rgba(220, 38, 38, 0.4);
+            border: 2px solid #ef4444;
+        }
 
         /* Animations */
-        .slide-in { animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .slide-in {
+            animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body class="flex flex-col min-h-screen text-slate-800">
 
     <!-- University Header -->
@@ -88,19 +137,21 @@
             <div class="flex items-center gap-6">
                 <!-- JW Wordmark -->
                 <div class="jw-nav shadow-lg" onclick="app.reset()" title="Reset Session">JW</div>
-                
+
                 <div class="border-l border-blue-800 pl-6">
-                    <h1 class="font-bold text-xl tracking-tight">BSc Computer Science</h1>
+                    <h1 class="font-bold text-xl tracking-tight">Interactive CS</h1>
                     <div class="flex items-center gap-2 text-xs text-blue-200">
                         <span class="material-icons text-[14px]">school</span>
                         <span>Interactive Taster Session</span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="hidden md:flex items-center gap-4">
-                 <!-- Instructor Tool -->
-                <button onclick="app.autoSolve()" class="bg-yellow-500 hover:bg-yellow-400 text-bnu-primary font-bold py-1 px-3 rounded text-xs flex items-center gap-1 shadow-md transition mr-4" title="Fill in the correct answer automatically">
+                <!-- Instructor Tool -->
+                <button onclick="app.autoSolve()"
+                    class="bg-yellow-500 hover:bg-yellow-400 text-bnu-primary font-bold py-1 px-3 rounded text-xs flex items-center gap-1 shadow-md transition mr-4"
+                    title="Fill in the correct answer automatically">
                     <span class="material-icons text-[16px]">bolt</span> Demo: Auto-Solve
                 </button>
 
@@ -108,7 +159,8 @@
                     <div class="text-xs text-blue-300 uppercase tracking-widest font-semibold">Current Module</div>
                     <div id="module-name" class="font-mono font-bold text-white">Introduction</div>
                 </div>
-                <div class="bg-blue-900/50 px-4 py-2 rounded-lg border border-blue-700/50 flex flex-col items-center min-w-[80px]">
+                <div
+                    class="bg-blue-900/50 px-4 py-2 rounded-lg border border-blue-700/50 flex flex-col items-center min-w-[80px]">
                     <span class="text-[10px] text-blue-300 uppercase">Score</span>
                     <span id="score" class="font-mono text-xl font-bold text-green-400">0</span>
                 </div>
@@ -119,7 +171,7 @@
     <!-- Main Interface -->
     <main class="flex-grow p-4 md:p-8 flex items-center justify-center">
         <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
+
             <!-- Left Panel: Context/Theory (Academic Side) -->
             <div class="lg:col-span-4 space-y-4 slide-in">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -127,7 +179,8 @@
                         <h2 class="font-bold text-slate-700 flex items-center gap-2">
                             <span class="material-icons text-bnu-accent">menu_book</span> Theory
                         </h2>
-                        <span id="progress-text" class="text-xs font-mono bg-slate-200 px-2 py-1 rounded text-slate-600">Step 1/12</span>
+                        <span id="progress-text"
+                            class="text-xs font-mono bg-slate-200 px-2 py-1 rounded text-slate-600">Step 1/12</span>
                     </div>
                     <div id="theory-content" class="p-6 text-slate-600 text-sm leading-relaxed">
                         <!-- Dynamic Content -->
@@ -140,7 +193,8 @@
                         <span class="material-icons text-blue-600 mt-1">lightbulb</span>
                         <div>
                             <h3 class="font-bold text-blue-800 text-sm">Academic Hint</h3>
-                            <p id="hint-text" class="text-xs text-blue-700 mt-1">Read the briefing carefully to begin.</p>
+                            <p id="hint-text" class="text-xs text-blue-700 mt-1">Read the briefing carefully to begin.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -148,8 +202,10 @@
 
             <!-- Right Panel: Interactive Lab (Practical Side) -->
             <div class="lg:col-span-8">
-                <div id="lab-container" class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden h-full min-h-[500px] flex flex-col relative slide-in" style="animation-delay: 0.1s;">
-                    
+                <div id="lab-container"
+                    class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden h-full min-h-[500px] flex flex-col relative slide-in"
+                    style="animation-delay: 0.1s;">
+
                     <!-- Lab Toolbar -->
                     <div class="bg-slate-800 text-white p-3 flex items-center justify-between font-mono text-xs">
                         <div class="flex gap-2">
@@ -170,7 +226,8 @@
                     </div>
 
                     <!-- Feedback Overlay (Pushes content up) -->
-                    <div id="feedback-overlay" class="bg-white border-t border-slate-200 shadow-2xl z-20 transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
+                    <div id="feedback-overlay"
+                        class="bg-white border-t border-slate-200 shadow-2xl z-20 transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
                         <div class="p-6 flex items-start gap-4">
                             <div id="feedback-icon" class="p-3 rounded-full bg-green-100 text-green-600 shrink-0">
                                 <span class="material-icons">check</span>
@@ -179,7 +236,8 @@
                                 <h4 id="feedback-title" class="font-bold text-lg mb-1">Correct</h4>
                                 <p id="feedback-message" class="text-slate-600 text-sm">Explanation goes here.</p>
                             </div>
-                            <button onclick="app.nextLevel()" id="next-btn" class="bg-bnu-primary hover:bg-bnu-accent text-white px-6 py-2 rounded-lg font-medium text-sm transition hidden shrink-0 whitespace-nowrap">
+                            <button onclick="app.nextLevel()" id="next-btn"
+                                class="bg-bnu-primary hover:bg-bnu-accent text-white px-6 py-2 rounded-lg font-medium text-sm transition hidden shrink-0 whitespace-nowrap">
                                 Next Module
                             </button>
                         </div>
@@ -190,6 +248,10 @@
         </div>
     </main>
 
+    <footer class="text-center py-6 text-xs text-slate-400">
+        Made by James Williams. MIT Licensed.
+    </footer>
+
     <script>
         const app = {
             state: {
@@ -197,14 +259,14 @@
                 score: 0,
                 maxLevels: 12 // 10 Games + Intro + Outro
             },
-            
+
             levels: [
                 {
                     id: 'intro',
                     module: 'Welcome',
                     title: 'Computer Science Orientation',
                     theory: `
-                        <p class="mb-4">Welcome to the BSc Computer Science taster. You will encounter 10 micro-challenges simulating real undergraduate modules.</p>
+                        <p class="mb-4">Welcome to the Interactive CS taster. You will encounter 10 micro-challenges simulating real undergraduate modules.</p>
                         <ul class="list-disc pl-5 space-y-1 mb-4 text-xs">
                             <li>Software Engineering</li>
                             <li>Network Security</li>
@@ -246,7 +308,7 @@
                     correctCommand: 'chmod 700 secret.sh',
                     solve: () => app.handleTerminal('chmod 700 secret.sh'),
                     renderLab: () => app.templates.terminal(`
-                        student@bnu-lab:~$ ls -l<br>
+                        student@lab:~$ ls -l<br>
                         -rw-r--r-- 1 student student 4096 Nov 28 10:00 secret.sh<br>
                         <span class="text-yellow-500"># TODO: Secure this file. Owner: Full(7). Others: None(0).</span>
                     `)
@@ -323,7 +385,7 @@
                     correctCommand: 'kill 4444',
                     solve: () => app.handleTerminal('kill 4444'),
                     renderLab: () => app.templates.terminal(`
-                        student@bnu-lab:~$ top -n 1<br>
+                        student@lab:~$ top -n 1<br>
                         <span class="text-slate-400">PID&nbsp;&nbsp;&nbsp;USER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPU%&nbsp;&nbsp;COMMAND</span><br>
                         1022&nbsp;&nbsp;root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.1%&nbsp;&nbsp;systemd<br>
                         <span class="text-red-400 font-bold">4444&nbsp;&nbsp;hacker&nbsp;&nbsp;&nbsp;&nbsp;99.0%&nbsp;&nbsp;crypto_miner</span><br>
@@ -390,7 +452,7 @@
                         <div>&lt;body&gt;</div>
                         <div class="pl-4">&lt;div class="container"&gt;</div>
                         <div id="vuln-web" onclick="app.handleCodeClick(this, true)" class="pl-8 hover:bg-white/10 cursor-pointer border border-transparent hover:border-red-500 transition">
-                            &lt;h1&gt;Welcome to BNU&lt;/h2&gt; <span class="code-comment">&lt;-- Error?</span>
+                            &lt;h1&gt;Welcome to Interactive CS&lt;/h2&gt; <span class="code-comment">&lt;-- Error?</span>
                         </div>
                         <div class="pl-4">&lt;/div&gt;</div>
                         <div>&lt;/body&gt;</div>
@@ -433,7 +495,7 @@
                     title: 'Session Summary',
                     theory: `
                         <p>You have completed the full 10-module assessment.</p>
-                        <p class="mt-2">This session covered the breadth of a BSc Computer Science degree, from low-level architecture to high-level web dev.</p>
+                        <p class="mt-2">This session covered the breadth of a Computer Science degree, from low-level architecture to high-level web dev.</p>
                     `,
                     hint: "Well done!",
                     solve: () => app.reset(),
@@ -469,7 +531,7 @@
                         <div class="text-slate-400 mb-4">${content}</div>
                         <div class="flex-grow overflow-y-auto" id="terminal-history"></div>
                         <div class="flex items-center gap-2 border-t border-slate-700 pt-4 mt-auto">
-                            <span class="text-green-500 font-bold">student@bnu-lab:~$</span>
+                            <span class="text-green-500 font-bold">student@lab:~$</span>
                             <input type="text" id="term-input" autocomplete="off" 
                                 class="bg-transparent border-none outline-none text-white w-full font-mono" 
                                 placeholder="Type command..." 
@@ -544,7 +606,7 @@
                 document.getElementById('module-name').innerText = lvl.module;
                 document.getElementById('score').innerText = this.state.score;
                 document.getElementById('progress-text').innerText = `Step ${this.state.level}/${this.state.maxLevels - 1}`;
-                
+
                 document.getElementById('theory-content').innerHTML = `
                     <h3 class="text-lg font-bold text-bnu-primary mb-3">${lvl.title}</h3>
                     ${lvl.theory}
@@ -573,7 +635,7 @@
                 const history = document.getElementById('terminal-history');
                 const cleanCmd = cmd.trim();
                 const lvl = this.levels[this.state.level];
-                
+
                 history.innerHTML += `<div class="mb-1"><span class="text-green-500">student@bnu-lab:~$</span> ${cmd}</div>`;
                 document.getElementById('term-input').value = '';
 
@@ -589,7 +651,7 @@
             handleCodeClick(el, isCorrect) {
                 if (isCorrect) {
                     if (el.classList.contains('border-red-500') || el.classList.contains('border-transparent')) {
-                         el.className = "pl-4 bg-red-900/30 border border-red-500 text-white rounded";
+                        el.className = "pl-4 bg-red-900/30 border border-red-500 text-white rounded";
                     }
                     this.showFeedback(true, "Issue Identified. In a real IDE, you would now patch this vulnerability.");
                 } else {
@@ -643,7 +705,7 @@
                     icon.className = "p-3 rounded-full bg-green-100 text-green-600 shrink-0";
                     icon.innerHTML = '<span class="material-icons">check_circle</span>';
                     nextBtn.classList.remove('hidden');
-                    
+
                     if (!this.levels[this.state.level].completed) {
                         this.state.score += 100;
                         document.getElementById('score').innerText = this.state.score;
@@ -678,4 +740,5 @@
         window.onload = () => app.init();
     </script>
 </body>
+
 </html>

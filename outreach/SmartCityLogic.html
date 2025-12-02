@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Smart City Logic | IoT Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -30,8 +33,12 @@
         }
     </script>
     <style>
-        body { background-color: #0f172a; color: #e2e8f0; overflow: hidden; }
-        
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow: hidden;
+        }
+
         /* JW Nav Icon */
         .jw-nav {
             width: 40px;
@@ -49,6 +56,7 @@
             user-select: none;
             color: #38bdf8;
         }
+
         .jw-nav:hover {
             background: rgba(56, 189, 248, 0.3);
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
@@ -67,8 +75,11 @@
             border-left: 4px solid #38bdf8;
             transition: all 0.2s;
         }
-        .logic-row:hover { background: #475569; }
-        
+
+        .logic-row:hover {
+            background: #475569;
+        }
+
         select {
             background: #1e293b;
             border: 1px solid #64748b;
@@ -79,36 +90,56 @@
             font-size: 0.85rem;
             outline: none;
         }
-        select:focus { border-color: #38bdf8; }
 
-        .keyword { font-weight: bold; color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; }
-        
+        select:focus {
+            border-color: #38bdf8;
+        }
+
+        .keyword {
+            font-weight: bold;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
         /* Draggable Items */
         .draggable-tool {
             cursor: grab;
             transition: transform 0.1s;
         }
-        .draggable-tool:active { cursor: grabbing; transform: scale(0.95); }
+
+        .draggable-tool:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
 
         /* Canvas Overlay */
         .canvas-container {
             position: relative;
-            background-color: #0f172a; 
-            background-image: 
+            background-color: #0f172a;
+            background-image:
                 linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
             background-size: 40px 40px;
             overflow: hidden;
             border-radius: 12px;
             border: 1px solid #334155;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
         }
 
         /* Animation Classes */
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .slide-in {
             animation: slideIn 0.3s ease-out forwards;
         }
@@ -123,7 +154,7 @@
             z-index: 10;
             transition: opacity 0.5s ease;
         }
-        
+
         /* Game Over Screen */
         #fail-screen {
             position: absolute;
@@ -138,12 +169,14 @@
             pointer-events: none;
             transition: opacity 0.5s;
         }
+
         #fail-screen.visible {
             opacity: 1;
             pointer-events: auto;
         }
     </style>
 </head>
+
 <body class="flex flex-col h-screen">
 
     <!-- Header -->
@@ -160,7 +193,8 @@
         </div>
         <div class="flex items-center gap-4">
             <!-- Play/Pause Control -->
-            <button onclick="app.togglePlay()" id="play-btn" class="bg-blue-900/50 hover:bg-blue-900 text-blue-200 px-3 py-1.5 rounded text-xs font-bold border border-blue-800 transition flex items-center gap-1">
+            <button onclick="app.togglePlay()" id="play-btn"
+                class="bg-blue-900/50 hover:bg-blue-900 text-blue-200 px-3 py-1.5 rounded text-xs font-bold border border-blue-800 transition flex items-center gap-1">
                 <span class="material-icons text-sm">pause</span> PAUSE
             </button>
 
@@ -172,7 +206,8 @@
                     </div>
                 </div>
             </div>
-            <button onclick="app.resetSimulation()" class="bg-red-900/50 hover:bg-red-900 text-red-200 px-3 py-1.5 rounded text-xs font-bold border border-red-800 transition">
+            <button onclick="app.resetSimulation()"
+                class="bg-red-900/50 hover:bg-red-900 text-red-200 px-3 py-1.5 rounded text-xs font-bold border border-red-800 transition">
                 RESET CITY
             </button>
         </div>
@@ -180,10 +215,10 @@
 
     <!-- Main Workspace -->
     <main class="flex-grow flex flex-col md:flex-row overflow-hidden">
-        
+
         <!-- Left Panel: Logic Builder & Tools -->
         <aside class="w-full md:w-1/3 min-w-[320px] bg-iot-panel border-r border-gray-700 flex flex-col z-20 shadow-xl">
-            
+
             <!-- Toolbox (Draggables) -->
             <div class="p-4 border-b border-gray-700 bg-gray-800/50">
                 <h2 class="text-xs font-bold text-iot-accent uppercase tracking-wider mb-3 flex items-center gap-2">
@@ -192,8 +227,9 @@
                 <div class="grid grid-cols-2 gap-3">
                     <!-- Traffic Sensor -->
                     <div class="draggable-tool bg-gray-700 p-3 rounded border border-gray-600 flex items-center gap-3 hover:border-iot-accent hover:bg-gray-600 select-none"
-                         draggable="true" ondragstart="app.dragStart(event, 'traffic_sensor')">
-                        <div class="w-8 h-8 rounded bg-yellow-500/20 flex items-center justify-center text-yellow-500 border border-yellow-500/50">
+                        draggable="true" ondragstart="app.dragStart(event, 'traffic_sensor')">
+                        <div
+                            class="w-8 h-8 rounded bg-yellow-500/20 flex items-center justify-center text-yellow-500 border border-yellow-500/50">
                             <span class="material-icons text-sm">traffic</span>
                         </div>
                         <div>
@@ -204,8 +240,9 @@
 
                     <!-- Air Sensor -->
                     <div class="draggable-tool bg-gray-700 p-3 rounded border border-gray-600 flex items-center gap-3 hover:border-iot-accent hover:bg-gray-600 select-none"
-                         draggable="true" ondragstart="app.dragStart(event, 'air_sensor')">
-                        <div class="w-8 h-8 rounded bg-green-500/20 flex items-center justify-center text-green-500 border border-green-500/50">
+                        draggable="true" ondragstart="app.dragStart(event, 'air_sensor')">
+                        <div
+                            class="w-8 h-8 rounded bg-green-500/20 flex items-center justify-center text-green-500 border border-green-500/50">
                             <span class="material-icons text-sm">air</span>
                         </div>
                         <div>
@@ -216,8 +253,9 @@
 
                     <!-- Industrial Fan -->
                     <div class="draggable-tool bg-gray-700 p-3 rounded border border-gray-600 flex items-center gap-3 hover:border-iot-accent hover:bg-gray-600 select-none col-span-2"
-                         draggable="true" ondragstart="app.dragStart(event, 'fan')">
-                        <div class="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center text-blue-500 border border-blue-500/50">
+                        draggable="true" ondragstart="app.dragStart(event, 'fan')">
+                        <div
+                            class="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center text-blue-500 border border-blue-500/50">
                             <span class="material-icons text-sm">cyclone</span>
                         </div>
                         <div>
@@ -234,11 +272,12 @@
                     <h2 class="text-xs font-bold text-iot-accent uppercase tracking-wider flex items-center gap-2">
                         <span class="material-icons text-sm">code</span> Logic Controller
                     </h2>
-                    <button onclick="app.addRule()" class="text-xs bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded flex items-center gap-1">
+                    <button onclick="app.addRule()"
+                        class="text-xs bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded flex items-center gap-1">
                         <span class="material-icons text-[12px]">add</span> Add Rule
                     </button>
                 </div>
-                
+
                 <div id="logic-container" class="flex-grow overflow-y-auto pr-1 space-y-2 pb-4">
                     <!-- Rules injected here -->
                     <div class="text-center text-gray-500 text-xs mt-10 italic" id="empty-rules">
@@ -256,6 +295,9 @@
                         <div>Active Sensors: <span id="sensor-count" class="text-white">0</span></div>
                         <div>Active Rules: <span id="rule-count" class="text-white">0</span></div>
                     </div>
+                    <div class="text-center text-[10px] text-gray-600 mt-2">
+                        Made by James Williams. MIT Licensed.
+                    </div>
                 </div>
             </div>
         </aside>
@@ -263,9 +305,9 @@
         <!-- Right Panel: Simulation Canvas -->
         <main class="flex-grow relative bg-gray-900 p-4 flex flex-col">
             <div class="canvas-container flex-grow w-full h-full relative" id="drop-zone"
-                 ondragover="app.dragOver(event)" ondrop="app.drop(event)">
+                ondragover="app.dragOver(event)" ondrop="app.drop(event)">
                 <canvas id="cityCanvas" class="block w-full h-full"></canvas>
-                
+
                 <!-- Smog Visual Layer -->
                 <div id="smog-layer" style="opacity: 0;"></div>
 
@@ -274,21 +316,28 @@
                     <span class="material-icons text-6xl text-red-500 mb-4">warning</span>
                     <h2 class="text-3xl font-bold text-white mb-2">CITY EVACUATED</h2>
                     <p class="text-red-300 mb-6">Critical pollution levels reached.</p>
-                    <button onclick="app.resetSimulation()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-bold">
+                    <button onclick="app.resetSimulation()"
+                        class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-bold">
                         REBOOT SYSTEM
                     </button>
                 </div>
-                
+
                 <!-- Overlay UI on Canvas -->
-                <div class="absolute top-4 left-4 bg-gray-900/80 backdrop-blur border border-gray-700 p-2 rounded text-xs text-gray-300 pointer-events-none z-20">
+                <div
+                    class="absolute top-4 left-4 bg-gray-900/80 backdrop-blur border border-gray-700 p-2 rounded text-xs text-gray-300 pointer-events-none z-20">
                     <div class="font-bold text-white mb-1">City Legend (UK Rules)</div>
-                    <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 bg-blue-500 rounded-sm"></span> Fan (Actuator)</div>
-                    <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 bg-red-500 rounded-full"></span> Traffic Light</div>
-                    <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 border border-dashed border-gray-400 rounded-full"></span> Sensor Zone</div>
-                    <div class="flex items-center gap-2"><span class="w-3 h-3 bg-orange-500 rounded-sm"></span> Maint. Depot</div>
+                    <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 bg-blue-500 rounded-sm"></span> Fan
+                        (Actuator)</div>
+                    <div class="flex items-center gap-2 mb-1"><span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                        Traffic Light</div>
+                    <div class="flex items-center gap-2 mb-1"><span
+                            class="w-3 h-3 border border-dashed border-gray-400 rounded-full"></span> Sensor Zone</div>
+                    <div class="flex items-center gap-2"><span class="w-3 h-3 bg-orange-500 rounded-sm"></span> Maint.
+                        Depot</div>
                 </div>
 
-                <div id="notification-area" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col gap-2 items-center pointer-events-none z-30">
+                <div id="notification-area"
+                    class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col gap-2 items-center pointer-events-none z-30">
                     <!-- Dynamic Toasts -->
                 </div>
             </div>
@@ -304,7 +353,7 @@
             ctx: null,
             width: 0,
             height: 0,
-            
+
             // Simulation State
             cars: [],
             lights: [],
@@ -313,24 +362,24 @@
             pollution: [],
             rules: [],
             activeConnections: [],
-            depotLocation: {x: 0, y: 0},
-            
+            depotLocation: { x: 0, y: 0 },
+
             // Logic State
             sensorCounter: 1,
             fanCounter: 1,
             cityHealth: 100,
             gameOver: false,
             isPlaying: true, // Play/Pause State
-            
+
             // Drag State
             draggedEntity: null,
             isDraggingMapItem: false,
-            
+
             init() {
                 this.ctx = this.canvas.getContext('2d');
                 this.resize();
                 window.addEventListener('resize', () => this.resize());
-                
+
                 // Add Map Interaction Listeners
                 this.canvas.addEventListener('mousedown', this.handleMouseDown.bind(this));
                 this.canvas.addEventListener('mousemove', this.handleMouseMove.bind(this));
@@ -338,7 +387,7 @@
                 this.canvas.addEventListener('mouseleave', this.handleMouseUp.bind(this));
 
                 this.setupCity();
-                
+
                 this.loop = this.loop.bind(this);
                 requestAnimationFrame(this.loop);
 
@@ -423,20 +472,20 @@
             setupCity() {
                 this.lights = [];
                 // Clear fans (they are now user-placeable, though we can keep some defaults if preferred)
-                this.fans = []; 
+                this.fans = [];
                 this.activeConnections = [];
-                
+
                 const cx = this.width / 2;
                 const cy = this.height / 2;
-                
+
                 // Traffic Lights (UK Left Side Positions)
-                this.lights.push(new TrafficLight(1, cx - 22, cy + 55, 'Northbound (L1)')); 
+                this.lights.push(new TrafficLight(1, cx - 22, cy + 55, 'Northbound (L1)'));
                 this.lights.push(new TrafficLight(2, cx + 22, cy - 55, 'Southbound (L2)'));
                 this.lights.push(new TrafficLight(3, cx - 55, cy + 22, 'Eastbound (L3)'));
                 this.lights.push(new TrafficLight(4, cx + 55, cy - 22, 'Westbound (L4)'));
 
                 // Maintenance Depot (Fixed Location)
-                this.depotLocation = {x: this.width - 60, y: 60};
+                this.depotLocation = { x: this.width - 60, y: 60 };
             },
 
             // --- Drag & Drop Handling ---
@@ -467,9 +516,9 @@
                 } else if (type === 'fan') {
                     this.fans.push(new Fan(this.fanCounter++, x, y));
                     this.showToast('Industrial Fan Deployed', 'success');
-                    this.refreshRuleDropdowns(); 
+                    this.refreshRuleDropdowns();
                 }
-                
+
                 this.updateUI();
             },
 
@@ -486,7 +535,7 @@
 
                 const div = document.createElement('div');
                 div.className = 'logic-row slide-in';
-                
+
                 div.innerHTML = `
                     <span class="keyword">IF</span>
                     <select class="sensor-select"><option>Loading...</option></select>
@@ -514,8 +563,8 @@
             },
 
             refreshRuleDropdowns() {
-                const sensorOptions = this.sensors.length > 0 
-                    ? this.sensors.map(s => `<option value="${s.id}">${s.name}</option>`).join('') 
+                const sensorOptions = this.sensors.length > 0
+                    ? this.sensors.map(s => `<option value="${s.id}">${s.name}</option>`).join('')
                     : '<option value="">No Sensors Available</option>';
 
                 const actuatorOptions = [
@@ -540,7 +589,7 @@
 
             evaluateLogic() {
                 const rows = document.querySelectorAll('.logic-row');
-                this.activeConnections = []; 
+                this.activeConnections = [];
 
                 rows.forEach(row => {
                     const sensorId = parseInt(row.querySelector('.sensor-select').value);
@@ -577,20 +626,20 @@
                                 } else {
                                     light.state = (state === 'active' ? 'green' : 'red');
                                 }
-                                targetLoc = {x: light.x, y: light.y};
+                                targetLoc = { x: light.x, y: light.y };
                             }
-                        } 
+                        }
                         else if (actuatorId.startsWith('F')) {
                             const fan = this.fans.find(f => f.id == actuatorId.substring(1));
                             if (fan) {
                                 fan.active = (state === 'active' || state === 'active_exclusive');
-                                targetLoc = {x: fan.x, y: fan.y};
+                                targetLoc = { x: fan.x, y: fan.y };
                             }
                         }
 
                         if (targetLoc) {
                             this.activeConnections.push({
-                                start: {x: sensor.x, y: sensor.y},
+                                start: { x: sensor.x, y: sensor.y },
                                 end: targetLoc
                             });
                         }
@@ -615,21 +664,21 @@
                     for (let j = i + 1; j < this.cars.length; j++) {
                         const c1 = this.cars[i];
                         const c2 = this.cars[j];
-                        
+
                         if (c1.crashed || c2.crashed) continue;
 
                         // Check collision distance based on vehicle type (length)
                         // Using a simple approximation of size for collision
                         const minDist = (c1.length + c2.length) / 3; // Approx overlap threshold
                         const dist = Math.hypot(c1.x - c2.x, c1.y - c2.y);
-                        
+
                         if (dist < minDist) {
                             c1.crashed = true;
                             c2.crashed = true;
                             c1.stopped = true;
                             c2.stopped = true;
                             // Add extra crash pollution burst
-                            for(let p=0; p<10; p++) this.pollution.push(new Cloud(c1.x, c1.y, true));
+                            for (let p = 0; p < 10; p++) this.pollution.push(new Cloud(c1.x, c1.y, true));
                             this.showToast('ACCIDENT DETECTED!', 'danger');
                         }
                     }
@@ -642,15 +691,15 @@
                 // Always redraw canvas even if paused
                 this.ctx.fillStyle = '#0f172a';
                 this.ctx.fillRect(0, 0, this.width, this.height);
-                
+
                 this.drawBuildings();
                 this.drawRoads();
-                this.drawDataLines(); 
+                this.drawDataLines();
                 this.drawDepot();
                 this.fans.forEach(fan => fan.draw(this.ctx));
                 this.lights.forEach(light => light.draw(this.ctx));
                 this.sensors.forEach(sensor => sensor.draw(this.ctx));
-                
+
                 // Keep drawing cars/pollution even if paused, just don't update positions
                 this.cars.forEach(car => car.draw(this.ctx));
                 this.pollution.forEach(p => p.draw(this.ctx));
@@ -671,7 +720,7 @@
 
                     this.checkCollisions();
                     this.evaluateLogic();
-                    
+
                     this.updateHealthUI();
 
                     if (this.cityHealth <= 0) this.triggerGameOver();
@@ -685,7 +734,7 @@
                 const axis = axes[Math.floor(Math.random() * axes.length)];
                 const cx = this.width / 2;
                 const cy = this.height / 2;
-                
+
                 // Random Vehicle Type
                 const rand = Math.random();
                 let type = 'car';
@@ -694,13 +743,13 @@
 
                 let x, y, vx, vy, laneLightId;
 
-                if (axis === 'N') { x = cx - 22; y = this.height + 50; vx = 0; vy = -2; laneLightId = 1; } 
-                else if (axis === 'S') { x = cx + 22; y = -50; vx = 0; vy = 2; laneLightId = 2; } 
-                else if (axis === 'E') { x = -50; y = cy + 22; vx = 2; vy = 0; laneLightId = 3; } 
+                if (axis === 'N') { x = cx - 22; y = this.height + 50; vx = 0; vy = -2; laneLightId = 1; }
+                else if (axis === 'S') { x = cx + 22; y = -50; vx = 0; vy = 2; laneLightId = 2; }
+                else if (axis === 'E') { x = -50; y = cy + 22; vx = 2; vy = 0; laneLightId = 3; }
                 else if (axis === 'W') { x = this.width + 50; y = cy - 22; vx = -2; vy = 0; laneLightId = 4; }
-                
+
                 const isBlocked = this.cars.some(c => Math.hypot(c.x - x, c.y - y) < 80);
-                
+
                 if (!isBlocked) {
                     this.cars.push(new Car(x, y, vx, vy, laneLightId, type));
                 }
@@ -716,10 +765,10 @@
                 const cy = this.height / 2;
 
                 const blocks = [
-                    {x: 20, y: 20, w: cx - roadW - 40, h: cy - roadW - 40}, 
-                    {x: cx + roadW + 20, y: 20, w: cx - roadW - 40, h: cy - roadW - 40},
-                    {x: 20, y: cy + roadW + 20, w: cx - roadW - 40, h: cy - roadW - 40},
-                    {x: cx + roadW + 20, y: cy + roadW + 20, w: cx - roadW - 40, h: cy - roadW - 40}
+                    { x: 20, y: 20, w: cx - roadW - 40, h: cy - roadW - 40 },
+                    { x: cx + roadW + 20, y: 20, w: cx - roadW - 40, h: cy - roadW - 40 },
+                    { x: 20, y: cy + roadW + 20, w: cx - roadW - 40, h: cy - roadW - 40 },
+                    { x: cx + roadW + 20, y: cy + roadW + 20, w: cx - roadW - 40, h: cy - roadW - 40 }
                 ];
 
                 blocks.forEach(b => {
@@ -729,17 +778,17 @@
                         this.ctx.shadowColor = '#38bdf8';
                         this.ctx.strokeRect(b.x, b.y, b.w, b.h);
                         this.ctx.shadowBlur = 0;
-                        
+
                         this.ctx.fillStyle = '#0f172a';
                         // Draw windows
-                        for(let wx = b.x + 10; wx < b.x + b.w - 10; wx += 20) {
-                            for(let wy = b.y + 10; wy < b.y + b.h - 10; wy += 20) {
+                        for (let wx = b.x + 10; wx < b.x + b.w - 10; wx += 20) {
+                            for (let wy = b.y + 10; wy < b.y + b.h - 10; wy += 20) {
                                 // Pseudo-random check based on coordinates to keep lights static (no flickering)
                                 const seed = (Math.floor(wx) * 11 + Math.floor(wy) * 13) % 100;
-                                
+
                                 if (seed > 65) { // 35% chance to be lit
                                     // Consistent color choice based on seed
-                                    this.ctx.fillStyle = (seed % 2 === 0) ? '#fef08a' : '#22d3ee'; 
+                                    this.ctx.fillStyle = (seed % 2 === 0) ? '#fef08a' : '#22d3ee';
                                     this.ctx.fillRect(wx, wy, 10, 10);
                                 } else {
                                     // Dark window
@@ -757,23 +806,23 @@
                 const cy = this.height / 2;
                 const roadWidth = 90;
 
-                this.ctx.fillStyle = '#0f172a'; 
-                this.ctx.fillRect(0, cy - roadWidth/2, this.width, roadWidth);
-                this.ctx.fillRect(cx - roadWidth/2, 0, roadWidth, this.height);
-                
+                this.ctx.fillStyle = '#0f172a';
+                this.ctx.fillRect(0, cy - roadWidth / 2, this.width, roadWidth);
+                this.ctx.fillRect(cx - roadWidth / 2, 0, roadWidth, this.height);
+
                 this.ctx.strokeStyle = '#64748b';
                 this.ctx.lineWidth = 2;
-                
+
                 this.ctx.beginPath();
-                this.ctx.moveTo(0, cy - roadWidth/2); this.ctx.lineTo(this.width, cy - roadWidth/2);
-                this.ctx.moveTo(0, cy + roadWidth/2); this.ctx.lineTo(this.width, cy + roadWidth/2);
+                this.ctx.moveTo(0, cy - roadWidth / 2); this.ctx.lineTo(this.width, cy - roadWidth / 2);
+                this.ctx.moveTo(0, cy + roadWidth / 2); this.ctx.lineTo(this.width, cy + roadWidth / 2);
                 this.ctx.stroke();
 
                 this.ctx.beginPath();
-                this.ctx.moveTo(cx - roadWidth/2, 0); this.ctx.lineTo(cx - roadWidth/2, this.height);
-                this.ctx.moveTo(cx + roadWidth/2, 0); this.ctx.lineTo(cx + roadWidth/2, this.height);
+                this.ctx.moveTo(cx - roadWidth / 2, 0); this.ctx.lineTo(cx - roadWidth / 2, this.height);
+                this.ctx.moveTo(cx + roadWidth / 2, 0); this.ctx.lineTo(cx + roadWidth / 2, this.height);
                 this.ctx.stroke();
-                
+
                 this.ctx.strokeStyle = '#475569';
                 this.ctx.setLineDash([15, 15]);
                 this.ctx.beginPath();
@@ -786,13 +835,13 @@
             drawDepot() {
                 const x = this.depotLocation.x;
                 const y = this.depotLocation.y;
-                
+
                 this.ctx.fillStyle = '#f97316';
                 this.ctx.fillRect(x - 20, y - 20, 40, 40);
                 this.ctx.strokeStyle = '#fff';
                 this.ctx.lineWidth = 2;
                 this.ctx.strokeRect(x - 20, y - 20, 40, 40);
-                
+
                 this.ctx.fillStyle = '#fff';
                 this.ctx.font = 'bold 10px sans-serif';
                 this.ctx.textAlign = 'center';
@@ -807,7 +856,7 @@
                     const grad = this.ctx.createLinearGradient(conn.start.x, conn.start.y, conn.end.x, conn.end.y);
                     grad.addColorStop(0, '#22c55e');
                     grad.addColorStop(1, '#38bdf8');
-                    
+
                     this.ctx.strokeStyle = grad;
                     this.ctx.beginPath();
                     this.ctx.moveTo(conn.start.x, conn.start.y);
@@ -818,10 +867,10 @@
                     const progress = time % 1;
                     const dx = conn.end.x - conn.start.x;
                     const dy = conn.end.y - conn.start.y;
-                    
+
                     this.ctx.fillStyle = '#fff';
                     this.ctx.beginPath();
-                    this.ctx.arc(conn.start.x + dx * progress, conn.start.y + dy * progress, 3, 0, Math.PI*2);
+                    this.ctx.arc(conn.start.x + dx * progress, conn.start.y + dy * progress, 3, 0, Math.PI * 2);
                     this.ctx.fill();
                 });
             },
@@ -830,7 +879,7 @@
                 this.cars.forEach(car => {
                     // Crashed cars emit A LOT more pollution
                     if (car.crashed) {
-                         if (Math.random() < 0.3) this.pollution.push(new Cloud(car.x, car.y, true));
+                        if (Math.random() < 0.3) this.pollution.push(new Cloud(car.x, car.y, true));
                     } else {
                         // Midpoint Difficulty: 2% chance (was 3%, originally 1%)
                         if (Math.random() < 0.02) this.pollution.push(new Cloud(car.x, car.y));
@@ -841,17 +890,17 @@
                     if (fan.active) {
                         this.pollution = this.pollution.filter(p => {
                             const d = Math.hypot(p.x - fan.x, p.y - fan.y);
-                            return d > 180; 
+                            return d > 180;
                         });
-                        
-                         if (Math.random() < 0.3) {
-                             this.ctx.fillStyle = 'rgba(56, 189, 248, 0.3)';
-                             const ang = Math.random() * Math.PI * 2;
-                             const r = Math.random() * 150;
-                             this.ctx.beginPath();
-                             this.ctx.arc(fan.x + Math.cos(ang)*r, fan.y + Math.sin(ang)*r, 1, 0, Math.PI*2);
-                             this.ctx.fill();
-                         }
+
+                        if (Math.random() < 0.3) {
+                            this.ctx.fillStyle = 'rgba(56, 189, 248, 0.3)';
+                            const ang = Math.random() * Math.PI * 2;
+                            const r = Math.random() * 150;
+                            this.ctx.beginPath();
+                            this.ctx.arc(fan.x + Math.cos(ang) * r, fan.y + Math.sin(ang) * r, 1, 0, Math.PI * 2);
+                            this.ctx.fill();
+                        }
                     }
                 });
 
@@ -859,7 +908,7 @@
                     p.update();
                     p.draw(this.ctx);
                 });
-                
+
                 this.pollution = this.pollution.filter(p => p.life > 0);
             },
 
@@ -871,16 +920,16 @@
             updateHealthUI() {
                 const count = this.pollution.length;
                 // Midpoint Difficulty: 0.4 multiplier (was 0.8, originally 0.2)
-                this.cityHealth = Math.max(0, 100 - (count * 0.4)); 
-                
+                this.cityHealth = Math.max(0, 100 - (count * 0.4));
+
                 const smogOpacity = (100 - this.cityHealth) / 100; // Cap at 1.0
                 document.getElementById('smog-layer').style.opacity = Math.min(0.9, smogOpacity);
 
                 const pillsContainer = document.getElementById('health-pills');
                 pillsContainer.innerHTML = '';
                 const bars = Math.ceil(this.cityHealth / 10);
-                
-                for(let i=0; i<10; i++) {
+
+                for (let i = 0; i < 10; i++) {
                     const div = document.createElement('div');
                     div.className = `w-3 h-2 rounded-sm ${i < bars ? 'bg-green-500' : 'bg-gray-700'}`;
                     if (this.cityHealth < 40 && i < bars) div.className = div.className.replace('bg-green-500', 'bg-red-500');
@@ -910,37 +959,37 @@
                 this.isPlaying = true; // Auto-play on reset
                 document.getElementById('fail-screen').classList.remove('visible');
                 document.getElementById('smog-layer').style.opacity = 0;
-                
+
                 this.setupCity();
-                
+
                 document.getElementById('logic-container').innerHTML = `<div class="text-center text-gray-500 text-xs mt-10 italic" id="empty-rules">No logic defined.<br>Tip: Use 'Green (Exclusive)' to prevent crashes.</div>`;
                 this.rules = [];
-                
+
                 this.updateUI();
                 this.updateHealthUI();
-                
-                if(!this.gameOver) requestAnimationFrame(this.loop);
+
+                if (!this.gameOver) requestAnimationFrame(this.loop);
             }
         };
 
         /**
          * ENTITY CLASSES
          */
-        
+
         class Car {
             constructor(x, y, vx, vy, lightId, type = 'car') {
                 this.x = x;
                 this.y = y;
                 this.vx = vx;
                 this.vy = vy;
-                this.laneLightId = lightId; 
+                this.laneLightId = lightId;
                 this.type = type;
                 this.dead = false;
                 this.stopped = false;
                 this.crashed = false;
                 this.beingTowed = false;
-                this.crashTimer = 0; 
-                
+                this.crashTimer = 0;
+
                 // Properties based on type
                 if (type === 'bus') {
                     this.length = 24;
@@ -958,10 +1007,10 @@
                     this.speed = 2.5;
                     this.color = `hsl(${Math.random() * 360}, 80%, 60%)`;
                 }
-                
+
                 // Scale velocity by speed
-                if(this.vx !== 0) this.vx = Math.sign(this.vx) * this.speed;
-                if(this.vy !== 0) this.vy = Math.sign(this.vy) * this.speed;
+                if (this.vx !== 0) this.vx = Math.sign(this.vx) * this.speed;
+                if (this.vy !== 0) this.vy = Math.sign(this.vy) * this.speed;
             }
             update(lights, otherCars) {
                 if (this.beingTowed) {
@@ -976,13 +1025,13 @@
                 if (this.crashed) {
                     this.crashTimer++;
                     if (this.crashTimer > 600) {
-                        this.dead = true; 
+                        this.dead = true;
                     }
-                    return; 
+                    return;
                 }
-                
+
                 this.stopped = false;
-                
+
                 // 1. Check My Specific Traffic Light
                 const light = lights.find(l => l.id === this.laneLightId);
                 if (light && light.state === 'red') {
@@ -1003,14 +1052,14 @@
                 if (!this.stopped) {
                     const carAhead = otherCars.find(c => {
                         if (c === this) return false;
-                        
+
                         // Treat crashed cars as circular obstacles
                         if (c.crashed || c.beingTowed) {
-                             const d = Math.hypot(this.x - c.x, this.y - c.y);
-                             if (d < 35) return true;
-                             return false;
+                            const d = Math.hypot(this.x - c.x, this.y - c.y);
+                            if (d < 35) return true;
+                            return false;
                         }
-                        
+
                         // IGNORE cross-traffic to prevent gridlock
                         const myVertical = this.vy !== 0;
                         const otherVertical = c.vy !== 0;
@@ -1021,13 +1070,13 @@
                         if (myHorizontal && otherVertical && !c.stopped) return false;
 
                         // Standard Queue Logic - Adjusted for vehicle length
-                        const stopDist = this.length/2 + c.length/2 + 10;
-                        
+                        const stopDist = this.length / 2 + c.length / 2 + 10;
+
                         if (this.vy < 0 && c.y < this.y && c.y > this.y - 60 && Math.abs(c.x - this.x) < 12) return true;
                         if (this.vy > 0 && c.y > this.y && c.y < this.y + 60 && Math.abs(c.x - this.x) < 12) return true;
                         if (this.vx > 0 && c.x > this.x && c.x < this.x + 60 && Math.abs(c.y - this.y) < 12) return true;
                         if (this.vx < 0 && c.x < this.x && c.x > this.x - 60 && Math.abs(c.y - this.y) < 12) return true;
-                        
+
                         return false;
                     });
                     if (carAhead) this.stopped = true;
@@ -1051,12 +1100,12 @@
 
                 if (this.crashed) {
                     ctx.globalAlpha = Math.max(0, 1 - (this.crashTimer / 600));
-                    ctx.fillStyle = '#1f2937'; 
+                    ctx.fillStyle = '#1f2937';
                     // Draw somewhat boxy wreckage
-                    ctx.fillRect(this.x - this.width/2, this.y - this.length/2, this.width, this.length);
+                    ctx.fillRect(this.x - this.width / 2, this.y - this.length / 2, this.width, this.length);
                     ctx.fillStyle = `rgba(239, 68, 68, ${Math.random()})`;
                     ctx.beginPath();
-                    ctx.arc(this.x + (Math.random()*4-2), this.y + (Math.random()*4-2), 4, 0, Math.PI*2);
+                    ctx.arc(this.x + (Math.random() * 4 - 2), this.y + (Math.random() * 4 - 2), 4, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.globalAlpha = 1;
                     return;
@@ -1065,7 +1114,7 @@
                 ctx.fillStyle = this.color;
                 ctx.shadowBlur = 5;
                 ctx.shadowColor = this.color;
-                
+
                 // Draw based on orientation and type dimensions
                 let dimX = this.length;
                 let dimY = this.width;
@@ -1073,40 +1122,40 @@
                     dimX = this.width;
                     dimY = this.length;
                 }
-                
-                ctx.fillRect(this.x - dimX/2, this.y - dimY/2, dimX, dimY);
+
+                ctx.fillRect(this.x - dimX / 2, this.y - dimY / 2, dimX, dimY);
                 ctx.shadowBlur = 0;
-                
+
                 ctx.fillStyle = '#fff';
                 // Headlights
-                if (this.vx > 0) ctx.fillRect(this.x + dimX/2 - 2, this.y - dimY/2 + 2, 2, dimY - 4); 
-                if (this.vx < 0) ctx.fillRect(this.x - dimX/2, this.y - dimY/2 + 2, 2, dimY - 4); 
-                if (this.vy > 0) ctx.fillRect(this.x - dimX/2 + 2, this.y + dimY/2 - 2, dimX - 4, 2); 
-                if (this.vy < 0) ctx.fillRect(this.x - dimX/2 + 2, this.y - dimY/2, dimX - 4, 2); 
+                if (this.vx > 0) ctx.fillRect(this.x + dimX / 2 - 2, this.y - dimY / 2 + 2, 2, dimY - 4);
+                if (this.vx < 0) ctx.fillRect(this.x - dimX / 2, this.y - dimY / 2 + 2, 2, dimY - 4);
+                if (this.vy > 0) ctx.fillRect(this.x - dimX / 2 + 2, this.y + dimY / 2 - 2, dimX - 4, 2);
+                if (this.vy < 0) ctx.fillRect(this.x - dimX / 2 + 2, this.y - dimY / 2, dimX - 4, 2);
             }
         }
 
         // ... (TrafficLight, Fan, Cloud, TrafficSensor, AirSensor classes remain identical)
         // Re-included for completeness
-        
+
         class TrafficLight {
             constructor(id, x, y, orientation) {
                 this.id = id;
                 this.x = x;
                 this.y = y;
-                this.state = 'red'; 
+                this.state = 'red';
                 this.orientation = orientation;
             }
             draw(ctx) {
                 ctx.fillStyle = '#111';
                 ctx.fillRect(this.x - 12, this.y - 12, 24, 24);
-                
+
                 const color = this.state === 'green' ? '#22c55e' : '#ef4444';
                 ctx.fillStyle = color;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, 8, 0, Math.PI * 2);
                 ctx.fill();
-                
+
                 ctx.shadowColor = color;
                 ctx.shadowBlur = 15;
                 ctx.fill();
@@ -1135,12 +1184,12 @@
             draw(ctx) {
                 ctx.save();
                 ctx.translate(this.x, this.y);
-                
+
                 ctx.fillStyle = '#334155';
                 ctx.beginPath();
-                ctx.arc(0, 0, 16, 0, Math.PI*2);
+                ctx.arc(0, 0, 16, 0, Math.PI * 2);
                 ctx.fill();
-                
+
                 ctx.rotate(this.angle);
                 ctx.strokeStyle = this.active ? '#38bdf8' : '#94a3b8';
                 ctx.lineWidth = 3;
@@ -1148,17 +1197,17 @@
                 ctx.moveTo(-12, 0); ctx.lineTo(12, 0);
                 ctx.moveTo(0, -12); ctx.lineTo(0, 12);
                 ctx.stroke();
-                
+
                 if (this.active) {
                     ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
                     ctx.lineWidth = 1;
                     ctx.beginPath();
-                    ctx.arc(0, 0, 150, 0, Math.PI*2);
+                    ctx.arc(0, 0, 150, 0, Math.PI * 2);
                     ctx.stroke();
                 }
-                
+
                 ctx.restore();
-                
+
                 ctx.fillStyle = '#94a3b8';
                 ctx.font = '10px sans-serif';
                 ctx.textAlign = 'center';
@@ -1184,9 +1233,9 @@
             }
             draw(ctx) {
                 ctx.globalAlpha = Math.max(0, this.life * 0.4);
-                ctx.fillStyle = this.isSmoke ? '#1f2937' : '#64748b'; 
+                ctx.fillStyle = this.isSmoke ? '#1f2937' : '#64748b';
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.globalAlpha = 1;
             }
@@ -1213,20 +1262,20 @@
                 ctx.lineWidth = this.triggered ? 3 : 1;
                 ctx.setLineDash([4, 4]);
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, 50, 0, Math.PI*2);
+                ctx.arc(this.x, this.y, 50, 0, Math.PI * 2);
                 ctx.stroke();
                 ctx.setLineDash([]);
-                
+
                 ctx.fillStyle = '#eab308';
                 ctx.fillRect(this.x - 5, this.y - 5, 10, 10);
-                
+
                 if (this.triggered) {
                     ctx.shadowColor = '#eab308';
                     ctx.shadowBlur = 15;
                     ctx.fillRect(this.x - 5, this.y - 5, 10, 10);
                     ctx.shadowBlur = 0;
                 }
-                
+
                 ctx.fillStyle = '#fff';
                 ctx.font = '10px sans-serif';
                 ctx.fillText(`Cars: ${this.value}`, this.x + 12, this.y);
@@ -1239,7 +1288,7 @@
                 this.name = `AirMon ${id}`;
                 this.x = x;
                 this.y = y;
-                this.value = 0; 
+                this.value = 0;
                 this.type = 'air';
                 this.triggered = false;
             }
@@ -1254,20 +1303,20 @@
                 ctx.lineWidth = this.triggered ? 3 : 1;
                 ctx.setLineDash([4, 4]);
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, 50, 0, Math.PI*2);
+                ctx.arc(this.x, this.y, 50, 0, Math.PI * 2);
                 ctx.stroke();
                 ctx.setLineDash([]);
-                
+
                 ctx.fillStyle = '#22c55e';
                 ctx.fillRect(this.x - 5, this.y - 5, 10, 10);
-                
+
                 if (this.triggered) {
                     ctx.shadowColor = '#22c55e';
                     ctx.shadowBlur = 15;
                     ctx.fillRect(this.x - 5, this.y - 5, 10, 10);
                     ctx.shadowBlur = 0;
                 }
-                
+
                 ctx.fillStyle = '#fff';
                 ctx.font = '10px sans-serif';
                 ctx.fillText(`AQI: ${this.value}`, this.x + 12, this.y);
@@ -1278,4 +1327,5 @@
         window.onload = () => app.init();
     </script>
 </body>
+
 </html>
