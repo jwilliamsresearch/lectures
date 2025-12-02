@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 2: Project Brief & Early Technical Feasibility</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session1.html" title="Previous Session">&lt;</a>
+        <a href="session3.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART A: WRITING AN INDUSTRY DESIGN BRIEF -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 2</div>
+                <h1>Project Brief & Early Technical Feasibility</h1>
+                <h2>Part A: Writing Design Briefs | Part B: "Hello World" Prototypes</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 2 parts • 2 team tasks</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                <div class="diagram">
+                    <h3>Part A: Writing an Industry Design Brief (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on problem definition, users, requirements, constraints</p>
+                    <p><strong>45 minutes:</strong> Task 1 - Team design brief workshop</p>
+                    <p><strong>15 minutes:</strong> Break</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part B: Feasibility Prototype ("Hello World") (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on tech stack validation and feasibility testing</p>
+                    <p><strong>45 minutes:</strong> Task 2 - Build minimal technical prototype</p>
+                    <p><strong>15 minutes:</strong> Q&A and troubleshooting</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand the purpose and structure of industry design briefs</li>
+                    <li>Learn to define problems clearly and identify target users</li>
+                    <li>Identify technical and business constraints for projects</li>
+                    <li>Write clear, measurable requirements as a team</li>
+                    <li>Understand the importance of early technical validation</li>
+                    <li>Build "Hello World" prototypes to test tech stack feasibility</li>
+                    <li>Validate that team can work with chosen technologies</li>
+                    <li>Identify potential technical blockers early in the project</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Why Design Briefs Matter -->
+            <section data-slide-title="Why Design Briefs Matter">
+                <h2>Why Design Briefs Matter</h2>
+                <div class="highlight">
+                    <strong>Design Brief:</strong> A concise document that defines the problem, users,
+                    requirements, and constraints for your project. It's the foundation for all subsequent work.
+                </div>
+                <div class="two-column">
+                    <div>
+                        <h3>Benefits:</h3>
+                        <ul>
+                            <li>Aligns team understanding</li>
+                            <li>Prevents scope creep</li>
+                            <li>Clarifies priorities</li>
+                            <li>Guides technical decisions</li>
+                            <li>Enables stakeholder communication</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Industry Use:</h3>
+                        <ul>
+                            <li>Client projects start with briefs</li>
+                            <li>Product roadmaps need definition</li>
+                            <li>Teams use as reference</li>
+                            <li>Investors require clarity</li>
+                            <li>Handover documentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Design Brief Structure -->
+            <section data-slide-title="Design Brief Structure">
+                <h2>Industry Design Brief Structure</h2>
+                <ol>
+                    <li><strong>Project Title & Team</strong> - Name, team members, roles</li>
+                    <li><strong>Problem Statement</strong> - What problem are you solving? Why does it matter?</li>
+                    <li><strong>Target Users</strong> - Who will use this? What are their needs?</li>
+                    <li><strong>Project Objectives</strong> - What will the project achieve?</li>
+                    <li><strong>Key Features</strong> - Core functionality (prioritized)</li>
+                    <li><strong>Technical Constraints</strong> - Technology, time, resources, expertise</li>
+                    <li><strong>Success Criteria</strong> - How do you know if you've succeeded?</li>
+                    <li><strong>Project Scope</strong> - What's included and explicitly excluded</li>
+                </ol>
+                <p class="text-light"><em>Each section should be concise - typically 2-5 sentences</em></p>
+            </section>
+
+            <!-- Slide 6: Problem Definition -->
+            <section data-slide-title="Defining the Problem">
+                <h2>Defining the Problem</h2>
+                <div class="info-box">
+                    <strong>Key Question:</strong> What problem are you solving, and why does it matter?
+                </div>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>✗ Weak Problem Statement:</h4>
+                        <p>"We want to build a mobile app for students."</p>
+                        <p class="text-light"><em>Too vague, no clear problem</em></p>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Strong Problem Statement:</h4>
+                        <p>"Students struggle to find available study spaces across campus, wasting 15-30 minutes daily.
+                            Current booking systems are fragmented and don't show real-time availability."</p>
+                        <p class="text-light"><em>Specific, quantified, clear pain point</em></p>
+                    </div>
+                </div>
+                <h3>Good Problem Statements:</h3>
+                <ul>
+                    <li>Are specific and measurable</li>
+                    <li>Identify who is affected</li>
+                    <li>Explain why it matters (impact)</li>
+                    <li>Avoid jumping to solutions</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Understanding Users -->
+            <section data-slide-title="Understanding Target Users">
+                <h2>Understanding Target Users</h2>
+                <div class="diagram">
+                    <h3>User Analysis Framework:</h3>
+                    <ul style="text-align: left;">
+                        <li><strong>Who are they?</strong> Demographics, roles, technical proficiency</li>
+                        <li><strong>What do they need?</strong> Goals, tasks, pain points</li>
+                        <li><strong>When/Where do they use it?</strong> Context of use</li>
+                        <li><strong>How do they currently solve this?</strong> Existing solutions or workarounds</li>
+                        <li><strong>What are their constraints?</strong> Device access, connectivity, time</li>
+                    </ul>
+                </div>
+                <div class="example-box">
+                    <h4>Example: Healthcare Booking System</h4>
+                    <p><strong>Primary Users:</strong> Patients (ages 25-75), varying tech skills<br>
+                        <strong>Needs:</strong> Book appointments easily, receive reminders, access history<br>
+                        <strong>Context:</strong> Mobile-first, need quick access during work hours<br>
+                        <strong>Current Solution:</strong> Phone calls (long wait times, limited hours)<br>
+                        <strong>Constraints:</strong> Some have limited smartphone experience
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 8: Functional Requirements -->
+            <section data-slide-title="Writing Functional Requirements">
+                <h2>Writing Functional Requirements</h2>
+                <div class="info-box">
+                    <strong>Functional Requirements:</strong> What the system must DO - specific features and behaviors.
+                </div>
+                <h3>Requirements should be:</h3>
+                <ul>
+                    <li><strong>Specific:</strong> Clear, unambiguous description</li>
+                    <li><strong>Measurable:</strong> Can verify if it's implemented</li>
+                    <li><strong>Achievable:</strong> Technically feasible for your team</li>
+                    <li><strong>Relevant:</strong> Addresses user needs or business goals</li>
+                    <li><strong>Testable:</strong> Can be validated through testing</li>
+                </ul>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>✗ Poor Requirement:</h4>
+                        <p>"The system should be user-friendly"</p>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Good Requirement:</h4>
+                        <p>"Users must be able to create an account and log in using email/password within 2 minutes"
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Non-Functional Requirements -->
+            <section data-slide-title="Non-Functional Requirements">
+                <h2>Non-Functional Requirements</h2>
+                <div class="info-box">
+                    <strong>Non-Functional Requirements:</strong> How the system should PERFORM - quality attributes.
+                </div>
+                <h3>Common Categories:</h3>
+                <ul>
+                    <li><strong>Performance:</strong> Response time, throughput, load capacity
+                        <br><em>Example: "Search results must load within 2 seconds"</em>
+                    </li>
+                    <li><strong>Security:</strong> Authentication, authorization, data protection
+                        <br><em>Example: "Passwords must be hashed using bcrypt"</em>
+                    </li>
+                    <li><strong>Usability:</strong> Learning curve, accessibility, error handling
+                        <br><em>Example: "Must meet WCAG 2.1 Level AA standards"</em>
+                    </li>
+                    <li><strong>Scalability:</strong> Growth capacity, concurrent users
+                        <br><em>Example: "Support 100 concurrent users"</em>
+                    </li>
+                    <li><strong>Reliability:</strong> Uptime, error rates, data consistency
+                        <br><em>Example: "99% uptime during operating hours"</em>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Constraints -->
+            <section data-slide-title="Identifying Constraints">
+                <h2>Identifying Project Constraints</h2>
+                <div class="diagram">
+                    <h3>Types of Constraints:</h3>
+                </div>
+                <div class="two-column">
+                    <div>
+                        <h4>Technical Constraints:</h4>
+                        <ul>
+                            <li>Must use specific technologies</li>
+                            <li>Integration requirements</li>
+                            <li>Platform compatibility</li>
+                            <li>Team's technical expertise</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Project Constraints:</h4>
+                        <ul>
+                            <li>Timeline (12-week semester)</li>
+                            <li>Team size and availability</li>
+                            <li>Budget (free/open-source tools)</li>
+                            <li>Scope limitations</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <strong>Be Honest:</strong> Acknowledging constraints upfront helps scope projects
+                    realistically and prevents over-commitment.
+                </div>
+            </section>
+
+            <!-- Slide 11: Success Criteria -->
+            <section data-slide-title="Defining Success Criteria">
+                <h2>Defining Success Criteria</h2>
+                <div class="info-box">
+                    <strong>Success Criteria:</strong> Specific, measurable outcomes that define project success.
+                </div>
+                <div class="example-box">
+                    <h4>Example: E-Commerce Platform</h4>
+                    <p><strong>Functional Success:</strong></p>
+                    <ul style="text-align: left;">
+                        <li>✓ Users can browse products, search, and filter</li>
+                        <li>✓ Complete checkout flow with test payment integration</li>
+                        <li>✓ Admin panel for product management</li>
+                    </ul>
+                    <p><strong>Technical Success:</strong></p>
+                    <ul style="text-align: left;">
+                        <li>✓ Code deployed to cloud platform (e.g., Heroku, Vercel)</li>
+                        <li>✓ 80%+ unit test coverage on backend</li>
+                        <li>✓ Responsive design working on mobile and desktop</li>
+                    </ul>
+                    <p><strong>Team Success:</strong></p>
+                    <ul style="text-align: left;">
+                        <li>✓ All team members contributed equally (tracked via Git)</li>
+                        <li>✓ Complete documentation (README, setup guide, API docs)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 12: Scope Management -->
+            <section data-slide-title="Managing Project Scope">
+                <h2>Managing Project Scope</h2>
+                <div class="diagram">
+                    <h3>MoSCoW Prioritization:</h3>
+                    <ul style="text-align: left;">
+                        <li><strong style="color: #d32f2f;">Must Have:</strong> Core features - project fails without
+                            these</li>
+                        <li><strong style="color: #f57c00;">Should Have:</strong> Important but not critical - include
+                            if time allows</li>
+                        <li><strong style="color: #388e3c;">Could Have:</strong> Nice to have - only if ahead of
+                            schedule</li>
+                        <li><strong style="color: #1976d2;">Won't Have:</strong> Explicitly out of scope - revisit later
+                        </li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <strong>Scope Creep Warning:</strong> Teams often try to add too many features.
+                    Better to build fewer features well than many features poorly.
+                </div>
+                <p><strong>Rule of Thumb:</strong> If you have 10 weeks, plan features for 7 weeks.
+                    Buffer time for integration, testing, and unexpected issues.</p>
+            </section>
+
+            <!-- Slide 13: Design Brief Example -->
+            <section data-slide-title="Design Brief Example">
+                <h2>Design Brief Example</h2>
+                <div class="code-example">
+                    <pre><code class="language-markdown">## Study Space Finder - Design Brief
+
+**Team:** Tom (Frontend), Bob (Backend), Charlie (Database), Dana (Mobile)
+
+**Problem Statement:**
+Students waste 15-30 minutes daily searching for available study 
+spaces across campus. Current systems don't show real-time availability.
+
+**Target Users:**
+University students (18-25) who need quiet study spaces. Mix of 
+laptop users and group study needs.
+
+**Objectives:**
+- Provide real-time study space availability
+- Reduce time spent searching for spaces
+- Enable booking to guarantee space
+
+**Key Features (MoSCoW):**
+MUST: View live availability, filter by location/type, book spaces
+SHOULD: Save favorite spaces, receive booking reminders
+COULD: Social features (study groups), occupancy predictions
+
+**Technical Constraints:**
+- 12-week timeline
+- Team has React/Node.js expertise
+- Must integrate with campus authentication
+- Free hosting (Heroku/Vercel)
+
+**Success Criteria:**
+- Functional web + mobile app deployed
+- Real-time updates working
+- 90% of bookings processed without errors</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 14: Team Decision Making -->
+            <section data-slide-title="Team Decision Making for Briefs">
+                <h2>Team Decision Making for Design Briefs</h2>
+                <h3>Collaborative Process:</h3>
+                <ol>
+                    <li><strong>Individual Preparation:</strong> Each member researches similar solutions</li>
+                    <li><strong>Brainstorm Users:</strong> Create user personas together</li>
+                    <li><strong>Define Problem:</strong> Reach consensus on core problem</li>
+                    <li><strong>List Features:</strong> Everyone contributes feature ideas</li>
+                    <li><strong>Prioritize with MoSCoW:</strong> Vote/discuss to categorize</li>
+                    <li><strong>Assign Writing:</strong> Divide brief sections among team</li>
+                    <li><strong>Review & Refine:</strong> Everyone edits final document</li>
+                </ol>
+                <div class="success-box">
+                    <strong>Best Practice:</strong> Use shared documents (Google Docs, Notion) so everyone
+                    can contribute simultaneously and see changes in real-time.
+                </div>
+            </section>
+
+            <!-- Slide 15: TASK 1 -->
+            <section data-slide-title="Task 1: Team Design Brief Workshop" class="center">
+                <h2>Task 1: Team Design Brief Workshop</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Review Project Idea (5 min):</strong> Revisit your chosen project from Lecture 1
+                        </li>
+                        <li><strong>Define the Problem (10 min):</strong> Write a clear problem statement together
+                            <ul>
+                                <li>What problem does it solve?</li>
+                                <li>Who is affected and how?</li>
+                                <li>Why does it matter?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Identify Target Users (10 min):</strong> Create 1-2 user personas
+                            <ul>
+                                <li>Who are they, what do they need?</li>
+                                <li>What's their context of use?</li>
+                            </ul>
+                        </li>
+                        <li><strong>List Features (10 min):</strong> Brainstorm all possible features</li>
+                        <li><strong>Prioritize with MoSCoW (10 min):</strong> Categorize features as
+                            Must/Should/Could/Won't</li>
+                        <li><strong>Write Brief Sections (15 min):</strong> Divide writing among team:
+                            <ul>
+                                <li>Constraints, Success Criteria, Scope</li>
+                                <li>Compile into one document</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> 1-2 page design brief (submit to Moodle by end of session)</p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break. When you return, bring laptops - you'll be coding!</p>
+                    <p><em>Next: Part B - Building "Hello World" Prototypes</em></p>
+                </div>
+            </section>
+
+            <!-- PART B: FEASIBILITY PROTOTYPE ("HELLO WORLD") -->
+
+            <!-- Slide 17: Part B Introduction -->
+            <section data-slide-title="Part B: Feasibility Validation">
+                <h2>Part B: Early Technical Feasibility</h2>
+                <div class="highlight">
+                    You've defined WHAT you're building. Now let's validate that you CAN build it
+                    with your chosen technology stack.
+                </div>
+                <h3>What is a "Hello World" Prototype?</h3>
+                <ul>
+                    <li>Minimal technical proof-of-concept</li>
+                    <li>Tests your tech stack setup and viability</li>
+                    <li>Validates team can work with chosen tools</li>
+                    <li>Identifies blockers early (before you invest weeks)</li>
+                    <li>NOT a full feature - just the simplest possible working example</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: Why Validate Early? -->
+            <section data-slide-title="Why Validate Early?">
+                <h2>Why Validate Technical Feasibility Early?</h2>
+                <div class="two-column">
+                    <div class="success-box">
+                        <h4>Benefits of Early Validation:</h4>
+                        <ul style="text-align: left;">
+                            <li>Catch technical blockers NOW</li>
+                            <li>Confirm team can use tech</li>
+                            <li>Test development environment setup</li>
+                            <li>Verify integrations are possible</li>
+                            <li>Adjust project scope if needed</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>Risks of Skipping Validation:</h4>
+                        <ul style="text-align: left;">
+                            <li>Discover tech doesn't work (Week 8)</li>
+                            <li>Team struggles with chosen stack</li>
+                            <li>Integration impossible/too complex</li>
+                            <li>No time to pivot</li>
+                            <li>Project failure</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <strong>Industry Reality:</strong> Professional teams always build prototypes/spikes
+                    before committing to architectural decisions.
+                </div>
+            </section>
+
+            <!-- Slide 19: What to Validate -->
+            <section data-slide-title="What to Validate">
+                <h2>What Should Your Prototype Validate?</h2>
+                <h3>Choose ONE of these based on your project:</h3>
+                <ul>
+                    <li><strong>Web App:</strong> Basic server + database connection + API endpoint
+                        <br><em>Example: Node.js server returns data from PostgreSQL via /api/test</em>
+                    </li>
+                    <li><strong>Frontend + Backend:</strong> Frontend fetches data from backend
+                        <br><em>Example: React app displays data from Flask API</em>
+                    </li>
+                    <li><strong>Database Operations:</strong> CRUD operations on a test table
+                        <br><em>Example: Create, read, update, delete a "User" record</em>
+                    </li>
+                    <li><strong>External API Integration:</strong> Call third-party API successfully
+                        <br><em>Example: Fetch weather data from OpenWeather API</em>
+                    </li>
+                    <li><strong>ML Model:</strong> Load a pre-trained model and make prediction
+                        <br><em>Example: Load scikit-learn model, predict on sample data</em>
+                    </li>
+                    <li><strong>Mobile App:</strong> Display "Hello World" on iOS/Android simulator
+                        <br><em>Example: React Native app with button that updates text</em>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 20: Hello World Examples -->
+            <section data-slide-title="Hello World Examples">
+                <h2>"Hello World" Prototype Examples</h2>
+                <div class="example-box">
+                    <h4>E-Commerce Platform (Full-stack)</h4>
+                    <p><strong>Backend:</strong> Node.js/Express server with one route<br>
+                        <strong>Database:</strong> PostgreSQL with "products" table<br>
+                        <strong>Frontend:</strong> React app fetching products from API<br>
+                        <strong>Goal:</strong> Display list of 3 hardcoded products
+                    </p>
+                </div>
+                <div class="example-box">
+                    <h4>ML Image Classifier</h4>
+                    <p><strong>Model:</strong> Load pre-trained ResNet model<br>
+                        <strong>Input:</strong> Test image (cat/dog)<br>
+                        <strong>Output:</strong> Print classification result<br>
+                        <strong>Goal:</strong> Verify TensorFlow setup and model loading works
+                    </p>
+                </div>
+                <div class="example-box">
+                    <h4>IoT Monitoring System</h4>
+                    <p><strong>Hardware:</strong> Raspberry Pi + sensor<br>
+                        <strong>Code:</strong> Read sensor value (temperature)<br>
+                        <strong>Output:</strong> Print value every 5 seconds<br>
+                        <strong>Goal:</strong> Confirm sensor communication works
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 21: Tech Stack Setup -->
+            <section data-slide-title="Tech Stack Setup Checklist">
+                <h2>Tech Stack Setup Checklist</h2>
+                <h3>Essential Setup Steps:</h3>
+                <ol>
+                    <li><strong>Install Core Tools:</strong>
+                        <ul>
+                            <li>Programming language runtime (Python, Node.js, Java, etc.)</li>
+                            <li>Package manager (npm, pip, maven, etc.)</li>
+                            <li>Database (PostgreSQL, MongoDB, MySQL, etc.)</li>
+                        </ul>
+                    </li>
+                    <li><strong>IDE/Editor Setup:</strong>
+                        <ul>
+                            <li>VS Code, PyCharm, IntelliJ, etc.</li>
+                            <li>Extensions/plugins for your languages</li>
+                        </ul>
+                    </li>
+                    <li><strong>Version Control:</strong>
+                        <ul>
+                            <li>Git installed and configured</li>
+                            <li>SSH keys for GitHub (if using)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Test Communication:</strong>
+                        <ul>
+                            <li>Slack/Discord for team chat</li>
+                            <li>Shared project board (Trello/Jira)</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Slide 22: Code Example - Node + PostgreSQL -->
+            <section data-slide-title="Example: Node.js + PostgreSQL Hello World">
+                <h2>Example: Node.js + PostgreSQL "Hello World"</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// server.js - Minimal Node.js + PostgreSQL example
+const express = require('express');
+const { Pool } = require('pg');
+
+const app = express();
+const pool = new Pool({
+  user: 'your_user',
+  host: 'localhost',
+  database: 'test_db',
+  password: 'your_password',
+  port: 5432,
+});
+
+// Test route: fetch data from database
+app.get('/api/test', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ 
+      message: 'Hello World!',
+      timestamp: result.rows[0].now 
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
+});</code></pre>
+                </div>
+                <p class="text-light"><em>This validates: Node.js works, PostgreSQL connection works, API endpoint
+                        responds</em></p>
+            </section>
+
+            <!-- Slide 23: Code Example - React + API -->
+            <section data-slide-title="Example: React + API Integration">
+                <h2>Example: React + API Integration</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// App.js - Minimal React component fetching from API
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/test')
+      .then(response => response.json())
+      .then(data => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <h1>{data?.message || 'No data'}</h1>
+      <p>Server time: {data?.timestamp}</p>
+    </div>
+  );
+}
+
+export default App;</code></pre>
+                </div>
+                <p class="text-light"><em>This validates: React setup works, API calls work, data displays</em></p>
+            </section>
+
+            <!-- Slide 24: Code Example - Python ML -->
+            <section data-slide-title="Example: Python ML Prototype">
+                <h2>Example: Python ML "Hello World"</h2>
+                <div class="code-example">
+                    <pre><code class="language-python"># ml_test.py - Minimal ML model loading and prediction
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+
+# Load sample dataset
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Train simple model
+model = RandomForestClassifier(n_estimators=10, random_state=42)
+model.fit(X, y)
+
+# Make a test prediction
+sample = np.array([[5.1, 3.5, 1.4, 0.2]])  # Sample iris features
+prediction = model.predict(sample)
+probability = model.predict_proba(sample)
+
+print(f"Prediction: {iris.target_names[prediction[0]]}")
+print(f"Confidence: {probability[0][prediction[0]]:.2%}")
+print("✓ Model loading and prediction successful!")</code></pre>
+                </div>
+                <p class="text-light"><em>This validates: Python/libraries installed, model training works, predictions
+                        work</em></p>
+            </section>
+
+            <!-- Slide 25: Common Blockers -->
+            <section data-slide-title="Common Technical Blockers">
+                <h2>Common Technical Blockers & Solutions</h2>
+                <table style="width: 100%; font-size: 0.8em; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #007bff; color: white;">
+                            <th style="border: 1px solid #dee2e6; padding: 8px;">Blocker</th>
+                            <th style="border: 1px solid #dee2e6; padding: 8px;">Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f8f9fa;">
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Database won't start</strong>
+                            </td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Check if already running, restart
+                                service, verify port not in use</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Package installation
+                                    fails</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Update package manager, use virtual
+                                environment, check Python/Node version</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>CORS errors (frontend →
+                                    backend)</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Enable CORS in backend (express: cors
+                                middleware)</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Port already in use</strong>
+                            </td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Kill existing process or use different
+                                port</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>API key/credentials
+                                    issues</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Use environment variables, never commit
+                                credentials to Git</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="info-box">
+                    <strong>Debugging Tip:</strong> Read error messages carefully. Copy-paste into Google/Stack
+                    Overflow.
+                    Most errors have been solved by someone else!
+                </div>
+            </section>
+
+            <!-- Slide 26: Team Coordination for Prototyping -->
+            <section data-slide-title="Team Coordination for Prototyping">
+                <h2>Team Coordination for Prototyping</h2>
+                <h3>Divide & Conquer Approach:</h3>
+                <div class="two-column">
+                    <div>
+                        <h4>Option 1: Parallel Components</h4>
+                        <ul>
+                            <li>Frontend person: Build UI "Hello World"</li>
+                            <li>Backend person: Build API "Hello World"</li>
+                            <li>Database person: Set up schema</li>
+                            <li>Then: Integrate all pieces</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Option 2: Pair Programming</h4>
+                        <ul>
+                            <li>Whole team works together</li>
+                            <li>One person shares screen</li>
+                            <li>Others contribute ideas/debug</li>
+                            <li>Everyone learns the stack</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="success-box">
+                    <strong>Recommended for Today:</strong> Pair programming approach - ensures everyone
+                    understands the setup and can work independently later.
+                </div>
+            </section>
+
+            <!-- Slide 27: Documentation -->
+            <section data-slide-title="Document Your Setup">
+                <h2>Document Your Setup Process</h2>
+                <div class="info-box">
+                    <strong>Critical:</strong> As you set up your prototype, document EVERY step.
+                    This becomes your team's setup guide.
+                </div>
+                <h3>Create a setup.md file with:</h3>
+                <ol>
+                    <li><strong>Prerequisites:</strong> Required software and versions</li>
+                    <li><strong>Installation Steps:</strong> Exact commands to install dependencies</li>
+                    <li><strong>Configuration:</strong> Environment variables, database setup</li>
+                    <li><strong>Running the Project:</strong> Commands to start all services</li>
+                    <li><strong>Testing:</strong> How to verify everything works</li>
+                    <li><strong>Common Issues:</strong> Problems you encountered and solutions</li>
+                </ol>
+                <div class="highlight">
+                    <strong>Why?</strong> New team members need to set up. You'll need to remember in 3 weeks.
+                    Assessors need to run your project.
+                </div>
+            </section>
+
+            <!-- Slide 28: TASK 2 -->
+            <section data-slide-title="Task 2: Build Feasibility Prototype" class="center">
+                <h2>Task 2: Build "Hello World" Prototype</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Setup Environment (15 min):</strong>
+                            <ul>
+                                <li>Install core tools (language runtime, database, packages)</li>
+                                <li>Verify installations with version commands</li>
+                                <li>Document each step in setup.md</li>
+                            </ul>
+                        </li>
+                        <li><strong>Choose Prototype Type (5 min):</strong> Pick ONE to validate:
+                            <ul>
+                                <li>Backend + Database connection</li>
+                                <li>Frontend + Backend API call</li>
+                                <li>External API integration</li>
+                                <li>ML model loading</li>
+                                <li>Mobile app basic display</li>
+                            </ul>
+                        </li>
+                        <li><strong>Build Prototype (20 min):</strong>
+                            <ul>
+                                <li>Write minimal code to test chosen component</li>
+                                <li>One person codes, others help debug</li>
+                                <li>Test that it runs successfully</li>
+                            </ul>
+                        </li>
+                        <li><strong>Document & Share (5 min):</strong>
+                            <ul>
+                                <li>Add "How to run" to setup.md</li>
+                                <li>Take screenshot of working prototype</li>
+                                <li>Commit code to shared repo (or prepare to)</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Working prototype + setup.md (demo to instructor if time)</p>
+                </div>
+            </section>
+
+            <!-- Slide 29: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 2 Summary</h2>
+                <ul>
+                    <li>Design briefs define problems, users, requirements, and constraints</li>
+                    <li>Good problem statements are specific, measurable, and impact-focused</li>
+                    <li>MoSCoW prioritization prevents scope creep</li>
+                    <li>Early technical validation catches blockers before they become critical</li>
+                    <li>"Hello World" prototypes test tech stack feasibility</li>
+                    <li>Documentation during setup saves time later</li>
+                    <li>Teams should work collaboratively on both briefs and prototypes</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Lecture:</h3>
+                    <p>Project Management & Sprint Zero<br>
+                        <em>Agile methodologies, setting up your repository, and planning your first sprint</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 30: Next Steps -->
+            <section data-slide-title="Next Steps">
+                <h2>Before Next Lecture</h2>
+                <ol>
+                    <li><strong>Submit to Moodle:</strong>
+                        <ul>
+                            <li>Team design brief (complete version)</li>
+                            <li>Setup.md file documenting your prototype setup</li>
+                            <li>Screenshot of working "Hello World" prototype</li>
+                        </ul>
+                    </li>
+                    <li><strong>Refine Your Brief:</strong> Incorporate any feedback from today</li>
+                    <li><strong>Expand Prototype:</strong> If time, try adding one more component</li>
+                    <li><strong>Read About Agile:</strong> Review Scrum Guide (link on Moodle)</li>
+                    <li><strong>Think About User Stories:</strong> How would users describe your features?</li>
+                </ol>
+                <div class="success-box">
+                    <strong>Questions?</strong> Post on Moodle forum or email me.
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

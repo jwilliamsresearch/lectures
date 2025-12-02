@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 8: Sprint 3 - Refinement & Quality</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session7.html" title="Previous Session">&lt;</a>
+        <a href="session9.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART A: REFACTORING, CODE QUALITY, TESTING STRATEGY -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 8</div>
+                <h1>Sprint 3: Refinement & Quality</h1>
+                <h2>Part A: Code Quality | Part B: Refactor & Test Sprint</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 2 parts • 2 team tasks</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                <div class="diagram">
+                    <h3>Part A: Refactoring, Code Quality, Testing (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on refactoring, DRY, testing strategies</p>
+                    <p><strong>45 minutes:</strong> Task 1 - Code quality audit</p>
+                    <p><strong>15 minutes:</strong> Break</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part B: Refactor + Test Sprint (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Testing examples and refactoring patterns</p>
+                    <p><strong>45 minutes:</strong> Task 2 - Refactor code and write tests</p>
+                    <p><strong>15 minutes:</strong> Review and test execution</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand code smells and how to identify them</li>
+                    <li>Apply DRY (Don't Repeat Yourself) principle</li>
+                    <li>Refactor code for better readability and maintainability</li>
+                    <li>Write effective unit tests</li>
+                    <li>Understand test-driven development (TDD) concepts</li>
+                    <li>Implement logging for debugging and monitoring</li>
+                    <li>Identify and fix bugs systematically</li>
+                    <li>Improve code quality without breaking functionality</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Why Code Quality Matters -->
+            <section data-slide-title="Why Code Quality Matters">
+                <h2>Why Code Quality Matters</h2>
+                <div class="warning-box">
+                    <strong>Technical Debt:</strong> Poor code today = more work tomorrow.
+                </div>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>Bad Code Costs:</h4>
+                        <ul style="text-align: left;">
+                            <li>Harder to understand</li>
+                            <li>More bugs</li>
+                            <li>Slower to modify</li>
+                            <li>Difficult to test</li>
+                            <li>Team frustration</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>Good Code Benefits:</h4>
+                        <ul style="text-align: left;">
+                            <li>Easy to read</li>
+                            <li>Fewer bugs</li>
+                            <li>Fast to change</li>
+                            <li>Simple to test</li>
+                            <li>Team confidence</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <strong>Sprint 3 Goal:</strong> Pause feature development, improve what you have.
+                </div>
+            </section>
+
+            <!-- Slide 5: Code Smells -->
+            <section data-slide-title="Common Code Smells">
+                <h2>Common Code Smells</h2>
+                <h3>Signs your code needs refactoring:</h3>
+                <ul>
+                    <li><strong>Long Functions:</strong> Function does too much (> 50 lines)</li>
+                    <li><strong>Duplicated Code:</strong> Same logic in multiple places</li>
+                    <li><strong>Magic Numbers:</strong> Unexplained constants (e.g., `if (status === 3)`)</li>
+                    <li><strong>Long Parameter Lists:</strong> Functions with > 3-4 parameters</li>
+                    <li><strong>Nested Conditionals:</strong> if inside if inside if...</li>
+                    <li><strong>God Objects:</strong> Class/file that does everything</li>
+                    <li><strong>Dead Code:</strong> Unused variables, functions, imports</li>
+                    <li><strong>Poor Naming:</strong> Variables like `x`, `temp`, `data`</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: DRY Principle -->
+            <section data-slide-title="DRY - Don't Repeat Yourself">
+                <h2>DRY: Don't Repeat Yourself</h2>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>❌ Repeated Code:</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">// Validation repeated
+if (!user.email || !user.email.includes('@')) {
+  return 'Invalid email';
+}
+
+if (!admin.email || !admin.email.includes('@')) {
+  return 'Invalid email';
+}
+
+if (!customer.email || !customer.email.includes('@')) {
+  return 'Invalid email';
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ DRY Solution:</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">// Extract to reusable function
+function validateEmail(email) {
+  if (!email || !email.includes('@')) {
+    return 'Invalid email';
+  }
+  return null;
+}
+
+// Use everywhere
+const userError = validateEmail(user.email);
+const adminError = validateEmail(admin.email);
+const customerError = validateEmail(customer.email);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Extract Functions -->
+            <section data-slide-title="Refactoring: Extract Functions">
+                <h2>Refactoring: Extract Functions</h2>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>Before: Long Function</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">function processOrder(order) {
+  // Validate
+  if (!order.items || order.items.length === 0) {
+    throw new Error('No items');
+  }
+  
+  // Calculate total
+  let total = 0;
+  for (const item of order.items) {
+    total += item.price * item.quantity;
+  }
+  
+  // Apply discount
+  if (order.coupon) {
+    total = total * 0.9;
+  }
+  
+  // Save to DB
+  db.insert('orders', {
+    ...order,
+    total
+  });
+  
+  // Send email
+  sendEmail(order.email, 'Order confirmed');
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="success-box">
+                        <h4>After: Small Functions</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">function processOrder(order) {
+  validateOrder(order);
+  const total = calculateTotal(order);
+  saveOrder(order, total);
+  notifyCustomer(order);
+}
+
+function validateOrder(order) {
+  if (!order.items?.length) {
+    throw new Error('No items');
+  }
+}
+
+function calculateTotal(order) {
+  let total = order.items.reduce(
+    (sum, item) => sum + item.price * item.quantity, 0
+  );
+  if (order.coupon) total *= 0.9;
+  return total;
+}
+
+function saveOrder(order, total) {
+  db.insert('orders', {...order, total});
+}
+
+function notifyCustomer(order) {
+  sendEmail(order.email, 'Order confirmed');
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Magic Numbers to Constants -->
+            <section data-slide-title="Replace Magic Numbers with Constants">
+                <h2>Replace Magic Numbers with Named Constants</h2>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>❌ Magic Numbers:</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">if (user.age < 18) {
+  return 'Too young';
+}
+
+if (order.status === 3) {
+  shipOrder(order);
+}
+
+setTimeout(checkStatus, 300000);</code></pre>
+                        </div>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Named Constants:</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">const MIN_AGE = 18;
+if (user.age < MIN_AGE) {
+  return 'Too young';
+}
+
+const ORDER_STATUS = {
+  PENDING: 1,
+  PAID: 2,
+  SHIPPED: 3
+};
+
+if (order.status === ORDER_STATUS.SHIPPED) {
+  shipOrder(order);
+}
+
+const FIVE_MINUTES = 5 * 60 * 1000;
+setTimeout(checkStatus, FIVE_MINUTES);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Simplify Conditionals -->
+            <section data-slide-title="Simplify Complex Conditionals">
+                <h2>Simplify Complex Conditionals</h2>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>❌ Nested Mess:</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">if (user) {
+  if (user.isActive) {
+    if (user.hasPermission('admin')) {
+      if (user.emailVerified) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+} else {
+  return false;
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Early Returns:</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">function canAccessAdmin(user) {
+  if (!user) return false;
+  if (!user.isActive) return false;
+  if (!user.hasPermission('admin')) return false;
+  if (!user.emailVerified) return false;
+  
+  return true;
+}
+
+// Even better: single expression
+function canAccessAdmin(user) {
+  return user?.isActive && 
+         user?.hasPermission('admin') && 
+         user?.emailVerified;
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Testing Fundamentals -->
+            <section data-slide-title="Testing Fundamentals">
+                <h2>Software Testing Fundamentals</h2>
+                <h3>Types of Tests:</h3>
+                <ul>
+                    <li><strong>Unit Tests:</strong> Test individual functions/methods in isolation
+                        <br><em>Example: Test validateEmail() function</em>
+                    </li>
+                    <li><strong>Integration Tests:</strong> Test multiple components together
+                        <br><em>Example: Test API endpoint + database</em>
+                    </li>
+                    <li><strong>End-to-End (E2E) Tests:</strong> Test entire user flow
+                        <br><em>Example: Complete registration process in browser</em>
+                    </li>
+                </ul>
+                <div class="diagram">
+                    <h3>Testing Pyramid:</h3>
+                    <pre>
+        ╱╲       Few E2E Tests (slow, expensive)
+       ╱  ╲
+      ╱────╲     Some Integration Tests
+     ╱      ╲
+    ╱────────╲   Many Unit Tests (fast, cheap)
+                    </pre>
+                </div>
+            </section>
+
+            <!-- Slide 11: Writing Unit Tests -->
+            <section data-slide-title="Writing Unit Tests">
+                <h2>Writing Unit Tests with Jest</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Function to test
+function calculateDiscount(price, discountPercent) {
+  if (price < 0 || discountPercent < 0 || discountPercent > 100) {
+    throw new Error('Invalid input');
+  }
+  return price * (1 - discountPercent / 100);
+}
+
+// Unit tests
+describe('calculateDiscount', () => {
+  test('applies 10% discount correctly', () => {
+    expect(calculateDiscount(100, 10)).toBe(90);
+  });
+  
+  test('applies 50% discount correctly', () => {
+    expect(calculateDiscount(200, 50)).toBe(100);
+  });
+  
+  test('handles 0% discount', () => {
+    expect(calculateDiscount(100, 0)).toBe(100);
+  });
+  
+  test('throws error for negative price', () => {
+    expect(() => calculateDiscount(-10, 10)).toThrow('Invalid input');
+  });
+  
+  test('throws error for discount > 100%', () => {
+    expect(() => calculateDiscount(100, 150)).toThrow('Invalid input');
+  });
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 12: Test Coverage -->
+            <section data-slide-title="Test Coverage">
+                <h2>What to Test?</h2>
+                <h3>Test Coverage Guidelines:</h3>
+                <ul>
+                    <li><strong>Happy Path:</strong> Normal, expected usage</li>
+                    <li><strong>Edge Cases:</strong> Boundary values (0, MAX, empty, null)</li>
+                    <li><strong>Error Cases:</strong> Invalid inputs, failures</li>
+                    <li><strong>Business Logic:</strong> Critical calculations, validations</li>
+                </ul>
+                <div class="example-box">
+                    <h4>Example: Testing Login Function</h4>
+                    <ul style="text-align: left;">
+                        <li>✓ Valid email and password (happy path)</li>
+                        <li>✓ Invalid email format</li>
+                        <li>✓ Wrong password</li>
+                        <li>✓ Non-existent user</li>
+                        <li>✓ Empty email or password</li>
+                        <li>✓ Account locked/disabled</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 13: Logging -->
+            <section data-slide-title="Adding Logging">
+                <h2>Implementing Logging</h2>
+                <div class="info-box">
+                    <strong>Logging:</strong> Recording what happens in your application for debugging and monitoring.
+                </div>
+                <h3>Log Levels:</h3>
+                <ul>
+                    <li><strong>ERROR:</strong> Critical failures</li>
+                    <li><strong>WARN:</strong> Potential issues</li>
+                    <li><strong>INFO:</strong> Important events</li>
+                    <li><strong>DEBUG:</strong> Detailed diagnostic info</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Using Winston logger
+const winston = require('winston');
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
+
+// Usage in code
+logger.info('User logged in', { userId: 123, email: 'user@example.com' });
+logger.error('Database connection failed', { error: err.message });
+logger.warn('API rate limit approaching', { remaining: 10 });</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 14: TASK 1 -->
+            <section data-slide-title="Task 1: Code Quality Audit" class="center">
+                <h2>Task 1: Conduct Code Quality Audit</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Identify Code Smells (15 min):</strong>
+                            <ul>
+                                <li>Review your codebase together</li>
+                                <li>Look for: duplicated code, long functions, magic numbers, poor naming</li>
+                                <li>List specific files and line numbers</li>
+                            </ul>
+                        </li>
+                        <li><strong>Assess Test Coverage (10 min):</strong>
+                            <ul>
+                                <li>What functions have tests?</li>
+                                <li>What critical logic is untested?</li>
+                                <li>List functions that need tests</li>
+                            </ul>
+                        </li>
+                        <li><strong>Find Bugs (10 min):</strong>
+                            <ul>
+                                <li>Known bugs from testing</li>
+                                <li>Edge cases not handled</li>
+                                <li>Missing error handling</li>
+                            </ul>
+                        </li>
+                        <li><strong>Prioritize (10 min):</strong>
+                            <ul>
+                                <li>High: Critical bugs, duplicated logic</li>
+                                <li>Medium: Long functions, magic numbers</li>
+                                <li>Low: Naming improvements</li>
+                                <li>Create docs/code-quality-audit.md</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Code quality audit with prioritized improvements</p>
+                </div>
+            </section>
+
+            <!-- Slide 15: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break. Next: Refactoring and testing!</p>
+                    <p><em>Part B: Refactor + Test Sprint</em></p>
+                </div>
+            </section>
+
+            <!-- PART B: REFACTOR + TEST SPRINT -->
+
+            <!-- Slide 16: Part B Introduction -->
+            <section data-slide-title="Part B: Refactor & Test Sprint">
+                <h2>Part B: Refactor Code & Write Tests</h2>
+                <div class="highlight">
+                    Now implement improvements from your audit!
+                </div>
+                <h3>Sprint Goals:</h3>
+                <ul>
+                    <li>Refactor at least 2-3 code smells</li>
+                    <li>Write unit tests for 3-5 critical functions</li>
+                    <li>Fix 1-2 known bugs</li>
+                    <li>Add logging to key operations</li>
+                    <li>Verify nothing breaks (regression testing)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 17: Refactoring Safely -->
+            <section data-slide-title="Refactoring Safely">
+                <h2>How to Refactor Safely</h2>
+                <h3>Golden Rule:</h3>
+                <div class="warning-box">
+                    <strong>Don't change behavior while refactoring!</strong> Refactoring = improving structure
+                    WITHOUT changing what code does.
+                </div>
+                <h3>Safe Refactoring Process:</h3>
+                <ol>
+                    <li><strong>Write tests first</strong> (or verify existing tests pass)</li>
+                    <li><strong>Make small change</strong> (extract function, rename variable)</li>
+                    <li><strong>Run tests</strong> to ensure still passing</li>
+                    <li><strong>Repeat</strong> until code is clean</li>
+                    <li><strong>Commit</strong> after each successful refactor</li>
+                </ol>
+                <div class="success-box">
+                    <strong>Git Tip:</strong> Make separate commits for refactoring vs new features.
+                </div>
+            </section>
+
+            <!-- Slide 18: Test-Driven Development -->
+            <section data-slide-title="Test-Driven Development (TDD)">
+                <h2>Test-Driven Development (TDD)</h2>
+                <div class="info-box">
+                    <strong>TDD:</strong> Write test BEFORE writing code.
+                </div>
+                <div class="diagram">
+                    <h3>TDD cycle (Red-Green-Refactor):</h3>
+                    <ol style="text-align: left;">
+                        <li><strong style="color: #dc3545;">Red:</strong> Write failing test</li>
+                        <li><strong style="color: #28a745;">Green:</strong> Write minimum code to pass</li>
+                        <li><strong style="color: #007bff;">Refactor:</strong> Clean up code</li>
+                        <li>Repeat</li>
+                    </ol>
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// 1. RED: Write test first (fails - function doesn't exist yet)
+test('isPalindrome returns true for "racecar"', () => {
+  expect(isPalindrome('racecar')).toBe(true);
+});
+
+// 2. GREEN: Write minimum code to pass
+function isPalindrome(str) {
+  return str === str.split('').reverse().join('');
+}
+
+// 3. REFACTOR: Improve code
+function isPalindrome(str) {
+  const cleaned = str.toLowerCase().replace(/[^a-z]/g, '');
+  return cleaned === cleaned.split('').reverse().join('');
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 19: Testing API Endpoints -->
+            <section data-slide-title="Testing API Endpoints">
+                <h2>Testing API Endpoints</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Using Supertest with Express
+const request = require('supertest');
+const app = require('./app');
+
+describe('POST /api/users', () => {
+  test('creates user with valid data', async () => {
+    const response = await request(app)
+      .post('/api/users')
+      .send({
+        email: 'test@example.com',
+        name: 'Test User'
+      });
+    
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty('id');
+    expect(response.body.email).toBe('test@example.com');
+  });
+  
+  test('returns 400 for invalid email', async () => {
+    const response = await request(app)
+      .post('/api/users')
+      .send({
+        email: 'invalid-email',
+        name: 'Test User'
+      });
+    
+    expect(response.status).toBe(400);
+    expect(response.body.error).toMatch(/invalid email/i);
+  });
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 20: Mocking in Tests -->
+            <section data-slide-title="Mocking Dependencies">
+                <h2>Mocking Dependencies in Tests</h2>
+                <div class="info-box">
+                    <strong>Mock:</strong> Replace real dependency (DB, API) with fake version for testing.
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Code that calls database
+async function getUser(id) {
+  const user = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+  return user;
+}
+
+// Test with mocked database
+jest.mock('./db');
+const db = require('./db');
+
+test('getUser returns user from database', async () => {
+  // Mock the query function
+  db.query.mockResolvedValue({
+    id: 1,
+    name: 'Tom',
+    email: 'Tom@example.com'
+  });
+  
+  const user = await getUser(1);
+  
+  expect(user.name).toBe('Tom');
+  expect(db.query).toHaveBeenCalledWith(
+    'SELECT * FROM users WHERE id = $1',
+    [1]
+  );
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 21: Debugging Techniques -->
+            <section data-slide-title="Debugging Techniques">
+                <h2>Debugging Techniques</h2>
+                <h3>Systematic Debugging:</h3>
+                <ol>
+                    <li><strong>Reproduce:</strong> Can you make bug happen consistently?</li>
+                    <li><strong>Isolate:</strong> Where exactly does it fail?</li>
+                    <li><strong>Hypothesize:</strong> What do you think causes it?</li>
+                    <li><strong>Test:</strong> Add logging, use debugger, check values</li>
+                    <li><strong>Fix:</strong> Make smallest change that fixes it</li>
+                    <li><strong>Verify:</strong> Test fix doesn't break anything else</li>
+                </ol>
+                <div class="example-box">
+                    <h4>Debugging Tools:</h4>
+                    <ul style="text-align: left;">
+                        <li><strong>console.log():</strong> Quick inspection</li>
+                        <li><strong>debugger;</strong> Break point in browser DevTools</li>
+                        <li><strong>VSCode debugger:</strong> Step through code</li>
+                        <li><strong>Network tab:</strong> Inspect API calls</li>
+                        <li><strong>Error stack traces:</strong> Follow the path</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 22: Running Tests -->
+            <section data-slide-title="Running Tests in CI">
+                <h2>Running Tests Automatically (CI)</h2>
+                <div class="code-example">
+                    <pre><code class="language-yaml"># .github/workflows/test.yml - GitHub Actions
+name: Run Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Check test coverage
+        run: npm run test:coverage</code></pre>
+                </div>
+                <p><strong>Benefit:</strong> Tests run automatically on every push/PR!</p>
+            </section>
+
+            <!-- Slide 23: Code Review Checklist -->
+            <section data-slide-title="Post-Refactor Review">
+                <h2>Post-Refactor Code Review Checklist</h2>
+                <h3>Before merging refactors:</h3>
+                <ul>
+                    <li>✓ All existing tests still pass</li>
+                    <li>✓ New tests added where needed</li>
+                    <li>✓ Code is more readable than before</li>
+                    <li>✓ No functionality changed (only structure)</li>
+                    <li>✓ No new bugs introduced</li>
+                    <li>✓ Commit messages explain WHY refactored</li>
+                    <li>✓ Team reviewed changes</li>
+                </ul>
+                <div class="success-box">
+                    <strong>PR Description:</strong> Explain what you refactored and why.
+                    Include before/after code snippets.
+                </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 -->
+            <section data-slide-title="Task 2: Refactor & Test" class="center">
+                <h2>Task 2: Refactor Code & Write Tests</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Select Items from Audit (5 min):</strong>
+                            <ul>
+                                <li>Choose 2-3 refactors and 3-5 functions to test</li>
+                                <li>Divide among team members</li>
+                            </ul>
+                        </li>
+                        <li><strong>Write Tests First (15 min):</strong>
+                            <ul>
+                                <li>Write unit tests for functions you'll refactor</li>
+                                <li>Ensure tests pass with current code</li>
+                            </ul>
+                        </li>
+                        <li><strong>Refactor (20 min):</strong>
+                            <ul>
+                                <li>Extract functions, remove duplication, add constants</li>
+                                <li>Run tests after each change</li>
+                                <li>Commit after successful refactor</li>
+                            </ul>
+                        </li>
+                        <li><strong>Add Logging (5 min):</strong>
+                            <ul>
+                                <li>Add logging to critical operations</li>
+                                <li>Log errors with context</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Refactored code with tests, all tests passing</p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 8 Summary</h2>
+                <ul>
+                    <li>Code quality prevents technical debt and improves maintainability</li>
+                    <li>Code smells indicate areas needing refactoring</li>
+                    <li>DRY principle eliminates code duplication</li>
+                    <li>Extract functions to break down complex logic</li>
+                    <li>Replace magic numbers with named constants</li>
+                    <li>Unit tests verify individual functions work correctly</li>
+                    <li>Test-Driven Development writes tests before code</li>
+                    <li>Logging helps debug issues and monitor applications</li>
+                    <li>Refactor safely by running tests frequently</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Lecture:</h3>
+                    <p>Sprint 3 Review & Documentation Sprint<br>
+                        <em>Creating technical documentation, architecture diagrams, and API documentation</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 26: Next Steps -->
+            <section data-slide-title="Next Steps">
+                <h2>Before Next Lecture</h2>
+                <ol>
+                    <li><strong>Complete Refactoring:</strong>
+                        <ul>
+                            <li>Finish items from audit</li>
+                            <li>Ensure all tests pass</li>
+                            <li>Create PRs for refactors</li>
+                        </ul>
+                    </li>
+                    <li><strong>Fix Bugs:</strong>
+                        <ul>
+                            <li>Address known bugs from audit</li>
+                            <li>Add tests to prevent regression</li>
+                        </ul>
+                    </li>
+                    <li><strong>Test Coverage:</strong>
+                        <ul>
+                            <li>Run coverage report: npm test -- --coverage</li>
+                            <li>Aim for > 70% coverage on critical code</li>
+                        </ul>
+                    </li>
+                    <li><strong>Submit to Moodle:</strong>
+                        <ul>
+                            <li>Code quality audit document</li>
+                            <li>Test coverage report screenshot</li>
+                            <li>List of refactorings completed</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

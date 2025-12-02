@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 12: Final Presentation Sprint</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session11.html" title="Previous Session">&lt;</a>
+        <a href="../index.html" title="Module Home">M</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART A: ASSESSMENT CRITERIA & FINAL PREPARATION -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 12</div>
+                <h1>Final Presentation Sprint</h1>
+                <h2>Part A: Assessment Criteria | Part B: Practice Presentations</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 2 parts • Final practice!</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline - Final Session!</h2>
+                <div class="diagram">
+                    <h3>Part A: Assessment Criteria & Final Preparation (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Presentation assessment criteria breakdown</p>
+                    <p><strong>45 minutes:</strong> Task 1 - Final presentation polish</p>
+                    <p><strong>15 minutes:</strong> Break</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part B: Full Run-Through Demos (90 minutes)</h3>
+                    <p><strong>60 minutes:</strong> Each team presents (15 min presentation + feedback)</p>
+                    <p><strong>20 minutes:</strong> Task 2 - Final technical fixes</p>
+                    <p><strong>10 minutes:</strong> Closing remarks and good luck!</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand how presentations are assessed</li>
+                    <li>Deliver polished technical presentations</li>
+                    <li>Demonstrate working software effectively</li>
+                    <li>Answer technical questions confidently</li>
+                    <li>Handle presentation nerves and mistakes gracefully</li>
+                    <li>Give and receive constructive feedback</li>
+                    <li>Complete final system validation</li>
+                    <li>Celebrate team achievements!</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Assessment Overview -->
+            <section data-slide-title="Assessment Overview">
+                <h2>How You'll Be Assessed</h2>
+                <div class="info-box">
+                    <strong>Total:</strong> 100 points (Presentation: 40 points, Project: 60 points)
+                </div>
+                <h3>Assessment Components:</h3>
+                <table style="width: 100%; font-size: 0.75em; border-collapse: collapse;">
+                    <tr style="background: #007bff; color: white;">
+                        <th style="border: 1px solid #dee2e6; padding: 8px;">Component</th>
+                        <th style="border: 1px solid #dee2e6; padding: 8px;">Points</th>
+                        <th style="border: 1px solid #dee2e6; padding: 8px;">What's Assessed</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Presentation</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">40</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Clarity, structure, demo, Q&A</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Technical Implementation</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">30</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Code quality, architecture, features</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Documentation</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">15</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">README, architecture docs, code comments
+                        </td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Team Process</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">10</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Git usage, collaboration, agile practices
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Professional Standards</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">5</td>
+                        <td style="border: 1px solid #dee2e6; padding: 8px;">Ethics, accessibility, security</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Slide 5: Presentation Rubric -->
+            <section data-slide-title="Presentation Rubric (40 pts)">
+                <h2>Presentation Assessment Rubric</h2>
+                <table style="width: 100%; font-size: 0.7em; border-collapse: collapse;">
+                    <tr style="background: #007bff; color: white;">
+                        <th style="border: 1px solid #dee2e6; padding: 6px;">Criterion</th>
+                        <th style="border: 1px solid #dee2e6; padding: 6px;">Points</th>
+                        <th style="border: 1px solid #dee2e6; padding: 6px;">What We're Looking For</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Structure & Clarity</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">10</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Clear intro, logical flow, effective
+                            conclusion</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Technical Explanation</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">10</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Architecture, tech stack, decisions
+                            well-explained</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Demo Quality</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">10</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Working demo, smooth execution, shows value
+                        </td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Delivery & Teamwork</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">5</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Professional, confident, equal
+                            participation</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Q&A Response</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">5</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Thoughtful answers, technical understanding
+                        </td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Slide 6: Technical Implementation Rubric -->
+            <section data-slide-title="Technical Implementation (30 pts)">
+                <h2>Technical Implementation Assessment</h2>
+                <table style="width: 100%; font-size: 0.7em; border-collapse: collapse;">
+                    <tr style="background: #007bff; color: white;">
+                        <th style="border: 1px solid #dee2e6; padding: 6px;">Criterion</th>
+                        <th style="border: 1px solid #dee2e6; padding: 6px;">Points</th>
+                        <th style="border: 1px solid #dee2e6; padding: 6px;">What We're Looking For</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Functionality</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">10</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Core features work, meets requirements</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Code Quality</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">8</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Clean, readable, well-structured, DRY</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Architecture</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">6</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Appropriate patterns, separation of
+                            concerns</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Testing</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">4</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Tests written, critical paths covered</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;"><strong>Error Handling</strong></td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">2</td>
+                        <td style="border: 1px solid #dee2e6; padding: 6px;">Graceful failures, user-friendly errors
+                        </td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Slide 7: Documentation & Process -->
+            <section data-slide-title="Documentation & Process (25 pts)">
+                <h2>Documentation & Team Process Assessment</h2>
+                <h3>Documentation (15 points):</h3>
+                <ul>
+                    <li><strong>README (6 pts):</strong> Clear setup instructions, features listed, tech stack explained
+                    </li>
+                    <li><strong>Architecture Docs (4 pts):</strong> System diagram, component descriptions</li>
+                    <li><strong>API Docs (3 pts):</strong> Endpoints documented with examples</li>
+                    <li><strong>Code Comments (2 pts):</strong> Complex logic explained</li>
+                </ul>
+                <h3>Team Process (10 points):</h3>
+                <ul>
+                    <li><strong>Git Usage (5 pts):</strong> Meaningful commits, branches, PRs, code reviews</li>
+                    <li><strong>Agile Practices (3 pts):</strong> Sprint planning, retrospectives documented</li>
+                    <li><strong>Collaboration (2 pts):</strong> Equal contributions, team coordination</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Professional Standards -->
+            <section data-slide-title="Professional Standards (5 pts)">
+                <h2>Professional & Ethical Standards</h2>
+                <h3>Assessed Elements (5 points):</h3>
+                <ul>
+                    <li><strong>Security (2 pts):</strong>
+                        <ul>
+                            <li>Passwords hashed, not plaintext</li>
+                            <li>Input validation (SQL injection prevention)</li>
+                            <li>No secrets in Git repository</li>
+                        </ul>
+                    </li>
+                    <li><strong>Accessibility (2 pts):</strong>
+                        <ul>
+                            <li>Alt text for images</li>
+                            <li>Keyboard navigation works</li>
+                            <li>Sufficient color contrast</li>
+                        </ul>
+                    </li>
+                    <li><strong>GDPR Compliance (1 pt):</strong>
+                        <ul>
+                            <li>Clear privacy policy</li>
+                            <li>User data deletion capability</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Common Mistakes to Avoid -->
+            <section data-slide-title="Common Mistakes to Avoid">
+                <h2>Common Presentation Mistakes</h2>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>❌ Avoid:</h4>
+                        <ul style="text-align: left; font-size: 0.85em;">
+                            <li>Reading slides word-for-word</li>
+                            <li>Going over time limit</li>
+                            <li>Too much technical jargon</li>
+                            <li>Code walkthrough instead of demo</li>
+                            <li>Unprepared for questions</li>
+                            <li>One person dominates</li>
+                            <li>Apologizing excessively</li>
+                            <li>"This doesn't work but..."</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Do:</h4>
+                        <ul style="text-align: left; font-size: 0.85em;">
+                            <li>Speak naturally, make eye contact</li>
+                            <li>Stay within 15 minutes</li>
+                            <li>Balance technical & accessible</li>
+                            <li>Show working features</li>
+                            <li>Anticipate & prepare answers</li>
+                            <li>Everyone presents equally</li>
+                            <li>Focus on achievements</li>
+                            <li>Show what DOES work</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Handling Nerves -->
+            <section data-slide-title="Handling Presentation Nerves">
+                <h2>Managing Presentation Nerves</h2>
+                <div class="info-box">
+                    <strong>Normal:</strong> Everyone gets nervous! Even experienced presenters.
+                </div>
+                <h3>Strategies:</h3>
+                <ul>
+                    <li><strong>Practice, Practice, Practice:</strong> Confidence comes from preparation</li>
+                    <li><strong>Arrive Early:</strong> Test equipment, get comfortable in space</li>
+                    <li><strong>Breathe:</strong> Take deep breaths before starting</li>
+                    <li><strong>Start Strong:</strong> Memorize first 2 minutes cold</li>
+                    <li><strong>Focus on Content:</strong> You know your project better than anyone</li>
+                    <li><strong>Remember:</strong> Audience wants you to succeed!</li>
+                </ul>
+                <div class="success-box">
+                    <strong>If You Mess Up:</strong> Pause, breathe, continue. Don't dwell on mistakes!
+                </div>
+            </section>
+
+            <!-- Slide 11: Pre-Presentation Checklist -->
+            <section data-slide-title="Pre-Presentation Checklist">
+                <h2>Final Pre-Presentation Checklist</h2>
+                <h3>Day Before:</h3>
+                <ul>
+                    <li>✓ Full team run-through with timer</li>
+                    <li>✓ Demo tested 3+ times successfully</li>
+                    <li>✓ Slides finalized (no last-minute changes)</li>
+                    <li>✓ Backup screenshots/video ready</li>
+                    <li>✓ Q&A preparation reviewed</li>
+                    <li>✓ Everyone knows their part</li>
+                </ul>
+                <h3>Day Of:</h3>
+                <ul>
+                    <li>✓ Test demo on presentation computer</li>
+                    <li>✓ Slides load correctly</li>
+                    <li>✓ Internet connection works (if needed)</li>
+                    <li>✓ Water bottles available</li>
+                    <li>✓ Team ready 10 minutes early</li>
+                </ul>
+            </section>
+
+            <!-- Slide 12: TASK 1 -->
+            <section data-slide-title="Task 1: Final Polish" class="center">
+                <h2>Task 1: Final Presentation Polish</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Review Rubric (10 min):</strong>
+                            <ul>
+                                <li>Check presentation against assessment criteria</li>
+                                <li>Identify weak areas to strengthen</li>
+                            </ul>
+                        </li>
+                        <li><strong>Refine Presentation (20 min):</strong>
+                            <ul>
+                                <li>Improve weak slides</li>
+                                <li>Add missing elements (technical explanation, challenges)</li>
+                                <li>Ensure equal participation clear</li>
+                            </ul>
+                        </li>
+                        <li><strong>Test Demo ONE MORE TIME (10 min):</strong>
+                            <ul>
+                                <li>Run through demo script</li>
+                                <li>Fix any last issues</li>
+                                <li>Verify backup ready</li>
+                            </ul>
+                        </li>
+                        <li><strong>Prepare Q&A (5 min):</strong>
+                            <ul>
+                                <li>Review likely questions</li>
+                                <li>Ensure everyone can answer about their part</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Presentation ready for final practice run</p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break. Next: Practice presentations!</p>
+                    <p><em>Part B: Full Team Presentations</em></p>
+                </div>
+            </section>
+
+            <!-- PART B: FULL RUN-THROUGH DEMO -->
+
+            <!-- Slide 14: Part B Introduction -->
+            <section data-slide-title="Part B: Practice Presentations">
+                <h2>Part B: Full Run-Through Presentations</h2>
+                <div class="highlight">
+                    This is it! Final practice before the real thing.
+                </div>
+                <h3>Format:</h3>
+                <ul>
+                    <li>Each team presents for 15 minutes</li>
+                    <li>5 minutes of Q&A from class</li>
+                    <li>5 minutes of constructive feedback</li>
+                    <li>Treat this like the real presentation!</li>
+                </ul>
+                <div class="success-box">
+                    <strong>Purpose:</strong> Get comfortable, receive feedback, identify final issues.
+                </div>
+            </section>
+
+            <!-- Slide 15: Giving Constructive Feedback -->
+            <section data-slide-title="Giving Good Feedback">
+                <h2>Giving Constructive Feedback</h2>
+                <h3>Feedback Structure:</h3>
+                <div class="success-box">
+                    <h4>✓ Effective Feedback:</h4>
+                    <ol style="text-align: left;">
+                        <li><strong>Specific:</strong> "The architecture diagram on slide 5 was really clear"</li>
+                        <li><strong>Actionable:</strong> "Consider adding a slide about error handling"</li>
+                        <li><strong>Balanced:</strong> Positives + Areas for improvement</li>
+                    </ol>
+                </div>
+                <div class="warning-box">
+                    <h4>❌ Avoid:</h4>
+                    <ul style="text-align: left;">
+                        <li>Vague: "It was good" or "I didn't like it"</li>
+                        <li>Personal: "You talked too fast" → "The pacing was quick in the demo section"</li>
+                        <li>Only negative: Always include positives!</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 16: Receiving Feedback -->
+            <section data-slide-title="Receiving Feedback">
+                <h2>Receiving Feedback Gracefully</h2>
+                <h3>How to Respond:</h3>
+                <ul>
+                    <li>✓ <strong>Listen:</strong> Don't interrupt or defend</li>
+                    <li>✓ <strong>Note It:</strong> Write down actionable points</li>
+                    <li>✓ <strong>Thank Them:</strong> Appreciate the feedback</li>
+                    <li>✓ <strong>Ask Questions:</strong> "Can you clarify...?"</li>
+                    <li>✓ <strong>Reflect:</strong> Is this feedback useful?</li>
+                </ul>
+                <div class="info-box">
+                    <strong>Remember:</strong> Feedback is gift! Use it to improve.
+                </div>
+            </section>
+
+            <!-- Slide 17: TASK 2 -->
+            <section data-slide-title="Task 2: Practice & Fix" class="center">
+                <h2>Task 2: Practice Presentations & Final Fixes</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li><strong>Team Presentations (60 min):</strong>
+                            <ul>
+                                <li>Each team presents (15 min)</li>
+                                <li>Class asks questions (5 min)</li>
+                                <li>Feedback from peers and instructor (5 min)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Incorporate Feedback (10 min):</strong>
+                            <ul>
+                                <li>Quick fixes to presentation based on feedback</li>
+                                <li>Only critical changes - don't overthink!</li>
+                            </ul>
+                        </li>
+                        <li><strong>Final Technical Check (10 min):</strong>
+                            <ul>
+                                <li>Any bugs found during practice?</li>
+                                <li>Quick fixes only</li>
+                                <li>Test demo once more</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 80 minutes total</p>
+                    <p><strong>Deliverable:</strong> Polished presentation ready for assessment</p>
+                </div>
+            </section>
+
+            <!-- Slide 18: Final Reminders -->
+            <section data-slide-title="Final Reminders">
+                <h2>Final Reminders for Presentation Day</h2>
+                <h3>Technical:</h3>
+                <ul>
+                    <li>✓ Laptop fully charged + bring charger</li>
+                    <li>✓ Demo tested on presentation computer</li>
+                    <li>✓ Backup plan ready (screenshots/video)</li>
+                    <li>✓ Slides accessible (USB drive + cloud)</li>
+                </ul>
+                <h3>Team:</h3>
+                <ul>
+                    <li>✓ Everyone knows their speaking parts</li>
+                    <li>✓ Smooth transitions practiced</li>
+                    <li>✓ Timekeeper assigned</li>
+                </ul>
+                <h3>Mindset:</h3>
+                <ul>
+                    <li>✓ You've built something amazing - be proud!</li>
+                    <li>✓ Confidence comes from preparation (which you have!)</li>
+                    <li>✓ You've got this! 🎉</li>
+                </ul>
+            </section>
+
+            <!-- Slide 19: Celebrating Your Work -->
+            <section data-slide-title="Celebrate Your Achievement">
+                <h2>Celebrating Your Achievement</h2>
+                <div class="success-box">
+                    <h3>What You've Accomplished:</h3>
+                    <ul>
+                        <li>✓ Worked in a professional agile team</li>
+                        <li>✓ Built a real software system from scratch</li>
+                        <li>✓ Learned industry-standard tools and practices</li>
+                        <li>✓ Collaborated through challenges</li>
+                        <li>✓ Created documentation and presentations</li>
+                        <li>✓ Applied professional and ethical standards</li>
+                    </ul>
+                </div>
+                <div class="highlight">
+                    <h3>This is Portfolio-Worthy Work!</h3>
+                    <p>Add to LinkedIn, GitHub, show to employers.</p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Beyond This Module -->
+            <section data-slide-title="Beyond This Module">
+                <h2>Taking This Forward</h2>
+                <h3>Next Steps:</h3>
+                <ul>
+                    <li><strong>Portfolio:</strong> Add project to portfolio site, polish README</li>
+                    <li><strong>GitHub:</strong> Pin repository, ensure public and well-documented</li>
+                    <li><strong>LinkedIn:</strong> Post about your project, tag teammates</li>
+                    <li><strong>Continue Building:</strong> Add those "Won't Have" features!</li>
+                    <li><strong>Deploy Permanently:</strong> Keep it live to show employers</li>
+                </ul>
+                <h3>Skills You Can Highlight:</h3>
+                <ul>
+                    <li>Agile/Scrum methodology</li>
+                    <li>Full-stack development (your tech stack)</li>
+                    <li>Team collaboration & Git workflows</li>
+                    <li>Technical communication</li>
+                </ul>
+            </section>
+
+            <!-- Slide 21: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 12 Summary</h2>
+                <ul>
+                    <li>Presentations assessed on structure, technical explanation, demo, and Q&A</li>
+                    <li>Technical implementation judged on functionality, code quality, architecture</li>
+                    <li>Documentation and team process are important components</li>
+                    <li>Professional standards (security, accessibility, GDPR) matter</li>
+                    <li>Practice reduces nerves and builds confidence</li>
+                    <li>Constructive feedback helps teams improve</li>
+                    <li>You've accomplished something significant!</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Good Luck on Your Presentations!</h3>
+                    <p>You've prepared well. Trust your work and your team.</p>
+                </div>
+            </section>
+
+            <!-- Slide 22: Thank You -->
+            <section data-slide-title="Thank You & Good Luck" class="center">
+                <h2>Thank You & Good Luck!</h2>
+                <div class="success-box">
+                    <h3>To All Teams:</h3>
+                    <p>It's been a pleasure watching your projects develop from ideas to working systems.</p>
+                    <p>You've demonstrated:</p>
+                    <ul style="display: inline-block; text-align: left; margin: 20px auto;">
+                        <li>Technical skill</li>
+                        <li>Team collaboration</li>
+                        <li>Problem-solving ability</li>
+                        <li>Professional growth</li>
+                    </ul>
+                    <p><strong>Well done, and best of luck with presentations!</strong></p>
+                </div>
+                <div class="highlight">
+                    <p><strong>Questions?</strong> Office hours available, or email jwilliams@staff.newman.ac.uk</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

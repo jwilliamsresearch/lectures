@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 9: Sprint 3 Review & Documentation</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session8.html" title="Previous Session">&lt;</a>
+        <a href="../index.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART A: INTERNAL PROJECT EVALUATION & DOCUMENTATION STANDARDS -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 9</div>
+                <h1>Sprint 3 Review & Documentation</h1>
+                <h2>Part A: Documentation Standards | Part B: Documentation Sprint</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 2 parts • 2 team tasks</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                <div class="diagram">
+                    <h3>Part A: Documentation Standards & Evaluation (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on documentation types and best practices</p>
+                    <p><strong>45 minutes:</strong> Task 1 - Plan documentation needs</p>
+                    <p><strong>15 minutes:</strong> Break</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part B: Documentation Sprint (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Examples and templates</p>
+                    <p><strong>45 minutes:</strong> Task 2 - Create project documentation</p>
+                    <p><strong>15 minutes:</strong> Review and feedback</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand different types of technical documentation</li>
+                    <li>Write effective README files</li>
+                    <li>Create architecture diagrams that communicate system design</li>
+                    <li>Document APIs with clear examples</li>
+                    <li>Maintain decision logs (ADRs - Architecture Decision Records)</li>
+                    <li>Write setup and deployment instructions</li>
+                    <li>Document code with meaningful comments</li>
+                    <li>Evaluate project progress and quality</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Why Documentation Matters -->
+            <section data-slide-title="Why Documentation Matters">
+                <h2>Why Documentation Matters</h2>
+                <div class="warning-box">
+                    <strong>Reality:</strong> Code without documentation is hard to understand, maintain, and use.
+                </div>
+                <h3>Documentation Helps:</h3>
+                <ul>
+                    <li><strong>New Team Members:</strong> Get up to speed quickly</li>
+                    <li><strong>Future You:</strong> Remember why you made decisions</li>
+                    <li><strong>Stakeholders:</strong> Understand what was built</li>
+                    <li><strong>Users:</strong> Know how to use the system</li>
+                    <li><strong>Maintenance:</strong> Easier to fix and extend</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Professional Standard:</strong> Industry projects REQUIRE good documentation.
+                </div>
+            </section>
+
+            <!-- Slide 5: Types of Documentation -->
+            <section data-slide-title="Types of Documentation">
+                <h2>Types of Documentation</h2>
+                <h3>1. User Documentation:</h3>
+                <ul>
+                    <li>README - Project overview and quick start</li>
+                    <li>User guides - How to use features</li>
+                    <li>FAQ - Common questions</li>
+                </ul>
+                <h3>2. Developer Documentation:</h3>
+                <ul>
+                    <li>Setup instructions - How to run locally</li>
+                    <li>Architecture docs - System design</li>
+                    <li>API documentation - Endpoint specs</li>
+                    <li>Contributing guidelines - How to contribute</li>
+                </ul>
+                <h3>3. Project Documentation:</h3>
+                <ul>
+                    <li>Decision logs (ADRs) - Why we chose X</li>
+                    <li>Meeting notes - Team discussions</li>
+                    <li>Retrospectives - Sprint learnings</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: README Best Practices -->
+            <section data-slide-title="README Best Practices">
+                <h2>Writing an Excellent README</h2>
+                <div class="info-box">
+                    <strong>README.md:</strong> The front door to your project. First thing people see!
+                </div>
+                <h3>Essential Sections:</h3>
+                <ol>
+                    <li><strong>Project Title & Description:</strong> What it does (1-2 sentences)</li>
+                    <li><strong>Screenshot/Demo:</strong> Show don't just tell</li>
+                    <li><strong>Features:</strong> Bullet list of main capabilities</li>
+                    <li><strong>Tech Stack:</strong> Languages, frameworks, tools</li>
+                    <li><strong>Getting Started:</strong> Prerequisites and installation</li>
+                    <li><strong>Usage:</strong> How to use/run the app</li>
+                    <li><strong>Team:</strong> Who built it</li>
+                    <li><strong>License:</strong> MIT, Apache, etc.</li>
+                </ol>
+            </section>
+
+            <!-- Slide 7: README Example -->
+            <section data-slide-title="README Example">
+                <h2>README Example</h2>
+                <div class="code-example">
+                    <pre><code class="language-markdown"># StudySpace Finder
+
+A web application that helps students find and book available study spaces across campus in real-time.
+
+![Screenshot of app](docs/screenshot.png)
+
+## Features
+
+- 🔍 Search study spaces by building and capacity
+- 📅 Real-time availability updates
+- 🔐 Secure user authentication
+- 📊 Admin dashboard for space management
+
+## Tech Stack
+
+**Frontend:** React 18, TypeScript, Material-UI  
+**Backend:** Node.js, Express, PostgreSQL  
+**Hosting:** Heroku
+
+## Getting Started
+
+### Prerequisites
+- Node.js 16+
+- PostgreSQL 14+
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/your-team/studyspace-finder.git
+cd studyspace-finder
+
+# Install dependencies
+npm install
+
+# Setup database
+createdb studyspace_db
+npm run migrate
+
+# Start development server
+npm run dev
+```
+
+Visit http://localhost:3000
+
+## Team
+
+- Tom Johnson - Frontend Lead
+- Bob Smith - Backend Lead
+- Charlie Davis - Database & DevOps
+
+## License
+
+MIT</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 8: Architecture Documentation -->
+            <section data-slide-title="Architecture Documentation">
+                <h2>Architecture Documentation</h2>
+                <div class="info-box">
+                    <strong>Purpose:</strong> Explain system structure, components, and how they interact.
+                </div>
+                <h3>Include:</h3>
+                <ul>
+                    <li><strong>High-Level Diagram:</strong> Visual of system components</li>
+                    <li><strong>Component Descriptions:</strong> What each part does</li>
+                    <li><strong>Data Flow:</strong> How data moves through system</li>
+                    <li><strong>Technology Choices:</strong> Why you chose each technology</li>
+                    <li><strong>External Dependencies:</strong> APIs, libraries, services</li>
+                </ul>
+                <div class="example-box">
+                    <h4>Create: docs/architecture.md</h4>
+                    <p>Explain your system design with diagrams and text.</p>
+                </div>
+            </section>
+
+            <!-- Slide 9: Architecture Diagram Example -->
+            <section data-slide-title="Architecture Diagram">
+                <h2>Example Architecture Diagram</h2>
+                <div class="code-example">
+                    <pre><code class="language-markdown"># System Architecture
+
+## High-Level Overview
+
+```
+┌──────────────┐         ┌──────────────┐         ┌──────────────┐
+│              │  HTTPS  │              │   SQL   │              │
+│   React      │ ◄─────► │   Express    │ ◄─────► │  PostgreSQL  │
+│   Frontend   │         │   Backend    │         │   Database   │
+│              │         │              │         │              │
+└──────────────┘         └──────┬───────┘         └──────────────┘
+                                 │
+                                 │ HTTPS
+                                 ▼
+                        ┌──────────────┐
+                        │  Google Maps │
+                        │     API      │
+                        └──────────────┘
+```
+
+## Components
+
+### Frontend (React)
+- User interface for searching and booking spaces
+- Built with Material-UI components
+- State management with React Context
+
+### Backend (Express)
+- REST API endpoints
+- User authentication with JWT
+- Business logic for bookings
+
+### Database (PostgreSQL)
+- Stores users, spaces, bookings
+- Normalized schema
+- Indexes on frequently queried fields</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 10: API Documentation -->
+            <section data-slide-title="API Documentation">
+                <h2>API Documentation</h2>
+                <div class="info-box">
+                    <strong>API Docs:</strong> Specify every endpoint, parameters, responses, and examples.
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-markdown">## GET /api/spaces
+
+Get list of all study spaces.
+
+**Query Parameters:**
+- `building` (string, optional) - Filter by building name
+- `capacity` (number, optional) - Minimum capacity
+
+**Response:** 200 OK
+```json
+{
+  "spaces": [
+    {
+      "id": 1,
+      "name": "Room 204",
+      "building": "Library",
+      "capacity": 6,
+      "available": true
+    }
+  ]
+}
+```
+
+**Example Request:**
+```bash
+curl https://api.example.com/spaces?building=Library&capacity=4
+```
+
+**Errors:**
+- `400` - Invalid parameters
+- `500` - Server error</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 11: Decision Logs (ADRs) -->
+            <section data-slide-title="Architecture Decision Records">
+                <h2>Architecture Decision Records (ADRs)</h2>
+                <div class="info-box">
+                    <strong>ADR:</strong> Document important decisions with context and rationale.
+                </div>
+                <h3>When to Write an ADR:</h3>
+                <ul>
+                    <li>Choosing tech stack (React vs Vue)</li>
+                    <li>Architectural patterns (REST vs GraphQL)</li>
+                    <li>Database choices (SQL vs NoSQL)</li>
+                    <li>Third-party services (Stripe vs PayPal)</li>
+                </ul>
+                <div class="example-box">
+                    <h4>ADR Template:</h4>
+                    <ul style="text-align: left;">
+                        <li><strong>Title:</strong> "Use PostgreSQL for database"</li>
+                        <li><strong>Status:</strong> Accepted</li>
+                        <li><strong>Context:</strong> We need to store relational data...</li>
+                        <li><strong>Decision:</strong> We will use PostgreSQL</li>
+                        <li><strong>Consequences:</strong> Pros: ACID compliance. Cons: More setup than Firebase</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 12: ADR Example -->
+            <section data-slide-title="ADR Example">
+                <h2>Example ADR</h2>
+                <div class="code-example">
+                    <pre><code class="language-markdown"># ADR 001: Use PostgreSQL for Database
+
+**Date:** 2024-10-15  
+**Status:** Accepted
+
+## Context
+
+Our application needs to store user accounts, study spaces, and bookings. 
+These entities have clear relationships (users → bookings → spaces), and 
+we need strong data consistency to prevent double-booking.
+
+## Decision
+
+We will use PostgreSQL as our database.
+
+## Alternatives Considered
+
+1. **MongoDB (NoSQL):** Good for flexible schemas, but we have fixed structure
+2. **Firebase:** Easy setup, but vendor lock-in and limited querying
+3. **MySQL:** Similar to PostgreSQL, but Postgres has better JSON support
+
+## Consequences
+
+### Positive
+- ACID transactions prevent booking conflicts
+- Foreign keys ensure data integrity
+- Team has PostgreSQL experience
+- Free tier on Heroku
+
+### Negative
+- More complex setup than Firebase
+- Need to run migrations for schema changes
+- Requires SQL knowledge</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 13: Setup Instructions -->
+            <section data-slide-title="Setup Instructions">
+                <h2>Writing Clear Setup Instructions</h2>
+                <div class="warning-box">
+                    <strong>Test It:</strong> Have someone NOT on your team try to follow setup instructions!
+                </div>
+                <h3>Good Setup Instructions Include:</h3>
+                <ul>
+                    <li>Exact versions of tools (Node 16, Python 3.9)</li>
+                    <li>OS-specific instructions if needed (Windows vs Mac)</li>
+                    <li>Step-by-step commands to run</li>
+                    <li>Environment variables to set (.env.example)</li>
+                    <li>How to verify setup worked</li>
+                    <li>Common troubleshooting tips</li>
+                </ul>
+                <div class="example-box">
+                    <h4>Create: docs/setup.md</h4>
+                    <p>Detailed guide from fresh computer to running app.</p>
+                </div>
+            </section>
+
+            <!-- Slide 14: Code Comments -->
+            <section data-slide-title="Code Comments Best Practices">
+                <h2>Code Comments: When and How</h2>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>❌ Bad Comments:</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">// Increment i
+i++;
+
+// Check if user is null
+if (user === null) {
+  // Return error
+  return error;
+}</code></pre>
+                        </div>
+                        <p class="text-light"><em>Just restating obvious code</em></p>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Good Comments:</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">// HACK: parseFloat returns NaN for "5%"
+// so we strip the % first
+const value = parseFloat(str.replace('%', ''));
+
+// NOTE: Must validate email before 
+// calling sendVerification, otherwise
+// API returns 500 instead of 400
+validateEmail(user.email);
+sendVerificationEmail(user);
+
+// TODO: Extract to config file
+const MAX_RETRIES = 3;</code></pre>
+                        </div>
+                        <p class="text-light"><em>Explain WHY, not what</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 15: TASK 1 -->
+            <section data-slide-title="Task 1: Documentation Planning" class="center">
+                <h2>Task 1: Plan Documentation Needs</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Documentation Audit (15 min):</strong>
+                            <ul>
+                                <li>What documentation do you already have?</li>
+                                <li>What's missing or outdated?</li>
+                                <li>Review README, architecture docs, API docs</li>
+                            </ul>
+                        </li>
+                        <li><strong>Identify Gaps (15 min):</strong>
+                            <ul>
+                                <li>Critical: README, setup instructions</li>
+                                <li>Important: Architecture diagram, API docs</li>
+                                <li>Nice-to-have: ADRs, contributing guide</li>
+                            </ul>
+                        </li>
+                        <li><strong>Prioritize (10 min):</strong>
+                            <ul>
+                                <li>Which docs are most important for assessment?</li>
+                                <li>Which help team members most?</li>
+                                <li>Make list in priority order</li>
+                            </ul>
+                        </li>
+                        <li><strong>Assign Work (5 min):</strong>
+                            <ul>
+                                <li>Divide documentation tasks among team</li>
+                                <li>Create docs/ folder if not exists</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Prioritized documentation plan with assignments</p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break. Next: Creating documentation!</p>
+                    <p><em>Part B: Documentation Sprint</em></p>
+                </div>
+            </section>
+
+            <!-- PART B: DOCUMENTATION SPRINT -->
+
+            <!-- Slide 17: Part B Introduction -->
+            <section data-slide-title="Part B: Documentation Sprint">
+                <h2>Part B: Create Project Documentation</h2>
+                <div class="highlight">
+                    Time to write! Create the documentation you planned.
+                </div>
+                <h3>Sprint Goals:</h3>
+                <ul>
+                    <li>Update/create comprehensive README</li>
+                    <li>Document system architecture</li>
+                    <li>Write API documentation for key endpoints</li>
+                    <li>Create setup.md with step-by-step instructions</li>
+                    <li>Write 1-2 ADRs for important decisions</li>
+                    <li>Add code comments where needed</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: Drawing Diagrams -->
+            <section data-slide-title="Creating Diagrams">
+                <h2>Creating Architecture Diagrams</h2>
+                <h3>Tools for Diagrams:</h3>
+                <ul>
+                    <li><strong>Draw.io / diagrams.net:</strong> Free, web-based, saves as .png or .svg</li>
+                    <li><strong>Lucidchart:</strong> Professional, has free tier</li>
+                    <li><strong>Mermaid:</strong> Text-based diagrams in markdown</li>
+                    <li><strong>ASCII Art:</strong> Simple text diagrams</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-markdown">```mermaid
+graph TD
+    A[User] -->|HTTPS| B[React Frontend]
+    B -->|API Calls| C[Express Backend]
+    C -->|SQL| D[PostgreSQL]
+    C -->|API Call| E[Google Maps API]
+```</code></pre>
+                </div>
+                <div class="success-box">
+                    <strong>Tip:</strong> Keep diagrams simple. Too much detail makes them unreadable.
+                </div>
+            </section>
+
+            <!-- Slide 19: Database Schema Documentation -->
+            <section data-slide-title="Database Schema Documentation">
+                <h2>Documenting Database Schema</h2>
+                <div class="code-example">
+                    <pre><code class="language-markdown"># Database Schema
+
+## Tables
+
+### users
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | SERIAL | PRIMARY KEY | Unique user ID |
+| email | VARCHAR(255) | UNIQUE, NOT NULL | User email |
+| password_hash | VARCHAR(255) | NOT NULL | Bcrypt hashed password |
+| created_at | TIMESTAMP | DEFAULT NOW() | Account creation date |
+
+### spaces
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | SERIAL | PRIMARY KEY | Unique space ID |
+| name | VARCHAR(100) | NOT NULL | Space name (e.g., "Room 204") |
+| building | VARCHAR(100) | NOT NULL | Building name |
+| capacity | INTEGER | CHECK > 0 | Max occupancy |
+
+### bookings
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| id | SERIAL | PRIMARY KEY | Unique booking ID |
+| user_id | INTEGER | FOREIGN KEY → users(id) | Who booked |
+| space_id | INTEGER | FOREIGN KEY → spaces(id) | Which space |
+| start_time | TIMESTAMP | NOT NULL | Booking start |
+| end_time | TIMESTAMP | NOT NULL | Booking end |</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 20: Deployment Documentation -->
+            <section data-slide-title="Deployment Documentation">
+                <h2>Deployment Documentation</h2>
+                <div class="info-box">
+                    <strong>Document how to deploy:</strong> Critical for handoff and production releases.
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-markdown"># Deployment Guide
+
+## Heroku Deployment
+
+### Prerequisites
+- Heroku account
+- Heroku CLI installed
+
+### Steps
+
+1. **Create Heroku app**
+   ```bash
+   heroku create your-app-name
+   ```
+
+2. **Add PostgreSQL**
+   ```bash
+   heroku addons:create heroku-postgresql:hobby-dev
+   ```
+
+3. **Set environment variables**
+   ```bash
+   heroku config:set NODE_ENV=production
+   heroku config:set API_KEY=your_key_here
+   ```
+
+4. **Deploy**
+   ```bash
+   git push heroku main
+   ```
+
+5. **Run migrations**
+   ```bash
+   heroku run npm run migrate
+   ```
+
+6. **Verify**
+   Visit https://your-app-name.herokuapp.com</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 21: Contributing Guidelines -->
+            <section data-slide-title="Contributing Guidelines">
+                <h2>Contributing Guidelines</h2>
+                <div class="info-box">
+                    <strong>CONTRIBUTING.md:</strong> How team members contribute code.
+                </div>
+                <h3>Include:</h3>
+                <ul>
+                    <li><strong>Coding Standards:</strong> Naming conventions, style guide</li>
+                    <li><strong>Git Workflow:</strong> Branch naming, commit message format</li>
+                    <li><strong>Pull Request Process:</strong> How to create and review PRs</li>
+                    <li><strong>Testing Requirements:</strong> What tests are needed</li>
+                    <li><strong>Code Review Checklist:</strong> What reviewers check</li>
+                </ul>
+                <div class="example-box">
+                    <h4>Example Commit Format:</h4>
+                    <p><code>feat: add user registration endpoint</code><br>
+                        <code>fix: prevent double booking bug</code><br>
+                        <code>docs: update API documentation</code>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 22: Internal Evaluation -->
+            <section data-slide-title="Project Self-Evaluation">
+                <h2>Project Self-Evaluation</h2>
+                <h3>Evaluate Your Project:</h3>
+                <table style="width: 100%; font-size: 0.75em; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #007bff; color: white;">
+                            <th style="border: 1px solid #dee2e6; padding: 8px;">Criterion</th>
+                            <th style="border: 1px solid #dee2e6; padding: 8px;">Questions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f8f9fa;">
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Functionality</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Does it work? Are core features
+                                complete?</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Code Quality</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Is code clean, tested, maintainable?
+                            </td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Architecture</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Is system well-structured?</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Documentation</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Can someone else understand and run it?
+                            </td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Ethics</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Is data secure? Is it accessible?</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;"><strong>Team Process</strong></td>
+                            <td style="border: 1px solid #dee2e6; padding: 8px;">Did team collaborate well?</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight">
+                    <strong>Be honest:</strong> Identify strengths AND areas for improvement.
+                </div>
+            </section>
+
+            <!-- Slide 23: Documentation Checklist -->
+            <section data-slide-title="Documentation Checklist">
+                <h2>Documentation Completeness Checklist</h2>
+                <h3>Before submitting project:</h3>
+                <ul>
+                    <li>✓ README.md is comprehensive and up-to-date</li>
+                    <li>✓ Architecture diagram exists and is clear</li>
+                    <li>✓ Setup instructions tested by teammate</li>
+                    <li>✓ API endpoints documented with examples</li>
+                    <li>✓ Database schema documented</li>
+                    <li>✓ Important decisions captured in ADRs</li>
+                    <li>✓ Code has meaningful comments</li>
+                    <li>✓ .env.example file with all required variables</li>
+                    <li>✓ License file included</li>
+                    <li>✓ No broken links in documentation</li>
+                </ul>
+            </section>
+
+            <!-- Slide 24: TASK 2 -->
+            <section data-slide-title="Task 2: Create Documentation" class="center">
+                <h2>Task 2: Create Project Documentation</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Update README (10 min):</strong>
+                            <ul>
+                                <li>Ensure all sections present</li>
+                                <li>Add screenshot if missing</li>
+                                <li>Update tech stack and features</li>
+                            </ul>
+                        </li>
+                        <li><strong>Create Architecture Docs (15 min):</strong>
+                            <ul>
+                                <li>Draw system diagram</li>
+                                <li>Write docs/architecture.md</li>
+                                <li>Explain component interactions</li>
+                            </ul>
+                        </li>
+                        <li><strong>Document API (10 min):</strong>
+                            <ul>
+                                <li>List all endpoints</li>
+                                <li>Document 3-5 most important endpoints fully</li>
+                                <li>Include request/response examples</li>
+                            </ul>
+                        </li>
+                        <li><strong>Write Setup Guide (10 min):</strong>
+                            <ul>
+                                <li>Step-by-step installation</li>
+                                <li>Environment variables needed</li>
+                                <li>How to verify setup worked</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Complete documentation in docs/ folder</p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 9 Summary</h2>
+                <ul>
+                    <li>Documentation makes projects understandable and maintainable</li>
+                    <li>README is the front door - make it comprehensive</li>
+                    <li>Architecture diagrams communicate system design visually</li>
+                    <li>API documentation specifies endpoints with examples</li>
+                    <li>ADRs capture important decisions with rationale</li>
+                    <li>Setup instructions should be tested by someone else</li>
+                    <li>Code comments explain WHY, not what</li>
+                    <li>Documentation is part of professional software development</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Lecture:</h3>
+                    <p>Presentation Sprint 1<br>
+                        <em>Structuring technical presentations and creating demo scripts</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 26: Next Steps -->
+            <section data-slide-title="Next Steps">
+                <h2>Before Next Lecture</h2>
+                <ol>
+                    <li><strong>Complete Documentation:</strong>
+                        <ul>
+                            <li>Finish all planned documentation</li>
+                            <li>Get peer review from teammate</li>
+                            <li>Fix any unclear sections</li>
+                        </ul>
+                    </li>
+                    <li><strong>Test Setup Instructions:</strong>
+                        <ul>
+                            <li>Have teammate follow setup.md on fresh computer</li>
+                            <li>Fix any missing steps or errors</li>
+                        </ul>
+                    </li>
+                    <li><strong>Organize docs/ Folder:</strong>
+                        <ul>
+                            <li>Create clear folder structure</li>
+                            <li>Link all docs from README</li>
+                        </ul>
+                    </li>
+                    <li><strong>Submit to Moodle:</strong>
+                        <ul>
+                            <li>Link to repository (ensure docs are pushed)</li>
+                            <li>Link to key documentation files</li>
+                        </ul>
+                    </li>
+                    <li><strong>Prepare for Presentation:</strong>
+                        <ul>
+                            <li>Think about what to present</li>
+                            <li>What's most impressive about your project?</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

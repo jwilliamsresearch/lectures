@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 6: Ethics, Professionalism & Applied Fixes</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session5.html" title="Previous Session">&lt;</a>
+        <a href="../index.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART A: PROFESSIONAL, MORAL, LEGAL & ETHICAL ISSUES -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 6</div>
+                <h1>Ethics, Professionalism & Applied Fixes</h1>
+                <h2>Part A: Professional Ethics | Part B: Ethical Fix Sprint</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 2 parts • 2 team tasks</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                <div class="diagram">
+                    <h3>Part A: Professional, Moral, Legal & Ethical Issues (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on BCS Code, GDPR, accessibility, security</p>
+                    <p><strong>45 minutes:</strong> Task 1 - Ethical audit of team project</p>
+                    <p><strong>15 minutes:</strong> Break</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part B: Ethical Fix Sprint (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Implementation guidance and examples</p>
+                    <p><strong>45 minutes:</strong> Task 2 - Implement ethical improvements</p>
+                    <p><strong>15 minutes:</strong> Review and discussion</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand professional responsibilities as software developers</li>
+                    <li>Learn BCS Code of Conduct principles</li>
+                    <li>Understand GDPR and data protection requirements</li>
+                    <li>Apply WCAG accessibility standards</li>
+                    <li>Implement basic cybersecurity practices</li>
+                    <li>Identify ethical issues in team projects</li>
+                    <li>Implement concrete ethical improvements</li>
+                    <li>Balance business needs with ethical considerations</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: BCS Code of Conduct -->
+            <section data-slide-title="BCS Code of Conduct">
+                <h2>BCS Code of Conduct</h2>
+                <div class="info-box">
+                    <strong>BCS (British Computer Society):</strong> Professional body for computing.
+                    Their Code of Conduct sets ethical standards for IT professionals.
+                </div>
+                <h3>Four Key Principles:</h3>
+                <ol>
+                    <li><strong>Public Interest:</strong> Prioritize public good over personal/organizational interests
+                    </li>
+                    <li><strong>Professional Competence:</strong> Only undertake work you're qualified for</li>
+                    <li><strong>Duty to Profession:</strong> Uphold reputation of IT profession</li>
+                    <li><strong>Duty to Employer/Client:</strong> Act with integrity and avoid conflicts of interest
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Slide 6: BCS Public Interest -->
+            <section data-slide-title="BCS: Public Interest">
+                <h2>BCS Public Interest Obligations</h2>
+                <h3>You must:</h3>
+                <ul>
+                    <li>Consider impact of your work on society and environment</li>
+                    <li>Respect privacy and confidentiality</li>
+                    <li>Consider individuals with disabilities and disadvantaged groups</li>
+                    <li>Reject bribery or unethical practices</li>
+                    <li>Report professional misconduct</li>
+                </ul>
+                <div class="example-box">
+                    <h4>Example Application:</h4>
+                    <p>If your e-commerce project collects user data, you must:</p>
+                    <ul style="text-align: left;">
+                        <li>Only collect necessary data</li>
+                        <li>Secure it properly</li>
+                        <li>Be transparent about how it's used</li>
+                        <li>Allow users to delete their data</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7: GDPR Overview -->
+            <section data-slide-title="GDPR Overview">
+                <h2>GDPR: General Data Protection Regulation</h2>
+                <div class="info-box">
+                    <strong>GDPR:</strong> EU law governing data protection and privacy (applies to UK too).
+                    Even student projects should follow GDPR principles.
+                </div>
+                <h3>Core Principles:</h3>
+                <ul>
+                    <li><strong>Lawfulness:</strong> Have legal basis for processing data</li>
+                    <li><strong>Purpose Limitation:</strong> Only use data for stated purpose</li>
+                    <li><strong>Data Minimization:</strong> Collect only what you need</li>
+                    <li><strong>Accuracy:</strong> Keep data accurate and up-to-date</li>
+                    <li><strong>Storage Limitation:</strong> Don't keep data longer than necessary</li>
+                    <li><strong>Security:</strong> Protect data from unauthorized access</li>
+                    <li><strong>Accountability:</strong> Demonstrate compliance</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: GDPR User Rights -->
+            <section data-slide-title="GDPR User Rights">
+                <h2>User Rights Under GDPR</h2>
+                <h3>Users have the right to:</h3>
+                <ol>
+                    <li><strong>Be Informed:</strong> Know what data you collect and why (privacy policy)</li>
+                    <li><strong>Access:</strong> Request copy of their data</li>
+                    <li><strong>Rectification:</strong> Correct inaccurate data</li>
+                    <li><strong>Erasure:</strong> "Right to be forgotten" - delete their data</li>
+                    <li><strong>Data Portability:</strong> Receive data in machine-readable format</li>
+                    <li><strong>Object:</strong> Opt out of certain data processing</li>
+                </ol>
+                <div class="example-box">
+                    <h4>Implementation Example:</h4>
+                    <p>Add "Delete Account" button that removes all user data from database</p>
+                </div>
+            </section>
+
+            <!-- Slide 9: Data Security Basics -->
+            <section data-slide-title="Data Security Basics">
+                <h2>Data Security Basics</h2>
+                <h3>Essential Security Practices:</h3>
+                <ul>
+                    <li><strong>Password Hashing:</strong> NEVER store passwords in plain text
+                        <br><em>Use: bcrypt, Argon2, PBKDF2</em>
+                    </li>
+                    <li><strong>HTTPS:</strong> Encrypt data in transit (SSL/TLS certificates)</li>
+                    <li><strong>Input Validation:</strong> Prevent SQL injection, XSS attacks</li>
+                    <li><strong>Authentication:</strong> Verify user identity (JWT, sessions)</li>
+                    <li><strong>Authorization:</strong> Control what users can access</li>
+                    <li><strong>Environment Variables:</strong> Never commit secrets to Git</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Password hashing example (bcrypt)
+const bcrypt = require('bcrypt');
+
+// Hash password before storing
+const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
+// Verify password on login
+const isValid = await bcrypt.compare(plainPassword, hashedPassword);</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 10: Accessibility (WCAG) -->
+            <section data-slide-title="Web Accessibility (WCAG)">
+                <h2>Web Accessibility: WCAG Standards</h2>
+                <div class="info-box">
+                    <strong>WCAG (Web Content Accessibility Guidelines):</strong> International standards
+                    for making web content accessible to people with disabilities.
+                </div>
+                <h3>Four Principles (POUR):</h3>
+                <ul>
+                    <li><strong>Perceivable:</strong> Users must be able to perceive information
+                        <br><em>Example: Alt text for images, captions for videos</em>
+                    </li>
+                    <li><strong>Operable:</strong> Users must be able to operate UI
+                        <br><em>Example: Keyboard navigation, sufficient time to complete tasks</em>
+                    </li>
+                    <li><strong>Understandable:</strong> Information and operation must be clear
+                        <br><em>Example: Clear instructions, consistent navigation</em>
+                    </li>
+                    <li><strong>Robust:</strong> Content works with assistive technologies
+                        <br><em>Example: Semantic HTML, ARIA labels</em>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Accessibility Implementation -->
+            <section data-slide-title="Implementing Accessibility">
+                <h2>Implementing Accessibility</h2>
+                <div class="code-example">
+                    <pre><code class="language-html"><!-- Bad: No alt text, unclear button -->
+<img src="logo.png">
+<button>Click</button>
+
+<!-- Good: Alt text, descriptive labels -->
+<img src="logo.png" alt="Company logo">
+<button aria-label="Submit registration form">Submit</button>
+
+<!-- Bad: Div as button (not keyboard accessible) -->
+<div onclick="submit()">Submit</div>
+
+<!-- Good: Actual button element -->
+<button onclick="submit()">Submit</button>
+
+<!-- Good: Semantic HTML -->
+<nav aria-label="Main navigation">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav></code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 12: Color Contrast -->
+            <section data-slide-title="Color Contrast & Visual Design">
+                <h2>Color Contrast & Visual Design</h2>
+                <div class="warning-box">
+                    <strong>WCAG Requirement:</strong> Text must have sufficient contrast ratio with background.
+                </div>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>✗ Poor Contrast:</h4>
+                        <p style="color: #ccc; background: #eee; padding: 10px;">
+                            Light grey text on light background (ratio: 1.4:1) - FAILS
+                        </p>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Good Contrast:</h4>
+                        <p style="color: #000; background: #fff; padding: 10px; border: 1px solid #ccc;">
+                            Black text on white background (ratio: 21:1) - PASSES
+                        </p>
+                    </div>
+                </div>
+                <h3>WCAG 2.1 Requirements:</h3>
+                <ul>
+                    <li><strong>Level AA:</strong> 4.5:1 for normal text, 3:1 for large text</li>
+                    <li><strong>Level AAA:</strong> 7:1 for normal text, 4.5:1 for large text</li>
+                </ul>
+                <p><strong>Tool:</strong> Use WebAIM Contrast Checker to test your colors</p>
+            </section>
+
+            <!-- Slide 13: Ethical AI/ML Considerations -->
+            <section data-slide-title="Ethical AI/ML Considerations">
+                <h2>Ethical Considerations for AI/ML Projects</h2>
+                <h3>Key Concerns:</h3>
+                <ul>
+                    <li><strong>Fairness:</strong> Ensure fair treatment across demographics
+                        <br><em>Example: Credit scoring shouldn't discriminate by protected characteristics</em>
+                    </li>
+                    <li><strong>Transparency:</strong> Users should understand how decisions are made
+                        <br><em>Example: Explain why loan application was rejected</em>
+                    </li>
+                    <li><strong>Privacy:</strong> Training data may contain sensitive information
+                        <br><em>Example: Anonymize data, don't memorize personal details</em>
+                    </li>
+                </ul>
+                <div class="info-box">
+                    <strong>Action:</strong> Check training data for biases, test model fairness across groups,
+                    document model limitations.
+                </div>
+            </section>
+
+            <!-- Slide 14: Environmental Impact -->
+            <section data-slide-title="Environmental Impact of Software">
+                <h2>Environmental Impact of Software</h2>
+                <div class="highlight">
+                    <strong>Digital Carbon Footprint:</strong> Software consumes energy through servers,
+                    data centers, and user devices.
+                </div>
+                <h3>Considerations:</h3>
+                <ul>
+                    <li><strong>Efficient Code:</strong> Optimize algorithms to reduce compute time</li>
+                    <li><strong>Data Storage:</strong> Don't hoard unnecessary data</li>
+                    <li><strong>Image/Video:</strong> Compress media files appropriately</li>
+                    <li><strong>Cloud Providers:</strong> Choose providers using renewable energy</li>
+                    <li><strong>Unnecessary Features:</strong> Every feature has environmental cost</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15: Ethical Checklist -->
+            <section data-slide-title="Project Ethical Checklist">
+                <h2>Project Ethical Checklist</h2>
+                <h3>Ask Your Team:</h3>
+                <ul>
+                    <li>✓ Do we collect only necessary data?</li>
+                    <li>✓ Is personal data secured (hashed passwords, encrypted connections)?</li>
+                    <li>✓ Can users delete their data?</li>
+                    <li>✓ Do we have a privacy policy (even simple one)?</li>
+                    <li>✓ Is our UI accessible (alt text, keyboard navigation, contrast)?</li>
+                    <li>✓ Do we validate all user inputs (prevent injection attacks)?</li>
+                    <li>✓ Are errors handled gracefully (don't leak system info)?</li>
+                    <li>✓ If using ML, have we checked for bias in training data?</li>
+                    <li>✓ Do we have proper authorization (users can't access others' data)?</li>
+                    <li>✓ Are we transparent about how the system works?</li>
+                </ul>
+            </section>
+
+            <!-- Slide 16: TASK 1 -->
+            <section data-slide-title="Task 1: Ethical Audit" class="center">
+                <h2>Task 1: Conduct Ethical Audit of Project</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Review Your Project (10 min):</strong>
+                            <ul>
+                                <li>What data do you collect?</li>
+                                <li>How is it stored and secured?</li>
+                                <li>Who can access what?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Identify Issues (15 min):</strong> Use the ethical checklist
+                            <ul>
+                                <li>Security issues (plain text passwords, no input validation)</li>
+                                <li>Privacy issues (collecting unnecessary data, no delete option)</li>
+                                <li>Accessibility issues (missing alt text, poor contrast, no keyboard nav)</li>
+                                <li>Fairness/bias issues (if using ML/automation)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Prioritize Fixes (10 min):</strong>
+                            <ul>
+                                <li>Critical (security vulnerabilities)</li>
+                                <li>Important (GDPR violations, major accessibility issues)</li>
+                                <li>Nice-to-have (minor improvements)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Document Findings (10 min):</strong>
+                            <ul>
+                                <li>Create docs/ethical-audit.md</li>
+                                <li>List issues found and proposed fixes</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Ethical audit document with prioritized issues</p>
+                </div>
+            </section>
+
+            <!-- Slide 17: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break. Next: Implementing ethical fixes!</p>
+                    <p><em>Part B: Ethical Fix Sprint</em></p>
+                </div>
+            </section>
+
+            <!-- PART B: ETHICAL FIX SPRINT -->
+
+            <!-- Slide 18: Part B Introduction -->
+            <section data-slide-title="Part B: Ethical Fix Sprint">
+                <h2>Part B: Implementing Ethical Improvements</h2>
+                <div class="highlight">
+                    Theory → Practice! Now you'll implement concrete ethical improvements to your project.
+                </div>
+                <h3>Today's Goal:</h3>
+                <ul>
+                    <li>Fix at least 2-3 ethical issues from your audit</li>
+                    <li>Focus on high-priority items (security, privacy, accessibility)</li>
+                    <li>Document what you changed and why</li>
+                    <li>Test improvements work correctly</li>
+                </ul>
+            </section>
+
+            <!-- Slide 19: Common Fixes - Password Security -->
+            <section data-slide-title="Fix: Password Security">
+                <h2>Implementation: Secure Password Hashing</h2>
+                <div class="warning-box">
+                    <strong>Issue:</strong> Passwords stored in plain text or insecurely hashed
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// BAD: Plain text password ❌
+const user = {
+  email: 'Tom@example.com',
+  password: 'password123'  // NEVER DO THIS!
+};
+
+// GOOD: Hashed with bcrypt ✓
+const bcrypt = require('bcrypt');
+
+async function createUser(email, password) {
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = {
+    email,
+    password: hashedPassword  // Stored as hash
+  };
+  return db.insert('users', user);
+}
+
+async function verifyPassword(plainPassword, hashedPassword) {
+  return await bcrypt.compare(plainPassword, hashedPassword);
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 20: Common Fixes - Input Validation -->
+            <section data-slide-title="Fix: Input Validation">
+                <h2>Implementation: SQL Injection Prevention</h2>
+                <div class="warning-box">
+                    <strong>Issue:</strong> User input directly concatenated into SQL queries
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// BAD: SQL Injection vulnerable ❌
+app.get('/user', (req, res) => {
+  const userId = req.query.id;
+  const query = `SELECT * FROM users WHERE id = ${userId}`;
+  // Attacker could send: id=1 OR 1=1 (returns all users!)
+  db.query(query, (err, result) => res.json(result));
+});
+
+// GOOD: Parameterized query ✓
+app.get('/user', (req, res) => {
+  const userId = req.query.id;
+  const query = 'SELECT * FROM users WHERE id = $1';
+  db.query(query, [userId], (err, result) => {
+    if (err) return res.status(500).json({ error: 'Server error' });
+    res.json(result);
+  });
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 21: Common Fixes - GDPR Data Deletion -->
+            <section data-slide-title="Fix: GDPR Data Deletion">
+                <h2>Implementation: User Data Deletion</h2>
+                <div class="info-box">
+                    <strong>Requirement:</strong> Users must be able to delete their data (Right to Erasure)
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Backend: Delete user endpoint
+app.delete('/api/user/:id', authenticateUser, async (req, res) => {
+  const userId = req.params.id;
+  
+  // Verify user can only delete their own account
+  if (req.user.id !== userId) {
+    return res.status(403).json({ error: 'Unauthorized' });
+  }
+  
+  try {
+    // Delete user and all associated data
+    await db.query('DELETE FROM orders WHERE user_id = $1', [userId]);
+    await db.query('DELETE FROM user_data WHERE user_id = $1', [userId]);
+    await db.query('DELETE FROM users WHERE id = $1', [userId]);
+    
+    res.json({ message: 'Account deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Deletion failed' });
+  }
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 22: Common Fixes - Accessibility -->
+            <section data-slide-title="Fix: Accessibility Improvements">
+                <h2>Implementation: Accessibility Fixes</h2>
+                <div class="code-example">
+                    <pre><code class="language-html"><!-- Before: No accessibility ❌ -->
+<img src="profile.jpg">
+<div class="button" onclick="submit()">Submit</div>
+<input type="text" name="email">
+
+<!-- After: Accessible ✓ -->
+<img src="profile.jpg" alt="User profile photo">
+
+<button onclick="submit()" aria-label="Submit registration form">
+  Submit
+</button>
+
+<label for="email-input">Email Address:</label>
+<input 
+  type="email" 
+  id="email-input"
+  name="email"
+  aria-required="true"
+  aria-describedby="email-help"
+>
+<small id="email-help">We'll never share your email</small></code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 23: Common Fixes - Authorization -->
+            <section data-slide-title="Fix: Proper Authorization">
+                <h2>Implementation: Authorization Checks</h2>
+                <div class="warning-box">
+                    <strong>Issue:</strong> Users can access/modify other users' data
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// BAD: No authorization check ❌
+app.get('/api/order/:orderId', async (req, res) => {
+  const order = await db.query(
+    'SELECT * FROM orders WHERE id = $1', 
+    [req.params.orderId]
+  );
+  res.json(order);  // Any user can view any order!
+});
+
+// GOOD: Verify ownership ✓
+app.get('/api/order/:orderId', authenticateUser, async (req, res) => {
+  const order = await db.query(
+    'SELECT * FROM orders WHERE id = $1 AND user_id = $2',
+    [req.params.orderId, req.user.id]
+  );
+  
+  if (!order) {
+    return res.status(404).json({ error: 'Order not found' });
+  }
+  
+  res.json(order);
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 24: Common Fixes - Environment Variables -->
+            <section data-slide-title="Fix: Secure Configuration">
+                <h2>Implementation: Environment Variables</h2>
+                <div class="warning-box">
+                    <strong>Issue:</strong> API keys and secrets hardcoded in source code
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// BAD: Hardcoded secrets ❌
+const db = new Database({
+  host: 'localhost',
+  password: 'mySecretPassword123'  // Committed to Git!
+});
+
+const apiKey = 'sk_live_abc123xyz';  // Exposed in code!
+
+// GOOD: Environment variables ✓
+// .env file (NOT committed to Git)
+DB_HOST=localhost
+DB_PASSWORD=mySecretPassword123
+API_KEY=sk_live_abc123xyz
+
+// .gitignore (ensure .env is ignored)
+.env
+.env.local
+
+// Application code
+require('dotenv').config();
+
+const db = new Database({
+  host: process.env.DB_HOST,
+  password: process.env.DB_PASSWORD
+});
+
+const apiKey = process.env.API_KEY;</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 25: Privacy Policy -->
+            <section data-slide-title="Creating Privacy Policy">
+                <h2>Creating a Simple Privacy Policy</h2>
+                <div class="info-box">
+                    <strong>GDPR Requirement:</strong> Inform users what data you collect and why
+                </div>
+                <div class="example-box">
+                    <h4>Minimum Privacy Policy Sections:</h4>
+                    <ol style="text-align: left;">
+                        <li><strong>What data we collect:</strong> e.g., "Name, email, password (hashed)"</li>
+                        <li><strong>Why we collect it:</strong> e.g., "To provide account functionality"</li>
+                        <li><strong>How we use it:</strong> e.g., "Send login notifications"</li>
+                        <li><strong>How we store it:</strong> e.g., "Encrypted PostgreSQL database"</li>
+                        <li><strong>Your rights:</strong> e.g., "You can delete your account anytime"</li>
+                        <li><strong>Contact:</strong> How to reach you with questions</li>
+                    </ol>
+                </div>
+                <p><strong>Tip:</strong> Create docs/privacy-policy.md and link from your app footer</p>
+            </section>
+
+            <!-- Slide 26: Testing Ethical Fixes -->
+            <section data-slide-title="Testing Ethical Improvements">
+                <h2>Testing Your Ethical Improvements</h2>
+                <h3>Verification Checklist:</h3>
+                <ul>
+                    <li><strong>Security:</strong>
+                        <ul>
+                            <li>Try SQL injection attacks (in safe test environment)</li>
+                            <li>Verify passwords are hashed in database</li>
+                            <li>Test authorization (can User A access User B's data?)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Accessibility:</strong>
+                        <ul>
+                            <li>Navigate site using only keyboard (Tab, Enter)</li>
+                            <li>Use screen reader (NVDA, VoiceOver)</li>
+                            <li>Check color contrast with WebAIM tool</li>
+                        </ul>
+                    </li>
+                    <li><strong>GDPR:</strong>
+                        <ul>
+                            <li>Create account, delete it, verify data removed from DB</li>
+                            <li>Check privacy policy is accessible</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 27: TASK 2 -->
+            <section data-slide-title="Task 2: Implement Ethical Fixes" class="center">
+                <h2>Task 2: Implement Ethical Improvements</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Select Fixes (5 min):</strong>
+                            <ul>
+                                <li>Choose 2-3 high-priority issues from your audit</li>
+                                <li>Ensure achievable in session</li>
+                            </ul>
+                        </li>
+                        <li><strong>Assign Tasks (5 min):</strong>
+                            <ul>
+                                <li>Divide fixes among team members</li>
+                                <li>Create Git branches</li>
+                            </ul>
+                        </li>
+                        <li><strong>Implement Fixes (30 min):</strong>
+                            <ul>
+                                <li>Write code for your assigned fix</li>
+                                <li>Test that it works</li>
+                                <li>Commit with clear message (e.g., "security: hash passwords with bcrypt")</li>
+                            </ul>
+                        </li>
+                        <li><strong>Document Changes (5 min):</strong>
+                            <ul>
+                                <li>Update docs/ethical-audit.md with "Fixed" status</li>
+                                <li>Add comments in code explaining ethical considerations</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Implemented and tested ethical improvements</p>
+                </div>
+            </section>
+
+            <!-- Slide 28: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 6 Summary</h2>
+                <ul>
+                    <li>Software developers have ethical responsibilities to society</li>
+                    <li>BCS Code of Conduct provides professional ethical framework</li>
+                    <li>GDPR protects user data and privacy rights</li>
+                    <li>WCAG standards ensure web accessibility for all users</li>
+                    <li>Security basics: hash passwords, validate inputs, use HTTPS</li>
+                    <li>AI/ML projects must consider bias and fairness</li>
+                    <li>Conducting ethical audits identifies project issues</li>
+                    <li>Implementing fixes demonstrates professional responsibility</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Lecture:</h3>
+                    <p>Sprint 2 - Integrations Sprint<br>
+                        <em>Integrating APIs, libraries, and external services with error handling and testing</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 29: Next Steps -->
+            <section data-slide-title="Next Steps">
+                <h2>Before Next Lecture</h2>
+                <ol>
+                    <li><strong>Complete Ethical Fixes:</strong>
+                        <ul>
+                            <li>Finish any incomplete improvements</li>
+                            <li>Create pull requests for review</li>
+                            <li>Merge approved changes</li>
+                        </ul>
+                    </li>
+                    <li><strong>Documentation:</strong>
+                        <ul>
+                            <li>Create/update privacy policy if handling user data</li>
+                            <li>Document security measures in README</li>
+                        </ul>
+                    </li>
+                    <li><strong>Submit to Moodle:</strong>
+                        <ul>
+                            <li>Ethical audit document (docs/ethical-audit.md)</li>
+                            <li>Summary of fixes implemented</li>
+                            <li>Screenshots showing improvements</li>
+                        </ul>
+                    </li>
+                    <li><strong>Continue Sprint 2:</strong>
+                        <ul>
+                            <li>Resume work on Sprint 2 stories</li>
+                            <li>Prepare for integrations work next week</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>
