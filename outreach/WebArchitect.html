@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebArchitect | Visual Bootstrap Builder</title>
+    <!-- Tailwind for the Editor UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap CSS (For the user's content) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        editor: {
+                            bg: '#1e1e1e',
+                            sidebar: '#252526',
+                            active: '#37373d',
+                            border: '#333'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Isolate Editor UI from Bootstrap styles where possible */
+        body { 
+            background-color: #1e1e1e; 
+            color: #ccc; 
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden; /* App-like feel */
+        }
+
+        /* JW Nav Icon */
+        .jw-nav {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            user-select: none;
+            color: #fff;
+        }
+        .jw-nav:hover { background: rgba(255, 255, 255, 0.2); }
+
+        /* The Canvas Area (White paper look) */
+        #visual-canvas {
+            background-color: white;
+            color: black;
+            min-height: 100%;
+            padding-bottom: 50px;
+            transition: all 0.3s;
+        }
+        
+        /* Drag and Drop Visual Cues */
+        .draggable-item { cursor: grab; user-select: none; }
+        .draggable-item:active { cursor: grabbing; }
+        
+        /* When dragging OVER the canvas */
+        .drag-over {
+            background-color: #f0fdf4 !important; /* Light green tint */
+            outline: 2px dashed #22c55e;
+            outline-offset: -4px;
+        }
+
+        /* The rendered elements in Visual Mode need to be clickable to delete */
+        .canvas-element {
+            position: relative;
+            border: 1px dashed transparent;
+        }
+        .canvas-element:hover {
+            border: 1px dashed #0d6efd;
+        }
+        .canvas-element:hover::after {
+            content: 'double-click to remove';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #0d6efd;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Code Editor Styling */
+        #code-editor {
+            font-family: 'Fira Code', monospace;
+            background-color: #1e1e1e;
+            color: #a9b7c6;
+            line-height: 1.5;
+        }
+        
+        /* Mobile Specifics */
+        @media (max-width: 768px) {
+            .mobile-sidebar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 180px;
+                z-index: 50;
+                border-top: 1px solid #333;
+            }
+            .mobile-canvas {
+                margin-bottom: 180px; /* Space for sidebar */
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen">
+
+    <!-- App Header -->
+    <header class="bg-editor-sidebar border-b border-editor-border p-3 flex items-center justify-between shrink-0 z-50 h-16">
+        <div class="flex items-center gap-4">
+            <div class="jw-nav" onclick="location.reload()" title="Reset Project">JW</div>
+            <div class="leading-tight">
+                <h1 class="font-bold text-lg text-white tracking-tight flex items-center gap-2">
+                    <span class="material-icons text-blue-500">architecture</span>
+                    WebArchitect
+                </h1>
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">BSc Computer Science Taster</p>
+            </div>
+        </div>
+
+        <!-- Mode Switcher Tabs -->
+        <div class="flex bg-black/30 rounded-lg p-1 gap-1">
+            <button onclick="app.setMode('visual')" id="tab-visual" class="px-4 py-1.5 rounded text-sm font-medium transition flex items-center gap-2 bg-blue-600 text-white">
+                <span class="material-icons text-[16px]">view_quilt</span> <span class="hidden md:inline">Visual</span>
+            </button>
+            <button onclick="app.setMode('code')" id="tab-code" class="px-4 py-1.5 rounded text-sm font-medium transition flex items-center gap-2 text-gray-400 hover:text-white hover:bg-white/10">
+                <span class="material-icons text-[16px]">code</span> <span class="hidden md:inline">Code</span>
+            </button>
+            <button onclick="app.setMode('preview')" id="tab-preview" class="px-4 py-1.5 rounded text-sm font-medium transition flex items-center gap-2 text-gray-400 hover:text-white hover:bg-white/10">
+                <span class="material-icons text-[16px]">preview</span> <span class="hidden md:inline">Preview</span>
+            </button>
+        </div>
+        
+        <div class="hidden md:block">
+            <button onclick="app.exportHTML()" class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                <span class="material-icons text-[14px]">download</span> Export
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="flex-grow flex overflow-hidden relative">
+        
+        <!-- Left Sidebar (Toolbox) - Becomes Bottom Drawer on Mobile -->
+        <aside id="toolbox" class="w-full md:w-64 bg-editor-sidebar border-r border-editor-border flex flex-col shrink-0 mobile-sidebar shadow-2xl transition-transform">
+            <div class="p-3 border-b border-editor-border bg-editor-active/50 flex justify-between items-center">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Components</span>
+                <span class="text-[10px] text-gray-500">Drag or Tap to Add</span>
+            </div>
+            
+            <div class="flex-grow overflow-y-auto p-3 grid grid-cols-2 md:grid-cols-1 gap-2">
+                <!-- Draggables -->
+                
+                <div class="draggable-item bg-editor-active hover:bg-white/10 p-3 rounded border border-editor-border flex items-center gap-3 transition" 
+                     draggable="true" ondragstart="app.dragStart(event, 'navbar')" onclick="app.addComponent('navbar')">
+                    <span class="material-icons text-purple-400">menu</span>
+                    <div class="text-sm">Navbar</div>
+                </div>
+
+                <div class="draggable-item bg-editor-active hover:bg-white/10 p-3 rounded border border-editor-border flex items-center gap-3 transition" 
+                     draggable="true" ondragstart="app.dragStart(event, 'hero')" onclick="app.addComponent('hero')">
+                    <span class="material-icons text-blue-400">ad_units</span>
+                    <div class="text-sm">Hero Unit</div>
+                </div>
+
+                <div class="draggable-item bg-editor-active hover:bg-white/10 p-3 rounded border border-editor-border flex items-center gap-3 transition" 
+                     draggable="true" ondragstart="app.dragStart(event, 'card')" onclick="app.addComponent('card')">
+                    <span class="material-icons text-green-400">crop_portrait</span>
+                    <div class="text-sm">Card</div>
+                </div>
+
+                <div class="draggable-item bg-editor-active hover:bg-white/10 p-3 rounded border border-editor-border flex items-center gap-3 transition" 
+                     draggable="true" ondragstart="app.dragStart(event, 'grid3')" onclick="app.addComponent('grid3')">
+                    <span class="material-icons text-yellow-400">view_column</span>
+                    <div class="text-sm">3-Col Grid</div>
+                </div>
+
+                <div class="draggable-item bg-editor-active hover:bg-white/10 p-3 rounded border border-editor-border flex items-center gap-3 transition" 
+                     draggable="true" ondragstart="app.dragStart(event, 'alert')" onclick="app.addComponent('alert')">
+                    <span class="material-icons text-red-400">warning</span>
+                    <div class="text-sm">Alert</div>
+                </div>
+
+                <div class="draggable-item bg-editor-active hover:bg-white/10 p-3 rounded border border-editor-border flex items-center gap-3 transition" 
+                     draggable="true" ondragstart="app.dragStart(event, 'form')" onclick="app.addComponent('form')">
+                    <span class="material-icons text-pink-400">input</span>
+                    <div class="text-sm">Contact Form</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center: The Canvas (Visual Mode) -->
+        <main id="view-visual" class="flex-grow bg-gray-100 overflow-y-auto relative mobile-canvas">
+            <div id="visual-canvas" class="min-h-full w-full bg-white shadow-xl mx-auto max-w-6xl p-4 md:p-8"
+                 ondragover="app.dragOver(event)" 
+                 ondragleave="app.dragLeave(event)" 
+                 ondrop="app.drop(event)">
+                 
+                 <!-- Empty State -->
+                 <div id="empty-state" class="border-2 border-dashed border-gray-300 rounded-lg h-64 flex flex-col items-center justify-center text-gray-400 pointer-events-none mt-12">
+                     <span class="material-icons text-4xl mb-2">touch_app</span>
+                     <p>Drag components here or tap them in the sidebar</p>
+                 </div>
+
+            </div>
+        </main>
+
+        <!-- Center: Code Editor (Code Mode) -->
+        <main id="view-code" class="flex-grow bg-[#1e1e1e] hidden flex-col">
+            <div class="bg-black/20 p-2 text-xs text-gray-500 font-mono border-b border-editor-border flex justify-between">
+                <span>index.html</span>
+                <span>Read-Write</span>
+            </div>
+            <textarea id="code-editor" class="flex-grow w-full h-full p-4 resize-none outline-none border-none text-sm" spellcheck="false"></textarea>
+            <div class="p-2 bg-editor-active border-t border-editor-border text-right">
+                <button onclick="app.applyCode()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1 rounded text-sm font-medium">Apply Changes</button>
+            </div>
+        </main>
+
+        <!-- Center: Preview (Preview Mode) -->
+        <main id="view-preview" class="flex-grow bg-white hidden flex-col relative z-50">
+            <!-- Iframe enables true CSS isolation for the preview -->
+            <iframe id="preview-frame" class="flex-grow w-full h-full border-none"></iframe>
+        </main>
+
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded shadow-lg transform translate-y-20 transition-transform z-[60]">
+        Component Added
+    </div>
+
+    <!-- Bootstrap JS (Needed for Dropdowns/Toggles within user content) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- Component Templates ---
+        const templates = {
+            navbar: `
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 rounded">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">My Brand</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>`,
+            hero: `
+<div class="p-5 mb-4 bg-light rounded-3 jumbotron">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Hello, world!</h1>
+    <p class="col-md-8 fs-4">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <button class="btn btn-primary btn-lg" type="button">Learn more</button>
+  </div>
+</div>`,
+            card: `
+<div class="card mb-3" style="max-width: 18rem; display: inline-block; margin-right: 1rem; vertical-align: top;">
+  <div class="card-header">Featured</div>
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>`,
+            grid3: `
+<div class="row mb-4">
+  <div class="col-md-4">
+    <div class="p-3 border bg-light">Column 1</div>
+  </div>
+  <div class="col-md-4">
+    <div class="p-3 border bg-light">Column 2</div>
+  </div>
+  <div class="col-md-4">
+    <div class="p-3 border bg-light">Column 3</div>
+  </div>
+</div>`,
+            alert: `
+<div class="alert alert-warning alert-dismissible fade show mb-3" role="alert">
+  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>`,
+            form: `
+<form class="mb-4 p-4 border rounded bg-white">
+  <div class="mb-3">
+    <label class="form-label">Email address</label>
+    <input type="email" class="form-control" placeholder="name@example.com">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Message</label>
+    <textarea class="form-control" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Send Message</button>
+</form>`
+        };
+
+        const app = {
+            currentMode: 'visual',
+            canvas: document.getElementById('visual-canvas'),
+            editor: document.getElementById('code-editor'),
+            emptyState: document.getElementById('empty-state'),
+
+            // --- State Management ---
+            
+            setMode(mode) {
+                // Update UI State
+                document.querySelectorAll('header button[id^="tab-"]').forEach(btn => {
+                    btn.className = "px-4 py-1.5 rounded text-sm font-medium transition flex items-center gap-2 text-gray-400 hover:text-white hover:bg-white/10";
+                });
+                
+                const activeBtn = document.getElementById(`tab-${mode}`);
+                activeBtn.className = "px-4 py-1.5 rounded text-sm font-medium transition flex items-center gap-2 bg-blue-600 text-white";
+
+                // Hide all views
+                document.getElementById('view-visual').classList.add('hidden');
+                document.getElementById('view-code').classList.add('hidden');
+                document.getElementById('view-preview').classList.add('hidden');
+                document.getElementById('view-code').classList.remove('flex');
+                document.getElementById('view-preview').classList.remove('flex');
+
+                // Logic for switching
+                if (mode === 'visual') {
+                    document.getElementById('view-visual').classList.remove('hidden');
+                    document.getElementById('toolbox').classList.remove('hidden'); // Show toolbox
+                } else if (mode === 'code') {
+                    this.syncCanvasToCode(); // Update text editor with current DOM
+                    document.getElementById('view-code').classList.remove('hidden');
+                    document.getElementById('view-code').classList.add('flex');
+                    document.getElementById('toolbox').classList.add('hidden'); // Hide toolbox
+                } else if (mode === 'preview') {
+                    this.renderPreview();
+                    document.getElementById('view-preview').classList.remove('hidden');
+                    document.getElementById('view-preview').classList.add('flex');
+                    document.getElementById('toolbox').classList.add('hidden'); // Hide toolbox
+                }
+
+                this.currentMode = mode;
+            },
+
+            // --- Drag and Drop Logic ---
+
+            dragStart(e, type) {
+                e.dataTransfer.setData('componentType', type);
+                e.dataTransfer.effectAllowed = 'copy';
+            },
+
+            dragOver(e) {
+                e.preventDefault(); // Necessary to allow dropping
+                this.canvas.classList.add('drag-over');
+            },
+
+            dragLeave(e) {
+                this.canvas.classList.remove('drag-over');
+            },
+
+            drop(e) {
+                e.preventDefault();
+                this.canvas.classList.remove('drag-over');
+                const type = e.dataTransfer.getData('componentType');
+                if (type && templates[type]) {
+                    this.addComponent(type);
+                }
+            },
+
+            // --- Core Logic ---
+
+            addComponent(type) {
+                if (this.emptyState) {
+                    this.emptyState.remove();
+                    this.emptyState = null;
+                }
+
+                const html = templates[type];
+                const wrapper = document.createElement('div');
+                wrapper.className = "canvas-element";
+                wrapper.innerHTML = html;
+                
+                // Add removal logic
+                wrapper.addEventListener('dblclick', (e) => {
+                    // Prevent deleting internal elements easily, remove the whole block
+                    if (confirm('Delete this component?')) {
+                        wrapper.remove();
+                    }
+                });
+
+                this.canvas.appendChild(wrapper);
+                this.showToast("Component Added");
+            },
+
+            // --- Sync Logic ---
+
+            syncCanvasToCode() {
+                // Get innerHTML of canvas elements only
+                let code = "";
+                const elements = this.canvas.querySelectorAll('.canvas-element');
+                elements.forEach(el => {
+                    code += el.innerHTML.trim() + "\n\n";
+                });
+                
+                // Prettify simple (formatting is tricky in pure JS without libs, sticking to raw)
+                this.editor.value = code.trim();
+            },
+
+            applyCode() {
+                const code = this.editor.value;
+                this.canvas.innerHTML = ""; // Clear
+                
+                // Reconstruct visual DOM
+                // We wrap manually to maintain the "canvas-element" structure for the visual builder
+                // This is a naive implementation: it assumes user pastes blocks. 
+                // A robust one would parse the nodes. For a taster, we'll wrap the whole blob or split by lines? 
+                // Let's just create one wrapper for the custom code to ensure editability.
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = "canvas-element";
+                wrapper.innerHTML = code;
+                wrapper.addEventListener('dblclick', () => { if(confirm('Delete block?')) wrapper.remove(); });
+                
+                this.canvas.appendChild(wrapper);
+                
+                this.showToast("Code Applied to Canvas");
+                this.setMode('visual'); // Go back to see changes
+            },
+
+            renderPreview() {
+                const frame = document.getElementById('preview-frame');
+                const doc = frame.contentDocument || frame.contentWindow.document;
+                
+                // Get all content
+                let content = "";
+                const elements = this.canvas.querySelectorAll('.canvas-element');
+                elements.forEach(el => {
+                    content += el.innerHTML;
+                });
+
+                doc.open();
+                doc.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                        <style>body { padding: 20px; }</style>
+                    </head>
+                    <body>
+                        ${content}
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"><\/script>
+                    </body>
+                    </html>
+                `);
+                doc.close();
+            },
+
+            // --- Utils ---
+
+            showToast(msg) {
+                const toast = document.getElementById('toast');
+                toast.innerText = msg;
+                toast.classList.remove('translate-y-20');
+                setTimeout(() => toast.classList.add('translate-y-20'), 2000);
+            },
+
+            exportHTML() {
+                this.syncCanvasToCode();
+                const text = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+${this.editor.value.split('\n').map(line => '        ' + line).join('\n')}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"><\/script>
+</body>
+</html>`;
+                
+                // Simple download trigger
+                const blob = new Blob([text], { type: 'text/html' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'website.html';
+                a.click();
+            }
+        };
+    </script>
+</body>
+</html>

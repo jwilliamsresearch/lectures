@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BitDefender | Logic Gate Defense | Birmingham Newman University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#050505',
+                            green: '#00ff41',
+                            darkGreen: '#008F11',
+                            red: '#ff003c',
+                            blue: '#00f0ff'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['VT323', 'monospace'],
+                        sans: ['Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            color: #00ff41;
+            font-family: 'VT323', monospace;
+            overflow: hidden;
+            touch-action: none; /* Prevent zooming/scrolling on mobile */
+        }
+
+        /* JW Nav Icon */
+        .jw-nav {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 255, 65, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            user-select: none;
+            color: #00ff41;
+            font-family: 'Roboto', sans-serif;
+            position: relative;
+            z-index: 50;
+        }
+        .jw-nav:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        /* Scanline Effect */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 40;
+            opacity: 0.3;
+        }
+
+        /* Custom Button Press Animation */
+        .btn-press:active {
+            transform: translateY(2px);
+            box-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.8);
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col">
+
+    <!-- Scanline Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- UI Header -->
+    <header class="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-50 pointer-events-none">
+        <div class="pointer-events-auto">
+            <div class="jw-nav" onclick="location.reload()" title="Reset System">JW</div>
+        </div>
+        
+        <div class="text-center">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-widest glow-text text-white">BITDEFENDER</h1>
+            <div class="text-cyber-green text-lg tracking-wider">WAVE <span id="wave-display">1</span></div>
+        </div>
+
+        <div class="text-right">
+            <div class="text-xs text-cyber-blue uppercase tracking-widest">Score</div>
+            <div id="score-display" class="text-3xl font-bold text-white">000000</div>
+            <div class="text-xs text-cyber-red mt-1" id="health-bar">||||||||||</div>
+        </div>
+    </header>
+
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas" class="block w-full h-full"></canvas>
+
+    <!-- Start Screen Overlay -->
+    <div id="start-screen" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-50 transition-opacity duration-500">
+        <div class="text-center max-w-md px-6">
+            <span class="material-icons text-6xl text-cyber-green mb-4 animate-pulse">security</span>
+            <h2 class="text-4xl mb-2 text-white glow-text">SYSTEM COMPROMISED</h2>
+            <p class="text-xl text-cyber-green mb-6">Malicious logic gates detected. Help us defend against them in this taster session from Birmingham Newman University.</p>
+            
+            <div class="bg-gray-900 border border-cyber-green p-4 rounded mb-8 text-left text-sm font-sans text-gray-300">
+                <p class="mb-2"><strong class="text-white">MISSION:</strong> Solve the falling logic gates before they breach the CPU.</p>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li><code class="text-cyber-blue">1 AND 1</code> = 1 (Both True)</li>
+                    <li><code class="text-cyber-blue">1 OR 0</code> = 1 (One True)</li>
+                    <li><code class="text-cyber-blue">NOT 0</code> = 1 (Invert)</li>
+                    <li><code class="text-cyber-blue">1 XOR 1</code> = 0 (Must be different)</li>
+                </ul>
+            </div>
+
+            <button onclick="game.start()" class="bg-cyber-green hover:bg-cyber-darkGreen text-black font-bold py-3 px-12 rounded text-2xl shadow-[0_0_15px_rgba(0,255,65,0.6)] transition transform hover:scale-105">
+                INITIALIZE DEFENSE
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen" class="absolute inset-0 bg-red-900/90 flex flex-col items-center justify-center z-50 hidden">
+        <h2 class="text-5xl mb-2 text-white font-bold glitch-text">CRITICAL FAILURE</h2>
+        <p class="text-2xl text-red-300 mb-6">CPU Overrun</p>
+        <div class="text-4xl text-white mb-8 border-2 border-white px-6 py-2">SCORE: <span id="final-score">0</span></div>
+        <button onclick="location.reload()" class="bg-white text-red-900 font-bold py-3 px-8 rounded text-xl hover:bg-gray-200">
+            SYSTEM REBOOT
+        </button>
+    </div>
+
+    <!-- Mobile Controls -->
+    <div id="mobile-controls" class="absolute bottom-0 left-0 right-0 p-4 pb-8 flex gap-4 justify-center items-end z-40 lg:opacity-50 lg:hover:opacity-100">
+        <button id="btn-0" class="btn-press bg-gray-900/80 border-2 border-cyber-red text-cyber-red w-full max-w-[160px] h-24 rounded-lg text-6xl font-bold backdrop-blur-sm shadow-[0_0_15px_rgba(255,0,60,0.3)] active:bg-cyber-red active:text-white transition">
+            0
+        </button>
+        <button id="btn-1" class="btn-press bg-gray-900/80 border-2 border-cyber-blue text-cyber-blue w-full max-w-[160px] h-24 rounded-lg text-6xl font-bold backdrop-blur-sm shadow-[0_0_15px_rgba(0,240,255,0.3)] active:bg-cyber-blue active:text-white transition">
+            1
+        </button>
+    </div>
+
+    <script>
+        /**
+         * BITDEFENDER GAME ENGINE
+         */
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Game State
+        const game = {
+            active: false,
+            score: 0,
+            health: 100,
+            wave: 1,
+            enemies: [],
+            particles: [],
+            lastSpawn: 0,
+            spawnRate: 2000,
+            bgStars: [],
+            
+            // Core Logic
+            init() {
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.setupControls();
+                this.createStars();
+                this.loop = this.loop.bind(this);
+                requestAnimationFrame(this.loop);
+            },
+
+            resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            },
+
+            createStars() {
+                for(let i=0; i<50; i++) {
+                    this.bgStars.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        size: Math.random() * 2,
+                        speed: Math.random() * 0.5 + 0.1
+                    });
+                }
+            },
+
+            setupControls() {
+                // Keyboard
+                window.addEventListener('keydown', (e) => {
+                    if (!this.active) return;
+                    if (e.key === '0' || e.key === 'ArrowLeft') this.checkInput(0);
+                    if (e.key === '1' || e.key === 'ArrowRight') this.checkInput(1);
+                });
+
+                // Touch/Click
+                document.getElementById('btn-0').addEventListener('pointerdown', (e) => {
+                    e.preventDefault(); // Prevent double fire
+                    if (this.active) this.checkInput(0);
+                });
+                document.getElementById('btn-1').addEventListener('pointerdown', (e) => {
+                    e.preventDefault();
+                    if (this.active) this.checkInput(1);
+                });
+            },
+
+            start() {
+                document.getElementById('start-screen').classList.add('hidden');
+                this.active = true;
+                this.score = 0;
+                this.health = 100;
+                this.wave = 1;
+                this.enemies = [];
+                this.particles = [];
+                this.lastSpawn = performance.now();
+                this.updateHUD();
+            },
+
+            gameOver() {
+                this.active = false;
+                document.getElementById('game-over-screen').classList.remove('hidden');
+                document.getElementById('final-score').innerText = this.score;
+            },
+
+            // Game Logic
+            spawnEnemy() {
+                const now = performance.now();
+                if (now - this.lastSpawn > this.spawnRate) {
+                    this.enemies.push(new Enemy(this.wave));
+                    this.lastSpawn = now;
+                    
+                    // Difficulty Ramp
+                    if (this.spawnRate > 500) this.spawnRate -= 20; 
+                }
+            },
+
+            checkInput(val) {
+                // Find the closest enemy (lowest Y is top, highest Y is bottom. We want closest to bottom)
+                // Actually, closest enemy is the one with highest Y value.
+                if (this.enemies.length === 0) return;
+
+                // Sort by Y desc (closest to player)
+                const sorted = [...this.enemies].sort((a, b) => b.y - a.y);
+                const target = sorted[0];
+
+                if (target.answer === val) {
+                    // Success
+                    this.destroyEnemy(target);
+                    this.score += 100 * this.wave;
+                    
+                    // Wave Logic
+                    if (this.score > this.wave * 1000) {
+                        this.wave++;
+                        this.spawnRate = Math.max(400, 2000 - (this.wave * 200));
+                        this.createFloatingText("WAVE " + this.wave, canvas.width/2, canvas.height/2, '#fff', 40);
+                    }
+                } else {
+                    // Fail
+                    this.health -= 10;
+                    this.cameraShake();
+                    this.createFloatingText("ERROR", target.x, target.y, '#ff003c');
+                }
+                this.updateHUD();
+            },
+
+            destroyEnemy(enemy) {
+                // Remove from array
+                this.enemies = this.enemies.filter(e => e !== enemy);
+                
+                // Laser effect
+                this.drawLaser(enemy.x, enemy.y, enemy.answer === 0 ? '#ff003c' : '#00f0ff');
+
+                // Explosion particles
+                for (let i = 0; i < 10; i++) {
+                    this.particles.push(new Particle(enemy.x, enemy.y, enemy.answer === 0 ? '#ff003c' : '#00f0ff'));
+                }
+            },
+
+            drawLaser(tx, ty, color) {
+                ctx.beginPath();
+                // Origin depends on answer (Left btn for 0, Right btn for 1)
+                const startX = canvas.width / 2;
+                const startY = canvas.height - 100;
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(tx, ty);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 5;
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = color;
+                ctx.stroke();
+                
+                // Flash effect
+                setTimeout(() => { ctx.shadowBlur = 0; }, 50);
+            },
+
+            cameraShake() {
+                canvas.style.transform = `translate(${Math.random()*10 - 5}px, ${Math.random()*10 - 5}px)`;
+                setTimeout(() => canvas.style.transform = 'translate(0,0)', 100);
+            },
+
+            createFloatingText(text, x, y, color, size = 24) {
+                // Simple fire-and-forget text drawing handled in loop
+                this.particles.push({
+                    x: x, y: y, text: text, life: 1.0, color: color, size: size,
+                    update() { this.y -= 1; this.life -= 0.02; },
+                    draw(ctx) { 
+                        ctx.globalAlpha = Math.max(0, this.life);
+                        ctx.fillStyle = this.color;
+                        ctx.font = `bold ${this.size}px VT323`;
+                        ctx.fillText(this.text, this.x, this.y);
+                        ctx.globalAlpha = 1;
+                    }
+                });
+            },
+
+            updateHUD() {
+                document.getElementById('score-display').innerText = this.score.toString().padStart(6, '0');
+                document.getElementById('wave-display').innerText = this.wave;
+                
+                // Health Bar
+                const bars = Math.ceil(this.health / 10);
+                document.getElementById('health-bar').innerText = "|".repeat(Math.max(0, bars));
+                document.getElementById('health-bar').style.color = this.health > 30 ? '#00ff41' : '#ff003c';
+
+                if (this.health <= 0) this.gameOver();
+            },
+
+            // Render Loop
+            loop() {
+                ctx.fillStyle = 'rgba(5, 5, 5, 0.2)'; // Trails
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw Stars
+                ctx.fillStyle = '#113311';
+                this.bgStars.forEach(star => {
+                    star.y += star.speed;
+                    if (star.y > canvas.height) star.y = 0;
+                    ctx.fillRect(star.x, star.y, star.size, star.size);
+                });
+
+                if (this.active) {
+                    this.spawnEnemy();
+
+                    // Update & Draw Enemies
+                    this.enemies.forEach(enemy => {
+                        enemy.update();
+                        enemy.draw();
+                        
+                        // Game Over check
+                        if (enemy.y > canvas.height - 100) {
+                            this.health -= 20;
+                            this.destroyEnemy(enemy); // It hits the player/ground
+                            this.cameraShake();
+                            this.updateHUD();
+                        }
+                    });
+                }
+
+                // Update & Draw Particles (and floating text)
+                this.particles = this.particles.filter(p => {
+                    p.update();
+                    p.draw(ctx);
+                    return p.life > 0;
+                });
+
+                // Draw Player Base
+                const cx = canvas.width / 2;
+                const cy = canvas.height - 80;
+                
+                // CPU Core
+                ctx.fillStyle = '#222';
+                ctx.fillRect(cx - 30, cy, 60, 40);
+                ctx.fillStyle = this.health > 30 ? '#00ff41' : '#ff003c';
+                ctx.fillRect(cx - 25, cy + 5, 50, 10); // Status Light
+
+                requestAnimationFrame(this.loop);
+            }
+        };
+
+        /**
+         * ENEMY CLASS
+         */
+        class Enemy {
+            constructor(difficulty) {
+                this.x = Math.random() * (canvas.width - 100) + 50;
+                this.y = -50;
+                this.speed = Math.random() * 1 + 1 + (difficulty * 0.2);
+                
+                // Logic Generation
+                const types = ['NOT', 'AND', 'OR', 'XOR'];
+                // Limit complexity based on difficulty
+                const type = types[Math.floor(Math.random() * Math.min(types.length, 1 + difficulty))];
+                
+                const a = Math.random() > 0.5 ? 1 : 0;
+                const b = Math.random() > 0.5 ? 1 : 0;
+
+                if (type === 'NOT') {
+                    this.text = `NOT ${a}`;
+                    this.answer = a === 0 ? 1 : 0;
+                } else if (type === 'AND') {
+                    this.text = `${a} AND ${b}`;
+                    this.answer = (a && b) ? 1 : 0;
+                } else if (type === 'OR') {
+                    this.text = `${a} OR ${b}`;
+                    this.answer = (a || b) ? 1 : 0;
+                } else if (type === 'XOR') {
+                    this.text = `${a} XOR ${b}`;
+                    this.answer = (a !== b) ? 1 : 0;
+                }
+            }
+
+            update() {
+                this.y += this.speed;
+            }
+
+            draw() {
+                // Glitch Box
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00ff41';
+                ctx.strokeStyle = '#00ff41';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(this.x - 40, this.y - 20, 80, 40);
+                
+                // Text
+                ctx.fillStyle = '#fff';
+                ctx.font = '24px VT323';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.text, this.x, this.y);
+                
+                // Connecting Line to top
+                ctx.beginPath();
+                ctx.moveTo(this.x, 0);
+                ctx.lineTo(this.x, this.y - 20);
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.1)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        /**
+         * PARTICLE CLASS
+         */
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 10;
+                this.vy = (Math.random() - 0.5) * 10;
+                this.life = 1.0;
+                this.color = color;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life -= 0.05;
+            }
+
+            draw(ctx) {
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, 4, 4);
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        // Boot
+        window.onload = () => game.init();
+
+    </script>
+</body>
+</html>
