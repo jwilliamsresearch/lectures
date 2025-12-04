@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>PlaceAgents - SDSS2025</title>
+
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/theme/white.min.css">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Tailwind for internal layout styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Custom overrides for the presentation */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            text-transform: none;
+            font-family: 'Helvetica Neue', sans-serif;
+            color: #2c3e50;
+        }
+        .reveal p, .reveal ul, .reveal li {
+            font-family: 'Helvetica Neue', sans-serif;
+            font-size: 32px;
+            line-height: 1.5;
+            color: #34495e;
+        }
+        .reveal ul {
+            display: block;
+        }
+        .reveal li {
+            margin-bottom: 15px;
+        }
+        .highlight-text {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .sub-text {
+            font-size: 0.6em;
+            color: #7f8c8d;
+        }
+        
+        /* Footer for context */
+        .footer-context {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            font-size: 14px;
+            color: #95a5a6;
+            z-index: 1000;
+            font-family: sans-serif;
+            display: flex;
+            gap: 10px;
+        }
+        .footer-divider {
+            color: #bdc3c7;
+        }
+
+        /* Slide specific layout helpers */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            text-align: left;
+        }
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Clean finish for last slide */
+        .last-slide-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Footer -->
+    <div class="footer-context">
+        <span>SDSS2025</span>
+        <span class="footer-divider">|</span>
+        <span>4th Dec 2025</span>
+        <span class="footer-divider">|</span>
+        <span>jwilliams.science</span>
+    </div>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section>
+                <h2 class="text-4xl font-bold mb-4">PlaceAgents</h2>
+                <h3 class="text-2xl text-gray-600 mb-8">Multi-Stop Pedestrian Itineraries as<br>Platial Flows on Urban Networks</h3>
+                
+                <div class="mt-12">
+                    <p class="font-bold">James Williams</p>
+                    <p class="sub-text">Centre for Disruptive Era Studies<br>Birmingham Newman University, UK</p>
+                </div>
+
+                <div class="mt-8 text-sm text-blue-600">
+                    Spatial Data Science Symposium 2025
+                </div>
+            </section>
+
+            <!-- Slide 1: Introduction -->
+            <section>
+                <h3>Rethinking Urban Movement</h3>
+                <div class="two-col">
+                    <div>
+                        <ul>
+                            <li>Urban life is not just A to B.</li>
+                            <li>People stitch together <span class="highlight-text">sequences of places</span> (errands, leisure, work).</li>
+                            <li>Current models often focus on isolated trips (OD pairs).</li>
+                            <li><b>The Goal:</b> Treat the itinerary as the base behavioural unit.</li>
+                        </ul>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="bg-blue-50 p-6 rounded-lg text-center">
+                            <span class="material-icons" style="font-size: 64px; color: #3498db;">alt_route</span>
+                            <p class="text-sm mt-4">"Corridors are co-produced by clusters of amenities and itinerary logic."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: Platial Theory -->
+            <section>
+                <h3>From Space to Place: Platial Theory</h3>
+                <p class="text-left text-base mb-6">Moving beyond abstract coordinates to meaningful locations.</p>
+                
+                <div class="two-col">
+                    <div class="card border-t-4 border-gray-400">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="material-icons text-4xl text-gray-400">grid_on</span>
+                            <h4 class="text-gray-600 font-bold m-0">Abstract Space</h4>
+                        </div>
+                        <ul class="text-lg">
+                            <li>Focus on X, Y coordinates.</li>
+                            <li>Single Origin-Destination pairs.</li>
+                            <li>Movement is "overcoming distance".</li>
+                            <li>Geometry-first.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card border-t-4 border-blue-600">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="material-icons text-4xl text-blue-600">place</span>
+                            <h4 class="text-blue-700 font-bold m-0">Platial Information</h4>
+                        </div>
+                        <ul class="text-lg">
+                            <li>Focus on "Fuzzy Places" & POIs.</li>
+                            <li>Chained itineraries & routines.</li>
+                            <li>Movement is "linking functions".</li>
+                            <li>Meaning-first.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 bg-blue-50 p-4 rounded text-center">
+                    <p class="text-xl italic text-gray-600">"The basic unit is not abstract space but fuzzy places." <span class="text-sm not-italic">(Williams, 2025)</span></p>
+                </div>
+            </section>
+
+            <!-- Slide 3: The Framework (ANIMATED) -->
+            <section>
+                <h3>The PlaceAgents Framework</h3>
+                <p>A pipeline for modelling multi-stop itineraries using exclusively open data.</p>
+                
+                <div class="grid grid-cols-3 gap-4 mt-8">
+                    <!-- Added 'fragment fade-up' to create step-by-step animation -->
+                    <div class="card fragment fade-up">
+                        <h4 class="text-xl font-bold text-blue-600">1. Open Data</h4>
+                        <p class="text-sm">Built entirely on OpenStreetMap (OSM) and H3 Grids.</p>
+                    </div>
+                    <div class="card fragment fade-up">
+                        <h4 class="text-xl font-bold text-green-600">2. Explicit Agents</h4>
+                        <p class="text-sm">Transparent assumptions about pedestrian logic and speed.</p>
+                    </div>
+                    <div class="card fragment fade-up">
+                        <h4 class="text-xl font-bold text-red-600">3. Auditability</h4>
+                        <p class="text-sm">Full event logs and reproducible "Scenario" files (YAML).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3b: Web Vis Demo -->
+            <section>
+                <h3>Web Visualization</h3>
+                <div class="flex items-center justify-center">
+                    <img src="webvis_demo.png" alt="Web Visualization Demo" style="max-height: 500px; width: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                </div>
+            </section>
+
+            <!-- Slide 4: Methodology Pipeline -->
+            <section>
+                <h3>Methodology Pipeline</h3>
+                <div class="text-left">
+                    <ol>
+                        <li class="fragment fade-in">
+                            <b>Data Acquisition (OSMnx):</b> 
+                            <br><span class="text-gray-500 text-sm">Download routable pedestrian graphs and POIs (Cafes, Libraries, etc.) for city bounding box.</span>
+                        </li>
+                        <li class="fragment fade-in">
+                            <b>Spatial Aggregation (H3 Grid):</b>
+                            <br><span class="text-gray-500 text-sm">Summarize context into hexagonal cells. Consistent aggregation across scales.</span>
+                        </li>
+                        <li class="fragment fade-in">
+                            <b>Routing Engine (NetworkX):</b>
+                            <br><span class="text-gray-500 text-sm">Agents navigate using length-weighted A* search on the graph.</span>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 5: The Agent Model -->
+            <section>
+                <h3>Designing the "Place Agent"</h3>
+                <p class="text-left">Agents represent pedestrians executing short itineraries.</p>
+                <div class="bg-white border-l-4 border-blue-500 p-4 my-4 text-left shadow">
+                    <p class="text-lg"><b>State Machine:</b><br>
+                    { Planning &rarr; Moving &rarr; Arriving &rarr; Finished }</p>
+                </div>
+                <ul class="text-left mt-4">
+                    <li><b>Origin:</b> Sampled from network nodes.</li>
+                    <li><b>Targets:</b> Sampled from POIs based on tags (e.g., "amenity=cafe").</li>
+                    <li><b>Constraints:</b> Respects OSM opening hours (where available).</li>
+                    <li><b>Output:</b> Per-tick event log for every move.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Case Studies -->
+            <section>
+                <h3>Case Studies: UK City Centres</h3>
+                <table class="w-full text-lg border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100 border-b-2 border-gray-300">
+                            <th class="p-3 text-left">Metric</th>
+                            <th class="p-3 text-left text-blue-700">Nottingham</th>
+                            <th class="p-3 text-left text-red-700">Birmingham</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-3 font-bold">Scope</td>
+                            <td class="p-3">Compact, Market Sq.</td>
+                            <td class="p-3">Larger, Bullring/New St.</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 font-bold">Agents</td>
+                            <td class="p-3">1,000</td>
+                            <td class="p-3">1,000</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-3 font-bold">Network Edges</td>
+                            <td class="p-3">~6,400</td>
+                            <td class="p-3">~8,900</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">POIs</td>
+                            <td class="p-3">1,317</td>
+                            <td class="p-3">1,858</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-sm mt-4 text-gray-500">Same pipeline, resolution, and time steps used for comparison.</p>
+            </section>
+
+            <!-- Slide 6b: Sample Agents -->
+            <section>
+                <h3>Sample Agents</h3>
+                <div class="two-col">
+                    <div>
+                        <h4 class="text-blue-700">Nottingham</h4>
+                        <img src="sample_agent_Nottingham.png" alt="Nottingham Agent" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    </div>
+                    <div>
+                        <h4 class="text-red-700">Birmingham</h4>
+                        <img src="sample_agents_Birmingham.png" alt="Birmingham Agents" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Results - Nottingham -->
+            <section>
+                <h3>Results: Nottingham</h3>
+                <div class="two-col">
+                    <div>
+                        <h4 class="text-blue-600">High Concentration</h4>
+                        <p class="text-2xl">Core street grid usage is intense, while backstreets remain quiet.</p>
+                        <hr class="my-4">
+                        <p class="text-xl"><b>Gini Coefficient: 0.82</b></p>
+                        <p class="text-sm">Indicates high inequality in edge load distribution.</p>
+                    </div>
+                    <div class="flex items-center justify-center rounded">
+                        <img src="edge_load_Nottingham.png" alt="Nottingham Edge Load" style="max-height: 400px; width: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Results - Birmingham -->
+            <section>
+                <h3>Results: Birmingham</h3>
+                <div class="two-col">
+                    <div class="flex items-center justify-center rounded order-2 md:order-1">
+                         <img src="edge_load_Birmingham.png" alt="Birmingham Edge Load" style="max-height: 400px; width: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <h4 class="text-red-600">Wider Dispersion</h4>
+                        <p class="text-2xl">Larger network creates less concentrated flows compared to Nottingham.</p>
+                        <hr class="my-4">
+                        <p class="text-xl"><b>Gini Coefficient: 0.77</b></p>
+                        <p class="text-sm">Load aligns strongly with structural connectivity (Betweenness Centrality).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Conclusions (SPLIT LAYOUT) -->
+            <section>
+                <h3>Conclusions & Future Work</h3>
+                                        <div class="text-left bg-blue-50 p-4 rounded mb-4">
+                            <p class="text-lg"><b>Contribution:</b> A baseline for itinerary-centred simulation using 100% open data.</p>
+                        </div>
+                <div class="two-col">
+                    <!-- Left: Technical Conclusions -->
+                    <div>
+
+                        
+                        <h4 class="text-left text-lg font-bold">Model Extensions:</h4>
+                        <ul class="text-base">
+                            <li><b>Contextual Layers:</b> Integrating exposure data (pollution, noise) into H3.</li>
+                            <li><b>Richer Narratives:</b> Expanding agents (commuters vs tourists).</li>
+                            <li><b>Scale:</b> Moving to city-wide simulation.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Right: New Role/Research Direction -->
+                    <div class="text-black p-6 rounded-lg flex flex-col justify-center">
+                        <div class="flex items-center gap-2 mb-4">
+                            <h4 class="text-xl font-bold text-white m-0">New Horizons</h4>
+                        </div>
+                        <p class="text-lg leading-relaxed mb-4">
+                            I am moving to a new role to apply platial narratives in slavery and war, exploring the fusion of platial and spatial data. .
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Questions Slide -->
+            <section data-background-color="#f3f4f6">
+                <div class="last-slide-container">
+                    <h2 class="text-5xl font-light text-gray-800 mb-8">Questions?</h2>
+                    
+                    <div class="border-t-2 border-gray-300 w-24 mb-8"></div>
+
+                    <div class="text-gray-700 text-xl text-center leading-relaxed">
+                        <p class="mb-2">Thank you for your attention.</p>
+                        <p class="font-bold text-2xl text-blue-800 mt-6">James Williams</p>
+                        <p class="text-gray-500 font-mono text-base mt-2">jwilliams@staff.newman.ac.uk</p>
+                    </div>
+                    
+                    <div class="mt-12 flex items-center gap-2 text-gray-400 text-sm bg-white px-4 py-2 rounded-full shadow-sm">
+                        <span class="material-icons text-sm">timer</span>
+                        <span>2 mins for Q&A</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            center: true,
+            hash: true,
+            transition: 'slide'
+        });
+    </script>
+</body>
+</html>
