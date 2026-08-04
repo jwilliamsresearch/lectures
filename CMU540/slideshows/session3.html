@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU540 - Session 3: WEB-CRYPTO-01 - Cryptographic Failures</title>
+
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+</head>
+
+<body>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session2.html" title="Previous Session">&lt;</a>
+        <a href="session4.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>WEB-CRYPTO-01 - Cryptographic Failures</h1>
+                <h2>Session 3</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand OWASP A02: Cryptographic Failures</li>
+                    <li>Identify common cryptographic vulnerabilities</li>
+                    <li>Learn secure encryption practices</li>
+                    <li>Practice vulnerability discovery using OS³ Studio</li>
+                    <li>Implement secure cryptographic solutions</li>
+                    <li>Explore career opportunities in cryptography</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="OWASP A02: Cryptographic Failures">
+                <h2>OWASP A02: Cryptographic Failures</h2>
+                <div class="highlight">
+                    <p><strong>Definition:</strong> Cryptographic failures occur when sensitive data is exposed due to weak or missing cryptographic controls.</p>
+                </div>
+                <h3>Key Areas:</h3>
+                <ul>
+                    <li>Weak encryption algorithms</li>
+                    <li>Poor key management</li>
+                    <li>Insecure data transmission</li>
+                    <li>Inadequate data protection at rest</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Real-World Impact">
+                <h2>Real-World Impact</h2>
+                <div class="vulnerability">
+                    <h3>Notable Breaches:</h3>
+                    <ul>
+                        <li><strong>Equifax (2017):</strong> 147 million records exposed due to weak encryption</li>
+                        <li><strong>Marriott (2018):</strong> 500 million records compromised</li>
+                        <li><strong>Facebook (2019):</strong> 540 million records stored in plaintext</li>
+                    </ul>
+                    <p><strong>Average Cost:</strong> $4.45 million per breach (IBM 2023)</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Common Cryptographic Vulnerabilities">
+                <h2>Common Cryptographic Vulnerabilities</h2>
+                <h3>1. Weak Encryption Algorithms</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Using weak algorithms --&gt;
+MD5(password)  // Easily cracked
+DES(data)       // 56-bit key, broken
+RC4(data)       // Vulnerable to attacks</code></pre>
+                </div>
+                <h3>2. Hardcoded Keys</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: Hardcoded encryption key --&gt;
+const ENCRYPTION_KEY = "mysecretkey123";</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Insecure Data Transmission">
+                <h2>Insecure Data Transmission</h2>
+                <h3>HTTP vs HTTPS</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: HTTP transmission --&gt;
+http://example.com/login
+POST /login
+username=admin&amp;password=secret123
+// SECURE: HTTPS transmission
+https://example.com/login
+POST /login (encrypted)</code></pre>
+                </div>
+                <div class="highlight">
+                    <p><strong>Risk:</strong> Data intercepted in transit, credentials stolen</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Poor Key Management">
+                <h2>Poor Key Management</h2>
+                <h3>Common Mistakes:</h3>
+                <ul>
+                    <li>Using default keys</li>
+                    <li>Reusing keys across applications</li>
+                    <li>Storing keys in source code</li>
+                    <li>Not rotating keys regularly</li>
+                    <li>Weak key generation</li>
+                </ul>
+                <div class="vulnerability">
+                    <p><strong>Example:</strong> Many IoT devices use default encryption keys, making them easily compromised.</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Inadequate Data Protection at Rest">
+                <h2>Inadequate Data Protection at Rest</h2>
+                <h3>Database Encryption Issues:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Storing sensitive data unencrypted --&gt;
+CREATE TABLE users (
+  id INT,
+  username VARCHAR(50),
+  password VARCHAR(50),  -- Should be hashed
+  ssn VARCHAR(20),       -- Should be encrypted
+  credit_card VARCHAR(20) -- Should be encrypted
+);</code></pre>
+                </div>
+                <div class="highlight">
+                    <p><strong>Risk:</strong> Database breaches expose all sensitive data</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Hash Function Vulnerabilities">
+                <h2>Hash Function Vulnerabilities</h2>
+                <h3>Weak Hash Functions:</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: Weak hash functions --&gt;
+MD5(password)     // Collision attacks possible
+SHA1(password)    // Vulnerable to attacks
+CRC32(data)       // Not cryptographically secure
+// SECURE: Strong hash functions
+bcrypt(password, 12)  // Adaptive hashing
+Argon2(password)     // Memory-hard function
+scrypt(password)      // Memory-hard function</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Certificate and SSL/TLS Issues">
+                <h2>Certificate and SSL/TLS Issues</h2>
+                <h3>Common Problems:</h3>
+                <ul>
+                    <li>Self-signed certificates</li>
+                    <li>Expired certificates</li>
+                    <li>Weak cipher suites</li>
+                    <li>SSL/TLS misconfiguration</li>
+                    <li>Certificate validation bypass</li>
+                </ul>
+                <div class="demo-link">
+                    <p><strong>Test Your Site:</strong> <a href="https://www.ssllabs.com/ssltest/" target="_blank">SSL Labs SSL Test</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Opportunities in Cryptography">
+                <h2>Career Opportunities in Cryptography</h2>
+                <div class="career-box">
+                    <h3>Cryptographic Roles:</h3>
+                    <ul>
+                        <li><strong>Cryptographic Engineer:</strong> £45,000 - £80,000</li>
+                        <li><strong>Security Architect:</strong> £60,000 - £120,000</li>
+                        <li><strong>Penetration Tester:</strong> £35,000 - £70,000</li>
+                        <li><strong>Security Consultant:</strong> £50,000 - £100,000</li>
+                        <li><strong>Cryptographic Researcher:</strong> £40,000 - £90,000</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> Mathematics, Programming, Security protocols, Risk assessment</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Industry Certifications">
+                <h2>Industry Certifications</h2>
+                <h3>Cryptographic Certifications:</h3>
+                <ul>
+                    <li><strong>CISSP:</strong> Certified Information Systems Security Professional</li>
+                    <li><strong>CISM:</strong> Certified Information Security Manager</li>
+                    <li><strong>CISA:</strong> Certified Information Systems Auditor</li>
+                    <li><strong>CEH:</strong> Certified Ethical Hacker</li>
+                    <li><strong>OSCP:</strong> Offensive Security Certified Professional</li>
+                </ul>
+                <div class="demo-link">
+                    <p><strong>Resources:</strong> <a href="https://www.isc2.org/" target="_blank">ISC²</a> | <a href="https://www.eccouncil.org/" target="_blank">EC-Council</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
+                <h2>OS³ Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>WEB-CRYPTO-01 Lab Environment</h3>
+                    <p>Our OS³ Studio provides hands-on experience with:</p>
+                    <ul>
+                        <li>Vulnerable web applications with cryptographic flaws</li>
+                        <li>Real-world attack scenarios</li>
+                        <li>Secure implementation challenges</li>
+                        <li>Code analysis and remediation</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Practical Examples">
+                <h2>Practical Examples</h2>
+                <div class="interactive-content">
+                    <h3>Watch: Cryptographic Failures Explained</h3>
+                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
+                    <p class="interactive-description">
+                        Understanding real-world cryptographic vulnerabilities and their impact
+                    </p>
+                </div>
+            </section>
+
+            <section data-slide-title="Web Demos and Tools">
+                <h2>Web Demos and Tools</h2>
+                <div class="demo-link">
+                    <h3>Cryptographic Testing Tools:</h3>
+                    <ul>
+                        <li><a href="https://cryptii.com/" target="_blank">Cryptii</a> - Online cryptographic tools</li>
+                        <li><a href="https://www.dcode.fr/" target="_blank">DCode</a> - Cipher decoder</li>
+                        <li><a href="https://hashcat.net/hashcat/" target="_blank">Hashcat</a> - Password recovery tool</li>
+                        <li><a href="https://www.ssllabs.com/ssltest/" target="_blank">SSL Labs</a> - SSL/TLS testing</li>
+                        <li><a href="https://testssl.sh/" target="_blank">TestSSL</a> - SSL/TLS scanner</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Case Study: Heartbleed Vulnerability">
+                <h2>Case Study: Heartbleed Vulnerability</h2>
+                <div class="vulnerability">
+                    <h3>OpenSSL Heartbleed (CVE-2014-0160)</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> Exposed private keys and sensitive data</li>
+                        <li><strong>Affected:</strong> 500,000+ websites</li>
+                        <li><strong>Cause:</strong> Buffer over-read in TLS heartbeat extension</li>
+                        <li><strong>Fix:</strong> Proper bounds checking</li>
+                    </ul>
+                    <p><strong>Lesson:</strong> Even cryptographic libraries can have implementation flaws</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Implementation Principles">
+                <h2>Secure Implementation Principles</h2>
+                <h3>1. Use Strong Algorithms</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Use approved algorithms --&gt;
+AES-256-GCM for encryption
+SHA-256 or SHA-3 for hashing
+RSA-2048+ or ECDSA for signatures</code></pre>
+                </div>
+                <h3>2. Proper Key Management</h3>
+                <ul>
+                    <li>Use hardware security modules (HSMs)</li>
+                    <li>Implement key rotation</li>
+                    <li>Store keys securely</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Summary: Common Cryptographic Failures">
+                <h2>Summary: Common Cryptographic Failures</h2>
+                <div class="highlight">
+                    <h3>Key Vulnerabilities to Look For:</h3>
+                    <ol>
+                        <li>Weak encryption algorithms (MD5, DES, RC4)</li>
+                        <li>Hardcoded encryption keys</li>
+                        <li>HTTP instead of HTTPS</li>
+                        <li>Unencrypted sensitive data storage</li>
+                        <li>Weak password hashing</li>
+                        <li>SSL/TLS misconfiguration</li>
+                        <li>Certificate validation issues</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: Cryptographic Vulnerability Discovery">
+                <h2>Task 1: Cryptographic Vulnerability Discovery</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to identify cryptographic vulnerabilities in the WEB-CRYPTO-01 lab environment.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio vulnerable application</li>
+                        <li>Analyze the application for cryptographic weaknesses</li>
+                        <li>Test for weak encryption algorithms</li>
+                        <li>Check for insecure data transmission</li>
+                        <li>Identify poor key management practices</li>
+                        <li>Test password hashing vulnerabilities</li>
+                        <li>Document all findings with evidence</li>
+                        <li>Prepare a vulnerability assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on systematic testing and thorough documentation</em></p>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Break Time">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secure implementation and Task 2</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Encryption Implementation">
+                <h2>Secure Encryption Implementation</h2>
+                
+                <h3>1. Strong Password Hashing</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Use bcrypt with appropriate cost --&gt;
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
+const hashPassword = async (password) =&gt; {
+  return await bcrypt.hash(password, saltRounds);
+};
+const verifyPassword = async (password, hash) =&gt; {
+  return await bcrypt.compare(password, hash);
+};</code></pre>
+                </div>
+
+                <h3>2. Data Encryption at Rest</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: AES-256-GCM encryption --&gt;
+const crypto = require('crypto');
+const encrypt = (text, key) =&gt; {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipher('aes-256-gcm', key);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return { encrypted, iv: iv.toString('hex') };
+};</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Key Management">
+                <h2>Secure Key Management</h2>
+                
+                <h3>1. Environment Variables</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Store keys in environment variables --&gt;
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
+const JWT_SECRET = process.env.JWT_SECRET;
+// Use .env file for development
+ENCRYPTION_KEY=your-256-bit-key-here
+JWT_SECRET=your-jwt-secret-here</code></pre>
+                </div>
+
+                <h3>2. Key Rotation Strategy</h3>
+                <ul>
+                    <li>Implement automatic key rotation</li>
+                    <li>Use key versioning</li>
+                    <li>Monitor key usage</li>
+                    <li>Have key recovery procedures</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="HTTPS Implementation">
+                <h2>HTTPS Implementation</h2>
+                
+                <h3>1. SSL/TLS Configuration</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Express.js HTTPS setup --&gt;
+const https = require('https');
+const fs = require('fs');
+const options = {
+  key: fs.readFileSync('private-key.pem'),
+  cert: fs.readFileSync('certificate.pem'),
+  ciphers: [
+    'ECDHE-RSA-AES256-GCM-SHA384',
+    'ECDHE-RSA-AES128-GCM-SHA256'
+  ].join(':'),
+  honorCipherOrder: true
+};
+https.createServer(options, app).listen(443);</code></pre>
+                </div>
+
+                <h3>2. Security Headers</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Security headers --&gt;
+app.use((req, res, next) =&gt; {
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  next();
+});</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Database Security">
+                <h2>Database Security</h2>
+                
+                <h3>1. Encrypted Database Fields</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Encrypt sensitive fields --&gt;
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  username VARCHAR(50),
+  password_hash VARCHAR(255),  -- bcrypt hash
+  email_encrypted BLOB,        -- AES encrypted
+  ssn_encrypted BLOB,         -- AES encrypted
+  created_at TIMESTAMP
+);</code></pre>
+                </div>
+
+                <h3>2. Database Connection Security</h3>
+                <ul>
+                    <li>Use SSL/TLS for database connections</li>
+                    <li>Implement connection pooling</li>
+                    <li>Use least privilege database users</li>
+                    <li>Enable database audit logging</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="API Security">
+                <h2>API Security</h2>
+                
+                <h3>1. JWT Token Security</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: JWT implementation --&gt;
+const jwt = require('jsonwebtoken');
+const generateToken = (user) =&gt; {
+  return jwt.sign(
+    { userId: user.id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h', algorithm: 'HS256' }
+  );
+};
+const verifyToken = (token) =&gt; {
+  return jwt.verify(token, process.env.JWT_SECRET);
+};</code></pre>
+                </div>
+
+                <h3>2. API Rate Limiting</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Rate limiting --&gt;
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP'
+});
+app.use('/api/', limiter);</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Security Testing">
+                <h2>Security Testing</h2>
+                
+                <h3>1. Automated Security Scanning</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Security testing tools --&gt;
+npm install --save-dev eslint-plugin-security
+npm install --save-dev snyk
+// Run security audit
+npm audit
+snyk test</code></pre>
+                </div>
+
+                <h3>2. Manual Testing Checklist</h3>
+                <ul>
+                    <li>Test all encryption/decryption functions</li>
+                    <li>Verify HTTPS implementation</li>
+                    <li>Check for hardcoded secrets</li>
+                    <li>Test password policies</li>
+                    <li>Validate certificate configuration</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Compliance and Standards">
+                <h2>Compliance and Standards</h2>
+                
+                <h3>1. Industry Standards</h3>
+                <ul>
+                    <li><strong>FIPS 140-2:</strong> Cryptographic module validation</li>
+                    <li><strong>Common Criteria:</strong> Security evaluation</li>
+                    <li><strong>PCI DSS:</strong> Payment card industry standards</li>
+                    <li><strong>GDPR:</strong> Data protection requirements</li>
+                </ul>
+
+                <h3>2. Best Practices</h3>
+                <div class="highlight">
+                    <ul>
+                        <li>Use approved cryptographic algorithms only</li>
+                        <li>Implement defense in depth</li>
+                        <li>Regular security assessments</li>
+                        <li>Incident response planning</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Development in Cryptography">
+                <h2>Career Development in Cryptography</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Advanced Certifications:</strong> CISSP, CISM, CISA</li>
+                        <li><strong>Specialized Training:</strong> Cryptographic protocols, PKI</li>
+                        <li><strong>Hands-on Practice:</strong> CTF competitions, bug bounties</li>
+                        <li><strong>Industry Networking:</strong> Security conferences, meetups</li>
+                        <li><strong>Research:</strong> Academic papers, new algorithms</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://owasp.org/" target="_blank">OWASP</a> | <a href="https://www.nist.gov/" target="_blank">NIST</a> | <a href="https://cryptopals.com/" target="_blank">Cryptopals</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Secure Cryptographic Implementation">
+                <h2>Task 2: Secure Cryptographic Implementation</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to implement secure cryptographic solutions and fix the vulnerabilities found in Task 1.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio secure implementation environment</li>
+                        <li>Implement strong password hashing (bcrypt/Argon2)</li>
+                        <li>Add proper data encryption for sensitive fields</li>
+                        <li>Configure HTTPS with strong cipher suites</li>
+                        <li>Implement secure key management</li>
+                        <li>Add proper security headers</li>
+                        <li>Test the secure implementation</li>
+                        <li>Document the security improvements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on implementing industry-standard security practices</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Further Activity: Code Inspection">
+                <h2>Further Activity: Code Inspection</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Code Analysis:</h3>
+                    <p>For students with additional time, explore the source code to understand:</p>
+                    <ul>
+                        <li>How cryptographic functions are implemented</li>
+                        <li>Key generation and management processes</li>
+                        <li>Error handling in cryptographic operations</li>
+                        <li>Performance implications of security measures</li>
+                        <li>Integration with other security controls</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Code review report with recommendations</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Session Summary">
+                <h2>Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>Cryptographic failures are a major security risk</li>
+                        <li>Weak algorithms and poor key management are common issues</li>
+                        <li>HTTPS and proper encryption are essential</li>
+                        <li>OS³ Studio provides hands-on vulnerability testing</li>
+                        <li>Secure implementation requires multiple layers of protection</li>
+                        <li>Career opportunities in cryptography are growing</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Next Steps">
+                <h2>Next Steps</h2>
+                
+            </section>
+
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

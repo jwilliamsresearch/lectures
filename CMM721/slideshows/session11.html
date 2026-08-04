@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM721 - Session 11: Comparative Critique</title>
+
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session10.html" title="Previous Session">&lt;</a>
+        <a href="session12.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
+                <h1>Comparative Critique</h1>
+                <h2>Session 11</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Compare multiple web applications systematically</li>
+                    <li>Evaluate frontend frameworks (React, Vue, Angular)</li>
+                    <li>Analyze design decisions and trade-offs</li>
+                    <li>Assess scalability and maintainability</li>
+                    <li>Compare technology stacks</li>
+                    <li>Conduct competitive analysis</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Why Comparative Analysis?">
+                <h2>Why Comparative Analysis?</h2>
+                <ul>
+                    <li><strong>Informed Decisions:</strong> Choose right tools for your project</li>
+                    <li><strong>Best Practices:</strong> Learn from successful implementations</li>
+                    <li><strong>Avoid Pitfalls:</strong> Identify common mistakes</li>
+                    <li><strong>Innovation:</strong> Understand competitive landscape</li>
+                    <li><strong>Justification:</strong> Defend technology choices</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Critical Thinking:</strong> No "best" framework - only best fit for context
+                </div>
+            </section>
+
+            <section data-slide-title="Comparison Framework">
+                <h2>Comparison Framework</h2>
+                <h3>Evaluation Criteria:</h3>
+                <ol>
+                    <li><strong>Functionality:</strong> Features, capabilities</li>
+                    <li><strong>Usability:</strong> User experience, learnability</li>
+                    <li><strong>Performance:</strong> Speed, efficiency</li>
+                    <li><strong>Scalability:</strong> Growth potential</li>
+                    <li><strong>Maintainability:</strong> Code quality, documentation</li>
+                    <li><strong>Security:</strong> Vulnerabilities, best practices</li>
+                    <li><strong>Accessibility:</strong> Inclusive design</li>
+                    <li><strong>Technology Stack:</strong> Modern, supported</li>
+                </ol>
+            </section>
+
+            <section data-slide-title="🎯 Framework Comparison: React vs Vue vs Angular">
+                <h2>🎯 Framework Comparison: React vs Vue vs Angular</h2>
+                <div class="demo-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>React</th>
+                                <th>Vue</th>
+                                <th>Angular</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Type</strong></td>
+                                <td>Library</td>
+                                <td>Progressive Framework</td>
+                                <td>Full Framework</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Learning Curve</strong></td>
+                                <td>Moderate</td>
+                                <td>Easy</td>
+                                <td>Steep</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Size (min+gzip)</strong></td>
+                                <td>42 KB</td>
+                                <td>34 KB</td>
+                                <td>143 KB</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data Binding</strong></td>
+                                <td>One-way</td>
+                                <td>Two-way</td>
+                                <td>Two-way</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile</strong></td>
+                                <td>React Native</td>
+                                <td>NativeScript Vue</td>
+                                <td>Ionic, NativeScript</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Backed By</strong></td>
+                                <td>Meta (Facebook)</td>
+                                <td>Community</td>
+                                <td>Google</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section data-slide-title="React: Detailed Analysis">
+                <h2>React: Detailed Analysis</h2>
+                <div class="framework-card">
+                    <h4>React (Meta/Facebook)</h4>
+                    <p><strong>Philosophy:</strong> Component-based UI library with virtual DOM</p>
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4 style="color: #27ae60; margin-top: 0;">✅ Pros</h4>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>Huge ecosystem & community</li>
+                                <li>Virtual DOM for performance</li>
+                                <li>JSX syntax (HTML in JS)</li>
+                                <li>React Native for mobile</li>
+                                <li>Flexible, not opinionated</li>
+                                <li>Strong job market</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4 style="color: #e74c3c; margin-top: 0;">❌ Cons</h4>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>Just the view layer</li>
+                                <li>Requires many libraries</li>
+                                <li>Rapid changes (hooks, etc.)</li>
+                                <li>JSX learning curve</li>
+                                <li>Documentation gaps</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p><strong>Best For:</strong> Large-scale apps, teams with JS expertise, when flexibility is needed</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Vue: Detailed Analysis">
+                <h2>Vue: Detailed Analysis</h2>
+                <div class="framework-card">
+                    <h4>Vue.js (Evan You)</h4>
+                    <p><strong>Philosophy:</strong> Progressive framework, incrementally adoptable</p>
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4 style="color: #27ae60; margin-top: 0;">✅ Pros</h4>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>Gentle learning curve</li>
+                                <li>Excellent documentation</li>
+                                <li>Small bundle size</li>
+                                <li>Template syntax familiar</li>
+                                <li>Two-way data binding</li>
+                                <li>Great for small to medium apps</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4 style="color: #e74c3c; margin-top: 0;">❌ Cons</h4>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>Smaller community vs React</li>
+                                <li>Fewer job opportunities</li>
+                                <li>Less corporate backing</li>
+                                <li>Plugin quality varies</li>
+                                <li>Over-flexibility can be bad</li>
+                </ul>
+                        </div>
+                    </div>
+                    <p><strong>Best For:</strong> Rapid prototyping, small teams, developers new to frameworks</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Angular: Detailed Analysis">
+                <h2>Angular: Detailed Analysis</h2>
+                <div class="framework-card">
+                    <h4>Angular (Google)</h4>
+                    <p><strong>Philosophy:</strong> Full-featured framework with opinionated structure</p>
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h4 style="color: #27ae60; margin-top: 0;">✅ Pros</h4>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>Complete solution (routing, HTTP, forms)</li>
+                                <li>TypeScript by default</li>
+                                <li>Powerful CLI</li>
+                                <li>Dependency injection</li>
+                                <li>Strong enterprise support</li>
+                                <li>Enforces best practices</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h4 style="color: #e74c3c; margin-top: 0;">❌ Cons</h4>
+                            <ul style="margin: 0; padding-left: 20px;">
+                                <li>Steep learning curve</li>
+                                <li>Verbose syntax</li>
+                                <li>Large bundle size</li>
+                                <li>Complex for small apps</li>
+                                <li>Breaking changes between versions</li>
+                </ul>
+                        </div>
+                    </div>
+                    <p><strong>Best For:</strong> Enterprise apps, large teams, when structure is needed</p>
+                </div>
+            </section>
+
+            <section data-slide-title="🎯 Performance Comparison">
+                <h2>🎯 Performance Comparison</h2>
+                <div class="demo-container">
+                    <h3>Rendering 10,000 Items</h3>
+                    <div style="margin: 20px 0;">
+                        <h4 style="margin: 10px 0;">React</h4>
+                        <div class="rating-bar">
+                            <div class="rating-fill" style="width: 85%;">85ms</div>
+                        </div>
+                        
+                        <h4 style="margin: 10px 0;">Vue</h4>
+                        <div class="rating-bar">
+                            <div class="rating-fill" style="width: 78%;">78ms</div>
+                        </div>
+                        
+                        <h4 style="margin: 10px 0;">Angular</h4>
+                        <div class="rating-bar">
+                            <div class="rating-fill" style="width: 92%;">92ms</div>
+                        </div>
+                        
+                        <h4 style="margin: 10px 0;">Vanilla JS</h4>
+                        <div class="rating-bar">
+                            <div class="rating-fill" style="width: 45%;">45ms</div>
+                        </div>
+                    </div>
+                    <p style="color: #666; font-size: 0.9em; text-align: center;">
+                        Benchmark results vary by use case. Always test for your specific scenario.
+                    </p>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: Framework Comparative Analysis">
+                <h2>Task 1: Framework Comparative Analysis</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Build the same simple app in React, Vue, and Angular</p>
+                    <h3>App Requirements:</h3>
+                    <ul>
+                        <li>Todo list with add, complete, delete</li>
+                        <li>Filter: all/active/completed</li>
+                        <li>Local storage persistence</li>
+                    </ul>
+                    <h3>Analysis Requirements:</h3>
+                    <ol>
+                        <li>Document development time for each</li>
+                        <li>Compare lines of code</li>
+                        <li>Measure bundle sizes</li>
+                        <li>Test performance (Lighthouse)</li>
+                        <li>Evaluate developer experience</li>
+                        <li>Rate learning curve (1-10)</li>
+                    </ol>
+                    <h3>Deliverables:</h3>
+                    <ul>
+                        <li>Three working implementations</li>
+                        <li>Comparative analysis report (2000 words)</li>
+                        <li>Recommendation with justification</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Backend Framework Comparison">
+                <h2>Backend Framework Comparison</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Framework</th>
+                            <th>Language</th>
+                            <th>Architecture</th>
+                            <th>Best For</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Django</strong></td>
+                            <td>Python</td>
+                            <td>MVT, Batteries included</td>
+                            <td>Rapid development, Content-heavy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Express.js</strong></td>
+                            <td>JavaScript</td>
+                            <td>Minimalist, Middleware</td>
+                            <td>APIs, Real-time apps</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Laravel</strong></td>
+                            <td>PHP</td>
+                            <td>MVC, Eloquent ORM</td>
+                            <td>Web apps, Rapid prototyping</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ruby on Rails</strong></td>
+                            <td>Ruby</td>
+                            <td>MVC, Convention over config</td>
+                            <td>Startups, MVPs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Spring Boot</strong></td>
+                            <td>Java</td>
+                            <td>Microservices</td>
+                            <td>Enterprise, Scalability</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section data-slide-title="Design Decisions & Trade-offs">
+                <h2>Design Decisions & Trade-offs</h2>
+                <h3>Common Decisions:</h3>
+                <ul>
+                    <li><strong>Monolith vs Microservices:</strong> Simplicity vs scalability</li>
+                    <li><strong>SQL vs NoSQL:</strong> Structure vs flexibility</li>
+                    <li><strong>Server-side vs Client-side rendering:</strong> SEO vs interactivity</li>
+                    <li><strong>REST vs GraphQL:</strong> Simplicity vs flexibility</li>
+                    <li><strong>TypeScript vs JavaScript:</strong> Type safety vs simplicity</li>
+                </ul>
+                <div class="highlight">
+                    <strong>No silver bullet:</strong> Every decision has trade-offs
+                </div>
+            </section>
+
+            <section data-slide-title="🎯 Trade-off Analysis Example">
+                <h2>🎯 Trade-off Analysis Example</h2>
+                <div class="demo-container">
+                    <h3>Server-Side Rendering (SSR) vs Client-Side Rendering (CSR)</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #3498db;">
+                            <h4 style="color: #3498db; margin-top: 0;">Server-Side Rendering</h4>
+                            <p><strong>✅ Advantages:</strong></p>
+                            <ul style="font-size: 0.9em;">
+                                <li>Better SEO</li>
+                                <li>Faster initial load</li>
+                                <li>Works without JavaScript</li>
+                            </ul>
+                            <p><strong>❌ Disadvantages:</strong></p>
+                            <ul style="font-size: 0.9em;">
+                                <li>Higher server load</li>
+                                <li>Slower navigation</li>
+                                <li>More complex deployment</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #9b59b6;">
+                            <h4 style="color: #9b59b6; margin-top: 0;">Client-Side Rendering</h4>
+                            <p><strong>✅ Advantages:</strong></p>
+                            <ul style="font-size: 0.9em;">
+                                <li>Rich interactions</li>
+                                <li>Faster navigation</li>
+                                <li>Lower server costs</li>
+                            </ul>
+                            <p><strong>❌ Disadvantages:</strong></p>
+                            <ul style="font-size: 0.9em;">
+                                <li>SEO challenges</li>
+                                <li>Slower initial load</li>
+                                <li>Requires JavaScript</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-slide-title="Scalability Assessment">
+                <h2>Scalability Assessment</h2>
+                <h3>Vertical vs Horizontal Scaling:</h3>
+                <ul>
+                    <li><strong>Vertical:</strong> More powerful server (limited, expensive)</li>
+                    <li><strong>Horizontal:</strong> More servers (better, complex)</li>
+                </ul>
+                <h3>Scalability Indicators:</h3>
+                <ul>
+                    <li>Stateless architecture</li>
+                    <li>Database connection pooling</li>
+                    <li>Caching strategy (Redis, Memcached)</li>
+                    <li>Load balancing support</li>
+                    <li>Async task processing (Celery, RabbitMQ)</li>
+                    <li>CDN for static assets</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Maintainability Evaluation">
+                <h2>Maintainability Evaluation</h2>
+                <h3>Code Quality Metrics:</h3>
+                <ul>
+                    <li><strong>Readability:</strong> Clear naming, proper structure</li>
+                    <li><strong>Documentation:</strong> Comments, README, API docs</li>
+                    <li><strong>Test Coverage:</strong> Unit, integration, E2E tests</li>
+                    <li><strong>Dependencies:</strong> Up-to-date, minimal, trusted</li>
+                    <li><strong>Code Duplication:</strong> DRY principle</li>
+                    <li><strong>Complexity:</strong> Cyclomatic complexity</li>
+                </ul>
+                <h3>Tools:</h3>
+                <div class="code-example">
+                    <pre><code class="language-bash"># Code quality
+SonarQube, CodeClimate
+# Test coverage
+Coverage.py, Jest --coverage
+# Dependency check
+npm audit, pip-audit</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Competitive Analysis">
+                <h2>Task 2: Competitive Analysis</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Compare 3 competing web applications in the same domain</p>
+                    <h3>Example Domains:</h3>
+                    <ul>
+                        <li>Social media: Twitter vs Mastodon vs Bluesky</li>
+                        <li>Project management: Trello vs Asana vs Monday.com</li>
+                        <li>Video: YouTube vs Vimeo vs TikTok</li>
+                        <li>E-commerce: Amazon vs eBay vs Etsy</li>
+                    </ul>
+                    <h3>Analysis Requirements:</h3>
+                    <ol>
+                        <li>Compare features and functionality</li>
+                        <li>Evaluate UX and design patterns</li>
+                        <li>Analyze performance (Lighthouse)</li>
+                        <li>Check accessibility compliance</li>
+                        <li>Identify technology stack (Wappalyzer)</li>
+                        <li>Compare business models</li>
+                        <li>SWOT analysis for each</li>
+                    </ol>
+                    <h3>Deliverables:</h3>
+                    <ul>
+                        <li>Comparative analysis report (2500-3000 words)</li>
+                        <li>Feature comparison matrix</li>
+                        <li>Recommendation with justification</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Technology Stack Evaluation">
+                <h2>Technology Stack Evaluation</h2>
+                <h3>LAMP Stack:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">Linux + Apache + MySQL + PHP
+✅ Mature, widely supported
+❌ Older technology, slower performance</code></pre>
+                </div>
+                <h3>MEAN/MERN Stack:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">MongoDB + Express + (Angular/React) + Node.js
+✅ JavaScript everywhere, modern
+❌ Less structured, JavaScript limitations</code></pre>
+                </div>
+                <h3>Django Stack:</h3>
+                <div class="code-example">
+                    <pre><code class="language-python">Python + Django + PostgreSQL + React
+✅ Rapid development, powerful ORM
+❌ Monolithic, Python performance</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="🎯 Real-World Example: Instagram">
+                <h2>🎯 Real-World Example: Instagram</h2>
+                <div class="demo-container">
+                    <h3>Instagram's Technology Evolution</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <h4 style="margin-top: 0;">2010 (Launch):</h4>
+                        <ul>
+                            <li>Django + PostgreSQL</li>
+                            <li>Simple photo sharing</li>
+                            <li>13 employees</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: 15px;">2012 (Facebook Acquisition):</h4>
+                        <ul>
+                            <li>Scaled Django infrastructure</li>
+                            <li>Added Cassandra for feed</li>
+                            <li>Introduced Redis caching</li>
+                        </ul>
+                        
+                        <h4 style="margin-top: 15px;">2020+ (Current):</h4>
+                        <ul>
+                            <li>Microservices architecture</li>
+                            <li>React Native mobile apps</li>
+                            <li>GraphQL API</li>
+                            <li>Machine learning for recommendations</li>
+                </ul>
+                        
+                        <p style="margin-top: 20px; color: #9b59b6;"><strong>Lesson:</strong> Start simple, scale as needed. Django still powers major parts!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section data-slide-title="Comparative Report Structure">
+                <h2>Comparative Report Structure</h2>
+                <ol>
+                    <li><strong>Executive Summary:</strong> Key findings, recommendations</li>
+                    <li><strong>Introduction:</strong> Apps/frameworks being compared</li>
+                    <li><strong>Methodology:</strong> Evaluation criteria, tools used</li>
+                    <li><strong>Feature Comparison:</strong> Side-by-side analysis</li>
+                    <li><strong>Usability:</strong> UX, design patterns</li>
+                    <li><strong>Performance:</strong> Speed, optimization</li>
+                    <li><strong>Technology:</strong> Stack, architecture, scalability</li>
+                    <li><strong>Trade-off Analysis:</strong> Design decisions</li>
+                    <li><strong>SWOT Analysis:</strong> Strengths, weaknesses, opportunities, threats</li>
+                    <li><strong>Recommendation:</strong> Which to choose and why</li>
+                    <li><strong>Conclusion:</strong> Summary of insights</li>
+                </ol>
+            </section>
+
+            <section data-slide-title="Best Practices">
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>Fair Comparison:</strong> Compare like with like</li>
+                    <li><strong>Context Matters:</strong> Consider use case, team, budget</li>
+                    <li><strong>Data-Driven:</strong> Use metrics, not opinions</li>
+                    <li><strong>Acknowledge Bias:</strong> Be transparent about limitations</li>
+                    <li><strong>Version Specific:</strong> Technology changes rapidly</li>
+                    <li><strong>Holistic View:</strong> Don't focus only on one aspect</li>
+                    <li><strong>Real-World Testing:</strong> Build something, don't just read</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Next Session: Project Finalisation">
+                <h2>Next Session: Project Finalisation</h2>
+                <ul>
+                    <li>Testing strategies (unit, integration, E2E)</li>
+                    <li>Load testing and performance optimization</li>
+                    <li>Documentation best practices</li>
+                    <li>Deployment strategies</li>
+                    <li>CI/CD pipelines</li>
+                    <li>Project presentation tips</li>
+                </ul>
+                <p><strong>Preparation:</strong> Ensure your final project is near completion</p>
+            </section>
+
+            <section data-slide-title="Questions & Discussion" class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> TodoMVC (framework comparison), Stack Overflow Trends</p>
+                <p>Thank you for your attention!</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

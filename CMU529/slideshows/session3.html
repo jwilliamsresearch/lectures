@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 3: Bootstrap Components & Customization</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+    <!-- Bootstrap CSS for live demos -->
+    <link href="../../libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .live-demo {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .live-demo h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        .demo-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session2.html" title="Previous Session">&lt;</a>
+        <a href="session4.html" title="Next Session">&gt;</a>
+    </div>
+    
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 3</div>
+                <h1>Bootstrap Components & Customization</h1>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
+                </div>
+            </section>
+
+            
+
+            <!-- Slide 2: Learning Objectives -->
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
+                <ul>
+                    <li>Master advanced Bootstrap components and layouts</li>
+                    <li>Learn Bootstrap customization techniques</li>
+                    <li>Create custom component variants</li>
+                    <li>Build complex e-commerce interfaces</li>
+                    <li>Understand responsive design patterns</li>
+                    <li>Implement interactive components with JavaScript</li>
+                    <li><strong>Experience live code demos:</strong> modals, carousels, accordions, tabs, product cards, and shopping carts</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: Advanced Bootstrap Components -->
+            <section data-slide-title="Advanced Bootstrap Components"><h2>Advanced Bootstrap Components</h2>
+                <div class="code-example">
+                <pre><code class="language-html">Advanced Components:
+Modal Dialogs
+Carousel/Slideshow
+Accordion/Collapse
+Tabs &amp; Pills
+Progress Bars
+Spinners &amp; Loaders
+Toast Notifications
+Offcanvas Sidebar
+Dropdown Menus
+Tooltips &amp; Popovers</code></pre>
+            </div>
+                <ul>
+                    <li>Interactive components with JavaScript</li>
+                    <li>Data attributes for initialization</li>
+                    <li>Customizable behavior and styling</li>
+                    <li>Accessible by default</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Bootstrap Modal -->
+            <section data-slide-title="Bootstrap Modal"><h2>Bootstrap Modal</h2>
+                <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Modal Trigger --&gt;
+&lt;button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal"&gt;
+  View Product Details
+&lt;/button&gt;
+&lt;!-- Modal --&gt;
+&lt;div class="modal fade" id="productModal" tabindex="-1"&gt;
+  &lt;div class="modal-dialog modal-lg"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title"&gt;Product Details&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        Product content here...
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 4b: LIVE DEMO - Bootstrap Modal -->
+            <section data-slide-title="🎯 Live Demo: Bootstrap Modal"><h2>🎯 Live Demo: Bootstrap Modal</h2>
+                <span class="demo-badge">INTERACTIVE DEMO</span>
+                <div class="live-demo">
+                    <p><strong>Try it yourself:</strong> Click the button below to see a modal in action!</p>
+                    
+                    <!-- Modal Trigger -->
+                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#demoProductModal">
+                        🛍️ View Product Details
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="demoProductModal" tabindex="-1" aria-labelledby="demoProductModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title" id="demoProductModalLabel">Premium Wireless Headphones</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="https://via.placeholder.com/400x300/4a90e2/ffffff?text=Product+Image" class="img-fluid rounded" alt="Product">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>$199.99</h4>
+                                            <p class="text-muted">In Stock</p>
+                                            <p>High-quality wireless headphones with noise cancellation, 30-hour battery life, and premium sound quality.</p>
+                                            <ul>
+                                                <li>Active Noise Cancellation</li>
+                                                <li>Bluetooth 5.0</li>
+                                                <li>30-hour battery life</li>
+                                                <li>Premium leather cushions</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-success">🛒 Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Bootstrap Carousel -->
+            <section data-slide-title="Bootstrap Carousel"><h2>Bootstrap Carousel</h2>
+                <div class="code-example">
+                <pre><code class="language-html">&lt;div id="productCarousel" class="carousel slide" data-bs-ride="carousel"&gt;
+  &lt;div class="carousel-indicators"&gt;
+    &lt;button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active"&gt;&lt;/button&gt;
+    &lt;button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="carousel-inner"&gt;
+    &lt;div class="carousel-item active"&gt;
+      &lt;img src="product1.jpg" class="d-block w-100" alt="Product 1"&gt;
+    &lt;/div&gt;
+    &lt;div class="carousel-item"&gt;
+      &lt;img src="product2.jpg" class="d-block w-100" alt="Product 2"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 5b: LIVE DEMO - Bootstrap Carousel -->
+            <section data-slide-title="🎯 Live Demo: Bootstrap Carousel"><h2>🎯 Live Demo: Bootstrap Carousel</h2>
+                <span class="demo-badge">INTERACTIVE DEMO</span>
+                <div class="live-demo">
+                    <p><strong>Try it yourself:</strong> Use the arrows or indicators to navigate through product images!</p>
+                    
+                    <div id="demoCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://via.placeholder.com/800x400/FF6B6B/ffffff?text=Product+View+1" class="d-block w-100" alt="Product View 1">
+                                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                                    <h5>Front View</h5>
+                                    <p>Premium wireless headphones - front perspective</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://via.placeholder.com/800x400/4A90E2/ffffff?text=Product+View+2" class="d-block w-100" alt="Product View 2">
+                                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                                    <h5>Side View</h5>
+                                    <p>Showcasing the sleek design and premium materials</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://via.placeholder.com/800x400/51CF66/ffffff?text=Product+View+3" class="d-block w-100" alt="Product View 3">
+                                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                                    <h5>Detail View</h5>
+                                    <p>Close-up of the premium leather cushions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#demoCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#demoCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Bootstrap Accordion -->
+            <section data-slide-title="Bootstrap Accordion"><h2>Bootstrap Accordion</h2>
+                <div class="code-example">
+                <pre><code class="language-html">&lt;div class="accordion" id="productAccordion"&gt;
+  &lt;div class="accordion-item"&gt;
+    &lt;h2 class="accordion-header"&gt;
+      &lt;button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"&gt;
+        Product Description
+      &lt;/button&gt;
+    &lt;/h2&gt;
+    &lt;div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#productAccordion"&gt;
+      &lt;div class="accordion-body"&gt;
+        Product details here...
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 6b: LIVE DEMO - Bootstrap Accordion -->
+            <section data-slide-title="🎯 Live Demo: Bootstrap Accordion"><h2>🎯 Live Demo: Bootstrap Accordion</h2>
+                <span class="demo-badge">INTERACTIVE DEMO</span>
+                <div class="live-demo">
+                    <p><strong>Try it yourself:</strong> Click on the sections to expand/collapse product information!</p>
+                    
+                    <div class="accordion" id="demoAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDesc" aria-expanded="true" aria-controls="collapseDesc">
+                                    📝 Product Description
+                                </button>
+                            </h2>
+                            <div id="collapseDesc" class="accordion-collapse collapse show" data-bs-parent="#demoAccordion">
+                                <div class="accordion-body">
+                                    <strong>Premium Wireless Headphones</strong> - Experience crystal-clear audio with our top-of-the-line wireless headphones. 
+                                    Featuring advanced Bluetooth 5.0 technology, active noise cancellation, and an impressive 30-hour battery life. 
+                                    Perfect for music lovers, gamers, and professionals alike.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpecs" aria-expanded="false" aria-controls="collapseSpecs">
+                                    🔧 Technical Specifications
+                                </button>
+                            </h2>
+                            <div id="collapseSpecs" class="accordion-collapse collapse" data-bs-parent="#demoAccordion">
+                                <div class="accordion-body">
+                                    <ul class="mb-0">
+                                        <li>Frequency Response: 20Hz - 20kHz</li>
+                                        <li>Impedance: 32 Ohms</li>
+                                        <li>Battery Life: 30 hours (ANC on), 40 hours (ANC off)</li>
+                                        <li>Charging Time: 2 hours (USB-C fast charging)</li>
+                                        <li>Weight: 250g</li>
+                                        <li>Bluetooth Version: 5.0</li>
+                                        <li>Range: 10 meters</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReviews" aria-expanded="false" aria-controls="collapseReviews">
+                                    ⭐ Customer Reviews
+                                </button>
+                            </h2>
+                            <div id="collapseReviews" class="accordion-collapse collapse" data-bs-parent="#demoAccordion">
+                                <div class="accordion-body">
+                                    <div class="mb-2">
+                                        <strong>⭐⭐⭐⭐⭐ Amazing sound quality!</strong><br>
+                                        <small class="text-muted">by John D. - 2 days ago</small><br>
+                                        Best headphones I've ever owned. The noise cancellation is incredible!
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <strong>⭐⭐⭐⭐⭐ Perfect for work from home</strong><br>
+                                        <small class="text-muted">by Sarah M. - 1 week ago</small><br>
+                                        Comfortable for all-day wear and the battery lasts forever.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseShipping" aria-expanded="false" aria-controls="collapseShipping">
+                                    📦 Shipping & Returns
+                                </button>
+                            </h2>
+                            <div id="collapseShipping" class="accordion-collapse collapse" data-bs-parent="#demoAccordion">
+                                <div class="accordion-body">
+                                    <strong>Shipping:</strong> Free standard shipping on orders over $50. Express shipping available.<br>
+                                    <strong>Returns:</strong> 30-day money-back guarantee. Free return shipping.<br>
+                                    <strong>Warranty:</strong> 2-year manufacturer warranty included.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Bootstrap Tabs -->
+            <section data-slide-title="Bootstrap Tabs"><h2>Bootstrap Tabs</h2>
+                <div class="code-example">
+                <pre><code class="language-html">&lt;ul class="nav nav-tabs" id="productTabs" role="tablist"&gt;
+  &lt;li class="nav-item" role="presentation"&gt;
+    &lt;button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details"&gt;Details&lt;/button&gt;
+  &lt;/li&gt;
+  &lt;li class="nav-item" role="presentation"&gt;
+    &lt;button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"&gt;Reviews&lt;/button&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="tab-content" id="productTabsContent"&gt;
+  &lt;div class="tab-pane fade show active" id="details"&gt;Details content...&lt;/div&gt;
+  &lt;div class="tab-pane fade" id="reviews"&gt;Reviews content...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 7b: LIVE DEMO - Bootstrap Tabs -->
+            <section data-slide-title="🎯 Live Demo: Bootstrap Tabs"><h2>🎯 Live Demo: Bootstrap Tabs</h2>
+                <span class="demo-badge">INTERACTIVE DEMO</span>
+                <div class="live-demo">
+                    <p><strong>Try it yourself:</strong> Click on different tabs to switch between content sections!</p>
+                    
+                    <ul class="nav nav-tabs" id="demoTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">
+                                📋 Overview
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab" aria-controls="features" aria-selected="false">
+                                ✨ Features
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="compare-tab" data-bs-toggle="tab" data-bs-target="#compare" type="button" role="tab" aria-controls="compare" aria-selected="false">
+                                📊 Compare
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="support-tab" data-bs-toggle="tab" data-bs-target="#support" type="button" role="tab" aria-controls="support" aria-selected="false">
+                                💬 Support
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content border border-top-0 p-3" id="demoTabsContent">
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                            <h5>Product Overview</h5>
+                            <p>Our premium wireless headphones combine cutting-edge technology with exceptional comfort. Whether you're commuting, working, or relaxing, these headphones deliver an unparalleled audio experience.</p>
+                            <p><strong>Key Highlights:</strong></p>
+                            <ul>
+                                <li>Industry-leading noise cancellation</li>
+                                <li>30-hour battery life</li>
+                                <li>Premium materials and build quality</li>
+                                <li>Available in 4 colors</li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="features" role="tabpanel" aria-labelledby="features-tab">
+                            <h5>Advanced Features</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>🎵 Audio Quality</h6>
+                                    <p>Custom 40mm drivers deliver rich, detailed sound across all frequencies.</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>🔇 Noise Cancellation</h6>
+                                    <p>Advanced ANC technology blocks up to 95% of ambient noise.</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>📱 Smart Controls</h6>
+                                    <p>Touch controls for music, calls, and voice assistant activation.</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>🎙️ Crystal Clear Calls</h6>
+                                    <p>Dual microphone array with beamforming technology.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="compare" role="tabpanel" aria-labelledby="compare-tab">
+                            <h5>Model Comparison</h5>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Standard</th>
+                                        <th>Premium</th>
+                                        <th>Pro</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Battery Life</td>
+                                        <td>20h</td>
+                                        <td>30h</td>
+                                        <td>40h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Noise Cancellation</td>
+                                        <td>Basic</td>
+                                        <td>Advanced</td>
+                                        <td>Premium</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Price</td>
+                                        <td>$99</td>
+                                        <td>$199</td>
+                                        <td>$299</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="support" role="tabpanel" aria-labelledby="support-tab">
+                            <h5>Customer Support</h5>
+                            <p><strong>Need help?</strong> We're here for you!</p>
+                            <div class="alert alert-info">
+                                <strong>📞 Phone:</strong> 1-800-HEADPHONES<br>
+                                <strong>✉️ Email:</strong> support@example.com<br>
+                                <strong>💬 Live Chat:</strong> Available 24/7<br>
+                                <strong>📚 Documentation:</strong> <a href="#" class="alert-link">View user manual</a>
+                            </div>
+                            <p><strong>Warranty Information:</strong></p>
+                            <p>All products come with a 2-year manufacturer warranty covering defects in materials and workmanship.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: Bootstrap Customization -->
+            <section data-slide-title="Bootstrap Customization"><h2>Bootstrap Customization</h2>
+                <div class="code-example">
+                <pre><code class="language-html">CSS Custom Properties:
+:root {
+  --bs-primary: #ff6b6b;
+  --bs-secondary: #ee5a24;
+  --bs-success: #28a745;
+  --bs-info: #17a2b8;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #343a40;
+}</code></pre>
+            </div>
+                <ul>
+                    <li>Override Bootstrap's default colors</li>
+                    <li>Use CSS custom properties for theming</li>
+                    <li>Maintain consistency across components</li>
+                    <li>Easy to update and maintain</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Custom Component Classes -->
+            <section data-slide-title="Custom Component Classes"><h2>Custom Component Classes</h2>
+                <div class="code-example">
+                <pre><code class="language-html">Custom Button Styles:
+.btn-ecommerce {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-ecommerce:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 10: Responsive Utilities -->
+            <section data-slide-title="Responsive Utilities"><h2>Responsive Utilities</h2>
+                <div class="code-example">
+                <pre><code class="language-html">Responsive Display Classes:
+d-none d-md-block
+d-block d-md-none
+d-flex d-md-none
+d-none d-md-flex
+Responsive Spacing:
+mt-0 mt-md-3
+p-2 p-md-4
+mx-auto mx-md-0
+Responsive Text:
+text-center text-md-start
+fs-6 fs-md-4
+fw-normal fw-md-bold</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 11: E-commerce Layout Patterns -->
+            <section data-slide-title="E-commerce Layout Patterns"><h2>E-commerce Layout Patterns</h2>
+                <div class="code-example">
+                <pre><code class="language-html">Product Grid Layout:
+&lt;div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"&gt;
+  &lt;div class="col"&gt;
+    &lt;div class="card h-100"&gt;
+      &lt;img src="product.jpg" class="card-img-top" alt="Product"&gt;
+      &lt;div class="card-body d-flex flex-column"&gt;
+        &lt;h5 class="card-title"&gt;Product Name&lt;/h5&gt;
+        &lt;p class="card-text flex-grow-1"&gt;Description...&lt;/p&gt;
+        &lt;button class="btn btn-primary mt-auto"&gt;Add to Cart&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 11b: LIVE DEMO - Product Cards -->
+            <section data-slide-title="🎯 Live Demo: Interactive Product Cards"><h2>🎯 Live Demo: Interactive Product Cards</h2>
+                <span class="demo-badge">INTERACTIVE DEMO</span>
+                <div class="live-demo">
+                    <p><strong>Try it yourself:</strong> Hover over cards to see effects and click buttons to interact!</p>
+                    
+                    <style>
+                        .product-card {
+                            transition: all 0.3s ease;
+                            height: 100%;
+                        }
+                        .product-card:hover {
+                            transform: translateY(-10px);
+                            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+                        }
+                        .product-badge {
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            background: #ff6b6b;
+                            color: white;
+                            padding: 5px 10px;
+                            border-radius: 20px;
+                            font-size: 0.8em;
+                            font-weight: 600;
+                        }
+                        .price-tag {
+                            font-size: 1.5em;
+                            color: #28a745;
+                            font-weight: bold;
+                        }
+                    </style>
+                    
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col">
+                            <div class="card product-card">
+                                <div style="position: relative;">
+                                    <img src="https://via.placeholder.com/300x200/FF6B6B/ffffff?text=Headphones" class="card-img-top" alt="Headphones">
+                                    <span class="product-badge">20% OFF</span>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Wireless Headphones</h5>
+                                    <p class="card-text flex-grow-1">Premium sound quality with active noise cancellation.</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">$199.99</span>
+                                        <span class="text-muted text-decoration-line-through">$249.99</span>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-success flex-grow-1" onclick="addToCartDemo('Headphones', 199.99)">
+                                            🛒 Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline-secondary" onclick="alert('Added to wishlist!')">
+                                            ❤️
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card product-card">
+                                <div style="position: relative;">
+                                    <img src="https://via.placeholder.com/300x200/4A90E2/ffffff?text=Smart+Watch" class="card-img-top" alt="Smart Watch">
+                                    <span class="product-badge">NEW</span>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Smart Watch Pro</h5>
+                                    <p class="card-text flex-grow-1">Track your fitness and stay connected on the go.</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">$299.99</span>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-success flex-grow-1" onclick="addToCartDemo('Smart Watch', 299.99)">
+                                            🛒 Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline-secondary" onclick="alert('Added to wishlist!')">
+                                            ❤️
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card product-card">
+                                <div style="position: relative;">
+                                    <img src="https://via.placeholder.com/300x200/51CF66/ffffff?text=Portable+Speaker" class="card-img-top" alt="Speaker">
+                                    <span class="product-badge">HOT</span>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">Portable Speaker</h5>
+                                    <p class="card-text flex-grow-1">Waterproof design with 20-hour battery life.</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="price-tag">$79.99</span>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-success flex-grow-1" onclick="addToCartDemo('Speaker', 79.99)">
+                                            🛒 Add to Cart
+                                        </button>
+                                        <button class="btn btn-outline-secondary" onclick="alert('Added to wishlist!')">
+                                            ❤️
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success mt-3" id="cartAlert" style="display: none;">
+                        <strong>Success!</strong> <span id="cartMessage"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 11c: LIVE DEMO - Interactive Shopping Cart -->
+            <section data-slide-title="🎯 Live Demo: Shopping Cart with JavaScript"><h2>🎯 Live Demo: Shopping Cart with JavaScript</h2>
+                <span class="demo-badge">INTERACTIVE DEMO</span>
+                <div class="live-demo">
+                    <p><strong>Try it yourself:</strong> Adjust quantities and see the total update in real-time!</p>
+                    
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Shopping Cart <span class="badge bg-primary" id="cartCount">3</span></h5>
+                                    
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2">
+                                                    <img src="https://via.placeholder.com/80x80/FF6B6B/ffffff?text=Item" class="img-fluid rounded" alt="Item">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h6 class="mb-0">Wireless Headphones</h6>
+                                                    <small class="text-muted">Premium Edition</small>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <button class="btn btn-outline-secondary" onclick="updateQuantity('item1', -1)">-</button>
+                                                        <input type="text" class="form-control text-center" id="item1-qty" value="1" readonly>
+                                                        <button class="btn btn-outline-secondary" onclick="updateQuantity('item1', 1)">+</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 text-end">
+                                                    <strong id="item1-price">$199.99</strong>
+                                                </div>
+                                                <div class="col-md-1 text-end">
+                                                    <button class="btn btn-sm btn-danger" onclick="removeItem('item1')">×</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2">
+                                                    <img src="https://via.placeholder.com/80x80/4A90E2/ffffff?text=Item" class="img-fluid rounded" alt="Item">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h6 class="mb-0">Smart Watch Pro</h6>
+                                                    <small class="text-muted">Space Gray</small>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <button class="btn btn-outline-secondary" onclick="updateQuantity('item2', -1)">-</button>
+                                                        <input type="text" class="form-control text-center" id="item2-qty" value="2" readonly>
+                                                        <button class="btn btn-outline-secondary" onclick="updateQuantity('item2', 1)">+</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 text-end">
+                                                    <strong id="item2-price">$599.98</strong>
+                                                </div>
+                                                <div class="col-md-1 text-end">
+                                                    <button class="btn btn-sm btn-danger" onclick="removeItem('item2')">×</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2">
+                                                    <img src="https://via.placeholder.com/80x80/51CF66/ffffff?text=Item" class="img-fluid rounded" alt="Item">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h6 class="mb-0">Portable Speaker</h6>
+                                                    <small class="text-muted">Waterproof</small>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <button class="btn btn-outline-secondary" onclick="updateQuantity('item3', -1)">-</button>
+                                                        <input type="text" class="form-control text-center" id="item3-qty" value="1" readonly>
+                                                        <button class="btn btn-outline-secondary" onclick="updateQuantity('item3', 1)">+</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 text-end">
+                                                    <strong id="item3-price">$79.99</strong>
+                                                </div>
+                                                <div class="col-md-1 text-end">
+                                                    <button class="btn btn-sm btn-danger" onclick="removeItem('item3')">×</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Order Summary</h5>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Subtotal:</span>
+                                        <strong id="subtotal">$879.96</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Shipping:</span>
+                                        <strong id="shipping">$9.99</strong>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Tax:</span>
+                                        <strong id="tax">$70.40</strong>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <strong>Total:</strong>
+                                        <strong class="text-success" style="font-size: 1.5em;" id="total">$960.35</strong>
+                                    </div>
+                                    <button class="btn btn-primary w-100 mb-2">Proceed to Checkout</button>
+                                    <button class="btn btn-outline-secondary w-100">Continue Shopping</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 12: Shopping Cart Interface -->
+            <section data-slide-title="Shopping Cart Interface"><h2>Shopping Cart Interface</h2>
+                <div class="code-example">
+                <pre><code class="language-html">Cart Layout Structure:
+&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-lg-8"&gt;
+      &lt;!-- Cart Items --&gt;
+      &lt;div class="card"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Shopping Cart&lt;/h5&gt;
+          &lt;!-- Cart items list --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-lg-4"&gt;
+      &lt;!-- Order Summary --&gt;
+      &lt;div class="card"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Order Summary&lt;/h5&gt;
+          &lt;!-- Summary details --&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 13: Product Filter Sidebar -->
+            <section data-slide-title="Product Filter Sidebar"><h2>Product Filter Sidebar</h2>
+                <div class="code-example">
+                <pre><code class="language-html">Filter Sidebar Structure:
+&lt;div class="col-md-3"&gt;
+  &lt;div class="card"&gt;
+    &lt;div class="card-body"&gt;
+      &lt;h5 class="card-title"&gt;Filters&lt;/h5&gt;
+      &lt;!-- Price Range --&gt;
+      &lt;div class="mb-3"&gt;
+        &lt;label class="form-label"&gt;Price Range&lt;/label&gt;
+        &lt;input type="range" class="form-range" min="0" max="1000"&gt;
+      &lt;/div&gt;
+      &lt;!-- Categories --&gt;
+      &lt;div class="mb-3"&gt;
+        &lt;label class="form-label"&gt;Categories&lt;/label&gt;
+        &lt;div class="form-check"&gt;
+          &lt;input class="form-check-input" type="checkbox"&gt;
+          &lt;label class="form-check-label"&gt;Electronics&lt;/label&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 14: TASK 1 - Halfway Point -->
+            <section data-slide-title="Task 1: Advanced E-commerce Components" class="center"><h2>Task 1: Advanced E-commerce Components</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create an advanced e-commerce product page with:</li>
+                        <ul>
+                            <li>Product image carousel with multiple images</li>
+                            <li>Product details in tabs (Description, Specifications, Reviews)</li>
+                            <li>Related products accordion</li>
+                            <li>Add to cart modal with quantity selector</li>
+                            <li>Custom styling using CSS variables</li>
+                        </ul>
+                        <li>Implement responsive behavior for all components</li>
+                        <li>Add hover effects and transitions</li>
+                        <li>Test all interactive elements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you master advanced Bootstrap components</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 15: Break/Catch Up -->
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 16: JavaScript Integration -->
+            <section data-slide-title="JavaScript Integration"><h2>JavaScript Integration</h2>
+                <div class="code-example">
+                <pre><code class="language-javascript">Custom JavaScript for E-commerce:
+// Shopping cart functionality
+function addToCart(productId, quantity) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push({ id: productId, quantity: quantity });
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartDisplay();
+}
+// Update cart display
+function updateCartDisplay() {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  document.getElementById('cart-count').textContent = cart.length;
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 17: Performance Optimization -->
+            <section data-slide-title="Performance Optimization"><h2>Performance Optimization</h2>
+                <ul>
+                    <li><strong>Lazy Loading:</strong> Load images and components as needed</li>
+                    <li><strong>CSS Minification:</strong> Reduce file sizes</li>
+                    <li><strong>Image Optimization:</strong> Use appropriate formats and sizes</li>
+                    <li><strong>Code Splitting:</strong> Load only necessary JavaScript</li>
+                    <li><strong>Caching:</strong> Implement browser caching strategies</li>
+                </ul>
+                <div class="code-example">
+                <pre><code class="language-javascript">Lazy Loading Example:
+&lt;img src="placeholder.jpg" data-src="product.jpg" class="lazy"&gt;
+// Lazy loading script
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+  // Implementation here...
+});</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 18: Accessibility Best Practices -->
+            <section data-slide-title="Accessibility Best Practices"><h2>Accessibility Best Practices</h2>
+                <ul>
+                    <li><strong>Semantic HTML:</strong> Use proper HTML elements</li>
+                    <li><strong>ARIA Labels:</strong> Provide descriptive labels</li>
+                    <li><strong>Keyboard Navigation:</strong> Ensure all elements are keyboard accessible</li>
+                    <li><strong>Color Contrast:</strong> Maintain sufficient contrast ratios</li>
+                    <li><strong>Screen Reader Support:</strong> Test with screen readers</li>
+                </ul>
+                <div class="code-example">
+                <pre><code class="language-html">Accessibility Examples:
+&lt;button aria-label="Add product to cart"&gt;Add to Cart&lt;/button&gt;
+&lt;img src="product.jpg" alt="Red running shoes with white sole"&gt;
+&lt;div role="main" aria-label="Product catalog"&gt;
+  &lt;!-- Content --&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 19: Cross-browser Compatibility -->
+            <section data-slide-title="Cross-browser Compatibility"><h2>Cross-browser Compatibility</h2>
+                <ul>
+                    <li><strong>CSS Prefixes:</strong> Use vendor prefixes where needed</li>
+                    <li><strong>Feature Detection:</strong> Check for browser support</li>
+                    <li><strong>Fallbacks:</strong> Provide alternative solutions</li>
+                    <li><strong>Testing:</strong> Test on multiple browsers and devices</li>
+                </ul>
+                <div class="code-example">
+                <pre><code class="language-javascript">Feature Detection Example:
+if ('IntersectionObserver' in window) {
+  // Use modern lazy loading
+  const observer = new IntersectionObserver(callback);
+} else {
+  // Fallback for older browsers
+  loadAllImages();
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 20: TASK 2 - Final Task -->
+            <section data-slide-title="Task 2: Complete E-commerce Interface" class="center"><h2>Task 2: Complete E-commerce Interface</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Build a complete e-commerce interface with:</li>
+                        <ul>
+                            <li>Responsive navigation with shopping cart icon</li>
+                            <li>Product listing with filters and sorting</li>
+                            <li>Product detail page with all components</li>
+                            <li>Shopping cart page with quantity controls</li>
+                            <li>Checkout form with validation</li>
+                        </ul>
+                        <li>Implement JavaScript functionality</li>
+                        <li>Add custom styling and animations</li>
+                        <li>Ensure accessibility compliance</li>
+                        <li>Test on multiple screen sizes</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you build a complete e-commerce interface</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 21: Summary -->
+            <section class="center">
+                <h2>Session Summary</h2>
+                <ul>
+                    <li>Advanced Bootstrap components enable rich user experiences</li>
+                    <li>Customization allows for unique brand identity</li>
+                    <li>Responsive design is crucial for modern web applications</li>
+                    <li>JavaScript integration adds interactivity</li>
+                    <li>Performance and accessibility should be prioritized</li>
+                    <li>Cross-browser testing ensures compatibility</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>PHP Fundamentals & Server Setup - Introduction to server-side programming</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS for live demos -->
+    <script src="../../libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        // Cart items data
+        const cartItems = {
+            item1: { name: 'Wireless Headphones', price: 199.99, quantity: 1 },
+            item2: { name: 'Smart Watch Pro', price: 299.99, quantity: 2 },
+            item3: { name: 'Portable Speaker', price: 79.99, quantity: 1 }
+        };
+
+        // Add to cart demo function
+        function addToCartDemo(productName, price) {
+            const alert = document.getElementById('cartAlert');
+            const message = document.getElementById('cartMessage');
+            message.textContent = `${productName} ($${price}) has been added to your cart!`;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+
+        // Update quantity in shopping cart
+        function updateQuantity(itemId, change) {
+            const item = cartItems[itemId];
+            if (!item) return;
+            
+            const newQty = item.quantity + change;
+            if (newQty < 1) return;
+            
+            item.quantity = newQty;
+            document.getElementById(`${itemId}-qty`).value = newQty;
+            
+            const itemTotal = item.price * newQty;
+            document.getElementById(`${itemId}-price`).textContent = `$${itemTotal.toFixed(2)}`;
+            
+            updateCartTotals();
+        }
+
+        // Remove item from cart
+        function removeItem(itemId) {
+            const itemElement = document.getElementById(`${itemId}-qty`).closest('.list-group-item');
+            itemElement.style.transition = 'all 0.3s ease';
+            itemElement.style.opacity = '0';
+            itemElement.style.transform = 'translateX(100px)';
+            
+            setTimeout(() => {
+                delete cartItems[itemId];
+                itemElement.remove();
+                updateCartTotals();
+                updateCartCount();
+            }, 300);
+        }
+
+        // Update cart totals
+        function updateCartTotals() {
+            let subtotal = 0;
+            for (const item of Object.values(cartItems)) {
+                subtotal += item.price * item.quantity;
+            }
+            
+            const shipping = subtotal > 0 ? (subtotal > 100 ? 0 : 9.99) : 0;
+            const tax = subtotal * 0.08;
+            const total = subtotal + shipping + tax;
+            
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('shipping').textContent = shipping === 0 && subtotal > 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const count = Object.keys(cartItems).length;
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>

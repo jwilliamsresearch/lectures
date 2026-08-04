@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 6: PHP Forms & Database Integration</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        .reveal .slides section h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        .reveal .slides section h2 { font-size: 2em; margin-bottom: 0.5em; }
+        .reveal .slides section h3 { font-size: 1.5em; margin-bottom: 0.5em; }
+        .reveal .slides section p { font-size: 1.1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section ul, .reveal .slides section ol { font-size: 1em; line-height: 1.4; margin-bottom: 0.8em; }
+        .reveal .slides section li { margin-bottom: 0.3em; }
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        .timeline-info ul { margin: 10px 0; padding-left: 20px; }
+        .timeline-info li { margin-bottom: 0.2em; }
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .reveal .slides section { padding: 15px; }
+            .reveal .slides section h1 { font-size: 2em; }
+            .reveal .slides section h2 { font-size: 1.6em; }
+            .reveal .slides section h3 { font-size: 1.3em; }
+            .task-box, .code-example { font-size: 0.9em; padding: 15px; }
+        }
+        
+        /* Custom scrollbar styling */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        </style>
+</head>
+<body>
+            <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session5.html" title="Previous Session">&lt;</a>
+        <a href="session7.html" title="Next Session">&gt;</a>
+    </div>
+    
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 6</div>
+                <h1>PHP Forms & Database Integration</h1>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
+                </div>
+            </section>
+
+            
+
+            <!-- Slide 2: Learning Objectives -->
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
+                <ul>
+                    <li>Connect PHP forms to MySQL databases</li>
+                    <li>Implement secure database operations</li>
+                    <li>Handle form data with database storage</li>
+                    <li>Create user registration and login systems</li>
+                    <li>Build data-driven web applications</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: Database Connection -->
+            <section data-slide-title="Database Connection"><h2>Database Connection</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Basic Database Connection:
+&lt;?php
+// Database configuration
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "ecommerce";
+// Create connection
+try {
+  $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+  $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  echo "Connected successfully";
+} catch(PDOException $e) {
+  echo "Connection failed: " . $e-&gt;getMessage();
+}
+?&gt;</code></pre>
+            </div>
+                <ul>
+                    <li>PDO provides database abstraction</li>
+                    <li>Exception handling for errors</li>
+                    <li>Secure connection management</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Prepared Statements -->
+            <section data-slide-title="Prepared Statements"><h2>Prepared Statements</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Secure Database Queries:
+// User registration with prepared statement
+$stmt = $pdo-&gt;prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+$username = $_POST['username'];
+$email = $_POST['email'];
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+try {
+  $stmt-&gt;execute([$username, $email, $password]);
+  echo "User registered successfully";
+} catch(PDOException $e) {
+  echo "Error: " . $e-&gt;getMessage();
+}</code></pre>
+            </div>
+                <ul>
+                    <li>Prevents SQL injection attacks</li>
+                    <li>Separates data from SQL logic</li>
+                    <li>Improves performance with repeated queries</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: User Authentication -->
+            <section data-slide-title="User Authentication"><h2>User Authentication</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Login Verification:
+function authenticateUser($email, $password) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT id, username, password FROM users WHERE email = ?");
+  $stmt-&gt;execute([$email]);
+  $user = $stmt-&gt;fetch();
+  if ($user &amp;&amp; password_verify($password, $user['password'])) {
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['username'] = $user['username'];
+    return true;
+  }
+  return false;
+}</code></pre>
+            </div>
+                <ul>
+                    <li>Password hashing with password_hash()</li>
+                    <li>Session management for user state</li>
+                    <li>Secure credential verification</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Form Processing -->
+            <section data-slide-title="Form Processing"><h2>Form Processing</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Complete Registration Process:
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $errors = validateRegistration($_POST);
+  if (empty($errors)) {
+    try {
+      $stmt = $pdo-&gt;prepare("INSERT INTO users (username, email, password, created_at) VALUES (?, ?, ?, NOW())");
+      $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+      $stmt-&gt;execute([$_POST['username'], $_POST['email'], $hashedPassword]);
+      echo "Registration successful!";
+    } catch(PDOException $e) {
+      $errors[] = "Registration failed: " . $e-&gt;getMessage();
+    }
+  }
+}</code></pre>
+            </div>
+                <ul>
+                    <li>Validate input before database operations</li>
+                    <li>Handle database errors gracefully</li>
+                    <li>Provide user-friendly feedback</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: CRUD Operations -->
+            <section data-slide-title="CRUD Operations"><h2>CRUD Operations</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Create, Read, Update, Delete:
+// CREATE - Insert new product
+$stmt = $pdo-&gt;prepare("INSERT INTO products (name, price, description) VALUES (?, ?, ?)");
+$stmt-&gt;execute([$name, $price, $description]);
+// READ - Get all products
+$stmt = $pdo-&gt;query("SELECT * FROM products ORDER BY name");
+$products = $stmt-&gt;fetchAll();
+// UPDATE - Modify product
+$stmt = $pdo-&gt;prepare("UPDATE products SET price = ? WHERE id = ?");
+$stmt-&gt;execute([$newPrice, $productId]);
+// DELETE - Remove product
+$stmt = $pdo-&gt;prepare("DELETE FROM products WHERE id = ?");
+$stmt-&gt;execute([$productId]);</code></pre>
+            </div>
+                <ul>
+                    <li>Always use prepared statements</li>
+                    <li>Validate data before operations</li>
+                    <li>Handle errors with try-catch</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Data Validation -->
+            <section data-slide-title="Data Validation"><h2>Data Validation</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Database-Level Validation:
+function checkEmailExists($email) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+  $stmt-&gt;execute([$email]);
+  return $stmt-&gt;fetchColumn() &gt; 0;
+}
+function validateUniqueUsername($username) {
+  global $pdo;
+  $stmt = $pdo-&gt;prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+  $stmt-&gt;execute([$username]);
+  return $stmt-&gt;fetchColumn() == 0;
+}</code></pre>
+            </div>
+                <ul>
+                    <li>Check for duplicate data</li>
+                    <li>Validate data integrity</li>
+                    <li>Prevent database conflicts</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Session Management -->
+            <section data-slide-title="Session Management"><h2>Session Management</h2>
+                <div class="code-example">
+                <pre><code class="language-php">User Session Handling:
+session_start();
+// Check if user is logged in
+function isLoggedIn() {
+  return isset($_SESSION['user_id']);
+}
+// Logout function
+function logout() {
+  session_destroy();
+  header("Location: login.php");
+  exit();
+}
+// Protect pages
+if (!isLoggedIn()) {
+  header("Location: login.php");
+  exit();
+}</code></pre>
+            </div>
+                <ul>
+                    <li>Maintain user state across requests</li>
+                    <li>Secure session management</li>
+                    <li>Protect restricted pages</li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Error Handling -->
+            <section data-slide-title="Error Handling"><h2>Error Handling</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Database Error Management:
+try {
+  $stmt = $pdo-&gt;prepare("INSERT INTO orders (user_id, total) VALUES (?, ?)");
+  $stmt-&gt;execute([$userId, $total]);
+  $orderId = $pdo-&gt;lastInsertId();
+  // Insert order items
+  foreach ($items as $item) {
+    $stmt = $pdo-&gt;prepare("INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)");
+    $stmt-&gt;execute([$orderId, $item['id'], $item['quantity']]);
+  }
+  $pdo-&gt;commit();
+  echo "Order placed successfully";
+} catch(PDOException $e) {
+  $pdo-&gt;rollback();
+  error_log("Database error: " . $e-&gt;getMessage());
+  echo "Order failed. Please try again.";
+}</code></pre>
+            </div>
+                <ul>
+                    <li>Use try-catch for database operations</li>
+                    <li>Log errors for debugging</li>
+                    <li>Provide user-friendly messages</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: TASK 1 - Halfway Point -->
+            <section data-slide-title="Task 1: User Registration System" class="center"><h2>Task 1: User Registration System</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a complete user registration system with:</li>
+                        <ul>
+                            <li>User registration form with validation</li>
+                            <li>Database connection using PDO</li>
+                            <li>Prepared statements for security</li>
+                            <li>Password hashing implementation</li>
+                            <li>Email and username uniqueness check</li>
+                            <li>Error handling and display</li>
+                        </ul>
+                        <li>Implement login functionality</li>
+                        <li>Add session management</li>
+                        <li>Create password reset functionality</li>
+                        <li>Test all security measures</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you master database integration techniques</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Break/Catch Up -->
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 13: Database Schema -->
+            <section data-slide-title="Database Schema"><h2>Database Schema</h2>
+                <div class="code-example">
+                <pre><code class="language-html">Users Table:
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+Products Table:
+CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  price DECIMAL(10,2) NOT NULL,
+  stock INT DEFAULT 0,
+  image VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 14: Product Management -->
+            <section data-slide-title="Product Management"><h2>Product Management</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Product Listing with Search:
+&lt;?php
+// Pagination
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 12;
+$offset = ($page - 1) * $limit;
+// Search functionality
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+// Build query
+$where = "WHERE 1=1";
+$params = [];
+if (!empty($search)) {
+  $where .= " AND (name LIKE ? OR description LIKE ?)";
+  $params[] = "%$search%";
+  $params[] = "%$search%";
+}
+// Get products
+$stmt = $pdo-&gt;prepare("SELECT * FROM products $where ORDER BY created_at DESC LIMIT ? OFFSET ?");
+$params[] = $limit;
+$params[] = $offset;
+$stmt-&gt;execute($params);
+$products = $stmt-&gt;fetchAll();
+?&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 15: File Upload -->
+            <section data-slide-title="File Upload"><h2>File Upload</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Image Upload Handling:
+function handleImageUpload($file) {
+  $uploadDir = "uploads/";
+  $errors = [];
+  // Check if file was uploaded
+  if ($file["error"] !== UPLOAD_ERR_OK) {
+    $errors[] = "File upload failed";
+    return $errors;
+  }
+  // Validate file type
+  $allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+  if (!in_array($file["type"], $allowedTypes)) {
+    $errors[] = "Invalid file type";
+  }
+  // Validate file size (2MB max)
+  if ($file["size"] &gt; 2 * 1024 * 1024) {
+    $errors[] = "File too large (max 2MB)";
+  }
+  // Generate unique filename
+  $extension = pathinfo($file["name"], PATHINFO_EXTENSION);
+  $filename = uniqid() . "." . $extension;
+  $filepath = $uploadDir . $filename;
+  // Move uploaded file
+  if (!move_uploaded_file($file["tmp_name"], $filepath)) {
+    $errors[] = "Failed to save file";
+  }
+  return $errors;
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 16: Shopping Cart -->
+            <section data-slide-title="Shopping Cart"><h2>Shopping Cart</h2>
+                <div class="code-example">
+                <pre><code class="language-html">Cart Database Tables:
+CREATE TABLE cart (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  product_id INT,
+  quantity INT DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  total DECIMAL(10,2),
+  status ENUM('pending', 'processing', 'shipped', 'delivered') DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 17: Performance Optimization -->
+            <section data-slide-title="Performance Optimization"><h2>Performance Optimization</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Database Indexes:
+// Add indexes for better performance
+CREATE INDEX idx_products_name ON products(name);
+CREATE INDEX idx_products_price ON products(price);
+CREATE INDEX idx_users_email ON users(email);
+// Optimized query with joins
+$stmt = $pdo-&gt;prepare("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.name LIKE ? ORDER BY p.created_at DESC LIMIT ? OFFSET ?");</code></pre>
+            </div>
+                <ul>
+                    <li>Use indexes on frequently searched columns</li>
+                    <li>Implement pagination for large datasets</li>
+                    <li>Optimize image sizes and formats</li>
+                    <li>Use lazy loading for images</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: Security Best Practices -->
+            <section data-slide-title="Security Best Practices"><h2>Security Best Practices</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Security Implementation:
+// Secure password hashing
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+// Input sanitization
+$username = htmlspecialchars(trim($_POST['username']));
+$email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+// CSRF protection
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+  die('CSRF token validation failed');
+}</code></pre>
+            </div>
+                <ul>
+                    <li>Always use prepared statements</li>
+                    <li>Hash passwords with password_hash()</li>
+                    <li>Validate and sanitize all input</li>
+                    <li>Use HTTPS in production</li>
+                </ul>
+            </section>
+
+            <!-- Slide 19: Error Logging -->
+            <section data-slide-title="Error Logging"><h2>Error Logging</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Custom Error Handler:
+function customErrorHandler($errno, $errstr, $errfile, $errline) {
+  $errorMessage = date('Y-m-d H:i:s') . " Error: [$errno] $errstr in $errfile on line $errline\n";
+  error_log($errorMessage, 3, "logs/error.log");
+  return true;
+}
+set_error_handler("customErrorHandler");
+// Database error handling
+try {
+  $stmt = $pdo-&gt;prepare("INSERT INTO products (name, price) VALUES (?, ?)");
+  $stmt-&gt;execute([$name, $price]);
+} catch(PDOException $e) {
+  error_log("Database error: " . $e-&gt;getMessage());
+  echo "An error occurred. Please try again.";
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 20: Testing & Debugging -->
+            <section data-slide-title="Testing & Debugging"><h2>Testing & Debugging</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Debug Functions:
+// Debug function
+function debug($data) {
+  echo "&lt;pre&gt;";
+  print_r($data);
+  echo "&lt;/pre&gt;";
+}
+// Test database connection
+function testConnection() {
+  global $pdo;
+  try {
+    $stmt = $pdo-&gt;query("SELECT 1");
+    echo "Database connection successful";
+  } catch(PDOException $e) {
+    echo "Database connection failed: " . $e-&gt;getMessage();
+  }
+}
+// Validate form data
+function validateProductData($data) {
+  $errors = [];
+  if (empty($data['name'])) $errors[] = "Product name is required";
+  if (!is_numeric($data['price']) || $data['price'] &lt;= 0) $errors[] = "Valid price is required";
+  return $errors;
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 21: TASK 2 - Final Task -->
+            <section data-slide-title="Task 2: Complete E-commerce System" class="center"><h2>Task 2: Complete E-commerce System</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Build a complete e-commerce system with:</li>
+                        <ul>
+                            <li>User registration and login forms</li>
+                            <li>Product management (CRUD operations)</li>
+                            <li>Shopping cart functionality</li>
+                            <li>Order processing system</li>
+                            <li>File upload for product images</li>
+                            <li>Search and filter functionality</li>
+                        </ul>
+                        <li>Implement comprehensive validation</li>
+                        <li>Add security measures (CSRF, input sanitization)</li>
+                        <li>Include error handling and logging</li>
+                        <li>Add pagination for product listings</li>
+                        <li>Test all database operations</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you build a complete e-commerce database system</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 22: Summary -->
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
+                <ul>
+                    <li>Database integration is essential for dynamic web applications</li>
+                    <li>Prepared statements prevent SQL injection attacks</li>
+                    <li>Password hashing protects user credentials</li>
+                    <li>Session management maintains user state</li>
+                    <li>Error handling improves application reliability</li>
+                    <li>Performance optimization enhances user experience</li>
+                    <li>Security best practices protect against vulnerabilities</li>
+                    <li>Testing and debugging ensure code quality</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>Advanced PHP Features - Object-oriented programming and advanced techniques</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>

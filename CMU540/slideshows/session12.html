@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU540 - Session 12: NET-TRAFFIC-01, NET-FIREWALL-01 & Final Assessment</title>
+
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+</head>
+
+<body>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session11.html" title="Previous Session">&lt;</a>
+        <a href="../index.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>NET-TRAFFIC-01, NET-FIREWALL-01 & Final Assessment</h1>
+                <h2>Session 12</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand network traffic analysis techniques</li>
+                    <li>Learn firewall configuration and management</li>
+                    <li>Perform comprehensive security assessments</li>
+                    <li>Practice vulnerability discovery using OS³ Studio</li>
+                    <li>Implement secure network configurations</li>
+                    <li>Complete final assessment and course evaluation</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Network Traffic Analysis">
+                <h2>Network Traffic Analysis</h2>
+                <div class="highlight">
+                    <p><strong>NET-TRAFFIC-01:</strong> Traffic analysis involves monitoring and analyzing network communications to detect threats</p>
+                    <p><strong>NET-FIREWALL-01:</strong> Firewall configuration provides network perimeter security and access control</p>
+                    <p><strong>Final Assessment:</strong> Comprehensive security assessment covering all course topics</p>
+                </div>
+                <h3>Key Areas:</h3>
+                <ul>
+                    <li>Traffic monitoring and analysis</li>
+                    <li>Firewall rules and policies</li>
+                    <li>Security assessment methodologies</li>
+                    <li>Incident response and forensics</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Real-World Impact">
+                <h2>Real-World Impact</h2>
+                <div class="vulnerability">
+                    <h3>Notable Security Incidents:</h3>
+                    <ul>
+                        <li><strong>SolarWinds (2020):</strong> Supply chain attack detected through traffic analysis</li>
+                        <li><strong>NotPetya (2017):</strong> Ransomware spread via network traffic</li>
+                        <li><strong>WannaCry (2017):</strong> Global ransomware attack affecting 200,000+ systems</li>
+                    </ul>
+                    <p><strong>Impact:</strong> Data breaches, service disruption, financial loss, reputation damage</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Traffic Analysis Techniques">
+                <h2>Traffic Analysis Techniques</h2>
+                <h3>1. Packet Capture and Analysis</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Wireshark Filters --&gt;
+# HTTP traffic
+http
+# HTTPS traffic
+ssl
+# DNS queries
+dns
+# Suspicious patterns
+tcp.flags.syn == 1 and tcp.flags.ack == 0
+# Source IP analysis
+ip.src == 192.168.1.100
+# Port scanning detection
+tcp.port == 22 and tcp.flags.syn == 1</code></pre>
+                </div>
+                <h3>2. Flow Analysis</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- NetFlow Analysis --&gt;
+# High bandwidth flows
+flow-export destination 192.168.1.100 2055
+flow-export version 9
+flow-export template timeout-rate 1
+&lt;!-- sFlow Configuration --&gt;
+sflow agent-ip 192.168.1.1
+sflow collector-ip 192.168.1.100
+sflow sampling-rate 1000
+sflow polling-interval 20</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Anomaly Detection">
+                <h2>Anomaly Detection</h2>
+                <h3>1. Statistical Analysis</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Baseline Traffic Patterns --&gt;
+# Normal business hours
+08:00-18:00: 1000-5000 packets/min
+18:00-08:00: 100-500 packets/min
+# Anomaly thresholds
+Bandwidth: &gt;200% of baseline
+Connections: &gt;500% of baseline
+Failed logins: &gt;10 per minute
+# Alert conditions
+if (traffic &gt; baseline * 2) {
+  trigger_alert("High traffic volume");
+}</code></pre>
+                </div>
+                <h3>2. Behavioral Analysis</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- User Behavior Analysis --&gt;
+# Normal user patterns
+- Login during business hours
+- Access to authorized resources
+- Normal data transfer volumes
+# Suspicious patterns
+- Login outside business hours
+- Access to unauthorized resources
+- Unusual data transfer patterns
+- Multiple failed login attempts</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Firewall Configuration">
+                <h2>Firewall Configuration</h2>
+                <h3>1. iptables Rules</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Basic Firewall Rules --&gt;
+# Default policies
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+# Allow loopback
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+# Allow SSH from specific network
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT</code></pre>
+                </div>
+                <h3>2. Advanced Firewall Rules</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Rate Limiting --&gt;
+iptables -A INPUT -p tcp --dport 22 -m recent --set --name SSH
+iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4 --name SSH -j DROP
+&lt;!-- Port Knocking --&gt;
+iptables -A INPUT -p tcp --dport 1000 -m recent --set --name KNOCK1
+iptables -A INPUT -p tcp --dport 2000 -m recent --rcheck --seconds 10 --name KNOCK1 -m recent --set --name KNOCK2
+iptables -A INPUT -p tcp --dport 3000 -m recent --rcheck --seconds 10 --name KNOCK2 -j ACCEPT</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Firewall Management">
+                <h2>Firewall Management</h2>
+                <h3>1. Zone-Based Firewalls</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Cisco Zone-Based Firewall --&gt;
+# Define zones
+zone security INSIDE
+zone security OUTSIDE
+zone security DMZ
+# Define zone pairs
+zone-pair security INSIDE-OUTSIDE source INSIDE destination OUTSIDE
+zone-pair security OUTSIDE-DMZ source OUTSIDE destination DMZ
+# Apply policies
+class-map type inspect INSIDE-OUTSIDE
+match access-group 100
+policy-map type inspect INSIDE-OUTSIDE-POLICY
+class INSIDE-OUTSIDE
+inspect</code></pre>
+                </div>
+                <h3>2. Application-Aware Firewalls</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Application Control --&gt;
+# Block specific applications
+application-control
+  block facebook
+  block youtube
+  allow business-apps
+# Deep Packet Inspection
+dpi
+  inspect http
+  inspect https
+  inspect ftp
+  inspect smtp</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Security Assessment Methodology">
+                <h2>Security Assessment Methodology</h2>
+                <h3>1. Assessment Phases</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Security Assessment Process --&gt;
+1. Planning and Preparation
+  - Define scope and objectives
+  - Obtain authorization
+  - Gather information
+2. Reconnaissance
+  - Network discovery
+  - Service enumeration
+  - Vulnerability scanning
+3. Vulnerability Assessment
+  - Manual testing
+  - Automated scanning
+  - Risk analysis
+4. Reporting
+  - Document findings
+  - Risk prioritization
+  - Remediation recommendations</code></pre>
+                </div>
+                <h3>2. Testing Techniques</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Testing Techniques --&gt;
+# Network Testing
+- Port scanning
+- Service enumeration
+- Protocol analysis
+- Traffic analysis
+# Application Testing
+- Web application scanning
+- Authentication testing
+- Input validation testing
+- Session management testing
+# Social Engineering
+- Phishing simulations
+- Physical security testing
+- Awareness assessment</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Opportunities in Cybersecurity">
+                <h2>Career Opportunities in Cybersecurity</h2>
+                <div class="career-box">
+                    <h3>Cybersecurity Roles:</h3>
+                    <ul>
+                        <li><strong>Security Analyst:</strong> £30,000 - £60,000</li>
+                        <li><strong>Penetration Tester:</strong> £35,000 - £70,000</li>
+                        <li><strong>Security Engineer:</strong> £40,000 - £80,000</li>
+                        <li><strong>Security Consultant:</strong> £50,000 - £100,000</li>
+                        <li><strong>Security Manager:</strong> £60,000 - £120,000</li>
+                        <li><strong>CISO:</strong> £80,000 - £200,000+</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> Security assessment, Risk management, Incident response, Compliance</p>
+                </div>
+            </section>
+
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
+                <h2>OS³ Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>NET-TRAFFIC-01, NET-FIREWALL-01 & Final Assessment Lab Environment</h3>
+                    <p>Our OS³ Studio provides hands-on experience with:</p>
+                    <ul>
+                        <li>Network traffic analysis and monitoring</li>
+                        <li>Firewall configuration and management</li>
+                        <li>Comprehensive security assessment scenarios</li>
+                        <li>Incident response and forensics</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Web Demos and Tools">
+                <h2>Web Demos and Tools</h2>
+                <div class="demo-link">
+                    <h3>Security Assessment Tools:</h3>
+                    <ul>
+                        <li><a href="https://www.wireshark.org/" target="_blank">Wireshark</a> - Network protocol analyzer</li>
+                        <li><a href="https://nmap.org/" target="_blank">Nmap</a> - Network discovery and security auditing</li>
+                        <li><a href="https://www.tenable.com/products/nessus" target="_blank">Nessus</a> - Vulnerability scanner</li>
+                        <li><a href="https://www.rapid7.com/products/metasploit/" target="_blank">Metasploit</a> - Penetration testing framework</li>
+                        <li><a href="https://www.elastic.co/products/elasticsearch" target="_blank">ELK Stack</a> - Log analysis and visualization</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Case Study: SolarWinds Supply Chain Attack">
+                <h2>Case Study: SolarWinds Supply Chain Attack</h2>
+                <div class="vulnerability">
+                    <h3>2020 SolarWinds Supply Chain Attack</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> 18,000+ organizations compromised</li>
+                        <li><strong>Method:</strong> Malicious code injected into software updates</li>
+                        <li><strong>Detection:</strong> Traffic analysis revealed unusual network activity</li>
+                        <li><strong>Response:</strong> Incident response teams activated worldwide</li>
+                    </ul>
+                    <p><strong>Lesson:</strong> Comprehensive monitoring and traffic analysis are essential for detecting sophisticated attacks</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Summary: Comprehensive Security Assessment Areas">
+                <h2>Summary: Comprehensive Security Assessment Areas</h2>
+                <div class="highlight">
+                    <h3>Key Assessment Areas:</h3>
+                    <ol>
+                        <li>Network security and protocols</li>
+                        <li>Web application security</li>
+                        <li>Authentication and access control</li>
+                        <li>Data protection and encryption</li>
+                        <li>Incident response capabilities</li>
+                        <li>Compliance and governance</li>
+                        <li>Physical security controls</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: Traffic Analysis and Firewall Configuration">
+                <h2>Task 1: Traffic Analysis and Firewall Configuration</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to perform network traffic analysis and configure firewall rules.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio network lab environment</li>
+                        <li>Capture and analyze network traffic using Wireshark</li>
+                        <li>Identify suspicious traffic patterns and anomalies</li>
+                        <li>Configure firewall rules to block malicious traffic</li>
+                        <li>Test firewall effectiveness against various attacks</li>
+                        <li>Implement traffic monitoring and alerting</li>
+                        <li>Document all findings and configurations</li>
+                        <li>Prepare a network security assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on comprehensive network security analysis and implementation</em></p>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Break Time">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Final Assessment and Task 2</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Incident Response">
+                <h2>Incident Response</h2>
+                
+                <h3>1. Incident Response Process</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Incident Response Phases --&gt;
+1. Preparation
+  - Incident response plan
+  - Team roles and responsibilities
+  - Communication procedures
+2. Identification
+  - Detect security incidents
+  - Analyze indicators of compromise
+  - Assess impact and scope
+3. Containment
+  - Isolate affected systems
+  - Prevent further damage
+  - Preserve evidence
+4. Eradication
+  - Remove threats
+  - Patch vulnerabilities
+  - Strengthen defenses
+5. Recovery
+  - Restore systems
+  - Monitor for reoccurrence
+  - Validate security
+6. Lessons Learned
+  - Document incident
+  - Update procedures
+  - Improve security</code></pre>
+                </div>
+
+                <h3>2. Digital Forensics</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Forensic Analysis --&gt;
+# Memory analysis
+volatility -f memory.dump --profile=Win7SP1x64 pslist
+volatility -f memory.dump --profile=Win7SP1x64 netscan
+# Disk analysis
+autopsy
+sleuthkit
+# Network forensics
+wireshark
+tshark -r capture.pcap -T fields -e ip.src -e ip.dst
+# Timeline analysis
+log2timeline.py timeline.csv /path/to/evidence</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Security Monitoring">
+                <h2>Security Monitoring</h2>
+                
+                <h3>1. SIEM Implementation</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- ELK Stack Configuration --&gt;
+# Elasticsearch configuration
+cluster.name: security-cluster
+node.name: security-node-1
+network.host: 0.0.0.0
+http.port: 9200
+# Logstash configuration
+input {
+  beats {
+    port =&gt; 5044
+  }
+}
+filter {
+  if [fields][log_type] == "security" {
+    grok {
+      match =&gt; { "message" =&gt; "%{SYSLOGTIMESTAMP:timestamp} %{IP:source_ip} %{GREEDYDATA:message}" }
+    }
+  }
+}</code></pre>
+                </div>
+
+                <h3>2. Threat Intelligence</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Threat Intelligence Feeds --&gt;
+# IOC (Indicators of Compromise)
+- IP addresses
+- Domain names
+- File hashes
+- Email addresses
+# Threat Intelligence Sources
+- Commercial feeds
+- Open source feeds
+- Government sources
+- Industry sharing
+# Integration with SIEM
+- Automated correlation
+- Real-time alerts
+- Historical analysis
+- Trend analysis</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Compliance and Governance">
+                <h2>Compliance and Governance</h2>
+                
+                <h3>1. Security Frameworks</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Security Frameworks --&gt;
+# NIST Cybersecurity Framework
+- Identify: Asset management, Risk assessment
+- Protect: Access control, Data security
+- Detect: Monitoring, Detection processes
+- Respond: Response planning, Communications
+- Recover: Recovery planning, Improvements
+# ISO 27001
+- Information security management system
+- Risk management
+- Security controls
+- Continuous improvement
+# COBIT
+- IT governance framework
+- Process management
+- Control objectives
+- Maturity models</code></pre>
+                </div>
+
+                <h3>2. Risk Management</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Risk Assessment Process --&gt;
+1. Asset Identification
+  - Hardware assets
+  - Software assets
+  - Data assets
+  - Human assets
+2. Threat Analysis
+  - External threats
+  - Internal threats
+  - Threat likelihood
+  - Threat impact
+3. Vulnerability Assessment
+  - Technical vulnerabilities
+  - Process vulnerabilities
+  - Human vulnerabilities
+4. Risk Calculation
+  Risk = Threat × Vulnerability × Impact
+5. Risk Treatment
+  - Accept
+  - Avoid
+  - Mitigate
+  - Transfer</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Development in Cybersecurity">
+                <h2>Career Development in Cybersecurity</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Advanced Certifications:</strong> CISSP, CISM, CISA, OSCP</li>
+                        <li><strong>Specialized Training:</strong> Incident response, Digital forensics</li>
+                        <li><strong>Hands-on Practice:</strong> CTF competitions, Bug bounties</li>
+                        <li><strong>Industry Networking:</strong> Security conferences, meetups</li>
+                        <li><strong>Research:</strong> New attack techniques, Defense methods</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://www.isc2.org/" target="_blank">ISC²</a> | <a href="https://www.sans.org/" target="_blank">SANS</a> | <a href="https://owasp.org/" target="_blank">OWASP</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Final Comprehensive Security Assessment">
+                <h2>Task 2: Final Comprehensive Security Assessment</h2>
+                <div class="assessment-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to perform a comprehensive security assessment covering all course topics.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio final assessment environment</li>
+                        <li>Perform comprehensive vulnerability assessment</li>
+                        <li>Test all security controls and configurations</li>
+                        <li>Analyze network traffic and identify threats</li>
+                        <li>Assess web application security</li>
+                        <li>Evaluate authentication and access controls</li>
+                        <li>Test incident response procedures</li>
+                        <li>Prepare comprehensive security assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on demonstrating comprehensive understanding of all course topics</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Course Summary">
+                <h2>Course Summary</h2>
+                <div class="highlight">
+                    <h3>CMU540: Cyber Security - Complete Course Coverage:</h3>
+                    <ul>
+                        <li><strong>Sessions 1-3:</strong> OWASP Top 10 (A01-A03)</li>
+                        <li><strong>Sessions 4-6:</strong> Web Security (SQL, XSS, CSRF, Config)</li>
+                        <li><strong>Sessions 7-9:</strong> Advanced Security (Components, Auth, Data, Logging, SSRF, Upload)</li>
+                        <li><strong>Sessions 10-12:</strong> Network Security (Protocols, Scanning, DNS, Traffic, Firewall)</li>
+                    </ul>
+                    <p><strong>Total:</strong> 12 sessions, 36 hours, comprehensive cybersecurity education</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Further Activity: Advanced Security Analysis">
+                <h2>Further Activity: Advanced Security Analysis</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Comprehensive Analysis:</h3>
+                    <p>For students with additional time, explore advanced security topics:</p>
+                    <ul>
+                        <li>Advanced persistent threats (APT) analysis</li>
+                        <li>Zero-day vulnerability research</li>
+                        <li>Advanced evasion techniques</li>
+                        <li>Security architecture design</li>
+                        <li>Threat hunting methodologies</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Advanced security research report</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Final Session Summary">
+                <h2>Final Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>Network traffic analysis is essential for threat detection</li>
+                        <li>Firewall configuration provides critical network protection</li>
+                        <li>Comprehensive security assessments require systematic approach</li>
+                        <li>OS³ Studio provides hands-on security testing experience</li>
+                        <li>Incident response and forensics are critical skills</li>
+                        <li>Career opportunities in cybersecurity are extensive</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Course Completion">
+                <h2>Course Completion</h2>
+                
+            </section>
+
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

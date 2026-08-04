@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Decoder | Interactive CS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                    },
+                    colors: {
+                        bnu: {
+                            primary: '#003366',
+                            accent: '#0055A4',
+                            gold: '#C5A900'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a;
+            /* Slate 900 */
+            color: #e2e8f0;
+            /* Slate 200 */
+        }
+
+        /* JW Nav Icon */
+        .jw-nav {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            user-select: none;
+            color: white;
+            text-decoration: none;
+        }
+
+        .jw-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Mode Card Active State */
+        .mode-card.active {
+            background-color: #4f46e5;
+            /* Indigo 600 */
+            border-color: #818cf8;
+            /* Indigo 400 */
+            color: white;
+        }
+
+        .mode-card.active .mode-icon {
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes pulse-green {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(74, 222, 128, 0);
+            }
+        }
+
+        .animate-success {
+            animation: pulse-green 0.5s;
+        }
+
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+
+            20%,
+            80% {
+                transform: translate3d(2px, 0, 0);
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+
+            40%,
+            60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <nav
+        class="bg-slate-900 border-b border-slate-700 p-3 flex items-center justify-between shrink-0 z-50 h-16 sticky top-0">
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="jw-nav" title="Back to Hub">JW</a>
+            <div>
+                <h1 class="font-bold text-lg text-white tracking-tight flex items-center gap-2">
+                    <span class="material-icons text-purple-400">code</span>
+                    Binary Decoder
+                </h1>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Translation Protocol</p>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex items-center gap-6">
+            <div class="flex flex-col items-end">
+                <div class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Score</div>
+                <div class="text-xl font-bold text-purple-400 leading-none font-mono" id="score">0</div>
+            </div>
+            <div class="flex flex-col items-end pl-6 border-l border-slate-700">
+                <div class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Streak</div>
+                <div class="text-lg font-bold text-blue-400 leading-none font-mono" id="streak">0</div>
+            </div>
+            <div class="flex flex-col items-end pl-6 border-l border-slate-700" id="timerStat" style="display: none;">
+                <div class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Time</div>
+                <div class="text-lg font-bold text-yellow-400 leading-none font-mono" id="timer">30</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-6 overflow-y-auto">
+        <div class="max-w-4xl mx-auto space-y-8">
+
+            <!-- Game Modes -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button
+                    class="mode-card active flex flex-col items-center p-4 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all group"
+                    data-mode="binary-to-decimal">
+                    <span
+                        class="material-icons text-3xl mb-2 text-purple-400 group-hover:text-white mode-icon transition-colors">looks_one</span>
+                    <span class="font-bold text-sm">Binary → Decimal</span>
+                </button>
+                <button
+                    class="mode-card flex flex-col items-center p-4 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all group"
+                    data-mode="decimal-to-binary">
+                    <span
+                        class="material-icons text-3xl mb-2 text-blue-400 group-hover:text-white mode-icon transition-colors">computer</span>
+                    <span class="font-bold text-sm">Decimal → Binary</span>
+                </button>
+                <button
+                    class="mode-card flex flex-col items-center p-4 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all group"
+                    data-mode="speed-round">
+                    <span
+                        class="material-icons text-3xl mb-2 text-yellow-400 group-hover:text-white mode-icon transition-colors">bolt</span>
+                    <span class="font-bold text-sm">Speed Round</span>
+                </button>
+            </div>
+
+            <!-- Game Area -->
+            <div
+                class="bg-slate-800 rounded-2xl border border-slate-700 p-8 shadow-xl text-center relative overflow-hidden">
+
+                <div class="mb-8">
+                    <h2 class="text-slate-400 text-sm uppercase tracking-widest font-bold mb-4" id="challengeLabel">
+                        Convert this binary number:</h2>
+                    <div class="bg-slate-900 rounded-xl p-8 border border-slate-700 inline-block min-w-[300px]">
+                        <span class="text-4xl md:text-5xl font-mono font-bold text-white tracking-widest"
+                            id="challengeContent">10101010</span>
+                    </div>
+                </div>
+
+                <div class="max-w-md mx-auto space-y-4">
+                    <input type="text" id="answerInput"
+                        class="w-full bg-slate-900 border-2 border-slate-600 rounded-lg p-4 text-center text-2xl font-mono text-white focus:border-purple-500 focus:outline-none transition-colors placeholder-slate-600"
+                        placeholder="Enter value..." autocomplete="off">
+
+                    <div class="flex gap-3 justify-center">
+                        <button id="submitBtn"
+                            class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all active:scale-95 flex items-center gap-2">
+                            <span class="material-icons">check</span> Submit
+                        </button>
+                        <button id="skipBtn"
+                            class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-4 rounded-lg shadow transition-all active:scale-95"
+                            title="Skip">
+                            <span class="material-icons">skip_next</span>
+                        </button>
+                        <button id="newGameBtn"
+                            class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-4 rounded-lg shadow transition-all active:scale-95"
+                            title="Reset">
+                            <span class="material-icons">refresh</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="feedback" class="mt-6 h-8 text-lg font-bold"></div>
+            </div>
+
+            <!-- Bottom Section: Leaderboard & Reference -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Leaderboard -->
+                <div class="bg-slate-800 rounded-xl border border-slate-700 p-6">
+                    <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
+                        <span class="material-icons text-yellow-500">emoji_events</span>
+                        <h3 class="font-bold text-white">Session High Scores</h3>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center bg-slate-700/50 p-3 rounded">
+                            <span class="text-sm text-slate-300">Binary → Decimal</span>
+                            <span class="font-mono font-bold text-purple-400" id="highScore1">0</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-slate-700/50 p-3 rounded">
+                            <span class="text-sm text-slate-300">Decimal → Binary</span>
+                            <span class="font-mono font-bold text-blue-400" id="highScore2">0</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-slate-700/50 p-3 rounded">
+                            <span class="text-sm text-slate-300">Speed Round</span>
+                            <span class="font-mono font-bold text-yellow-400" id="highScore3">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reference -->
+                <div class="bg-slate-800 rounded-xl border border-slate-700 p-6">
+                    <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
+                        <span class="material-icons text-blue-400">menu_book</span>
+                        <h3 class="font-bold text-white">Quick Reference</h3>
+                    </div>
+                    <div class="grid grid-cols-4 gap-2 text-center text-xs font-mono" id="referenceTable">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="text-center py-6 text-xs text-slate-500">
+        Made by James Williams. MIT Licensed.
+    </footer>
+
+    <script>
+        let currentMode = 'binary-to-decimal';
+        let currentChallenge = {};
+        let score = 0;
+        let streak = 0;
+        let bestStreak = 0;
+        let highScores = { 'binary-to-decimal': 0, 'decimal-to-binary': 0, 'speed-round': 0 };
+        let speedTimer = null;
+        let timeLeft = 30;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHighScores();
+            setupEventListeners();
+            generateReferenceTable();
+            generateChallenge();
+        });
+
+        function setupEventListeners() {
+            document.querySelectorAll('.mode-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    currentMode = card.dataset.mode;
+                    resetGame();
+                });
+            });
+
+            document.getElementById('submitBtn').addEventListener('click', checkAnswer);
+            document.getElementById('skipBtn').addEventListener('click', skipQuestion);
+            document.getElementById('newGameBtn').addEventListener('click', resetGame);
+
+            document.getElementById('answerInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkAnswer();
+            });
+
+            document.getElementById('answerInput').focus();
+        }
+
+        function generateChallenge() {
+            const input = document.getElementById('answerInput');
+            input.value = '';
+            input.focus();
+
+            if (currentMode === 'binary-to-decimal') {
+                const decimal = Math.floor(Math.random() * 256);
+                const binary = decimal.toString(2).padStart(8, '0');
+                currentChallenge = { question: binary, answer: decimal.toString(), type: 'b2d' };
+                document.getElementById('challengeLabel').textContent = 'Convert this binary number:';
+                document.getElementById('challengeContent').innerHTML = `<span class="text-purple-400">${binary}</span>`;
+            } else if (currentMode === 'decimal-to-binary') {
+                const decimal = Math.floor(Math.random() * 256);
+                const binary = decimal.toString(2);
+                currentChallenge = { question: decimal, answer: binary, type: 'd2b' };
+                document.getElementById('challengeLabel').textContent = 'Convert this decimal number:';
+                document.getElementById('challengeContent').innerHTML = `<span class="text-blue-400">${decimal}</span>`;
+            } else if (currentMode === 'speed-round') {
+                const mode = Math.random() > 0.5 ? 'b2d' : 'd2b';
+                const decimal = Math.floor(Math.random() * 128);
+                const binary = decimal.toString(2).padStart(7, '0');
+
+                if (mode === 'b2d') {
+                    currentChallenge = { question: binary, answer: decimal.toString(), type: 'b2d' };
+                    document.getElementById('challengeLabel').textContent = 'Binary to Decimal:';
+                    document.getElementById('challengeContent').innerHTML = `<span class="text-purple-400">${binary}</span>`;
+                } else {
+                    currentChallenge = { question: decimal, answer: binary, type: 'd2b' };
+                    document.getElementById('challengeLabel').textContent = 'Decimal to Binary:';
+                    document.getElementById('challengeContent').innerHTML = `<span class="text-blue-400">${decimal}</span>`;
+                }
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answerInput').value.trim();
+            const feedback = document.getElementById('feedback');
+            const inputEl = document.getElementById('answerInput');
+
+            if (!userAnswer) {
+                feedback.textContent = '⚠️ Please enter an answer!';
+                feedback.className = 'mt-6 h-8 text-lg font-bold text-yellow-500';
+                return;
+            }
+
+            const isCorrect = userAnswer === currentChallenge.answer;
+
+            if (isCorrect) {
+                score += 10;
+                streak++;
+                if (streak > bestStreak) bestStreak = streak;
+
+                feedback.textContent = `✓ Correct! ${currentChallenge.question} = ${currentChallenge.answer}`;
+                feedback.className = 'mt-6 h-8 text-lg font-bold text-green-400';
+                inputEl.classList.add('border-green-500');
+                setTimeout(() => inputEl.classList.remove('border-green-500'), 500);
+
+                updateStats();
+                setTimeout(generateChallenge, 1000);
+            } else {
+                streak = 0;
+                feedback.textContent = `✗ Wrong! ${currentChallenge.question} = ${currentChallenge.answer}`;
+                feedback.className = 'mt-6 h-8 text-lg font-bold text-red-500';
+                inputEl.classList.add('border-red-500', 'shake');
+                setTimeout(() => inputEl.classList.remove('border-red-500', 'shake'), 500);
+
+                updateStats();
+                setTimeout(() => {
+                    feedback.textContent = '';
+                }, 2000);
+            }
+        }
+
+        function skipQuestion() {
+            streak = 0;
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = `Skipped! ${currentChallenge.question} = ${currentChallenge.answer}`;
+            feedback.className = 'mt-6 h-8 text-lg font-bold text-slate-500';
+            updateStats();
+            setTimeout(() => {
+                feedback.textContent = '';
+                generateChallenge();
+            }, 1500);
+        }
+
+        function updateStats() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('streak').textContent = streak;
+
+            if (score > highScores[currentMode]) {
+                highScores[currentMode] = score;
+                saveHighScores();
+                updateHighScoreDisplay();
+            }
+        }
+
+        function resetGame() {
+            score = 0;
+            streak = 0;
+
+            if (speedTimer) {
+                clearInterval(speedTimer);
+                speedTimer = null;
+            }
+
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = '';
+
+            if (currentMode === 'speed-round') {
+                timeLeft = 30;
+                document.getElementById('timerStat').style.display = 'flex';
+                document.getElementById('timer').textContent = timeLeft;
+                startSpeedRound();
+            } else {
+                document.getElementById('timerStat').style.display = 'none';
+            }
+
+            updateStats();
+            generateChallenge();
+        }
+
+        function startSpeedRound() {
+            speedTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(speedTimer);
+                    endSpeedRound();
+                }
+            }, 1000);
+        }
+
+        function endSpeedRound() {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = `⏰ Time's Up! Final Score: ${score}`;
+            feedback.className = 'mt-6 h-8 text-lg font-bold text-yellow-400';
+
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('skipBtn').disabled = true;
+            document.getElementById('answerInput').disabled = true;
+            document.getElementById('submitBtn').classList.add('opacity-50');
+
+            setTimeout(() => {
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('skipBtn').disabled = false;
+                document.getElementById('answerInput').disabled = false;
+                document.getElementById('submitBtn').classList.remove('opacity-50');
+            }, 3000);
+        }
+
+        function generateReferenceTable() {
+            const table = document.getElementById('referenceTable');
+            table.innerHTML = '';
+            for (let i = 0; i <= 15; i++) {
+                const binary = i.toString(2).padStart(4, '0');
+                table.innerHTML += `
+                    <div class="bg-slate-700/50 p-2 rounded">
+                        <div class="text-green-400">${binary}</div>
+                        <div class="text-white font-bold">${i}</div>
+                    </div>
+                `;
+            }
+        }
+
+        function saveHighScores() {
+            const scores = {
+                'binary-to-decimal': highScores['binary-to-decimal'],
+                'decimal-to-binary': highScores['decimal-to-binary'],
+                'speed-round': highScores['speed-round']
+            };
+            // Store in memory
+            window.binaryDecoderScores = scores;
+        }
+
+        function loadHighScores() {
+            // Load from memory if exists
+            if (window.binaryDecoderScores) {
+                highScores = window.binaryDecoderScores;
+            }
+            updateHighScoreDisplay();
+        }
+
+        function updateHighScoreDisplay() {
+            document.getElementById('highScore1').textContent = highScores['binary-to-decimal'];
+            document.getElementById('highScore2').textContent = highScores['decimal-to-binary'];
+            document.getElementById('highScore3').textContent = highScores['speed-round'];
+        }
+    </script>
+</body>
+
+</html>

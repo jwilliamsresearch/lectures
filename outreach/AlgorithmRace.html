@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Olympics | Algorithm Race</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* JW Nav Icon */
+        .jw-nav {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            user-select: none;
+            color: white;
+            text-decoration: none;
+        }
+
+        .jw-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .bar {
+            transition: height 0.1s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-200 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <nav
+        class="bg-slate-900 border-b border-slate-700 p-3 flex items-center justify-between shrink-0 z-50 h-16 sticky top-0">
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="jw-nav" title="Back to Hub">JW</a>
+            <div>
+                <h1 class="font-bold text-lg text-white tracking-tight flex items-center gap-2">
+                    <span class="material-icons text-indigo-400">emoji_events</span>
+                    Sorting Olympics
+                </h1>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Algorithm Race</p>
+            </div>
+        </div>
+
+        <!-- Controls in Header -->
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex items-center gap-2 text-xs font-mono text-slate-400">
+                <span>SIZE:</span>
+                <input type="range" id="arraySize" min="10" max="100" value="50" class="w-24 accent-indigo-500">
+                <span id="sizeValue" class="w-6 text-right text-white">50</span>
+            </div>
+            <div
+                class="hidden md:flex items-center gap-2 text-xs font-mono text-slate-400 border-l border-slate-700 pl-4">
+                <span>SPEED:</span>
+                <input type="range" id="animSpeed" min="1" max="3" value="2" class="w-24 accent-indigo-500">
+                <span id="speedValue" class="w-12 text-right text-white">Med</span>
+            </div>
+            <button id="startBtn"
+                class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold py-2 px-4 rounded shadow-lg transition-colors flex items-center gap-2">
+                <span class="material-icons text-sm">play_arrow</span> RACE
+            </button>
+            <button id="resetBtn"
+                class="bg-slate-700 hover:bg-slate-600 text-white text-sm font-bold py-2 px-3 rounded shadow transition-colors"
+                title="Reset">
+                <span class="material-icons text-sm">refresh</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-6 overflow-y-auto">
+        <div class="max-w-7xl mx-auto space-y-6">
+
+            <!-- Visualizers Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="visualizers">
+                <!-- Visualizers injected here -->
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-xl">
+                <div class="p-4 border-b border-slate-700 bg-slate-800/50 flex items-center gap-2">
+                    <span class="material-icons text-yellow-500">leaderboard</span>
+                    <h2 class="font-bold text-white">Race Results</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-400">
+                        <thead class="text-xs text-slate-500 uppercase bg-slate-900/50">
+                            <tr>
+                                <th class="px-6 py-3">Rank</th>
+                                <th class="px-6 py-3">Algorithm</th>
+                                <th class="px-6 py-3">Time</th>
+                                <th class="px-6 py-3">Comparisons</th>
+                                <th class="px-6 py-3">Swaps</th>
+                                <th class="px-6 py-3">Complexity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody">
+                            <tr>
+                                <td colspan="6" class="px-6 py-8 text-center text-slate-500 italic">
+                                    Start the race to see which algorithm wins!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-4 text-xs text-slate-500 bg-slate-900 border-t border-slate-800">
+        Made by James Williams. MIT Licensed.
+    </footer>
+
+    <script>
+        const algorithms = [
+            { name: 'Bubble Sort', complexity: 'O(n²)', fn: bubbleSort },
+            { name: 'Selection Sort', complexity: 'O(n²)', fn: selectionSort },
+            { name: 'Insertion Sort', complexity: 'O(n²)', fn: insertionSort },
+            { name: 'Merge Sort', complexity: 'O(n log n)', fn: mergeSort },
+            { name: 'Quick Sort', complexity: 'O(n log n)', fn: quickSort }
+        ];
+
+        let baseArray = [];
+        let isRunning = false;
+        const speeds = { 1: 50, 2: 20, 3: 5 };
+        const speedLabels = { 1: 'Slow', 2: 'Med', 3: 'Fast' };
+
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize
+            generateNewArray();
+            createVisualizers();
+
+            // Event listeners
+            document.getElementById('arraySize').addEventListener('input', (e) => {
+                document.getElementById('sizeValue').textContent = e.target.value;
+                if (!isRunning) generateNewArray();
+            });
+
+            document.getElementById('animSpeed').addEventListener('input', (e) => {
+                document.getElementById('speedValue').textContent = speedLabels[e.target.value];
+            });
+
+            document.getElementById('startBtn').addEventListener('click', startRace);
+            document.getElementById('resetBtn').addEventListener('click', reset);
+        });
+
+        function generateNewArray() {
+            const size = parseInt(document.getElementById('arraySize').value);
+            baseArray = Array.from({ length: size }, () => Math.floor(Math.random() * 100) + 5);
+            if (document.getElementById('visualizers').children.length > 0) {
+                updateAllVisualizers();
+                clearLeaderboard();
+            }
+        }
+
+        function createVisualizers() {
+            const container = document.getElementById('visualizers');
+            container.innerHTML = '';
+            algorithms.forEach((algo, idx) => {
+                const viz = document.createElement('div');
+                viz.className = 'bg-slate-800 rounded-lg border border-slate-700 p-4 shadow-lg flex flex-col';
+                viz.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-indigo-400">${algo.name}</h3>
+                        <span class="text-xs font-mono px-2 py-1 rounded bg-slate-700 text-slate-300" id="status-${idx}">Ready</span>
+                    </div>
+                    <div class="flex-grow flex items-end justify-between gap-[1px] h-40 bg-slate-900/50 rounded p-2 mb-4" id="bars-${idx}"></div>
+                    <div class="grid grid-cols-3 gap-2 text-xs text-center">
+                        <div class="bg-slate-700/50 rounded p-1">
+                            <div class="text-slate-500 text-[10px] uppercase">Time</div>
+                            <div class="font-mono font-bold text-white" id="time-${idx}">0ms</div>
+                        </div>
+                        <div class="bg-slate-700/50 rounded p-1">
+                            <div class="text-slate-500 text-[10px] uppercase">Comps</div>
+                            <div class="font-mono font-bold text-blue-400" id="comp-${idx}">0</div>
+                        </div>
+                        <div class="bg-slate-700/50 rounded p-1">
+                            <div class="text-slate-500 text-[10px] uppercase">Swaps</div>
+                            <div class="font-mono font-bold text-pink-400" id="swap-${idx}">0</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(viz);
+            });
+            updateAllVisualizers();
+        }
+
+        function updateAllVisualizers() {
+            algorithms.forEach((_, idx) => {
+                renderBars(idx, [...baseArray]);
+            });
+        }
+
+        function renderBars(idx, array, comparing = [], swapping = [], sorted = []) {
+            const container = document.getElementById(`bars-${idx}`);
+            if (!container) return;
+            const maxVal = Math.max(...array, 100); // Ensure consistent height
+
+            container.innerHTML = array.map((val, i) => {
+                let colorClass = 'bg-indigo-500';
+                if (sorted.includes(i)) colorClass = 'bg-green-500';
+                else if (swapping.includes(i)) colorClass = 'bg-pink-500';
+                else if (comparing.includes(i)) colorClass = 'bg-yellow-400';
+
+                const height = Math.max(5, (val / maxVal) * 100);
+                return `<div class="w-full rounded-t-sm ${colorClass} bar" style="height: ${height}%"></div>`;
+            }).join('');
+        }
+
+        function updateStatus(idx, status) {
+            const el = document.getElementById(`status-${idx}`);
+            if (!el) return;
+
+            if (status === 'waiting') {
+                el.className = 'text-xs font-mono px-2 py-1 rounded bg-slate-700 text-slate-300';
+                el.textContent = 'Ready';
+            } else if (status === 'sorting') {
+                el.className = 'text-xs font-mono px-2 py-1 rounded bg-yellow-500/20 text-yellow-500 animate-pulse';
+                el.textContent = 'Running...';
+            } else {
+                el.className = 'text-xs font-mono px-2 py-1 rounded bg-green-500/20 text-green-500';
+                el.textContent = 'Done';
+            }
+        }
+
+        async function startRace() {
+            if (isRunning) return;
+            isRunning = true;
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('startBtn').classList.add('opacity-50', 'cursor-not-allowed');
+            clearLeaderboard();
+
+            const results = [];
+            const promises = algorithms.map(async (algo, idx) => {
+                const arr = [...baseArray];
+                const stats = { comparisons: 0, swaps: 0 };
+                const startTime = performance.now();
+
+                updateStatus(idx, 'sorting');
+                await algo.fn(arr, idx, stats);
+                const endTime = performance.now();
+
+                updateStatus(idx, 'complete');
+
+                return {
+                    name: algo.name,
+                    time: Math.round(endTime - startTime),
+                    comparisons: stats.comparisons,
+                    swaps: stats.swaps,
+                    complexity: algo.complexity
+                };
+            });
+
+            const allResults = await Promise.all(promises);
+            updateLeaderboard(allResults);
+
+            isRunning = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('startBtn').classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function getDelay() {
+            return speeds[document.getElementById('animSpeed').value];
+        }
+
+        // --- SORTING ALGORITHMS ---
+
+        async function bubbleSort(arr, idx, stats) {
+            const n = arr.length;
+            for (let i = 0; i < n - 1; i++) {
+                for (let j = 0; j < n - i - 1; j++) {
+                    stats.comparisons++;
+                    renderBars(idx, arr, [j, j + 1]);
+                    document.getElementById(`comp-${idx}`).textContent = stats.comparisons;
+                    await sleep(getDelay());
+
+                    if (arr[j] > arr[j + 1]) {
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                        stats.swaps++;
+                        renderBars(idx, arr, [], [j, j + 1]);
+                        document.getElementById(`swap-${idx}`).textContent = stats.swaps;
+                        await sleep(getDelay());
+                    }
+                }
+                renderBars(idx, arr, [], [], Array.from({ length: n - i }, (_, k) => n - 1 - k));
+            }
+            renderBars(idx, arr, [], [], Array.from({ length: n }, (_, k) => k));
+        }
+
+        async function selectionSort(arr, idx, stats) {
+            const n = arr.length;
+            for (let i = 0; i < n - 1; i++) {
+                let minIdx = i;
+                for (let j = i + 1; j < n; j++) {
+                    stats.comparisons++;
+                    renderBars(idx, arr, [minIdx, j], [], Array.from({ length: i }, (_, k) => k));
+                    document.getElementById(`comp-${idx}`).textContent = stats.comparisons;
+                    await sleep(getDelay());
+
+                    if (arr[j] < arr[minIdx]) {
+                        minIdx = j;
+                    }
+                }
+                if (minIdx !== i) {
+                    [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+                    stats.swaps++;
+                    renderBars(idx, arr, [], [i, minIdx], Array.from({ length: i }, (_, k) => k));
+                    document.getElementById(`swap-${idx}`).textContent = stats.swaps;
+                    await sleep(getDelay());
+                }
+            }
+            renderBars(idx, arr, [], [], Array.from({ length: n }, (_, k) => k));
+        }
+
+        async function insertionSort(arr, idx, stats) {
+            const n = arr.length;
+            for (let i = 1; i < n; i++) {
+                let key = arr[i];
+                let j = i - 1;
+
+                while (j >= 0) {
+                    stats.comparisons++;
+                    renderBars(idx, arr, [j, j + 1], [], Array.from({ length: Math.max(0, i - 1) }, (_, k) => k));
+                    document.getElementById(`comp-${idx}`).textContent = stats.comparisons;
+                    await sleep(getDelay());
+
+                    if (arr[j] <= key) break;
+
+                    arr[j + 1] = arr[j];
+                    stats.swaps++;
+                    renderBars(idx, arr, [], [j, j + 1]);
+                    document.getElementById(`swap-${idx}`).textContent = stats.swaps;
+                    await sleep(getDelay());
+                    j--;
+                }
+                arr[j + 1] = key;
+            }
+            renderBars(idx, arr, [], [], Array.from({ length: n }, (_, k) => k));
+        }
+
+        async function mergeSort(arr, idx, stats) {
+            await mergeSortHelper(arr, 0, arr.length - 1, idx, stats);
+            renderBars(idx, arr, [], [], Array.from({ length: arr.length }, (_, k) => k));
+        }
+
+        async function mergeSortHelper(arr, left, right, idx, stats) {
+            if (left >= right) return;
+
+            const mid = Math.floor((left + right) / 2);
+            await mergeSortHelper(arr, left, mid, idx, stats);
+            await mergeSortHelper(arr, mid + 1, right, idx, stats);
+            await merge(arr, left, mid, right, idx, stats);
+        }
+
+        async function merge(arr, left, mid, right, idx, stats) {
+            const leftArr = arr.slice(left, mid + 1);
+            const rightArr = arr.slice(mid + 1, right + 1);
+
+            let i = 0, j = 0, k = left;
+
+            while (i < leftArr.length && j < rightArr.length) {
+                stats.comparisons++;
+                renderBars(idx, arr, [left + i, mid + 1 + j]);
+                document.getElementById(`comp-${idx}`).textContent = stats.comparisons;
+                await sleep(getDelay());
+
+                if (leftArr[i] <= rightArr[j]) {
+                    arr[k] = leftArr[i++];
+                } else {
+                    arr[k] = rightArr[j++];
+                }
+                stats.swaps++;
+                document.getElementById(`swap-${idx}`).textContent = stats.swaps;
+                k++;
+            }
+
+            while (i < leftArr.length) arr[k++] = leftArr[i++];
+            while (j < rightArr.length) arr[k++] = rightArr[j++];
+        }
+
+        async function quickSort(arr, idx, stats) {
+            await quickSortHelper(arr, 0, arr.length - 1, idx, stats);
+            renderBars(idx, arr, [], [], Array.from({ length: arr.length }, (_, k) => k));
+        }
+
+        async function quickSortHelper(arr, low, high, idx, stats) {
+            if (low < high) {
+                const pi = await partition(arr, low, high, idx, stats);
+                await quickSortHelper(arr, low, pi - 1, idx, stats);
+                await quickSortHelper(arr, pi + 1, high, idx, stats);
+            }
+        }
+
+        async function partition(arr, low, high, idx, stats) {
+            const pivot = arr[high];
+            let i = low - 1;
+
+            for (let j = low; j < high; j++) {
+                stats.comparisons++;
+                renderBars(idx, arr, [j, high]);
+                document.getElementById(`comp-${idx}`).textContent = stats.comparisons;
+                await sleep(getDelay());
+
+                if (arr[j] < pivot) {
+                    i++;
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                    stats.swaps++;
+                    renderBars(idx, arr, [], [i, j]);
+                    document.getElementById(`swap-${idx}`).textContent = stats.swaps;
+                    await sleep(getDelay());
+                }
+            }
+
+            [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+            stats.swaps++;
+            return i + 1;
+        }
+
+        function updateLeaderboard(results) {
+            results.sort((a, b) => a.time - b.time);
+            const tbody = document.getElementById('leaderboardBody');
+            const medals = ['🥇', '🥈', '🥉'];
+
+            tbody.innerHTML = results.map((r, i) => `
+                <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition-colors">
+                    <td class="px-6 py-4 font-bold text-white">${medals[i] || i + 1}</td>
+                    <td class="px-6 py-4 font-medium text-indigo-300">${r.name}</td>
+                    <td class="px-6 py-4 font-mono">${r.time}ms</td>
+                    <td class="px-6 py-4 font-mono text-blue-400">${r.comparisons.toLocaleString()}</td>
+                    <td class="px-6 py-4 font-mono text-pink-400">${r.swaps.toLocaleString()}</td>
+                    <td class="px-6 py-4"><span class="bg-slate-700 text-slate-300 px-2 py-1 rounded text-xs font-mono">${r.complexity}</span></td>
+                </tr>
+            `).join('');
+
+            // Update time displays
+            results.forEach((r, i) => {
+                const algoIdx = algorithms.findIndex(a => a.name === r.name);
+                document.getElementById(`time-${algoIdx}`).textContent = `${r.time}ms`;
+            });
+        }
+
+        function clearLeaderboard() {
+            document.getElementById('leaderboardBody').innerHTML = `
+                <tr>
+                    <td colspan="6" class="px-6 py-8 text-center text-slate-500 italic">
+                        Race in progress...
+                    </td>
+                </tr>
+            `;
+            algorithms.forEach((_, idx) => {
+                document.getElementById(`time-${idx}`).textContent = '0ms';
+                document.getElementById(`comp-${idx}`).textContent = '0';
+                document.getElementById(`swap-${idx}`).textContent = '0';
+            });
+        }
+
+        function reset() {
+            if (!isRunning) {
+                generateNewArray();
+                algorithms.forEach((_, idx) => {
+                    updateStatus(idx, 'waiting');
+                    document.getElementById(`time-${idx}`).textContent = '0ms';
+                    document.getElementById(`comp-${idx}`).textContent = '0';
+                    document.getElementById(`swap-${idx}`).textContent = '0';
+                });
+                clearLeaderboard();
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 2: Bootstrap Framework Fundamentals - Newman University</title>
+    <link rel="stylesheet" href="../../base.css">
+    <link rel="stylesheet" href="../../placeholder/quiz.css">    <style>
+        body {
+            max-width: 900px;
+            margin: 2em auto;
+            padding: 2em;
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 3em;
+            padding-bottom: 2em;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .quiz-header h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
+        }
+        
+        .quiz-header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .quiz-info {
+            background: #f8f8f8;
+            padding: 1.5em;
+            margin-bottom: 2em;
+            border-left: 3px solid #2c3e50;
+        }
+        
+        .question {
+            background: #fff;
+            padding: 2em;
+            margin-bottom: 2em;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .question-number {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 1em;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 1.5em;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8em;
+        }
+        
+        .option {
+            padding: 1em;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background: #f8f8f8;
+            border-color: #2c3e50;
+        }
+        
+        .option.selected {
+            background: #e8f0f8;
+            border-color: #2c3e50;
+        }
+        
+        .option.correct {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            border-width: 2px;
+        }
+        
+        .option.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+            border-width: 2px;
+        }
+        
+        .explanation {
+            margin-top: 1em;
+            padding: 1em;
+            background: #f0f7ff;
+            border-left: 3px solid #2196f3;
+            display: none;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .submit-container {
+            text-align: center;
+            margin: 3em 0 2em 0;
+        }
+        
+        .btn {
+            padding: 1em 2.5em;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: #1a252f;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 3em;
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5em;
+        }
+        
+        .feedback {
+            font-size: 1.2em;
+            margin-bottom: 2em;
+            color: #666;
+        }
+        
+        .results-buttons {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-header">
+        <h1>Quiz 2: Bootstrap Framework Fundamentals</h1>
+        <div class="subtitle">Newman University | CMU529: Advanced Web Development</div>
+    </div>
+    
+    <div class="quiz-info">
+        <p><strong>Instructions:</strong> Answer all questions below. Questions are randomized each time. Click "Submit Quiz" when finished to see your results.</p>
+    </div>
+    
+    <div id="quiz-container">
+        <!-- Questions will be populated by JavaScript -->
+    </div>
+    
+    <div class="submit-container">
+        <button class="btn" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+    </div>
+    
+    <div class="results" id="results">
+        <div class="score" id="scoreDisplay"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="results-buttons">
+            <button class="btn" onclick="location.reload()">Retake Quiz</button>
+            <button class="btn" onclick="window.location.href='../index.html'">Back to Module</button>
+        </div>
+    </div>
+
+    <script>
+        const questionsData = [
+        {
+                "question": "What is Bootstrap primarily used for?",
+                "options": [
+                        "Server-side programming",
+                        "Database management",
+                        "Responsive front-end design",
+                        "Back-end logic"
+                ],
+                "correct": 2,
+                "explanation": "Bootstrap is a front-end framework for creating responsive web designs."
+        },
+        {
+                "question": "Which Bootstrap class creates a responsive grid container?",
+                "options": [
+                        ".container",
+                        ".row",
+                        ".col",
+                        ".grid"
+                ],
+                "correct": 0,
+                "explanation": "The .container class creates a responsive, fixed-width container in Bootstrap."
+        },
+        {
+                "question": "What does the Bootstrap class 'col-md-6' mean?",
+                "options": [
+                        "6 columns on all screen sizes",
+                        "6 columns on medium screens and up",
+                        "6 columns on small screens only",
+                        "6 columns on large screens only"
+                ],
+                "correct": 1,
+                "explanation": "col-md-6 means 6 columns (half width) on medium screens and larger."
+        },
+        {
+                "question": "Which Bootstrap breakpoint is for tablets?",
+                "options": [
+                        "sm",
+                        "md",
+                        "lg",
+                        "xl"
+                ],
+                "correct": 1,
+                "explanation": "md (medium) breakpoint is typically used for tablets."
+        },
+        {
+                "question": "What is the purpose of Bootstrap's grid system?",
+                "options": [
+                        "To create databases",
+                        "To organize content",
+                        "To write PHP code",
+                        "To manage servers"
+                ],
+                "correct": 1,
+                "explanation": "Bootstrap's grid system helps organize and layout content responsively."
+        },
+        {
+                "question": "Which Bootstrap utility class adds margin to all sides?",
+                "options": [
+                        ".m-0",
+                        ".p-0",
+                        ".mx-0",
+                        ".my-0"
+                ],
+                "correct": 0,
+                "explanation": ".m-0 adds margin to all sides, while .p-0 adds padding."
+        },
+        {
+                "question": "What is the purpose of Bootstrap's responsive utilities?",
+                "options": [
+                        "To hide elements",
+                        "To show elements",
+                        "To control visibility",
+                        "All of the above"
+                ],
+                "correct": 3,
+                "explanation": "Bootstrap's responsive utilities can hide, show, and control element visibility."
+        },
+        {
+                "question": "Which Bootstrap component is used for navigation?",
+                "options": [
+                        ".card",
+                        ".navbar",
+                        ".button",
+                        ".form"
+                ],
+                "correct": 1,
+                "explanation": ".navbar is Bootstrap's navigation component."
+        },
+        {
+                "question": "What is the purpose of Bootstrap's card component?",
+                "options": [
+                        "To create containers",
+                        "To display content",
+                        "To organize information",
+                        "All of the above"
+                ],
+                "correct": 3,
+                "explanation": "Bootstrap cards are used to create containers, display content, and organize information."
+        },
+        {
+                "question": "Which Bootstrap class creates a button?",
+                "options": [
+                        ".btn",
+                        ".button",
+                        ".link",
+                        ".click"
+                ],
+                "correct": 0,
+                "explanation": ".btn is Bootstrap's button class."
+        },
+        {
+                "question": "What is the purpose of Bootstrap's form components?",
+                "options": [
+                        "To create inputs",
+                        "To style forms",
+                        "To validate data",
+                        "All of the above"
+                ],
+                "correct": 3,
+                "explanation": "Bootstrap form components create inputs, style forms, and help with validation."
+        },
+        {
+                "question": "Which Bootstrap class creates a responsive image?",
+                "options": [
+                        ".img-fluid",
+                        ".img-responsive",
+                        ".img-scale",
+                        ".img-fit"
+                ],
+                "correct": 0,
+                "explanation": ".img-fluid creates responsive images in Bootstrap."
+        },
+        {
+                "question": "What is the purpose of Bootstrap's alert component?",
+                "options": [
+                        "To show messages",
+                        "To display warnings",
+                        "To provide feedback",
+                        "All of the above"
+                ],
+                "correct": 3,
+                "explanation": "Bootstrap alerts show messages, display warnings, and provide user feedback."
+        },
+        {
+                "question": "Which Bootstrap class creates a badge?",
+                "options": [
+                        ".badge",
+                        ".tag",
+                        ".label",
+                        ".mark"
+                ],
+                "correct": 0,
+                "explanation": ".badge creates small badges in Bootstrap."
+        },
+        {
+                "question": "What is the purpose of Bootstrap's modal component?",
+                "options": [
+                        "To create popups",
+                        "To show dialogs",
+                        "To display overlays",
+                        "All of the above"
+                ],
+                "correct": 3,
+                "explanation": "Bootstrap modals create popups, show dialogs, and display overlays."
+        }
+];
+        
+        // Shuffle array function
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        // Randomize questions on page load
+        const questions = shuffleArray(questionsData);
+        let userAnswers = new Array(questions.length).fill(null);
+        
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = questions.map((q, qIndex) => `
+                <div class="question" id="question-${qIndex}">
+                    <div class="question-number">Question ${qIndex + 1} of ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((option, oIndex) => `
+                            <div class="option" data-question="${qIndex}" data-option="${oIndex}" onclick="selectOption(${qIndex}, ${oIndex})">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation" id="explanation-${qIndex}">
+                        <strong>Explanation:</strong> ${q.explanation || 'No explanation provided.'}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function selectOption(questionIndex, optionIndex) {
+            // Deselect all options for this question
+            document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Select the clicked option
+            event.target.classList.add('selected');
+            userAnswers[questionIndex] = optionIndex;
+        }
+        
+        function submitQuiz() {
+            // Check if all questions are answered
+            if (userAnswers.includes(null)) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+            
+            // Calculate score
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const isCorrect = userAnswers[index] === q.correct;
+                if (isCorrect) correct++;
+                
+                // Show correct/incorrect
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                options.forEach((opt, oIndex) => {
+                    opt.style.cursor = 'default';
+                    opt.onclick = null;
+                    
+                    if (oIndex === q.correct) {
+                        opt.classList.add('correct');
+                    } else if (oIndex === userAnswers[index]) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+                
+                // Show explanation
+                document.getElementById(`explanation-${index}`).classList.add('show');
+            });
+            
+            // Display results
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('scoreDisplay').textContent = `${correct}/${questions.length} (${percentage}%)`;
+            
+            let feedbackText = '';
+            if (percentage >= 90) {
+                feedbackText = 'Excellent work! You have demonstrated mastery of this material.';
+            } else if (percentage >= 80) {
+                feedbackText = 'Very good! You have a strong understanding of the concepts.';
+            } else if (percentage >= 70) {
+                feedbackText = 'Good effort. You have grasped the fundamentals.';
+            } else if (percentage >= 60) {
+                feedbackText = 'Fair performance. Review the material to strengthen your understanding.';
+            } else {
+                feedbackText = 'Additional study is recommended. Review the session materials carefully.';
+            }
+            
+            document.getElementById('feedback').textContent = feedbackText;
+            document.getElementById('results').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Initialize quiz on page load
+        window.onload = initQuiz;
+    </script>
+</html>

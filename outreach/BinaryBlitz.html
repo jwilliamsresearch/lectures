@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Binary Blitz: Data Defense</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Roboto:wght@700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #050505;
+            color: #00ff00;
+            overflow: hidden;
+            touch-action: none;
+            user-select: none;
+        }
+
+        /* CRT Effect */
+        .crt::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .bit-switch {
+            transition: all 0.1s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+
+        .bit-switch.active {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+            transform: translateY(2px);
+        }
+
+        /* JW Nav Icon */
+        .jw-nav {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 255, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            user-select: none;
+            color: #00ff00;
+            text-decoration: none;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .jw-nav:hover {
+            background: rgba(0, 255, 0, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Glitch animation for Game Over */
+        @keyframes glitch {
+            0% {
+                text-shadow: 2px 0 #ff0000, -2px 0 #0000ff;
+            }
+
+            25% {
+                text-shadow: -2px 0 #ff0000, 2px 0 #0000ff;
+            }
+
+            50% {
+                text-shadow: 2px 0 #ff0000, -2px 0 #0000ff;
+            }
+
+            75% {
+                text-shadow: -2px 0 #ff0000, 2px 0 #0000ff;
+            }
+
+            100% {
+                text-shadow: 2px 0 #ff0000, -2px 0 #0000ff;
+            }
+        }
+
+        .glitch-text {
+            animation: glitch 0.5s infinite;
+        }
+    </style>
+</head>
+
+<body class="h-screen w-screen relative crt">
+
+    <!-- HEADER / HUD -->
+    <nav
+        class="absolute top-0 left-0 w-full p-3 flex items-center justify-between z-20 bg-black/80 border-b border-green-900 backdrop-blur-sm h-16">
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="jw-nav" title="Back to Hub">JW</a>
+            <div>
+                <h1
+                    class="font-bold text-lg text-green-500 tracking-tight flex items-center gap-2 font-mono drop-shadow-[0_0_5px_rgba(0,255,0,0.5)]">
+                    <span class="material-icons text-green-400">security</span>
+                    BINARY BLITZ
+                </h1>
+                <p class="text-[10px] text-green-800 uppercase tracking-widest font-bold font-mono">Data Defense
+                    Protocol</p>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex items-center gap-6">
+            <div class="flex flex-col items-end">
+                <div class="text-[10px] text-green-800 uppercase tracking-widest font-bold font-mono">Score</div>
+                <div class="text-xl font-bold text-green-500 leading-none drop-shadow-[0_0_5px_rgba(0,255,0,0.8)]"
+                    id="scoreDisplay">0</div>
+            </div>
+            <div class="flex flex-col items-end pl-6 border-l border-green-900">
+                <div class="text-[10px] text-green-800 uppercase tracking-widest font-bold font-mono">Integrity</div>
+                <div class="text-lg font-bold text-green-500 leading-none tracking-widest" id="livesDisplay">100%</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN MENU SCREEN -->
+    <div id="menuScreen"
+        class="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/95 backdrop-blur-sm top-16">
+        <div
+            class="text-center space-y-8 max-w-lg px-6 border border-green-900/50 p-10 rounded-xl shadow-[0_0_50px_rgba(0,255,0,0.1)]">
+            <div class="space-y-2">
+                <h1 class="text-6xl font-bold text-green-500 tracking-tighter drop-shadow-[0_0_10px_rgba(0,255,0,0.8)]">
+                    BINARY BLITZ</h1>
+                <p class="text-green-800 text-lg uppercase tracking-widest">Data Defense Protocol</p>
+            </div>
+
+            <div
+                class="text-left bg-black border border-green-800 p-4 rounded text-sm text-green-400 font-mono space-y-2">
+                <p>> SYSTEM ALERT: DECIMAL VIRUSES DETECTED.</p>
+                <p>> INSTRUCTION: TOGGLE BITS TO MATCH VALUE.</p>
+                <p>> EXAMPLE: VIRUS '5' = [4] + [1] (101).</p>
+                <p>> PRESS [ENTER] OR [FIRE] TO ELIMINATE.</p>
+            </div>
+
+            <button id="startBtn"
+                class="w-full bg-green-700 hover:bg-green-600 text-black font-bold py-4 px-6 rounded transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(0,255,0,0.4)] uppercase text-xl">
+                Initialize Firewall
+            </button>
+        </div>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="gameOverScreen"
+        class="hidden absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/95 backdrop-blur-md top-16">
+        <div class="text-center mb-8">
+            <h2 class="text-6xl font-bold text-red-500 mb-4 glitch-text">SYSTEM FAILURE</h2>
+            <div class="text-3xl text-green-500">DATA SAVED: <span id="finalScore">0</span></div>
+        </div>
+        <button id="restartBtn"
+            class="bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-black font-bold py-3 px-8 rounded transition-all uppercase tracking-widest">
+            Reboot System
+        </button>
+    </div>
+
+    <!-- CANVAS LAYER -->
+    <div class="flex-grow relative w-full h-full">
+        <canvas id="gameCanvas" class="block w-full h-full"></canvas>
+    </div>
+
+    <!-- CONTROL PANEL (Bottom) -->
+    <div id="controlPanel"
+        class="absolute bottom-0 left-0 w-full p-2 pb-6 z-20 flex flex-col items-center bg-gradient-to-t from-black via-black to-transparent transition-transform duration-300 translate-y-full">
+
+        <!-- Current Value Display -->
+        <div class="mb-4 flex items-center gap-4">
+            <div class="text-green-800 text-xs uppercase tracking-widest">Output Value</div>
+            <div
+                class="bg-black border border-green-600 px-6 py-2 rounded text-3xl font-bold text-green-400 shadow-[0_0_15px_rgba(0,255,0,0.3)] min-w-[100px] text-center">
+                <span id="currentValueDisplay">0</span>
+            </div>
+            <button id="fireBtn"
+                class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded shadow-[0_0_15px_rgba(255,0,0,0.4)] active:scale-95 transition-all">
+                EXECUTE
+            </button>
+        </div>
+
+        <!-- Bits Container -->
+        <div class="flex justify-center gap-2 md:gap-4 w-full max-w-4xl px-4" id="bitContainer">
+            <!-- Bits generated by JS -->
+        </div>
+
+        <div class="text-green-900 text-[10px] mt-2 font-mono uppercase">Keyboard: 1-5 to toggle bits | SPACE/ENTER to
+            Fire</div>
+    </div>
+
+    <script>
+        // --- GAME CONFIG ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Game State
+        let gameState = 'MENU';
+        let score = 0;
+        let lives = 100;
+        let lastTime = 0;
+        let enemies = [];
+        let particles = [];
+        let lasers = [];
+        let floaters = []; // Background binary numbers
+
+        // Difficulty
+        let spawnRate = 2000;
+        let spawnTimer = 0;
+        let enemySpeed = 1.0;
+        let maxBits = 4; // Start with 4 bits (Max number 15)
+
+        // Player Input
+        let bits = [0, 0, 0, 0, 0]; // Will resize based on difficulty
+        const BIT_VALUES = [16, 8, 4, 2, 1]; // Left to right
+
+        // --- RESIZE ---
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            createBackgroundFloaters();
+        }
+        window.addEventListener('resize', resize);
+
+        // --- AUDIO (Synthesized for zero dependencies) ---
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'switch') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            } else if (type === 'fire') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.1);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'explosion') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            }
+        }
+
+        // --- BACKGROUND FX ---
+        function createBackgroundFloaters() {
+            floaters = [];
+            for (let i = 0; i < 30; i++) {
+                floaters.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    text: Math.random() > 0.5 ? '1' : '0',
+                    speed: 0.5 + Math.random(),
+                    opacity: 0.1 + Math.random() * 0.2,
+                    size: 10 + Math.random() * 20
+                });
+            }
+        }
+
+        // --- GAME LOGIC ---
+        function startGame() {
+            gameState = 'PLAYING';
+            score = 0;
+            lives = 100;
+            enemies = [];
+            particles = [];
+            lasers = [];
+
+            // Reset Difficulty
+            maxBits = 4; // Start with 4 bits (1, 2, 4, 8) -> Max 15
+            spawnRate = 2500;
+            enemySpeed = 0.5;
+
+            setupBits(maxBits);
+
+            document.getElementById('menuScreen').classList.add('hidden');
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            document.getElementById('controlPanel').classList.remove('translate-y-full');
+            updateHUD();
+
+            lastTime = performance.now();
+            requestAnimationFrame(loop);
+
+            resize(); // Ensure floaters are set
+        }
+
+        function setupBits(count) {
+            bits = new Array(count).fill(0);
+            const container = document.getElementById('bitContainer');
+            container.innerHTML = '';
+
+            // Calculate powers of 2 for labels (Reverse order for display: High -> Low)
+            // Actually, usually bits are read left-to-right as MSB to LSB or vice versa.
+            // Let's do MSB Left: 8 4 2 1
+
+            for (let i = 0; i < count; i++) {
+                const power = count - 1 - i;
+                const value = Math.pow(2, power);
+
+                const btn = document.createElement('button');
+                btn.className = `bit-switch relative w-12 h-16 md:w-16 md:h-24 bg-black border border-green-600 rounded flex flex-col items-center justify-between py-2 overflow-hidden`;
+                btn.onclick = () => toggleBit(i);
+                btn.id = `bit-${i}`;
+
+                btn.innerHTML = `
+                    <span class="text-[10px] text-green-700 font-bold">${value}</span>
+                    <span class="text-2xl font-bold bit-val text-green-900">0</span>
+                    <div class="w-full h-1 bg-green-900 status-bar"></div>
+                `;
+
+                container.appendChild(btn);
+            }
+            updateValueDisplay();
+        }
+
+        function toggleBit(index) {
+            bits[index] = bits[index] ? 0 : 1;
+            playSound('switch');
+
+            // Visual Update
+            const btn = document.getElementById(`bit-${index}`);
+            const valSpan = btn.querySelector('.bit-val');
+            const statusBar = btn.querySelector('.status-bar');
+
+            if (bits[index]) {
+                btn.classList.add('active', 'border-green-400');
+                btn.classList.remove('border-green-600');
+                valSpan.innerText = '1';
+                valSpan.classList.remove('text-green-900');
+                valSpan.classList.add('text-black');
+                statusBar.classList.add('bg-white');
+            } else {
+                btn.classList.remove('active', 'border-green-400');
+                btn.classList.add('border-green-600');
+                valSpan.innerText = '0';
+                valSpan.classList.add('text-green-900');
+                valSpan.classList.remove('text-black');
+                statusBar.classList.remove('bg-white');
+            }
+
+            updateValueDisplay();
+        }
+
+        function getCurrentValue() {
+            let val = 0;
+            for (let i = 0; i < bits.length; i++) {
+                const power = bits.length - 1 - i;
+                if (bits[i]) val += Math.pow(2, power);
+            }
+            return val;
+        }
+
+        function updateValueDisplay() {
+            const val = getCurrentValue();
+            document.getElementById('currentValueDisplay').innerText = val;
+        }
+
+        function fire() {
+            if (gameState !== 'PLAYING') return;
+
+            const damageValue = getCurrentValue();
+            if (damageValue === 0) return; // Don't fire 0
+
+            playSound('fire');
+
+            // Create Laser Visual
+            lasers.push({
+                y: canvas.height - 150,
+                val: damageValue,
+                life: 1.0
+            });
+
+            // Check hits immediately (Hitscan logic for gameplay feel)
+            let hit = false;
+
+            // Filter out destroyed enemies
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                if (enemies[i].val === damageValue) {
+                    // HIT
+                    createExplosion(enemies[i].x, enemies[i].y);
+                    enemies.splice(i, 1);
+                    hit = true;
+                    score += damageValue * 10;
+                }
+            }
+
+            if (hit) {
+                playSound('explosion');
+
+                // Progression: Increase difficulty every 500 points
+                if (score > 0 && score % 500 === 0 && maxBits < 6) {
+                    maxBits++;
+                    setupBits(maxBits);
+                    showFloatingMessage("SYSTEM UPGRADE: BIT DEPTH INCREASED");
+                }
+
+                // Speed up slightly
+                spawnRate = Math.max(500, spawnRate - 50);
+                enemySpeed += 0.05;
+            } else {
+                // Miss Penalty? Optional. Maybe screen shake.
+            }
+
+            updateHUD();
+
+            // Auto reset bits? No, manual reset requires more skill.
+            // But let's flash the output
+            const disp = document.getElementById('currentValueDisplay');
+            disp.style.color = hit ? '#fff' : '#ef4444';
+            setTimeout(() => disp.style.color = '#4ade80', 200);
+        }
+
+        function spawnEnemy() {
+            const maxVal = Math.pow(2, bits.length) - 1;
+            const minVal = 1;
+            const val = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
+
+            const laneWidth = canvas.width / (bits.length + 1); // rough spacing
+            const x = Math.random() * (canvas.width - 100) + 50;
+
+            enemies.push({
+                x: x,
+                y: -50,
+                val: val,
+                speed: enemySpeed * (0.8 + Math.random() * 0.4) // Variation
+            });
+        }
+
+        function createExplosion(x, y) {
+            for (let i = 0; i < 15; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
+                    life: 1.0,
+                    color: '#00ff00'
+                });
+            }
+            // Add text pop
+            particles.push({
+                x: x,
+                y: y,
+                vx: 0,
+                vy: -2,
+                life: 1.0,
+                text: "DELETED",
+                color: '#fff'
+            });
+        }
+
+        function showFloatingMessage(text) {
+            // Simple overlay message logic could go here
+        }
+
+        function gameOver() {
+            gameState = 'GAMEOVER';
+            document.getElementById('finalScore').innerText = score;
+            document.getElementById('gameOverScreen').classList.remove('hidden');
+            document.getElementById('controlPanel').classList.add('translate-y-full');
+        }
+
+        function updateHUD() {
+            document.getElementById('scoreDisplay').innerText = score;
+            const livesEl = document.getElementById('livesDisplay');
+            livesEl.innerText = Math.floor(lives) + '%';
+            livesEl.style.color = lives < 30 ? '#ef4444' : (lives < 60 ? '#f59e0b' : '#00ff00');
+        }
+
+        // --- MAIN LOOP ---
+        function loop(timestamp) {
+            if (gameState !== 'PLAYING') return;
+            const dt = timestamp - lastTime;
+            lastTime = timestamp;
+
+            // Spawning
+            spawnTimer += dt;
+            if (spawnTimer > spawnRate) {
+                spawnEnemy();
+                spawnTimer = 0;
+            }
+
+            // Update Background
+            floaters.forEach(f => {
+                f.y += f.speed;
+                if (f.y > canvas.height) f.y = -20;
+            });
+
+            // Update Enemies
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                let e = enemies[i];
+                e.y += e.speed;
+
+                // Hit bottom
+                if (e.y > canvas.height - 100) { // Hit the "defense line"
+                    enemies.splice(i, 1);
+                    lives -= 10;
+                    playSound('switch'); // dull sound
+
+                    // Red Flash
+                    ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    if (lives <= 0) gameOver();
+                    updateHUD();
+                }
+            }
+
+            // Update Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.x += p.vx || 0;
+                p.y += p.vy || 0;
+                p.life -= 0.05;
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+
+            // Update Lasers
+            for (let i = lasers.length - 1; i >= 0; i--) {
+                lasers[i].life -= 0.1;
+                if (lasers[i].life <= 0) lasers.splice(i, 1);
+            }
+
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        function draw() {
+            // Clear / Trail effect
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Background Floaters
+            ctx.font = '20px monospace';
+            floaters.forEach(f => {
+                ctx.fillStyle = `rgba(0, 255, 0, ${f.opacity})`;
+                ctx.fillText(f.text, f.x, f.y);
+            });
+
+            // Draw Laser Beams (Visual only, logic is hitscan)
+            lasers.forEach(l => {
+                ctx.save();
+                ctx.globalAlpha = l.life;
+                ctx.strokeStyle = '#00ff00';
+                ctx.lineWidth = 50 * l.life;
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2, canvas.height); // From center bottom? Or whole screen flash?
+                // Let's make it a scanline that moves up
+                ctx.moveTo(0, l.y);
+                ctx.lineTo(canvas.width, l.y);
+                ctx.stroke();
+
+                // Also a big vertical beam
+                ctx.fillStyle = `rgba(0, 255, 0, ${l.life * 0.2})`;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.restore();
+            });
+
+            // Draw Enemies
+            enemies.forEach(e => {
+                // Hex shape
+                ctx.strokeStyle = '#00ff00';
+                ctx.lineWidth = 2;
+                ctx.fillStyle = 'rgba(0, 20, 0, 0.8)';
+
+                const size = 25;
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    ctx.lineTo(e.x + size * Math.cos(i * 2 * Math.PI / 6), e.y + size * Math.sin(i * 2 * Math.PI / 6));
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Text
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 20px "Share Tech Mono"';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(e.val, e.x, e.y);
+            });
+
+            // Draw Particles
+            particles.forEach(p => {
+                ctx.globalAlpha = p.life;
+                ctx.fillStyle = p.color;
+                if (p.text) {
+                    ctx.font = '14px monospace';
+                    ctx.fillText(p.text, p.x, p.y);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.globalAlpha = 1.0;
+            });
+
+            // Draw Defense Line
+            ctx.strokeStyle = '#15803d'; // Green-700
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height - 100);
+            ctx.lineTo(canvas.width, canvas.height - 100);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        // --- CONTROLS ---
+        document.getElementById('startBtn').addEventListener('click', startGame);
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            // quick reset
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            document.getElementById('menuScreen').classList.remove('hidden');
+        });
+
+        document.getElementById('fireBtn').addEventListener('click', fire);
+
+        // Keyboard
+        window.addEventListener('keydown', (e) => {
+            if (gameState !== 'PLAYING') return;
+
+            // Numbers 1-8
+            if (e.key >= '1' && e.key <= '8') {
+                const idx = parseInt(e.key) - 1;
+                if (idx < bits.length) toggleBit(idx);
+            }
+
+            if (e.key === 'Enter' || e.key === ' ') {
+                fire();
+            }
+        });
+
+    </script>
+</body>
+
+</html>

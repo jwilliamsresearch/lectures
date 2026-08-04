@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5: Beginning Your Development</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/theme/white.css">
+    <style>
+        /* Three.js Canvas for first slide */
+        #galaxyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: #000000;
+            margin: 0;
+            padding: 0;
+            display: none;
+            /* Hidden by default, shown only on first slide */
+        }
+
+        .reveal .slides section:first-child {
+            background: #000000;
+        }
+
+        .title-slide-content {
+            position: relative;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            color: white !important;
+        }
+
+        .title-slide-content h1,
+        .title-slide-content h3,
+        .title-slide-content p,
+        .title-slide-content strong,
+        .title-slide-content em,
+        .title-slide-content small {
+            color: white !important;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        .title-slide-content .timeline-info {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .title-slide-content .timeline-info p,
+        .title-slide-content .timeline-info ul,
+        .title-slide-content .timeline-info li {
+            color: white !important;
+        }
+
+        /* Global slide styling */
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section.center {
+            text-align: center;
+        }
+
+        /* Ensure content fits within viewport */
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        /* Task box styling - Dissertation Orange Theme */
+        .task-box {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffe6cc 100%);
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(243, 156, 18, 0.1);
+        }
+
+        /* Code example styling - Dark theme for Dissertation */
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #34495e;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 10px 0;
+            font-size: 0.9em;
+            line-height: 1.4;
+            max-height: 40vh;
+            overflow-y: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Highlight styling - Orange accent for Dissertation */
+        .highlight {
+            background: linear-gradient(135deg, #fff7e6 0%, #ffe6cc 100%);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #f39c12;
+            margin: 10px 0;
+            box-shadow: 0 1px 4px rgba(243, 156, 18, 0.2);
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .warning-box h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="galaxyCanvas"></canvas>
+
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="../index.html" title="Previous Week">&lt;</a>
+        <a href="week6.html" title="Next Week">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <!-- Title Slide with Galaxy Animation -->
+            <section class="title-slide custom-title-slide" data-slide-title="Title Slide">
+                <div class="module-code" style="color: white;">CMU601</div>
+                <h1 style="color: white;">Beginning Your Development</h1>
+                <h2 style="color: white;">Week 5</h2>
+                <div class="author">
+                    <p><strong style="color: white;">James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk"
+                            style="color: white;">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand how to effectively begin dissertation project development</li>
+                    <li>Set up a professional development environment</li>
+                    <li>Establish project structure and architecture foundations</li>
+                    <li>Implement good coding practices from day one</li>
+                    <li>Create an initial working prototype or proof of concept</li>
+                    <li>Plan iterative development cycles</li>
+                </ul>
+                <div class="warning-box">
+                    <h3>⚠️ Critical Point</h3>
+                    <p>Starting development early and maintaining consistent progress is the single
+                        most important factor in dissertation success. Don't wait until you have a
+                        "perfect" plan - start building!</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: The Importance of Starting Early -->
+            <section data-slide-title="Why Start Development Now?">
+                <h2>Why Start Development Now?</h2>
+                <div class="highlight">
+                    <strong>The earlier you start, the more time for refinement and polish</strong>
+                </div>
+                <h3>Benefits of Early Development:</h3>
+                <ul>
+                    <li><strong>Discovery of Issues:</strong> Technical problems emerge that weren't
+                        apparent during planning</li>
+                    <li><strong>Realistic Timeline:</strong> Understand how long tasks actually take
+                        versus estimates</li>
+                    <li><strong>Scope Adjustment:</strong> Time to pivot or adjust features based on
+                        feasibility</li>
+                    <li><strong>Learning Curve:</strong> Master new technologies gradually rather
+                        than cramming</li>
+                    <li><strong>Buffer Time:</strong> Handle unexpected challenges without panic
+                    </li>
+                    <li><strong>Quality Improvement:</strong> Iterate and refine your solution
+                        multiple times</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">Common Timeline:
+Week 5-10: Initial development &amp; core features
+Week 11-15: Feature completion &amp; integration
+Week 16-20: Testing, refinement, &amp; documentation
+Week 21-25: Polish, final testing, &amp; report writing</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 4: Common Mistakes to Avoid -->
+            <section data-slide-title="Common Mistakes to Avoid">
+                <h2>Common Mistakes to Avoid</h2>
+                <h3>Planning Forever Without Building</h3>
+                <ul>
+                    <li>Spending months on design documents without writing code</li>
+                    <li>Waiting for the "perfect" plan before starting</li>
+                    <li>Over-engineering solutions before understanding the problem</li>
+                </ul>
+                <h3>Starting Too Ambitious</h3>
+                <ul>
+                    <li>Trying to build everything at once</li>
+                    <li>Selecting technologies you don't know for "learning experience"</li>
+                    <li>Ignoring MVP (Minimum Viable Product) principles</li>
+                </ul>
+                <h3>Poor Time Management</h3>
+                <ul>
+                    <li>Leaving development until the last few weeks</li>
+                    <li>Not scheduling regular development time</li>
+                    <li>Underestimating debugging and testing time</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: Development Environment Setup -->
+            <section data-slide-title="Setting Up Your Development Environment">
+                <h2>Setting Up Your Development Environment</h2>
+                <h3>Essential Components:</h3>
+                <ul>
+                    <li><strong>Code Editor/IDE:</strong> VS Code, PyCharm, IntelliJ, etc.</li>
+                    <li><strong>Version Control:</strong> Git installed locally</li>
+                    <li><strong>Language Runtime:</strong> Python, Node.js, Java, etc.</li>
+                    <li><strong>Package Manager:</strong> pip, npm, Maven, etc.</li>
+                    <li><strong>Database:</strong> PostgreSQL, MySQL, MongoDB (if needed)</li>
+                    <li><strong>Testing Framework:</strong> pytest, Jest, JUnit (language-specific)
+                    </li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-bash"># Example: Python project setup
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Mac/Linux
+pip install -r requirements.txt
+# Example: Node.js project setup
+npm init -y
+npm install express mongoose dotenv</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 6: Project Structure -->
+            <section data-slide-title="Organizing Your Project Structure">
+                <h2>Organizing Your Project Structure</h2>
+                <h3>Well-Organized Structure Benefits:</h3>
+                <ul>
+                    <li>Easier to find and modify code</li>
+                    <li>Clear separation of concerns</li>
+                    <li>Professional presentation</li>
+                    <li>Easier for others (and supervisors) to understand</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-javascript">my-dissertation-project/
+├── src/                    # Source code
+│   ├── components/         # Reusable components
+│   ├── models/             # Data models
+│   ├── services/           # Business logic
+│   ├── utils/              # Helper functions
+│   └── main.py             # Entry point
+├── tests/                  # Test files
+├── docs/                   # Documentation
+├── config/                 # Configuration files
+├── .env.example            # Environment variables template
+├── .gitignore              # Git ignore rules
+├── README.md               # Project documentation
+└── requirements.txt        # Dependencies</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 7: The README File -->
+            <section data-slide-title="Creating a Professional README">
+                <h2>Creating a Professional README</h2>
+                <div class="highlight">
+                    <strong>Your README is often the first thing people see - make it
+                        count!</strong>
+                </div>
+                <h3>Essential README Sections:</h3>
+                <ul>
+                    <li><strong>Project Title & Description:</strong> Clear explanation of what it
+                        does</li>
+                    <li><strong>Features:</strong> Key functionality and capabilities</li>
+                    <li><strong>Installation:</strong> Step-by-step setup instructions</li>
+                    <li><strong>Usage:</strong> How to run and use the application</li>
+                    <li><strong>Technologies:</strong> List of frameworks, libraries, tools</li>
+                    <li><strong>Screenshots:</strong> Visual demonstration (if applicable)</li>
+                    <li><strong>Testing:</strong> How to run tests</li>
+                    <li><strong>License:</strong> If applicable</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: README Example -->
+            <section data-slide-title="README.md Example">
+                <h2>README.md Example</h2>
+                <div class="code-example">
+                    <pre><code class="language-bash"># Student Performance Tracking System
+A web-based application for tracking student academic performance
+and generating predictive analytics.
+## Features
+- Student grade tracking and visualization
+- Performance prediction using machine learning
+- Interactive dashboards for tutors
+- Export reports to PDF/Excel
+## Installation
+```bash
+git clone https://github.com/username/project.git
+cd project
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python src/main.py
+```
+## Technologies
+- Python 3.11
+- Django 4.2
+- PostgreSQL
+- Scikit-learn
+- Chart.js</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 9: Version Control Fundamentals -->
+            <section data-slide-title="Version Control from Day One">
+                <h2>Version Control from Day One</h2>
+                <div class="highlight">
+                    <strong>Start using Git immediately - it's your safety net!</strong>
+                </div>
+                <h3>Benefits of Version Control:</h3>
+                <ul>
+                    <li>Track all changes to your code</li>
+                    <li>Revert to previous working versions if something breaks</li>
+                    <li>Document your development progress</li>
+                    <li>Collaborate with supervisors or team members</li>
+                    <li>Demonstrate systematic development for your report</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-bash"># Initialize Git repository
+git init
+# First commit
+git add .
+git commit -m "Initial project setup with basic structure"
+# Connect to GitHub
+git remote add origin https://github.com/username/project.git
+git branch -M main
+git push -u origin main</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 10: Commit Message Best Practices -->
+            <section data-slide-title="Writing Good Commit Messages">
+                <h2>Writing Good Commit Messages</h2>
+                <h3>❌ Bad Commit Messages:</h3>
+                <div class="code-example">
+                    <pre><code class="language-bash">git commit -m "fixed stuff"
+git commit -m "update"
+git commit -m "asdfasdf"
+git commit -m "final version"
+git commit -m "final version 2"</code></pre>
+                </div>
+                <h3>✅ Good Commit Messages:</h3>
+                <div class="code-example">
+                    <pre><code class="language-bash">git commit -m "Add user authentication with JWT tokens"
+git commit -m "Fix database connection timeout issue"
+git commit -m "Implement student grade calculation algorithm"
+git commit -m "Refactor data validation in forms module"
+git commit -m "Update README with installation instructions"</code></pre>
+                </div>
+                <p><strong>Format:</strong> Start with a verb, be specific, explain what and why</p>
+            </section>
+
+            <!-- Slide 11: Task 1 - Project Setup -->
+            <section data-slide-title="Task 1: Initial Project Setup">
+                <h2>Task 1: Initial Project Setup</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Set up your dissertation project with proper structure and version control
+                    </p>
+
+                    <h3>Activity Steps:</h3>
+                    <ol>
+                        <li>Create a new project directory with appropriate folder structure</li>
+                        <li>Initialize a Git repository in your project</li>
+                        <li>Create a .gitignore file (use templates from gitignore.io)</li>
+                        <li>Write a comprehensive README.md for your project</li>
+                        <li>Set up your development environment (virtual env, dependencies)</li>
+                        <li>Create a GitHub repository and push your initial commit</li>
+                        <li>Add a LICENSE file if appropriate</li>
+                        <li>Create an initial project roadmap or TODO.md file</li>
+                    </ol>
+
+                    <h3>Deliverable:</h3>
+                    <p>A well-structured, version-controlled project repository with professional
+                        documentation</p>
+
+                    <h3>Time:</h3>
+                    <p>45 minutes</p>
+                </div>
+            </section>
+
+            <!-- Slide 12: MVP - Minimum Viable Product -->
+            <section data-slide-title="The MVP Approach">
+                <h2>The MVP Approach</h2>
+                <div class="highlight">
+                    <strong>Build the simplest working version first, then iterate</strong>
+                </div>
+                <h3>What is an MVP?</h3>
+                <p>A version of your project with just enough features to be functional and
+                    demonstrate core functionality.</p>
+                <h3>MVP Benefits:</h3>
+                <ul>
+                    <li>Early proof of concept validates your approach</li>
+                    <li>Identify technical challenges early</li>
+                    <li>Something to show supervisors for feedback</li>
+                    <li>Foundation to build upon systematically</li>
+                    <li>Achievable milestone that builds confidence</li>
+                </ul>
+                <h3>Example MVPs:</h3>
+                <ul>
+                    <li><strong>E-commerce:</strong> Product listing + shopping cart (no payment
+                        yet)</li>
+                    <li><strong>Chat App:</strong> Text messaging between two users (no groups)</li>
+                    <li><strong>Analytics Dashboard:</strong> Display one chart type with sample
+                        data</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: Breaking Down Features -->
+            <section data-slide-title="Breaking Features into Iterations">
+                <h2>Breaking Features into Iterations</h2>
+                <h3>Example: Building a Study Planner App</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;strong&gt;Iteration 1 (MVP - Week 5-7):&lt;/strong&gt;
+- Create account and login
+- Add study tasks with title and due date
+- Mark tasks as complete
+- Basic list view
+&lt;strong&gt;Iteration 2 (Week 8-10):&lt;/strong&gt;
+- Add task categories/subjects
+- Calendar view of tasks
+- Edit and delete tasks
+- Basic statistics (tasks completed)
+&lt;strong&gt;Iteration 3 (Week 11-13):&lt;/strong&gt;
+- Task priorities and reminders
+- Study time tracking
+- Progress visualization
+- Export study schedule
+&lt;strong&gt;Iteration 4 (Week 14-16):&lt;/strong&gt;
+- AI study recommendations
+- Collaboration features
+- Mobile responsive design
+- Performance optimization</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 14: Coding Standards -->
+            <section data-slide-title="Establishing Coding Standards">
+                <h2>Establishing Coding Standards</h2>
+                <div class="highlight">
+                    <strong>Consistency is key to maintainable code</strong>
+                </div>
+                <h3>Essential Standards:</h3>
+                <ul>
+                    <li><strong>Naming Conventions:</strong> Consistent variable, function, class
+                        names</li>
+                    <li><strong>Indentation:</strong> 2 or 4 spaces (pick one and stick with it)
+                    </li>
+                    <li><strong>Comments:</strong> Explain complex logic, not obvious code</li>
+                    <li><strong>Function Length:</strong> Keep functions focused and concise</li>
+                    <li><strong>DRY Principle:</strong> Don't Repeat Yourself - extract common code
+                    </li>
+                    <li><strong>Error Handling:</strong> Use try-catch blocks appropriately</li>
+                </ul>
+                <h3>Style Guides by Language:</h3>
+                <ul>
+                    <li><strong>Python:</strong> PEP 8</li>
+                    <li><strong>JavaScript:</strong> Airbnb Style Guide</li>
+                    <li><strong>Java:</strong> Google Java Style Guide</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15: Code Examples - Good vs Bad -->
+            <section data-slide-title="Code Quality Examples">
+                <h2>Code Quality Examples</h2>
+                <h3>❌ Poorly Written Code:</h3>
+                <div class="code-example">
+                    <pre><code class="language-python">def calc(a,b,c):
+x=a+b*c #calculate result
+return x
+result=calc(5,10,2)</code></pre>
+                </div>
+                <h3>✅ Well-Written Code:</h3>
+                <div class="code-example">
+                    <pre><code class="language-python">def calculate_total_with_tax(base_price, quantity, tax_rate):
+"""
+Calculate total price including tax.
+Args:
+base_price (float): Price per item
+quantity (int): Number of items
+tax_rate (float): Tax rate as decimal (e.g., 0.2 for 20%)
+Returns:
+float: Total price including tax
+"""
+subtotal = base_price * quantity
+total = subtotal * (1 + tax_rate)
+return total
+final_price = calculate_total_with_tax(
+base_price=50.0,
+quantity=3,
+tax_rate=0.2
+)</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 16: Testing Strategy -->
+            <section data-slide-title="Building in Testing from the Start">
+                <h2>Building in Testing from the Start</h2>
+                <div class="highlight">
+                    <strong>Write tests as you develop, not at the end</strong>
+                </div>
+                <h3>Types of Testing:</h3>
+                <ul>
+                    <li><strong>Unit Tests:</strong> Test individual functions/methods</li>
+                    <li><strong>Integration Tests:</strong> Test how components work together</li>
+                    <li><strong>User Acceptance Tests:</strong> Test from user perspective</li>
+                    <li><strong>Manual Testing:</strong> Explore your app like a user would</li>
+                </ul>
+                <h3>Simple Testing Example (Python):</h3>
+                <div class="code-example">
+                    <pre><code class="language-python"># tests/test_calculator.py
+import pytest
+from src.calculator import calculate_total_with_tax
+def test_calculate_total_basic():
+result = calculate_total_with_tax(50.0, 3, 0.2)
+assert result == 180.0
+def test_calculate_total_no_tax():
+result = calculate_total_with_tax(25.0, 2, 0.0)
+assert result == 50.0</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 17: Documentation While Building -->
+            <section data-slide-title="Documenting as You Develop">
+                <h2>Documenting as You Develop</h2>
+                <h3>Why Document Early?</h3>
+                <ul>
+                    <li>You'll forget implementation details later</li>
+                    <li>Easier to write reports with existing documentation</li>
+                    <li>Helps clarify your own thinking</li>
+                    <li>Useful for supervisor meetings</li>
+                </ul>
+                <h3>What to Document:</h3>
+                <ul>
+                    <li><strong>Architecture Decisions:</strong> Why you chose certain approaches
+                    </li>
+                    <li><strong>API Documentation:</strong> How functions/endpoints work</li>
+                    <li><strong>Setup Instructions:</strong> How to run your project</li>
+                    <li><strong>Known Issues:</strong> Problems and workarounds</li>
+                    <li><strong>Development Log:</strong> Weekly progress notes</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">docs/
+├── architecture.md      # System design decisions
+├── api-reference.md     # API documentation
+├── development-log.md   # Weekly progress
+└── setup-guide.md       # Installation instructions</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 18: Development Workflow -->
+            <section data-slide-title="Establishing a Development Workflow">
+                <h2>Establishing a Development Workflow</h2>
+                <h3>Recommended Daily/Weekly Routine:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;strong&gt;Daily (30-60 minutes minimum):&lt;/strong&gt;
+1. Review yesterday's progress
+2. Pick one task from backlog
+3. Implement feature/fix
+4. Write tests
+5. Commit with clear message
+6. Push to GitHub
+7. Update documentation
+&lt;strong&gt;Weekly:&lt;/strong&gt;
+1. Review all commits
+2. Update project roadmap
+3. Test full application
+4. Plan next week's tasks
+5. Write development log entry
+6. Prepare supervisor update</code></pre>
+                </div>
+                <div class="warning-box">
+                    <h3>⏰ Time Management Tip</h3>
+                    <p>Schedule specific development time in your calendar. Treat it like a class -
+                        non-negotiable commitment to your project.</p>
+                </div>
+            </section>
+
+            <!-- Slide 19: Using Configuration Files -->
+            <section data-slide-title="Environment Variables & Configuration">
+                <h2>Environment Variables & Configuration</h2>
+                <div class="highlight">
+                    <strong>Never hardcode sensitive information!</strong>
+                </div>
+                <h3>What Belongs in Configuration:</h3>
+                <ul>
+                    <li>Database connection strings</li>
+                    <li>API keys and secrets</li>
+                    <li>Email service credentials</li>
+                    <li>Environment-specific settings (dev, test, production)</li>
+                </ul>
+                <h3>Example .env File:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># .env (DO NOT commit this file!)
+DATABASE_URL=postgresql://user:pass@localhost/mydb
+SECRET_KEY=your-secret-key-here
+API_KEY=your-api-key-here
+DEBUG=True
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587</code></pre>
+                </div>
+                <h3>Example .env.example File:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># .env.example (commit this as a template)
+DATABASE_URL=
+SECRET_KEY=
+API_KEY=
+DEBUG=True
+EMAIL_HOST=
+EMAIL_PORT=</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 20: Dependency Management -->
+            <section data-slide-title="Managing Project Dependencies">
+                <h2>Managing Project Dependencies</h2>
+                <h3>Python Projects:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># Create requirements.txt
+pip freeze &gt; requirements.txt
+# Install from requirements.txt
+pip install -r requirements.txt</code></pre>
+                </div>
+                <h3>Node.js Projects:</h3>
+                <div class="code-example">
+                    <pre><code class="language-bash"># package.json automatically manages dependencies
+npm install package-name --save
+# Install all dependencies
+npm install</code></pre>
+                </div>
+                <h3>Best Practices:</h3>
+                <ul>
+                    <li>Keep dependencies updated regularly</li>
+                    <li>Document why each dependency is needed</li>
+                    <li>Remove unused dependencies</li>
+                    <li>Use specific version numbers for stability</li>
+                    <li>Test after updating dependencies</li>
+                </ul>
+            </section>
+
+            <!-- Slide 21: Debugging Strategies -->
+            <section data-slide-title="Debugging Effectively">
+                <h2>Debugging Effectively</h2>
+                <div class="highlight">
+                    <strong>Debugging is a skill - develop it systematically</strong>
+                </div>
+                <h3>Debugging Approaches:</h3>
+                <ul>
+                    <li><strong>Print Statements:</strong> Simple but effective for tracking values
+                    </li>
+                    <li><strong>Debugger Tools:</strong> Step through code line by line</li>
+                    <li><strong>Logging:</strong> Record application behavior</li>
+                    <li><strong>Error Messages:</strong> Read them carefully - they tell you exactly
+                        what's wrong</li>
+                    <li><strong>Rubber Duck Debugging:</strong> Explain your code to someone (or
+                        something)</li>
+                </ul>
+                <h3>Systematic Debugging Process:</h3>
+                <ol>
+                    <li>Reproduce the error consistently</li>
+                    <li>Read error messages and stack traces</li>
+                    <li>Form hypothesis about the cause</li>
+                    <li>Test hypothesis with minimal changes</li>
+                    <li>Document solution for future reference</li>
+                </ol>
+            </section>
+
+            <!-- Slide 22: Task 2 - Initial Development -->
+            <section data-slide-title="Task 2: Build Your MVP">
+                <h2>Task 2: Build Your MVP</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create the first working version of your dissertation project</p>
+
+                    <h3>Activity Steps:</h3>
+                    <ol>
+                        <li>Define your MVP scope (3-5 core features maximum)</li>
+                        <li>Create a basic project structure for your chosen tech stack</li>
+                        <li>Implement the most fundamental feature (e.g., data entry, user auth)
+                        </li>
+                        <li>Write at least 2 unit tests for your code</li>
+                        <li>Test your implementation manually</li>
+                        <li>Make multiple commits as you work (not one giant commit!)</li>
+                        <li>Update README with what you've built</li>
+                        <li>Document any challenges or decisions in a development log</li>
+                    </ol>
+
+                    <h3>Success Criteria:</h3>
+                    <ul>
+                        <li>Something demonstrable that runs without errors</li>
+                        <li>Clear Git commit history showing progression</li>
+                        <li>At least basic documentation</li>
+                    </ul>
+
+                    <h3>Time:</h3>
+                    <p>40 minutes</p>
+                </div>
+            </section>
+
+            <!-- Slide 23: Code Review & Refactoring -->
+            <section data-slide-title="Self-Review and Refactoring">
+                <h2>Self-Review and Refactoring</h2>
+                <h3>Review Your Own Code:</h3>
+                <ul>
+                    <li>Read through code before committing</li>
+                    <li>Check for obvious errors or improvements</li>
+                    <li>Ensure naming is clear and consistent</li>
+                    <li>Verify comments are helpful</li>
+                    <li>Test edge cases</li>
+                </ul>
+                <h3>When to Refactor:</h3>
+                <ul>
+                    <li>After getting something working</li>
+                    <li>When you notice repeated code patterns</li>
+                    <li>Before adding new features to messy code</li>
+                    <li>After learning better approaches</li>
+                </ul>
+                <div class="warning-box">
+                    <h3>⚠️ Refactoring Warning</h3>
+                    <p>Refactor incrementally, not all at once! Make small improvements regularly
+                        rather than massive rewrites.</p>
+                </div>
+            </section>
+
+            <!-- Slide 24: Performance Considerations -->
+            <section data-slide-title="Early Performance Thinking">
+                <h2>Early Performance Thinking</h2>
+                <div class="highlight">
+                    <strong>"Premature optimization is the root of all evil" - Donald Knuth</strong>
+                </div>
+                <h3>Don't Optimize Too Early:</h3>
+                <ul>
+                    <li>Get it working first, optimize later</li>
+                    <li>Focus on code clarity over speed initially</li>
+                    <li>Profile before optimizing (measure, don't guess)</li>
+                </ul>
+                <h3>But Do Consider:</h3>
+                <ul>
+                    <li><strong>Algorithm Choice:</strong> O(n²) vs O(n log n) matters at scale</li>
+                    <li><strong>Database Queries:</strong> Avoid N+1 query problems</li>
+                    <li><strong>Asset Loading:</strong> Don't load huge files unnecessarily</li>
+                    <li><strong>Memory Leaks:</strong> Clean up resources properly</li>
+                </ul>
+                <p><strong>Rule of Thumb:</strong> Write clean code first, then optimize hotspots if
+                    needed.</p>
+            </section>
+
+            <!-- Slide 25: Handling Technical Challenges -->
+            <section data-slide-title="When You Get Stuck">
+                <h2>When You Get Stuck</h2>
+                <h3>Problem-Solving Strategy:</h3>
+                <ol>
+                    <li><strong>Reproduce:</strong> Can you make the problem happen consistently?
+                    </li>
+                    <li><strong>Simplify:</strong> Create minimal test case</li>
+                    <li><strong>Research:</strong> Google error messages, check documentation</li>
+                    <li><strong>Ask:</strong> Stack Overflow, forums, supervisor, peers</li>
+                    <li><strong>Take a Break:</strong> Fresh perspective helps</li>
+                    <li><strong>Alternative Approach:</strong> Sometimes need to try different
+                        solution</li>
+                </ol>
+                <h3>Good Resources:</h3>
+                <ul>
+                    <li><strong>Stack Overflow:</strong> Specific coding problems</li>
+                    <li><strong>GitHub Issues:</strong> Library-specific problems</li>
+                    <li><strong>Official Documentation:</strong> Always check first!</li>
+                    <li><strong>Reddit:</strong> r/learnprogramming, language-specific subs</li>
+                    <li><strong>Discord Communities:</strong> Real-time help</li>
+                </ul>
+            </section>
+
+            <!-- Slide 26: Maintaining Motivation -->
+            <section data-slide-title="Staying Motivated Throughout Development">
+                <h2>Staying Motivated Throughout Development</h2>
+                <h3>Strategies for Sustained Progress:</h3>
+                <ul>
+                    <li><strong>Small Wins:</strong> Celebrate completing features, no matter how
+                        small</li>
+                    <li><strong>Visual Progress:</strong> Keep screenshots/videos of your app
+                        evolving</li>
+                    <li><strong>Regular Demos:</strong> Show friends, family, supervisors</li>
+                    <li><strong>Break Tasks Down:</strong> Large tasks are overwhelming</li>
+                    <li><strong>Reward Yourself:</strong> After completing milestones</li>
+                    <li><strong>Join Communities:</strong> Connect with other dissertation students
+                    </li>
+                    <li><strong>Remember Your Why:</strong> Why did you choose this project?</li>
+                </ul>
+                <div class="warning-box">
+                    <h3>💪 Persistence is Key</h3>
+                    <p>Every professional developer encounters frustrating bugs and challenges. The
+                        difference is they keep going. You can too!</p>
+                </div>
+            </section>
+
+            <!-- Slide 27: Next Steps & Action Plan -->
+            <section data-slide-title="Your Action Plan This Week">
+                <h2>Your Action Plan This Week</h2>
+                <div class="task-box">
+                    <h3>Immediate Actions (Today):</h3>
+                    <ul>
+                        <li>Complete Task 1: Set up your project structure</li>
+                        <li>Complete Task 2: Build your first working feature</li>
+                        <li>Schedule daily development time in your calendar</li>
+                    </ul>
+                    <h3>This Week (Days 1-7):</h3>
+                    <ul>
+                        <li>Expand MVP with 1-2 additional core features</li>
+                        <li>Write tests for new functionality</li>
+                        <li>Make daily commits</li>
+                        <li>Start development log</li>
+                        <li>Document any technical decisions</li>
+                    </ul>
+                    <h3>Next Two Weeks:</h3>
+                    <ul>
+                        <li>Complete MVP (all core features working)</li>
+                        <li>Implement basic UI/UX</li>
+                        <li>Create initial user documentation</li>
+                        <li>Prepare demo for supervisor meeting</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 28: Closing Reminders -->
+            <section class="center" data-slide-title="Key Takeaways">
+                <h2>Key Takeaways</h2>
+                <div class="highlight">
+                    <h3>Remember:</h3>
+                    <ul style="text-align: left; margin: 20px auto; max-width: 600px;">
+                        <li>Start development NOW, not later</li>
+                        <li>Build iteratively - MVP first, then enhance</li>
+                        <li>Commit code regularly with good messages</li>
+                        <li>Document as you go, not at the end</li>
+                        <li>Test your code continuously</li>
+                        <li>Ask for help when stuck</li>
+                        <li>Work on your project EVERY day or week</li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <h3>🎯 Success Formula</h3>
+                    <p><strong>Consistent small progress beats sporadic heroic efforts every
+                            time!</strong></p>
+                    <p>30 minutes daily = 3.5 hours weekly = 90+ hours by submission</p>
+                </div>
+                <p><strong>Contact:</strong> <a
+                        href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a>
+                </p>
+                <p><strong>Next Week:</strong> Using GitHub & Project Management Tools</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/three.js/build/three.min.js"></script>
+    <script>
+
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            progress: true,
+            controls: true,
+            center: false,
+            mouseWheel: true,
+            transition: 'none',
+            width: '100%',
+            height: '100%',
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0,
+            display: 'block',
+            responsive: true,
+            mobileViewDistance: 2,
+            hideEmptyElements: true
+        });
+
+        // Three.js Galaxy/Nebula Background with Dev Logos
+        const canvas = document.getElementById('galaxyCanvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        // Camera positioned at an angle, zoomed in closer
+        camera.position.set(2, 2.5, 4.5); // x, y, z - viewing from above and to the side, closer
+        camera.lookAt(0, 0, 0); // Look at the center of the galaxy
+
+        // Popular dev technology icons from devicon.dev
+        const devIcons = [
+            '../../libs/devicons/javascript-original.svg',
+            '../../libs/devicons/python-original.svg',
+            '../../libs/devicons/react-original.svg',
+            '../../libs/devicons/nodejs-original.svg',
+            '../../libs/devicons/html5-original.svg',
+            '../../libs/devicons/css3-original.svg',
+            '../../libs/devicons/git-original.svg',
+            '../../libs/devicons/github-original.svg',
+            '../../libs/devicons/docker-original.svg',
+            '../../libs/devicons/mongodb-original.svg',
+            '../../libs/devicons/mysql-original.svg',
+            '../../libs/devicons/postgresql-original.svg',
+            '../../libs/devicons/typescript-original.svg',
+            '../../libs/devicons/vue-original.svg',
+            '../../libs/devicons/angular-original.svg',
+            '../../libs/devicons/java-original.svg',
+            '../../libs/devicons/php-original.svg',
+            '../../libs/devicons/django-plain.svg',
+            '../../libs/devicons/flask-original.svg',
+            '../../libs/devicons/vscode-original.svg',
+            '../../libs/devicons/npm-original-wordmark.svg',
+            '../../libs/devicons/webpack-original.svg',
+            '../../libs/devicons/bootstrap-original.svg',
+            '../../libs/devicons/tailwindcss-plain.svg',
+            '../../libs/devicons/firebase-plain.svg',
+            '../../libs/devicons/sass-original.svg',
+            '../../libs/devicons/redux-original.svg',
+            '../../libs/devicons/nextjs-original.svg',
+            '../../libs/devicons/express-original.svg',
+            '../../libs/devicons/laravel-plain.svg'
+        ];
+
+        // Create galaxy of dev icon sprites
+        const logoSprites = [];
+        const textureLoader = new THREE.TextureLoader();
+        const iconCount = 150; // Number of icon particles
+
+        for (let i = 0; i < iconCount; i++) {
+            const iconUrl = devIcons[Math.floor(Math.random() * devIcons.length)];
+            const texture = textureLoader.load(iconUrl);
+
+            const spriteMaterial = new THREE.SpriteMaterial({
+                map: texture,
+                transparent: true,
+                opacity: 0.6 + Math.random() * 0.4, // Varying opacity
+                blending: THREE.AdditiveBlending
+            });
+            const sprite = new THREE.Sprite(spriteMaterial);
+
+            // Spiral galaxy distribution
+            const radius = Math.random() * 5;
+            const spinAngle = radius * 5;
+            const branchAngle = (i % 3) * ((Math.PI * 2) / 3);
+
+            const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.3;
+            const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.3;
+            const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.3;
+
+            sprite.position.x = Math.cos(branchAngle + spinAngle) * radius + randomX;
+            sprite.position.y = randomY;
+            sprite.position.z = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+
+            // Vary size based on distance from center
+            const sizeVariation = 0.1 + (radius / 5) * 0.2;
+            sprite.scale.set(sizeVariation, sizeVariation, 1);
+
+            // Store initial position and velocity for animation
+            sprite.userData = {
+                initialX: sprite.position.x,
+                initialY: sprite.position.y,
+                initialZ: sprite.position.z,
+                rotationSpeed: (Math.random() - 0.5) * 0.005,
+                floatSpeed: Math.random() * 0.5,
+                floatOffset: Math.random() * Math.PI * 2
+            };
+
+            scene.add(sprite);
+            logoSprites.push(sprite);
+        }
+
+        // Animation loop
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.005; // Slower animation (was 0.01)
+
+            // Animate icon sprites in galaxy formation
+            logoSprites.forEach((sprite, index) => {
+                // Rotate around center (galaxy rotation) - slower
+                const rotationSpeed = 0.0005 + (1 / (Math.sqrt(sprite.userData.initialX ** 2 + sprite.userData.initialZ ** 2) + 1)) * 0.001;
+                const currentAngle = Math.atan2(sprite.position.z, sprite.position.x) + rotationSpeed;
+                const currentRadius = Math.sqrt(sprite.position.x ** 2 + sprite.position.z ** 2);
+
+                sprite.position.x = Math.cos(currentAngle) * currentRadius;
+                sprite.position.z = Math.sin(currentAngle) * currentRadius;
+
+                // Gentle floating motion - slower
+                sprite.position.y = sprite.userData.initialY + Math.sin(time * sprite.userData.floatSpeed + sprite.userData.floatOffset) * 0.15;
+
+                // Gentle rotation of individual icons - slower
+                sprite.material.rotation += sprite.userData.rotationSpeed * 0.5;
+
+                // Subtle pulsing opacity - slower
+                sprite.material.opacity = 0.5 + Math.sin(time * 0.3 + index * 0.1) * 0.3;
+            });
+
+            // Slight camera movement for parallax effect - slower, maintaining angle
+            camera.position.x = 2 + Math.sin(time * 0.03) * 0.3;
+            camera.position.y = 2.5 + Math.cos(time * 0.02) * 0.2;
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Only show canvas and animate on first slide
+        let animationId = null;
+        Reveal.on('slidechanged', event => {
+            if (event.indexh === 0) {
+                canvas.style.display = 'block';
+                if (!animationId) {
+                    animate();
+                }
+            } else {
+                canvas.style.display = 'none';
+            }
+        });
+
+        // Show on initial load if on first slide
+        Reveal.on('ready', event => {
+            if (event.indexh === 0) {
+                canvas.style.display = 'block';
+                animate();
+            }
+        });
+    </script>
+</body>
+
+</html>

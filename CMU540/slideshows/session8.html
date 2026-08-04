@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU540 - Session 8: WEB-DATA-01 & WEB-LOG-01 - Data Exposure & Logging</title>
+
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+</head>
+
+<body>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session7.html" title="Previous Session">&lt;</a>
+        <a href="session9.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>WEB-DATA-01 & WEB-LOG-01 - Data Exposure & Logging</h1>
+                <h2>Session 8</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand OWASP A08: Data Exposure & A09: Logging</li>
+                    <li>Identify data exposure vulnerabilities</li>
+                    <li>Learn secure logging practices</li>
+                    <li>Practice vulnerability discovery using OS³ Studio</li>
+                    <li>Implement secure data protection and logging</li>
+                    <li>Explore career opportunities in data security</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="OWASP A08: Data Exposure & A09: Logging">
+                <h2>OWASP A08: Data Exposure & A09: Logging</h2>
+                <div class="highlight">
+                    <p><strong>A08:</strong> Sensitive data exposure occurs when applications don't properly protect sensitive information</p>
+                    <p><strong>A09:</strong> Insufficient logging allows attackers to persist undetected</p>
+                </div>
+                <h3>Key Areas:</h3>
+                <ul>
+                    <li>Data encryption and protection</li>
+                    <li>Logging and monitoring</li>
+                    <li>Data classification</li>
+                    <li>Audit trails</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Real-World Impact">
+                <h2>Real-World Impact</h2>
+                <div class="vulnerability">
+                    <h3>Notable Breaches:</h3>
+                    <ul>
+                        <li><strong>Facebook (2019):</strong> 540M records stored in plaintext</li>
+                        <li><strong>Marriott (2018):</strong> 500M records exposed due to poor logging</li>
+                        <li><strong>Capital One (2019):</strong> 100M records exposed via misconfigured logging</li>
+                    </ul>
+                    <p><strong>Impact:</strong> Data breaches, regulatory fines, reputation damage</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Common Data Exposure Vulnerabilities">
+                <h2>Common Data Exposure Vulnerabilities</h2>
+                <h3>1. Unencrypted Data Storage</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Plaintext storage --&gt;
+CREATE TABLE users (
+  id INT,
+  username VARCHAR(50),
+  password VARCHAR(50),  -- Plaintext
+  ssn VARCHAR(20),       -- Plaintext
+  credit_card VARCHAR(20) -- Plaintext
+);
+&lt;!-- SECURE: Encrypted storage --&gt;
+CREATE TABLE users (
+  id INT,
+  username VARCHAR(50),
+  password_hash VARCHAR(255),  -- Hashed
+  ssn_encrypted BLOB,         -- Encrypted
+  credit_card_encrypted BLOB  -- Encrypted
+);</code></pre>
+                </div>
+                <h3>2. Weak Encryption</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Weak encryption --&gt;
+MD5(password)     // Easily cracked
+DES(data)         // 56-bit key
+&lt;!-- SECURE: Strong encryption --&gt;
+bcrypt(password, 12)  // Adaptive hashing
+AES-256-GCM(data)    // Strong encryption</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Data Classification">
+                <h2>Data Classification</h2>
+                <h3>1. Data Sensitivity Levels</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Data classification levels --&gt;
+PUBLIC:      No restrictions
+INTERNAL:    Company use only
+CONFIDENTIAL: Limited access
+RESTRICTED:  Highest security
+&lt;!-- Implementation --&gt;
+if (data.classification === 'RESTRICTED') {
+  requireStrongAuthentication();
+  requireEncryption();
+  logAccess(data, user);
+}</code></pre>
+                </div>
+                <h3>2. Data Handling Policies</h3>
+                <ul>
+                    <li>Encrypt sensitive data at rest</li>
+                    <li>Use secure transmission protocols</li>
+                    <li>Implement access controls</li>
+                    <li>Regular data audits</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Common Logging Vulnerabilities">
+                <h2>Common Logging Vulnerabilities</h2>
+                <h3>1. Insufficient Logging</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: No security logging --&gt;
+app.post('/login', (req, res) =&gt; {
+  const { username, password } = req.body;
+  if (authenticate(username, password)) {
+    res.json({ success: true });
+  } else {
+    res.json({ success: false });
+  }
+});
+&lt;!-- SECURE: Comprehensive logging --&gt;
+app.post('/login', (req, res) =&gt; {
+  const { username, password } = req.body;
+  if (authenticate(username, password)) {
+    logger.info('Successful login', { username, ip: req.ip });
+    res.json({ success: true });
+  } else {
+    logger.warn('Failed login attempt', { username, ip: req.ip });
+    res.json({ success: false });
+  }
+});</code></pre>
+                </div>
+                <h3>2. Log Injection</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Log injection --&gt;
+logger.info('User action: ' + userInput);
+&lt;!-- Malicious input --&gt;
+userInput = 'admin\n[ERROR] System compromised'
+&lt;!-- SECURE: Sanitized logging --&gt;
+logger.info('User action: %s', sanitize(userInput));</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Logging Practices">
+                <h2>Secure Logging Practices</h2>
+                <h3>1. Structured Logging</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Structured logging --&gt;
+const winston = require('winston');
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.File({ filename: 'security.log' })
+  ]
+});
+logger.info('Security event', {
+  event: 'login_attempt',
+  user: username,
+  ip: req.ip,
+  success: false
+});</code></pre>
+                </div>
+                <h3>2. Log Retention and Rotation</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Log rotation --&gt;
+const winston = require('winston');
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.DailyRotateFile({
+      filename: 'logs/security-%DATE%.log',
+      datePattern: 'YYYY-MM-DD',
+      maxSize: '20m',
+      maxFiles: '14d'
+    })
+  ]
+});</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Data Encryption Implementation">
+                <h2>Data Encryption Implementation</h2>
+                <h3>1. Database Encryption</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Database encryption --&gt;
+const crypto = require('crypto');
+function encryptData(data, key) {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipher('aes-256-gcm', key);
+  let encrypted = cipher.update(data, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return {
+    encrypted,
+    iv: iv.toString('hex')
+  };
+}
+function decryptData(encryptedData, key, iv) {
+  const decipher = crypto.createDecipher('aes-256-gcm', key);
+  let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}</code></pre>
+                </div>
+                <h3>2. Field-Level Encryption</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Field-level encryption --&gt;
+// Store encrypted SSN
+const encryptedSSN = encryptData(user.ssn, process.env.ENCRYPTION_KEY);
+await db.users.create({
+  username: user.username,
+  ssn_encrypted: encryptedSSN.encrypted,
+  ssn_iv: encryptedSSN.iv
+});
+// Retrieve and decrypt
+const user = await db.users.findById(id);
+const decryptedSSN = decryptData(user.ssn_encrypted, process.env.ENCRYPTION_KEY, user.ssn_iv);</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Opportunities in Data Security">
+                <h2>Career Opportunities in Data Security</h2>
+                <div class="career-box">
+                    <h3>Data Security Roles:</h3>
+                    <ul>
+                        <li><strong>Data Protection Officer:</strong> £50,000 - £100,000</li>
+                        <li><strong>Privacy Engineer:</strong> £45,000 - £90,000</li>
+                        <li><strong>Security Engineer:</strong> £40,000 - £80,000</li>
+                        <li><strong>Compliance Specialist:</strong> £35,000 - £70,000</li>
+                        <li><strong>Data Analyst:</strong> £30,000 - £60,000</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> Data protection, Privacy regulations, Encryption, Compliance</p>
+                </div>
+            </section>
+
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
+                <h2>OS³ Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>WEB-DATA-01 & WEB-LOG-01 Lab Environment</h3>
+                    <p>Our OS³ Studio provides hands-on experience with:</p>
+                    <ul>
+                        <li>Applications with data exposure vulnerabilities</li>
+                        <li>Insufficient logging implementations</li>
+                        <li>Secure data protection challenges</li>
+                        <li>Logging and monitoring best practices</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Web Demos and Tools">
+                <h2>Web Demos and Tools</h2>
+                <div class="demo-link">
+                    <h3>Data Security Tools:</h3>
+                    <ul>
+                        <li><a href="https://portswigger.net/burp" target="_blank">Burp Suite</a> - Web application security testing</li>
+                        <li><a href="https://github.com/OWASP/OWASP-ZAP" target="_blank">OWASP ZAP</a> - Open source web app scanner</li>
+                        <li><a href="https://www.elastic.co/products/logstash" target="_blank">Logstash</a> - Log processing and analysis</li>
+                        <li><a href="https://www.splunk.com/" target="_blank">Splunk</a> - Security information and event management</li>
+                        <li><a href="https://www.graylog.org/" target="_blank">Graylog</a> - Open source log management</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Case Study: Capital One Breach">
+                <h2>Case Study: Capital One Breach</h2>
+                <div class="vulnerability">
+                    <h3>2019 Capital One Data Breach</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> 100 million records exposed</li>
+                        <li><strong>Cause:</strong> Misconfigured logging in AWS S3</li>
+                        <li><strong>Method:</strong> Server-side request forgery (SSRF)</li>
+                        <li><strong>Cost:</strong> $190 million in settlements</li>
+                    </ul>
+                    <p><strong>Lesson:</strong> Misconfigured logging can lead to massive data exposure</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Summary: Common Data & Logging Issues">
+                <h2>Summary: Common Data & Logging Issues</h2>
+                <div class="highlight">
+                    <h3>Key Vulnerabilities to Look For:</h3>
+                    <ol>
+                        <li>Unencrypted sensitive data storage</li>
+                        <li>Weak encryption algorithms</li>
+                        <li>Insufficient logging and monitoring</li>
+                        <li>Log injection vulnerabilities</li>
+                        <li>Missing data classification</li>
+                        <li>Inadequate access controls</li>
+                        <li>Poor log retention policies</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: Data Exposure & Logging Vulnerability Discovery">
+                <h2>Task 1: Data Exposure & Logging Vulnerability Discovery</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to identify data exposure vulnerabilities and insufficient logging in the lab environment.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio vulnerable application</li>
+                        <li>Look for unencrypted sensitive data</li>
+                        <li>Test for weak encryption implementations</li>
+                        <li>Check for insufficient logging</li>
+                        <li>Test for log injection vulnerabilities</li>
+                        <li>Examine data classification practices</li>
+                        <li>Document all findings with proof of concept</li>
+                        <li>Prepare a vulnerability assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on systematic testing and thorough documentation</em></p>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Break Time">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secure implementation and Task 2</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Data Protection">
+                <h2>Secure Data Protection</h2>
+                
+                <h3>1. Data Encryption at Rest</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Database encryption --&gt;
+// Enable Transparent Data Encryption (TDE)
+ALTER DATABASE MyDatabase
+SET ENCRYPTION ON;
+// Column-level encryption
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  username VARCHAR(50),
+  ssn VARBINARY(MAX),  -- Encrypted
+  credit_card VARBINARY(MAX)  -- Encrypted
+);</code></pre>
+                </div>
+
+                <h3>2. Data Masking</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Data masking --&gt;
+function maskSensitiveData(data) {
+  if (data.type === 'ssn') {
+    return data.value.replace(/(\d{3})\d{4}(\d{3})/, '$1-****-$2');
+  }
+  if (data.type === 'credit_card') {
+    return data.value.replace(/(\d{4})\d{8}(\d{4})/, '$1-********-$2');
+  }
+  return data.value;
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Logging Implementation">
+                <h2>Secure Logging Implementation</h2>
+                
+                <h3>1. Security Event Logging</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Security logging --&gt;
+const winston = require('winston');
+const securityLogger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.File({ filename: 'security.log' })
+  ]
+});
+// Log security events
+securityLogger.warn('Failed login attempt', {
+  username: username,
+  ip: req.ip,
+  userAgent: req.headers['user-agent'],
+  timestamp: new Date().toISOString()
+});</code></pre>
+                </div>
+
+                <h3>2. Log Analysis and Monitoring</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Log monitoring --&gt;
+// Monitor for suspicious patterns
+const suspiciousPatterns = [
+  /failed login/i,
+  /unauthorized access/i,
+  /privilege escalation/i
+];
+function analyzeLogs(logEntry) {
+  for (const pattern of suspiciousPatterns) {
+    if (pattern.test(logEntry.message)) {
+      alertSecurityTeam(logEntry);
+    }
+  }
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Data Access Controls">
+                <h2>Data Access Controls</h2>
+                
+                <h3>1. Role-Based Access Control</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: RBAC implementation --&gt;
+const roles = {
+  admin: ['read', 'write', 'delete'],
+  user: ['read'],
+  guest: []
+};
+function checkPermission(userRole, action) {
+  return roles[userRole].includes(action);
+}
+app.get('/sensitive-data', (req, res) =&gt; {
+  if (!checkPermission(req.user.role, 'read')) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  res.json(sensitiveData);
+});</code></pre>
+                </div>
+
+                <h3>2. Data Anonymization</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Data anonymization --&gt;
+function anonymizeData(data) {
+  return {
+    id: hashId(data.id),
+    age: data.age,
+    gender: data.gender,
+    // Remove PII
+    // name: data.name,
+    // email: data.email
+  };
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Compliance and Regulations">
+                <h2>Compliance and Regulations</h2>
+                
+                <h3>1. GDPR Compliance</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: GDPR compliance --&gt;
+// Right to be forgotten
+app.delete('/user/:id', async (req, res) =&gt; {
+  const userId = req.params.id;
+  await anonymizeUserData(userId);
+  await deleteUserData(userId);
+  res.json({ message: 'User data deleted' });
+});
+// Data portability
+app.get('/user/:id/export', async (req, res) =&gt; {
+  const userData = await getUserData(req.params.id);
+  res.json(userData);
+});</code></pre>
+                </div>
+
+                <h3>2. Audit Trails</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Audit trail --&gt;
+function logDataAccess(userId, dataType, action) {
+  auditLogger.info('Data access', {
+    userId: userId,
+    dataType: dataType,
+    action: action,
+    timestamp: new Date().toISOString(),
+    ip: req.ip
+  });
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Monitoring and Alerting">
+                <h2>Monitoring and Alerting</h2>
+                
+                <h3>1. Real-time Monitoring</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Real-time monitoring --&gt;
+const monitoring = {
+  failedLogins: 0,
+  lastReset: Date.now()
+};
+function checkSecurityMetrics() {
+  if (monitoring.failedLogins &gt; 10) {
+    alertSecurityTeam('High failed login rate');
+    monitoring.failedLogins = 0;
+  }
+}
+setInterval(checkSecurityMetrics, 60000); // Every minute</code></pre>
+                </div>
+
+                <h3>2. Security Dashboards</h3>
+                <ul>
+                    <li>Real-time security metrics</li>
+                    <li>Failed login attempts</li>
+                    <li>Data access patterns</li>
+                    <li>Anomaly detection alerts</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Career Development in Data Security">
+                <h2>Career Development in Data Security</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Advanced Certifications:</strong> CIPP, CISM, CISA</li>
+                        <li><strong>Specialized Training:</strong> Data protection, Privacy regulations</li>
+                        <li><strong>Hands-on Practice:</strong> Data security assessments, Compliance audits</li>
+                        <li><strong>Industry Networking:</strong> Privacy conferences, Data protection meetups</li>
+                        <li><strong>Research:</strong> New privacy regulations, Data protection methods</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://iapp.org/" target="_blank">IAPP</a> | <a href="https://www.nist.gov/" target="_blank">NIST</a> | <a href="https://gdpr.eu/" target="_blank">GDPR</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Secure Data Protection & Logging Implementation">
+                <h2>Task 2: Secure Data Protection & Logging Implementation</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to implement secure data protection and logging practices.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio secure implementation environment</li>
+                        <li>Implement data encryption for sensitive fields</li>
+                        <li>Add comprehensive security logging</li>
+                        <li>Implement data classification and access controls</li>
+                        <li>Configure log rotation and retention</li>
+                        <li>Add data masking for non-production environments</li>
+                        <li>Test the secure implementation</li>
+                        <li>Document the security improvements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on implementing industry-standard data protection practices</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Further Activity: Code Inspection">
+                <h2>Further Activity: Code Inspection</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Code Analysis:</h3>
+                    <p>For students with additional time, explore the source code to understand:</p>
+                    <ul>
+                        <li>How data encryption is implemented</li>
+                        <li>Logging and monitoring mechanisms</li>
+                        <li>Data classification and access controls</li>
+                        <li>Compliance and audit trail implementation</li>
+                        <li>Data anonymization and masking</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Code review report with data protection recommendations</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Session Summary">
+                <h2>Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>Data exposure is a critical security vulnerability</li>
+                        <li>Insufficient logging allows attackers to persist undetected</li>
+                        <li>Data encryption and classification are essential</li>
+                        <li>OS³ Studio provides hands-on vulnerability testing</li>
+                        <li>Secure implementation requires multiple layers of protection</li>
+                        <li>Career opportunities in data security are growing</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Next Steps">
+                <h2>Next Steps</h2>
+                
+            </section>
+
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

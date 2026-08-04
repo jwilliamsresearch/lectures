@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 5: Sprint 1 Review & Sprint 2 Start</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session4.html" title="Previous Session">&lt;</a>
+        <a href="session6.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART A: SPRINT REVIEWS, RETROSPECTIVES, AND GIT WORKFLOWS -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 5</div>
+                <h1>Sprint 1 Review & Sprint 2 Start</h1>
+                <h2>Part A: Reviews & Git | Part B: Sprint 2 Kick-Off</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 2 parts • 2 team tasks</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                <div class="diagram">
+                    <h3>Part A: Sprint Reviews, Retrospectives, Git (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on conducting reviews and advanced Git workflows</p>
+                    <p><strong>45 minutes:</strong> Task 1 - Conduct Sprint 1 retrospective</p>
+                    <p><strong>15 minutes:</strong> Break</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part B: Sprint 1 Review + Sprint 2 Kick-Off (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Sprint 1 team demos (5-7 min per team)</p>
+                    <p><strong>45 minutes:</strong> Task 2 - Plan Sprint 2</p>
+                    <p><strong>15 minutes:</strong> Q&A and troubleshooting</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Conduct effective sprint reviews and demonstrations</li>
+                    <li>Run productive sprint retrospectives</li>
+                    <li>Understand advanced Git workflows (branching, rebasing, conflict resolution)</li>
+                    <li>Master pull requests and code review processes</li>
+                    <li>Learn from Sprint 1 successes and challenges</li>
+                    <li>Plan Sprint 2 with improved velocity estimates</li>
+                    <li>Identify and address team blockers</li>
+                    <li>Continuously improve team processes</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Sprint Review vs Retrospective -->
+            <section data-slide-title="Sprint Review vs Retrospective">
+                <h2>Sprint Review vs Sprint Retrospective</h2>
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>Sprint Review:</h4>
+                        <ul style="text-align: left;">
+                            <li><strong>Focus:</strong> WHAT was built</li>
+                            <li><strong>Audience:</strong> Team + stakeholders</li>
+                            <li><strong>Format:</strong> Demo working software</li>
+                            <li><strong>Outcome:</strong> Feedback on product</li>
+                            <li><strong>Duration:</strong> 30-60 minutes</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>Sprint Retrospective:</h4>
+                        <ul style="text-align: left;">
+                            <li><strong>Focus:</strong> HOW team worked</li>
+                            <li><strong>Audience:</strong> Team only</li>
+                            <li><strong>Format:</strong> Discussion/reflection</li>
+                            <li><strong>Outcome:</strong> Process improvements</li>
+                            <li><strong>Duration:</strong> 45-90 minutes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <strong>Key Difference:</strong> Review = Product inspection, Retrospective = Process inspection
+                </div>
+            </section>
+
+            <!-- Slide 5: Conducting Sprint Reviews -->
+            <section data-slide-title="Good Sprint Review">
+                <h2>Conducting an Effective Sprint Review</h2>
+                <h3>Review Structure:</h3>
+                <ol>
+                    <li><strong>Introduction (2 min):</strong> Sprint goal reminder, what was planned</li>
+                    <li><strong>Demo (15-20 min):</strong> Show working features (live, not slides)</li>
+                    <li><strong>Discussion (5-10 min):</strong> Questions, feedback, suggestions</li>
+                    <li><strong>Backlog Update (5 min):</strong> Adjust priorities based on feedback</li>
+                </ol>
+                <div class="success-box">
+                    <h4>Demo Best Practices:</h4>
+                    <ul style="text-align: left;">
+                        <li>✓ Show WORKING software, not PowerPoint</li>
+                        <li>✓ Use realistic data (not "test test test")</li>
+                        <li>✓ Focus on user value, not technical details</li>
+                        <li>✓ Be honest about incomplete items</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 6: Demo Tips -->
+            <section data-slide-title="Demo Presentation Tips">
+                <h2>Demo Presentation Tips</h2>
+                <h3>Tell a Story:</h3>
+                <div class="example-box">
+                    <p><strong>Good:</strong> "As a student looking for study space, I open the app,
+                        select my building, and immediately see 3 available rooms. I click 'Book' for Room 204,
+                        get confirmation, and receive booking details."</p>
+                </div>
+                <div class="warning-box">
+                    <p><strong>Avoid:</strong> "So here's the database table, and this is the API endpoint,
+                        and if you look at the code..."</p>
+                </div>
+                <h3>Preparation:</h3>
+                <ul>
+                    <li>Test demo flow beforehand (no surprises!)</li>
+                    <li>Have backup screenshots if live demo fails</li>
+                    <li>Assign who presents which feature</li>
+                    <li>Keep within time limit (5-7 min for student teams)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Sprint Retrospective Purpose -->
+            <section data-slide-title="Sprint Retrospective Purpose">
+                <h2>The Purpose of Sprint Retrospectives</h2>
+                <div class="highlight">
+                    <strong>Goal:</strong> Continuous improvement - identify what worked, what didn't,
+                    and commit to concrete changes.
+                </div>
+                <h3>Three Core Questions:</h3>
+                <ol>
+                    <li><strong>What went well?</strong> (Celebrate successes, repeat these)</li>
+                    <li><strong>What didn't go well?</strong> (Identify problems, don't blame)</li>
+                    <li><strong>What will we change?</strong> (Actionable improvements for next sprint)</li>
+                </ol>
+                <div class="info-box">
+                    <strong>Safe Environment:</strong> Retrospectives should be blameless. Focus on
+                    processes and systems, not individuals.
+                </div>
+            </section>
+
+            <!-- Slide 8: Retrospective Format -->
+            <section data-slide-title="Retrospective Format">
+                <h2>Retrospective Format: Start-Stop-Continue</h2>
+                <div class="diagram">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="border: 2px solid #ccc; padding: 15px; background: #e8f5e9;">
+                                <strong>START</strong><br>
+                                <small>What should we start doing?</small><br>
+                                <em>Example: Daily standups, code reviews</em>
+                            </td>
+                            <td style="border: 2px solid #ccc; padding: 15px; background: #ffebee;">
+                                <strong>STOP</strong><br>
+                                <small>What should we stop doing?</small><br>
+                                <em>Example: Last-minute commits, skipping tests</em>
+                            </td>
+                            <td style="border: 2px solid #ccc; padding: 15px; background: #e1f5fe;">
+                                <strong>CONTINUE</strong><br>
+                                <small>What's working well?</small><br>
+                                <em>Example: Pair programming, clear commit messages</em>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <h3>Process:</h3>
+                <ol>
+                    <li>Everyone writes ideas on sticky notes (5 min)</li>
+                    <li>Group similar items (5 min)</li>
+                    <li>Discuss each category (15 min)</li>
+                    <li>Vote on top 3 action items (5 min)</li>
+                    <li>Assign ownership and track (5 min)</li>
+                </ol>
+            </section>
+
+            <!-- Slide 9: Retrospective Example -->
+            <section data-slide-title="Retrospective Example">
+                <h2>Example Retrospective Outcomes</h2>
+                <div class="example-box">
+                    <h4>Start:</h4>
+                    <ul style="text-align: left;">
+                        <li>Pair programming sessions twice a week (Tom & Bob)</li>
+                        <li>Document API changes immediately (Everyone)</li>
+                        <li>15-minute daily standup at 10am (Everyone)</li>
+                    </ul>
+                </div>
+                <div class="example-box">
+                    <h4>Stop:</h4>
+                    <ul style="text-align: left;">
+                        <li>Pushing code at midnight without testing (Everyone)</li>
+                        <li>Approving PRs without actually reviewing (Everyone)</li>
+                    </ul>
+                </div>
+                <div class="example-box">
+                    <h4>Continue:</h4>
+                    <ul style="text-align: left;">
+                        <li>Clear commit messages with ticket references</li>
+                        <li>Weekly team syncs on Discord</li>
+                        <li>Celebrating small wins!</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 10: Git Branching Strategies -->
+            <section data-slide-title="Git Branching Strategies">
+                <h2>Git Branching Strategies</h2>
+                <div class="info-box">
+                    <strong>Review:</strong> You learned basic feature branches. Now let's go deeper.
+                </div>
+                <h3>Branch Types:</h3>
+                <ul>
+                    <li><strong>main:</strong> Production-ready code (always deployable)</li>
+                    <li><strong>develop:</strong> Integration branch (optional for larger teams)</li>
+                    <li><strong>feature/*:</strong> New features (feature/user-login)</li>
+                    <li><strong>bugfix/*:</strong> Bug fixes (bugfix/login-error)</li>
+                    <li><strong>hotfix/*:</strong> urgent production fixes (hotfix/security-patch)</li>
+                </ul>
+                <div class="success-box">
+                    <strong>For Your Teams:</strong> Keep it simple. Use main + feature branches.
+                </div>
+            </section>
+
+            <!-- Slide 11: Advanced Git Workflow -->
+            <section data-slide-title="Advanced Git Workflow">
+                <h2>Advanced Git Workflow</h2>
+                <div class="code-example">
+                    <pre><code class="language-bash"># Keep your branch up-to-date with main
+git checkout main
+git pull origin main
+git checkout feature/my-feature
+git merge main  # Or: git rebase main (advanced)
+
+# Interactive staging (commit parts of file)
+git add -p  # Review each change and stage selectively
+
+# Amend last commit (fix typo in message/add forgotten file)
+git add forgotten-file.js
+git commit --amend --no-edit
+
+# Stash changes temporarily (switch branches without committing)
+git stash
+git checkout other-branch
+# ... do work ...
+git checkout feature/my-feature
+git stash pop
+
+# View commit history graphically
+git log --oneline --graph --all</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 12: Handling Merge Conflicts -->
+            <section data-slide-title="Resolving Merge Conflicts">
+                <h2>Resolving Merge Conflicts</h2>
+                <div class="warning-box">
+                    <strong>Conflict:</strong> Git can't automatically merge changes (both changed same lines).
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Example conflict in code
+function getUserName() {
+<<<<<<< HEAD
+  return user.fullName;  // Your change
+=======
+  return user.displayName;  // Teammate's change
+>>>>>>> feature/update-user-display
+}</code></pre>
+                </div>
+                <h3>Resolution Steps:</h3>
+                <ol>
+                    <li>Open conflicted file in editor</li>
+                    <li>Look for conflict markers (<code>&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>,
+                        <code>&gt;&gt;&gt;&gt;&gt;</code>)
+                    </li>
+                    <li>Decide which change to keep (or combine)</li>
+                    <li>Remove conflict markers</li>
+                    <li><code>git add</code> resolved file</li>
+                    <li><code>git commit</code> to complete merge</li>
+                </ol>
+            </section>
+
+            <!-- Slide 13: Pull Request Best Practices -->
+            <section data-slide-title="Pull Request Best Practices">
+                <h2>Pull Request Best Practices</h2>
+                <h3>Writing Good PR Descriptions:</h3>
+                <div class="example-box">
+                    <h4>Good PR Description:</h4>
+                    <pre><code class="language-markdown">## What
+Implements user registration feature (#23)
+
+## Changes
+- Added registration form component
+- Created POST /api/register endpoint
+- Added email validation and password hashing
+- Updated user schema with email_verified field
+
+## Testing
+- Manually tested happy path
+- Tested validation errors
+- Checked database insertion
+
+## Screenshots
+[Screenshot of registration form]</code></pre>
+                </div>
+                <p><strong>Tip:</strong> Link to user story/issue number for traceability</p>
+            </section>
+
+            <!-- Slide 14: Code Review Checklist -->
+            <section data-slide-title="Code Review Checklist">
+                <h2>Code Review Checklist</h2>
+                <h3>What to Check:</h3>
+                <ul>
+                    <li><strong>Functionality:</strong>
+                        <ul>
+                            <li>Does it meet acceptance criteria?</li>
+                            <li>Are there edge cases to consider?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Code Quality:</strong>
+                        <ul>
+                            <li>Readable and well-structured?</li>
+                            <li>Follows team conventions?</li>
+                            <li>No code duplication (DRY principle)?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Security:</strong>
+                        <ul>
+                            <li>Input validation present?</li>
+                            <li>No hardcoded secrets?</li>
+                        </ul>
+                    </li>
+                    <li><strong>Testing:</strong>
+                        <ul>
+                            <li>Are there tests?</li>
+                            <li>Do existing tests still pass?</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 15: TASK 1 -->
+            <section data-slide-title="Task 1: Sprint 1 Retrospective" class="center">
+                <h2>Task 1: Conduct Sprint 1 Retrospective</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Individual Reflection (5 min):</strong>
+                            <ul>
+                                <li>Each person writes down: What went well? What didn't? Ideas for improvement?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Share & Group (15 min):</strong>
+                            <ul>
+                                <li>Everyone shares their points</li>
+                                <li>Group similar items together</li>
+                                <li>Use Start-Stop-Continue framework</li>
+                            </ul>
+                        </li>
+                        <li><strong>Discuss (15 min):</strong>
+                            <ul>
+                                <li>Talk through each category</li>
+                                <li>Be specific about problems (not "communication was bad" → "didn't know who was
+                                    working on what")</li>
+                            </ul>
+                        </li>
+                        <li><strong>Action Items (10 min):</strong>
+                            <ul>
+                                <li>Vote on top 3 improvements to implement</li>
+                                <li>Assign ownership (who will ensure it happens?)</li>
+                                <li>Make actionable (not "communicate better" → "daily 10am standup")</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Document action items (save in docs/retrospectives/sprint1.md)</p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break. Prepare to demo your Sprint 1 work!</p>
+                    <p><em>Next: Part B - Sprint Reviews and Sprint 2 Planning</em></p>
+                </div>
+            </section>
+
+            <!-- PART B: SPRINT 1 REVIEW + SPRINT 2 KICK-OFF -->
+
+            <!-- Slide 17: Part B Introduction -->
+            <section data-slide-title="Part B: Sprint 1 Review">
+                <h2>Part B: Sprint 1 Review & Sprint 2 Planning</h2>
+                <div class="diagram">
+                    <h3>Demo Time!</h3>
+                    <p>Each team will demo their Sprint 1 work (5-7 minutes each)</p>
+                </div>
+                <h3>Review Structure:</h3>
+                <ol>
+                    <li>Quick introduction - sprint goal and stories planned</li>
+                    <li>Live demo of completed work</li>
+                    <li>Mention incomplete items honestly</li>
+                    <li>Answer questions</li>
+                    <li>Gather feedback</li>
+                </ol>
+            </section>
+
+            <!-- Slide 18: Demo Guidelines -->
+            <section data-slide-title="Demo Day Guidelines">
+                <h2>Demo Day Guidelines</h2>
+                <h3>For Presenting Teams:</h3>
+                <ul>
+                    <li>Show working software (not code or slides)</li>
+                    <li>Demonstrate from user perspective</li>
+                    <li>Stick to time limit (5-7 minutes)</li>
+                    <li>Be prepared for questions</li>
+                </ul>
+                <h3>For Audience Teams:</h3>
+                <ul>
+                    <li>Take notes on interesting approaches</li>
+                    <li>Ask constructive questions</li>
+                    <li>Share ideas and suggestions</li>
+                    <li>Learn from others' successes and challenges</li>
+                </ul>
+                <div class="success-box">
+                    <strong>Remember:</strong> This is a learning environment. Celebrate progress,
+                    don't judge perfection.
+                </div>
+            </section>
+
+            <!-- Slide 19: Velocity and Estimation -->
+            <section data-slide-title="Velocity & Estimation">
+                <h2>Understanding Velocity</h2>
+                <div class="info-box">
+                    <strong>Velocity:</strong> Amount of work (story points) team completes per sprint.
+                </div>
+                <div class="example-box">
+                    <h4>Example:</h4>
+                    <p><strong>Sprint 1 Plan:</strong> 20 story points<br>
+                        <strong>Sprint 1 Completed:</strong> 15 story points<br>
+                        <strong>Team Velocity:</strong> 15 points/sprint
+                    </p>
+                </div>
+                <h3>Using Velocity:</h3>
+                <ul>
+                    <li>Helps predict what team can achieve</li>
+                    <li>Use average of last 2-3 sprints</li>
+                    <li>Don't over-commit in Sprint 2</li>
+                    <li>Velocity typically increases over time (team gets faster)</li>
+                </ul>
+                <div class="warning-box">
+                    <strong>Not a Competition:</strong> Velocity is unique to each team.
+                    Don't compare across teams.
+                </div>
+            </section>
+
+            <!-- Slide 20: Sprint 2 Planning -->
+            <section data-slide-title="Planning Sprint 2">
+                <h2>Planning Sprint 2</h2>
+                <h3>Planning Process:</h3>
+                <ol>
+                    <li><strong>Review Backlog:</strong> Look at prioritized user stories</li>
+                    <li><strong>Consider Velocity:</strong> How much did you complete in Sprint 1?</li>
+                    <li><strong>Select Stories:</strong> Choose stories totaling ~your velocity</li>
+                    <li><strong>Apply Retrospective Learnings:</strong> Use improved processes</li>
+                    <li><strong>Break into Tasks:</strong> Detail technical work needed</li>
+                    <li><strong>Set Sprint Goal:</strong> One sentence objective</li>
+                </ol>
+                <div class="example-box">
+                    <h4>Sprint 2 Goal Examples:</h4>
+                    <p>"Complete user authentication and basic product management"<br>
+                        "Build data ingestion pipeline and first ML model integration"</p>
+                </div>
+            </section>
+
+            <!-- Slide 21: Continuous Integration -->
+            <section data-slide-title="Introducing Continuous Integration">
+                <h2>Introducing Continuous Integration (CI)</h2>
+                <div class="info-box">
+                    <strong>CI:</strong> Automatically build and test code when pushed to repository.
+                </div>
+                <h3>Benefits:</h3>
+                <ul>
+                    <li>Catch bugs immediately when code is pushed</li>
+                    <li>Ensure tests pass before merging</li>
+                    <li>Maintain code quality standards</li>
+                    <li>Team confidence in main branch</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-yaml"># .github/workflows/test.yml - GitHub Actions example
+name: Run Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 22: Definition of Done -->
+            <section data-slide-title="Definition of Done">
+                <h2>Establishing "Definition of Done"</h2>
+                <div class="highlight">
+                    <strong>Definition of Done (DoD):</strong> Checklist that EVERY story must meet
+                    before marking as "Done".
+                </div>
+                <div class="example-box">
+                    <h4>Example DoD:</h4>
+                    <ul style="text-align: left;">
+                        <li>✓ Code written and committed</li>
+                        <li>✓ Code reviewed and approved by 1+ teammate</li>
+                        <li>✓ All acceptance criteria met</li>
+                        <li>✓ Unit tests written and passing</li>
+                        <li>✓ Integrated into main branch</li>
+                        <li>✓ Manually tested end-to-end</li>
+                        <li>✓ Documentation updated (if needed)</li>
+                        <li>✓ No known bugs</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <strong>Team Agreement:</strong> Create your DoD in Sprint 2 planning.
+                </div>
+            </section>
+
+            <!-- Slide 23: Dealing With Technical Debt -->
+            <section data-slide-title="Managing Technical Debt">
+                <h2>Managing Technical Debt</h2>
+                <div class="warning-box">
+                    <strong>Technical Debt:</strong> Shortcuts or quick fixes that need refactoring later.
+                </div>
+                <h3>Common Sources:</h3>
+                <ul>
+                    <li>Skipping tests to save time</li>
+                    <li>Copy-pasting code instead of making reusable</li>
+                    <li>Hardcoding values instead of configuration</li>
+                    <li>Missing documentation</li>
+                </ul>
+                <h3>Managing It:</h3>
+                <ul>
+                    <li>Track debt items in backlog (label as "tech-debt")</li>
+                    <li>Allocate 20% of sprint to paying down debt</li>
+                    <li>Don't let it accumulate (harder to fix later)</li>
+                    <li>Refactor as you go when touching code</li>
+                </ul>
+            </section>
+
+            <!-- Slide 24: TASK 2 -->
+            <section data-slide-title="Task 2: Plan Sprint 2" class="center">
+                <h2>Task 2: Plan Sprint 2</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Calculate Velocity (5 min):</strong>
+                            <ul>
+                                <li>Review Sprint 1: planned vs completed story points</li>
+                                <li>Be realistic about capacity</li>
+                            </ul>
+                        </li>
+                        <li><strong>Review & Prioritize Backlog (10 min):</strong>
+                            <ul>
+                                <li>Move any incomplete Sprint 1 stories back to backlog</li>
+                                <li>Re-prioritize based on Sprint 1 learnings</li>
+                            </ul>
+                        </li>
+                        <li><strong>Select Stories (10 min):</strong>
+                            <ul>
+                                <li>Choose stories totaling ~your velocity</li>
+                                <li>Ensure stories build on Sprint 1 work</li>
+                            </ul>
+                        </li>
+                        <li><strong>Set Sprint Goal (5 min):</strong>
+                            <ul>
+                                <li>One clear objective for Sprint 2</li>
+                            </ul>
+                        </li>
+                        <li><strong>Break into Tasks & Assign (15 min):</strong>
+                            <ul>
+                                <li>Detail technical tasks for each story</li>
+                                <li>Assign to team members</li>
+                                <li>Update Kanban board</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Sprint 2 plan with goal, selected stories, and task assignments</p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 5 Summary</h2>
+                <ul>
+                    <li>Sprint reviews focus on WHAT was built (product demo)</li>
+                    <li>Sprint retrospectives focus on HOW team worked (process improvement)</li>
+                    <li>Retrospectives use Start-Stop-Continue or similar frameworks</li>
+                    <li>Advanced Git workflows include rebasing, stashing, interactive staging</li>
+                    <li>Merge conflicts are resolved by choosing/combining changes</li>
+                    <li>Good PRs have clear descriptions and link to user stories</li>
+                    <li>Velocity helps teams predict capacity</li>
+                    <li>Definition of Done ensures quality standards</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Lecture:</h3>
+                    <p>Ethics, Professionalism & Applied Fixes<br>
+                        <em>BCS Code of Conduct, GDPR, accessibility, and implementing ethical improvements</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 26: Next Steps -->
+            <section data-slide-title="Next Steps">
+                <h2>Before Next Lecture</h2>
+                <ol>
+                    <li><strong>Start Sprint 2 Work:</strong>
+                        <ul>
+                            <li>Begin assigned tasks</li>
+                            <li>Apply retrospective action items</li>
+                            <li>Hold regular standups</li>
+                        </ul>
+                    </li>
+                    <li><strong>Document Sprint 1:</strong>
+                        <ul>
+                            <li>Save retrospective notes (docs/retrospectives/sprint1.md)</li>
+                            <li>Update README with Sprint 1 achievements</li>
+                        </ul>
+                    </li>
+                    <li><strong>Improve Processes:</strong>
+                        <ul>
+                            <li>Implement action items from retrospective</li>
+                            <li>Update team conventions if needed</li>
+                        </ul>
+                    </li>
+                    <li><strong>Read About Ethics:</strong>
+                        <ul>
+                            <li>Review BCS Code of Conduct (link on Moodle)</li>
+                            <li>Skim GDPR basics</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

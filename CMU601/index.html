@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU601: Dissertation Support | James Williams | Birmingham Newman University</title>
+    <meta name="description"
+        content="CMU601 Dissertation - Final year project guidance with GitHub workflows, UML diagrams, and project management.">
+    <meta name="author" content="James Williams">
+    <link rel="stylesheet" href="../base.css">
+    <style>
+        .back-link {
+            display: inline-block;
+            margin-bottom: var(--spacing-md);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Teaching Portfolio</a>
+        <header class="header">
+            <div class="module-code">CMU601</div>
+            <h1>Dissertation Support</h1>
+            <p class="subtitle">Final Year Project Guidance</p>
+            <p class="department">Birmingham Newman University | 40 Credits | Final Year</p>
+        </header>
+        <main>
+            <section class="info-box">
+                <h3>Module Overview</h3>
+                <p>Essential guidance for your final year project. Master development workflows,
+                    GitHub collaboration, project management tools, and professional design
+                    documentation.</p>
+            </section>
+            <nav class="tabs">
+                <button class="tab active" onclick="showTab('slides')">Slides</button>
+                <button class="tab" onclick="showTab('resources')">Resources</button>
+            </nav>
+            <div id="slides" class="tab-content active">
+                <h3>Support Sessions</h3>
+                <ul class="sessions-list">
+                    <li class="session-item"><span class="session-number">1.</span><a
+                            href="slideshows/week5.html">Beginning Your Development</a><span
+                            class="text-light"> — Version control and best practices</span></li>
+                    <li class="session-item"><span class="session-number">2.</span><a
+                            href="slideshows/week6.html">Using GitHub & Project Management
+                            Tools</a><span class="text-light"> — Trello, Gantt charts, and
+                            organization</span></li>
+                    <li class="session-item"><span class="session-number">3.</span><a
+                            href="slideshows/week7.html">Doing Design Diagrams</a><span
+                            class="text-light"> — UML, wireframes, and technical docs</span></li>
+                </ul>
+            </div>
+            <div id="resources" class="tab-content">
+                <h3>Resources</h3>
+                <div class="content-section">
+                    <h4>Development Tools</h4>
+                    <ul>
+                        <li><a href="https://docs.github.com/" target="_blank">GitHub
+                                Documentation</a></li>
+                        <li><a href="https://trello.com/guide" target="_blank">Trello Guide</a></li>
+                        <li><a href="https://www.lucidchart.com/pages/uml-diagram"
+                                target="_blank">UML Diagrams Guide</a></li>
+                    </ul>
+                </div>
+                <div class="content-section">
+                    <h4>Project Management</h4>
+                    <ul>
+                        <li>Git and GitHub for version control</li>
+                        <li>Trello for task management</li>
+                        <li>Lucidchart for UML diagrams</li>
+                        <li>Figma for wireframing</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>&copy; 2025 James Williams, Birmingham Newman University</p>
+        </footer>
+    </div>
+    <script>function showTab(t) { document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active')); document.querySelectorAll('.tab').forEach(e => e.classList.remove('active')); document.getElementById(t).classList.add('active'); event.target.classList.add('active'); }</script>
+</body>
+
+</html>

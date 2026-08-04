@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 10: Presentation Sprint 1</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session9.html" title="Previous Session">&lt;</a>
+        <a href="session11.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART A: STRUCTURING A TECHNICAL PRESENTATION -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 10</div>
+                <h1>Presentation Sprint 1</h1>
+                <h2>Part A: Technical Presentations | Part B: Demo Script</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 2 parts • 2 team tasks</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                <div class="diagram">
+                    <h3>Part A: Structuring a Technical Presentation (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on presentation structure and storytelling</p>
+                    <p><strong>45 minutes:</strong> Task 1 - Create presentation outline</p>
+                    <p><strong>15 minutes:</strong> Break</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part B: Presentation Outline + Demo Script (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Demo best practices and scripting</p>
+                    <p><strong>45 minutes:</strong> Task 2 - Write demo script and practice</p>
+                    <p><strong>15 minutes:</strong> Peer feedback</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Structure an effective technical presentation</li>
+                    <li>Explain technical decisions to different audiences</li>
+                    <li>Create compelling narratives about your project</li>
+                    <li>Design and practice effective demos</li>
+                    <li>Present architecture and tech stack decisions</li>
+                    <li>Communicate project impact and value</li>
+                    <li>Handle questions confidently</li>
+                    <li>Work within time constraints (10-15 minutes)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Final Presentation Requirements -->
+            <section data-slide-title="Final Presentation Requirements">
+                <h2>Final Presentation Requirements</h2>
+                <div class="info-box">
+                    <strong>Format:</strong> 10-15 minute team presentation + 5 min Q&A
+                </div>
+                <h3>Must Include:</h3>
+                <ul>
+                    <li><strong>Problem & Solution:</strong> What problem did you solve?</li>
+                    <li><strong>Technical Approach:</strong> Architecture, tech stack, key decisions</li>
+                    <li><strong>Live Demo:</strong> Show working features</li>
+                    <li><strong>Challenges & Solutions:</strong> What was hard? How did you solve it?</li>
+                    <li><strong>Team Collaboration:</strong> How did you work together?</li>
+                    <li><strong>Impact:</strong> Who benefits and how?</li>
+                </ul>
+                <div class="warning-box">
+                    <strong>Not just code walkthrough!</strong> Tell a story about problem-solving.
+                </div>
+            </section>
+
+            <!-- Slide 5: Presentation Structure -->
+            <section data-slide-title="Presentation Structure">
+                <h2>Recommended Presentation Structure</h2>
+                <div class="diagram">
+                    <ol style="text-align: left; max-width: 800px; margin: 0 auto;">
+                        <li><strong>Hook (1 min):</strong> Start with compelling problem or demo teaser</li>
+                        <li><strong>Problem (2 min):</strong> What problem exists? Who has it?</li>
+                        <li><strong>Solution Overview (2 min):</strong> What you built and why</li>
+                        <li><strong>Technical Deep-Dive (3-4 min):</strong> Architecture, tech stack, key decisions</li>
+                        <li><strong>Live Demo (3-4 min):</strong> Show it working</li>
+                        <li><strong>Challenges (2 min):</strong> Hardest parts and how you overcame them</li>
+                        <li><strong>Team & Process (1 min):</strong> How you collaborated</li>
+                        <li><strong>Conclusion (1 min):</strong> Impact, future work, lessons learned</li>
+                    </ol>
+                </div>
+                <p><strong>Total:</strong> 15 minutes (leave 5 min for Q&A)</p>
+            </section>
+
+            <!-- Slide 6: The Hook -->
+            <section data-slide-title="Starting Strong - The Hook">
+                <h2>Starting Strong: The Hook</h2>
+                <div class="highlight">
+                    <strong>First 30 seconds determine engagement!</strong> Grab attention immediately.
+                </div>
+                <h3>Hook Strategies:</h3>
+                <div class="two-column">
+                    <div class="example-box">
+                        <h4>1. Problem Statement</h4>
+                        <p><em>"Every year, students waste 5+ hours searching for available study spaces. We solved
+                                this."</em></p>
+                    </div>
+                    <div class="example-box">
+                        <h4>2. Surprising Stat</h4>
+                        <p><em>"70% of campus study rooms sit empty while students can't find space. Why?"</em></p>
+                    </div>
+                    <div class="example-box">
+                        <h4>3. Demo Teaser</h4>
+                        <p><em>"In 30 seconds, I'll show you how to book a study room. Watch this."</em></p>
+                    </div>
+                    <div class="example-box">
+                        <h4>4. Story/Scenario</h4>
+                        <p><em>"It's exam week. Sarah needs a quiet space. Every room seems taken. What if there was a
+                                better way?"</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Explaining Technical Decisions -->
+            <section data-slide-title="Explaining Technical Decisions">
+                <h2>Explaining Technical Decisions</h2>
+                <div class="info-box">
+                    <strong>Structure:</strong> What → Why → Impact
+                </div>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>❌ Too Technical:</h4>
+                        <p><em>"We used PostgreSQL with Sequelize ORM, implementing a normalized schema with foreign key
+                                constraints and btree indexes on frequently queried columns..."</em></p>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Balanced:</h4>
+                        <p><em>"We chose PostgreSQL because we needed reliable transactions to prevent double-booking.
+                                If two students book the same room at the exact same time, the database ensures only one
+                                succeeds."</em></p>
+                    </div>
+                </div>
+                <h3>Framework:</h3>
+                <ul>
+                    <li><strong>Decision:</strong> We chose X</li>
+                    <li><strong>Rationale:</strong> Because Y problem/requirement</li>
+                    <li><strong>Impact:</strong> This ensures Z benefit</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Architecture Slide Example -->
+            <section data-slide-title="Presenting Architecture">
+                <h2>Presenting Your Architecture</h2>
+                <div class="success-box">
+                    <strong>Use a simple diagram</strong> - Don't show every function and class!
+                </div>
+                <div class="diagram">
+                    <h4>Good Architecture Slide:</h4>
+                    <pre style="font-size: 0.7em; text-align: left;">
+"Our system has three main components:
+
+┌─────────────┐      ┌─────────────┐      ┌─────────────┐
+│   React     │ ───▶ │   Express   │ ───▶ │ PostgreSQL  │
+│  Frontend   │      │   Backend   │      │  Database   │
+└─────────────┘      └─────────────┘      └─────────────┘
+
+The React frontend provides the user interface,
+the Express backend handles bookings and authentication,
+and PostgreSQL stores all data reliably."
+                    </pre>
+                </div>
+                <p><strong>Then explain WHY this architecture:</strong> "This client-server architecture lets us update
+                    the UI without changing backend logic, and vice versa."</p>
+            </section>
+
+            <!-- Slide 9: Tech Stack Slide -->
+            <section data-slide-title="Tech Stack Presentation">
+                <h2>Presenting Your Tech Stack</h2>
+                <div class="example-box">
+                    <h4>Good Tech Stack Slide:</h4>
+                    <table style="width: 100%; font-size: 0.8em;">
+                        <tr>
+                            <td><strong>Frontend:</strong></td>
+                            <td>React with TypeScript - Type safety reduces bugs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Backend:</strong></td>
+                            <td>Node.js + Express - Fast, team experience</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Database:</strong></td>
+                            <td>PostgreSQL - ACID transactions prevent conflicts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cloud:</strong></td>
+                            <td>Heroku - Simple deployment, free tier</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="warning-box">
+                    <strong>Don't just list!</strong> Briefly explain WHY you chose each technology.
+                </div>
+            </section>
+
+            <!-- Slide 10: Challenges Slide -->
+            <section data-slide-title="Presenting Challenges">
+                <h2>Presenting Challenges & Solutions</h2>
+                <div class="highlight">
+                    <strong>Challenges show problem-solving!</strong> Don't hide difficulties.
+                </div>
+                <div class="example-box">
+                    <h4>Structure:</h4>
+                    <ol style="text-align: left;">
+                        <li><strong>Challenge:</strong> What went wrong or was difficult?</li>
+                        <li><strong>Impact:</strong> Why was this a problem?</li>
+                        <li><strong>Solution:</strong> How did you solve it?</li>
+                        <li><strong>Outcome:</strong> What did you learn?</li>
+                    </ol>
+                </div>
+                <div class="example-box">
+                    <h4>Example:</h4>
+                    <p><em>"<strong>Challenge:</strong> Two students could book the same room simultaneously.
+                            <br><strong>Impact:</strong> Created booking conflicts and user frustration.
+                            <br><strong>Solution:</strong> We implemented database transactions with row-level locking.
+                            <br><strong>Outcome:</strong> Zero double-bookings in testing with 100 concurrent
+                            users."</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 11: Team Collaboration -->
+            <section data-slide-title="Presenting Team Collaboration">
+                <h2>Showing Team Collaboration</h2>
+                <h3>What to Highlight:</h3>
+                <ul>
+                    <li><strong>Role Distribution:</strong> Who did what (frontend, backend, design)</li>
+                    <li><strong>Agile Process:</strong> Sprints, retrospectives, how you improved</li>
+                    <li><strong>Collaboration Tools:</strong> Git workflow, code reviews, standups</li>
+                    <li><strong>Overcoming Team Challenges:</strong> How you resolved conflicts</li>
+                </ul>
+                <div class="example-box">
+                    <h4>Example Slide:</h4>
+                    <p><strong>Team:</strong> Tom (Frontend), Bob (Backend), Charlie (Database & DevOps)</p>
+                    <p><strong>Process:</strong> 2-week sprints, daily standups, code reviews on all PRs</p>
+                    <p><strong>Key Learning:</strong> Improved from 12 story points/sprint to 18 by Sprint 3</p>
+                </div>
+            </section>
+
+            <!-- Slide 12: Slide Design Tips -->
+            <section data-slide-title="Slide Design Tips">
+                <h2>Effective Slide Design</h2>
+                <div class="two-column">
+                    <div class="warning-box">
+                        <h4>❌ Avoid:</h4>
+                        <ul style="text-align: left;">
+                            <li>Walls of text</li>
+                            <li>Tiny font sizes</li>
+                            <li>Too much code</li>
+                            <li>Unreadable diagrams</li>
+                            <li>Distracting animations</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4>✓ Do:</h4>
+                        <ul style="text-align: left;">
+                            <li>One idea per slide</li>
+                            <li>Large, readable fonts</li>
+                            <li>Visuals > text</li>
+                            <li>Simple diagrams</li>
+                            <li>Consistent style</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="highlight">
+                    <strong>Rule of thumb:</strong> If you can't read it from back of room, font is too small!
+                </div>
+            </section>
+
+            <!-- Slide 13: TASK 1 -->
+            <section data-slide-title="Task 1: Presentation Outline" class="center">
+                <h2>Task 1: Create Presentation Outline</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Brainstorm Content (10 min):</strong>
+                            <ul>
+                                <li>What's most impressive about your project?</li>
+                                <li>What technical decisions are you proud of?</li>
+                                <li>What challenges did you overcome?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Structure Outline (15 min):</strong>
+                            <ul>
+                                <li>Use recommended structure (Hook → Problem → Solution → Technical → Demo → Challenges
+                                    → Team → Conclusion)</li>
+                                <li>Assign time to each section (total 15 min)</li>
+                                <li>Decide who presents what</li>
+                            </ul>
+                        </li>
+                        <li><strong>Draft Slides List (15 min):</strong>
+                            <ul>
+                                <li>Write slide titles (aim for 10-15 slides)</li>
+                                <li>Bullet main points for each slide</li>
+                                <li>Identify where diagrams/screenshots needed</li>
+                            </ul>
+                        </li>
+                        <li><strong>Review & Refine (5 min):</strong>
+                            <ul>
+                                <li>Does it tell a clear story?</li>
+                                <li>Too technical or too simple?</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Presentation outline with slide list and speaker assignments</p>
+                </div>
+            </section>
+
+            <!-- Slide 14: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break. Next: Demo scripting and practice!</p>
+                    <p><em>Part B: Demo Script Development</em></p>
+                </div>
+            </section>
+
+            <!-- PART B: PRESENTATION OUTLINE + DEMO SCRIPT -->
+
+            <!-- Slide 15: Part B Introduction -->
+            <section data-slide-title="Part B: Demo Script">
+                <h2>Part B: Creating Your Demo Script</h2>
+                <div class="highlight">
+                    The demo is the MOST IMPORTANT part of your presentation!
+                </div>
+                <h3>Demo Goals:</h3>
+                <ul>
+                    <li>Show your system actually works (not just slides)</li>
+                    <li>Demonstrate key features</li>
+                    <li>Tell a user story</li>
+                    <li>Stay within time limit (3-4 minutes)</li>
+                    <li>Handle failures gracefully</li>
+                </ul>
+            </section>
+
+            <!-- Slide 16: Demo Best Practices -->
+            <section data-slide-title="Demo Best Practices">
+                <h2>Demo Best Practices</h2>
+                <h3>✓ Do:</h3>
+                <ul>
+                    <li><strong>Tell a story:</strong> "As a student looking for space..."</li>
+                    <li><strong>Use realistic data:</strong> Real names, not "test test test"</li>
+                    <li><strong>Show user value:</strong> Focus on what users see, not code</li>
+                    <li><strong>Rehearse multiple times:</strong> Smooth, confident delivery</li>
+                    <li><strong>Have backup:</strong> Screenshots or video if live demo fails</li>
+                </ul>
+                <h3>✗ Don't:</h3>
+                <ul>
+                    <li><strong>Show code:</strong> Unless absolutely necessary</li>
+                    <li><strong>Navigate menus aimlessly:</strong> Know exactly where to click</li>
+                    <li><strong>Explain obvious things:</strong> "Here's a button..."</li>
+                    <li><strong>Go over time:</strong> Cut features if needed</li>
+                </ul>
+            </section>
+
+            <!-- Slide 17: Demo Script Structure -->
+            <section data-slide-title="Demo Script Structure">
+                <h2>Demo Script Structure</h2>
+                <div class="example-box">
+                    <h4>Script Template:</h4>
+                    <ol style="text-align: left;">
+                        <li><strong>Setup (15 sec):</strong>
+                            <ul>
+                                <li>"I'm going to show you how a student finds and books a study room."</li>
+                            </ul>
+                        </li>
+                        <li><strong>Feature 1 (60 sec):</strong>
+                            <ul>
+                                <li>What: "First, I search for available spaces"</li>
+                                <li>Action: [Type "Library", select capacity 4]</li>
+                                <li>Result: "The system shows 3 available rooms with real-time status"</li>
+                            </ul>
+                        </li>
+                        <li><strong>Feature 2 (60 sec):</strong>
+                            <ul>
+                                <li>What: "Now I book Room 204"</li>
+                                <li>Action: [Click book, select time]</li>
+                                <li>Result: "I get instant confirmation with booking details"</li>
+                            </ul>
+                        </li>
+                        <li><strong>Feature 3 (60 sec):</strong>
+                            <ul>
+                                <li>Highlight unique/impressive feature</li>
+                            </ul>
+                        </li>
+                        <li><strong>Wrap-up (15 sec):</strong>
+                            <ul>
+                                <li>"And that's how students save time finding study spaces."</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 18: Handling Demo Failures -->
+            <section data-slide-title="Handling Demo Failures">
+                <h2>When Demos Fail (Murphy's Law!)</h2>
+                <div class="warning-box">
+                    <strong>"Demo Hell":</strong> If it can go wrong during a demo, it will!
+                </div>
+                <h3>Mitigation Strategies:</h3>
+                <ul>
+                    <li><strong>Test beforehand:</strong> Run through demo 30 min before</li>
+                    <li><strong>Have backups:</strong> Screenshots, screen recording video</li>
+                    <li><strong>Offline mode:</strong> Use localhost, not relying on WiFi/internet</li>
+                    <li><strong>Pre-populate data:</strong> Don't create test accounts during demo</li>
+                    <li><strong>Stay calm:</strong> If it breaks, switch to backup immediately</li>
+                </ul>
+                <div class="success-box">
+                    <strong>Actual Failure:</strong> "Looks like the WiFi isn't cooperating. Let me show you our screen
+                    recording instead."
+                </div>
+            </section>
+
+            <!-- Slide 19: Q&A Preparation -->
+            <section data-slide-title="Preparing for Q&A">
+                <h2>Preparing for Questions</h2>
+                <h3>Likely Questions:</h3>
+                <ul>
+                    <li>"Why did you choose [technology X]?"</li>
+                    <li>"How did you handle [specific technical challenge]?"</li>
+                    <li>"What would you do differently next time?"</li>
+                    <li>"How does your system scale?"</li>
+                    <li>"What happens if [edge case]?"</li>
+                    <li>"Could you explain [technical concept] more?"</li>
+                </ul>
+                <h3>Answering Well:</h3>
+                <div class="success-box">
+                    <ul style="text-align: left;">
+                        <li>✓ Take a breath before answering</li>
+                        <li>✓ It's OK to say "I don't know, but I'd research..."</li>
+                        <li>✓ Redirect to team member with expertise</li>
+                        <li>✓ Keep answers concise (30-60 seconds)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 20: Presenting as a Team -->
+            <section data-slide-title="Team Presentation Tips">
+                <h2>Presenting as a Team</h2>
+                <h3>Coordination:</h3>
+                <ul>
+                    <li><strong>Smooth Transitions:</strong> "Thanks Tom. I'll now explain the backend
+                        architecture..."</li>
+                    <li><strong>Clear Handoffs:</strong> Decide WHO changes slides</li>
+                    <li><strong>Equal Participation:</strong> Everyone should present ~5 minutes</li>
+                    <li><strong>Support Each Other:</strong> Jump in if teammate forgets something</li>
+                </ul>
+                <div class="warning-box">
+                    <strong>Avoid:</strong> One person presents entire thing while others stand silently!
+                </div>
+            </section>
+
+            <!-- Slide 21: Time Management -->
+            <section data-slide-title="Managing Presentation Time">
+                <h2>Time Management During Presentation</h2>
+                <div class="info-box">
+                    <strong>Practice with timer!</strong> Going over time looks unprofessional.
+                </div>
+                <h3>Strategies:</h3>
+                <ul>
+                    <li><strong>Designate timekeeper:</strong> Someone watches clock, gives signals</li>
+                    <li><strong>Practice multiple times:</strong> Know your pace</li>
+                    <li><strong>Have "cut list":</strong> Know what to skip if running long</li>
+                    <li><strong>Build in buffer:</strong> Aim for 13-14 min, not full 15</li>
+                </ul>
+                <div class="example-box">
+                    <h4>Timekeeper Signals:</h4>
+                    <p>5 min left: One finger<br>
+                        2 min left: Two fingers<br>
+                        Time's up: Hand across throat</p>
+                </div>
+            </section>
+
+            <!-- Slide 22: TASK 2 -->
+            <section data-slide-title="Task 2: Demo Script" class="center">
+                <h2>Task 2: Write Demo Script & Practice</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Select Demo Features (10 min):</strong>
+                            <ul>
+                                <li>Which 2-3 features to demonstrate?</li>
+                                <li>What shows most value?</li>
+                                <li>What can you demo in 3-4 minutes?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Write Script (15 min):</strong>
+                            <ul>
+                                <li>Exact words you'll say</li>
+                                <li>Exact clicks/actions</li>
+                                <li>Expected results at each step</li>
+                                <li>Create docs/demo-script.md</li>
+                            </ul>
+                        </li>
+                        <li><strong>Rehearse (15 min):</strong>
+                            <ul>
+                                <li>Run through demo following script</li>
+                                <li>Time it (aim for 3-4 min)</li>
+                                <li>Identify any issues</li>
+                            </ul>
+                        </li>
+                        <li><strong>Create Backup (5 min):</strong>
+                            <ul>
+                                <li>Take screenshots of each step</li>
+                                <li>Or record screen capture video</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Demo script with timing, practiced at least once</p>
+                </div>
+            </section>
+
+            <!-- Slide 23: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 10 Summary</h2>
+                <ul>
+                    <li>Structure presentations: Hook → Problem → Solution → Technical → Demo → Challenges → Conclusion
+                    </li>
+                    <li>Start with compelling hook to grab attention</li>
+                    <li>Explain technical decisions as What → Why → Impact</li>
+                    <li>Keep slides simple, one idea per slide</li>
+                    <li>Demo shows user value, tells a story</li>
+                    <li>Script demos carefully with timing</li>
+                    <li>Always have backup plan for demo failures</li>
+                    <li>Prepare for common Q&A topics</li>
+                    <li>Team coordination and equal participation important</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Lecture:</h3>
+                    <p>Sprint 4 - Final Build & Integration<br>
+                        <em>Prioritizing final features and completing system integration</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 24: Next Steps -->
+            <section data-slide-title="Next Steps">
+                <h2>Before Next Lecture</h2>
+                <ol>
+                    <li><strong>Create Slides:</strong>
+                        <ul>
+                            <li>Build actual presentation slides from outline</li>
+                            <li>Add diagrams and screenshots</li>
+                            <li>Keep design clean and readable</li>
+                        </ul>
+                    </li>
+                    <li><strong>Polish Demo:</strong>
+                        <ul>
+                            <li>Practice demo 3+ times</li>
+                            <li>Fix any bugs that appear</li>
+                            <li>Ensure realistic test data</li>
+                        </ul>
+                    </li>
+                    <li><strong>Individual Practice:</strong>
+                        <ul>
+                            <li>Each person practice their section</li>
+                            <li>Know your content without reading slides</li>
+                        </ul>
+                    </li>
+                    <li><strong>Anticipate Questions:</strong>
+                        <ul>
+                            <li>List 5-10 questions you might be asked</li>
+                            <li>Prepare answers</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 1: Orientation, Project Ideation and Specialism Mapping</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Skills matrix table */
+        .skills-matrix {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+
+        .skills-matrix th,
+        .skills-matrix td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .skills-matrix th {
+            background: #007bff;
+            color: white;
+        }
+
+        .skills-matrix tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* Project examples grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .project-card {
+            background: #e7f3ff;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .project-card h4 {
+            margin: 0 0 10px 0;
+            color: #007bff;
+            font-size: 1.1em;
+        }
+
+        .project-card p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        /* Team roles grid */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .role-card {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .role-card h4 {
+            margin: 0 0 8px 0;
+            color: #2e7d32;
+            font-size: 1em;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .project-grid,
+            .roles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="../index.html" title="Previous Session">&lt;</a>
+        <a href="../index.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART 1: MODULE INTRODUCTION -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 1</div>
+                <h1>Orientation, Project Ideation and Specialism Mapping</h1>
+                <h2>Part 1: Module Introduction | Part 2: Technical Specialisms</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • Group Projects • 2 collaborative tasks</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                <div class="diagram">
+                    <h3>Part 1: Module Introduction (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on module aims, collaborative working, and industry projects
+                    </p>
+                    <p><strong>45 minutes:</strong> Task 1 - Team project ideation workshop</p>
+                    <p><strong>15 minutes:</strong> Break & team formation discussions</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part 2: Technical Specialisms & Team Dynamics (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on skills mapping, roles, and team composition</p>
+                    <p><strong>45 minutes:</strong> Task 2 - Team skills matrix and project proposal</p>
+                    <p><strong>15 minutes:</strong> Q&A, feedback, and next steps</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand the aims and collaborative nature of the Industry Project module</li>
+                    <li>Explore successful examples of team-based industry projects</li>
+                    <li>Generate project ideas through collaborative group brainstorming</li>
+                    <li>Identify team technical specialisms and complementary skills</li>
+                    <li>Understand effective team composition and role distribution</li>
+                    <li>Map project ideas to team capabilities and industry domains</li>
+                    <li>Begin forming project teams with clear roles and goals</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Module Aims -->
+            <section data-slide-title="Module Aims">
+                <h2>What is the Industry Project Module?</h2>
+                <div class="highlight">
+                    <strong>Core Purpose:</strong> Work collaboratively in a team to apply computer science
+                    knowledge and skills to a real-world, industry-oriented project using professional
+                    agile project management techniques.
+                </div>
+                <ul>
+                    <li><strong>Collaborative Teams:</strong> Work in groups of 3-5 students</li>
+                    <li><strong>Open-Ended Projects:</strong> Teams choose direction and specialism</li>
+                    <li><strong>Industry-Focused:</strong> Solve real problems with practical applications</li>
+                    <li><strong>Professional Development:</strong> Build portfolio-quality team work</li>
+                    <li><strong>Agile Methodology:</strong> Sprint-based development with regular reviews</li>
+                    <li><strong>Real Collaboration:</strong> Version control, code reviews, team coordination</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: Why Group Projects? -->
+            <section data-slide-title="Why Group Projects?">
+                <h2>Why Group Projects?</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Industry Reality:</h3>
+                        <ul>
+                            <li>Software is built by teams, not individuals</li>
+                            <li>Collaboration is the #1 skill employers seek</li>
+                            <li>Complex projects require diverse expertise</li>
+                            <li>Peer code review is industry standard</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Learning Benefits:</h3>
+                        <ul>
+                            <li>Learn from teammates' strengths</li>
+                            <li>Tackle larger, more ambitious projects</li>
+                            <li>Practice communication and coordination</li>
+                            <li>Experience agile team dynamics</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="success-box">
+                    <strong>Team Work = Real Work:</strong> This module prepares you for professional
+                    software development environments where collaboration is essential.
+                </div>
+            </section>
+
+            <!-- Slide 6: Module Expectations -->
+            <section data-slide-title="Module Expectations">
+                <h2>What You'll Learn</h2>
+                <ul>
+                    <li><strong>Agile Team Management:</strong> Scrum, sprint planning, daily standups, retrospectives
+                    </li>
+                    <li><strong>Collaborative Development:</strong> Git workflows, branch management, pull requests,
+                        code reviews</li>
+                    <li><strong>Technical Skills:</strong> Deepen expertise in chosen specialisms within your team</li>
+                    <li><strong>Communication:</strong> Team coordination, stakeholder presentations, documentation</li>
+                    <li><strong>Professional Practice:</strong> Industry ethics, legal considerations, accessibility
+                        standards</li>
+                    <li><strong>Role Specialization:</strong> Front-end, back-end, DevOps, testing, design, etc.</li>
+                    <li><strong>Conflict Resolution:</strong> Managing disagreements and keeping teams productive</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Assessment Overview -->
+            <section data-slide-title="Assessment Overview">
+                <h2>Assessment Structure</h2>
+                <div class="diagram">
+                    <h3>Component 1: Team Presentation (20%)</h3>
+                    <p><strong>Format:</strong> 500-word equivalent group presentation/demonstration</p>
+                    <p><strong>Content:</strong> Present your project, technologies, team roles, and industry
+                        application</p>
+                    <p><strong>Focus:</strong> Technical demonstration with clear team contribution explanation</p>
+                </div>
+                <div class="info-box">
+                    <strong>Team Assessment:</strong> While the presentation is a team effort, you will also
+                    individually reflect on your contributions and role within the team.
+                </div>
+                <div class="highlight">
+                    <strong>Key Point:</strong> Your presentation should showcase technical depth, practical
+                    industry relevance, AND effective teamwork throughout the development process.
+                </div>
+            </section>
+
+            <!-- Slide 8: Industry-Oriented Projects -->
+            <section data-slide-title="What Makes a Project Industry-Oriented?">
+                <h2>What Makes a Project Industry-Oriented?</h2>
+                <ul>
+                    <li><strong>Solves Real Problems:</strong> Addresses actual industry needs or challenges</li>
+                    <li><strong>Practical Application:</strong> Can be deployed or used in real scenarios</li>
+                    <li><strong>Current Technologies:</strong> Uses modern, industry-standard tools and frameworks</li>
+                    <li><strong>Scalable Architecture:</strong> Designed to handle growth and change</li>
+                    <li><strong>Team-Built Quality:</strong> Code reviews, testing, CI/CD pipelines</li>
+                    <li><strong>Professional Documentation:</strong> README, API docs, architecture diagrams, deployment
+                        guides</li>
+                    <li><strong>Ethical & Legal:</strong> GDPR compliance, accessibility (WCAG), security best practices
+                    </li>
+                    <li><strong>Maintainable:</strong> Clean code, consistent style, well-structured for handover</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: Team Project Scope -->
+            <section data-slide-title="Appropriate Team Project Scope">
+                <h2>Appropriate Team Project Scope</h2>
+                <div class="diagram">
+                    <h3>A good team project should:</h3>
+                    <ul style="text-align: left;">
+                        <li>✓ Be achievable in 12 weeks with your team size (3-5 people)</li>
+                        <li>✓ Have clear component separation (front-end, back-end, database, etc.)</li>
+                        <li>✓ Allow parallel development (team members work simultaneously)</li>
+                        <li>✓ Require integration of multiple technologies/systems</li>
+                        <li>✓ Have measurable milestones for sprint planning</li>
+                        <li>✓ Be complex enough to justify a team effort</li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <strong>Avoid:</strong> Projects too simple for a team, or overly ambitious projects
+                    that can't be completed in one semester.
+                </div>
+            </section>
+
+            <!-- Slide 10: Project Examples - E-Commerce & Business -->
+            <section data-slide-title="Project Examples: E-Commerce & Business">
+                <h2>Example Team Projects: E-Commerce & Business</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h4>Multi-vendor Marketplace</h4>
+                        <p>Platform with vendor dashboards, product management, payment integration</p>
+                        <p class="text-light"><em>Team: Front-end, Back-end, Payment API, Admin Panel</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Inventory Management System</h4>
+                        <p>Real-time stock tracking, analytics dashboard, supplier integration</p>
+                        <p class="text-light"><em>Team: Dashboard, API, Database, Reporting</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Booking & Scheduling Platform</h4>
+                        <p>Appointment system with notifications, calendar sync, payment processing</p>
+                        <p class="text-light"><em>Team: UI/UX, Backend Logic, Integrations, Testing</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Customer Relationship Management</h4>
+                        <p>CRM with contact management, sales pipeline, email automation</p>
+                        <p class="text-light"><em>Team: Frontend, Backend, Email Service, Analytics</em></p>
+                    </div>
+                </div>
+                <p><strong>Technologies:</strong> React/Vue, Node.js/Django, PostgreSQL/MongoDB, Stripe, AWS</p>
+            </section>
+
+            <!-- Slide 11: Project Examples - AI/ML & Data -->
+            <section data-slide-title="Project Examples: AI/ML & Data Science">
+                <h2>Example Team Projects: AI/ML & Data Science</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h4>Predictive Maintenance System</h4>
+                        <p>ML model for equipment failure prediction with dashboard and alerts</p>
+                        <p class="text-light"><em>Team: ML Engineer, Data Pipeline, Web Dashboard, DevOps</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Medical Image Classification</h4>
+                        <p>Computer vision for diagnostic assistance with clinician interface</p>
+                        <p class="text-light"><em>Team: CV Engineer, Data Prep, Web Interface, Validation</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Intelligent Chatbot Platform</h4>
+                        <p>NLP-powered customer service with admin dashboard and analytics</p>
+                        <p class="text-light"><em>Team: NLP Dev, Backend, Frontend, Training Data</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Real-time Analytics Dashboard</h4>
+                        <p>Data visualization platform with streaming data processing</p>
+                        <p class="text-light"><em>Team: Data Engineer, Viz Specialist, Backend, Frontend</em></p>
+                    </div>
+                </div>
+                <p><strong>Technologies:</strong> Python, TensorFlow/PyTorch, Flask/FastAPI, React, Docker, Cloud
+                    platforms</p>
+            </section>
+
+            <!-- Slide 12: Project Examples - Mobile & IoT -->
+            <section data-slide-title="Project Examples: Mobile, IoT & Other">
+                <h2>Example Team Projects: Mobile, IoT & Other Domains</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h4>Health & Fitness Tracker</h4>
+                        <p>Mobile app with wearable integration, progress tracking, social features</p>
+                        <p class="text-light"><em>Team: Mobile Dev, Backend, Integration, UI/UX</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Smart Home Control System</h4>
+                        <p>IoT device network with mobile app and web dashboard</p>
+                        <p class="text-light"><em>Team: IoT Dev, Mobile, Backend, Hardware</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Collaborative Learning Platform</h4>
+                        <p>Educational app with video, quizzes, progress tracking, gamification</p>
+                        <p class="text-light"><em>Team: Frontend, Backend, Content System, UX</em></p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Security Audit Tool</h4>
+                        <p>Automated vulnerability scanner with reporting dashboard</p>
+                        <p class="text-light"><em>Team: Security Dev, Reporting, CLI, Web Interface</em></p>
+                    </div>
+                </div>
+                <p><strong>Technologies:</strong> React Native/Flutter, Swift/Kotlin, Arduino/Raspberry Pi, Unity,
+                    Python security tools</p>
+            </section>
+
+            <!-- Slide 13: Team Composition -->
+            <section data-slide-title="Effective Team Composition">
+                <h2>Building an Effective Team</h2>
+                <h3>Ideal Team Size: 3-5 Members</h3>
+                <div class="two-column">
+                    <div>
+                        <h4>3-Person Team:</h4>
+                        <ul>
+                            <li>Easier coordination</li>
+                            <li>Clear role definition</li>
+                            <li>Less integration complexity</li>
+                            <li>Good for focused projects</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>4-5 Person Team:</h4>
+                        <ul>
+                            <li>More ambitious scope</li>
+                            <li>Diverse skill sets</li>
+                            <li>Better redundancy</li>
+                            <li>Richer feature sets</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="success-box">
+                    <strong>Complementary Skills:</strong> The best teams have members with different but
+                    complementary technical specialisms and working styles.
+                </div>
+            </section>
+
+            <!-- Slide 14: Team Roles -->
+            <section data-slide-title="Common Team Roles">
+                <h2>Common Team Roles in Software Projects</h2>
+                <div class="roles-grid">
+                    <div class="role-card">
+                        <h4>Frontend Developer</h4>
+                        <p>UI/UX, user interactions, responsive design</p>
+                    </div>
+                    <div class="role-card">
+                        <h4>Backend Developer</h4>
+                        <p>Server logic, APIs, business rules</p>
+                    </div>
+                    <div class="role-card">
+                        <h4>Database Specialist</h4>
+                        <p>Schema design, queries, optimization</p>
+                    </div>
+                    <div class="role-card">
+                        <h4>DevOps/Infrastructure</h4>
+                        <p>Deployment, CI/CD, hosting, monitoring</p>
+                    </div>
+                    <div class="role-card">
+                        <h4>QA/Testing Lead</h4>
+                        <p>Test strategy, automation, quality assurance</p>
+                    </div>
+                    <div class="role-card">
+                        <h4>Project Manager/Scrum Master</h4>
+                        <p>Sprint planning, coordination, backlog</p>
+                    </div>
+                </div>
+                <p class="text-light"><em>Note: In smaller teams, members often wear multiple hats</em></p>
+            </section>
+
+            <!-- Slide 15: Team Success Criteria -->
+            <section data-slide-title="What Makes a Successful Team Project?">
+                <h2>What Makes a Successful Team Project?</h2>
+                <ul>
+                    <li><strong>Clear Communication:</strong> Regular standups, shared documentation, defined channels
+                    </li>
+                    <li><strong>Defined Roles:</strong> Everyone knows their responsibilities and deliverables</li>
+                    <li><strong>Version Control Discipline:</strong> Proper branching, meaningful commits, code reviews
+                    </li>
+                    <li><strong>Sprint-Based Development:</strong> Regular reviews, retrospectives, and adaptations</li>
+                    <li><strong>Working Prototype:</strong> Integrated, functional system by end of semester</li>
+                    <li><strong>Shared Ownership:</strong> Team takes collective responsibility for success</li>
+                    <li><strong>Professional Documentation:</strong> README, setup guides, API docs, architecture
+                        diagrams</li>
+                    <li><strong>Equal Contribution:</strong> Balanced workload with individual accountability</li>
+                </ul>
+            </section>
+
+            <!-- Slide 16: TASK 1 -->
+            <section data-slide-title="Task 1: Team Project Ideation Workshop" class="center">
+                <h2>Task 1: Team Project Ideation Workshop</h2>
+                <div class="task-box">
+                    <h3>Instructions (Working in potential team groups of 3-5):</h3>
+                    <ol>
+                        <li><strong>Form Discussion Groups (5 min):</strong> Find 2-4 other students to work with</li>
+                        <li><strong>Individual Brainstorming (5 min):</strong> Each person writes down 2-3 project ideas
+                        </li>
+                        <li><strong>Share Ideas (15 min):</strong> Present your ideas to your group, discuss:
+                            <ul>
+                                <li>What problem does it solve?</li>
+                                <li>Who would use it? (Industry/target users)</li>
+                                <li>What are the main features? (5-7 key features)</li>
+                                <li>What technologies would we need?</li>
+                                <li>How would work be divided among team members?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Converge on Ideas (15 min):</strong> As a group, shortlist 2-3 strongest ideas</li>
+                        <li><strong>Feasibility Check (5 min):</strong> For each shortlisted idea, ask:
+                            <ul>
+                                <li>Can we build this in 12 weeks?</li>
+                                <li>Does it need diverse skills (justifies a team)?</li>
+                                <li>Is it exciting for everyone?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Document (5 min):</strong> Write down your top 2 team project ideas with key details
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>You don't need to finalize teams or projects today - this is exploratory!</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 17: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, continue team discussions informally, or ask questions.</p>
+                    <p><strong>Think about:</strong> Which team members have complementary skills?</p>
+                    <p><em>Next: Part 2 - Technical Specialisms and Team Dynamics</em></p>
+                </div>
+            </section>
+
+            <!-- PART 2: TECHNICAL SPECIALISMS & TEAM DYNAMICS -->
+
+            <!-- Slide 18: Part 2 Introduction -->
+            <section data-slide-title="Part 2: Technical Specialisms">
+                <h2>Part 2: Technical Specialisms & Team Dynamics</h2>
+                <div class="highlight">
+                    Now that you have team project ideas, let's map team skills, define roles,
+                    and understand how to build effective development teams.
+                </div>
+                <h3>In This Part:</h3>
+                <ul>
+                    <li>Identify individual and team technical specialisms</li>
+                    <li>Understand different CS industry domains</li>
+                    <li>Learn how to align projects with team capabilities</li>
+                    <li>Create team skills matrices</li>
+                    <li>Define roles and responsibilities within teams</li>
+                    <li>Develop provisional team project proposals</li>
+                </ul>
+            </section>
+
+            <!-- Slide 19: Technical Specialisms Overview -->
+            <section data-slide-title="What are Technical Specialisms?">
+                <h2>What are Technical Specialisms?</h2>
+                <div class="info-box">
+                    <strong>Technical Specialism:</strong> An area of computer science where a team member has
+                    developed expertise, interest, or wants to build deeper knowledge. Teams benefit from
+                    diverse specialisms.
+                </div>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h4>Web Development</h4>
+                        <p>Full-stack, front-end, back-end, REST APIs</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Mobile Development</h4>
+                        <p>iOS, Android, cross-platform, native</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>AI/Machine Learning</h4>
+                        <p>Deep learning, NLP, computer vision, MLOps</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Data Engineering</h4>
+                        <p>Pipelines, ETL, analytics, visualization</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Cybersecurity</h4>
+                        <p>Penetration testing, secure coding, auditing</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>DevOps/Cloud</h4>
+                        <p>AWS/Azure, CI/CD, containers, infrastructure</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Game Development</h4>
+                        <p>Unity, Unreal, graphics, game design</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>IoT/Embedded</h4>
+                        <p>Hardware, sensors, edge computing, protocols</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 20: Industry Domains -->
+            <section data-slide-title="Industry Domains">
+                <h2>Common Industry Domains</h2>
+                <table class="skills-matrix">
+                    <thead>
+                        <tr>
+                            <th>Domain</th>
+                            <th>Example Applications</th>
+                            <th>Common Technologies</th>
+                            <th>Team Roles Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>E-Commerce</strong></td>
+                            <td>Online stores, marketplaces, payments</td>
+                            <td>React, Node.js, Stripe, PostgreSQL</td>
+                            <td>Frontend, Backend, Database, DevOps</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Healthcare</strong></td>
+                            <td>Patient systems, diagnostics, telemedicine</td>
+                            <td>Python, ML libs, FHIR, security</td>
+                            <td>ML Engineer, Backend, Security, Frontend</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Finance</strong></td>
+                            <td>Trading, analytics, risk assessment</td>
+                            <td>Java/Python, real-time, encryption</td>
+                            <td>Backend, Data Engineer, Security, Frontend</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Education</strong></td>
+                            <td>LMS, assessment tools, e-learning</td>
+                            <td>Web frameworks, databases, media</td>
+                            <td>Frontend, Backend, Content, UX</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Entertainment</strong></td>
+                            <td>Streaming, gaming, social platforms</td>
+                            <td>Unity, video APIs, CDNs, WebSockets</td>
+                            <td>Game/UI Dev, Backend, Infrastructure, Data</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Smart Cities/IoT</strong></td>
+                            <td>Traffic, environmental monitoring, utilities</td>
+                            <td>IoT platforms, sensors, data pipelines</td>
+                            <td>IoT Dev, Data Engineer, Backend, Viz</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Slide 21: Mapping Projects to Team Skills -->
+            <section data-slide-title="Mapping Projects to Team Skills">
+                <h2>How to Map Projects to Team Skills</h2>
+                <ol>
+                    <li><strong>Audit Team Skills:</strong> What is each person good at? (Languages, frameworks, tools)
+                    </li>
+                    <li><strong>Identify Growth Areas:</strong> What does each person want to learn?</li>
+                    <li><strong>Match to Project Requirements:</strong> Does your project align with team capabilities?
+                    </li>
+                    <li><strong>Check Role Coverage:</strong> Can you fill essential roles (frontend, backend, etc.)?
+                    </li>
+                    <li><strong>Assess Feasibility:</strong> Can your team build this with current + developing skills?
+                    </li>
+                    <li><strong>Industry Relevance:</strong> Which industry values this project type?</li>
+                </ol>
+                <div class="success-box">
+                    <strong>Example:</strong> Team has: Strong Python dev + React dev + Database expert →
+                    Project: Full-stack e-commerce platform with ML recommendations →
+                    Industry: Retail/E-commerce
+                </div>
+            </section>
+
+            <!-- Slide 22: Team Skills Matrix Example -->
+            <section data-slide-title="Creating a Team Skills Matrix">
+                <h2>Creating a Team Skills Matrix</h2>
+                <table class="skills-matrix">
+                    <thead>
+                        <tr>
+                            <th>Team Member</th>
+                            <th>Primary Skills</th>
+                            <th>Want to Learn</th>
+                            <th>Project Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tom</strong></td>
+                            <td>React (Advanced), JavaScript (Advanced)</td>
+                            <td>TypeScript, State Management</td>
+                            <td>Frontend Lead</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bob</strong></td>
+                            <td>Python (Advanced), Django (Intermediate)</td>
+                            <td>FastAPI, Docker</td>
+                            <td>Backend Lead</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Charlie</strong></td>
+                            <td>PostgreSQL (Advanced), SQL (Advanced)</td>
+                            <td>Redis, Elasticsearch</td>
+                            <td>Database & Performance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dana</strong></td>
+                            <td>Git (Intermediate), AWS (Beginner)</td>
+                            <td>CI/CD, Kubernetes</td>
+                            <td>DevOps & Testing</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-light"><em>This 4-person team has complementary skills covering full-stack
+                        development</em></p>
+            </section>
+
+            <!-- Slide 23: Role Definition & Responsibilities -->
+            <section data-slide-title="Defining Roles & Responsibilities">
+                <h2>Defining Team Roles & Responsibilities</h2>
+                <div class="diagram">
+                    <h3>Each team member should have:</h3>
+                    <ul style="text-align: left;">
+                        <li><strong>Primary Role:</strong> Main area of responsibility (e.g., "Frontend Developer")</li>
+                        <li><strong>Key Deliverables:</strong> Specific features/components they own</li>
+                        <li><strong>Secondary Responsibilities:</strong> Supporting tasks (e.g., code reviews,
+                            documentation)</li>
+                        <li><strong>Learning Goals:</strong> New skills they want to develop during the project</li>
+                    </ul>
+                </div>
+                <div class="warning-box">
+                    <strong>Avoid:</strong> Vague roles like "general developer" or unbalanced workloads.
+                    Everyone needs clear ownership of specific components.
+                </div>
+            </section>
+
+            <!-- Slide 24: Team Skill Balance -->
+            <section data-slide-title="Achieving Good Team Skill Balance">
+                <h2>Achieving Good Team Skill Balance</h2>
+                <div class="two-column">
+                    <div class="success-box">
+                        <h4>✓ Good Balance:</h4>
+                        <ul style="text-align: left;">
+                            <li>Mix of existing expertise and learning goals</li>
+                            <li>Coverage of all major project components</li>
+                            <li>At least one expert in each critical area</li>
+                            <li>Complementary rather than duplicate skills</li>
+                            <li>Shared interest in project domain</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>✗ Poor Balance:</h4>
+                        <ul style="text-align: left;">
+                            <li>Everyone has the same specialism</li>
+                            <li>Critical skills gaps (e.g., no backend expertise)</li>
+                            <li>Too many learning areas, not enough expertise</li>
+                            <li>Misaligned interests within team</li>
+                            <li>Uneven skill levels across team</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 25: Collaborative Tools & Practices -->
+            <section data-slide-title="Essential Collaborative Tools & Practices">
+                <h2>Essential Collaborative Tools & Practices</h2>
+                <div class="diagram">
+                    <h3>Tools You'll Use:</h3>
+                    <div class="two-column">
+                        <div>
+                            <h4>Development:</h4>
+                            <ul style="text-align: left;">
+                                <li><strong>Git/GitHub:</strong> Version control, PRs</li>
+                                <li><strong>VS Code Live Share:</strong> Pair programming</li>
+                                <li><strong>Docker:</strong> Consistent environments</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Project Management:</h4>
+                            <ul style="text-align: left;">
+                                <li><strong>Trello/Jira:</strong> Sprint boards, backlog</li>
+                                <li><strong>Slack/Discord:</strong> Team communication</li>
+                                <li><strong>GitHub Projects:</strong> Issue tracking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <strong>Agile Rituals:</strong> Daily standups (15 min), Sprint planning (start of sprints),
+                    Sprint reviews (end of sprints), Retrospectives (what went well/improve)
+                </div>
+            </section>
+
+            <!-- Slide 26: Communication Best Practices -->
+            <section data-slide-title="Team Communication Best Practices">
+                <h2>Team Communication Best Practices</h2>
+                <ul>
+                    <li><strong>Daily Standups:</strong> Brief check-ins (What did you do? What will you do? Blockers?)
+                    </li>
+                    <li><strong>Written Documentation:</strong> Don't rely on memory - document decisions, APIs, setup
+                    </li>
+                    <li><strong>Code Reviews:</strong> All code gets reviewed before merging - improves quality</li>
+                    <li><strong>Clear Commit Messages:</strong> Describe what and why, not just what</li>
+                    <li><strong>Responsive Communication:</strong> Reply to team messages within 24 hours</li>
+                    <li><strong>Constructive Feedback:</strong> Focus on code/ideas, not people</li>
+                    <li><strong>Conflict Resolution:</strong> Address disagreements early and professionally</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Remember:</strong> Good communication is the difference between functioning
+                    teams and dysfunctional ones.
+                </div>
+            </section>
+
+            <!-- Slide 27: Git Workflow for Teams -->
+            <section data-slide-title="Git Workflow for Teams">
+                <h2>Git Workflow for Teams</h2>
+                <div class="code-example">
+                    <pre><code class="language-bash"># Feature Branch Workflow (Industry Standard)
+
+# 1. Create a branch for your feature
+git checkout -b feature/user-authentication
+
+# 2. Work on your feature, commit regularly
+git add .
+git commit -m "Add user login endpoint with JWT auth"
+
+# 3. Push your branch to remote
+git push origin feature/user-authentication
+
+# 4. Create a Pull Request on GitHub
+# - Describe your changes
+# - Request review from teammates
+# - Address review comments
+
+# 5. After approval, merge to main branch
+# - Squash commits if needed
+# - Delete feature branch after merge</code></pre>
+                </div>
+                <div class="info-box">
+                    <strong>Key Practice:</strong> Never commit directly to main branch. Always use feature
+                    branches and pull requests with code reviews.
+                </div>
+            </section>
+
+            <!-- Slide 28: Managing Team Challenges -->
+            <section data-slide-title="Managing Common Team Challenges">
+                <h2>Managing Common Team Challenges</h2>
+                <table class="skills-matrix">
+                    <thead>
+                        <tr>
+                            <th>Challenge</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Unequal Contribution</strong></td>
+                            <td>Track commits/PRs, sprint reviews show individual work, address early</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Schedule Conflicts</strong></td>
+                            <td>Set core hours for meetings, use async communication, flexible standups</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Technical Disagreements</strong></td>
+                            <td>Prototype both approaches if time allows, majority vote, document decision</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Merge Conflicts</strong></td>
+                            <td>Pull from main frequently, communicate about file changes, small PRs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scope Creep</strong></td>
+                            <td>Define MVP clearly, defer nice-to-haves, sprint reviews keep focus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Skill Gaps</strong></td>
+                            <td>Pair programming, code reviews as teaching, document patterns/examples</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Slide 29: Making Team Decisions -->
+            <section data-slide-title="Making Provisional Team Decisions">
+                <h2>Making Provisional Team & Project Decisions</h2>
+                <h3>Questions for Your Team:</h3>
+                <ol>
+                    <li>Does everyone in the team have clear, distinct roles?</li>
+                    <li>Do our combined skills cover the project requirements?</li>
+                    <li>Can we realistically complete this in one semester as a team?</li>
+                    <li>Is the project complex enough to justify teamwork?</li>
+                    <li>Will this project help us develop new skills we want?</li>
+                    <li>Is everyone excited about working on this together?</li>
+                    <li>Can we break it into parallel workstreams?</li>
+                    <li>Do we have a clear industry application/user benefit?</li>
+                </ol>
+                <div class="highlight">
+                    <strong>Remember:</strong> This is provisional - you can refine teams and projects
+                    over the next 1-2 lectures. Better to get it right than rush!
+                </div>
+            </section>
+
+            <!-- Slide 30: TASK 2 -->
+            <section data-slide-title="Task 2: Team Skills Matrix & Proposal" class="center">
+                <h2>Task 2: Team Skills Matrix & Project Proposal</h2>
+                <div class="task-box">
+                    <h3>Instructions (In your potential teams of 3-5):</h3>
+                    <ol>
+                        <li><strong>Individual Skills Audit (10 min):</strong> Each person lists:
+                            <ul>
+                                <li>Programming languages (proficiency level: Beginner/Intermediate/Advanced)</li>
+                                <li>Frameworks & libraries they know</li>
+                                <li>Tools & platforms (Git, Docker, AWS, etc.)</li>
+                                <li>Areas they want to learn/improve</li>
+                            </ul>
+                        </li>
+                        <li><strong>Create Team Skills Matrix (15 min):</strong> Compile everyone's skills:
+                            <ul>
+                                <li>What strengths does the team have?</li>
+                                <li>What gaps exist?</li>
+                                <li>Who would fill which role?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Match Project to Team (10 min):</strong>
+                            <ul>
+                                <li>Review your shortlisted projects from Task 1</li>
+                                <li>Which project best matches your team's skills?</li>
+                                <li>Can you fill all necessary roles?</li>
+                            </ul>
+                        </li>
+                        <li><strong>Write Provisional Proposal (10 min):</strong>
+                            <ul>
+                                <li>Project name and description (2-3 sentences)</li>
+                                <li>Team members and their proposed roles</li>
+                                <li>Industry domain and target users</li>
+                                <li>Key technologies the team will use</li>
+                                <li>5-7 main features/goals</li>
+                                <li>How work will be divided</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Submit your team skills matrix and provisional proposal to Moodle by end of day.</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 31: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 1 Summary</h2>
+                <ul>
+                    <li>Industry projects are collaborative and prepare you for real software teams</li>
+                    <li>Effective teams have complementary skills and clear role definitions</li>
+                    <li>Good projects balance ambition with feasibility for the team size</li>
+                    <li>Technical specialisms help teams cover all necessary areas</li>
+                    <li>Communication and agile practices are essential for team success</li>
+                    <li>Git workflows and code reviews maintain code quality</li>
+                    <li>Teams should create skills matrices to assess capabilities</li>
+                    <li>Provisional teams and projects will be refined in coming weeks</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Lecture:</h3>
+                    <p>Briefs, Requirements and Early Technical Validation<br>
+                        <em>Writing design briefs and testing project feasibility with "Hello World" prototypes</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 32: Next Steps -->
+            <section data-slide-title="Next Steps & Homework">
+                <h2>Before Next Lecture</h2>
+                <ol>
+                    <li><strong>Submit to Moodle (Required):</strong>
+                        <ul>
+                            <li>Team skills matrix (who's in your provisional team, their skills)</li>
+                            <li>Provisional project proposal (1-page document)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Continue Team Discussions:</strong> Refine your team composition if needed</li>
+                    <li><strong>Research Technologies:</strong> Look into the main technologies your project will use
+                    </li>
+                    <li><strong>Read Agile Basics:</strong> Review Scrum Guide (link on Moodle)</li>
+                    <li><strong>Set Up Git:</strong> Ensure everyone has Git installed and GitHub accounts</li>
+                    <li><strong>Think About Feasibility:</strong> Can you build a "Hello World" version next week?</li>
+                </ol>
+                <div class="success-box">
+                    <strong>Help Available:</strong> Use Moodle forums for questions, or email me for team/project
+                    advice.
+                </div>
+            </section>
+
+            <!-- Slide 33: Q&A -->
+            <section data-slide-title="Questions?" class="center">
+                <h2>Questions?</h2>
+                <div class="diagram">
+                    <h3>Contact & Support:</h3>
+                    <p><strong>Email:</strong> jwilliams@staff.newman.ac.uk</p>
+                    <p><strong>Moodle Forum:</strong> Post questions for peer/instructor responses</p>
+                    <p><strong>Office Hours:</strong> Check Moodle for schedule</p>
+                </div>
+                <div class="highlight">
+                    <p><strong>Remember:</strong> Team formation and project selection is iterative.
+                        Take time to get it right!</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

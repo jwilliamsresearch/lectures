@@ -1,0 +1,623 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 1: Introduction to HTML</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+    <style>
+        /* Preserve existing custom component styles */
+
+        
+
+        /* Task box styling */
+        .task-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Timeline info styling */
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Custom scrollbar for better UX */
+        .reveal .slides section::-webkit-scrollbar,
+        .task-box::-webkit-scrollbar,
+        .code-example::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-track,
+        .task-box::-webkit-scrollbar-track,
+        .code-example::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb,
+        .task-box::-webkit-scrollbar-thumb,
+        .code-example::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .reveal .slides section::-webkit-scrollbar-thumb:hover,
+        .task-box::-webkit-scrollbar-thumb:hover,
+        .code-example::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #2196f3;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container,
+        .codepen-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe,
+        .codepen-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover,
+        .codepen-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="../index.html" title="Previous Session">&lt;</a>
+        <a href="session2.html" title="Next Session">&gt;</a>
+    </div>
+    
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU422: Web Design - Session 1</div>
+                <h1>Introduction to HTML</h1>
+                <h2>Professional Web Design and Development</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
+                </div>
+            </section>
+
+            
+
+            <!-- Slide 2: Learning Objectives -->
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand what HTML is and its role in web development</li>
+                    <li>Learn basic HTML document structure</li>
+                    <li>Master essential HTML elements and tags</li>
+                    <li>Practice semantic HTML markup</li>
+                    <li>Create your first HTML page</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: What is HTML? -->
+            <section data-slide-title="What is HTML?"><h2>What is HTML?</h2>
+                <div class="highlight">
+                    <strong>HTML</strong> = HyperText Markup Language
+                </div>
+                <ul>
+                    <li>The standard markup language for creating web pages</li>
+                    <li>Describes the structure of web content</li>
+                    <li>Uses tags to define elements</li>
+                    <li>Works with CSS and JavaScript</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;...&lt;/head&gt;
+  &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+
+                <!-- YouTube Video: HTML Basics -->
+                <div class="interactive-content">
+                    <h3>Watch: HTML Basics Explained</h3>
+                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
+                    <p class="interactive-description">
+                        Learn the fundamentals of HTML in this beginner-friendly tutorial
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 4: HTML Document Structure -->
+            <section data-slide-title="Basic HTML Document Structure"><h2>Basic HTML Document Structure</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+      &lt;title&gt;My First Page&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;</code></pre>
+                </div>
+
+                <!-- YouTube Video: HTML Document Structure -->
+                <div class="interactive-content">
+                    <h3>Watch: HTML Document Structure Explained</h3>
+                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
+                    <p class="interactive-description">
+                        Learn about proper HTML document structure and semantic elements
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 5: DOCTYPE Declaration -->
+            <section data-slide-title="DOCTYPE Declaration"><h2>DOCTYPE Declaration</h2>
+                <p>The DOCTYPE tells the browser which version of HTML you're using.</p>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;!DOCTYPE html&gt;</code></pre>
+                </div>
+                <ul>
+                    <li>Must be the first line in your HTML document</li>
+                    <li>HTML5 uses the simple declaration above</li>
+                    <li>Ensures proper rendering across browsers</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: HTML Element -->
+            <section data-slide-title="The HTML Element"><h2>The HTML Element</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;html lang="en"&gt;
+  ... all content goes here ...
+&lt;/html&gt;</code></pre>
+                </div>
+                <ul>
+                    <li>Root element of the HTML document</li>
+                    <li>Contains all other elements</li>
+                    <li><code>lang="en"</code> specifies the language</li>
+                    <li>Helps screen readers and search engines</li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: Head Section -->
+            <section data-slide-title="The Head Section"><h2>The Head Section</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width,
+    initial-scale=1.0"&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+  &lt;/head&gt;</code></pre>
+                </div>
+                <ul>
+                    <li>Contains metadata about the document</li>
+                    <li>Not visible on the page</li>
+                    <li>Includes character encoding, viewport, title</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Body Section -->
+            <section data-slide-title="The Body Section"><h2>The Body Section</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;body&gt;
+  &lt;h1&gt;Main Heading&lt;/h1&gt;
+  &lt;p&gt;This is a paragraph.&lt;/p&gt;
+  &lt;img src="image.jpg" alt="Description"&gt;
+  &lt;/body&gt;</code></pre>
+                </div>
+                <ul>
+                    <li>Contains all visible content</li>
+                    <li>Text, images, links, forms, etc.</li>
+                    <li>What users see in the browser</li>
+                </ul>
+            </section>
+
+            <!-- Slide 9: HTML Tags and Elements -->
+            <section data-slide-title="HTML Tags and Elements"><h2>HTML Tags and Elements</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;tagname&gt;Content goes here&lt;/tagname&gt;</code></pre>
+                </div>
+                <ul>
+                    <li><strong>Opening tag:</strong> &lt;tagname&gt;</li>
+                    <li><strong>Content:</strong> Text, images, other elements</li>
+                    <li><strong>Closing tag:</strong> &lt;/tagname&gt;</li>
+                    <li>Some elements are self-closing: &lt;img /&gt;</li>
+                </ul>
+            </section>
+
+            <!-- Slide 10: Heading Elements -->
+            <section data-slide-title="Heading Elements"><h2>Heading Elements</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;h1&gt;Main Heading (largest)&lt;/h1&gt;
+&lt;h2&gt;Subheading&lt;/h2&gt;
+&lt;h3&gt;Sub-subheading&lt;/h3&gt;
+&lt;h4&gt;Level 4 heading&lt;/h4&gt;
+&lt;h5&gt;Level 5 heading&lt;/h5&gt;
+&lt;h6&gt;Level 6 heading (smallest)&lt;/h6&gt;</code></pre>
+                </div>
+                <ul>
+                    <li>Use for document structure and hierarchy</li>
+                    <li>H1 should be used once per page</li>
+                    <li>Important for SEO and accessibility</li>
+                </ul>
+            </section>
+
+            <!-- Slide 11: Paragraph Element -->
+            <section data-slide-title="Paragraph Element"><h2>Paragraph Element</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;p&gt;This is a paragraph of text. It can contain multiple sentences and will
+  be displayed as a block element with some spacing around it.&lt;/p&gt;
+  &lt;p&gt;This is another paragraph. Each paragraph is separated from others with
+    some margin.&lt;/p&gt;</code></pre>
+                </div>
+                <ul>
+                    <li>Used for blocks of text</li>
+                    <li>Automatically adds spacing between paragraphs</li>
+                    <li>Most common element for text content</li>
+                </ul>
+            </section>
+
+            <!-- Slide 12: Line Breaks and Horizontal Rules -->
+            <section data-slide-title="Line Breaks and Horizontal Rules"><h2>Line Breaks and Horizontal Rules</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;p&gt;This is the first line.&lt;br&gt;This is the second
+  line.&lt;/p&gt;
+  &lt;hr&gt;
+    &lt;p&gt;Content after the horizontal rule.&lt;/p&gt;</code></pre>
+                </div>
+                <ul>
+                    <li><code>&lt;br&gt;</code> creates a line break</li>
+                    <li><code>&lt;hr&gt;</code> creates a horizontal line</li>
+                    <li>Both are self-closing elements</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13: Text Formatting -->
+            <section data-slide-title="Text Formatting Elements"><h2>Text Formatting Elements</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;p&gt;This is &lt;strong&gt;bold text&lt;/strong&gt; and this is
+&lt;em&gt;italic text&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;This is &lt;mark&gt;highlighted text&lt;/mark&gt; and this is
+&lt;small&gt;smaller text&lt;/small&gt;.&lt;/p&gt;
+&lt;p&gt;This is &lt;del&gt;deleted text&lt;/del&gt; and this is
+&lt;ins&gt;inserted text&lt;/ins&gt;.&lt;/p&gt;</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 14: Lists -->
+            <section data-slide-title="HTML Lists"><h2>HTML Lists</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;Unordered list item 1&lt;/li&gt;
+  &lt;li&gt;Unordered list item 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+  &lt;li&gt;Ordered list item 1&lt;/li&gt;
+  &lt;li&gt;Ordered list item 2&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 15: Links -->
+            <section data-slide-title="Creating Links"><h2>Creating Links</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;a href="https://www.example.com"&gt;Visit Example.com&lt;/a&gt;
+&lt;a href="page.html"&gt;Link to another page&lt;/a&gt;
+&lt;a href="#section"&gt;Link to page section&lt;/a&gt;
+&lt;a href="mailto:email@example.com"&gt;Send email&lt;/a&gt;</code></pre>
+                </div>
+                <ul>
+                    <li><code>href</code> specifies the destination</li>
+                    <li>Can link to external websites, local pages, or email</li>
+                    <li>Essential for web navigation</li>
+                </ul>
+            </section>
+
+            <!-- Slide 16: Images -->
+            <section data-slide-title="Adding Images"><h2>Adding Images</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;img src="image.jpg" alt="Description of the image"&gt;
+  &lt;img src="https://example.com/image.png" alt="External image"&gt;
+    &lt;img src="photo.jpg" alt="Photo" width="300" height="200"&gt;</code></pre>
+                </div>
+                <ul>
+                    <li><code>src</code> specifies the image source</li>
+                    <li><code>alt</code> provides alternative text (important for accessibility)
+                    </li>
+                    <li>Can specify width and height attributes</li>
+                </ul>
+            </section>
+
+            <!-- Slide 17: Semantic HTML -->
+            <section data-slide-title="Semantic HTML"><h2>Semantic HTML</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;header&gt;Page header&lt;/header&gt;
+&lt;nav&gt;Navigation menu&lt;/nav&gt;
+&lt;main&gt;Main content&lt;/main&gt;
+&lt;section&gt;Content section&lt;/section&gt;
+&lt;article&gt;Article content&lt;/article&gt;
+&lt;aside&gt;Sidebar content&lt;/aside&gt;
+&lt;footer&gt;Page footer&lt;/footer&gt;</code></pre>
+                </div>
+                <ul>
+                    <li>Uses meaningful element names</li>
+                    <li>Improves accessibility and SEO</li>
+                    <li>Makes code more readable</li>
+                </ul>
+
+
+            </section>
+
+            <!-- Slide 18: Comments -->
+            <section data-slide-title="HTML Comments"><h2>HTML Comments</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;!-- This is a comment --&gt;
+&lt;h1&gt;My Page&lt;/h1&gt;
+&lt;!-- Navigation section --&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+&lt;!-- TODO: Add more content here --&gt;</code></pre>
+                </div>
+                <ul>
+                    <li>Comments are not displayed in the browser</li>
+                    <li>Useful for documentation and notes</li>
+                    <li>Help other developers understand your code</li>
+                </ul>
+            </section>
+
+            <!-- Slide 19: TASK 1 - Halfway Point -->
+            <section data-slide-title="Task 1: Create Your First HTML Page" class="center"><h2>Task 1: Create Your First HTML Page</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a new HTML file called <code>my-first-page.html</code></li>
+                        <li>Include proper HTML5 document structure</li>
+                        <li>Add a title: "My First Web Page"</li>
+                        <li>Create a main heading with your name</li>
+                        <li>Add 2-3 paragraphs about your interests</li>
+                        <li>Include a list of your favorite websites</li>
+                        <li>Add an image (use a placeholder if needed)</li>
+                        <li>Use semantic HTML elements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand basic HTML structure and elements</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 20: Break/Catch Up -->
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 21: HTML Validation -->
+            <section data-slide-title="HTML Validation"><h2>HTML Validation</h2>
+                <ul>
+                    <li>Check your HTML for errors</li>
+                    <li>Use online validators like W3C Validator</li>
+                    <li>Ensures cross-browser compatibility</li>
+                    <li>Helps identify missing closing tags</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Common validation errors:</strong>
+                    <ul>
+                        <li>Missing closing tags</li>
+                        <li>Incorrect attribute values</li>
+                        <li>Missing required attributes</li>
+                        <li>Invalid element nesting</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 21: Best Practices -->
+            <section data-slide-title="HTML Best Practices"><h2>HTML Best Practices</h2>
+                <ul>
+                    <li>Use lowercase for all element names and attributes</li>
+                    <li>Always close your tags</li>
+                    <li>Use semantic elements when possible</li>
+                    <li>Include alt text for images</li>
+                    <li>Write clean, readable code</li>
+                    <li>Validate your HTML</li>
+                    <li>Use proper indentation</li>
+                </ul>
+            </section>
+
+            <!-- Slide 22: Common Mistakes -->
+            <section data-slide-title="Common HTML Mistakes"><h2>Common HTML Mistakes</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;!-- WRONG --&gt;
+&lt;H1&gt;Title&lt;/H1&gt;
+&lt;p&gt;Text&lt;br&gt;
+  &lt;img src="image.jpg"&gt;
+    &lt;!-- CORRECT --&gt;
+    &lt;h1&gt;Title&lt;/h1&gt;
+    &lt;p&gt;Text&lt;/p&gt;
+    &lt;img src="image.jpg" alt="Description"&gt;</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 23: HTML5 Features -->
+            <section data-slide-title="HTML5 Features"><h2>HTML5 Features</h2>
+                <ul>
+                    <li><strong>New semantic elements:</strong> header, nav, main, section, article,
+                        aside, footer</li>
+                    <li><strong>New input types:</strong> email, date, number, range, color</li>
+                    <li><strong>Audio and video:</strong> Native multimedia support</li>
+                    <li><strong>Canvas:</strong> Drawing and graphics</li>
+                    <li><strong>Local storage:</strong> Client-side data storage</li>
+                </ul>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section data-slide-title="Task 2: Enhanced HTML Page" class="center"><h2>Task 2: Enhanced HTML Page</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Enhance your previous HTML page</li>
+                        <li>Add proper semantic structure (header, nav, main, footer)</li>
+                        <li>Create a navigation menu with 3 links</li>
+                        <li>Add a contact form with name, email, and message fields</li>
+                        <li>Include a table with some data</li>
+                        <li>Add comments to explain your code structure</li>
+                        <li>Validate your HTML using an online validator</li>
+                        <li>Test your page in different browsers</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand advanced HTML features and best
+                            practices</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
+                <ul>
+                    <li>HTML is the foundation of web development</li>
+                    <li>Proper document structure is essential</li>
+                    <li>Use semantic elements for better accessibility</li>
+                    <li>Always validate your HTML</li>
+                    <li>Practice makes perfect!</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>HTML Forms and Input - Working with user data</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+
+</html>

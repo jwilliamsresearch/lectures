@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU540 - Session 6: WEB-CSRF-01 & WEB-CONFIG-01 - CSRF and Misconfiguration</title>
+
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+</head>
+
+<body>
+        <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session5.html" title="Previous Session">&lt;</a>
+        <a href="session7.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>WEB-CSRF-01 & WEB-CONFIG-01 - CSRF and Misconfiguration</h1>
+                <h2>Session 6</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand OWASP A04: CSRF and A05: Misconfiguration</li>
+                    <li>Identify CSRF attack vectors and prevention methods</li>
+                    <li>Learn secure design principles and configuration management</li>
+                    <li>Practice vulnerability discovery using OS³ Studio</li>
+                    <li>Implement secure CSRF protection and configuration</li>
+                    <li>Explore career opportunities in security architecture</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="OWASP A04: CSRF & A05: Misconfiguration">
+                <h2>OWASP A04: CSRF & A05: Misconfiguration</h2>
+                <div class="highlight">
+                    <p><strong>CSRF:</strong> Cross-Site Request Forgery forces users to perform unwanted actions</p>
+                    <p><strong>Misconfiguration:</strong> Security misconfigurations expose applications to attacks</p>
+                </div>
+                <h3>Key Areas:</h3>
+                <ul>
+                    <li>CSRF token validation</li>
+                    <li>Secure design principles</li>
+                    <li>Configuration management</li>
+                    <li>Default credentials and settings</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="CSRF Attack Scenario">
+                <h2>CSRF Attack Scenario</h2>
+                <h3>Attack Flow:</h3>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;!-- VULNERABLE: No CSRF protection --&gt;
+&lt;form action="/transfer" method="POST"&gt;
+  &lt;input name="amount" value="1000"&gt;
+  &lt;input name="to" value="attacker-account"&gt;
+  &lt;input type="submit" value="Transfer"&gt;
+&lt;/form&gt;
+&lt;!-- Malicious site --&gt;
+&lt;img src="https://bank.com/transfer?amount=1000&amp;to=attacker"&gt;</code></pre>
+                </div>
+                <div class="vulnerability">
+                    <p><strong>Impact:</strong> Unauthorized actions performed on behalf of authenticated users</p>
+                </div>
+            </section>
+
+            <section data-slide-title="CSRF Prevention Methods">
+                <h2>CSRF Prevention Methods</h2>
+                <h3>1. CSRF Tokens</h3>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;!-- SECURE: CSRF token implementation --&gt;
+&lt;form action="/transfer" method="POST"&gt;
+  &lt;input type="hidden" name="csrf_token" value="&lt;?php echo $csrf_token; ?&gt;"&gt;
+  &lt;input name="amount" value="1000"&gt;
+  &lt;input name="to" value="recipient-account"&gt;
+  &lt;input type="submit" value="Transfer"&gt;
+&lt;/form&gt;
+&lt;!-- Server validation --&gt;
+if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+  die('CSRF token mismatch');
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="SameSite Cookie Protection">
+                <h2>SameSite Cookie Protection</h2>
+                <h3>Implementation:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: SameSite cookie --&gt;
+Set-Cookie: sessionid=abc123; SameSite=Strict; Secure; HttpOnly
+&lt;!-- SameSite values --&gt;
+SameSite=Strict    // Never sent with cross-site requests
+SameSite=Lax       // Sent with top-level navigation
+SameSite=None      // Always sent (requires Secure flag)</code></pre>
+                </div>
+                <div class="highlight">
+                    <p><strong>Benefit:</strong> Prevents cookies from being sent with cross-site requests</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Common Security Misconfigurations">
+                <h2>Common Security Misconfigurations</h2>
+                <h3>1. Default Credentials</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Default credentials --&gt;
+admin / admin
+admin / password
+root / root
+guest / guest
+&lt;!-- SECURE: Strong credentials --&gt;
+admin / Kx9#mP2$vL8@nQ4
+root / 7F&amp;gH3*jK9#mN5$pR2</code></pre>
+                </div>
+                <h3>2. Debug Mode Enabled</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Debug mode in production --&gt;
+DEBUG = True
+&lt;!-- SECURE: Debug mode disabled --&gt;
+DEBUG = False</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Directory Traversal Vulnerabilities">
+                <h2>Directory Traversal Vulnerabilities</h2>
+                <h3>Attack Example:</h3>
+                <div class="code-example">
+                    <pre><code class="language-php">&lt;!-- VULNERABLE: Directory traversal --&gt;
+&lt;img src="&lt;?php echo $_GET['file']; ?&gt;"&gt;
+&lt;!-- Malicious request --&gt;
+GET /image.php?file=../../../etc/passwd
+&lt;!-- SECURE: Path validation --&gt;
+$file = basename($_GET['file']);
+$path = '/safe/directory/' . $file;</code></pre>
+                </div>
+                <div class="vulnerability">
+                    <p><strong>Impact:</strong> Unauthorized access to sensitive files</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Information Disclosure">
+                <h2>Information Disclosure</h2>
+                <h3>Common Sources:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Error messages --&gt;
+Error: Database connection failed: mysql://root:password@localhost/db
+&lt;!-- VULNERABLE: Version disclosure --&gt;
+Server: Apache/2.4.41 (Ubuntu)
+X-Powered-By: PHP/7.4.3
+&lt;!-- SECURE: Generic error messages --&gt;
+Error: An error occurred. Please try again later.</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Opportunities in Security Architecture">
+                <h2>Career Opportunities in Security Architecture</h2>
+                <div class="career-box">
+                    <h3>Security Architecture Roles:</h3>
+                    <ul>
+                        <li><strong>Security Architect:</strong> £60,000 - £120,000</li>
+                        <li><strong>Security Consultant:</strong> £50,000 - £100,000</li>
+                        <li><strong>DevSecOps Engineer:</strong> £45,000 - £90,000</li>
+                        <li><strong>Security Engineer:</strong> £40,000 - £80,000</li>
+                        <li><strong>Penetration Tester:</strong> £35,000 - £70,000</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> Security architecture, Risk assessment, Compliance, System design</p>
+                </div>
+            </section>
+
+            <section data-slide-title="OS³ Newman Cyber Security Lab">
+                <h2>OS³ Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>WEB-CSRF-01 & WEB-CONFIG-01 Lab Environment</h3>
+                    <p>Our OS³ Studio provides hands-on experience with:</p>
+                    <ul>
+                        <li>Vulnerable applications with CSRF flaws</li>
+                        <li>Misconfigured systems and applications</li>
+                        <li>Secure implementation challenges</li>
+                        <li>Configuration management best practices</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Practical Examples">
+                <h2>Practical Examples</h2>
+                <div class="interactive-content">
+                    <h3>Watch: CSRF and Misconfiguration Explained</h3>
+                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
+                    <p class="interactive-description">
+                        Understanding CSRF attacks and security misconfigurations
+                    </p>
+                </div>
+            </section>
+
+            <section data-slide-title="Web Demos and Tools">
+                <h2>Web Demos and Tools</h2>
+                <div class="demo-link">
+                    <h3>Security Testing Tools:</h3>
+                    <ul>
+                        <li><a href="https://portswigger.net/burp" target="_blank">Burp Suite</a> - Web application security testing</li>
+                        <li><a href="https://github.com/OWASP/OWASP-ZAP" target="_blank">OWASP ZAP</a> - Open source web app scanner</li>
+                        <li><a href="https://www.owasp.org/index.php/OWASP_WebGoat_Project" target="_blank">WebGoat</a> - Vulnerable web application</li>
+                        <li><a href="https://pentesterlab.com/" target="_blank">PentesterLab</a> - Hands-on security training</li>
+                        <li><a href="https://www.hacker101.com/" target="_blank">Hacker101</a> - Free security training</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Case Study: GitHub CSRF Attack">
+                <h2>Case Study: GitHub CSRF Attack</h2>
+                <div class="vulnerability">
+                    <h3>2018 GitHub CSRF Vulnerability</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> Unauthorized repository access</li>
+                        <li><strong>Method:</strong> CSRF attack on GitHub's invitation system</li>
+                        <li><strong>Cause:</strong> Missing CSRF protection on invitation endpoints</li>
+                        <li><strong>Fix:</strong> Implemented CSRF tokens and SameSite cookies</li>
+                    </ul>
+                    <p><strong>Lesson:</strong> Even major platforms can have CSRF vulnerabilities</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Summary: Common CSRF and Misconfiguration Issues">
+                <h2>Summary: Common CSRF and Misconfiguration Issues</h2>
+                <div class="highlight">
+                    <h3>Key Vulnerabilities to Look For:</h3>
+                    <ol>
+                        <li>Missing CSRF protection</li>
+                        <li>Default credentials and settings</li>
+                        <li>Debug mode enabled in production</li>
+                        <li>Directory traversal vulnerabilities</li>
+                        <li>Information disclosure in errors</li>
+                        <li>Insecure cookie settings</li>
+                        <li>Missing security headers</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: CSRF and Misconfiguration Discovery">
+                <h2>Task 1: CSRF and Misconfiguration Discovery</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to identify CSRF vulnerabilities and security misconfigurations in the lab environment.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio vulnerable application</li>
+                        <li>Test for CSRF vulnerabilities in forms</li>
+                        <li>Look for default credentials</li>
+                        <li>Check for debug mode and error disclosure</li>
+                        <li>Test for directory traversal vulnerabilities</li>
+                        <li>Examine cookie security settings</li>
+                        <li>Document all findings with proof of concept</li>
+                        <li>Prepare a vulnerability assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on systematic testing and thorough documentation</em></p>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Break Time">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secure implementation and Task 2</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure CSRF Protection">
+                <h2>Secure CSRF Protection</h2>
+                
+                <h3>1. Double Submit Cookie Pattern</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Double submit cookie --&gt;
+&lt;script&gt;
+  function getCookie(name) {
+    let value = "; " + document.cookie;
+    let parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  }
+  let csrfToken = getCookie('csrf_token');
+  fetch('/api/transfer', {
+    method: 'POST',
+    headers: { 'X-CSRF-Token': csrfToken },
+    body: JSON.stringify({amount: 100, to: 'account'})
+  });
+&lt;/script&gt;</code></pre>
+                </div>
+
+                <h3>2. Origin Header Validation</h3>
+                <div class="code-example">
+                    <pre><code class="language-php">&lt;!-- SECURE: Origin validation --&gt;
+if ($_SERVER['HTTP_ORIGIN'] !== 'https://trusted-domain.com') {
+  http_response_code(403);
+  die('Invalid origin');
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Configuration Management">
+                <h2>Secure Configuration Management</h2>
+                
+                <h3>1. Environment-Based Configuration</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Environment configuration --&gt;
+# Production settings
+DEBUG = False
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DATABASE_URL = os.environ.get('DATABASE_URL')
+ALLOWED_HOSTS = ['yourdomain.com']
+# Development settings
+DEBUG = True
+SECRET_KEY = 'dev-key-only'
+DATABASE_URL = 'sqlite:///dev.db'</code></pre>
+                </div>
+
+                <h3>2. Security Headers</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Security headers --&gt;
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000
+Content-Security-Policy: default-src 'self'</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Input Validation and Sanitization">
+                <h2>Input Validation and Sanitization</h2>
+                
+                <h3>1. Path Traversal Prevention</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Path validation --&gt;
+function validateFilePath($input) {
+  // Remove directory traversal sequences
+  $input = str_replace(['../', '..\\', '..\\\\'], '', $input);
+  // Use basename to get only filename
+  $filename = basename($input);
+  // Validate against allowed files
+  $allowedFiles = ['file1.txt', 'file2.pdf', 'image.jpg'];
+  return in_array($filename, $allowedFiles);
+}</code></pre>
+                </div>
+
+                <h3>2. Error Handling</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Generic error handling --&gt;
+try {
+  $result = performOperation();
+} catch (Exception $e) {
+  // Log detailed error for debugging
+  error_log($e-&gt;getMessage());
+  // Show generic error to user
+  echo "An error occurred. Please try again.";
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Authentication and Authorization">
+                <h2>Authentication and Authorization</h2>
+                
+                <h3>1. Strong Password Policy</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Password validation --&gt;
+function validatePassword($password) {
+  if (strlen($password) &lt; 12) return false;
+  if (!preg_match('/[A-Z]/', $password)) return false;
+  if (!preg_match('/[a-z]/', $password)) return false;
+  if (!preg_match('/[0-9]/', $password)) return false;
+  if (!preg_match('/[^A-Za-z0-9]/', $password)) return false;
+  return true;
+}</code></pre>
+                </div>
+
+                <h3>2. Session Security</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Session configuration --&gt;
+session.cookie_httponly = 1
+session.cookie_secure = 1
+session.cookie_samesite = "Strict"
+session.use_strict_mode = 1
+session.gc_maxlifetime = 1800  // 30 minutes</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Monitoring and Logging">
+                <h2>Monitoring and Logging</h2>
+                
+                <h3>1. Security Event Logging</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Security logging --&gt;
+function logSecurityEvent($event, $details) {
+  $logEntry = [
+    'timestamp' =&gt; date('Y-m-d H:i:s'),
+    'event' =&gt; $event,
+    'ip' =&gt; $_SERVER['REMOTE_ADDR'],
+    'user_agent' =&gt; $_SERVER['HTTP_USER_AGENT'],
+    'details' =&gt; $details
+  ];
+  error_log(json_encode($logEntry));
+}</code></pre>
+                </div>
+
+                <h3>2. Anomaly Detection</h3>
+                <ul>
+                    <li>Monitor failed login attempts</li>
+                    <li>Track unusual access patterns</li>
+                    <li>Alert on privilege escalation attempts</li>
+                    <li>Monitor for suspicious file access</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Compliance and Standards">
+                <h2>Compliance and Standards</h2>
+                
+                <h3>1. Security Frameworks</h3>
+                <ul>
+                    <li><strong>OWASP Top 10:</strong> Web application security risks</li>
+                    <li><strong>NIST Cybersecurity Framework:</strong> Risk management</li>
+                    <li><strong>ISO 27001:</strong> Information security management</li>
+                    <li><strong>PCI DSS:</strong> Payment card industry standards</li>
+                </ul>
+
+                <h3>2. Best Practices</h3>
+                <div class="highlight">
+                    <ul>
+                        <li>Implement defense in depth</li>
+                        <li>Regular security assessments</li>
+                        <li>Automated security testing</li>
+                        <li>Incident response planning</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Development in Security Architecture">
+                <h2>Career Development in Security Architecture</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Advanced Certifications:</strong> CISSP, CISM, CISA</li>
+                        <li><strong>Specialized Training:</strong> Security architecture, Risk management</li>
+                        <li><strong>Hands-on Practice:</strong> Security assessments, Penetration testing</li>
+                        <li><strong>Industry Networking:</strong> Security conferences, meetups</li>
+                        <li><strong>Research:</strong> New attack techniques, Defense methods</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://owasp.org/" target="_blank">OWASP</a> | <a href="https://www.nist.gov/" target="_blank">NIST</a> | <a href="https://www.iso.org/" target="_blank">ISO</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Secure CSRF Protection and Configuration">
+                <h2>Task 2: Secure CSRF Protection and Configuration</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS³ Studio to implement secure CSRF protection and fix configuration issues found in Task 1.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS³ Studio secure implementation environment</li>
+                        <li>Implement CSRF token protection</li>
+                        <li>Configure secure cookie settings</li>
+                        <li>Remove default credentials and debug mode</li>
+                        <li>Implement proper input validation</li>
+                        <li>Add security headers</li>
+                        <li>Test the secure implementation</li>
+                        <li>Document the security improvements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on implementing industry-standard security practices</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Further Activity: Code Inspection">
+                <h2>Further Activity: Code Inspection</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Code Analysis:</h3>
+                    <p>For students with additional time, explore the source code to understand:</p>
+                    <ul>
+                        <li>How CSRF protection is implemented</li>
+                        <li>Configuration management practices</li>
+                        <li>Error handling and logging mechanisms</li>
+                        <li>Authentication and authorization systems</li>
+                        <li>Security header implementation</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Code review report with security recommendations</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Session Summary">
+                <h2>Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>CSRF attacks exploit user authentication</li>
+                        <li>Security misconfigurations are common vulnerabilities</li>
+                        <li>CSRF tokens and SameSite cookies provide protection</li>
+                        <li>OS³ Studio provides hands-on vulnerability testing</li>
+                        <li>Secure implementation requires multiple layers of protection</li>
+                        <li>Career opportunities in security architecture are growing</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Next Steps">
+                <h2>Next Steps</h2>
+                
+            </section>
+
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

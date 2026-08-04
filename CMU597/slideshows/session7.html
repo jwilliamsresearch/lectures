@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture 7: Sprint 2 - Integrations Sprint</title>
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../../libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../../placeholder/academic-theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../libs/reveal.js/plugin/highlight/monokai.css">
+
+    <style>
+        /* Task box styling */
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* Code example styling */
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        /* Highlight styling */
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        /* Info box styling */
+        .info-box {
+            background: #d1ecf1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #0c5460;
+            margin: 10px 0;
+        }
+
+        /* Warning box styling */
+        .warning-box {
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #721c24;
+            margin: 10px 0;
+        }
+
+        /* Success box styling */
+        .success-box {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #155724;
+            margin: 10px 0;
+        }
+
+        /* Diagram styling */
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Two column layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+
+        /* Example boxes */
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        /* Center content for title slides */
+        .reveal .slides section.center {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-nav">
+        <a href="../../index.html" title="Home">H</a>
+        <a href="../index.html" title="Module Home">M</a>
+        <a href="session6.html" title="Previous Session">&lt;</a>
+        <a href="session8.html" title="Next Session">&gt;</a>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- PART A: INTEGRATING APIs, LIBRARIES, AND SERVICES -->
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU597: Industry Project - Lecture 7</div>
+                <h1>Sprint 2: Integrations Sprint</h1>
+                <h2>Part A: Integration Concepts | Part B: Build Integration</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session • 2 parts • 2 team tasks</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Session Timeline -->
+            <section data-slide-title="Session Timeline">
+                <h2>Session Timeline</h2>
+                <div class="diagram">
+                    <h3>Part A: Integrating APIs, Libraries, and Services (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Lecture on integration patterns, error handling, testing</p>
+                    <p><strong>45 minutes:</strong> Task 1 - Plan and design integration work</p>
+                    <p><strong>15 minutes:</strong> Break</p>
+                </div>
+                <div class="diagram">
+                    <h3>Part B: Build Integration Feature (90 minutes)</h3>
+                    <p><strong>30 minutes:</strong> Implementation examples and guidance</p>
+                    <p><strong>45 minutes:</strong> Task 2 - Implement integration feature</p>
+                    <p><strong>15 minutes:</strong> Testing and troubleshooting</p>
+                </div>
+            </section>
+
+            <!-- Slide 3: Learning Objectives -->
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand different types of integrations (APIs, libraries, services)</li>
+                    <li>Learn REST API consumption patterns</li>
+                    <li>Implement proper error handling and retry logic</li>
+                    <li>Build resilient integrations that handle failures gracefully</li>
+                    <li>Test external integrations with mocks and stubs</li>
+                    <li>Integrate third-party libraries safely</li>
+                    <li>Work with cloud services (storage, ML inference, etc.)</li>
+                    <li>Document integration dependencies and setup</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4: Types of Integrations -->
+            <section data-slide-title="Types of Integrations">
+                <h2>Types of Integrations</h2>
+                <h3>1. REST APIs:</h3>
+                <ul>
+                    <li>External data sources (weather, maps, payment)</li>
+                    <li>Your own backend API (frontend → backend)</li>
+                    <li>Third-party services (Stripe, SendGrid, Twilio)</li>
+                </ul>
+                <h3>2. Libraries & Packages:</h3>
+                <ul>
+                    <li>npm/pip packages (React, Express, pandas, scikit-learn)</li>
+                    <li>UI component libraries (Material-UI, Bootstrap)</li>
+                    <li>Utility libraries (Lodash, Moment.js, Axios)</li>
+                </ul>
+                <h3>3. Cloud Services:</h3>
+                <ul>
+                    <li>File storage (AWS S3, Google Cloud Storage)</li>
+                    <li>Databases (Firebase, MongoDB Atlas, Supabase)</li>
+                    <li>ML services (Google Vision API, OpenAI API)</li>
+                </ul>
+            </section>
+
+            <!-- Slide 5: REST API Basics -->
+            <section data-slide-title="REST API Consumption">
+                <h2>REST API Consumption Basics</h2>
+                <div class="info-box">
+                    <strong>REST:</strong> REpresentational State Transfer - architectural style using HTTP methods.
+                </div>
+                <h3>HTTP Methods:</h3>
+                <ul>
+                    <li><strong>GET:</strong> Retrieve data (e.g., get user profile)</li>
+                    <li><strong>POST:</strong> Create new resource (e.g., create order)</li>
+                    <li><strong>PUT/PATCH:</strong> Update existing resource</li>
+                    <li><strong>DELETE:</strong> Remove resource</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Fetch API (browser/Node.js)
+const response = await fetch('https://api.example.com/users/123');
+const user = await response.json();
+
+// Axios (more features)
+const { data } = await axios.get('https://api.example.com/users/123');
+console.log(data);</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 6: API Example - Weather API -->
+            <section data-slide-title="Example: Weather API Integration">
+                <h2>Example: Integrating Weather API</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// OpenWeatherMap API integration
+const API_KEY = process.env.WEATHER_API_KEY;
+const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+
+async function getWeather(city) {
+  try {
+    const url = `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`;
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    return {
+      temperature: data.main.temp,
+      description: data.weather[0].description,
+      humidity: data.main.humidity
+    };
+  } catch (error) {
+    console.error('Weather API error:', error);
+    throw error;
+  }
+}
+
+// Usage
+const weather = await getWeather('Birmingham');
+console.log(`Temperature: ${weather.temperature}°C`);</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 7: Error Handling -->
+            <section data-slide-title="Error Handling Best Practices">
+                <h2>Robust Error Handling</h2>
+                <h3>Common Failure Scenarios:</h3>
+                <ul>
+                    <li>Network errors (no internet, timeout)</li>
+                    <li>HTTP errors (404 Not Found, 500 Server Error)</li>
+                    <li>Invalid API key or authentication failure</li>
+                    <li>Rate limiting (too many requests)</li>
+                    <li>Malformed response data</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-javascript">async function fetchWithErrorHandling(url) {
+  try {
+    const response = await fetch(url, { 
+      timeout: 5000  // 5 second timeout
+    });
+    
+    // Check HTTP status
+    if (response.status === 429) {
+      throw new Error('Rate limit exceeded. Please try again later.');
+    }
+    
+    if (response.status === 401) {
+      throw new Error('Unauthorized. Check API key.');
+    }
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+    
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      throw new Error('Request timeout');
+    }
+    throw error;
+  }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 8: Retry Logic -->
+            <section data-slide-title="Implementing Retry Logic">
+                <h2>Retry Logic for Resilience</h2>
+                <div class="info-box">
+                    <strong>Retry Pattern:</strong> Automatically retry failed requests after temporary failures.
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">async function fetchWithRetry(url, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url);
+      
+      if (response.ok) {
+        return await response.json();
+      }
+      
+      // Don't retry client errors (4xx)
+      if (response.status >= 400 && response.status < 500) {
+        throw new Error(`Client error: ${response.status}`);
+      }
+      
+      // Retry server errors (5xx)
+      if (attempt < maxRetries) {
+        const delay = Math.pow(2, attempt) * 1000;  // Exponential backoff
+        console.log(`Retry ${attempt}/${maxRetries} after ${delay}ms`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      
+      throw new Error(`Failed after ${maxRetries} attempts`);
+      
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
+    }
+  }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 9: API Authentication -->
+            <section data-slide-title="API Authentication">
+                <h2>API Authentication Methods</h2>
+                <div class="two-column">
+                    <div>
+                        <h4>API Keys (Simple):</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">// In headers
+fetch(url, {
+  headers: {
+    'X-API-Key': API_KEY
+  }
+});
+
+// In query params
+fetch(`${url}?api_key=${API_KEY}`);</code></pre>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Bearer Tokens (OAuth):</h4>
+                        <div class="code-example">
+                            <pre><code class="language-javascript">// Get token first
+const token = await getAuthToken();
+
+// Use in requests
+fetch(url, {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="warning-box">
+                    <strong>Security:</strong> NEVER commit API keys to Git! Use environment variables.
+                </div>
+            </section>
+
+            <!-- Slide 10: Integrating External Libraries -->
+            <section data-slide-title="Integrating External Libraries">
+                <h2>Integrating External Libraries</h2>
+                <h3>Best Practices:</h3>
+                <ul>
+                    <li><strong>Check Trustworthiness:</strong> npm downloads, GitHub stars, last updated</li>
+                    <li><strong>Review License:</strong> MIT/Apache OK, GPL may have restrictions</li>
+                    <li><strong>Check Dependencies:</strong> Avoid libraries with many dependencies</li>
+                    <li><strong>Test Before Integrating:</strong> Try in simple example first</li>
+                    <li><strong>Pin Versions:</strong> Use exact versions in package.json</li>
+                </ul>
+                <div class="example-box">
+                    <h4>Example: Adding Chart.js for Data Visualization</h4>
+                    <pre><code class="language-bash"># Install library
+npm install chart.js
+
+# Import and use
+import { Chart } from 'chart.js';
+
+const chart = new Chart(ctx, {
+  type: 'bar',
+  data: { labels: ['A', 'B'], datasets: [{data: [10, 20]}] }
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 11: Cloud Storage Integration -->
+            <section data-slide-title="Cloud Storage Integration">
+                <h2>Example: AWS S3 File Upload</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Using AWS SDK
+const AWS = require('aws-sdk');
+const fs = require('fs');
+
+// Configure SDK
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  region: 'eu-west-2'
+});
+
+async function uploadFile(filePath, bucketName) {
+  const fileContent = fs.readFileSync(filePath);
+  
+  const params = {
+    Bucket: bucketName,
+    Key: `uploads/${Date.now()}-${path.basename(filePath)}`,
+    Body: fileContent,
+    ContentType: 'image/jpeg'
+  };
+  
+  try {
+    const result = await s3.upload(params).promise();
+    console.log('Upload success:', result.Location);
+    return result.Location;  // Public URL
+  } catch (error) {
+    console.error('Upload failed:', error);
+    throw error;
+  }
+}
+
+// Usage
+const url = await uploadFile('./photo.jpg', 'my-bucket');</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 12: ML Model Integration -->
+            <section data-slide-title="ML Model Integration">
+                <h2>Example: Google Vision API Integration</h2>
+                <div class="code-example">
+                    <pre><code class="language-python"># Python example - Image classification with Google Vision
+from google.cloud import vision
+import os
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
+
+def classify_image(image_path):
+    client = vision.ImageAnnotatorClient()
+    
+    with open(image_path, 'rb') as image_file:
+        content = image_file.read()
+    
+    image = vision.Image(content=content)
+    response = client.label_detection(image=image)
+    labels = response.label_annotations
+    
+    if response.error.message:
+        raise Exception(f'API Error: {response.error.message}')
+    
+    results = []
+    for label in labels:
+        results.append({
+            'label': label.description,
+            'confidence': label.score
+        })
+    
+    return results
+
+# Usage
+labels = classify_image('dog.jpg')
+for label in labels:
+    print(f"{label['label']}: {label['confidence']:.2%}")</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 13: Testing Integrations -->
+            <section data-slide-title="Testing External Integrations">
+                <h2>Testing External Integrations</h2>
+                <h3>Challenges:</h3>
+                <ul>
+                    <li>External APIs cost money (per request)</li>
+                    <li>APIs may be slow or unreliable</li>
+                    <li>Hard to test error scenarios</li>
+                    <li>Tests depend on external service</li>
+                </ul>
+                <h3>Solution: Mocks and Stubs</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Production code
+async function fetchUserData(userId) {
+  const response = await fetch(`https://api.example.com/users/${userId}`);
+  return await response.json();
+}
+
+// Test with mock
+jest.mock('node-fetch');
+
+test('fetchUserData returns user', async () => {
+  // Mock the fetch response
+  fetch.mockResolvedValue({
+    ok: true,
+    json: async () => ({ id: 1, name: 'Tom' })
+  });
+  
+  const user = await fetchUserData(1);
+  expect(user.name).toBe('Tom');
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 14: Rate Limiting -->
+            <section data-slide-title="Handling Rate Limits">
+                <h2>Handling API Rate Limits</h2>
+                <div class="warning-box">
+                    <strong>Rate Limit:</strong> APIs restrict number of requests per time period (e.g., 100/hour).
+                </div>
+                <h3>Strategies:</h3>
+                <ul>
+                    <li><strong>Cache Responses:</strong> Store results, don't re-fetch unnecessarily</li>
+                    <li><strong>Queue Requests:</strong> Process requests at controlled rate</li>
+                    <li><strong>Respect Headers:</strong> Check X-RateLimit-Remaining header</li>
+                    <li><strong>Implement Backoff:</strong> Wait before retrying after rate limit error</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Simple rate limiter
+class RateLimiter {
+  constructor(maxRequests, perSeconds) {
+    this.maxRequests = maxRequests;
+    this.perSeconds = perSeconds;
+    this.requests = [];
+  }
+  
+  async acquire() {
+    const now = Date.now();
+    this.requests = this.requests.filter(time => now - time < this.perSeconds * 1000);
+    
+    if (this.requests.length >= this.maxRequests) {
+      const waitTime = this.perSeconds * 1000 - (now - this.requests[0]);
+      await new Promise(resolve => setTimeout(resolve, waitTime));
+      return this.acquire();
+    }
+    
+    this.requests.push(now);
+  }
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 15: TASK 1 -->
+            <section data-slide-title="Task 1: Plan Integration Work" class="center">
+                <h2>Task 1: Plan and Design Integration</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Identify Integration Needs (10 min):</strong>
+                            <ul>
+                                <li>What external APIs, services, or libraries does your project need?</li>
+                                <li>Examples: Payment (Stripe), Maps (Google Maps), Email (SendGrid), Charts (Chart.js)
+                                </li>
+                            </ul>
+                        </li>
+                        <li><strong>Select ONE Integration (5 min):</strong>
+                            <ul>
+                                <li>Choose the highest priority integration to implement today</li>
+                                <li>Ensure it's achievable in session</li>
+                            </ul>
+                        </li>
+                        <li><strong>Research & Plan (20 min):</strong>
+                            <ul>
+                                <li>Read API documentation</li>
+                                <li>Get API key/credentials (if needed)</li>
+                                <li>Find code examples</li>
+                                <li>Plan error handling approach</li>
+                            </ul>
+                        </li>
+                        <li><strong>Design Integration (10 min):</strong>
+                            <ul>
+                                <li>Sketch data flow (frontend → backend → external API)</li>
+                                <li>Define success and error responses</li>
+                                <li>Document in docs/integrations.md</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Integration plan with API docs, examples, and design</p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Break Time -->
+            <section data-slide-title="Break Time" class="center">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break. Next: Building your integration!</p>
+                    <p><em>Part B: Implement Integration Feature</em></p>
+                </div>
+            </section>
+
+            <!-- PART B: BUILD INTEGRATION FEATURE -->
+
+            <!-- Slide 17: Part B Introduction -->
+            <section data-slide-title="Part B: Build Integration">
+                <h2>Part B: Implementing Your Integration</h2>
+                <div class="highlight">
+                    Time to code! Implement the integration you planned.
+                </div>
+                <h3>Implementation Checklist:</h3>
+                <ul>
+                    <li>✓ Install necessary packages/SDKs</li>
+                    <li>✓ Set up environment variables for secrets</li>
+                    <li>✓ Implement basic API call</li>
+                    <li>✓ Add error handling</li>
+                    <li>✓ Test with real requests</li>
+                    <li>✓ Add loading states in UI</li>
+                    <li>✓ Display results to user</li>
+                    <li>✓ Document setup in README</li>
+                </ul>
+            </section>
+
+            <!-- Slide 18: Step-by-Step: Payment Integration -->
+            <section data-slide-title="Example: Stripe Payment Integration">
+                <h2>Example: Stripe Payment Integration</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// 1. Install Stripe
+// npm install stripe
+
+// 2. Backend - Create payment intent
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+app.post('/api/create-payment', async (req, res) => {
+  try {
+    const { amount } = req.body;
+    
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount * 100,  // Convert to cents
+      currency: 'gbp',
+      automatic_payment_methods: { enabled: true }
+    });
+    
+    res.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error('Payment error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 3. Frontend - Collect payment
+const { clientSecret } = await fetch('/api/create-payment', {
+  method: 'POST',
+  body: JSON.stringify({ amount: 50 })
+}).then(r => r.json());
+
+const result = await stripe.confirmCardPayment(clientSecret);
+if (result.error) {
+  alert('Payment failed: ' + result.error.message);
+} else {
+  alert('Payment successful!');
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 19: Loading States -->
+            <section data-slide-title="Implementing Loading States">
+                <h2>User Experience: Loading States</h2>
+                <div class="info-box">
+                    <strong>Always show loading state:</strong> External APIs can take seconds to respond.
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// React example
+function WeatherWidget({ city }) {
+  const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  async function fetchWeather() {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const data = await getWeatherAPI(city);
+      setWeather(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+  if (loading) return <div>Loading weather...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!weather) return <button onClick={fetchWeather}>Get Weather</button>;
+  
+  return <div>Temperature: {weather.temp}°C</div>;
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 20: Caching Responses -->
+            <section data-slide-title="Caching API Responses">
+                <h2>Caching to Reduce API Calls</h2>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Simple in-memory cache
+const cache = new Map();
+const CACHE_DURATION = 5 * 60 * 1000;  // 5 minutes
+
+async function fetchWithCache(url) {
+  const cached = cache.get(url);
+  
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    console.log('Cache hit!');
+    return cached.data;
+  }
+  
+  console.log('Cache miss, fetching...');
+  const data = await fetch(url).then(r => r.json());
+  
+  cache.set(url, {
+    data: data,
+    timestamp: Date.now()
+  });
+  
+  return data;
+}
+
+// Usage
+const weather = await fetchWithCache('https://api.weather.com/...');
+// Second call within 5 minutes returns cached result</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 21: Environment Configuration -->
+            <section data-slide-title="Environment Configuration">
+                <h2>Managing API Credentials</h2>
+                <div class="code-example">
+                    <pre><code class="language-bash"># .env file (NOT committed to Git)
+STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxx
+STRIPE_PUBLIC_KEY=pk_test_xxxxxxxxxxxxx
+WEATHER_API_KEY=your_api_key_here
+GOOGLE_MAPS_API_KEY=your_google_key
+
+# .env.example (COMMITTED to Git - template for team)
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_PUBLIC_KEY=your_stripe_public_key
+WEATHER_API_KEY=your_weather_api_key
+GOOGLE_MAPS_API_KEY=your_google_maps_key</code></pre>
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-javascript">// Load in application
+require('dotenv').config();
+
+const apiKey = process.env.WEATHER_API_KEY;
+if (!apiKey) {
+  throw new Error('WEATHER_API_KEY not set in environment');
+}</code></pre>
+                </div>
+                <div class="success-box">
+                    <strong>Team Setup:</strong> Each member creates .env from .env.example with their own keys
+                </div>
+            </section>
+
+            <!-- Slide 22: Documentation -->
+            <section data-slide-title="Documenting Integrations">
+                <h2>Documenting Your Integrations</h2>
+                <div class="example-box">
+                    <h4>docs/integrations.md Template:</h4>
+                    <pre><code class="language-markdown"># Project Integrations
+
+## Stripe Payment Processing
+
+**Purpose:** Accept payments for bookings
+
+**Setup:**
+1. Sign up at stripe.com, get API keys
+2. Add keys to `.env`:
+   ```
+   STRIPE_SECRET_KEY=sk_test_...
+   STRIPE_PUBLIC_KEY=pk_test_...
+   ```
+3. Install: `npm install stripe`
+
+**Usage:**
+- Backend: `/api/create-payment` endpoint
+- Frontend: Stripe Elements for card collection
+
+**Rate Limits:** None in test mode
+**Cost:** Free in test mode
+**Documentation:** https://stripe.com/docs</code></pre>
+                </div>
+            </section>
+
+            <!-- Slide 23: TASK 2 -->
+            <section data-slide-title="Task 2: Implement Integration" class="center">
+                <h2>Task 2: Build Integration Feature</h2>
+                <div class="task-box">
+                    <h3>Instructions (Work in your project teams):</h3>
+                    <ol>
+                        <li><strong>Setup (10 min):</strong>
+                            <ul>
+                                <li>Install required packages</li>
+                                <li>Create .env file with API keys</li>
+                                <li>Share .env.example with team</li>
+                            </ul>
+                        </li>
+                        <li><strong>Implement Backend (if needed) (15 min):</strong>
+                            <ul>
+                                <li>Create API endpoint that calls external service</li>
+                                <li>Add error handling and validation</li>
+                            </ul>
+                        </li>
+                        <li><strong>Implement Frontend (15 min):</strong>
+                            <ul>
+                                <li>Add UI to trigger integration</li>
+                                <li>Show loading state</li>
+                                <li>Display results or errors</li>
+                            </ul>
+                        </li>
+                        <li><strong>Test & Document (5 min):</strong>
+                            <ul>
+                                <li>Test with real API calls</li>
+                                <li>Document setup in docs/integrations.md</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><strong>Deliverable:</strong> Working integration with error handling and documentation</p>
+                </div>
+            </section>
+
+            <!-- Slide 24: Summary -->
+            <section data-slide-title="Lecture Summary" class="center">
+                <h2>Lecture 7 Summary</h2>
+                <ul>
+                    <li>Integrations connect your system to external APIs, libraries, and services</li>
+                    <li>REST APIs use HTTP methods (GET, POST, PUT, DELETE)</li>
+                    <li>Always implement error handling for network failures and API errors</li>
+                    <li>Retry logic with exponential backoff improves resilience</li>
+                    <li>Use environment variables for API keys and secrets</li>
+                    <li>Mock external APIs in tests to avoid costs and dependencies</li>
+                    <li>Implement loading states for better user experience</li>
+                    <li>Cache responses to reduce API calls and improve performance</li>
+                    <li>Document all integrations for team reference</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Lecture:</h3>
+                    <p>Sprint 3 - Refinement & Quality<br>
+                        <em>Refactoring, code quality, testing strategies, and cleaning up technical debt</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Next Steps -->
+            <section data-slide-title="Next Steps">
+                <h2>Before Next Lecture</h2>
+                <ol>
+                    <li><strong>Complete Integration:</strong>
+                        <ul>
+                            <li>Finish implementation if not done</li>
+                            <li>Test thoroughly with edge cases</li>
+                            <li>Handle all error scenarios</li>
+                        </ul>
+                    </li>
+                    <li><strong>Documentation:</strong>
+                        <ul>
+                            <li>Update docs/integrations.md</li>
+                            <li>Add setup instructions to README</li>
+                            <li>Document API costs/rate limits</li>
+                        </ul>
+                    </li>
+                    <li><strong>Team Sharing:</strong>
+                        <ul>
+                            <li>Ensure all team members can run integration</li>
+                            <li>Share .env.example file</li>
+                        </ul>
+                    </li>
+                    <li><strong>Submit to Moodle:</strong>
+                        <ul>
+                            <li>Link to integration PR</li>
+                            <li>Screenshot of working integration</li>
+                            <li>docs/integrations.md</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <script src="../../libs/reveal.js/dist/reveal.js"></script>
+    <script src="../../libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+
+            scrollableElements.forEach(function (element) {
+                element.addEventListener('wheel', function (e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>
