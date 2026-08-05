@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 5: Hash Functions & Signatures</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Hash Functions &amp; Signatures</span>
+    <span class="jw-count">5 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session4/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session6/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_5.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>Hash Functions & Signatures</h1>
+                <h2>Session 5: Message Authentication</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_5.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Define the three critical properties of cryptographic hash functions.</li>
+                    <li>Compare Merkle-Damgård (SHA-2) and Sponge (SHA-3) architectural constructions.</li>
+                    <li>Understand the mechanics of Message Authentication Codes (HMAC).</li>
+                    <li>Analyze Length Extension Attacks against naive hashing implementations.</li>
+                    <li>Deconstruct Digital Signature Algorithms (DSA, ECDSA) and Non-Repudiation.</li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Collision & Avalanche Test" data-background-image="/CMM7XX/images/cyber_bg_5.png" data-background-opacity="0.08">
+                <h2>Task 1: Collision & Avalanche Test</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Using Python's <code>hashlib</code>:</p>
+                    <ol>
+                        <li>Define a string $M_1$: "The quick brown fox jumps over the lazy dog"</li>
+                        <li>Define $M_2$: "The quick brown fox jumps over the lazy cog" (1 letter difference).</li>
+                        <li>Compute the SHA-256 hash for both strings (in binary representation).</li>
+                        <li>Write a function to compute the <strong>Hamming Distance</strong> between the two binary digests (count how many bits differ).</li>
+                        <li>Divide the Hamming distance by 256 (the hash length). Is the percentage close to 50%?</li>
+                    </ol>
+                </div>
+                
+        
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Digital Signatures" data-background-image="/CMM7XX/images/cyber_bg_5.png" data-background-opacity="0.08">
+                <h2>Digital Signatures (Non-Repudiation)</h2>
+                <p>MACs use symmetric keys, so both parties can generate the MAC. This cannot provide non-repudiation (proof of origin). We must use Asymmetric Cryptography.</p>
+                <div class="task-box">
+                    <h3>The Mechanism</h3>
+                    <ol>
+                        <li>Alissa hashes her document: $H = Hash(Doc)$.</li>
+                        <li>Alissa encrypts $H$ with her <strong>Private Key</strong>. This encrypted hash is the Signature.</li>
+                        <li>Bob decrypts the Signature using Alissa's <strong>Public Key</strong> to recover $H$.</li>
+                        <li>Bob independently hashes the document. If his hash matches $H$, the signature is valid.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final" target="_blank" style="color: #64ffda;">NIST FIPS 180-4: Secure Hash Standard</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMM7XX/images/cyber_bg_5.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Understanding how MACs protect data integrity is crucial for securing API endpoints and cookies.</p>
+                <div class="highlight">
+                    We will simulate an API request tampering scenario to demonstrate why naive hashing fails and why HMAC is required.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final" target="_blank" style="color: #64ffda;">NIST FIPS 180-4: Secure Hash Standard</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: HMAC Forgery Analysis" data-background-image="/CMM7XX/images/cyber_bg_5.png" data-background-opacity="0.08">
+                <h2>Task 2: HMAC Forgery Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>Assume an API authenticates requests using a naive hash: <code>hash = SHA256(secret_key + "user=guest")</code></p>
+                    <ol>
+                        <li>Using Python, construct a simulation of this vulnerable API endpoint.</li>
+                        <li>Demonstrate how an attacker (without knowing the secret key) can use a tool like <code>HashPump</code> or write a script to generate a valid hash for <code>"user=guest&user=admin"</code>.</li>
+                        <li>Refactor the API endpoint to use Python's <code>hmac</code> module instead.</li>
+                        <li>Verify that the length extension attack now fails against the HMAC implementation.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final" target="_blank" style="color: #64ffda;">NIST FIPS 180-4: Secure Hash Standard</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMM7XX/images/cyber_bg_5.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Hashes provide Integrity. MACs provide Integrity + Authenticity. Digital Signatures provide Integrity + Authenticity + Non-Repudiation.</li>
+                    <li>Always use standard constructions (HMAC) rather than attempting to mix keys and hashes manually.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Authentication and Access Control (Identity Management)
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final" target="_blank" style="color: #64ffda;">NIST FIPS 180-4: Secure Hash Standard</a>
+                </div>
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 9: Intrusion Detection</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Intrusion Detection</span>
+    <span class="jw-count">9 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session8/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session10/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>Intrusion Detection Systems</h1>
+                <h2>Session 9: Monitoring and Alerts</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Differentiate NIDS/HIDS architectures and their deployment strategies.</li>
+                    <li>Evaluate Signature vs Anomaly vs Heuristic detection engines.</li>
+                    <li>Understand the statistical implications of the Base Rate Fallacy in IDS.</li>
+                    <li>Write and analyze complex Suricata/Snort network rules.</li>
+                    <li>Deconstruct SIEM architectures and construct correlation queries for Threat Hunting.</li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Writing precise NIDS rules is essential to catching advanced threats without flooding the SOC with false positives.</p>
+                <div class="highlight">
+                    We will write rules for Suricata, a modern multi-threaded NIDS engine.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Writing Custom NIDS Rules" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 1: Writing Custom NIDS Rules</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>An APT group uses a custom Command & Control (C2) beacon that sends an HTTP GET request containing the User-Agent <code>"Mozilla/5.0 (EvilC2)"</code> to port 8080 every exactly 5 minutes.</p>
+                    <ol>
+                        <li>Draft a Suricata rule to detect this specific User-Agent string exiting the internal network.</li>
+                        <li>Draft a second rule to detect the specific <em>timing anomaly</em> (beaconing behavior) if the User-Agent was randomized.</li>
+                        <li>Discuss the performance implications of deep packet inspection rules versus simple IP/Port rules.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://gchq.github.io/CyberChef/" target="_blank" style="color: #64ffda;">CyberChef: The Cyber Swiss Army Knife</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: SIEM & Threat Hunting" class="center" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 2: SIEM & Threat Hunting</h2>
+                <h3>Duration: 1.5 Hours</h3>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="SIEM Architectures" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>SIEM Architectures</h2>
+                <p>Security Information and Event Management (SIEM) aggregates logs from firewalls, NIDS, HIDS, and servers into a single centralized database.</p>
+                <ul>
+                    <li><strong>Collection:</strong> Forwarding logs (syslog, Winlogbeat) to the SIEM.</li>
+                    <li><strong>Parsing/Normalization:</strong> Converting different log formats into a standardized JSON schema (e.g., mapping <code>src_ip</code> across all vendors).</li>
+                    <li><strong>Correlation:</strong> The true power of a SIEM. Linking isolated events into an attack narrative (e.g., 5 failed logins on a VPN, followed by a successful login, followed by a large data transfer).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.amazon.com/Firewalls-Internet-Security-Repelling-Wily/dp/0201633574" target="_blank" style="color: #64ffda;">Cheswick & Bellovin: Firewalls and Internet Security</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Threat Hunting" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Threat Hunting</h2>
+                <p>Proactively searching through SIEM data to find threats that evaded the automated IDS rules.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Hypothesis-Driven:</strong> "I suspect attackers are using DNS tunneling for exfiltration. Let me query the SIEM for unusual DNS query lengths."</li>
+                        <li><strong>IoC-Driven:</strong> Threat intel releases a list of malicious IPs. Querying the SIEM retroactively to see if anyone communicated with them 3 months ago.</li>
+                    </ul>
+                </div>
+                <p><em>Integration:</em> Often paired with SOAR (Security Orchestration, Automation, and Response) to automatically isolate compromised hosts.</p>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>In a real Security Operations Center (SOC), analysts use query languages (like Splunk SPL or KQL) to sift through millions of events.</p>
+                <div class="highlight">
+                    We will simulate a threat hunting scenario requiring the correlation of multiple log sources to confirm a breach.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Task 2: Threat Hunting with SIEM" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 2: Threat Hunting Correlation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You have access to pseudocode SIEM query capabilities. Write correlation logic to detect the following attack chain:</p>
+                    <ol>
+                        <li>A user account experiences >10 failed login attempts from a foreign IP (Windows Event ID 4625).</li>
+                        <li>Within 5 minutes, that same user account successfully logs in (Event ID 4624).</li>
+                        <li>Within 10 minutes of the successful login, a new Scheduled Task is created on the endpoint (Event ID 4698).</li>
+                        <li>Write the logic to join these events. Discuss why this correlation drastically reduces the False Positive rate compared to alerting on failed logins alone.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>IDS provides the raw data; SIEM provides the context and correlation.</li>
+                    <li>Alert Fatigue is a critical human vulnerability in SOCs. Rules must be tuned to minimize false positives using correlation.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> NIST Cyber Security Framework (Risk Assessment)
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.elastic.co/guide/en/security/current/index.html" target="_blank" style="color: #64ffda;">Elastic Security Documentation</a>
+                </div>
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

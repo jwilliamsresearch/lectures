@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 3: Policies & Procedures</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Policies &amp; Procedures</span>
+    <span class="jw-count">3 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session2/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session4/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 3: Information Security Policies & Procedures</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct the Security Policy Hierarchy (Policies, Standards, Guidelines, Procedures).</li>
+                    <li>Draft an enforceable Acceptable Use Policy (AUP).</li>
+                    <li>Analyze the role of ISO/IEC 27001 in corporate governance.</li>
+                    <li>Understand the mechanisms of policy enforcement and auditing.</li>
+                    <li>Evaluate the legal and HR implications of policy violations.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: The Policy Hierarchy (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Why Policies Matter (The Foundation of Governance)</li>
+                    <li>Policies vs Standards vs Procedures</li>
+                    <li><strong>Task 1: Drafting an Acceptable Use Policy (AUP)</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Frameworks & Enforcement (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>ISO 27001 and Information Security Management Systems (ISMS)</li>
+                    <li>Auditing and HR Implications</li>
+                    <li><strong>Task 2: Policy Violation Analysis</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: The Policy Hierarchy" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 1: The Policy Hierarchy</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Why Policies Matter" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Why Policies Matter</h2>
+                <p>Technology cannot solve management problems.</p>
+                <ul>
+                    <li>A firewall rule is a technical control. A policy is the <em>business justification</em> for why that firewall rule exists.</li>
+                    <li>If an employee installs unauthorized software that causes a breach, you cannot legally fire them or hold them accountable unless a written, signed policy explicitly forbade that action.</li>
+                    <li>Policies protect the organization from liability.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="The Hierarchy" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>The Policy Hierarchy</h2>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Policy (Mandatory):</strong> High-level statement of management intent. <em>"All corporate data must be protected in transit."</em> Does not specify technology. Rarely changes.</li>
+                        <li><strong>Standard (Mandatory):</strong> Specific technical requirements to meet the policy. <em>"All data in transit must use TLS 1.3 or higher."</em> Changes as technology evolves.</li>
+                        <li><strong>Procedure (Mandatory):</strong> Step-by-step instructions. <em>"To configure TLS 1.3 on Apache, edit the httpd.conf file..."</em></li>
+                        <li><strong>Guideline (Optional):</strong> Recommendations and best practices. <em>"We recommend using Let's Encrypt for certificate generation."</em></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Acceptable Use Policy" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Acceptable Use Policy (AUP)</h2>
+                <p>The most important document an employee signs during onboarding.</p>
+                <ul>
+                    <li>Defines exactly what an employee can and cannot do on corporate hardware and networks.</li>
+                    <li><strong>No Expectation of Privacy:</strong> The AUP must explicitly state that the company monitors all traffic on its network. If it doesn't, monitoring employees might violate privacy laws.</li>
+                    <li><strong>Shadow IT:</strong> Must prohibit the use of unauthorized cloud services (e.g., using personal Dropbox accounts for company files).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>A policy that is too vague cannot be enforced. A policy that is too strict will be ignored by employees trying to do their jobs.</p>
+                <div class="highlight">
+                    We will draft a realistic Acceptable Use Policy clause for a modern, remote-first workforce.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Drafting an AUP" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 1: Drafting an Acceptable Use Policy</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>A marketing agency allows its 50 employees to work remotely. They recently suffered a data leak because an employee used an unapproved AI writing tool and pasted client data into it.</p>
+                    <ol>
+                        <li>Draft a formal AUP clause (max 100 words) specifically governing the use of Generative AI tools on corporate devices.</li>
+                        <li>Ensure the language clearly differentiates between "Policy" (the rule) and "Standard" (the approved/banned tools).</li>
+                        <li>What is the HR consequence if an employee refuses to sign this new AUP addendum?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Frameworks & Enforcement" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 2: Frameworks & Enforcement</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="ISO 27001" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>ISO/IEC 27001</h2>
+                <p>The international standard for an Information Security Management System (ISMS).</p>
+                <ul>
+                    <li>It is not a technical checklist. It is a management framework for establishing, implementing, operating, monitoring, reviewing, maintaining, and improving security.</li>
+                    <li><strong>Continuous Improvement:</strong> Based on the Plan-Do-Check-Act (PDCA) cycle.</li>
+                    <li><strong>Certification:</strong> Companies undergo rigorous external audits to prove they adhere to their own policies. ISO 27001 certification is often a legal requirement to win government contracts.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.iso.org/isoiec-27001-information-security.html" target="_blank" style="color: #64ffda;">ISO 27001 Standards</a>
+                </div>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Enforcement & Auditing" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Enforcement & Auditing</h2>
+                <p>A policy without enforcement is just a suggestion.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Technical Enforcement:</strong> The best way to enforce a policy is to make violating it technically impossible (e.g., using Group Policy to disable USB drives, rather than just asking employees not to use them).</li>
+                        <li><strong>Auditing:</strong> Periodically reviewing logs and access rights to ensure policies are being followed. "Trust, but Verify."</li>
+                        <li><strong>Sanctions:</strong> Policies must explicitly state the consequences of violation, ranging from mandatory retraining to immediate termination and legal action.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="The Role of HR" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>The Role of Human Resources (HR)</h2>
+                <p>Information Security is an HR issue as much as an IT issue.</p>
+                <ul>
+                    <li><strong>Onboarding:</strong> Background checks, NDA signing, AUP training, and initial access provisioning.</li>
+                    <li><strong>Termination (Offboarding):</strong> The most critical phase. When an employee is fired, IT must revoke all access <em>before</em> the employee is notified, to prevent malicious sabotage (Insider Threat).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>When a security incident occurs, management must determine if it was a technical failure, a policy failure, or a malicious act. This dictates the response.</p>
+                <div class="highlight">
+                    We will analyze a complex policy violation involving an insider threat.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Policy Violation Analysis" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 2: Policy Violation Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>An IT administrator, Alissa, uses her domain admin credentials to access the CEO's email inbox. She reads an email about an upcoming round of layoffs and warns her colleagues on a private WhatsApp group. The CEO finds out.</p>
+                    <ol>
+                        <li>Alissa argues she was performing a "security audit" of the mail server. Which specific policy document (e.g., AUP, Privilege Access Policy) should HR reference to terminate her?</li>
+                        <li>Identify the technical control failure. How could the organization have <em>technically</em> prevented or immediately alerted on a domain admin reading executive email?</li>
+                        <li>Did Alissa commit a crime under the Computer Misuse Act 1990? Justify your answer.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Policies are the legal and operational bedrock of security. They translate business risk into actionable rules.</li>
+                    <li>Standards like ISO 27001 prove to external partners that your security program is mature and managed, not just a collection of firewalls.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Information Systems Planning & Administration
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

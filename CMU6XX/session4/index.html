@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 4: Vulnerability Analysis</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Vulnerability Analysis</span>
+    <span class="jw-count">4 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session3/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session5/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 4: Vulnerability Analysis</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Navigate Vulnerability Databases (CVE, NVD, Exploit-DB).</li>
+                    <li>Configure automated vulnerability scanners (Nessus, OpenVAS) safely.</li>
+                    <li>Differentiate between false positives and verifiable exploits.</li>
+                    <li>Cross-reference scanner output with manual exploitation frameworks (Metasploit).</li>
+                    <li>Analyze the impact of unauthenticated network vulnerabilities.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Automated Scanning (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The CVE Ecosystem</li>
+                    <li>Nessus and OpenVAS</li>
+                    <li><strong>Task 1: Scanner Profile Configuration</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Manual Verification (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>False Positives & False Negatives</li>
+                    <li>Exploit-DB & Metasploit Integration</li>
+                    <li><strong>Task 2: Manual Exploit Verification</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Automated Scanning" class="center" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Part 1: Automated Scanning</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The CVE Ecosystem" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>The CVE Ecosystem</h2>
+                <p>Common Vulnerabilities and Exposures (CVE) is a dictionary of publicly known information security vulnerabilities.</p>
+                <ul>
+                    <li><strong>Format:</strong> <code>CVE-YYYY-NNNNN</code> (e.g., CVE-2014-0160 for Heartbleed).</li>
+                    <li><strong>NVD:</strong> The National Vulnerability Database synchronizes with CVE to provide CVSS scoring and mitigation references.</li>
+                    <li>Vulnerability scanners use these databases to match the software versions they enumerated against known flaws.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://nvd.nist.gov/" target="_blank" style="color: #64ffda;">NIST National Vulnerability Database</a>
+                </div>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Automated Scanners" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Automated Scanners (Nessus/OpenVAS)</h2>
+                <p>Enterprise tools designed to scan entire subnets and generate compliance reports.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Unauthenticated Scans:</strong> Scans from the outside in. Identifies missing patches, default passwords on web portals, and exposed services.</li>
+                        <li><strong>Authenticated (Credentialed) Scans:</strong> The scanner is given SSH/RDP keys to log into the machine and check the local registry and package manager. Far more accurate.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="The Danger of Scanning" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>The Danger of Automated Scanning</h2>
+                <p>Scanners are "dumb" and aggressive. They throw thousands of packets a second.</p>
+                <ul>
+                    <li><strong>Denial of Service (DoS):</strong> Legacy systems (e.g., SCADA/ICS in manufacturing, old hospital equipment) often crash when hit with an aggressive Nmap or Nessus scan.</li>
+                    <li><strong>Account Lockouts:</strong> If a scanner attempts to test default credentials against an Active Directory service, it may accidentally lock out the entire company.</li>
+                </ul>
+                <div class="highlight">
+                    A pentester must meticulously configure scan policies based on the specific target environment.
+                </div>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Running a default "Basic Network Scan" in Nessus against a production environment is a recipe for disaster.</p>
+                <div class="highlight">
+                    We will architect a safe scanning policy for a fragile network environment.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Scanner Profile Configuration" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Task 1: Scanner Profile Configuration</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You have been contracted to scan a manufacturing plant running legacy SCADA controllers on subnet <code>10.0.50.0/24</code>.</p>
+                    <ol>
+                        <li>Identify three specific configuration changes you must make to a default Nessus/OpenVAS policy to prevent knocking the controllers offline (e.g., modifying concurrent connections, disabling "Safe Checks").</li>
+                        <li>Explain why <strong>Authenticated Scans</strong> are preferred in this environment, despite being harder to configure.</li>
+                        <li>Draft an emergency rollback plan to present to the plant manager before scanning begins.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Manual Verification" class="center" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Part 2: Manual Verification</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="False Positives" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>False Positives & Negatives</h2>
+                <p>A scanner's report is the <em>beginning</em> of a pentest, not the end.</p>
+                <ul>
+                    <li><strong>False Positive:</strong> The scanner flags a vulnerability that doesn't exist (e.g., flagging Apache 2.4 as vulnerable because it reads the banner, ignoring that the OS vendor backported the security patch).</li>
+                    <li><strong>False Negative:</strong> The scanner misses a critical vulnerability (e.g., complex business logic flaws in a custom web application).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Exploit-DB" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Exploit-DB & SearchSploit</h2>
+                <p>Once you identify a service (e.g., <code>vsftpd 2.3.4</code>), you need to find an exploit.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Exploit-DB:</strong> An archive of public exploits and vulnerable software maintained by Offensive Security.</li>
+                        <li><strong>SearchSploit:</strong> The command-line tool in Kali Linux that allows you to search Exploit-DB offline.</li>
+                        <li><em>Warning:</em> Never run an exploit script downloaded from the internet without reading the source code first. Many are backdoored.</li>
+                    </ul>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.exploit-db.com/" target="_blank" style="color: #64ffda;">Exploit Database</a>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Metasploit Integration" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Metasploit Integration</h2>
+                <p>The Metasploit Framework (MSF) bridges the gap between vulnerability discovery and exploitation.</p>
+                <ul>
+                    <li>You can import Nessus <code>.nessus</code> or Nmap <code>.xml</code> files directly into the Metasploit database using <code>db_import</code>.</li>
+                    <li>MSF can automatically map discovered CVEs to its internal exploit modules, significantly accelerating the exploitation phase.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>To provide value to a client, a pentester must prove that a vulnerability is exploitable in their specific environment, turning a theoretical risk into a proven threat.</p>
+                <div class="highlight">
+                    We will simulate the process of taking a Nessus finding and verifying it manually.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Manual Exploit Verification" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Task 2: Manual Exploit Verification</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>A Nessus scan reports that a target server is vulnerable to <strong>CVE-2017-5638</strong> (Apache Struts 2). The scanner assigned it a CVSS of 10.0.</p>
+                    <ol>
+                        <li>Use the internet to research CVE-2017-5638. What is the mechanism of the vulnerability? (Hint: <code>Content-Type</code> header).</li>
+                        <li>Write the exact Metasploit console (<code>msfconsole</code>) commands to search for this exploit, select it, and show its required options.</li>
+                        <li>Explain how demonstrating successful Remote Code Execution (RCE) changes the narrative in the final client report compared to just handing them the Nessus output.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Automated scanners are force multipliers, but they cannot replace the critical thinking of a human analyst.</li>
+                    <li>Always verify scanner findings. A report full of false positives destroys your credibility.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> System Hacking & Exploitation (Gaining & Maintaining Access)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

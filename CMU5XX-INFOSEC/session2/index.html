@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 2: Cyber-Physical & ICS</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Cyber-Physical &amp; ICS</span>
+    <span class="jw-count">2 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session1/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session3/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 2: Cyber-Physical Systems & Critical Infrastructure</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Define Cyber-Physical Systems (CPS) and their role in modern industry.</li>
+                    <li>Differentiate Information Technology (IT) from Operational Technology (OT).</li>
+                    <li>Analyze the architecture and vulnerabilities of ICS and SCADA systems.</li>
+                    <li>Deconstruct historic attacks against critical infrastructure (Stuxnet, Colonial Pipeline).</li>
+                    <li>Evaluate the Purdue Model for ICS network segmentation.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: The IT/OT Convergence (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Understanding IT vs OT Priorities</li>
+                    <li>ICS and SCADA Fundamentals</li>
+                    <li><strong>Task 1: IT/OT Priority Mapping</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Securing Critical Infrastructure (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The Purdue Enterprise Reference Architecture</li>
+                    <li>Real-World Case Studies (Stuxnet)</li>
+                    <li><strong>Task 2: SCADA Risk Assessment</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: IT/OT Convergence" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 1: The IT/OT Convergence</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Cyber-Physical Systems" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Cyber-Physical Systems (CPS)</h2>
+                <p>Systems where computer algorithms control or monitor physical entities.</p>
+                <ul>
+                    <li>Includes smart grids, autonomous automobile systems, medical monitoring, and industrial robotics.</li>
+                    <li><strong>The Stakes:</strong> If a corporate web server crashes, a company loses money. If a Cyber-Physical System crashes (e.g., a power plant cooling system), people can die.</li>
+                    <li>The physical impact changes the entire security paradigm.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="IT vs OT" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>IT vs OT Priorities</h2>
+                <p>Operational Technology (OT) manages industrial operations. Its priorities directly conflict with standard IT security.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>IT Priority:</strong> Confidentiality > Integrity > Availability. (It is better to lock the system down than let data leak).</li>
+                        <li><strong>OT Priority:</strong> Availability > Integrity > Confidentiality. (A factory line must <em>never</em> stop running, even if the data is unencrypted).</li>
+                        <li><strong>The Conflict:</strong> An IT admin pushes a mandatory Windows Update to an OT terminal, causing it to reboot. The reboot halts a chemical mixing process, ruining a $5M batch of product.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="ICS and SCADA" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>ICS and SCADA</h2>
+                <p>The systems controlling the world's infrastructure.</p>
+                <ul>
+                    <li><strong>ICS (Industrial Control Systems):</strong> The broad term for systems controlling physical processes (manufacturing, energy, water).</li>
+                    <li><strong>SCADA (Supervisory Control and Data Acquisition):</strong> A subset of ICS used to control geographically dispersed assets (e.g., an oil pipeline stretching 1,000 miles).</li>
+                    <li><strong>PLCs (Programmable Logic Controllers):</strong> The actual ruggedized microcomputers that flip the physical switches and read the sensor data.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Bridging the cultural and technical gap between IT security teams and Plant Floor engineers is critical to securing modern infrastructure.</p>
+                <div class="highlight">
+                    We will analyze how standard IT security controls fail when applied to OT environments.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: IT/OT Priority Mapping" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 1: IT/OT Priority Mapping</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>A new CISO at a water treatment facility mandates that all computers, including the SCADA terminals on the plant floor, must adhere to the standard IT security policy.</p>
+                    <ol>
+                        <li>The policy requires <strong>Complex Passwords that expire every 30 days</strong>. Explain why this is dangerous for a SCADA terminal controlling a water valve in an emergency.</li>
+                        <li>The policy requires <strong>Automated Vulnerability Scanning (Nessus) every Friday</strong>. Explain the technical risk this poses to legacy PLCs.</li>
+                        <li>Propose two <em>compensating controls</em> that improve the security of the OT environment without violating the priority of Availability.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Securing Critical Infrastructure" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 2: Securing Critical Infrastructure</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="The Purdue Model" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>The Purdue Model</h2>
+                <p>The industry standard for ICS network segmentation (ISA/IEC 62443).</p>
+                <ul>
+                    <li><strong>Level 4 & 5 (Enterprise):</strong> Corporate IT network (Email, ERP).</li>
+                    <li><strong>Level 3.5 (IDMZ):</strong> The Industrial DMZ. The critical barrier between IT and OT.</li>
+                    <li><strong>Level 3 (Operations):</strong> SCADA servers and historian databases.</li>
+                    <li><strong>Level 1 & 2 (Control):</strong> PLCs, HMIs (Human Machine Interfaces).</li>
+                    <li><strong>Level 0 (Process):</strong> The physical sensors, motors, and valves.</li>
+                </ul>
+                <div class="highlight">
+                    Rule: No direct communication is allowed between Level 4 and Level 3. It must pass through the IDMZ.
+                </div>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Case Study: Stuxnet" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Case Study: Stuxnet (2010)</h2>
+                <p>The first true cyber-weapon. Targeted Iranian nuclear centrifuges.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>The Air-Gap Bypass:</strong> The facility was disconnected from the internet. Stuxnet spread via infected USB drives dropped in the parking lot.</li>
+                        <li><strong>The Zero-Days:</strong> Used four separate Windows zero-day exploits to traverse the corporate network to the Siemens Step7 SCADA software.</li>
+                        <li><strong>The Physical Impact:</strong> It subtly changed the rotor speeds of the centrifuges while sending fake "normal" telemetry data back to the monitors, physically destroying the equipment without alerting operators.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Case Study: Colonial Pipeline" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Case Study: Colonial Pipeline (2021)</h2>
+                <p>A ransomware attack that caused panic-buying of gasoline across the US East Coast.</p>
+                <ul>
+                    <li><strong>The Vector:</strong> Attackers gained entry via an old, inactive VPN account that did not have Multi-Factor Authentication (MFA) enabled.</li>
+                    <li><strong>The Convergence Failure:</strong> The ransomware only hit the IT network (billing and enterprise). However, the company shut down the OT network (the physical pipeline) because they couldn't bill customers for the gas being delivered.</li>
+                    <li>Proves that a failure in IT can completely halt OT operations due to business logic dependencies.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Securing Critical Infrastructure requires thinking about worst-case physical scenarios and designing fail-safes that work even when the digital systems are completely compromised.</p>
+                <div class="highlight">
+                    We will conduct a high-level risk assessment for a vulnerable manufacturing environment.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: SCADA Risk Assessment" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 2: SCADA Risk Assessment</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You are auditing a power generation plant. You discover that the engineers frequently use TeamViewer on their home laptops to remotely access the Level 3 SCADA terminal to monitor turbine efficiency.</p>
+                    <ol>
+                        <li>Based on the Purdue Model, explain exactly why this architecture is a critical security violation.</li>
+                        <li>Describe the potential physical impact if a malicious actor compromised an engineer's home laptop and gained access to that SCADA terminal.</li>
+                        <li>Propose a secure architectural redesign using an Industrial DMZ (IDMZ) and jump servers to allow remote monitoring without direct OT access.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.cisa.gov/ics" target="_blank" style="color: #64ffda;">CISA Industrial Control Systems Guidance</a>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>IT focuses on data; OT focuses on physics. Security policies must respect this distinction.</li>
+                    <li>Air-gaps are rarely truly disconnected. Robust network segmentation (Purdue Model) is the only reliable defense for critical infrastructure.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Information Security Policies & Procedures
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 11: Cryptography</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Cryptography</span>
+    <span class="jw-count">11 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session10/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session12/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 11: Cryptography for Professionals</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Apply Symmetric (AES) and Asymmetric (RSA/ECC) cryptography correctly.</li>
+                    <li>Understand the mechanics of Key Exchange (Diffie-Hellman) and Forward Secrecy.</li>
+                    <li>Deploy a Public Key Infrastructure (PKI) and generate X.509 certificates.</li>
+                    <li>Differentiate between standard Hash Functions and Key Derivation Functions (KDFs).</li>
+                    <li>Analyze cryptographic implementation failures (e.g., hardcoded IVs, bad random number generators).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Encryption & PKI (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Symmetric vs Asymmetric Crypto</li>
+                    <li>Certificates and Trust Chains</li>
+                    <li><strong>Task 1: Practical PKI with OpenSSL</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Hashing & Passwords (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Hashes, Salts, and Peppers</li>
+                    <li>Key Derivation Functions (PBKDF2, Argon2)</li>
+                    <li><strong>Task 2: Cryptographic Code Analysis</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Encryption & PKI" class="center" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Part 1: Encryption & PKI</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Symmetric vs Asymmetric" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Symmetric vs Asymmetric Crypto</h2>
+                <p>Modern communication requires a hybrid approach.</p>
+                <ul>
+                    <li><strong>Symmetric (AES):</strong> Same key encrypts and decrypts. Extremely fast. Used to encrypt the actual bulk data (like an HD video stream). <em>Problem:</em> How do you share the key safely?</li>
+                    <li><strong>Asymmetric (RSA/ECC):</strong> A mathematical key pair (Public and Private). Anyone can encrypt with the Public Key, but only the Private Key can decrypt. Extremely slow.</li>
+                    <li><strong>The Hybrid Solution (TLS):</strong> Use Asymmetric crypto to safely establish a Symmetric key, then use the Symmetric key for the rest of the session.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Digital Signatures" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Digital Signatures</h2>
+                <p>Asymmetric cryptography run in reverse.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>If you encrypt data with your <em>Private Key</em>, anyone can decrypt it using your Public Key.</li>
+                        <li>This doesn't provide secrecy, but it provides <strong>Non-Repudiation and Authentication</strong>.</li>
+                        <li>If the Public Key successfully decrypts the file, it proves mathematically that the owner of the Private Key created it. This is how software updates are signed to prevent tampering.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Public Key Infrastructure" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Public Key Infrastructure (PKI)</h2>
+                <p>How do you know Google's Public Key actually belongs to Google, and not an attacker?</p>
+                <ul>
+                    <li><strong>Certificate Authorities (CAs):</strong> Trusted third parties (like Let's Encrypt or DigiCert) that verify identities.</li>
+                    <li>They issue an <strong>X.509 Certificate</strong>, which binds a Public Key to a domain name (google.com) and is digitally signed by the CA.</li>
+                    <li>Your browser implicitly trusts a hardcoded list of Root CAs. If a certificate is signed by one of them, the connection is trusted (the padlock icon appears).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Pentesters must know how to generate and inspect certificates to conduct MITM attacks, establish encrypted C2 (Command and Control) channels, and audit client infrastructure.</p>
+                <div class="highlight">
+                    We will use OpenSSL to manually build a functional cryptographic certificate.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Practical PKI" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Task 1: Practical PKI with OpenSSL</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Using the command line and OpenSSL:</p>
+                    <ol>
+                        <li>Write the command to generate a new 2048-bit RSA Private Key (<code>server.key</code>).</li>
+                        <li>Write the command to generate a Certificate Signing Request (CSR) using that key. (This is what you would send to a CA).</li>
+                        <li>Explain the difference between a Self-Signed Certificate and a CA-Signed Certificate. Why will a browser throw a warning for a Self-Signed cert?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Hashing & Passwords" class="center" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Part 2: Hashing & Passwords</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Hashes and Salts" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Hashes and Salts</h2>
+                <p>Databases should never store passwords in plaintext. They store Hashes.</p>
+                <ul>
+                    <li>A Hash (e.g., SHA-256) is a one-way mathematical function. You cannot "decrypt" a hash back to the password.</li>
+                    <li><strong>The Rainbow Table Attack:</strong> Attackers pre-compute the hashes for millions of common passwords. If your database hash matches their pre-computed hash, you lose.</li>
+                    <li><strong>The Solution (Salting):</strong> Appending a long, random string (the Salt) to the password <em>before</em> hashing it. This makes pre-computed rainbow tables useless.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="The Speed Problem" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>The Speed Problem</h2>
+                <p>Standard hash functions (MD5, SHA-256) are designed to be extremely fast.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>This is great for verifying file integrity, but terrible for passwords.</li>
+                        <li>A modern GPU cluster can calculate billions of SHA-256 hashes per second, allowing an attacker to brute-force a salted password rapidly.</li>
+                        <li>We need a hash function that is intentionally slow.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Key Derivation Functions" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Key Derivation Functions (KDFs)</h2>
+                <p>KDFs are algorithms explicitly designed for securely storing passwords.</p>
+                <ul>
+                    <li><strong>Bcrypt / PBKDF2:</strong> CPU-hard functions. They loop the hashing algorithm thousands of times to slow it down.</li>
+                    <li><strong>Argon2:</strong> The current state-of-the-art. It is <em>Memory-Hard</em>. It requires huge amounts of RAM to compute the hash. GPUs have thousands of cores but very little RAM per core, effectively neutralizing hardware cracking rigs.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>A major part of penetration testing is reviewing source code and identifying cryptographic implementation failures.</p>
+                <div class="highlight">
+                    We will act as a security auditor reviewing a client's authentication code.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Crypto Analysis" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Task 2: Cryptographic Code Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You find the following Python code snippet during a White-Box pentest:</p>
+                    <pre><code class="python">import hashlib
+def store_password(password):
+    hash_obj = hashlib.md5(password.encode())
+    db.save(hash_obj.hexdigest())</code></pre>
+                    <ol>
+                        <li>Identify the three critical cryptographic failures in this snippet.</li>
+                        <li>Explain how "Collision Vulnerabilities" affect MD5, and why that makes it unsuitable for security applications.</li>
+                        <li>Rewrite the conceptual logic to correctly utilize a Salt and a modern KDF (like Argon2 or Bcrypt).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Never "roll your own" cryptography. Always use established, peer-reviewed libraries.</li>
+                    <li>The strength of cryptography relies entirely on the secrecy of the keys, not the secrecy of the algorithm.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Pen-Testing Reporting & Ethics (Professional Documentation)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

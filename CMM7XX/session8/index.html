@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 8: Malware & Firewalls</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Malware &amp; Firewalls</span>
+    <span class="jw-count">8 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session7/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session9/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>Malware Detection & Firewalls</h1>
+                <h2>Session 8: Perimeter Defense</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct advanced malware architectures (Polymorphism, Rootkits).</li>
+                    <li>Analyze execution techniques like Reflective DLL Injection.</li>
+                    <li>Map Advanced Persistent Threat (APT) behaviors using the MITRE ATT&CK framework.</li>
+                    <li>Evaluate Next-Generation Firewalls (NGFW) and Deep Packet Inspection (DPI).</li>
+                    <li>Formulate evasion strategies against Web Application Firewalls (WAF).</li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Next-Generation Firewalls" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Next-Generation Firewalls (NGFW)</h2>
+                <p>Traditional firewalls (Layer 3/4) only look at IP addresses and ports. NGFWs operate up to Layer 7.</p>
+                <ul>
+                    <li><strong>Deep Packet Inspection (DPI):</strong> Examining the actual data payload of the packet to identify the application (e.g., distinguishing BitTorrent traffic from HTTP traffic, even if both use Port 80).</li>
+                    <li><strong>TLS/SSL Inspection:</strong> Acting as a trusted Man-in-the-Middle to decrypt, inspect, and re-encrypt outbound traffic, catching malware hiding in encrypted tunnels.</li>
+                    <li><strong>Identity Awareness:</strong> Linking network traffic to specific AD users, not just IP addresses.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://nostarch.com/malware" target="_blank" style="color: #64ffda;">Sikorski & Honig: Practical Malware Analysis</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Web Application Firewalls" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Web Application Firewalls (WAF)</h2>
+                <p>Specifically designed to protect web applications by inspecting HTTP traffic for common web exploits (SQLi, XSS, Path Traversal).</p>
+                <div class="task-box">
+                    <ul>
+                        <li>Operates as a reverse proxy, sitting in front of the web server.</li>
+                        <li>Relies heavily on Regular Expressions (Regex) and heuristic signatures to detect malicious patterns (e.g., blocking requests containing <code>UNION SELECT</code>).</li>
+                        <li>Susceptible to bypasses if the regex is poorly written or fails to account for protocol edge cases.</li>
+                    </ul>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="WAF Evasion Techniques" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>WAF Evasion Techniques</h2>
+                <p>Attackers craft payloads that the WAF ignores, but the backend server executes.</p>
+                <ul>
+                    <li><strong>Encoding:</strong> Using URL encoding, Base64, or Hex encoding to mask the payload. If the WAF doesn't decode it deeply enough, it bypasses the filter.</li>
+                    <li><strong>Polyglots:</strong> A payload valid in multiple contexts (e.g., both valid JavaScript and valid HTML), designed to confuse the parser.</li>
+                    <li><strong>HTTP Parameter Pollution:</strong> Sending the same parameter twice. The WAF might check the first one, but the backend server might process the second one.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>WAFs are not a silver bullet. Relying purely on WAFs without fixing the underlying vulnerable code is a dangerous anti-pattern.</p>
+                <div class="highlight">
+                    We will act as the red team, attempting to craft a payload that slips past a strict, regex-based WAF filter.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://coreruleset.org/" target="_blank" style="color: #64ffda;">OWASP ModSecurity Core Rule Set</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: WAF Evasion Simulation" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 2: WAF Evasion Simulation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>A target web application is protected by a WAF that strictly blocks any HTTP request containing the strings <code>&lt;script&gt;</code>, <code>alert</code>, or <code>UNION</code>.</p>
+                    <ol>
+                        <li>Craft an XSS payload that achieves execution without using the blocked strings (e.g., using SVG elements, onload events, and String.fromCharCode).</li>
+                        <li>Craft an SQL Injection payload that bypasses the <code>UNION</code> block by utilizing SQL comment obfuscation (e.g., <code>UN/**/ION</code>).</li>
+                        <li><strong>Discussion:</strong> Discuss why parameterized queries (Prepared Statements) are fundamentally superior to WAF filtering for preventing SQLi.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://coreruleset.org/" target="_blank" style="color: #64ffda;">OWASP ModSecurity Core Rule Set</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Malware has evolved beyond static binaries; Living off the Land techniques require behavioral monitoring rather than signature matching.</li>
+                    <li>NGFWs provide deep visibility, but must be configured with TLS inspection to be effective against modern threats.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Intrusion Detection Systems (Monitoring and Alerts)
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

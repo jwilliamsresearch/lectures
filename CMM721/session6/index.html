@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM721 - Session 6: Django Basics</title>
+
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM721</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Django Basics</span>
+    <span class="jw-count">6 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session5/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session7/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
+                <h1>Django Basics</h1>
+                <h2>Session 6</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand Django framework architecture</li>
+                    <li>Create Django projects and applications</li>
+                    <li>Implement URL routing and views</li>
+                    <li>Work with Django templates</li>
+                    <li>Handle static files</li>
+                    <li>Configure Django settings</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="What is Django?">
+                <h2>What is Django?</h2>
+                <div class="highlight">
+                    <strong>Django:</strong> High-level Python web framework
+                </div>
+                <ul>
+                    <li><strong>Philosophy:</strong> "Batteries included" - everything you need</li>
+                    <li><strong>Pattern:</strong> MTV (Model-Template-View) similar to MVC</li>
+                    <li><strong>Features:</strong> ORM, admin interface, authentication, security</li>
+                    <li><strong>Used by:</strong> Instagram, Pinterest, NASA, Spotify</li>
+                </ul>
+                <h3>Why Django?</h3>
+                <ul>
+                    <li>Rapid development</li>
+                    <li>Security built-in (CSRF, XSS, SQL injection protection)</li>
+                    <li>Scalable architecture</li>
+                    <li>Excellent documentation</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Django MTV Architecture">
+                <h2>Django MTV Architecture</h2>
+                <div class="django-flow">
+                    <div class="flow-step">HTTP Request → URL Pattern</div>
+                    <div class="flow-arrow">â†“</div>
+                    <div class="flow-step">View (Business Logic)</div>
+                    <div class="flow-arrow">â†“</div>
+                    <div class="flow-step">Model (Database)</div>
+                    <div class="flow-arrow">â†“</div>
+                    <div class="flow-step">Template (HTML)</div>
+                    <div class="flow-arrow">â†“</div>
+                    <div class="flow-step">HTTP Response</div>
+                </div>
+                <ul>
+                    <li><strong>Model:</strong> Data structure and database logic</li>
+                    <li><strong>Template:</strong> Presentation layer (HTML)</li>
+                    <li><strong>View:</strong> Business logic and request handling</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Installation">
+                <h2>Installation</h2>
+                <h3>Setting Up Django:</h3>
+                <div class="code-example">
+                    <pre><code class="language-python"># Create virtual environment
+python -m venv venv
+# Activate (Windows)
+venv\Scripts\activate
+# Activate (Mac/Linux)
+source venv/bin/activate
+# Install Django
+pip install django
+# Verify installation
+python -m django --version</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Creating a Django Project">
+                <h2>Creating a Django Project</h2>
+                <div class="code-example">
+                    <pre><code class="language-python"># Create project
+django-admin startproject myproject
+# Project structure:
+myproject/
+manage.py
+myproject/
+__init__.py
+settings.py
+urls.py
+asgi.py
+wsgi.py
+# Run development server
+python manage.py runserver
+# Visit: http://127.0.0.1:8000/</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="🎯 Project Structure Visualization">
+                <h2>🎯 Project Structure Visualization</h2>
+                <div class="demo-container">
+                    <h3>Django Project Layout</h3>
+                    <div style="font-family: monospace; background: #2c3e50; color: #ecf0f1; padding: 20px; border-radius: 10px;">
+                        <div style="margin-bottom: 10px;">ðŸ“ <strong style="color: #3498db;">myproject/</strong> (root directory)</div>
+                        <div style="margin-left: 20px; margin-bottom: 10px;">📄 <strong style="color: #e74c3c;">manage.py</strong> - Command-line utility</div>
+                        <div style="margin-left: 20px; margin-bottom: 10px;">ðŸ“ <strong style="color: #3498db;">myproject/</strong> (project package)</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #27ae60;">settings.py</strong> - Configuration</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #27ae60;">urls.py</strong> - URL routing</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #27ae60;">wsgi.py</strong> - Deployment</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #27ae60;">asgi.py</strong> - Async deployment</div>
+                        <div style="margin-left: 20px; margin-top: 15px; margin-bottom: 10px;">ðŸ“ <strong style="color: #9b59b6;">myapp/</strong> (application)</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">models.py</strong> - Data models</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">views.py</strong> - Views/Logic</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">urls.py</strong> - App URLs</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">admin.py</strong> - Admin config</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">📄 <strong style="color: #f39c12;">tests.py</strong> - Unit tests</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">ðŸ“ <strong style="color: #1abc9c;">templates/</strong> - HTML files</div>
+                        <div style="margin-left: 40px; margin-bottom: 8px;">ðŸ“ <strong style="color: #1abc9c;">static/</strong> - CSS, JS, images</div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-slide-title="Creating an App">
+                <h2>Creating an App</h2>
+                <div class="code-example">
+                    <pre><code class="language-python"># Create app
+python manage.py startapp blog
+# Register app in settings.py
+INSTALLED_APPS = [
+'django.contrib.admin',
+'django.contrib.auth',
+# ...
+'blog', # Add your app
+]</code></pre>
+                </div>
+                <div class="highlight">
+                    <strong>Project vs App:</strong><br>
+                    - Project: Entire website/application<br>
+                    - App: Module with specific functionality (blog, shop, etc.)
+                </div>
+            </section>
+
+            <section data-slide-title="Views and URLs">
+                <h2>Views and URLs</h2>
+                <h3>Create a View (views.py):</h3>
+                <div class="code-example">
+                    <pre><code class="language-python">from django.http import HttpResponse
+from django.shortcuts import render
+def home(request):
+return HttpResponse("&lt;h1&gt;Welcome to CMM721!&lt;/h1&gt;")
+def about(request):
+context = {'course': 'CMM721'}
+return render(request, 'about.html', context)</code></pre>
+                </div>
+                <h3>URL Configuration (urls.py):</h3>
+                <div class="code-example">
+                    <pre><code class="language-python">from django.urls import path
+from . import views
+urlpatterns = [
+path('', views.home, name='home'),
+path('about/', views.about, name='about'),
+]</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="🎯 URL Routing Flow Diagram">
+                <h2>🎯 URL Routing Flow Diagram</h2>
+                <div class="demo-container">
+                    <h3>Request to Response Flow</h3>
+                    <div class="django-flow" style="background: linear-gradient(135deg, #f3e5f5, #e1f5fe);">
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>1. Browser Request:</strong> http://localhost:8000/blog/
+                        </div>
+                        <div class="flow-arrow">â†“</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>2. Django URLconf:</strong> Match URL pattern in urls.py
+                        </div>
+                        <div class="flow-arrow">â†“</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>3. View Function:</strong> Execute views.blog_list()
+                        </div>
+                        <div class="flow-arrow">â†“</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>4. Query Database:</strong> Get blog posts from models
+                        </div>
+                        <div class="flow-arrow">â†“</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>5. Render Template:</strong> blog_list.html with data
+                        </div>
+                        <div class="flow-arrow">â†“</div>
+                        <div style="text-align: center; padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            <strong>6. HTTP Response:</strong> HTML sent to browser
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: Build First Django App">
+                <h2>Task 1: Build First Django App</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a personal portfolio website using Django</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create Django project: portfolio_project</li>
+                        <li>Create app: portfolio</li>
+                        <li>Create 3 views: home, about, contact</li>
+                        <li>Set up URL patterns for each view</li>
+                        <li>Create basic HTML responses (no templates yet)</li>
+                        <li>Test all URLs in browser</li>
+                    </ol>
+                    <h3>Deliverables:</h3>
+                    <ul>
+                        <li>Working Django project</li>
+                        <li>Screenshot of each page</li>
+                        <li>urls.py and views.py files</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Django Templates">
+                <h2>Django Templates</h2>
+                <h3>Template Basics:</h3>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;!-- templates/home.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;{{ title }}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Welcome {{ user.username }}!&lt;/h1&gt;
+&lt;p&gt;{{ content }}&lt;/p&gt;
+{% for item in items %}
+&lt;div&gt;{{ item.name }}&lt;/div&gt;
+{% endfor %}
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Template Syntax">
+                <h2>Template Syntax</h2>
+                <h3>Variables:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">{{ variable }}
+{{ user.name }}
+{{ items.0.title }}</code></pre>
+                </div>
+                <h3>Tags:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">{% if user.is_authenticated %}
+Welcome {{ user.username }}!
+{% else %}
+Please log in.
+{% endif %}
+{% for post in posts %}
+&lt;h2&gt;{{ post.title }}&lt;/h2&gt;
+{% empty %}
+&lt;p&gt;No posts yet.&lt;/p&gt;
+{% endfor %}</code></pre>
+                </div>
+                <h3>Filters:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">{{ text|lower }}
+{{ date|date:"Y-m-d" }}
+{{ content|truncatewords:30 }}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Template Inheritance">
+                <h2>Template Inheritance</h2>
+                <h3>Base Template (base.html):</h3>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;{% block title %}CMM721{% endblock %}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;nav&gt;Navigation here&lt;/nav&gt;
+{% block content %}{% endblock %}
+&lt;footer&gt;Footer here&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+                <h3>Child Template (home.html):</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">{% extends 'base.html' %}
+{% block title %}Home - CMM721{% endblock %}
+{% block content %}
+&lt;h1&gt;Welcome Home&lt;/h1&gt;
+&lt;p&gt;Page content here&lt;/p&gt;
+{% endblock %}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Static Files">
+                <h2>Static Files</h2>
+                <h3>Configuration (settings.py):</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+BASE_DIR / 'static',
+]</code></pre>
+                </div>
+                <h3>Using Static Files in Templates:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">{% load static %}
+&lt;link rel="stylesheet" href="{% static 'css/style.css' %}"&gt;
+&lt;img src="{% static 'images/logo.png' %}"&gt;
+&lt;script src="{% static 'js/script.js' %}"&gt;&lt;/script&gt;</code></pre>
+                </div>
+                <h3>Folder Structure:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">static/
+css/
+style.css
+js/
+script.js
+images/
+logo.png</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Build Template System">
+                <h2>Task 2: Build Template System</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Enhance portfolio with Django templates and static files</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create base.html with navigation and footer</li>
+                        <li>Create child templates extending base (home, about, contact)</li>
+                        <li>Add static CSS file with custom styling</li>
+                        <li>Add static JavaScript for interactive elements</li>
+                        <li>Include logo/images in static files</li>
+                        <li>Implement template inheritance properly</li>
+                        <li>Pass context data from views to templates</li>
+                    </ol>
+                    <h3>Bonus:</h3>
+                    <ul>
+                        <li>Add a projects list page with loop</li>
+                        <li>Implement conditionals in templates</li>
+                        <li>Add template filters for formatting</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Django Settings">
+                <h2>Django Settings</h2>
+                <h3>Important Settings:</h3>
+                <div class="code-example">
+                    <pre><code class="language-python"># settings.py
+SECRET_KEY = 'your-secret-key'
+DEBUG = True # Set False in production
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+INSTALLED_APPS = [...]
+DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.sqlite3',
+'NAME': BASE_DIR / 'db.sqlite3',
+}
+}
+TIME_ZONE = 'Europe/London'
+LANGUAGE_CODE = 'en-gb'</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Django Management Commands">
+                <h2>Django Management Commands</h2>
+                <div class="code-example">
+                    <pre><code class="language-python"># Run development server
+python manage.py runserver
+# Create database migrations
+python manage.py makemigrations
+python manage.py migrate
+# Create superuser
+python manage.py createsuperuser
+# Start new app
+python manage.py startapp myapp
+# Run tests
+python manage.py test
+# Collect static files
+python manage.py collectstatic
+# Open Django shell
+python manage.py shell</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Best Practices">
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>Virtual Environment:</strong> Always use venv</li>
+                    <li><strong>SECRET_KEY:</strong> Never commit to version control</li>
+                    <li><strong>DEBUG:</strong> Set to False in production</li>
+                    <li><strong>Requirements:</strong> Keep requirements.txt updated</li>
+                    <li><strong>App Structure:</strong> One app = one functionality</li>
+                    <li><strong>URL Names:</strong> Always use named URLs</li>
+                    <li><strong>Templates:</strong> Use template inheritance</li>
+                    <li><strong>Static Files:</strong> Organize by type (css, js, images)</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Security First:</strong> Django has built-in security features - use them!
+                </div>
+            </section>
+
+            <section data-slide-title="Next Session: Django ORM & CRUD">
+                <h2>Next Session: Django ORM & CRUD</h2>
+                <ul>
+                    <li>Django Models and ORM</li>
+                    <li>Database migrations</li>
+                    <li>CRUD operations (Create, Read, Update, Delete)</li>
+                    <li>QuerySets and filtering</li>
+                    <li>Model relationships (ForeignKey, ManyToMany)</li>
+                    <li>Django Admin interface</li>
+                </ul>
+                <p><strong>Preparation:</strong> Complete Task 1 and 2. Review Python classes.</p>
+            </section>
+
+            <section data-slide-title="Questions & Discussion" class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> Django Documentation, Django Girls Tutorial</p>
+                <p>Thank you for your attention!</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script><script src="/chrome.js"></script>
+</body>
+
+</html>

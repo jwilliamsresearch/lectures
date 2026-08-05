@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 1: Secure IS & Architecture</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Secure IS &amp; Architecture</span>
+    <span class="jw-count">1 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <span class="jw-nav-btn is-off" aria-hidden="true"><span>←</span>Prev<span></span></span>
+    <a class="jw-nav-btn" href="../session2/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 1: Secure IS & Architecture</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Define the core concepts of Secure Information Systems (IS).</li>
+                    <li>Deconstruct the CIA Triad (Confidentiality, Integrity, Availability) in a corporate context.</li>
+                    <li>Analyze standard enterprise network architectures and defense-in-depth strategies.</li>
+                    <li>Identify the primary components of an Information System (People, Process, Technology).</li>
+                    <li>Evaluate the transition from perimeter defense to Zero Trust Architecture.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: The Foundations of IS (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>What is an Information System?</li>
+                    <li>The CIA Triad and the McCumber Cube</li>
+                    <li><strong>Task 1: System Component Analysis</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Secure Architecture (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Defense in Depth vs Zero Trust</li>
+                    <li>Network Segmentation and DMZs</li>
+                    <li><strong>Task 2: Architectural Review</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Foundations" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 1: The Foundations of IS</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="What is an IS?" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>What is an Information System?</h2>
+                <p>An IS is not just a server or a piece of software. It is a holistic ecosystem.</p>
+                <ul>
+                    <li><strong>Technology:</strong> Hardware, software, databases, and networks.</li>
+                    <li><strong>People:</strong> Users, administrators, executives, and third-party vendors.</li>
+                    <li><strong>Process:</strong> The documented procedures (e.g., onboarding, data disposal) that dictate how the people interact with the technology.</li>
+                    <li>A failure in any one of these pillars results in a total system failure.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="The CIA Triad" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>The CIA Triad</h2>
+                <p>The foundation of all security design.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Confidentiality:</strong> Preventing unauthorized disclosure (Encryption, Access Control).</li>
+                        <li><strong>Integrity:</strong> Preventing unauthorized modification (Hashing, Digital Signatures, File Integrity Monitoring).</li>
+                        <li><strong>Availability:</strong> Ensuring authorized access when needed (Redundancy, Backups, DDoS mitigation).</li>
+                        <li><em>Trade-offs:</em> Maximizing confidentiality (e.g., locking servers in a vault) inherently reduces availability. Security is about balancing these three based on business needs.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="The McCumber Cube" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>The McCumber Cube</h2>
+                <p>A framework for evaluating information security comprehensively.</p>
+                <ul>
+                    <li><strong>Dimension 1:</strong> Information States (Storage, Transmission, Processing).</li>
+                    <li><strong>Dimension 2:</strong> Security Goals (Confidentiality, Integrity, Availability).</li>
+                    <li><strong>Dimension 3:</strong> Countermeasures (Technology, Policy/Practices, Human Factors).</li>
+                    <li>When assessing a system, you must check every intersection (e.g., "Do we have a *Policy* for the *Integrity* of data in *Transmission*?").</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Security analysts must look beyond firewalls and code to see the entire business process.</p>
+                <div class="highlight">
+                    We will analyze a common corporate system to identify the critical intersections of People, Process, and Technology.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: System Analysis" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 1: System Component Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Consider a hospital's Electronic Health Record (EHR) system.</p>
+                    <ol>
+                        <li>Identify one critical element for each of the three IS pillars: Technology, People, and Process.</li>
+                        <li>For each element identified, describe a specific threat that could compromise the <em>Integrity</em> of the patient data.</li>
+                        <li>Propose one countermeasure for each threat. Classify your countermeasures as either Technical, Administrative, or Physical.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Secure Architecture" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 2: Secure Architecture</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Defense in Depth" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Defense in Depth (The Castle Approach)</h2>
+                <p>Relying on multiple, independent layers of security controls.</p>
+                <ul>
+                    <li>If a hacker bypasses the perimeter firewall, they still have to beat the Intrusion Detection System (IDS).</li>
+                    <li>If they beat the IDS, they still have to crack the database encryption.</li>
+                    <li><strong>The Perimeter Problem:</strong> Traditional architecture assumes the "inside" of the network is safe, and the "outside" (the internet) is dangerous. This fails completely when an employee clicks a phishing link and the attacker is already "inside."</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Network Segmentation" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Network Segmentation & DMZs</h2>
+                <p>Limiting the blast radius of a breach.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Demilitarized Zone (DMZ):</strong> A subnetwork containing public-facing services (e.g., Web Servers, Email Relays). It is exposed to the internet, but strictly firewalled off from the internal corporate network.</li>
+                        <li><strong>VLANs:</strong> Logically dividing the internal network so the HR department cannot communicate with the Engineering department's servers, preventing lateral movement by malware (like ransomware).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Zero Trust Architecture" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Zero Trust Architecture (ZTA)</h2>
+                <p>"Never Trust, Always Verify."</p>
+                <ul>
+                    <li>ZTA assumes the network is already compromised.</li>
+                    <li>Location (being inside the corporate office or on the corporate VPN) grants <strong>zero</strong> implicit trust.</li>
+                    <li>Every single request to every single resource must be authenticated and authorized based on dynamic context (User Identity + Device Health + Geolocation + Time of Day).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-207/final" target="_blank" style="color: #64ffda;">NIST SP 800-207 Zero Trust Architecture</a>
+                </div>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Migrating from a legacy "flat network" to a segmented or Zero Trust architecture is the most difficult challenge facing modern CISOs.</p>
+                <div class="highlight">
+                    We will critique a legacy network design and propose architectural improvements.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Architectural Review" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 2: Architectural Review</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>A regional law firm has a single "flat" internal network (<code>10.0.0.0/16</code>). The web server, the employee laptops, the WiFi access points, and the central file server holding confidential case files are all on this same subnet.</p>
+                    <ol>
+                        <li>Explain the exact sequence of events that would occur if a receptionist's laptop was infected with a self-propagating ransomware worm on this network.</li>
+                        <li>Design a segmented architecture for this firm. Define at least three distinct network zones (e.g., DMZ, Internal, Guest WiFi) and outline the firewall rules between them.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Security is a holistic discipline. Fixing the technology does not matter if the processes are broken or the people are untrained.</li>
+                    <li>The traditional network perimeter is dead. Modern architecture focuses on Identity and Zero Trust.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Cyber-Physical Systems & Critical Infrastructure
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

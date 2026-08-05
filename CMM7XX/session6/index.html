@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 6: Authentication & Access Control</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Authentication &amp; Access Control</span>
+    <span class="jw-count">6 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session5/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session7/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>Authentication & Access Control</h1>
+                <h2>Session 6: Identity Management</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct modern Federated Identity protocols (SAML, OIDC, OAuth 2.0).</li>
+                    <li>Understand the mathematics and application of Zero-Knowledge Proofs (ZKPs).</li>
+                    <li>Evaluate Access Control Models (DAC, MAC, RBAC, ABAC).</li>
+                    <li>Analyze mandatory security models (Biba vs Bell-LaPadula).</li>
+                    <li>Design scalable Attribute-Based Access Control (ABAC) policies for cloud environments.</li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Access Control Models" class="center" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>Part 2: Access Control Models</h2>
+                <h3>Duration: 1.5 Hours</h3>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-162/final" target="_blank" style="color: #64ffda;">NIST SP 800-162: Attribute-Based Access Control (ABAC)</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Foundational Access Control" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>Foundational Access Control Models</h2>
+                <ul>
+                    <li><strong>DAC (Discretionary Access Control):</strong> The data owner dictates who has access (e.g., standard Windows/Linux file permissions). Vulnerable to Trojan horses.</li>
+                    <li><strong>MAC (Mandatory Access Control):</strong> Central authority dictates access based on security labels (e.g., Top Secret, Secret) assigned to subjects and objects. Used in military/intelligence environments.</li>
+                    <li><strong>RBAC (Role-Based Access Control):</strong> Access is assigned to organizational roles (e.g., 'HR_Manager', 'Developer'), and users are assigned to roles. Solves the administrative nightmare of DAC at scale.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://datatracker.ietf.org/doc/html/rfc2104" target="_blank" style="color: #64ffda;">RFC 2104: HMAC: Keyed-Hashing for Message Authentication</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Mandatory Security Models" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>Mandatory Security Models</h2>
+                <p>Theoretical frameworks governing MAC implementations.</p>
+                <div class="task-box">
+                    <h3>Bell-LaPadula (Confidentiality)</h3>
+                    <ul>
+                        <li><strong>No Read Up:</strong> Subject cannot read objects of higher classification.</li>
+                        <li><strong>No Write Down:</strong> Subject cannot write to objects of lower classification (prevents data leakage).</li>
+                    </ul>
+                    <h3>Biba (Integrity)</h3>
+                    <ul>
+                        <li><strong>No Read Down:</strong> Subject cannot read lower integrity data (prevents contamination).</li>
+                        <li><strong>No Write Up:</strong> Subject cannot write to higher integrity objects.</li>
+                    </ul>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://datatracker.ietf.org/doc/html/rfc2104" target="_blank" style="color: #64ffda;">RFC 2104: HMAC: Keyed-Hashing for Message Authentication</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Attribute-Based Access Control" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>Attribute-Based Access Control (ABAC)</h2>
+                <p>The modern enterprise standard. Evaluates boolean logic against dynamic attributes of the User, Resource, Environment, and Action.</p>
+                <ul>
+                    <li><strong>Unprecedented Granularity:</strong> "Allow 'HR_Rep' to 'Read' 'Employee_Record' ONLY IF 'Time' is between 9-5 AND 'User_IP' is within Corporate Subnet."</li>
+                    <li><strong>Dynamic:</strong> Can ingest threat intelligence feeds (e.g., block access if the user's location jumps continents impossibly fast).</li>
+                    <li><strong>Implementation:</strong> Heavily used in AWS IAM policies and XACML engines.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Designing ABAC policies requires rigorous logical structuring. Conflicting rules can lead to unauthorized access or denial of legitimate service.</p>
+                <div class="highlight">
+                    We will draft a JSON-based ABAC policy for a cloud environment, similar to AWS IAM.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: ABAC Policy Design" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>Task 2: ABAC Policy Design</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You are securing a cloud-based financial API. Draft a JSON policy that implements the following requirements:</p>
+                    <ol>
+                        <li>Financial Analysts can read reporting data at any time.</li>
+                        <li>Financial Managers can write to reporting data, but only from internal corporate IP ranges (10.0.0.0/8).</li>
+                        <li>No one, regardless of role, can delete data if the system threat-level attribute is set to "ELEVATED".</li>
+                        <li>Identify and resolve any logical conflicts (e.g., Does an explicit Deny override an explicit Allow?).</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMM7XX/images/cyber_bg_6.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Identity management extends far beyond passwords. OAuth 2.0 and Federated Identity form the backbone of modern SSO.</li>
+                    <li>ABAC provides the dynamic, context-aware authorization required for Zero-Trust architectures.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Software Security (Vulnerabilities and Protections)
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-207/final" target="_blank" style="color: #64ffda;">NIST SP 800-207: Zero Trust Architecture</a>
+                </div>
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 9: Governance & Roles</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Governance &amp; Roles</span>
+    <span class="jw-count">9 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session8/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session10/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 9: Enterprise Roles & Security Governance</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Analyze the evolving role of the Chief Information Security Officer (CISO).</li>
+                    <li>Evaluate organizational reporting structures and the conflict of interest between IT and Security.</li>
+                    <li>Understand the responsibilities of the Board of Directors regarding cyber risk.</li>
+                    <li>Design effective Security Steering Committees.</li>
+                    <li>Utilize RACI matrices to clarify operational security accountability.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Executive Roles (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The CISO, the CIO, and the Board</li>
+                    <li>Reporting Structures and Conflicts of Interest</li>
+                    <li><strong>Task 1: The Board Presentation</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Operational Governance (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Security Steering Committees</li>
+                    <li>Responsibility Assignment Matrices (RACI)</li>
+                    <li><strong>Task 2: Designing a Security RACI</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Executive Roles" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 1: Executive Roles</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The Role of the CISO" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>The Chief Information Security Officer (CISO)</h2>
+                <p>The CISO is no longer a purely technical role; it is a business risk role.</p>
+                <ul>
+                    <li><strong>Historically:</strong> A senior network engineer who configured firewalls.</li>
+                    <li><strong>Modern Era:</strong> A business executive who aligns security strategy with organizational goals, manages regulatory compliance, and speaks the language of risk to the board.</li>
+                    <li>The modern CISO must balance the need for security with the business's need to generate revenue rapidly.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="The Reporting Conflict" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>The Reporting Conflict</h2>
+                <p>Who should the CISO report to?</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Reporting to the CIO (Bad Practice):</strong> The Chief Information Officer's primary goal is uptime, speed, and cutting IT costs. Security is expensive and introduces friction. If the CISO reports to the CIO, security concerns are often overruled to meet IT deadlines.</li>
+                        <li><strong>Reporting to the CEO or Risk Officer (Best Practice):</strong> Elevates security to a peer-level with IT, allowing the CISO to challenge the CIO on insecure architectures without fear of being fired by them.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="The Board of Directors" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>The Board of Directors</h2>
+                <p>Fiduciary Duty and Cyber Liability.</p>
+                <ul>
+                    <li>The Board is legally responsible for overseeing enterprise risk. Following massive breaches (e.g., Equifax, Yahoo), courts have held boards liable for gross negligence in cybersecurity oversight.</li>
+                    <li>The Board does not manage security; they demand assurance that management is handling it effectively.</li>
+                    <li>They ask three questions: <em>Are we secure? Are we compliant? Are we spending the right amount?</em></li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Presenting a major security incident to a non-technical board requires filtering out operational details and focusing entirely on business impact, containment, and liability.</p>
+                <div class="highlight">
+                    We will draft a post-incident board briefing.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: The Board Presentation" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 1: The Board Presentation</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You are the CISO. Last night, an attacker successfully exfiltrated a database containing 50,000 customer credit card records by exploiting a SQL injection vulnerability in a legacy web portal.</p>
+                    <ol>
+                        <li>Draft a concise opening statement (max 3 sentences) informing the board of the breach. (Do not use the terms "SQL", "Injection", or "Exfiltration").</li>
+                        <li>Outline the three immediate business impacts the board needs to prepare for (e.g., regulatory fines, public relations).</li>
+                        <li>Propose a high-level strategic request to the board to ensure this specific class of vulnerability is eliminated across the enterprise.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Operational Governance" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 2: Operational Governance</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Security Committees" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Security Steering Committees</h2>
+                <p>Security cannot exist in a vacuum. It must have organizational buy-in.</p>
+                <ul>
+                    <li>A cross-functional group (IT, HR, Legal, PR, Business Unit Leaders) that meets quarterly to review security posture.</li>
+                    <li><strong>Purpose:</strong> To ensure security initiatives align with upcoming business projects. If the business is launching a new mobile app, the committee ensures security is involved from day one.</li>
+                    <li>Breaks down silos and distributes ownership of security risk across all department heads.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="The RACI Matrix" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>The RACI Matrix</h2>
+                <p>When everyone is responsible, nobody is responsible. RACI defines exact roles for a process.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Responsible:</strong> The person doing the actual work (e.g., the Engineer patching the server).</li>
+                        <li><strong>Accountable:</strong> The person whose head rolls if it fails. Only ONE person can be accountable (e.g., the IT Director).</li>
+                        <li><strong>Consulted:</strong> Subject matter experts asked for input before the work (e.g., the Security Team reviewing the patch).</li>
+                        <li><strong>Informed:</strong> People told after the work is done (e.g., the Helpdesk notified that servers were rebooted).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Applying RACI" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Applying RACI in Security</h2>
+                <p>Security teams often fail because they try to be 'Responsible' for everything.</p>
+                <ul>
+                    <li>The Security team does not own the servers; IT owns the servers. Therefore, Security cannot be <em>Responsible</em> for patching them.</li>
+                    <li>Security sets the policy (Standard), IT executes the work (Responsible), and Security audits the result.</li>
+                    <li>Clear RACI matrices prevent the classic "finger-pointing" match between IT and Security during an incident post-mortem.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Drafting a RACI matrix forces organizations to confront ambiguous ownership and clarify operational workflows before an incident occurs.</p>
+                <div class="highlight">
+                    We will design a RACI matrix for managing employee terminations (offboarding).
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Designing a RACI" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 2: Designing a Security RACI</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>Process: <strong>Revoking corporate network access when an employee is terminated.</strong></p>
+                    <p>Roles available: <em>HR Manager, IT Administrator, CISO, Direct Manager.</em></p>
+                    <ol>
+                        <li>Assign the R, A, C, and I roles to the four available positions for this specific process. (Remember: Only one person can be 'A').</li>
+                        <li>Justify your choice for who is <em>Accountable</em>. Why is this role ultimately answerable if access is not revoked and the ex-employee steals data?</li>
+                        <li>Explain why the CISO should generally be 'Consulted' or 'Informed' on operational IT tasks, rather than 'Responsible'.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>The CISO must bridge the gap between technical reality and board-level business risk.</li>
+                    <li>Governance structures (like Steering Committees and RACI matrices) replace ad-hoc heroics with repeatable, accountable processes.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Developing Security Plans (Actionable Security)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

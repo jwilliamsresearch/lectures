@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 10: NIST CSF & Risk Assessment</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">NIST CSF &amp; Risk Assessment</span>
+    <span class="jw-count">10 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session9/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session11/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>NIST Cyber Security Framework</h1>
+                <h2>Session 10: Risk Assessment</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Differentiate Quantitative vs Qualitative Risk Assessment methodologies.</li>
+                    <li>Apply the FAIR (Factor Analysis of Information Risk) framework mathematically.</li>
+                    <li>Deconstruct the five core functions of the NIST Cybersecurity Framework (CSF).</li>
+                    <li>Evaluate NIST Implementation Tiers and organizational maturity.</li>
+                    <li>Design target NIST Profiles to align cyber defense with business objectives.</li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Quantitative Risk Modeling" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>Task 1: Quantitative Risk Modeling</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>A hospital database (AV = £10M due to regulatory fines and lost trust) faces a ransomware threat. If successful, the EF is estimated at 40%. Threat Intel estimates an ARO of 0.25 (once every 4 years).</p>
+                    <ol>
+                        <li>Calculate the SLE and the ALE for the current state.</li>
+                        <li>A vendor proposes an immutable backup solution costing £200,000/year. This solution does not stop the attack (ARO remains 0.25), but reduces the EF to 2%.</li>
+                        <li>Calculate the new SLE and ALE.</li>
+                        <li><strong>Calculate the ROI:</strong> Does the reduction in ALE justify the £200,000 annual cost? Present your finding as a Board-level summary.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: The NIST Framework" class="center" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>Part 2: The NIST Framework</h2>
+                <h3>Duration: 1.5 Hours</h3>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.nist.gov/cyberframework" target="_blank" style="color: #64ffda;">NIST Cybersecurity Framework (CSF)</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="NIST Cybersecurity Framework" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>NIST Cybersecurity Framework (CSF)</h2>
+                <p>A voluntary framework developed by the US government to help organizations manage cyber risk. It provides a common language for executives and engineers.</p>
+                <p>The CSF Core consists of five concurrent functions:</p>
+                <ul>
+                    <li><strong>Identify (ID):</strong> Develop organizational understanding of assets and risks (Asset Management, Risk Assessment).</li>
+                    <li><strong>Protect (PR):</strong> Develop safeguards to ensure delivery of services (Access Control, Encryption, Training).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-162/final" target="_blank" style="color: #64ffda;">NIST SP 800-162: Attribute-Based Access Control (ABAC)</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="NIST CSF Core (Continued)" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>NIST CSF Core (Continued)</h2>
+                <ul>
+                    <li><strong>Detect (DE):</strong> Identify the occurrence of a cybersecurity event (Continuous Monitoring, Anomalies).</li>
+                    <li><strong>Respond (RS):</strong> Take action regarding a detected incident (Response Planning, Containment, Mitigation).</li>
+                    <li><strong>Recover (RC):</strong> Maintain plans for resilience and restore impaired capabilities (Recovery Planning, Communications).</li>
+                </ul>
+                <div class="highlight">
+                    Most organizations over-invest in Protect and heavily under-invest in Detect and Respond.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.nist.gov/cyberframework" target="_blank" style="color: #64ffda;">NIST Cybersecurity Framework (CSF)</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Implementation Tiers" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>Implementation Tiers</h2>
+                <p>Measure the organization's approach to cybersecurity risk management.</p>
+                <ul>
+                    <li><strong>Tier 1 (Partial):</strong> Reactive. Ad hoc processes. No formalized risk management.</li>
+                    <li><strong>Tier 2 (Risk Informed):</strong> Management approves risk decisions, but processes are not organizational-wide policies.</li>
+                    <li><strong>Tier 3 (Repeatable):</strong> Formal policies in place. Risk management is treated as a corporate-wide requirement.</li>
+                    <li><strong>Tier 4 (Adaptive):</strong> Proactive. Continuous improvement based on predictive indicators and advanced threat hunting.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>A NIST "Profile" is the alignment of the CSF Core to a specific business scenario. You create a "Current Profile" and a "Target Profile" to identify gaps.</p>
+                <div class="highlight">
+                    We will act as consultants developing a Target Profile for a recently breached organization.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.nist.gov/cyberframework" target="_blank" style="color: #64ffda;">NIST Cybersecurity Framework (CSF)</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: NIST Profile Development" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>Task 2: NIST Profile Development</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>A regional healthcare provider (Tier 1) suffered a catastrophic ransomware attack because they lacked asset visibility and had no offline backups. They wish to reach Tier 3 within 18 months.</p>
+                    <ol>
+                        <li>Focusing <strong>only</strong> on the <em>Identify</em> and <em>Recover</em> functions, draft a Target Profile summarizing the specific outcomes they must achieve.</li>
+                        <li>Map at least two specific technical controls (e.g., automated network discovery, tape backups) to your stated outcomes.</li>
+                        <li>Formulate a high-level 18-month roadmap to bridge the gap between their Current (Tier 1) and Target (Tier 3) profiles.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.nist.gov/cyberframework" target="_blank" style="color: #64ffda;">NIST Cybersecurity Framework (CSF)</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMM7XX/images/cyber_bg_4.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Cybersecurity is fundamentally a risk management discipline. Technical controls exist solely to mitigate quantified business risks.</li>
+                    <li>Frameworks like NIST provide the structure to communicate complex technical posture to non-technical boards.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Security Policy (Formation and Enforcement)
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.fairinstitute.org/" target="_blank" style="color: #64ffda;">FAIR Institute: Factor Analysis of Information Risk</a>
+                </div>
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

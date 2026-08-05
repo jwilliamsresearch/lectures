@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 6: Sniffing & MITM</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Sniffing &amp; MITM</span>
+    <span class="jw-count">6 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session5/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session7/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 6: Sniffing & MITM Attacks</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct Layer 2 network communication and the Address Resolution Protocol (ARP).</li>
+                    <li>Execute ARP Poisoning to establish a Man-in-the-Middle (MITM) position.</li>
+                    <li>Analyze packet captures (.pcap) using Wireshark to extract credentials.</li>
+                    <li>Analyze SSL Stripping attacks and downgrade vulnerabilities.</li>
+                    <li>Evaluate the security implications of rogue access points (Evil Twins).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Layer 2 Exploitation & Packet Analysis (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Hubs, Switches, and Promiscuous Mode</li>
+                    <li>The ARP Protocol & ARP Poisoning</li>
+                    <li><strong>Task 1: Wireshark Packet Analysis</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Intercepting Encrypted Traffic (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>SSL Stripping & Downgrade Attacks</li>
+                    <li>DNS Spoofing & Rogue Access Points</li>
+                    <li><strong>Task 2: MITM Simulation & HSTS Analysis</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Layer 2 Exploitation" class="center" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Part 1: Layer 2 Exploitation & Packet Analysis</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Sniffing Fundamentals" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Network Sniffing Fundamentals</h2>
+                <p>Network Interface Cards (NICs) normally ignore packets not addressed to their specific MAC address.</p>
+                <ul>
+                    <li><strong>Promiscuous Mode:</strong> Configuring the NIC to pass <em>all</em> traffic it sees up to the CPU for analysis (e.g., using tcpdump or Wireshark).</li>
+                    <li><strong>The Hub Problem:</strong> In legacy networks using Hubs, all packets are broadcast to all ports. Sniffing requires zero effort.</li>
+                    <li><strong>The Switch Solution:</strong> Switches map MAC addresses to physical ports and only send traffic to the intended recipient. To sniff on a switched network, an attacker must force traffic through their machine (MITM).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Address Resolution Protocol" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Address Resolution Protocol (ARP)</h2>
+                <p>ARP translates IP addresses (Layer 3) to MAC addresses (Layer 2) on a local network.</p>
+                <div class="task-box">
+                    <p><strong>The Flaw:</strong> ARP is stateless and has no authentication mechanism.</p>
+                    <ul>
+                        <li>When a machine asks "Who has IP 192.168.1.1 (the router)?", any machine can reply "I do! My MAC address is AB:CD."</li>
+                        <li>Furthermore, machines will accept <em>unsolicited</em> ARP replies (Gratuitous ARP) and update their internal ARP cache.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="ARP Poisoning" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>ARP Poisoning (Spoofing)</h2>
+                <p>The standard method for establishing a MITM position on a local switched network.</p>
+                <ol>
+                    <li>The attacker sends forged ARP replies to the Victim, saying "I am the Router."</li>
+                    <li>The attacker sends forged ARP replies to the Router, saying "I am the Victim."</li>
+                    <li>The switch updates its MAC tables. Now, all traffic between the Victim and the Internet flows directly through the Attacker's machine.</li>
+                </ol>
+                <div class="highlight">
+                    The attacker must enable "IP Forwarding" on their machine, otherwise the traffic drops and the victim loses internet access (a DoS instead of a MITM).
+                </div>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Once you are in the middle, you must make sense of the millions of packets flowing across the wire using protocol analyzers like Wireshark.</p>
+                <div class="highlight">
+                    We will analyze a packet capture to extract cleartext credentials from an insecure protocol.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Wireshark Analysis" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Task 1: Wireshark Packet Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You have intercepted traffic on the network and saved it as <code>capture.pcapng</code>. You suspect a user logged into a legacy FTP server.</p>
+                    <ol>
+                        <li>Open the file in Wireshark. Write the exact <strong>Display Filter</strong> required to show only FTP traffic containing authentication attempts.</li>
+                        <li>Right-click the relevant packet and use "Follow TCP Stream".</li>
+                        <li>Extract the username and password from the cleartext stream.</li>
+                        <li>Discuss the architectural difference between FTP and SFTP in mitigating this attack.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://wiki.wireshark.org/DisplayFilters" target="_blank" style="color: #64ffda;">Wireshark Display Filter Reference</a>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Intercepting Encrypted Traffic" class="center" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Part 2: Intercepting Encrypted Traffic</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="The Problem with HTTPS" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>The Problem with HTTPS</h2>
+                <p>If the victim is visiting an HTTPS website, intercepting the traffic via ARP poisoning only yields encrypted gibberish.</p>
+                <ul>
+                    <li>If the attacker tries to present their own SSL certificate to decrypt the traffic, the victim's browser will throw a massive red "Invalid Certificate" warning.</li>
+                    <li>To steal data, the attacker must either trick the user into ignoring the warning, or prevent the HTTPS connection from establishing in the first place.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="SSL Stripping" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>SSL Stripping (Downgrade Attacks)</h2>
+                <p>Invented by Moxie Marlinspike, this attack targets the moment a user types <code>bank.com</code> without specifying <code>https://</code>.</p>
+                <div class="task-box">
+                    <ol>
+                        <li>Victim sends unencrypted HTTP request for <code>bank.com</code>.</li>
+                        <li>Attacker intercepts the request and connects to the real bank via HTTPS on behalf of the victim.</li>
+                        <li>Attacker receives the HTTPS response, <em>strips out the encryption</em>, changes all <code>https://</code> links to <code>http://</code>, and forwards the unencrypted page to the victim.</li>
+                        <li>The victim logs into an HTTP page, and the attacker captures the cleartext credentials.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="DNS Spoofing & Evil Twins" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Alternative Interception</h2>
+                <ul>
+                    <li><strong>DNS Spoofing:</strong> The attacker intercepts DNS requests on the local network. When the victim asks for the IP of <code>google.com</code>, the attacker replies with the IP of their malicious phishing server.</li>
+                    <li><strong>Evil Twin Access Points:</strong> Setting up a rogue Wi-Fi router with the exact same SSID (e.g., "Starbucks_WiFi") as the legitimate network, but with a stronger signal. Victims auto-connect to the attacker, providing an instant MITM position without needing ARP poisoning.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>SSL Stripping was incredibly effective for years, forcing the industry to create a robust architectural defense mechanism built directly into modern browsers.</p>
+                <div class="highlight">
+                    We will simulate an ARP Poisoning attack and examine the impact of HTTP Strict Transport Security (HSTS).
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: MITM & HSTS" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Task 2: MITM Simulation & HSTS Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You have Kali Linux and a target Windows VM on the same virtual subnet.</p>
+                    <ol>
+                        <li>Draft the exact <code>arpspoof</code> commands required to establish a two-way MITM position between the Windows VM and the gateway.</li>
+                        <li>Assume you launch <code>sslstrip</code>. The victim attempts to navigate to <code>http://facebook.com</code>. The attack fails, and the browser forces an HTTPS connection anyway.</li>
+                        <li>Explain the mechanism of <strong>HSTS (HTTP Strict Transport Security)</strong> and how the "HSTS Preload List" fundamentally breaks the SSL Stripping attack methodology.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://hstspreload.org/" target="_blank" style="color: #64ffda;">HSTS Preload List Submission</a>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Local networks are inherently trusting. Protocols like ARP prioritize availability over confidentiality and integrity.</li>
+                    <li>Encryption in transit (HTTPS/TLS) is the ultimate defense against MITM, provided downgrade attacks (HSTS) and certificate warnings are strictly enforced.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Social Engineering (Human Vulnerabilities)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

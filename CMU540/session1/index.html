@@ -1,0 +1,536 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU540 - Session 1: Cyber Security Fundamentals & Lab Setup</title>
+
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU540</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Cyber Security Fundamentals &amp; Lab Setup</span>
+    <span class="jw-count">1 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <span class="jw-nav-btn is-off" aria-hidden="true"><span>←</span>Prev<span></span></span>
+    <a class="jw-nav-btn" href="../session2/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+        
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>Cyber Security Fundamentals & Lab Setup</h1>
+                <h2>Session 1</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand fundamental cybersecurity concepts</li>
+                    <li>Learn the CIA Triad (Confidentiality, Integrity, Availability)</li>
+                    <li>Explore common security threats and vulnerabilities</li>
+                    <li>Set up the OS&sup3; Newman Cyber Security Lab environment</li>
+                    <li>Understand the course structure and expectations</li>
+                    <li>Explore career opportunities in cybersecurity</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="What is Cybersecurity?">
+                <h2>What is Cybersecurity?</h2>
+                <div class="highlight">
+                    <p><strong>Cybersecurity</strong> is the practice of protecting systems, networks, and programs from digital attacks.</p>
+                </div>
+                <h3>Key Areas:</h3>
+                <ul>
+                    <li><strong>Information Security:</strong> Protecting data and information</li>
+                    <li><strong>Network Security:</strong> Securing network infrastructure</li>
+                    <li><strong>Application Security:</strong> Securing software applications</li>
+                    <li><strong>Operational Security:</strong> Protecting business operations</li>
+                    <li><strong>Disaster Recovery:</strong> Planning for security incidents</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="The CIA Triad">
+                <h2>The CIA Triad</h2>
+                <div class="cia-triad">
+                    <h3>Confidentiality</h3>
+                    <p>Ensuring that information is accessible only to those authorized to have access.</p>
+                    <ul>
+                        <li>Data encryption</li>
+                        <li>Access controls</li>
+                        <li>Authentication</li>
+                        <li>Privacy protection</li>
+                    </ul>
+                    
+                    <h3>Integrity</h3>
+                    <p>Maintaining the accuracy and completeness of information.</p>
+                    <ul>
+                        <li>Data validation</li>
+                        <li>Checksums and hashes</li>
+                        <li>Digital signatures</li>
+                        <li>Audit trails</li>
+                    </ul>
+                    
+                    <h3>Availability</h3>
+                    <p>Ensuring that information and resources are available when needed.</p>
+                    <ul>
+                        <li>Redundancy</li>
+                        <li>Backup systems</li>
+                        <li>Disaster recovery</li>
+                        <li>DDoS protection</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Common Security Threats">
+                <h2>Common Security Threats</h2>
+                <h3>1. Malware</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Types of Malware --&gt;
+- Viruses: Self-replicating malicious code
+- Worms: Self-propagating malware
+- Trojans: Disguised malicious software
+- Ransomware: Encrypts data for ransom
+- Spyware: Monitors user activity
+- Adware: Displays unwanted advertisements</code></pre>
+                </div>
+                <h3>2. Social Engineering</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Social Engineering Techniques --&gt;
+- Phishing: Fraudulent emails
+- Spear Phishing: Targeted attacks
+- Vishing: Voice-based attacks
+- Smishing: SMS-based attacks
+- Pretexting: False identity attacks
+- Baiting: Tempting offers</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Common Attack Vectors">
+                <h2>Common Attack Vectors</h2>
+                <h3>1. Network Attacks</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Network Attack Types --&gt;
+- DDoS: Distributed Denial of Service
+- Man-in-the-Middle: Intercepting communications
+- Packet Sniffing: Capturing network traffic
+- Port Scanning: Discovering open ports
+- ARP Spoofing: Redirecting network traffic
+- DNS Spoofing: Redirecting domain requests</code></pre>
+                </div>
+                <h3>2. Application Attacks</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Application Attack Types --&gt;
+- SQL Injection: Database manipulation
+- Cross-Site Scripting (XSS): Client-side attacks
+- Cross-Site Request Forgery (CSRF): Unauthorized actions
+- Buffer Overflow: Memory exploitation
+- Directory Traversal: File system access
+- Session Hijacking: Stealing user sessions</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Security Controls">
+                <h2>Security Controls</h2>
+                <h3>1. Administrative Controls</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Administrative Controls --&gt;
+- Security policies and procedures
+- Employee training and awareness
+- Background checks
+- Security audits and assessments
+- Incident response plans
+- Business continuity planning</code></pre>
+                </div>
+                <h3>2. Technical Controls</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Technical Controls --&gt;
+- Firewalls and intrusion detection
+- Antivirus and antimalware
+- Encryption and access controls
+- Network segmentation
+- Vulnerability scanning
+- Security monitoring and logging</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Physical Security">
+                <h2>Physical Security</h2>
+                <h3>1. Physical Access Controls</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Physical Security Measures --&gt;
+- Access control systems
+- Security cameras and monitoring
+- Biometric authentication
+- Security guards and patrols
+- Environmental controls
+- Equipment protection</code></pre>
+                </div>
+                <h3>2. Environmental Controls</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Environmental Security --&gt;
+- Temperature and humidity control
+- Fire suppression systems
+- Power backup and UPS
+- Flood protection
+- Earthquake protection
+- Electromagnetic shielding</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Risk Management">
+                <h2>Risk Management</h2>
+                <h3>1. Risk Assessment Process</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Risk Assessment Steps --&gt;
+1. Asset Identification
+  - Hardware and software assets
+  - Data and information assets
+  - Human resources
+  - Physical facilities
+2. Threat Analysis
+  - External threats
+  - Internal threats
+  - Natural disasters
+  - Human error</code></pre>
+                </div>
+                <h3>2. Risk Treatment Options</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Risk Treatment Strategies --&gt;
+- Accept: Acknowledge and monitor risk
+- Avoid: Eliminate the risk source
+- Mitigate: Reduce risk likelihood/impact
+- Transfer: Share risk with third party
+Risk = Threat × Vulnerability × Impact</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Opportunities in Cybersecurity">
+                <h2>Career Opportunities in Cybersecurity</h2>
+                <div class="career-box">
+                    <h3>Entry-Level Roles:</h3>
+                    <ul>
+                        <li><strong>Security Analyst:</strong> £25,000 - £45,000</li>
+                        <li><strong>IT Security Specialist:</strong> £30,000 - £50,000</li>
+                        <li><strong>Network Security Administrator:</strong> £28,000 - £48,000</li>
+                        <li><strong>Security Operations Center (SOC) Analyst:</strong> £26,000 - £46,000</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> Basic security concepts, Network fundamentals, Problem-solving, Communication</p>
+                </div>
+            </section>
+
+            <section data-slide-title="OS&sup3; Newman Cyber Security Lab">
+                <h2>OS&sup3; Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>What is OS&sup3; Studio?</h3>
+                    <p>OS&sup3; Studio is our comprehensive cybersecurity lab environment that provides:</p>
+                    <ul>
+                        <li>Hands-on vulnerability testing</li>
+                        <li>Secure implementation challenges</li>
+                        <li>Real-world attack scenarios</li>
+                        <li>Industry-standard security tools</li>
+                        <li>Guided learning experiences</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Course Structure Overview">
+                <h2>Course Structure Overview</h2>
+                
+            </section>
+
+            <section data-slide-title="Web Demos and Resources">
+                <h2>Web Demos and Resources</h2>
+                <div class="demo-link">
+                    <h3>Learning Resources:</h3>
+                    <ul>
+                        <li><a href="https://owasp.org/" target="_blank">OWASP</a> - Open Web Application Security Project</li>
+                        <li><a href="https://www.nist.gov/" target="_blank">NIST</a> - National Institute of Standards and Technology</li>
+                        <li><a href="https://www.sans.org/" target="_blank">SANS</a> - SANS Institute</li>
+                        <li><a href="https://www.cisecurity.org/" target="_blank">CIS</a> - Center for Internet Security</li>
+                        <li><a href="https://www.cyber.gov.au/" target="_blank">ACSC</a> - Australian Cyber Security Centre</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Security Awareness">
+                <h2>Security Awareness</h2>
+                <div class="highlight">
+                    <h3>Key Security Principles:</h3>
+                    <ul>
+                        <li><strong>Defense in Depth:</strong> Multiple layers of security</li>
+                        <li><strong>Least Privilege:</strong> Minimum necessary access</li>
+                        <li><strong>Fail Secure:</strong> System fails to secure state</li>
+                        <li><strong>Separation of Duties:</strong> No single person controls everything</li>
+                        <li><strong>Regular Updates:</strong> Keep systems and software current</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Summary: Cybersecurity Fundamentals">
+                <h2>Summary: Cybersecurity Fundamentals</h2>
+                <div class="highlight">
+                    <h3>Key Concepts Covered:</h3>
+                    <ol>
+                        <li>CIA Triad: Confidentiality, Integrity, Availability</li>
+                        <li>Common threats: Malware, Social Engineering</li>
+                        <li>Attack vectors: Network and Application attacks</li>
+                        <li>Security controls: Administrative and Technical</li>
+                        <li>Physical security and environmental controls</li>
+                        <li>Risk management and assessment</li>
+                        <li>Career opportunities in cybersecurity</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: OS&sup3; Studio Setup and Configuration">
+                <h2>Task 1: OS&sup3; Studio Setup and Configuration</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Follow the OS&sup3; Studio setup guide to configure your lab environment.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS&sup3; Studio portal through the university website</li>
+                        <li>Create your student account and log in</li>
+                        <li>Follow the step-by-step setup guide</li>
+                        <li>Configure your lab environment</li>
+                        <li>Test basic connectivity and access</li>
+                        <li>Explore the lab interface and tools</li>
+                        <li>Complete the setup verification checklist</li>
+                        <li>Document any issues or questions</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on following the setup guide carefully and ensuring everything works correctly</em></p>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Break Time">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the OS&sup3; Studio setup.</p>
+                    <p><em>Next: Live demo and Task 2</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Live Demo: OS&sup3; Studio Overview">
+                <h2>Live Demo: OS&sup3; Studio Overview</h2>
+                <div class="live-demo">
+                    <h3>Live Demonstration</h3>
+                    <p><strong>This section will be covered in a live demonstration by the lecturer.</strong></p>
+                    <ul>
+                        <li>OS&sup3; Studio interface overview</li>
+                        <li>Basic navigation and features</li>
+                        <li>Available lab environments</li>
+                        <li>Security tools and capabilities</li>
+                        <li>Hands-on examples</li>
+                    </ul>
+                    <p><em>Please pay attention to the live demo and ask questions as needed.</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="OS&sup3; Studio Features">
+                <h2>OS&sup3; Studio Features</h2>
+                <h3>1. Lab Environments</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Available Lab Environments --&gt;
+- Web Application Security Labs
+- Network Security Testing
+- Vulnerability Assessment
+- Penetration Testing Scenarios
+- Secure Coding Challenges
+- Incident Response Simulations</code></pre>
+                </div>
+                <h3>2. Security Tools</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Integrated Security Tools --&gt;
+- Nmap: Network scanning
+- Wireshark: Traffic analysis
+- Burp Suite: Web application testing
+- Metasploit: Exploitation framework
+- OWASP ZAP: Web app scanner
+- Custom vulnerability scanners</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Path in OS&sup3; Studio">
+                <h2>Learning Path in OS&sup3; Studio</h2>
+                <h3>1. Beginner Level</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Beginner Labs --&gt;
+- Basic vulnerability scanning
+- Simple web application testing
+- Network reconnaissance
+- Basic exploit techniques
+- Security tool introduction
+- Guided tutorials</code></pre>
+                </div>
+                <h3>2. Intermediate Level</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Intermediate Labs --&gt;
+- Advanced web application attacks
+- Network penetration testing
+- Social engineering simulations
+- Incident response scenarios
+- Secure implementation challenges
+- Real-world case studies</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="OS&sup3; Studio Best Practices">
+                <h2>OS&sup3; Studio Best Practices</h2>
+                <h3>1. Lab Safety</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Lab Safety Guidelines --&gt;
+- Only test in designated lab environments
+- Never attempt attacks on real systems
+- Follow ethical guidelines
+- Report any lab issues immediately
+- Respect other students' work
+- Keep lab environments clean</code></pre>
+                </div>
+                <h3>2. Learning Approach</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Effective Learning Strategies --&gt;
+- Start with guided tutorials
+- Practice regularly
+- Take notes and document findings
+- Ask questions when stuck
+- Collaborate with classmates
+- Challenge yourself with advanced labs</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Development in Cybersecurity">
+                <h2>Career Development in Cybersecurity</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Foundation Certifications:</strong> CompTIA Security+, Network+</li>
+                        <li><strong>Specialized Training:</strong> Ethical hacking, Incident response</li>
+                        <li><strong>Hands-on Practice:</strong> OS&sup3; Studio labs, CTF competitions</li>
+                        <li><strong>Industry Networking:</strong> Security conferences, meetups</li>
+                        <li><strong>Continuous Learning:</strong> Stay updated with latest threats</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://www.comptia.org/" target="_blank">CompTIA</a> | <a href="https://www.sans.org/" target="_blank">SANS</a> | <a href="https://owasp.org/" target="_blank">OWASP</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: OS&sup3; Studio Exploration">
+                <h2>Task 2: OS&sup3; Studio Exploration</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Explore the OS&sup3; Studio environment and familiarize yourself with the available tools and labs.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access your configured OS&sup3; Studio environment</li>
+                        <li>Navigate through the different lab categories</li>
+                        <li>Try out basic security tools and features</li>
+                        <li>Complete a simple vulnerability scanning exercise</li>
+                        <li>Explore the web application security labs</li>
+                        <li>Test basic network reconnaissance tools</li>
+                        <li>Familiarize yourself with the interface</li>
+                        <li>Document your exploration and any questions</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on exploring and getting comfortable with the OS&sup3; Studio environment</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Further Activity: Advanced Exploration">
+                <h2>Further Activity: Advanced Exploration</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Additional Exploration:</h3>
+                    <p>For students with additional time, explore advanced features:</p>
+                    <ul>
+                        <li>Advanced vulnerability scanning techniques</li>
+                        <li>Complex web application testing scenarios</li>
+                        <li>Network penetration testing labs</li>
+                        <li>Social engineering simulation exercises</li>
+                        <li>Incident response and forensics labs</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Exploration report with findings and questions</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Session Summary">
+                <h2>Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>Cybersecurity fundamentals are essential for all IT professionals</li>
+                        <li>The CIA Triad forms the foundation of security</li>
+                        <li>Understanding threats and vulnerabilities is crucial</li>
+                        <li>OS&sup3; Studio provides hands-on learning experience</li>
+                        <li>Career opportunities in cybersecurity are growing</li>
+                        <li>Continuous learning is essential in this field</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Next Steps">
+                <h2>Next Steps</h2>
+                
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script><script src="/chrome.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,624 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU540 - Session 11: NET-PROTO-01, NET-SCAN-01 & NET-DNS-01 - Network Security Fundamentals</title>
+
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU540</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">NET-PROTO-01, NET-SCAN-01 &amp; NET-DNS-01 - Network Security Fundamentals</span>
+    <span class="jw-count">11 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session10/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session12/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+        
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>NET-PROTO-01, NET-SCAN-01 & NET-DNS-01 - Network Security Fundamentals</h1>
+                <h2>Session 11</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand network protocol security fundamentals</li>
+                    <li>Learn port scanning techniques and detection</li>
+                    <li>Analyze DNS security vulnerabilities</li>
+                    <li>Practice vulnerability discovery using OS&sup3; Studio</li>
+                    <li>Implement secure network configurations</li>
+                    <li>Explore career opportunities in network security</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Network Security Fundamentals">
+                <h2>Network Security Fundamentals</h2>
+                <div class="highlight">
+                    <p><strong>NET-PROTO-01:</strong> Protocol security focuses on securing network communication protocols</p>
+                    <p><strong>NET-SCAN-01:</strong> Port scanning techniques for reconnaissance and vulnerability assessment</p>
+                    <p><strong>NET-DNS-01:</strong> DNS security analysis and protection against DNS-based attacks</p>
+                </div>
+                <h3>Key Areas:</h3>
+                <ul>
+                    <li>Protocol vulnerabilities and attacks</li>
+                    <li>Network reconnaissance techniques</li>
+                    <li>DNS security and DNSSEC</li>
+                    <li>Network monitoring and detection</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Real-World Impact">
+                <h2>Real-World Impact</h2>
+                <div class="vulnerability">
+                    <h3>Notable Network Attacks:</h3>
+                    <ul>
+                        <li><strong>Mirai Botnet (2016):</strong> IoT devices compromised via weak protocols</li>
+                        <li><strong>Dyn DNS Attack (2016):</strong> DNS DDoS attack took down major websites</li>
+                        <li><strong>SolarWinds (2020):</strong> Supply chain attack via network monitoring tools</li>
+                    </ul>
+                    <p><strong>Impact:</strong> Service disruption, data breaches, infrastructure compromise</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Common Protocol Security Vulnerabilities">
+                <h2>Common Protocol Security Vulnerabilities</h2>
+                <h3>1. Weak Encryption Protocols</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Weak protocols --&gt;
+SSH-1.0                    # Weak encryption
+SSL 2.0/3.0                # Deprecated protocols
+WEP (WiFi)                 # Easily cracked
+Telnet                     # Plaintext transmission
+&lt;!-- SECURE: Strong protocols --&gt;
+SSH-2.0                    # Strong encryption
+TLS 1.2/1.3               # Modern protocols
+WPA3 (WiFi)               # Strong authentication
+SSH/HTTPS                 # Encrypted transmission</code></pre>
+                </div>
+                <h3>2. Protocol Implementation Flaws</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- VULNERABLE: Implementation flaws --&gt;
+Heartbleed (OpenSSL)       # Buffer overflow
+POODLE (SSL 3.0)          # Padding oracle
+BEAST (TLS 1.0)           # Block cipher attack
+CRIME (TLS)               # Compression attack
+&lt;!-- SECURE: Proper implementation --&gt;
+Regular security updates
+Proper input validation
+Secure random number generation
+Memory-safe programming</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Port Scanning Techniques">
+                <h2>Port Scanning Techniques</h2>
+                <h3>1. TCP Scanning Methods</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- TCP Connect Scan --&gt;
+nmap -sT target.com
+&lt;!-- TCP SYN Scan (Stealth) --&gt;
+nmap -sS target.com
+&lt;!-- TCP FIN Scan --&gt;
+nmap -sF target.com
+&lt;!-- TCP NULL Scan --&gt;
+nmap -sN target.com
+&lt;!-- TCP XMAS Scan --&gt;
+nmap -sX target.com</code></pre>
+                </div>
+                <h3>2. UDP Scanning</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- UDP Scan --&gt;
+nmap -sU target.com
+&lt;!-- UDP Scan with Service Detection --&gt;
+nmap -sU -sV target.com
+&lt;!-- Common UDP Ports --&gt;
+53  - DNS
+67  - DHCP
+123 - NTP
+161 - SNMP
+500 - IKE</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Advanced Scanning Techniques">
+                <h2>Advanced Scanning Techniques</h2>
+                <h3>1. Service Detection</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Service Version Detection --&gt;
+nmap -sV target.com
+&lt;!-- OS Detection --&gt;
+nmap -O target.com
+&lt;!-- Script Scanning --&gt;
+nmap --script vuln target.com
+&lt;!-- Aggressive Scan --&gt;
+nmap -A target.com</code></pre>
+                </div>
+                <h3>2. Stealth and Evasion</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Timing Control --&gt;
+nmap -T0 target.com    # Paranoid (slowest)
+nmap -T5 target.com    # Insane (fastest)
+&lt;!-- Fragmentation --&gt;
+nmap -f target.com
+&lt;!-- Decoy Scanning --&gt;
+nmap -D decoy1,decoy2,ME target.com
+&lt;!-- Source Port Spoofing --&gt;
+nmap --source-port 53 target.com</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="DNS Security Vulnerabilities">
+                <h2>DNS Security Vulnerabilities</h2>
+                <h3>1. DNS Cache Poisoning</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- DNS Cache Poisoning Attack --&gt;
+1. Attacker queries DNS server for non-existent subdomain
+2. DNS server queries authoritative server
+3. Attacker floods with fake responses
+4. DNS server caches fake response
+&lt;!-- Example --&gt;
+Query: nonexistent.example.com
+Fake Response: example.com A 192.168.1.100
+Result: All queries to example.com redirected</code></pre>
+                </div>
+                <h3>2. DNS Amplification Attacks</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- DNS Amplification --&gt;
+1. Attacker spoofs victim's IP address
+2. Sends small DNS queries to open resolvers
+3. Open resolvers send large responses to victim
+4. Amplification factor: 50-100x
+&lt;!-- Mitigation --&gt;
+- Disable open DNS resolvers
+- Implement rate limiting
+- Use DNS response size limits</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="DNS Security Measures">
+                <h2>DNS Security Measures</h2>
+                <h3>1. DNSSEC Implementation</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- DNSSEC Zone Signing --&gt;
+dnssec-keygen -a RSASHA256 -b 2048 -n ZONE example.com
+dnssec-signzone -o example.com example.com.db
+&lt;!-- DNSSEC Validation --&gt;
+dig +dnssec example.com
+dig +cdflag example.com
+&lt;!-- DNSSEC Chain of Trust --&gt;
+Root Zone → TLD → Domain → Subdomain</code></pre>
+                </div>
+                <h3>2. DNS Filtering and Monitoring</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- DNS Filtering --&gt;
+# Block malicious domains
+*.malware.com A 0.0.0.0
+*.phishing.com A 0.0.0.0
+&lt;!-- DNS Monitoring --&gt;
+# Log DNS queries
+logging {
+  channel security {
+    file "/var/log/dns-security.log";
+    severity info;
+  };
+};</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Network Monitoring and Detection">
+                <h2>Network Monitoring and Detection</h2>
+                <h3>1. Intrusion Detection Systems</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Snort IDS Rules --&gt;
+alert tcp any any -&gt; any 22 (msg:"SSH Brute Force"; threshold:type both, track by_src, count 5, seconds 60;)
+alert udp any any -&gt; any 53 (msg:"DNS Query"; content:"|01 00 00 01|"; depth:4;)
+alert tcp any any -&gt; any 80 (msg:"Web Attack"; content:"/etc/passwd"; nocase;)
+&lt;!-- Suricata Rules --&gt;
+alert http any any -&gt; any any (msg:"Suspicious User Agent"; content:"sqlmap"; http_user_agent;)</code></pre>
+                </div>
+                <h3>2. Network Traffic Analysis</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Wireshark Filters --&gt;
+tcp.port == 22 and tcp.flags.syn == 1
+dns.qry.name contains "malware"
+http.request.uri contains "admin"
+ip.src == 192.168.1.100
+&lt;!-- tcpdump Commands --&gt;
+tcpdump -i eth0 port 22
+tcpdump -i eth0 host 192.168.1.100
+tcpdump -i eth0 -w capture.pcap</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Opportunities in Network Security">
+                <h2>Career Opportunities in Network Security</h2>
+                <div class="career-box">
+                    <h3>Network Security Roles:</h3>
+                    <ul>
+                        <li><strong>Network Security Engineer:</strong> £40,000 - £80,000</li>
+                        <li><strong>Penetration Tester:</strong> £35,000 - £70,000</li>
+                        <li><strong>Security Analyst:</strong> £30,000 - £60,000</li>
+                        <li><strong>Network Administrator:</strong> £25,000 - £50,000</li>
+                        <li><strong>Security Consultant:</strong> £50,000 - £100,000</li>
+                    </ul>
+                    <p><strong>Skills Needed:</strong> Network protocols, Security tools, Penetration testing, Risk assessment</p>
+                </div>
+            </section>
+
+            <section data-slide-title="OS&sup3; Newman Cyber Security Lab">
+                <h2>OS&sup3; Newman Cyber Security Lab</h2>
+                <div class="os3-studio">
+                    <h3>NET-PROTO-01, NET-SCAN-01 & NET-DNS-01 Lab Environment</h3>
+                    <p>Our OS&sup3; Studio provides hands-on experience with:</p>
+                    <ul>
+                        <li>Network protocols and their vulnerabilities</li>
+                        <li>Port scanning and reconnaissance tools</li>
+                        <li>DNS security testing and analysis</li>
+                        <li>Network monitoring and detection systems</li>
+                    </ul>
+                    <p><strong>Access:</strong> Available through university portal</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Web Demos and Tools">
+                <h2>Web Demos and Tools</h2>
+                <div class="demo-link">
+                    <h3>Network Security Tools:</h3>
+                    <ul>
+                        <li><a href="https://nmap.org/" target="_blank">Nmap</a> - Network discovery and security auditing</li>
+                        <li><a href="https://www.wireshark.org/" target="_blank">Wireshark</a> - Network protocol analyzer</li>
+                        <li><a href="https://www.snort.org/" target="_blank">Snort</a> - Intrusion detection system</li>
+                        <li><a href="https://suricata.io/" target="_blank">Suricata</a> - Network threat detection engine</li>
+                        <li><a href="https://www.tenable.com/products/nessus" target="_blank">Nessus</a> - Vulnerability scanner</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Case Study: Mirai Botnet">
+                <h2>Case Study: Mirai Botnet</h2>
+                <div class="vulnerability">
+                    <h3>2016 Mirai Botnet Attack</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> 600,000+ IoT devices compromised</li>
+                        <li><strong>Method:</strong> Default credentials and weak protocols</li>
+                        <li><strong>Targets:</strong> Cameras, routers, DVRs</li>
+                        <li><strong>Result:</strong> Major DDoS attacks on Dyn DNS</li>
+                    </ul>
+                    <p><strong>Lesson:</strong> Weak network protocols and default credentials create massive attack surfaces</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Summary: Common Network Security Issues">
+                <h2>Summary: Common Network Security Issues</h2>
+                <div class="highlight">
+                    <h3>Key Vulnerabilities to Look For:</h3>
+                    <ol>
+                        <li>Weak or deprecated protocols</li>
+                        <li>Open ports and services</li>
+                        <li>DNS cache poisoning vulnerabilities</li>
+                        <li>Unencrypted network traffic</li>
+                        <li>Missing network monitoring</li>
+                        <li>Insufficient access controls</li>
+                        <li>Default credentials and configurations</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: Network Security Vulnerability Discovery">
+                <h2>Task 1: Network Security Vulnerability Discovery</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS&sup3; Studio to identify network protocol vulnerabilities, perform port scanning, and analyze DNS security.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS&sup3; Studio network lab environment</li>
+                        <li>Perform comprehensive port scanning on target systems</li>
+                        <li>Identify weak protocols and services</li>
+                        <li>Test DNS security and cache poisoning</li>
+                        <li>Analyze network traffic for anomalies</li>
+                        <li>Test for protocol implementation flaws</li>
+                        <li>Document all findings with proof of concept</li>
+                        <li>Prepare a network security assessment report</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on systematic network reconnaissance and vulnerability assessment</em></p>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Break Time">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secure implementation and Task 2</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Protocol Implementation">
+                <h2>Secure Protocol Implementation</h2>
+                
+                <h3>1. Protocol Hardening</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: SSH Configuration --&gt;
+# /etc/ssh/sshd_config
+Protocol 2
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+MaxAuthTries 3
+ClientAliveInterval 300
+ClientAliveCountMax 2
+&lt;!-- SECURE: TLS Configuration --&gt;
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256;
+ssl_prefer_server_ciphers on;
+ssl_session_cache shared:SSL:10m;</code></pre>
+                </div>
+
+                <h3>2. Network Segmentation</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: VLAN Configuration --&gt;
+# DMZ Network
+vlan 10
+name DMZ
+# Internal Network
+vlan 20
+name Internal
+# Guest Network
+vlan 30
+name Guest
+&lt;!-- Firewall Rules --&gt;
+# Allow DMZ to Internet
+permit ip 192.168.10.0/24 any
+# Block Guest to Internal
+deny ip 192.168.30.0/24 192.168.20.0/24</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure DNS Configuration">
+                <h2>Secure DNS Configuration</h2>
+                
+                <h3>1. DNS Server Hardening</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: BIND Configuration --&gt;
+options {
+  listen-on port 53 { 127.0.0.1; 192.168.1.10; };
+  allow-query { localnets; };
+  allow-recursion { localnets; };
+  recursion no;
+  version "Not disclosed";
+  hide-identity yes;
+  hide-version yes;
+};
+&lt;!-- DNSSEC Configuration --&gt;
+zone "example.com" {
+  type master;
+  file "example.com.signed";
+  dnssec-enable yes;
+  dnssec-validation yes;
+};</code></pre>
+                </div>
+
+                <h3>2. DNS Filtering and Monitoring</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: DNS Filtering --&gt;
+# Block malicious domains
+zone "malware.com" {
+  type master;
+  file "blocked.zone";
+};
+&lt;!-- DNS Logging --&gt;
+logging {
+  channel security {
+    file "/var/log/dns-security.log";
+    severity info;
+  };
+  category security { security; };
+};</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Network Monitoring Implementation">
+                <h2>Network Monitoring Implementation</h2>
+                
+                <h3>1. IDS/IPS Configuration</h3>
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- SECURE: Snort Configuration --&gt;
+# /etc/snort/snort.conf
+var HOME_NET 192.168.1.0/24
+var EXTERNAL_NET !$HOME_NET
+# Enable rules
+include $RULE_PATH/local.rules
+include $RULE_PATH/web-attacks.rules
+# Output configuration
+output unified2: filename snort.log, limit 128
+&lt;!-- Custom Rules --&gt;
+alert tcp $EXTERNAL_NET any -&gt; $HOME_NET 22 (msg:"SSH Brute Force"; threshold:type both, track by_src, count 5, seconds 60;)</code></pre>
+                </div>
+
+                <h3>2. Network Traffic Analysis</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: Traffic Monitoring --&gt;
+# Monitor suspicious traffic
+tcpdump -i eth0 -w suspicious.pcap host 192.168.1.100
+# Analyze DNS queries
+tcpdump -i eth0 port 53 -n
+# Monitor failed connections
+tcpdump -i eth0 'tcp[tcpflags] &amp; (tcp-syn|tcp-rst) != 0'
+# Real-time analysis
+tshark -i eth0 -f "port 80" -T fields -e ip.src -e ip.dst</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Access Control Implementation">
+                <h2>Access Control Implementation</h2>
+                
+                <h3>1. Network Access Control (NAC)</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: 802.1X Configuration --&gt;
+# Switch Configuration
+interface GigabitEthernet0/1
+  switchport mode access
+  authentication port-control auto
+  authentication host-mode multi-domain
+  authentication violation restrict
+&lt;!-- RADIUS Configuration --&gt;
+radius-server host 192.168.1.100
+radius-server key secretkey
+aaa authentication dot1x default group radius
+dot1x system-auth-control</code></pre>
+                </div>
+
+                <h3>2. Firewall Rules</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- SECURE: iptables Rules --&gt;
+# Default deny policy
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+# Allow SSH from specific networks
+iptables -A INPUT -p tcp --dport 22 -s 192.168.1.0/24 -j ACCEPT
+# Block suspicious traffic
+iptables -A INPUT -p tcp --dport 22 -m recent --set --name SSH
+iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 4 --name SSH -j DROP</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Development in Network Security">
+                <h2>Career Development in Network Security</h2>
+                <div class="career-box">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li><strong>Advanced Certifications:</strong> CCNA Security, CCNP Security, CISSP</li>
+                        <li><strong>Specialized Training:</strong> Network security, Penetration testing</li>
+                        <li><strong>Hands-on Practice:</strong> Network labs, CTF competitions</li>
+                        <li><strong>Industry Networking:</strong> Security conferences, meetups</li>
+                        <li><strong>Research:</strong> New attack techniques, Defense methods</li>
+                    </ul>
+                    <p><strong>Resources:</strong> <a href="https://www.cisco.com/" target="_blank">Cisco</a> | <a href="https://www.sans.org/" target="_blank">SANS</a> | <a href="https://nmap.org/" target="_blank">Nmap</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Secure Network Configuration Implementation">
+                <h2>Task 2: Secure Network Configuration Implementation</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Use OS&sup3; Studio to implement secure network configurations and monitoring systems.</p>
+                    
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS&sup3; Studio secure implementation environment</li>
+                        <li>Configure secure network protocols and services</li>
+                        <li>Implement DNS security with DNSSEC</li>
+                        <li>Set up network monitoring and IDS</li>
+                        <li>Configure firewall rules and access controls</li>
+                        <li>Implement network segmentation</li>
+                        <li>Test the secure implementation</li>
+                        <li>Document the security improvements</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on implementing industry-standard network security practices</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Further Activity: Code Inspection">
+                <h2>Further Activity: Code Inspection</h2>
+                <div class="os3-studio">
+                    <h3>Advanced Students - Code Analysis:</h3>
+                    <p>For students with additional time, explore the source code to understand:</p>
+                    <ul>
+                        <li>How network protocols are implemented securely</li>
+                        <li>DNS server configuration and DNSSEC setup</li>
+                        <li>Network monitoring and IDS configuration</li>
+                        <li>Firewall rules and access control implementation</li>
+                        <li>Network segmentation and security policies</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Code review report with network security recommendations</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Session Summary">
+                <h2>Session Summary</h2>
+                <div class="highlight">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>Network protocol security is fundamental to overall security</li>
+                        <li>Port scanning provides valuable reconnaissance information</li>
+                        <li>DNS security requires proper configuration and monitoring</li>
+                        <li>OS&sup3; Studio provides hands-on network security testing</li>
+                        <li>Secure implementation requires multiple layers of protection</li>
+                        <li>Career opportunities in network security are growing</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Next Steps">
+                <h2>Next Steps</h2>
+                
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script><script src="/chrome.js"></script>
+</body>
+
+</html>

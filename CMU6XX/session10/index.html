@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 10: Cloud & IoT Security</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Cloud &amp; IoT Security</span>
+    <span class="jw-count">10 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session9/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session11/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 10: Cloud & IoT Security</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct the Cloud Shared Responsibility Model.</li>
+                    <li>Exploit misconfigured AWS S3 buckets and IAM policies.</li>
+                    <li>Analyze the unique threat landscape of Internet of Things (IoT) devices.</li>
+                    <li>Extract and reverse engineer IoT firmware binaries using Binwalk.</li>
+                    <li>Understand the implications of default credentials in embedded systems.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Cloud Exploitation (AWS) (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The Shared Responsibility Model</li>
+                    <li>S3 Buckets and IAM Misconfigurations</li>
+                    <li><strong>Task 1: S3 Bucket Exploitation</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: IoT Device Hacking (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The IoT Threat Landscape (Mirai)</li>
+                    <li>Firmware Extraction and Analysis</li>
+                    <li><strong>Task 2: Firmware Reverse Engineering</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Cloud Exploitation" class="center" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Part 1: Cloud Exploitation (AWS)</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Shared Responsibility" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>The Shared Responsibility Model</h2>
+                <p>When migrating to the cloud, you do not outsource your security responsibility.</p>
+                <ul>
+                    <li><strong>Security OF the Cloud:</strong> Amazon/Microsoft is responsible for physical security, hypervisor patching, and global infrastructure.</li>
+                    <li><strong>Security IN the Cloud:</strong> The customer is responsible for configuring firewalls (Security Groups), managing IAM permissions, and encrypting data.</li>
+                    <li>99% of cloud breaches are a result of customer misconfiguration, not AWS being "hacked."</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="S3 Bucket Misconfigurations" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>S3 Bucket Misconfigurations</h2>
+                <p>Amazon Simple Storage Service (S3) is the backbone of cloud storage.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>Buckets are private by default.</li>
+                        <li>However, developers often explicitly set permissions to "Public Read" to easily host images for a website, but accidentally apply that policy to the entire bucket containing database backups.</li>
+                        <li>If the bucket name is guessable (e.g., <code>acme-corp-backups</code>), an attacker can simply browse to the URL and download gigabytes of sensitive data without any authentication.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="IAM Privilege Escalation" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Identity and Access Management (IAM)</h2>
+                <p>IAM controls who can do what in the cloud. It replaces traditional network firewalls as the primary security boundary.</p>
+                <ul>
+                    <li><strong>Over-permissive Policies:</strong> Giving a developer <code>s3:*</code> (full access to all buckets) instead of <code>s3:GetObject</code> on a specific bucket.</li>
+                    <li><strong>Privilege Escalation:</strong> If a low-level user has the <code>iam:PassRole</code> permission, they can attach an Administrator role to a new EC2 instance they create, log into that instance, and effectively become a cloud administrator.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Attacking cloud infrastructure often requires no specialized hacking tools. The official AWS Command Line Interface (CLI) is the attacker's best friend.</p>
+                <div class="highlight">
+                    We will simulate the enumeration and exploitation of an unsecured S3 bucket.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: S3 Bucket Exploitation" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Task 1: S3 Bucket Exploitation</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You have discovered a potential S3 bucket named <code>startup-client-data</code> via OSINT.</p>
+                    <ol>
+                        <li>Write the exact <code>awscli</code> command used to list the contents of this bucket anonymously (without providing your own AWS credentials).</li>
+                        <li>Assume the list command succeeds and reveals a file named <code>prod-db-dump.sql</code>. Write the command to download this file to your local machine.</li>
+                        <li>Explain the principle of "Least Privilege" as it applies to fixing this specific IAM misconfiguration.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://aws.amazon.com/cli/" target="_blank" style="color: #64ffda;">AWS Command Line Interface</a>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: IoT Device Hacking" class="center" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Part 2: IoT Device Hacking</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="The IoT Threat Landscape" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>The IoT Threat Landscape</h2>
+                <p>The "S" in IoT stands for Security.</p>
+                <ul>
+                    <li>Smart cameras, thermostats, and industrial sensors are essentially tiny Linux computers connected to the internet.</li>
+                    <li><strong>The Mirai Botnet (2016):</strong> Scanned the internet for IoT devices using a hardcoded list of 60 default factory passwords (e.g., <code>admin/admin</code>). It compromised 600,000 devices and launched the largest DDoS attack in history.</li>
+                    <li>IoT devices often lack a mechanism for remote patching, meaning vulnerabilities remain forever.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Firmware" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>IoT Firmware</h2>
+                <p>Firmware is the operating system for embedded devices, usually distributed as a single `.bin` file.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>If an attacker can download a firmware update file from the manufacturer's website, they can reverse engineer the entire device offline.</li>
+                        <li>Firmware images often contain embedded Linux filesystems (SquashFS).</li>
+                        <li>Inside that filesystem, attackers hunt for hidden backdoor accounts, hardcoded private SSL keys, and compiled CGI scripts containing buffer overflows.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Binwalk" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Extracting Firmware: Binwalk</h2>
+                <p>Binwalk is the industry standard tool for analyzing embedded filesystems.</p>
+                <ul>
+                    <li>It scans the binary file for known file signatures (e.g., the magic bytes for a ZIP archive or a SquashFS filesystem).</li>
+                    <li>Running <code>binwalk -e firmware.bin</code> will automatically carve out the embedded filesystem and unpack it into a readable directory structure on your Linux machine.</li>
+                    <li>You can then explore the router's <code>/etc/shadow</code> file or <code>/var/www/</code> directory just like a normal computer.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Hardware hacking often doesn't require touching the physical hardware at all. Firmware reverse engineering allows us to find zero-day vulnerabilities from the comfort of our own terminal.</p>
+                <div class="highlight">
+                    We will simulate the extraction and analysis of a home router's firmware.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Firmware Analysis" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Task 2: Firmware Reverse Engineering</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You downloaded <code>router_update_v2.bin</code> from a vendor website. You run <code>binwalk -e router_update_v2.bin</code> and successfully extract a Linux filesystem.</p>
+                    <ol>
+                        <li>Which specific file inside the extracted <code>/etc/</code> directory should you target first to find local user passwords?</li>
+                        <li>If you find a password hash in that file, how would you attempt to crack it offline? (Specify the tool).</li>
+                        <li>Assume you find a hardcoded RSA private key (<code>server.key</code>) inside the firmware. Describe the devastating MITM attack this enables against <em>every</em> customer using this router model.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://github.com/ReFirmLabs/binwalk" target="_blank" style="color: #64ffda;">Binwalk GitHub Repository</a>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_4.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>The cloud is secure by default, but complex to configure safely. Misconfigurations are the new zero-days.</li>
+                    <li>IoT devices represent a massive, largely unpatched attack surface relying heavily on "Security through Obscurity" (which always fails).</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Cryptography for Professionals (Applied Encryption)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

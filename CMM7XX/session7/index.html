@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 7: Software Security</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Software Security</span>
+    <span class="jw-count">7 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session6/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session8/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>Software Security</h1>
+                <h2>Session 7: Vulnerabilities and Protections</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct memory corruption vulnerabilities (Stack Smashing, Heap Exploitation).</li>
+                    <li>Understand advanced exploitation techniques like Return-Oriented Programming (ROP).</li>
+                    <li>Evaluate OS-level mitigations (ASLR, DEP/NX, Stack Canaries, CFI).</li>
+                    <li>Apply Secure SDLC principles, including Fuzzing and SAST/DAST integration.</li>
+                    <li>Analyze C code to identify architectural and memory flaws.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://phrack.org/issues/49/14.html" target="_blank" style="color: #64ffda;">Aleph One: Smashing The Stack For Fun And Profit</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Memory Corruption & Exploitation (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Stack and Heap Architecture</li>
+                    <li>Buffer Overflows & Return-Oriented Programming</li>
+                    <li><strong>Task 1: Binary Exploitation Analysis</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Mitigations & Secure SDLC (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>OS Defenses (ASLR, DEP, CFI)</li>
+                    <li>Secure Development (SAST, DAST, Fuzzing)</li>
+                    <li><strong>Task 2: Bypassing Defenses (ROP Chains)</strong></li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://phrack.org/issues/49/14.html" target="_blank" style="color: #64ffda;">Aleph One: Smashing The Stack For Fun And Profit</a>
+                </div>
+        
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Memory Corruption" class="center" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 1: Memory Corruption & Exploitation</h2>
+                <h3>Duration: 1.5 Hours</h3>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://phrack.org/issues/49/14.html" target="_blank" style="color: #64ffda;">Aleph One: Smashing The Stack For Fun And Profit</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Memory Architecture" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Process Memory Architecture</h2>
+                <p>When a program runs, the OS allocates virtual memory, typically divided into:</p>
+                <ul>
+                    <li><strong>Text Segment:</strong> Executable machine instructions (Read-Only).</li>
+                    <li><strong>Data/BSS Segments:</strong> Initialized and uninitialized global variables.</li>
+                    <li><strong>Heap:</strong> Dynamically allocated memory (e.g., <code>malloc()</code>). Grows upward.</li>
+                    <li><strong>Stack:</strong> Local variables, function parameters, and return addresses. Grows downward (in x86/x64).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://datatracker.ietf.org/doc/html/rfc2104" target="_blank" style="color: #64ffda;">RFC 2104: HMAC: Keyed-Hashing for Message Authentication</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Stack Smashing" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Stack Smashing (Buffer Overflow)</h2>
+                <p>Occurs when data written to a buffer exceeds its allocated boundary, overwriting adjacent memory locations.</p>
+                <div class="highlight">
+                    <strong>The Target:</strong> The Return Address (EIP/RIP).
+                </div>
+                <ul>
+                    <li>When a function is called, the CPU pushes the address of the <em>next</em> instruction onto the Stack.</li>
+                    <li>If an attacker overflows a local variable, they can overwrite this return address.</li>
+                    <li>When the function exits (<code>ret</code>), the CPU jumps to the attacker's injected address (e.g., pointing to malicious shellcode).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://phrack.org/issues/49/14.html" target="_blank" style="color: #64ffda;">Aleph One: Smashing The Stack For Fun And Profit</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Return-Oriented Programming" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Return-Oriented Programming (ROP)</h2>
+                <p>What if the attacker cannot inject shellcode into the stack because the stack is marked as non-executable?</p>
+                <ul>
+                    <li><strong>ROP:</strong> The attacker searches the existing executable (and linked libraries like <code>libc</code>) for small sequences of instructions ending in a <code>ret</code>. These are called <strong>Gadgets</strong>.</li>
+                    <li>Instead of injecting code, the attacker overflows the stack with a chain of return addresses pointing to these gadgets.</li>
+                    <li>The CPU executes the existing code in an order defined by the attacker to achieve malicious goals (e.g., calling <code>system("/bin/sh")</code>).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://dl.acm.org/doi/10.1145/1315245.1315313" target="_blank" style="color: #64ffda;">Shacham: The Geometry of Innocent Flesh on the Bone (ROP)</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>To defend against memory corruption, you must be able to think like a reverse engineer and understand how data maps to the stack.</p>
+                <div class="highlight">
+                    We will analyze a vulnerable C application to calculate exactly how many bytes are needed to hijack the control flow.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://phrack.org/issues/49/14.html" target="_blank" style="color: #64ffda;">Aleph One: Smashing The Stack For Fun And Profit</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Binary Exploitation" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 1: Binary Exploitation Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You are provided with the source code of a C program utilizing the unsafe <code>strcpy()</code> function.</p>
+                    <ol>
+                        <li>Draw a diagram of the Stack frame for the vulnerable function, labeling the Buffer, the saved Frame Pointer (EBP), and the Return Address (EIP).</li>
+                        <li>Calculate the exact buffer offset required to begin overwriting the Return Address (accounting for architecture alignment).</li>
+                        <li>Construct a theoretical hex payload consisting of a NOP sled, placeholder shellcode, and the overwritten Return Address.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://gchq.github.io/CyberChef/" target="_blank" style="color: #64ffda;">CyberChef: The Cyber Swiss Army Knife</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Mitigations & Secure SDLC" class="center" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 2: Mitigations & Secure SDLC</h2>
+                <h3>Duration: 1.5 Hours</h3>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/" target="_blank" style="color: #64ffda;">OWASP Secure Coding Practices</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="OS-Level Mitigations" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>OS-Level Mitigations</h2>
+                <p>Modern operating systems employ deep architectural defenses against exploitation.</p>
+                <ul>
+                    <li><strong>DEP/NX (Data Execution Prevention / No-eXecute):</strong> Marks memory regions (like the Stack and Heap) as non-executable. Stops traditional shellcode injection.</li>
+                    <li><strong>ASLR (Address Space Layout Randomization):</strong> Randomizes the memory locations of the stack, heap, and libraries (like <code>libc</code>) every time the program runs. Prevents attackers from hardcoding return addresses.</li>
+                    <li><strong>Stack Canaries:</strong> A random value placed between local variables and the return address. Checked before the function returns; if altered, the program crashes to prevent hijacking.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://phrack.org/issues/49/14.html" target="_blank" style="color: #64ffda;">Aleph One: Smashing The Stack For Fun And Profit</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Control-Flow Integrity (CFI)" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Control-Flow Integrity (CFI)</h2>
+                <p>An advanced compiler-level mitigation against ROP and indirect pointer overwrites.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>Before compilation, the compiler maps out the legitimate Control Flow Graph (CFG) of the program.</li>
+                        <li>It inserts runtime checks before every indirect branch (function pointers, virtual tables).</li>
+                        <li>If a program attempts to jump to a gadget or address not explicitly permitted in the CFG, the program terminates.</li>
+                        <li>Hardware-assisted CFI (e.g., Intel CET) is becoming the new industry standard.</li>
+                    </ul>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://gchq.github.io/CyberChef/" target="_blank" style="color: #64ffda;">CyberChef: The Cyber Swiss Army Knife</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Secure SDLC" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Secure SDLC & Automated Testing</h2>
+                <p>Mitigations fail; preventing the vulnerability in the code is always the priority.</p>
+                <ul>
+                    <li><strong>SAST (Static Application Security Testing):</strong> Analyzes source code for flaws (e.g., finding <code>strcpy</code>) without executing it. Fast, but prone to false positives.</li>
+                    <li><strong>DAST (Dynamic Application Security Testing):</strong> Interacts with the running application to find flaws (e.g., injecting SQL payloads). Cannot see internal code.</li>
+                    <li><strong>Fuzzing:</strong> Feeding massive amounts of malformed, unexpected, or random data to a program's inputs to deliberately cause a crash, revealing memory corruption bugs.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://phrack.org/issues/49/14.html" target="_blank" style="color: #64ffda;">Aleph One: Smashing The Stack For Fun And Profit</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Security is an arms race. When defenders introduced DEP/NX, attackers invented ROP. When defenders introduced ASLR, attackers invented Info Leaks.</p>
+                <div class="highlight">
+                    We will architect a theoretical ROP chain to bypass DEP.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://gchq.github.io/CyberChef/" target="_blank" style="color: #64ffda;">CyberChef: The Cyber Swiss Army Knife</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Bypassing Defenses" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 2: Bypassing Defenses (ROP Chains)</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>Assume the target system has DEP enabled, but ASLR is temporarily disabled.</p>
+                    <ol>
+                        <li>Using the provided list of assembly "gadgets" extracted from the binary's memory, design a ROP chain.</li>
+                        <li>Your chain must sequentially pop the address of the string <code>"/bin/sh"</code> into the RDI register, and then jump to the address of the <code>system()</code> function.</li>
+                        <li><strong>Discussion:</strong> Explain how turning ASLR back on would completely break your ROP chain, and discuss what an "Information Leak" vulnerability is and how it helps bypass ASLR.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Memory corruption remains a critical threat in systems-level programming (C/C++). Memory-safe languages (Rust) are the ultimate mitigation.</li>
+                    <li>Modern exploitation requires chaining multiple vulnerabilities (e.g., Info Leak + Buffer Overflow + ROP) to bypass OS mitigations.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Malware Detection and Firewalls (Perimeter Defense)
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

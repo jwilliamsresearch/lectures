@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 5: Asset & Risk Mgmt</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Asset &amp; Risk Mgmt</span>
+    <span class="jw-count">5 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session4/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session6/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 5: Asset Management & Risk Assessment</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand the critical role of Information Asset Inventories.</li>
+                    <li>Implement a Data Classification scheme (Public, Internal, Confidential).</li>
+                    <li>Differentiate between Qualitative and Quantitative risk assessment.</li>
+                    <li>Calculate Single Loss Expectancy (SLE) and Annualized Loss Expectancy (ALE).</li>
+                    <li>Determine appropriate risk treatment strategies (Mitigate, Transfer, Accept, Avoid).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Asset Management (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>You Cannot Protect What You Don't Know You Have</li>
+                    <li>Data Classification & Handling</li>
+                    <li><strong>Task 1: Data Classification Mapping</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Risk Assessment (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Qualitative vs Quantitative Risk</li>
+                    <li>Calculating ALE and Risk Treatment</li>
+                    <li><strong>Task 2: Quantitative Risk Calculation</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Asset Management" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 1: Asset Management</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The Asset Inventory" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>The Asset Inventory</h2>
+                <p>Rule #1 of Security: You cannot protect what you don't know exists.</p>
+                <ul>
+                    <li><strong>Shadow IT:</strong> Servers, cloud services, or applications spun up by departments (like Marketing) without IT's knowledge. These are never patched and are highly vulnerable.</li>
+                    <li>A mature organization maintains a dynamic Configuration Management Database (CMDB) that tracks every laptop, server, software license, and data repository.</li>
+                    <li>If an asset is not in the inventory, it is a critical risk.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Information as an Asset" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Information as an Asset</h2>
+                <p>Hardware is cheap; the data stored on it is priceless.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>We don't apply maximum security to everything. Encrypting the cafeteria menu is a waste of CPU cycles.</li>
+                        <li><strong>Data Classification:</strong> Categorizing data based on its sensitivity and the impact to the business if it were disclosed or destroyed.</li>
+                        <li>Different classifications dictate different handling procedures (e.g., Confidential data cannot be sent via unencrypted email; Public data can).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Classification Levels" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Standard Classification Levels</h2>
+                <p>Most commercial organizations use a 3 or 4-tier system:</p>
+                <ul>
+                    <li><strong>Public:</strong> Marketing materials, press releases. No impact if disclosed (it's meant to be).</li>
+                    <li><strong>Internal (Proprietary):</strong> Company org charts, internal memos. Minor impact if disclosed to competitors.</li>
+                    <li><strong>Confidential:</strong> Customer PII, source code, financial projections. Severe regulatory and financial impact if disclosed.</li>
+                    <li><strong>Restricted (Top Secret):</strong> M&A data, cryptographic root keys. Catastrophic impact. Extremely limited access.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Properly classifying data is the prerequisite for designing access controls and encryption standards.</p>
+                <div class="highlight">
+                    We will act as data owners, classifying various corporate assets to determine their required security posture.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Data Classification" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 1: Data Classification Mapping</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You are the Data Protection Officer for a University.</p>
+                    <ol>
+                        <li>Classify the following assets into one of four tiers (Public, Internal, Confidential, Restricted):
+                            <ul>
+                                <li>The University's published prospectus for next year.</li>
+                                <li>A database containing student grades and home addresses.</li>
+                                <li>The IT department's network topology diagram.</li>
+                                <li>A professor's un-patented research on a new medical device.</li>
+                            </ul>
+                        </li>
+                        <li>For the "Student Database", define the Data Handling Procedure: How should it be stored? Can it be emailed? How should it be backed up?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Risk Assessment" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 2: Risk Assessment</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="What is Risk?" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Defining Risk</h2>
+                <p><strong>Risk = Threat x Vulnerability x Impact</strong></p>
+                <ul>
+                    <li><strong>Asset:</strong> The database.</li>
+                    <li><strong>Threat:</strong> A hacker (or an earthquake). Something you cannot control.</li>
+                    <li><strong>Vulnerability:</strong> Missing software patches (or a building not up to code). A weakness you *can* control.</li>
+                    <li><strong>Impact:</strong> The cost if the threat exploits the vulnerability.</li>
+                    <li>If you have no vulnerabilities, the risk is zero. If the asset has no value (zero impact), the risk is zero.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Risk Assessment Methods" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Qualitative vs Quantitative</h2>
+                <div class="task-box">
+                    <h3>Qualitative Risk Assessment</h3>
+                    <p>Uses subjective scoring (High, Medium, Low) based on expert intuition. Faster to perform, but difficult to justify budgets with.</p>
+                    <h3>Quantitative Risk Assessment</h3>
+                    <p>Assigns actual monetary values to assets and probabilities to threats. Requires massive amounts of historical data, but allows for precise financial decision-making.</p>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Quantitative Math" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>The Math of Risk</h2>
+                <p>Quantitative assessment relies on three core formulas:</p>
+                <ul>
+                    <li><strong>Asset Value (AV):</strong> The total value of the asset (e.g., £100,000).</li>
+                    <li><strong>Exposure Factor (EF):</strong> The percentage of the asset lost in a single incident (e.g., a fire destroys 50% = 0.5).</li>
+                    <li><strong>Single Loss Expectancy (SLE):</strong> AV x EF. The cost of one incident (£50,000).</li>
+                    <li><strong>Annualized Rate of Occurrence (ARO):</strong> How often the incident happens per year (e.g., once every 10 years = 0.1).</li>
+                    <li><strong>Annualized Loss Expectancy (ALE):</strong> SLE x ARO. The expected yearly cost of the risk (£5,000).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Once you calculate the ALE, you can decide how to treat the risk. If a control costs more than the ALE, it is a bad investment.</p>
+                <div class="highlight">
+                    We will perform a quantitative risk calculation to justify a security purchase.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Quantitative Risk" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 2: Quantitative Risk Calculation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>Your company operates an e-commerce site. The server generates £10,000 in revenue per hour. Historical data shows you suffer a DDoS attack once every 2 years, taking the server offline for exactly 4 hours.</p>
+                    <ol>
+                        <li>Calculate the <strong>Single Loss Expectancy (SLE)</strong> of a DDoS attack.</li>
+                        <li>Calculate the <strong>Annualized Rate of Occurrence (ARO)</strong> and the <strong>Annualized Loss Expectancy (ALE)</strong>.</li>
+                        <li>Cloudflare offers a DDoS mitigation service for £15,000 per year. Financially, should you buy it? Explain your reasoning based on your ALE calculation.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>You cannot secure an enterprise without a rigorous, constantly updated inventory of assets and data flows.</li>
+                    <li>Risk assessment translates technical threats into the universal language of business: Money.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Organizational & Human Security (Insider Threats)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

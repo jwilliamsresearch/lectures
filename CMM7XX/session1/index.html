@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 1: Introduction to Information Security</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Introduction to Information Security</span>
+    <span class="jw-count">1 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <span class="jw-nav-btn is-off" aria-hidden="true"><span>←</span>Prev<span></span></span>
+    <a class="jw-nav-btn" href="../session2/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Title -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>Introduction to Information Security</h1>
+                <h2>Session 1: Security Design Principles</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Objectives -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Critically evaluate the extended CIA Triad within complex systems.</li>
+                    <li>Deconstruct and apply Saltzer and Schroeder's Principles of Security Design.</li>
+                    <li>Compare advanced Threat Modeling methodologies (STRIDE, PASTA) for enterprise environments.</li>
+                    <li>Analyze the paradigm shift from perimeter-based security to Zero-Trust Architecture (ZTA).</li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Saltzer & Schroeder's Principles (1)" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Saltzer & Schroeder's Principles (1975)</h2>
+                <p>Foundational principles of secure design that remain critical in modern architectures.</p>
+                <ul>
+                    <li><strong>Economy of Mechanism:</strong> Keep the design simple. Complexity breeds vulnerabilities.</li>
+                    <li><strong>Fail-Safe Defaults:</strong> Base access decisions on permission rather than exclusion. Default to 'deny'.</li>
+                    <li><strong>Complete Mediation:</strong> Every access to every object must be checked for authority.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Saltzer & Schroeder's Principles (2)" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Saltzer & Schroeder's Principles (Continued)</h2>
+                <ul>
+                    <li><strong>Open Design:</strong> Security should not depend on the ignorance of attackers (Kerckhoffs's principle).</li>
+                    <li><strong>Separation of Privilege:</strong> Require two conditions to unlock (e.g., Multi-Factor Authentication).</li>
+                    <li><strong>Least Privilege:</strong> Every process/user must operate using the minimum privileges necessary.</li>
+                    <li><strong>Psychological Acceptability:</strong> Security mechanisms must be easy to use, or users will bypass them.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 8: Task 1 Intro -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>In the real world, massive breaches rarely occur due to zero-day cryptography exploits. They occur because fundamental design principles are violated at scale.</p>
+                <div class="highlight">
+                    We will analyze the <strong>Capital One Data Breach (2019)</strong>.
+                </div>
+                <p>An attacker exploited a misconfigured Web Application Firewall (WAF) to obtain SSRF, accessed an AWS metadata service, and stole 100M+ customer records.</p>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 9: Task 1 -->
+            <section data-slide-title="Task 1: Architecture Critique" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 1: Architecture Critique</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>In groups of 3-4, read the provided technical summary of the Capital One breach.</p>
+                    <ol>
+                        <li>Identify which of Saltzer and Schroeder's design principles were violated in this architecture.</li>
+                        <li>Specifically address the concept of <em>Complete Mediation</em> and <em>Least Privilege</em> in the context of IAM roles assigned to the WAF.</li>
+                        <li>Prepare a 3-minute brief on how enforcing "Fail-Safe Defaults" could have mitigated the blast radius.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 10: Break -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Advanced Threat Modeling" class="center" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 2: Threat Modeling & ZTA</h2>
+                <h3>Duration: 1.5 Hours</h3>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Advanced Threat Modeling" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Advanced Threat Modeling</h2>
+                <p>Systematic methodologies for identifying security threats during the design phase.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>STRIDE (Microsoft):</strong> Developer-centric. Focuses on Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege.</li>
+                        <li><strong>PASTA:</strong> Risk-centric. A seven-step process aligning technical requirements with business objectives. Ideal for enterprise risk management.</li>
+                        <li><strong>LINDDUN:</strong> Privacy-centric. Essential for GDPR compliance and data protection by design.</li>
+                    </ul>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="STRIDE Deep Dive" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>STRIDE Deep Dive</h2>
+                <p>Applied to Data Flow Diagrams (DFDs) to systematically find flaws:</p>
+                <ul>
+                    <li><strong>Spoofing:</strong> Can an attacker impersonate a user/system? <em>(Mitigation: Strong Auth)</em></li>
+                    <li><strong>Tampering:</strong> Can data be modified in transit or at rest? <em>(Mitigation: Integrity/Signatures)</em></li>
+                    <li><strong>Repudiation:</strong> Can someone deny an action? <em>(Mitigation: Auditing/Logging)</em></li>
+                    <li><strong>Information Disclosure:</strong> Is sensitive data exposed? <em>(Mitigation: Encryption/ACLs)</em></li>
+                    <li><strong>Denial of Service:</strong> Can the system be brought down? <em>(Mitigation: Filtering/Quotas)</em></li>
+                    <li><strong>Elevation of Privilege:</strong> Can an unprivileged user gain admin rights? <em>(Mitigation: Least Privilege)</em></li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool" target="_blank" style="color: #64ffda;">Microsoft Threat Modeling Tool</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="The Zero-Trust Architecture (ZTA)" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>The Zero-Trust Architecture (ZTA)</h2>
+                <div class="highlight">
+                    <strong>"Never Trust, Always Verify"</strong>
+                </div>
+                <p>The perimeter model (Castle-and-Moat) is obsolete due to cloud, BYOD, and remote work.</p>
+                <h3>Core Tenets (NIST SP 800-207):</h3>
+                <ul>
+                    <li>All communication is secured regardless of network location.</li>
+                    <li>Access to enterprise resources is granted on a per-session basis.</li>
+                    <li>Access is determined by dynamic policy (client identity, application, asset state).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-207/final" target="_blank" style="color: #64ffda;">NIST SP 800-207: Zero Trust Architecture</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 15: Task 2 Intro -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Threat modeling requires understanding the architecture, identifying trust boundaries, and applying a framework like STRIDE to discover potential vulnerabilities before writing a single line of code.</p>
+                <div class="highlight">
+                    You have been provided with a DFD (Data Flow Diagram) for a proposed cloud-based healthcare portal.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 16: Task 2 -->
+            <section data-slide-title="Task 2: Applied Threat Modeling" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 2: Applied Threat Modeling</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>Using the provided Healthcare Portal DFD:</p>
+                    <ol>
+                        <li>Identify the primary Trust Boundaries in the architecture.</li>
+                        <li>Perform a STRIDE analysis on the interaction between the Mobile Client and the API Gateway.</li>
+                        <li>Identify at least two specific threats (e.g., Information Disclosure via interception).</li>
+                        <li>Propose a ZTA-aligned mitigation for each identified threat.</li>
+                    </ol>
+                    <p><em>Submit your threat matrix to the VLE at the end of the session.</em></p>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMM7XX/images/cyber_bg_1.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Security design must be proactive (Threat Modeling) rather than reactive.</li>
+                    <li>Principles like Least Privilege and Complete Mediation form the basis of modern Zero-Trust Architectures.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Introduction to Cryptography & Security Mechanisms
+                </div>
+                <p>Please review modular arithmetic and prime factorization before the next session.</p>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://attack.mitre.org/" target="_blank" style="color: #64ffda;">MITRE ATT&CK Framework</a>
+                </div>
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

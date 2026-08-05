@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 11: IR & Business Continuity</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">IR &amp; Business Continuity</span>
+    <span class="jw-count">11 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session10/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session12/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 11: Incident Response & Business Continuity</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Execute the 6-phase Incident Response Lifecycle (NIST SP 800-61).</li>
+                    <li>Formulate effective Containment and Eradication strategies during an active breach.</li>
+                    <li>Differentiate between a Business Continuity Plan (BCP) and a Disaster Recovery Plan (DRP).</li>
+                    <li>Calculate and apply Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO).</li>
+                    <li>Design and facilitate a cyber crisis Tabletop Exercise.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Incident Response (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The Incident Response Lifecycle</li>
+                    <li>Containment vs Eradication</li>
+                    <li><strong>Task 1: Active Containment Strategy</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: BCP and Disaster Recovery (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>BCP vs DRP</li>
+                    <li>RTO, RPO, and High Availability</li>
+                    <li><strong>Task 2: RTO/RPO Calculation</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Incident Response" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 1: Incident Response</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The Reality of Breach" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>The Reality of Breach</h2>
+                <p>Assume Breach. Prevention eventually fails; your response dictates your survival.</p>
+                <ul>
+                    <li><strong>Incident Response (IR):</strong> The organized approach to addressing and managing the aftermath of a security breach or cyberattack.</li>
+                    <li>The goal is to limit damage, reduce recovery time, and costs.</li>
+                    <li>An ad-hoc, panicked response (e.g., unplugging servers randomly) destroys forensic evidence and prolongs downtime.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="The IR Lifecycle" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>The IR Lifecycle (NIST)</h2>
+                <div class="task-box">
+                    <ol>
+                        <li><strong>Preparation:</strong> Writing playbooks, establishing communication channels (Out-of-Band), and training the Computer Security Incident Response Team (CSIRT).</li>
+                        <li><strong>Detection & Analysis:</strong> Identifying that an incident is occurring. Triaging alerts, gathering logs, and determining scope.</li>
+                        <li><strong>Containment, Eradication, & Recovery:</strong> Stopping the bleeding, removing the threat, and restoring systems.</li>
+                        <li><strong>Post-Incident Activity (Lessons Learned):</strong> The most important phase. What broke? How do we prevent it next time?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Containment Strategies" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Containment Strategies</h2>
+                <p>The immediate priority is stopping the spread, not fixing the root cause.</p>
+                <ul>
+                    <li><strong>Isolation:</strong> Disconnecting an infected subnet from the internet or the wider corporate network.</li>
+                    <li><strong>The Dilemma:</strong> Do you shut down the system immediately to stop data theft (destroying volatile memory evidence), or do you monitor the attacker to see what they are after (risking further data loss)?</li>
+                    <li><strong>Eradication:</strong> Removing malware, disabling compromised accounts, and patching the vulnerability the attacker used.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>During an active incident, decisions must be made in minutes with incomplete information. Playbooks guide these decisions.</p>
+                <div class="highlight">
+                    We will formulate a containment strategy for an active ransomware outbreak.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Active Containment" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 1: Active Containment Strategy</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Scenario: It is 2:00 PM on a Tuesday. The Helpdesk reports that 5 users in the Accounting department cannot open their files. A screen message demands Bitcoin. The SIEM shows massive internal SMB traffic originating from Accounting.</p>
+                    <ol>
+                        <li>What is your immediate <strong>Containment</strong> action? Explain why you chose this over simply turning off the specific affected laptops.</li>
+                        <li>The CFO demands you pay the ransom immediately to get the payroll data back. As the Incident Commander, how do you respond?</li>
+                        <li>What <strong>Eradication</strong> steps must be completed before you allow the Accounting subnet back online?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: BCP and Disaster Recovery" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 2: BCP and Disaster Recovery</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="BCP vs DRP" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>BCP vs DRP</h2>
+                <p>They are related, but distinct disciplines.</p>
+                <ul>
+                    <li><strong>Business Continuity Plan (BCP):</strong> Focuses on the <em>business</em>. If the main office burns down, how do we process payroll? (e.g., "Everyone works from home, route calls to mobile phones").</li>
+                    <li><strong>Disaster Recovery Plan (DRP):</strong> Focuses on the <em>technology</em>. If the main data center floods, how do we restore the servers? (e.g., "Failover database to the AWS US-East region").</li>
+                    <li>The DRP is a technical subset of the broader BCP.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="RTO and RPO" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>RTO and RPO</h2>
+                <p>The two most critical metrics in disaster recovery.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Recovery Time Objective (RTO):</strong> How long can the system be down before the business suffers unacceptable loss? (e.g., "The payment gateway has an RTO of 4 hours"). Determines <em>Failover</em> architecture.</li>
+                        <li><strong>Recovery Point Objective (RPO):</strong> How much data can the business afford to lose? (e.g., "We can lose 1 hour of transactions"). Determines <em>Backup Frequency</em>.</li>
+                        <li>An RTO/RPO of "zero" costs millions of dollars (requires synchronous replication across multiple continents).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Tabletop Exercises" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Tabletop Exercises (TTX)</h2>
+                <p>A DRP that hasn't been tested is just a theory.</p>
+                <ul>
+                    <li><strong>The TTX:</strong> A low-stress, discussion-based exercise where executives and IT leaders gather in a room and talk through a simulated disaster scenario (e.g., "A hurricane hits the data center").</li>
+                    <li>Identifies massive gaps in the plan without risking actual downtime (e.g., "Our plan says the CEO authorizes failover, but the CEO is on a flight to Tokyo. Who has delegated authority?").</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Aligning IT recovery capabilities with business expectations prevents catastrophic misunderstandings during an actual crisis.</p>
+                <div class="highlight">
+                    We will calculate architectural requirements based on business RTO/RPO demands.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: RTO/RPO Calculation" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 2: RTO/RPO Calculation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>A logistics company runs a warehouse routing system. The business unit states: "If the system goes down, trucks stop moving. It must be back online within <strong>2 hours</strong>. However, because routes are printed on paper hourly, we can afford to lose up to <strong>12 hours</strong> of digital routing data if necessary."</p>
+                    <ol>
+                        <li>Identify the RTO and the RPO from the statement above.</li>
+                        <li>The IT team currently backs up the system to tape every night at midnight. The tape takes 6 hours to restore. Does this meet the RTO? Does it meet the RPO? Explain.</li>
+                        <li>Propose a new technical backup/recovery architecture (e.g., Cloud Snapshots, Active-Passive failover) that strictly meets both requirements.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_2.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Incident Response is about structured, rehearsed decision-making under extreme pressure.</li>
+                    <li>Disaster Recovery is a business discussion first, and a technical architecture discussion second. The business defines the RTO/RPO; IT builds to it.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Compliance, Laws, and Auditing (Regulatory Requirements)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

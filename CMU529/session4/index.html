@@ -1,0 +1,805 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 4: PHP Fundamentals & Server Setup</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <style>
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .reveal .slides section h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h2 {
+            font-size: 2em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section h3 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal .slides section p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section ul,
+        .reveal .slides section ol {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 0.8em;
+        }
+
+        .reveal .slides section li {
+            margin-bottom: 0.3em;
+        }
+
+        .task-box {
+            background: #fff5f5;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .code-example {
+            margin: 10px 0;
+            max-width: 100%;
+            overflow: visible;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        .timeline-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .timeline-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .timeline-info li {
+            margin-bottom: 0.2em;
+        }
+
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .reveal .slides section {
+                padding: 15px;
+            }
+
+            .reveal .slides section h1 {
+                font-size: 2em;
+            }
+
+            .reveal .slides section h2 {
+                font-size: 1.6em;
+            }
+
+            .reveal .slides section h3 {
+                font-size: 1.3em;
+            }
+
+            .task-box,
+            .code-example {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+
+        /* Interactive content styling */
+        .interactive-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .interactive-content h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container iframe:hover {
+            transform: scale(1.02);
+        }
+
+        .interactive-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU529</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">PHP Fundamentals &amp; Server Setup</span>
+    <span class="jw-count">4 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session3/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session5/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+            
+    
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Title -->
+            <section class="title-slide">
+                <div class="module-code">CMU529: Advanced Web Development - Session 4</div>
+                <h1>PHP Fundamentals & Server Setup</h1>
+                <h2>Full-stack Web Development with PHP and MySQL</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p>Birmingham Newman University</p>
+                    <p class="text-muted">jwilliams@staff.newman.ac.uk</p>
+                    <p class="text-muted">3-hour session</p>
+                </div>
+            </section>
+
+            
+
+            <!-- Slide 2: Learning Objectives -->
+            <section data-slide-title="Learning Objectives"><h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand PHP basics and server-side programming</li>
+                    <li>Set up a local development environment with XAMPP</li>
+                    <li>Learn PHP syntax, variables, and data types</li>
+                    <li>Create basic PHP scripts and functions</li>
+                    <li>Understand PHP's role in web development</li>
+                    <li>Build simple dynamic web pages</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3: What is PHP? -->
+            <section data-slide-title="What is PHP?"><h2>What is PHP?</h2>
+                <div class="highlight">
+                    <strong>PHP (Hypertext Preprocessor)</strong> is a server-side scripting
+                    language designed for web development
+                </div>
+                <ul>
+                    <li>Open-source and free to use</li>
+                    <li>Runs on web servers (Apache, Nginx)</li>
+                    <li>Processes code on the server before sending to browser</li>
+                    <li>Can generate dynamic HTML content</li>
+                    <li>Integrates with databases (MySQL, PostgreSQL)</li>
+                    <li>Widely used in web development</li>
+                </ul>
+                <div class="diagram">
+                    <h4>PHP Processing Flow</h4>
+                    <p><strong>Request:</strong> Browser → Server</p>
+                    <p><strong>Process:</strong> Server → PHP Engine</p>
+                    <p><strong>Response:</strong> PHP → HTML → Browser</p>
+                </div>
+
+                <!-- YouTube Video: PHP Fundamentals Explained -->
+                <div class="interactive-content">
+                    <h3>Watch:PHP Fundamentals Explained</h3>
+                    <div class="video-notice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center; margin: 20px 0;"><p style="margin: 0; font-size: 1.1em;">See Moodle for supporting materials.</p></div>
+                </div>
+            </section>
+
+            <!-- Slide 4: PHP vs Client-side Languages -->
+            <section data-slide-title="PHP vs Client-side Languages"><h2>PHP vs Client-side Languages</h2>
+                <div class="code-example">
+                <pre><code class="language-php">PHP (Server-side):
+✓ Runs on web server
+✓ Processes before page loads
+✓ Can access databases
+✓ Secure (code not visible)
+✓ Generates HTML dynamically
+✓ Handles form processing
+✓ Session management
+✓ File operations
+JavaScript (Client-side):
+✓ Runs in browser
+✓ Processes after page loads
+✓ Cannot access databases directly
+✗ Code visible to users
+✓ Manipulates existing HTML
+✓ Handles user interactions
+✓ Local storage only
+✓ Limited file access</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 5: Setting Up XAMPP -->
+            <section data-slide-title="Setting Up XAMPP"><h2>Setting Up XAMPP</h2>
+                <div class="code-example">
+                <pre><code class="language-php">XAMPP Installation Steps:
+1. Download XAMPP from apachefriends.org
+2. Run installer (Windows/macOS/Linux)
+3. Choose installation directory
+4. Select components (Apache, MySQL, PHP)
+5. Complete installation
+6. Start XAMPP Control Panel
+7. Start Apache and MySQL services
+8. Access http://localhost/phpmyadmin
+9. Create project folder in htdocs/</code></pre>
+            </div>
+                <ul>
+                    <li>XAMPP provides Apache, MySQL, PHP, and phpMyAdmin</li>
+                    <li>All-in-one package for local development</li>
+                    <li>No complex configuration required</li>
+                    <li>Perfect for learning and development</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6: Basic PHP Syntax -->
+            <section data-slide-title="Basic PHP Syntax"><h2>Basic PHP Syntax</h2>
+                <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// This is a PHP comment
+echo "Hello, World!";
+?&gt;
+&lt;?php
+/* Multi-line
+comment */
+$message = "Welcome to PHP";
+echo $message;
+?&gt;
+&lt;?php
+# Another comment style
+$number = 42;
+echo "The answer is: " . $number;
+?&gt;</code></pre>
+            </div>
+                <ul>
+                    <li>PHP code is enclosed in <code>&lt;?php ?&gt;</code> tags</li>
+                    <li>Statements end with semicolons</li>
+                    <li>Variables start with <code>$</code> symbol</li>
+                    <li>Comments use <code>//</code>, <code>/* */</code>, or <code>#</code></li>
+                </ul>
+            </section>
+
+            <!-- Slide 7: PHP Variables -->
+            <section data-slide-title="PHP Variables"><h2>PHP Variables</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Variable Declaration:
+&lt;?php
+$name = "John";
+$age = 25;
+$price = 19.99;
+$isActive = true;
+$products = ["Apple", "Banana", "Orange"];
+echo "Name: " . $name;
+echo "Age: " . $age;
+echo "Price: $" . $price;
+echo "Active: " . ($isActive ? "Yes" : "No");
+echo "Products: " . implode(", ", $products);
+?&gt;</code></pre>
+            </div>
+                <ul>
+                    <li>Variables are dynamically typed</li>
+                    <li>No need to declare data type</li>
+                    <li>Case-sensitive names</li>
+                    <li>Must start with letter or underscore</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: PHP Data Types -->
+            <section data-slide-title="PHP Data Types"><h2>PHP Data Types</h2>
+                <div class="code-example">
+                <pre><code class="language-php">PHP Data Types:
+// String
+$name = "John Doe";
+$message = 'Hello World';
+// Integer
+$age = 25;
+$count = -10;
+// Float
+$price = 19.99;
+$pi = 3.14159;
+// Boolean
+$isActive = true;
+$isLoggedIn = false;
+// Array
+$colors = ["red", "green", "blue"];
+$user = ["name" =&gt; "John", "age" =&gt; 25];
+// Null
+$empty = null;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 9: PHP Arrays -->
+            <section data-slide-title="PHP Arrays"><h2>PHP Arrays</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Array Examples:
+// Indexed Array
+$products = ["Laptop", "Mouse", "Keyboard"];
+echo $products[0]; // Outputs: Laptop
+// Associative Array
+$user = [
+  "name" =&gt; "John",
+  "email" =&gt; "john@example.com",
+  "age" =&gt; 25
+];
+echo $user["name"]; // Outputs: John
+// Multidimensional Array
+$orders = [
+  [
+    "id" =&gt; 1,
+    "product" =&gt; "Laptop",
+    "price" =&gt; 999.99
+  ],
+  [
+    "id" =&gt; 2,
+    "product" =&gt; "Mouse",
+    "price" =&gt; 29.99
+  ]
+];</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 10: PHP Functions -->
+            <section data-slide-title="PHP Functions"><h2>PHP Functions</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Function Examples:
+// Basic function
+function greet($name) {
+  return "Hello, " . $name . "!";
+}
+// Function with default parameter
+function calculateTotal($price, $tax = 0.20) {
+  return $price * (1 + $tax);
+}
+// Function with multiple parameters
+function createUser($name, $email, $age = 18) {
+  return [
+    "name" =&gt; $name,
+    "email" =&gt; $email,
+    "age" =&gt; $age
+  ];
+}
+// Using functions
+echo greet("John");
+echo calculateTotal(100);
+$user = createUser("Jane", "jane@example.com", 25);</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 11: PHP Control Structures -->
+            <section data-slide-title="PHP Control Structures"><h2>PHP Control Structures</h2>
+                <div class="code-example">
+                <pre><code class="language-php">If Statement:
+$age = 18;
+if ($age &gt;= 18) {
+  echo "You are an adult";
+} else {
+  echo "You are a minor";
+}
+Switch Statement:
+$status = "active";
+switch ($status) {
+  case "active":
+    echo "User is active";
+    break;
+  case "inactive":
+    echo "User is inactive";
+    break;
+  default:
+    echo "Unknown status";
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 12: PHP Loops -->
+            <section data-slide-title="PHP Loops"><h2>PHP Loops</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Loop Examples:
+// For loop
+for ($i = 1; $i &lt;= 5; $i++) {
+      echo "Number: " . $i . "&lt;br&gt;";
+    }
+    // While loop
+    $count = 0;
+    while ($count &lt; 3) {
+          echo "Count: " . $count . "&lt;br&gt;";
+          $count++;
+        }
+        // Foreach loop
+        $products = ["Laptop", "Mouse", "Keyboard"];
+        foreach ($products as $product) {
+          echo "Product: " . $product . "&lt;br&gt;";
+        }
+        // Foreach with associative array
+        $user = ["name" =&gt; "John", "age" =&gt; 25];
+        foreach ($user as $key =&gt; $value) {
+          echo $key . ": " . $value . "&lt;br&gt;";
+        }</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 13: PHP and HTML Integration -->
+            <section data-slide-title="PHP and HTML Integration"><h2>PHP and HTML Integration</h2>
+                <div class="code-example">
+                <pre><code class="language-php">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;PHP Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Welcome to our Store&lt;/h1&gt;
+  &lt;?php
+  $products = ["Laptop", "Mouse", "Keyboard"];
+  $currentTime = date("Y-m-d H:i:s");
+  ?&gt;
+  &lt;p&gt;Current time: &lt;?php echo $currentTime;
+?&gt;&lt;/p&gt;
+  &lt;h2&gt;Our Products:&lt;/h2&gt;
+  &lt;ul&gt;
+  &lt;?php foreach ($products as $product): ?&gt;
+    &lt;li&gt;&lt;?php echo $product; ?&gt;&lt;/li&gt;
+  &lt;?php endforeach; ?&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 14: PHP Form Processing -->
+            <section data-slide-title="PHP Form Processing"><h2>PHP Form Processing</h2>
+                <div class="code-example">
+                <pre><code class="language-php">HTML Form:
+&lt;form method="POST" action="process.php"&gt;
+  &lt;label for="name"&gt;Name:&lt;/label&gt;
+  &lt;input type="text" name="name"
+id="name"&gt;&lt;br&gt;&lt;br&gt;
+  &lt;label for="email"&gt;Email:&lt;/label&gt;
+  &lt;input type="email" name="email"
+id="email"&gt;&lt;br&gt;&lt;br&gt;
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+PHP Processing (process.php):
+&lt;?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $name = $_POST["name"];
+  $email = $_POST["email"];
+  echo "Name: " . $name . "&lt;br&gt;";
+  echo "Email: " . $email . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 15: TASK 1 - Halfway Point -->
+            <section data-slide-title="Task 1: Basic PHP Development" class="center"><h2>Task 1: Basic PHP Development</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Set up XAMPP and start Apache service</li>
+                        <li>Create a new project folder in htdocs directory</li>
+                        <li>Create PHP files with the following:</li>
+                        <ul>
+                            <li>Basic PHP syntax and variables</li>
+                            <li>Arrays and loops</li>
+                            <li>Functions with parameters</li>
+                            <li>HTML integration</li>
+                            <li>Simple form processing</li>
+                        </ul>
+                        <li>Test all files through localhost</li>
+                        <li>Create a simple product catalog page</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you understand PHP basics and server setup</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 16: Break/Catch Up -->
+            <section data-slide-title="Break Time" class="center"><h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secondary slides and Task 2</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 17: PHP Superglobals -->
+            <section data-slide-title="PHP Superglobals"><h2>PHP Superglobals</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Common Superglobals:
+// $_POST - Form data
+$name = $_POST["name"];
+// $_GET - URL parameters
+$id = $_GET["id"];
+// $_SERVER - Server information
+$method = $_SERVER["REQUEST_METHOD"];
+$url = $_SERVER["REQUEST_URI"];
+// $_SESSION - Session data
+session_start();
+$_SESSION["user_id"] = 123;
+// $_COOKIE - Cookie data
+$theme = $_COOKIE["theme"];
+// $_FILES - File uploads
+$uploadedFile = $_FILES["file"];</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 18: PHP Error Handling -->
+            <section data-slide-title="PHP Error Handling"><h2>PHP Error Handling</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Error Handling Examples:
+// Display errors (development only)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+// Try-catch for exceptions
+try {
+  $result = 10 / 0;
+} catch (Exception $e) {
+  echo "Error: " . $e-&gt;getMessage();
+}
+// Custom error handling
+function customErrorHandler($errno, $errstr) {
+  echo "Error [$errno]: $errstr";
+}
+set_error_handler("customErrorHandler");
+// Error logging
+error_log("This is an error message", 0);</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 19: PHP Security Basics -->
+            <section data-slide-title="PHP Security Basics"><h2>PHP Security Basics</h2>
+                <ul>
+                    <li><strong>Input Validation:</strong> Always validate user input</li>
+                    <li><strong>SQL Injection:</strong> Use prepared statements</li>
+                    <li><strong>XSS Prevention:</strong> Escape output with htmlspecialchars()</li>
+                    <li><strong>CSRF Protection:</strong> Use tokens for forms</li>
+                    <li><strong>File Upload Security:</strong> Validate file types and sizes</li>
+                </ul>
+                <div class="code-example">
+                <pre><code class="language-php">Security Examples:
+// Input validation
+$email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+// XSS prevention
+$userInput = "&lt;script&gt;alert('XSS')&lt;/script&gt;";
+echo htmlspecialchars($userInput);
+// File upload validation
+$allowedTypes = ["jpg", "png", "gif"];
+$fileExtension = strtolower(pathinfo($_FILES["file"]["name"],
+PATHINFO_EXTENSION));
+if (in_array($fileExtension, $allowedTypes)) {
+  // Process file
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 20: PHP File Operations -->
+            <section data-slide-title="PHP File Operations"><h2>PHP File Operations</h2>
+                <div class="code-example">
+                <pre><code class="language-php">File Operations Examples:
+// Reading a file
+$content = file_get_contents("data.txt");
+echo $content;
+// Writing to a file
+$data = "Hello, World!";
+file_put_contents("output.txt", $data);
+// Reading file line by line
+$handle = fopen("data.txt", "r");
+while (($line = fgets($handle)) !== false) {
+  echo $line;
+}
+fclose($handle);
+// Checking if file exists
+if (file_exists("config.php")) {
+  include "config.php";
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 21: PHP Include and Require -->
+            <section data-slide-title="PHP Include and Require"><h2>PHP Include and Require</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Include Examples:
+// Include file (continues if file not found)
+include "header.php";
+// Require file (stops if file not found)
+require "config.php";
+// Include once (prevents multiple inclusion)
+include_once "functions.php";
+// Require once (prevents multiple inclusion)
+require_once "database.php";
+// Example structure:
+// header.php
+&lt;?php
+echo "&lt;h1&gt;My Website&lt;/h1&gt;";
+?&gt;
+// footer.php
+&lt;?php
+echo "&lt;p&gt;© 2024 My Website&lt;/p&gt;";
+?&gt;</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 22: PHP Sessions -->
+            <section data-slide-title="PHP Sessions"><h2>PHP Sessions</h2>
+                <div class="code-example">
+                <pre><code class="language-php">Session Management:
+// Start session
+session_start();
+// Set session variables
+$_SESSION["user_id"] = 123;
+$_SESSION["username"] = "john_doe";
+$_SESSION["logged_in"] = true;
+// Access session variables
+echo "User ID: " . $_SESSION["user_id"];
+echo "Username: " . $_SESSION["username"];
+// Check if user is logged in
+if (isset($_SESSION["logged_in"]) &amp;&amp; $_SESSION["logged_in"]) {
+  echo "Welcome back!";
+} else {
+  echo "Please log in";
+}
+// Destroy session
+session_destroy();</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 23: PHP Best Practices -->
+            <section data-slide-title="PHP Best Practices"><h2>PHP Best Practices</h2>
+                <ul>
+                    <li><strong>Code Organization:</strong> Use meaningful file and folder names
+                    </li>
+                    <li><strong>Comments:</strong> Document your code properly</li>
+                    <li><strong>Naming Conventions:</strong> Use consistent naming (camelCase,
+                        snake_case)</li>
+                    <li><strong>Error Handling:</strong> Always handle errors gracefully</li>
+                    <li><strong>Security:</strong> Never trust user input</li>
+                    <li><strong>Performance:</strong> Optimize database queries and loops</li>
+                </ul>
+                <div class="code-example">
+                <pre><code class="language-php">Good Practices Example:
+// Good: Clear variable names
+$userFirstName = "John";
+$userLastName = "Doe";
+// Good: Proper error handling
+if (!file_exists("config.php")) {
+  die("Configuration file not found");
+}
+// Good: Input validation
+$email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
+if (!$email) {
+  echo "Invalid email address";
+}</code></pre>
+            </div>
+            </section>
+
+            <!-- Slide 24: TASK 2 - Final Task -->
+            <section data-slide-title="Task 2: E-commerce PHP Foundation" class="center"><h2>Task 2: E-commerce PHP Foundation</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Create a basic e-commerce PHP application with:</li>
+                        <ul>
+                            <li>Product listing page with PHP arrays</li>
+                            <li>Product detail page with URL parameters</li>
+                            <li>Contact form with validation</li>
+                            <li>Session-based shopping cart</li>
+                            <li>Simple user authentication system</li>
+                        </ul>
+                        <li>Implement proper error handling</li>
+                        <li>Use include/require for code organization</li>
+                        <li>Add security measures (input validation, XSS prevention)</li>
+                        <li>Test all functionality thoroughly</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>This task will help you build a foundation for e-commerce PHP
+                            development</em></p>
+                </div>
+            </section>
+
+            <!-- Slide 25: Summary -->
+            <section data-slide-title="Session Summary" class="center"><h2>Session Summary</h2>
+                <ul>
+                    <li>PHP is a powerful server-side scripting language</li>
+                    <li>XAMPP provides a complete local development environment</li>
+                    <li>PHP integrates seamlessly with HTML</li>
+                    <li>Proper error handling and security are essential</li>
+                    <li>Sessions enable user state management</li>
+                    <li>Code organization and best practices improve maintainability</li>
+                </ul>
+                <div class="highlight">
+                    <h3>Next Session:</h3>
+                    <p>PHP Forms & Data Processing - Advanced form handling and validation</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+        });
+    </script><script src="/chrome.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 7: Management Concepts</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Management Concepts</span>
+    <span class="jw-count">7 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session6/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session8/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 7: Cyber Security Management Concepts</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Formulate Key Performance Indicators (KPIs) to measure security effectiveness.</li>
+                    <li>Establish Key Risk Indicators (KRIs) as early warning systems.</li>
+                    <li>Analyze the business impact of Vendor/Third-Party vulnerabilities.</li>
+                    <li>Execute Third-Party Risk Assessments (TPRA) using industry standard questionnaires.</li>
+                    <li>Deconstruct supply chain attacks (e.g., SolarWinds) and their mitigations.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Metrics and Measurement (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>KPIs vs KRIs</li>
+                    <li>Presenting Metrics to the Board</li>
+                    <li><strong>Task 1: Developing Security KPIs</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Third-Party Risk Management (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The Supply Chain Threat Landscape</li>
+                    <li>Vendor Audits and Questionnaires</li>
+                    <li><strong>Task 2: Third-Party Risk Assessment</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Metrics and Measurement" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 1: Metrics and Measurement</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The Measurement Problem" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>The Measurement Problem</h2>
+                <p>How do you prove that the security program is working?</p>
+                <ul>
+                    <li>If a company suffers zero breaches in a year, is it because they have excellent security, or because they were lucky and nobody targeted them?</li>
+                    <li>Security leaders must provide quantifiable data to the business to justify their existence and their budgets.</li>
+                    <li>"We blocked 10,000 firewall attacks today" is a terrible metric. It provides zero business context.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="KPIs vs KRIs" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>KPIs vs KRIs</h2>
+                <div class="task-box">
+                    <h3>Key Performance Indicators (KPIs)</h3>
+                    <p>Looking backward. Measures how effectively a control is operating.<br>
+                    <em>Example:</em> "Percentage of laptops with up-to-date antivirus definitions" (Target: 99%).</p>
+                    
+                    <h3>Key Risk Indicators (KRIs)</h3>
+                    <p>Looking forward. Early warning signs that a risk is increasing to an unacceptable level.<br>
+                    <em>Example:</em> "Number of employees bypassing the VPN to access cloud services." If this spikes, the risk of data exfiltration is rising rapidly.</p>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Board Reporting" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Reporting to the Board</h2>
+                <p>The Board of Directors is responsible for enterprise risk management, not IT operations.</p>
+                <ul>
+                    <li>Metrics presented to the board must be tied to business goals (Revenue, Reputation, Compliance).</li>
+                    <li><strong>Good Board Metric:</strong> "Mean Time to Patch Critical Vulnerabilities" (Decreased from 14 days to 3 days, reducing compliance risk).</li>
+                    <li><strong>Bad Board Metric:</strong> "Number of malware signatures updated." (Irrelevant technical jargon).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Developing effective KPIs requires aligning technical telemetry with strategic business objectives.</p>
+                <div class="highlight">
+                    We will design a KPI dashboard for a healthcare provider.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Developing KPIs" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 1: Developing Security KPIs</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>A hospital network's primary strategic goal for the year is to "Achieve 100% compliance with HIPAA regulations regarding patient data privacy."</p>
+                    <ol>
+                        <li>Develop two technical KPIs that directly measure progress toward this goal (e.g., related to encryption or access control).</li>
+                        <li>Develop one KRI that would serve as an early warning sign that HIPAA compliance is slipping.</li>
+                        <li>For each metric, explicitly define how the data will be collected automatically (without manual counting).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Third-Party Risk" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 2: Third-Party Risk Management</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="The Supply Chain Threat" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>The Supply Chain Threat</h2>
+                <p>You are only as secure as your weakest vendor.</p>
+                <ul>
+                    <li>Why spend months trying to hack a bank's impenetrable firewall, when you can just hack the small, underfunded marketing agency that handles the bank's customer emails?</li>
+                    <li><strong>Target Breach (2013):</strong> 40 million credit cards stolen. Attackers didn't hack Target directly; they hacked Target's HVAC (air conditioning) vendor, who had a remote connection into Target's billing network.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="SolarWinds" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Case Study: SolarWinds (2020)</h2>
+                <p>The most sophisticated supply chain attack in history.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>Russian state-sponsored actors compromised the software build pipeline of SolarWinds, an IT monitoring company.</li>
+                        <li>They inserted a malicious backdoor into the official SolarWinds software update.</li>
+                        <li>30,000 organizations (including the US Treasury and FireEye) downloaded the "legitimate" update, instantly giving the attackers administrative access to their internal networks.</li>
+                        <li>Proves that implicitly trusting software vendors is a critical vulnerability.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Vendor Risk Management" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Third-Party Risk Assessment (TPRA)</h2>
+                <p>Before signing a contract with a vendor who will handle your data, you must assess their security posture.</p>
+                <ul>
+                    <li><strong>Security Questionnaires:</strong> Standardized documents (e.g., SIG Core, CAIQ) asking the vendor 200+ questions about their encryption, policies, and incident response plans.</li>
+                    <li><strong>Right to Audit:</strong> Contracts must include a clause allowing your company to hire independent auditors to verify the vendor's claims.</li>
+                    <li><strong>SOC 2 Reports:</strong> An independent audit report proving a vendor adheres to strict security controls. If a cloud vendor cannot produce a SOC 2 Type II report, you should not use them.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>TPRAs are a balancing act between security rigor and business velocity. The business wants to use the new software today; security needs to ensure it won't cause a breach.</p>
+                <div class="highlight">
+                    We will evaluate a potential vendor's security posture and make a Go/No-Go recommendation.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: TPRA Simulation" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 2: Third-Party Risk Assessment</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>Your HR department wants to purchase a new cloud-based payroll system from a startup vendor ("PayFast"). You send them a security questionnaire. They return the following answers:</p>
+                    <ul>
+                        <li>Data Encryption at Rest: <em>"No, but our servers are in a locked cage."</em></li>
+                        <li>Multi-Factor Authentication (MFA) for Admins: <em>"In development, arriving Q4."</em></li>
+                        <li>Recent Penetration Test: <em>"Yes, conducted internally by our lead developer last month."</em></li>
+                    </ul>
+                    <ol>
+                        <li>Identify the three critical red flags in the vendor's responses.</li>
+                        <li>Draft a formal "Risk Acceptance" memo to the Head of HR, explaining why Security is vetoing this vendor.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Metrics are the language of management. If you can't measure your security posture, you can't improve it.</li>
+                    <li>The perimeter no longer ends at your corporate firewall; it extends to every vendor and software supplier you interact with.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> The NIST Cyber Security Framework (Standardizing Defense)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

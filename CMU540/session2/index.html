@@ -1,0 +1,702 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU540 - Session 2: WEB-ACCESS-01 - Broken Access Control</title>
+
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU540</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">WEB-ACCESS-01 - Broken Access Control</span>
+    <span class="jw-count">2 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session1/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session3/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+        
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMU540</div>
+                <h1>WEB-ACCESS-01 - Broken Access Control</h1>
+                <h2>Session 2</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Session Overview">
+                <h2>Session Overview</h2>
+                
+                
+                <div class="career-box">
+                    <h3>🎯 Career Focus</h3>
+                    <p>Access control specialists earn £45,000-£80,000+ in roles like:</p>
+                    <ul>
+                        <li>Security Architect</li>
+                        <li>Identity & Access Management (IAM) Specialist</li>
+                        <li>Penetration Tester</li>
+                        <li>Security Consultant</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand access control mechanisms and their importance</li>
+                    <li>Identify common access control vulnerabilities</li>
+                    <li>Practice exploiting broken access control using OS&sup3; Studio</li>
+                    <li>Learn secure access control implementation patterns</li>
+                    <li>Explore career opportunities in access control security</li>
+                </ul>
+                
+                <div class="highlight">
+                    <strong>Key Question:</strong> How do we ensure users can only access what they're authorized to see?
+                </div>
+            </section>
+
+            <section data-slide-title="What is Access Control?">
+                <h2>What is Access Control?</h2>
+                <p><strong>Access Control</strong> determines who can access what resources and under what conditions.</p>
+                
+                <h3>Core Principles:</h3>
+                <ul>
+                    <li><strong>Authentication:</strong> "Who are you?" - Verifying identity</li>
+                    <li><strong>Authorization:</strong> "What can you do?" - Determining permissions</li>
+                    <li><strong>Accountability:</strong> "What did you do?" - Tracking actions</li>
+                </ul>
+
+                <div class="demo-link">
+                    <h3>🔗 Real-World Example</h3>
+                    <p>Think of a bank vault - you need:</p>
+                    <ul>
+                        <li>Valid ID (Authentication)</li>
+                        <li>Proper authorization level (Authorization)</li>
+                        <li>Access logs (Accountability)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Types of Access Control">
+                <h2>Types of Access Control</h2>
+                
+                <h3>1. Discretionary Access Control (DAC)</h3>
+                <ul>
+                    <li>Resource owners control access</li>
+                    <li>Common in file systems</li>
+                    <li>Flexible but can be insecure</li>
+                </ul>
+
+                <h3>2. Mandatory Access Control (MAC)</h3>
+                <ul>
+                    <li>System-enforced policies</li>
+                    <li>Used in military/government</li>
+                    <li>Highly secure but inflexible</li>
+                </ul>
+
+                <h3>3. Role-Based Access Control (RBAC)</h3>
+                <ul>
+                    <li>Access based on user roles</li>
+                    <li>Most common in web applications</li>
+                    <li>Balances security and usability</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Common Access Control Vulnerabilities">
+                <h2>Common Access Control Vulnerabilities</h2>
+                
+                <div class="vulnerability">
+                    <h3>🚨 Vertical Privilege Escalation</h3>
+                    <p>Regular users gaining admin privileges</p>
+                    <div class="code-example">
+                    <pre><code class="language-plaintext">GET /admin/users → Should require admin role</code></pre>
+                </div>
+                </div>
+
+                <div class="vulnerability">
+                    <h3>🚨 Horizontal Privilege Escalation</h3>
+                    <p>Users accessing other users' data</p>
+                    <div class="code-example">
+                    <pre><code class="language-plaintext">GET /users/123/profile → User 456 accessing User 123's data</code></pre>
+                </div>
+                </div>
+            </section>
+
+            <section data-slide-title="Missing Function Level Access Control">
+                <h2>Missing Function Level Access Control</h2>
+                
+                <div class="vulnerability">
+                    <h3>🚨 Direct Object References</h3>
+                    <p>No authorization check for object access</p>
+                    <div class="code-example">
+                    <pre><code class="language-plaintext">GET /api/documents/456 → No check if user owns document 456</code></pre>
+                </div>
+                </div>
+
+                <h3>Common Scenarios:</h3>
+                <ul>
+                    <li>Direct database queries without authorization</li>
+                    <li>File system access without permission checks</li>
+                    <li>API endpoints without role verification</li>
+                    <li>Administrative functions accessible to regular users</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="OS&sup3; Studio Lab Environment">
+                <h2>OS&sup3; Studio Lab Environment</h2>
+                
+                <div class="os3-studio">
+                    <h3>🔬 Lab Setup</h3>
+                    <p>We'll use the OS&sup3; Newman Cyber Security Lab to practice access control exploitation:</p>
+                    <ol>
+                        <li>Access the vulnerable web application</li>
+                        <li>Identify broken access control mechanisms</li>
+                        <li>Exploit vulnerabilities systematically</li>
+                        <li>Document findings and impact</li>
+                    </ol>
+                </div>
+
+                <div class="highlight">
+                    <strong>Lab Environment:</strong> Isolated, safe environment for learning offensive security techniques
+                </div>
+            </section>
+
+            <section data-slide-title="Common Attack Vectors">
+                <h2>Common Attack Vectors</h2>
+                
+                <h3>1. URL Manipulation</h3>
+                <ul>
+                    <li>Changing user IDs in URLs</li>
+                    <li>Accessing admin panels directly</li>
+                    <li>Bypassing authentication checks</li>
+                </ul>
+
+                <h3>2. Parameter Tampering</h3>
+                <ul>
+                    <li>Modifying form parameters</li>
+                    <li>Changing role values</li>
+                    <li>Manipulating session data</li>
+                </ul>
+
+                <h3>3. Directory Traversal</h3>
+                <ul>
+                    <li>Accessing restricted directories</li>
+                    <li>Bypassing path restrictions</li>
+                    <li>Reading sensitive files</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Real-World Impact">
+                <h2>Real-World Impact</h2>
+                
+                <div class="vulnerability">
+                    <h3>🚨 Case Study: Facebook Data Breach (2018)</h3>
+                    <ul>
+                        <li><strong>Impact:</strong> 50 million users affected</li>
+                        <li><strong>Cause:</strong> Access token vulnerability</li>
+                        <li><strong>Result:</strong> $5 billion fine from FTC</li>
+                    </ul>
+                </div>
+
+                <div class="career-box">
+                    <h3>💼 Industry Impact</h3>
+                    <p>Broken access control is the #1 OWASP vulnerability because:</p>
+                    <ul>
+                        <li>It's easy to exploit</li>
+                        <li>It has high impact</li>
+                        <li>It's often overlooked in development</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Detection Methods">
+                <h2>Detection Methods</h2>
+                
+                <h3>Manual Testing:</h3>
+                <ul>
+                    <li>Role-based testing with different user accounts</li>
+                    <li>URL manipulation and parameter tampering</li>
+                    <li>Session management analysis</li>
+                </ul>
+
+                <h3>Automated Testing:</h3>
+                <ul>
+                    <li>Burp Suite Professional</li>
+                    <li>OWASP ZAP</li>
+                    <li>Custom scripts for authorization testing</li>
+                </ul>
+
+                <div class="demo-link">
+                    <h3>🔗 Tools and Resources</h3>
+                    <p><a href="https://portswigger.net/web-security/access-control" target="_blank">PortSwigger Access Control Guide</a></p>
+                    <p><a href="https://owasp.org/www-community/attacks/IDOR" target="_blank">OWASP IDOR Attack Guide</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Prevention Strategies">
+                <h2>Prevention Strategies</h2>
+                
+                <h3>1. Implement Proper Authorization</h3>
+                <ul>
+                    <li>Check permissions on every request</li>
+                    <li>Use role-based access control (RBAC)</li>
+                    <li>Implement principle of least privilege</li>
+                </ul>
+
+                <h3>2. Secure Session Management</h3>
+                <ul>
+                    <li>Use secure session tokens</li>
+                    <li>Implement proper session timeout</li>
+                    <li>Validate session state on every request</li>
+                </ul>
+
+                <h3>3. Regular Security Testing</h3>
+                <ul>
+                    <li>Conduct regular penetration tests</li>
+                    <li>Implement automated security scanning</li>
+                    <li>Review access control policies regularly</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Industry Standards and Frameworks">
+                <h2>Industry Standards and Frameworks</h2>
+                
+                <h3>Security Frameworks:</h3>
+                <ul>
+                    <li><strong>NIST Cybersecurity Framework</strong></li>
+                    <li><strong>ISO 27001</strong></li>
+                    <li><strong>OWASP ASVS (Application Security Verification Standard)</strong></li>
+                </ul>
+
+                <h3>Compliance Requirements:</h3>
+                <ul>
+                    <li><strong>GDPR:</strong> Data protection and access control</li>
+                    <li><strong>PCI DSS:</strong> Payment card industry standards</li>
+                    <li><strong>HIPAA:</strong> Healthcare data protection</li>
+                </ul>
+
+                <div class="career-box">
+                    <h3>💼 Career Opportunities</h3>
+                    <p>Compliance specialists earn £40,000-£70,000+ in roles like:</p>
+                    <ul>
+                        <li>Compliance Officer</li>
+                        <li>Risk Assessment Specialist</li>
+                        <li>Security Auditor</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Paths in Access Control">
+                <h2>Career Paths in Access Control</h2>
+                
+                <div class="career-box">
+                    <h3>🎯 Entry-Level Roles (£25,000-£40,000)</h3>
+                    <ul>
+                        <li>Junior Security Analyst</li>
+                        <li>IT Security Support</li>
+                        <li>Security Operations Center (SOC) Analyst</li>
+                    </ul>
+                </div>
+
+                <div class="career-box">
+                    <h3>🎯 Mid-Level Roles (£40,000-£70,000)</h3>
+                    <ul>
+                        <li>Security Consultant</li>
+                        <li>Penetration Tester</li>
+                        <li>Identity & Access Management Specialist</li>
+                    </ul>
+                </div>
+
+                <div class="career-box">
+                    <h3>🎯 Senior Roles (£70,000-£120,000+)</h3>
+                    <ul>
+                        <li>Security Architect</li>
+                        <li>Chief Information Security Officer (CISO)</li>
+                        <li>Security Engineering Manager</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Tools and Technologies">
+                <h2>Tools and Technologies</h2>
+                
+                <h3>Identity and Access Management (IAM):</h3>
+                <ul>
+                    <li><strong>Auth0:</strong> Identity-as-a-Service platform</li>
+                    <li><strong>Okta:</strong> Enterprise identity management</li>
+                    <li><strong>Microsoft Azure AD:</strong> Cloud identity services</li>
+                    <li><strong>Keycloak:</strong> Open-source identity management</li>
+                </ul>
+
+                <h3>Testing Tools:</h3>
+                <ul>
+                    <li><strong>Burp Suite:</strong> Web application security testing</li>
+                    <li><strong>OWASP ZAP:</strong> Free security testing tool</li>
+                    <li><strong>Postman:</strong> API testing and development</li>
+                </ul>
+
+                <div class="demo-link">
+                    <h3>🔗 Hands-On Learning</h3>
+                    <p><a href="https://auth0.com/docs/quickstart/webapp" target="_blank">Auth0 Quick Start Guide</a></p>
+                    <p><a href="https://www.keycloak.org/getting-started" target="_blank">Keycloak Getting Started</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Security Best Practices">
+                <h2>Security Best Practices</h2>
+                
+                <h3>Development Phase:</h3>
+                <ul>
+                    <li>Implement security by design</li>
+                    <li>Use secure coding practices</li>
+                    <li>Conduct regular code reviews</li>
+                    <li>Test authorization thoroughly</li>
+                </ul>
+
+                <h3>Deployment Phase:</h3>
+                <ul>
+                    <li>Use secure configuration</li>
+                    <li>Implement monitoring and logging</li>
+                    <li>Regular security updates</li>
+                    <li>Incident response planning</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>Remember:</strong> Security is not a one-time implementation - it's an ongoing process!
+                </div>
+            </section>
+
+            <section data-slide-title="Common Mistakes to Avoid">
+                <h2>Common Mistakes to Avoid</h2>
+                
+                <div class="vulnerability">
+                    <h3>🚨 Security Anti-Patterns</h3>
+                    <ul>
+                        <li><strong>Client-side authorization only</strong> - Easy to bypass</li>
+                        <li><strong>Hidden form fields</strong> - Can be manipulated</li>
+                        <li><strong>URL-based permissions</strong> - Not secure</li>
+                        <li><strong>Weak session management</strong> - Vulnerable to hijacking</li>
+                    </ul>
+                </div>
+
+                <h3>Red Flags:</h3>
+                <ul>
+                    <li>Authorization checks only in JavaScript</li>
+                    <li>Admin functions accessible via direct URLs</li>
+                    <li>No session timeout implementation</li>
+                    <li>Predictable session tokens</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Legal and Ethical Considerations">
+                <h2>Legal and Ethical Considerations</h2>
+                
+                <div class="highlight">
+                    <h3>âš ï¸ Important Legal Notice</h3>
+                    <p>Only test systems you own or have explicit permission to test!</p>
+                </div>
+
+                <h3>Ethical Guidelines:</h3>
+                <ul>
+                    <li>Always get proper authorization</li>
+                    <li>Follow responsible disclosure</li>
+                    <li>Respect privacy and data protection</li>
+                    <li>Report vulnerabilities responsibly</li>
+                </ul>
+
+                <div class="career-box">
+                    <h3>💼 Professional Ethics</h3>
+                    <p>Ethical hackers and security professionals follow:</p>
+                    <ul>
+                        <li>Certified Ethical Hacker (CEH) guidelines</li>
+                        <li>OWASP ethical guidelines</li>
+                        <li>Company security policies</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Task 1: Vulnerability Discovery">
+                <h2>Task 1: Vulnerability Discovery</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Access the OS&sup3; Studio vulnerable application</li>
+                        <li>Create test accounts with different roles (user, admin)</li>
+                        <li>Identify broken access control vulnerabilities</li>
+                        <li>Test vertical privilege escalation (user → admin)</li>
+                        <li>Test horizontal privilege escalation (user A → user B)</li>
+                        <li>Document all findings with screenshots</li>
+                        <li>Note the impact and potential damage</li>
+                        <li>Prepare a brief report of your findings</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on systematic testing and thorough documentation</em></p>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Break Time">
+                <h2>Break Time</h2>
+                <div class="highlight">
+                    <h3>15 Minutes</h3>
+                    <p>Take a break, ask questions, or catch up on the previous task.</p>
+                    <p><em>Next: Secure implementation and Task 2</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Secure Implementation Patterns">
+                <h2>Secure Implementation Patterns</h2>
+                
+                <h3>1. Server-Side Authorization</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Always check permissions on the server --&gt;
+if (user.hasRole('admin') &amp;&amp; user.canAccess(resource)) {
+  return resource;
+} else {
+  throw new UnauthorizedException();
+}</code></pre>
+                </div>
+
+                <h3>2. Role-Based Access Control</h3>
+                <ul>
+                    <li>Define clear roles and permissions</li>
+                    <li>Implement role hierarchy</li>
+                    <li>Use principle of least privilege</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Secure Session Management">
+                <h2>Secure Session Management</h2>
+                
+                <h3>Best Practices:</h3>
+                <ul>
+                    <li><strong>Secure Session Tokens:</strong> Use cryptographically secure random tokens</li>
+                    <li><strong>Session Timeout:</strong> Implement automatic logout</li>
+                    <li><strong>Session Validation:</strong> Check session state on every request</li>
+                    <li><strong>Secure Storage:</strong> Store sessions securely on server</li>
+                </ul>
+
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- Secure session implementation --&gt;
+const session = {
+  id: crypto.randomBytes(32).toString('hex'),
+  userId: user.id,
+  role: user.role,
+  expiresAt: Date.now() + SESSION_TIMEOUT,
+  lastActivity: Date.now()
+};</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Input Validation and Sanitization">
+                <h2>Input Validation and Sanitization</h2>
+                
+                <h3>Critical Security Measures:</h3>
+                <ul>
+                    <li><strong>Validate all inputs:</strong> Check data types, ranges, and formats</li>
+                    <li><strong>Sanitize user data:</strong> Remove or escape dangerous characters</li>
+                    <li><strong>Use parameterized queries:</strong> Prevent SQL injection</li>
+                    <li><strong>Implement CSRF protection:</strong> Prevent cross-site request forgery</li>
+                </ul>
+
+                <div class="code-example">
+                    <pre><code class="language-javascript">&lt;!-- Input validation example --&gt;
+function validateUserId(userId) {
+  if (!userId || !Number.isInteger(userId) || userId &lt;= 0) {
+    throw new ValidationError('Invalid user ID');
+  }
+  return userId;
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Monitoring and Logging">
+                <h2>Monitoring and Logging</h2>
+                
+                <h3>Security Monitoring:</h3>
+                <ul>
+                    <li><strong>Access Logs:</strong> Track all access attempts</li>
+                    <li><strong>Failed Authentication:</strong> Monitor login failures</li>
+                    <li><strong>Privilege Escalation:</strong> Alert on suspicious activity</li>
+                    <li><strong>Anomaly Detection:</strong> Identify unusual patterns</li>
+                </ul>
+
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;!-- Security logging example --&gt;
+logger.warn('Unauthorized access attempt', {
+  userId: user.id,
+  resource: requestedResource,
+  ip: request.ip,
+  userAgent: request.headers['user-agent'],
+  timestamp: new Date()
+});</code></pre>
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Task 2: Secure Implementation">
+                <h2>Task 2: Secure Implementation</h2>
+                <div class="task-box">
+                    <h3>Instructions:</h3>
+                    <ol>
+                        <li>Return to the OS&sup3; Studio application</li>
+                        <li>Implement secure access control mechanisms</li>
+                        <li>Fix the vulnerabilities discovered in Task 1</li>
+                        <li>Add proper server-side authorization checks</li>
+                        <li>Implement secure session management</li>
+                        <li>Add input validation and sanitization</li>
+                        <li>Test your secure implementation</li>
+                        <li>Document the security improvements made</li>
+                    </ol>
+                    <p><strong>Time:</strong> 45 minutes</p>
+                    <p><em>Focus on implementing robust security controls</em></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Testing Secure Implementation">
+                <h2>Testing Secure Implementation</h2>
+                
+                <h3>Security Testing Checklist:</h3>
+                <ul>
+                    <li>✓ Test all user roles and permissions</li>
+                    <li>✓ Verify session timeout works correctly</li>
+                    <li>✓ Test input validation with malicious data</li>
+                    <li>✓ Check error handling doesn't leak information</li>
+                    <li>✓ Verify logging captures security events</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>Remember:</strong> Security testing should be continuous, not just a one-time activity!
+                </div>
+            </section>
+
+            <section data-slide-title="Industry Tools and Resources">
+                <h2>Industry Tools and Resources</h2>
+                
+                <h3>Professional Tools:</h3>
+                <ul>
+                    <li><strong>Burp Suite Professional:</strong> Advanced web security testing</li>
+                    <li><strong>OWASP ZAP:</strong> Free, open-source security scanner</li>
+                    <li><strong>Nessus:</strong> Vulnerability assessment tool</li>
+                    <li><strong>Metasploit:</strong> Penetration testing framework</li>
+                </ul>
+
+                <div class="demo-link">
+                    <h3>🔗 Learning Resources</h3>
+                    <p><a href="https://portswigger.net/web-security/access-control" target="_blank">PortSwigger Access Control Guide</a></p>
+                    <p><a href="https://owasp.org/www-project-top-ten/" target="_blank">OWASP Top 10</a></p>
+                    <p><a href="https://www.cybrary.it/catalog/cybersecurity/" target="_blank">Free Cyber Security Courses</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Career Development in Access Control">
+                <h2>Career Development in Access Control</h2>
+                
+                <h3>Certifications to Consider:</h3>
+                <ul>
+                    <li><strong>CEH (Certified Ethical Hacker):</strong> Ethical hacking certification</li>
+                    <li><strong>CISSP (Certified Information Systems Security Professional):</strong> Advanced security certification</li>
+                    <li><strong>CISM (Certified Information Security Manager):</strong> Security management</li>
+                    <li><strong>CompTIA Security+:</strong> Entry-level security certification</li>
+                </ul>
+
+                <div class="career-box">
+                    <h3>💼 Professional Development</h3>
+                    <p>Build your career through:</p>
+                    <ul>
+                        <li>Continuous learning and certification</li>
+                        <li>Hands-on experience with security tools</li>
+                        <li>Contributing to open-source security projects</li>
+                        <li>Networking with security professionals</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Summary and Key Takeaways">
+                <h2>Summary and Key Takeaways</h2>
+                
+                <h3>What We've Learned:</h3>
+                <ul>
+                    <li>Access control is fundamental to application security</li>
+                    <li>Broken access control is the #1 OWASP vulnerability</li>
+                    <li>Proper implementation requires server-side validation</li>
+                    <li>Security testing should be continuous and systematic</li>
+                    <li>Strong career opportunities exist in access control security</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>Key Principle:</strong> Never trust the client - always validate on the server!
+                </div>
+            </section>
+
+            <section class="center" data-slide-title="Next Steps">
+                <h2>Next Steps</h2>
+                
+
+                <div class="demo-link">
+                    <h3>🔗 Continue Learning</h3>
+                    <p><a href="https://owasp.org/www-project-top-ten/" target="_blank">Complete OWASP Top 10</a></p>
+                    <p><a href="https://www.cybrary.it/catalog/cybersecurity/" target="_blank">Free Cyber Security Courses</a></p>
+                </div>
+
+                <div class="highlight">
+                    <h3>Questions?</h3>
+                    <p>Feel free to ask questions about access control, career paths, or anything else!</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        
+        // Prevent wheel events from changing slides when scrolling within scrollable content
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box, [style*="overflow"]');
+            
+            scrollableElements.forEach(function(element) {
+                element.addEventListener('wheel', function(e) {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
+        });
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script><script src="/chrome.js"></script>
+</body>
+
+</html>

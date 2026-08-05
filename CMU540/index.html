@@ -1,138 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMU540: Cyber Security | James Williams | Birmingham Newman University</title>
-    <meta name="description"
-        content="CMU540 Cyber Security course - OWASP Top 10, network security, and web application security.">
-    <meta name="author" content="James Williams">
-    <link rel="stylesheet" href="../base.css">
-    <style>
-        .back-link {
-            display: inline-block;
-            margin-bottom: var(--spacing-md);
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-    </style>
+<meta charset="utf-8">
+<title>CMU540</title>
+<link rel="canonical" href="https://jameswil.com/teaching/cmu540">
+<meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0; url=https://jameswil.com/teaching/cmu540">
+<script>window.location.replace("https://jameswil.com/teaching/cmu540");</script>
+<style>
+  body { font: 14px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+         background: #0a0a0a; color: #f2f2f2; display: grid; place-items: center;
+         min-height: 100vh; margin: 0; text-align: center; padding: 2rem; }
+  a { color: #f2f2f2; }
+</style>
 </head>
-
 <body>
-    <div class="container">
-        <a href="../index.html" class="back-link">← Back to Teaching Portfolio</a>
-        <header class="header">
-            <div class="module-code">CMU540</div>
-            <h1>Cyber Security</h1>
-            <p class="subtitle">Network & Web Application Security</p>
-            <p class="department">Birmingham Newman University | 20 Credits | Undergraduate</p>
-        </header>
-        <main>
-            <section class="info-box">
-                <h3>Module Overview</h3>
-                <p>Explore network and web application security in our OS³ Cyber Security Lab. Learn
-                    threat analysis, defensive strategies, and ethical hacking fundamentals with
-                    hands-on practice.</p>
-            </section>
-            <nav class="tabs">
-                <button class="tab active" onclick="showTab('slides')">Slides</button>
-                <button class="tab" onclick="showTab('quizzes')">Quizzes</button>
-                <button class="tab" onclick="showTab('resources')">Resources</button>
-            </nav>
-            <div id="slides" class="tab-content active">
-                <h3>Lecture Slides</h3>
-                <ul class="sessions-list">
-                    <li class="session-item"><span class="session-number">1.</span><a
-                            href="slideshows/session1.html">Cyber Security Fundamentals & Lab
-                            Setup</a><span class="text-light"> — Introduction and CIA triad</span>
-                    </li>
-                    <li class="session-item"><span class="session-number">2.</span><a
-                            href="slideshows/session2.html">WEB-ACCESS-01 - Broken Access
-                            Control</a><span class="text-light"> — OWASP Top 10 #1</span></li>
-                    <li class="session-item"><span class="session-number">3.</span><a
-                            href="slideshows/session3.html">WEB-CRYPTO-01 - Cryptographic
-                            Failures</a><span class="text-light"> — OWASP Top 10 #2</span></li>
-                    <li class="session-item"><span class="session-number">4.</span><a
-                            href="slideshows/session4.html">WEB-SQL-01 - SQL Injection</a><span
-                            class="text-light"> — OWASP Top 10 #3</span></li>
-                    <li class="session-item"><span class="session-number">5.</span><a
-                            href="slideshows/session5.html">WEB-XSS-01 - Cross-Site
-                            Scripting</a><span class="text-light"> — Client-side attacks</span></li>
-                    <li class="session-item"><span class="session-number">6.</span><a
-                            href="slideshows/session6.html">WEB-CSRF-01 & WEB-CONFIG-01</a><span
-                            class="text-light"> — CSRF and Misconfiguration</span></li>
-                    <li class="session-item"><span class="session-number">7.</span><a
-                            href="slideshows/session7.html">WEB-VULN-01 & WEB-AUTH-01</a><span
-                            class="text-light"> — Vulnerable Components & Authentication</span></li>
-                    <li class="session-item"><span class="session-number">8.</span><a
-                            href="slideshows/session8.html">WEB-DATA-01 & WEB-LOG-01</a><span
-                            class="text-light"> — Data Exposure & Logging</span></li>
-                    <li class="session-item"><span class="session-number">9.</span><a
-                            href="slideshows/session9.html">WEB-SSRF-01 & WEB-UPLOAD-01</a><span
-                            class="text-light"> — SSRF & File Upload Security</span></li>
-                    <li class="session-item"><span class="session-number">10.</span><a
-                            href="slideshows/session10.html">HACKATHON</a><span class="text-light">
-                            — Practical security challenge</span></li>
-                    <li class="session-item"><span class="session-number">11.</span><a
-                            href="slideshows/session11.html">NET-PROTO-01, NET-SCAN-01 &
-                            NET-DNS-01</a><span class="text-light"> — Network Security
-                            Fundamentals</span></li>
-                    <li class="session-item"><span class="session-number">12.</span><a
-                            href="slideshows/session12.html">NET-TRAFFIC-01, NET-FIREWALL-01 & Final
-                            Assessment</a><span class="text-light"> — Network defense and
-                            review</span></li>
-                </ul>
-            </div>
-            <div id="quizzes" class="tab-content">
-                <h3>Module Quizzes</h3>
-                <ul class="quizzes-list">
-                    <li class="quiz-item"><span class="quiz-number">Q1.</span><a
-                            href="quizzes/quiz1.html">Cyber Security Fundamentals</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q2.</span><a
-                            href="quizzes/quiz2.html">Broken Access Control</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q3.</span><a
-                            href="quizzes/quiz3.html">Cryptographic Failures</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q4.</span><a
-                            href="quizzes/quiz4.html">SQL Injection</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q5.</span><a
-                            href="quizzes/quiz5.html">Cross-Site Scripting</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q6.</span><a
-                            href="quizzes/quiz6.html">CSRF & Misconfiguration</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q7.</span><a
-                            href="quizzes/quiz7.html">Vulnerable Components & Authentication</a>
-                    </li>
-                    <li class="quiz-item"><span class="quiz-number">Q8.</span><a
-                            href="quizzes/quiz8.html">Data Exposure & Logging</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q9.</span><a
-                            href="quizzes/quiz9.html">SSRF & File Upload Security</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q10.</span><a
-                            href="quizzes/quiz10.html">Security Challenge Review</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q11.</span><a
-                            href="quizzes/quiz11.html">Network Security Fundamentals</a></li>
-                    <li class="quiz-item"><span class="quiz-number">Q12.</span><a
-                            href="quizzes/quiz12.html">Network Defense & Final Review</a></li>
-                </ul>
-            </div>
-            <div id="resources" class="tab-content">
-                <h3>Resources</h3>
-                <div class="content-section">
-                    <h4>Security Resources</h4>
-                    <ul>
-                        <li><a href="https://owasp.org/www-project-top-ten/" target="_blank">OWASP
-                                Top 10</a></li>
-                        <li><a href="https://www.nist.gov/cyberframework" target="_blank">NIST
-                                Cybersecurity Framework</a></li>
-                        <li><a href="https://tryhackme.com/" target="_blank">TryHackMe</a></li>
-                    </ul>
-                </div>
-            </div>
-        </main>
-        <footer class="footer">
-            <p>&copy; 2025 James Williams, Birmingham Newman University</p>
-        </footer>
-    </div>
-    <script>function showTab(t) { document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active')); document.querySelectorAll('.tab').forEach(e => e.classList.remove('active')); document.getElementById(t).classList.add('active'); event.target.classList.add('active'); }</script>
+<p>CMU540 lives on the teaching pages.<br><a href="https://jameswil.com/teaching/cmu540">Continue to https://jameswil.com/teaching/cmu540</a></p>
 </body>
-
 </html>

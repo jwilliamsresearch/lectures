@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 4: Planning & Admin</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Planning &amp; Admin</span>
+    <span class="jw-count">4 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session3/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session5/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 4: Information Systems Planning & Administration</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Differentiate between Strategic, Tactical, and Operational planning.</li>
+                    <li>Integrate security into the Systems Development Life Cycle (SDLC).</li>
+                    <li>Justify security budgets using business alignment.</li>
+                    <li>Understand the mechanics and necessity of robust Patch Management.</li>
+                    <li>Execute a formal Change Control Board (CCB) process.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Strategic Alignment (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Strategic vs Tactical Planning</li>
+                    <li>Security in the SDLC</li>
+                    <li><strong>Task 1: Security Budget Justification</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Systems Administration (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Patch Management Lifecycles</li>
+                    <li>Configuration & Change Management (CCB)</li>
+                    <li><strong>Task 2: Change Control Simulation</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Strategic Alignment" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 1: Strategic Alignment</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Levels of Planning" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Levels of Planning</h2>
+                <p>Security must align with business goals, or it will be seen as a roadblock.</p>
+                <ul>
+                    <li><strong>Strategic Planning (3-5 Years):</strong> Driven by the Board/CISO. Long-term goals aligning with business vision (e.g., "Migrate all on-premise infrastructure to a Zero Trust Cloud model by 2029 to support remote work").</li>
+                    <li><strong>Tactical Planning (1-2 Years):</strong> Driven by Directors. Broad initiatives to achieve strategic goals (e.g., "Deploy an Identity Provider (Okta) and enforce MFA across all departments").</li>
+                    <li><strong>Operational Planning (Months/Weeks):</strong> Driven by Managers. Day-to-day tasks (e.g., "Patch 50 servers this weekend").</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Security in the SDLC" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Security in the SDLC</h2>
+                <p>The Systems Development Life Cycle (SDLC) is how software is built. "Bolting on" security at the end is expensive and ineffective.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Shift-Left:</strong> Moving security testing to the earliest phases of development (Requirements & Design).</li>
+                        <li>Fixing an architectural flaw during the Design phase costs £100.</li>
+                        <li>Fixing that same flaw after the software is deployed to production costs £10,000 and risks a major breach.</li>
+                        <li><strong>DevSecOps:</strong> Automating security testing within the deployment pipeline.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Budgeting for Security" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Budgeting for Security</h2>
+                <p>Security is a cost center. It does not generate revenue; it protects revenue.</p>
+                <ul>
+                    <li>To secure a budget, a CISO must prove Return on Security Investment (ROSI).</li>
+                    <li>You cannot tell a CFO: "We need £50,000 for a Next-Gen Firewall because it stops SQLi."</li>
+                    <li>You must tell a CFO: "We process £5M in transactions daily. A breach would cost £2M in GDPR fines and downtime. A £50,000 investment mitigates 80% of this risk."</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>The ability to translate technical necessity into business value is the most critical skill for a security manager.</p>
+                <div class="highlight">
+                    We will simulate pitching a security budget to a non-technical board of directors.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Budget Justification" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 1: Security Budget Justification</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Your company recently suffered a minor phishing incident. You want to purchase an advanced Email Security Gateway (e.g., Proofpoint) that costs £100,000 annually. The CFO is skeptical, noting you already have standard Microsoft 365 spam filters.</p>
+                    <ol>
+                        <li>Draft a one-page business case for the CFO. </li>
+                        <li>Calculate the potential cost of a successful ransomware infection stemming from a phishing email (factor in 3 days of total company downtime).</li>
+                        <li>Explain how the £100k investment aligns with the company's <em>Strategic Goal</em> of expanding into the healthcare sector (which requires HIPAA compliance).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Systems Administration" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 2: Systems Administration</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Patch Management" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Patch Management</h2>
+                <p>Unpatched software is the root cause of the vast majority of breaches (e.g., Equifax, WannaCry).</p>
+                <ul>
+                    <li>You cannot just blindly click "Update" on enterprise servers. A bad patch can crash a critical database.</li>
+                    <li><strong>The Lifecycle:</strong> Discover (Scan) &rarr; Assess (Severity) &rarr; Test (In a sandbox) &rarr; Deploy (In phases) &rarr; Verify.</li>
+                    <li><strong>Patching Window:</strong> IT and Business must agree on a scheduled downtime window (e.g., Sunday 2 AM) for server reboots.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Configuration Management" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Configuration Management</h2>
+                <p>Maintaining systems in a known, secure state.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Baselining:</strong> Defining the standard secure configuration for a server (e.g., "All Windows Servers must have RDP disabled and the local Administrator account renamed").</li>
+                        <li><strong>Configuration Drift:</strong> Over time, admins tweak settings to fix temporary problems and forget to revert them. The server "drifts" away from the secure baseline.</li>
+                        <li>Tools like Ansible, Puppet, or Microsoft Endpoint Manager automate baseline enforcement.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Change Control" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Change Control Boards (CCB)</h2>
+                <p>The enemy of availability is an unapproved, untested change made by a "cowboy" admin on a Friday afternoon.</p>
+                <ul>
+                    <li>All changes to production environments must go through the CCB.</li>
+                    <li>The engineer must submit a Change Request (CR) detailing:
+                        <ol>
+                            <li>The exact technical change.</li>
+                            <li>The testing performed.</li>
+                            <li><strong>The Rollback Plan</strong> (How do we revert if it breaks everything?)</li>
+                        </ol>
+                    </li>
+                    <li>The CCB (composed of IT, Security, and Business leaders) approves or denies the change.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>A rigorous Change Control process is the hallmark of a mature IT organization. It prevents self-inflicted outages.</p>
+                <div class="highlight">
+                    We will simulate a Change Control Board meeting reviewing a critical firewall alteration.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Change Control" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 2: Change Control Simulation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>A junior network engineer submits an Emergency Change Request to the CCB: <em>"Need to open Port 3389 (RDP) on the external firewall pointing to the main database server so the vendor can perform urgent maintenance."</em></p>
+                    <ol>
+                        <li>As the Security Representative on the CCB, reject this request. Explain the catastrophic risk of exposing RDP to the public internet.</li>
+                        <li>Propose a secure alternative method for the vendor to access the database (e.g., VPN + MFA + Jump Server).</li>
+                        <li>Write the required "Rollback Plan" if the vendor's maintenance accidentally corrupts the database.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Security planning must start at the Strategic level and cascade down into daily Operations via the SDLC and Patch Management.</li>
+                    <li>Change Control prevents IT teams from accidentally causing the very downtime they are hired to prevent.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Asset Management & Risk Assessment
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

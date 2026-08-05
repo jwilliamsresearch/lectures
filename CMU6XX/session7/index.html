@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 7: Social Engineering</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Social Engineering</span>
+    <span class="jw-count">7 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session6/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session8/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 7: Social Engineering</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Understand the psychology of influence used in Social Engineering.</li>
+                    <li>Differentiate between Phishing, Spear-Phishing, and Whaling.</li>
+                    <li>Design effective pretexting scenarios utilizing OSINT.</li>
+                    <li>Evaluate physical security vulnerabilities (Tailgating, RFID Cloning).</li>
+                    <li>Understand the capabilities of the Social Engineering Toolkit (SET).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Digital Social Engineering (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The Psychology of Manipulation</li>
+                    <li>Phishing Frameworks</li>
+                    <li><strong>Task 1: Spear-Phishing Campaign Design</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Physical Penetration Testing (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Tailgating & Piggybacking</li>
+                    <li>RFID Cloning & Hardware Keyloggers</li>
+                    <li><strong>Task 2: Physical Breach Analysis</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Digital Social Engineering" class="center" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 1: Digital Social Engineering</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The Human Element" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>The Human Vulnerability</h2>
+                <p>Amateurs hack systems. Professionals hack people.</p>
+                <ul>
+                    <li>Why spend weeks developing a zero-day exploit for a firewall when you can simply call an employee and ask for their password?</li>
+                    <li><strong>Pretexting:</strong> The foundation of social engineering. Creating an invented scenario (a pretext) to engage a targeted victim and increase the chance they will divulge information or perform actions that would be unlikely in ordinary circumstances.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Vectors of Attack" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Vectors of Attack</h2>
+                <p>Social Engineering takes many forms across different mediums.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Phishing:</strong> Broad, untargeted emails sent to thousands of users ("Your account is suspended").</li>
+                        <li><strong>Spear-Phishing:</strong> Highly targeted emails based on OSINT ("Hi John, attached is the Q3 report for the Finance team").</li>
+                        <li><strong>Whaling:</strong> Spear-phishing specifically targeting C-level executives (CEO, CFO) for high-value payouts.</li>
+                        <li><strong>Vishing / Smishing:</strong> Voice phishing (phone calls) and SMS phishing (text messages).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="The SET Toolkit" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Social Engineering Toolkit (SET)</h2>
+                <p>A Python-driven tool inside Kali Linux designed entirely for social engineering.</p>
+                <ul>
+                    <li><strong>Credential Harvester:</strong> Clones a legitimate website (e.g., Office365 login), hosts it on the attacker's machine, and logs any submitted credentials before redirecting the victim back to the real site.</li>
+                    <li><strong>Infectious Media Generator:</strong> Creates malicious payloads disguised as PDFs or Word documents to be sent via email or dropped on USB drives.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://github.com/trustedsec/social-engineer-toolkit" target="_blank" style="color: #64ffda;">TrustedSec SET Repository</a>
+                </div>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>A successful spear-phishing attack requires establishing authority, urgency, or trust through meticulous OSINT profiling.</p>
+                <div class="highlight">
+                    We will design a highly targeted spear-phishing campaign against a corporate HR department.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Spear-Phishing Campaign" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 1: Spear-Phishing Campaign Design</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Scenario: You have been hired to test the security awareness of "Acme Corp". You found via LinkedIn that Acme recently switched to "Workday" for their HR portal.</p>
+                    <ol>
+                        <li>Draft the exact text of a spear-phishing email targeting the HR Manager. The email must establish urgency and explicitly reference their new Workday system.</li>
+                        <li>Detail the technical delivery mechanism: How will you spoof the sender address to bypass basic SPF checks? What domain will you register to host the credential harvester?</li>
+                        <li>Identify two Psychological Principles of Influence (e.g., Authority, Scarcity) you used in your email text.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Physical Pentesting" class="center" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 2: Physical Penetration Testing</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Physical Security" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Physical Security Bypasses</h2>
+                <p>A multi-million dollar firewall is useless if an attacker can simply walk into the server room and plug in a USB drive.</p>
+                <ul>
+                    <li><strong>Tailgating:</strong> Following an authorized person through a secure door without swiping your own badge. Often aided by carrying heavy boxes to exploit human politeness.</li>
+                    <li><strong>Piggybacking:</strong> Similar to tailgating, but the authorized person explicitly allows the attacker in (e.g., "I forgot my badge, can you let me in?").</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Hardware Exploitation" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Hardware Exploitation</h2>
+                <p>Tools of the Physical Pentester:</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>RFID Cloners (Proxmark):</strong> Devices that can copy the signal of a standard 125kHz HID badge from several feet away, cloning the victim's access card onto a blank card.</li>
+                        <li><strong>Rubber Ducky:</strong> A USB device that looks like a flash drive but acts as a keyboard. It injects hundreds of keystrokes a second (e.g., opening a reverse shell) immediately upon insertion.</li>
+                        <li><strong>Hardware Keyloggers:</strong> Small adapters placed between a keyboard and a PC that record all keystrokes, bypassing all software antivirus.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Baiting & USB Drops" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Baiting & USB Drops</h2>
+                <p>Exploiting human curiosity.</p>
+                <ul>
+                    <li><strong>The Attack:</strong> An attacker leaves infected USB drives in the company parking lot or breakroom.</li>
+                    <li><strong>The Pretext:</strong> The USB drives are labeled with enticing titles like "Q4 Executive Bonuses" or "Confidential Layoffs."</li>
+                    <li><strong>The Result:</strong> Employees plug the drives into corporate machines to see what is on them, instantly executing the malicious payload.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Physical pentesting requires extensive reconnaissance to identify weaknesses in building security, employee habits, and camera blind spots.</p>
+                <div class="highlight">
+                    We will analyze a physical security posture and design a breach methodology.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Physical Breach Analysis" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 2: Physical Breach Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>Target Building: A corporate office occupying floors 3, 4, and 5 of a shared commercial skyscraper. The lobby has a security desk, but elevators to all floors are public. Floor 4 houses the server room.</p>
+                    <ol>
+                        <li>Identify the primary vulnerability in the building's layout.</li>
+                        <li>Design a multi-stage physical intrusion plan. How will you bypass the lobby security desk? How will you bypass the electronic lock on the 4th floor?</li>
+                        <li>Propose three architectural or policy changes the company must implement to prevent your attack.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Humans are consistently the weakest link in any security architecture.</li>
+                    <li>Training and security awareness programs are the only defense against social engineering, as firewalls cannot patch human gullibility.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Web Application Hacking (OWASP Top 10)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

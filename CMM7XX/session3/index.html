@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 3: Symmetric Cryptography</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Symmetric Cryptography</span>
+    <span class="jw-count">3 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session2/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session4/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>Symmetric Cryptography</h1>
+                <h2>Session 3: Stream and Block Ciphers, DES</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Differentiate the architectures of Stream and Block Ciphers.</li>
+                    <li>Analyze vulnerabilities of legacy stream ciphers (RC4) and architecture of modern equivalents (ChaCha20).</li>
+                    <li>Deconstruct the Feistel Network structure used in DES.</li>
+                    <li>Evaluate fundamental Block Cipher Modes of Operation (ECB, CBC, GCM).</li>
+                    <li>Understand attack vectors like Padding Oracles.</li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Feistel Simulation" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 1: Feistel Network Simulation</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Using Python or pen-and-paper for small 8-bit blocks:</p>
+                    <ol>
+                        <li>Define an 8-bit plaintext block and split it into $L_0$ (4 bits) and $R_0$ (4 bits).</li>
+                        <li>Define a dummy, completely non-invertible, lossy function for $f$. (e.g., $f(x) = 0$ or $f(x) = x \land K$).</li>
+                        <li>Execute one encryption round to find $L_1$ and $R_1$.</li>
+                        <li>Execute the decryption round using $L_1$ and $R_1$.</li>
+                        <li>Prove mathematically and programmatically that $L_0, R_0$ are recovered perfectly, demonstrating the power of the XOR swap mechanism.</li>
+                    </ol>
+                </div>
+                
+        
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Modes of Operation" class="center" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 2: Modes of Operation & Cryptanalysis</h2>
+                <h3>Duration: 1.5 Hours</h3>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-38a/final" target="_blank" style="color: #64ffda;">NIST SP 800-38A: Block Cipher Modes of Operation</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Advanced Cryptanalysis" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Advanced Cryptanalysis against Block Ciphers</h2>
+                <p>DES S-Boxes were designed by IBM to specifically resist these attacks:</p>
+                <ul>
+                    <li><strong>Differential Cryptanalysis:</strong> Analyzes how differences in input plaintexts affect differences at the output. Requires Chosen-Plaintext.</li>
+                    <li><strong>Linear Cryptanalysis:</strong> Finds affine approximations to the action of a cipher. Developed in 1993, breaking DES faster than brute force ($2^{43}$ known plaintexts).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://web.mit.edu/Saltzer/www/publications/protection/" target="_blank" style="color: #64ffda;">Saltzer & Schroeder: Protection of Information in Computer Systems</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Block Cipher Modes of Operation" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Modes of Operation (1)</h2>
+                <p>How do we encrypt data larger than a single block?</p>
+                <ul>
+                    <li><strong>ECB (Electronic Codebook):</strong> Identical plaintext blocks produce identical ciphertext blocks. Preserves structural patterns. <em>Never use.</em></li>
+                    <li><strong>CBC (Cipher Block Chaining):</strong> Introduces an IV. $C_i = E_K(P_i \oplus C_{i-1})$. Provides randomization. Must be sequential.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-38a/final" target="_blank" style="color: #64ffda;">NIST SP 800-38A: Block Cipher Modes of Operation</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Block Cipher Modes of Operation" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Modes of Operation (2)</h2>
+                <ul>
+                    <li><strong>CTR (Counter Mode):</strong> Turns a block cipher into a stream cipher. Encrypts a counter value to generate a keystream. Highly parallelizable.</li>
+                    <li><strong>GCM (Galois/Counter Mode):</strong> Authenticated Encryption. Provides confidentiality (CTR) and integrity (universal hashing over a Galois field). Modern standard in TLS 1.3.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-38a/final" target="_blank" style="color: #64ffda;">NIST SP 800-38A: Block Cipher Modes of Operation</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Visualizing cryptographic failure is the best way to understand modes of operation. ECB mode fails to provide "Diffusion" across multiple blocks.</p>
+                <div class="highlight">
+                    We will generate the famous "ECB Penguin" to see what happens when structural data is encrypted without block chaining.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-38a/final" target="_blank" style="color: #64ffda;">NIST SP 800-38A: Block Cipher Modes of Operation</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: The ECB Penguin" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 2: ECB vs CBC & Padding Oracles</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <ol>
+                        <li>Download the provided uncompressed <code>.bmp</code> image of the Linux Tux penguin.</li>
+                        <li>Use the OpenSSL CLI to encrypt the image using <code>aes-128-ecb</code>.</li>
+                        <li>Manipulate the ciphertext file header (copy the first 54 bytes from the original) so it renders as a valid image. Observe the ciphertext visually.</li>
+                        <li>Repeat the process using <code>aes-128-cbc</code>. Compare the outputs.</li>
+                        <li><strong>Discussion:</strong> Discuss how CBC mode requires padding (PKCS#7) and how this padding can lead to a Padding Oracle Attack (Chosen-Ciphertext Attack).</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://gchq.github.io/CyberChef/" target="_blank" style="color: #64ffda;">CyberChef: The Cyber Swiss Army Knife</a>
+                </div>
+        
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMM7XX/images/cyber_bg_3.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Block ciphers require secure Modes of Operation to handle arbitrary data lengths safely.</li>
+                    <li>Authenticated Encryption (GCM) is essential to prevent malleability attacks against modes like CBC and CTR.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Asymmetric Cryptography (RSA and Key Management)
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://csrc.nist.gov/publications/detail/sp/800-38a/final" target="_blank" style="color: #64ffda;">NIST SP 800-38A: Block Cipher Modes of Operation</a>
+                </div>
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

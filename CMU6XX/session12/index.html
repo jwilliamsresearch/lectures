@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 12: Reporting & Ethics</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Reporting &amp; Ethics</span>
+    <span class="jw-count">12 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session11/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <span class="jw-nav-btn is-off" aria-hidden="true"><span></span>Next<span>→</span></span>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 12: Pen-Testing Reporting & Ethics</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Master the structure and tone of a professional Penetration Test Report.</li>
+                    <li>Translate highly technical vulnerabilities into business risk for C-suite executives.</li>
+                    <li>Navigate the ethical dilemmas of zero-day discovery and disclosure.</li>
+                    <li>Differentiate between Responsible Disclosure, Full Disclosure, and Coordinated Disclosure.</li>
+                    <li>Understand industry certifications and career pathways (CREST, OSCP).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: The Pentest Report (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Report Architecture & Target Audiences</li>
+                    <li>Articulating Business Risk</li>
+                    <li><strong>Task 1: Executive Summary Drafting</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Ethics and Industry (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Responsible Disclosure vs Full Disclosure</li>
+                    <li>Certifications (OSCP, CREST)</li>
+                    <li><strong>Task 2: Zero-Day Disclosure Simulation</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: The Pentest Report" class="center" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Part 1: The Pentest Report</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The Only Deliverable" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>The Only Deliverable</h2>
+                <p>A client pays £20,000 for a penetration test. They don't buy your exploits; they buy a PDF.</p>
+                <ul>
+                    <li>If you compromise the entire domain but write a poor report, the engagement is a failure.</li>
+                    <li>The report must cater to two completely different audiences simultaneously:
+                        <ul>
+                            <li><strong>The C-Suite (CEO/CFO):</strong> Needs to understand business risk, financial impact, and ROI.</li>
+                            <li><strong>The Engineering Team:</strong> Needs exact reproduction steps, HTTP requests, and code-level remediation advice.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Report Architecture" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Report Architecture</h2>
+                <p>A standard CREST-approved report structure:</p>
+                <div class="task-box">
+                    <ol>
+                        <li><strong>Executive Summary:</strong> High-level overview, non-technical risk assessment, and strategic recommendations.</li>
+                        <li><strong>Engagement Scope & Methodology:</strong> What was tested, when, and how (PTES).</li>
+                        <li><strong>Narrative (Attack Chain):</strong> A chronological story of how vulnerabilities were chained together to achieve the objective.</li>
+                        <li><strong>Technical Findings:</strong> Detailed breakdown of each vulnerability, CVSS scores, Proof of Concept (PoC) screenshots, and remediation steps.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Articulating Risk" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Articulating Business Risk</h2>
+                <p>Engineers care about SQL Injection. CEOs care about bankruptcy.</p>
+                <ul>
+                    <li><em>Technical phrasing:</em> "We achieved blind boolean-based SQL injection on the login endpoint."</li>
+                    <li><em>Business phrasing:</em> "A flaw in the login portal allows an unauthenticated attacker to extract the entire customer database, exposing the company to severe GDPR fines and catastrophic reputational damage."</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.crest-approved.org/" target="_blank" style="color: #64ffda;">CREST Security Standards</a>
+                </div>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Writing an Executive Summary requires turning off your "hacker brain" and turning on your "business consultant brain."</p>
+                <div class="highlight">
+                    We will translate a deeply technical finding into an Executive Summary paragraph.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Executive Summary Drafting" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Task 1: Executive Summary Drafting</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>During an engagement against a hospital's patient portal, you discovered a Server-Side Request Forgery (SSRF) vulnerability that allowed you to query the internal AWS metadata endpoint (<code>169.254.169.254</code>) and extract temporary IAM administrative credentials.</p>
+                    <ol>
+                        <li>Draft a one-paragraph Executive Summary of this finding. Ensure you clearly state the <em>business impact</em> without using any technical acronyms (No SSRF, AWS, IAM, IP addresses).</li>
+                        <li>Provide one strategic (non-technical) recommendation for the hospital board.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Ethics & Industry" class="center" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Part 2: Ethics and Industry</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="The Disclosure Dilemma" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>The Disclosure Dilemma</h2>
+                <p>You find a zero-day vulnerability in widely used router firmware. What do you do?</p>
+                <ul>
+                    <li><strong>Full Disclosure:</strong> Publishing the exploit code immediately to the public (e.g., Twitter, Exploit-DB). Forces the vendor to fix it instantly, but leaves users vulnerable to immediate attack.</li>
+                    <li><strong>Coordinated (Responsible) Disclosure:</strong> Privately notifying the vendor and giving them 90 days to issue a patch before you publish the details. The industry standard approach.</li>
+                    <li><strong>Non-Disclosure:</strong> Selling the exploit to a zero-day broker (like Zerodium) or a nation-state. Extremely lucrative, highly controversial.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="The Hacker Ethic" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>The Hacker Ethic</h2>
+                <p>The line between a security researcher and a cybercriminal is often defined by intent and authorization.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>If you find an open database online and download a file to "prove" it was open, you have committed theft under the Computer Misuse Act.</li>
+                        <li>Ethical hacking demands strict adherence to Rules of Engagement (RoE) and a commitment to doing no harm.</li>
+                        <li>The goal is to improve the security posture of the target, not to demonstrate technical superiority.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Career Pathways" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Industry Certifications</h2>
+                <p>How do you prove you can hack legally?</p>
+                <ul>
+                    <li><strong>OSCP (Offensive Security Certified Professional):</strong> The gold standard entry-level cert. A brutal 24-hour practical exam where you must hack multiple machines in a lab environment.</li>
+                    <li><strong>CREST (Council of Registered Ethical Security Testers):</strong> The primary regulatory body in the UK. CREST certifications are often legally required to perform pentesting for government agencies.</li>
+                    <li><strong>CISSP:</strong> The gold standard for management and security architecture.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Navigating vendor relationships during a zero-day disclosure can be politically tense and legally risky.</p>
+                <div class="highlight">
+                    We will draft a formal vulnerability disclosure communication.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Zero-Day Disclosure" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Task 2: Zero-Day Disclosure Simulation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You have discovered a critical authentication bypass in a smart-lock application used by millions of homes. You have found the security contact email for the vendor.</p>
+                    <ol>
+                        <li>Draft the initial outreach email to the vendor. Include a brief technical summary, but clearly outline your timeline for Coordinated Disclosure (e.g., 90 days).</li>
+                        <li>How should you securely transmit the Proof of Concept (PoC) code to the vendor? (Assume email is inherently insecure).</li>
+                        <li>If the vendor threatens legal action against you, what resources (e.g., EFF) and safe harbor principles can you invoke?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Module Conclusion" class="center" data-background-image="/CMU6XX/images/eh_bg_6.png" data-background-opacity="0.08">
+                <h2>Module Conclusion</h2>
+                <ul>
+                    <li>Ethical hacking is 50% technical mastery and 50% professional communication.</li>
+                    <li>You now possess the foundational knowledge to perform vulnerability assessments, execute exploits, and articulate risk.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>End of Module: CMU6XX Ethical Hacking</strong>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

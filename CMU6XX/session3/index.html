@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 3: Scanning & Enumeration</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Scanning &amp; Enumeration</span>
+    <span class="jw-count">3 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session2/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session4/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 3: Scanning & Enumeration</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct TCP/UDP network communication for port scanning.</li>
+                    <li>Analyze the mechanisms of Nmap (TCP Connect vs SYN Stealth scans).</li>
+                    <li>Automate vulnerability discovery using the Nmap Scripting Engine (NSE).</li>
+                    <li>Perform deep enumeration of specific protocols (SMB, SNMP).</li>
+                    <li>Identify misconfigurations leading to unauthorized data exposure.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Network Scanning (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>The TCP Three-Way Handshake</li>
+                    <li>Port Scanning with Nmap</li>
+                    <li><strong>Task 1: Nmap Scripting Engine (NSE)</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Deep Enumeration (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Moving from Port to Service</li>
+                    <li>Enumerating SMB and SNMP</li>
+                    <li><strong>Task 2: SMB Null Session Exploitation</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Network Scanning" class="center" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 1: Network Scanning</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="TCP Communication" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>The Three-Way Handshake</h2>
+                <p>Port scanning relies on abusing standard network protocol behaviors.</p>
+                <ul>
+                    <li><strong>Standard Connection:</strong>
+                        <ol>
+                            <li>Client sends <code>SYN</code>.</li>
+                            <li>Server responds <code>SYN-ACK</code> (Port Open).</li>
+                            <li>Client responds <code>ACK</code> (Connection established).</li>
+                        </ol>
+                    </li>
+                    <li><strong>TCP Connect Scan (-sT):</strong> Completes the full handshake. Highly reliable but noisy; logged by the operating system.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="SYN Stealth Scanning" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>SYN Stealth Scanning (-sS)</h2>
+                <p>The default and preferred method for pentesting. Requires root/admin privileges.</p>
+                <div class="task-box">
+                    <ol>
+                        <li>Client sends <code>SYN</code>.</li>
+                        <li>Server responds <code>SYN-ACK</code> (Port Open).</li>
+                        <li>Client responds with <code>RST</code> (Reset) instead of ACK.</li>
+                    </ol>
+                    <p><strong>Why?</strong> The connection is torn down before it is fully established. Historically, this bypassed basic application logging mechanisms, earning the name "stealth." Modern IDSs easily detect this, however.</p>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="UDP Scanning" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>UDP Scanning (-sU)</h2>
+                <p>UDP is connectionless, making scanning extremely slow and difficult.</p>
+                <ul>
+                    <li>If you send a UDP packet and receive no response, the port is marked <code>open|filtered</code>. It could be open, or a firewall could have dropped the packet.</li>
+                    <li>If you receive an <code>ICMP Port Unreachable</code> error, the port is definitely <code>closed</code>.</li>
+                    <li>UDP scanning often requires sending protocol-specific payloads (e.g., an actual DNS query to Port 53) to provoke a response.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Nmap is not just a port scanner. It contains a full Lua-based scripting engine capable of executing vulnerability checks and automated exploitation.</p>
+                <div class="highlight">
+                    We will utilize the Nmap Scripting Engine (NSE) to identify vulnerable services.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: NSE Scripts" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 1: Nmap Scripting Engine (NSE)</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Using the command line, construct an Nmap command to achieve the following against a mock target IP (e.g., <code>10.0.0.5</code>):</p>
+                    <ol>
+                        <li>Perform an aggressive scan (<code>-A</code>) against the top 1000 ports.</li>
+                        <li>Run the <code>vuln</code> script category to automatically check open ports for known CVEs.</li>
+                        <li>Output the results into all three formats (Normal, XML, Grepable) for later parsing.</li>
+                        <li>Review a sample Nmap XML output and identify the version of the SSH daemon running on Port 22.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://nmap.org/book/nse.html" target="_blank" style="color: #64ffda;">Nmap Scripting Engine Documentation</a>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Deep Enumeration" class="center" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 2: Deep Enumeration</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Scanning vs Enumeration" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Scanning vs Enumeration</h2>
+                <p>Scanning tells you Port 445 is open. Enumeration tells you <em>exactly what data</em> that port is exposing.</p>
+                <ul>
+                    <li><strong>Enumeration:</strong> Extracting usernames, machine names, network resources, shares, and services from a system.</li>
+                    <li>It represents the bridge between Discovery and Exploitation.</li>
+                    <li>Requires protocol-specific tools (e.g., <code>enum4linux</code> for SMB, <code>snmpwalk</code> for SNMP).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Enumerating SMB" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Server Message Block (SMB)</h2>
+                <p>The core file and printer sharing protocol in Windows environments (Port 445).</p>
+                <div class="task-box">
+                    <ul>
+                        <li>Historically riddled with vulnerabilities (e.g., MS08-067, EternalBlue).</li>
+                        <li><strong>Null Sessions:</strong> A legacy feature in Windows allowing an anonymous, unauthenticated connection to the IPC$ (Inter-Process Communication) share.</li>
+                        <li>Once a Null Session is established, an attacker can enumerate the entire Active Directory user list and password policies without a password.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Enumerating SNMP" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Simple Network Management Protocol</h2>
+                <p>Used to monitor and configure network devices (routers, switches) via UDP Port 161.</p>
+                <ul>
+                    <li><strong>Community Strings:</strong> Act as passwords for SNMP. The default string for read access is almost universally <code>public</code>. The default for write access is <code>private</code>.</li>
+                    <li>If an attacker finds an exposed SNMP service with the <code>public</code> string, they can extract massive routing tables, ARP caches, and exact OS versions.</li>
+                    <li>Mitigation requires SNMPv3 (which enforces encryption and strong authentication).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Misconfigured SMB shares are the number one vector for lateral movement in internal pentests.</p>
+                <div class="highlight">
+                    We will simulate connecting to a Windows server via an unauthenticated Null Session.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: SMB Exploitation" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 2: SMB Null Session Exploitation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You have identified Port 445 is open on a target Windows Server 2012 machine.</p>
+                    <ol>
+                        <li>Write the <code>smbclient</code> command syntax required to list the available shares on the target using a Null Session (blank username and password).</li>
+                        <li>Assume you found an open share named <code>BACKUPS</code>. Write the syntax to connect to it.</li>
+                        <li>Discuss the remediation steps a sysadmin must take to disable Null Sessions via Group Policy (GPO).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Port scanning establishes the attack surface; enumeration maps the internal logic of the applications.</li>
+                    <li>Legacy protocols (SMBv1, SNMPv1/v2) default to insecurity and rely purely on network perimeter defenses.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Vulnerability Analysis (Identifying Weaknesses)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

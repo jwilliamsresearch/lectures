@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 8: Web App Hacking</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Web App Hacking</span>
+    <span class="jw-count">8 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session7/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session9/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 8: Web Application Hacking</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Configure and utilize Intercepting Proxies (Burp Suite, OWASP ZAP).</li>
+                    <li>Exploit injection flaws (SQLi) to bypass authentication or extract data.</li>
+                    <li>Execute client-side attacks via Cross-Site Scripting (XSS).</li>
+                    <li>Analyze Broken Access Control and IDOR vulnerabilities.</li>
+                    <li>Leverage Server-Side Request Forgery (SSRF) to pivot into internal networks.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Interception & Injection (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Burp Suite Architecture</li>
+                    <li>SQLi and XSS Fundamentals</li>
+                    <li><strong>Task 1: Intercepting Proxy Manipulation</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Logic & Architecture Flaws (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Broken Access Control (IDOR)</li>
+                    <li>Server-Side Request Forgery (SSRF)</li>
+                    <li><strong>Task 2: Exploiting IDOR in APIs</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Interception & Injection" class="center" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 1: Interception & Injection</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The Intercepting Proxy" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>The Intercepting Proxy</h2>
+                <p>Browsers hide the true nature of HTTP. To hack a web app, you must see the raw requests.</p>
+                <ul>
+                    <li><strong>Burp Suite:</strong> The industry standard tool for web app pentesting.</li>
+                    <li>It sits between your browser and the server. You can catch an HTTP request, modify its contents (e.g., changing a <code>price=50</code> parameter to <code>price=1</code>), and forward it to the server.</li>
+                    <li>Bypasses all client-side JavaScript validation (because you modify the traffic <em>after</em> it leaves the browser).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://portswigger.net/web-security" target="_blank" style="color: #64ffda;">PortSwigger Web Security Academy</a>
+                </div>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Injection Flaws (SQLi)" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>SQL Injection (SQLi)</h2>
+                <p>Occurs when untrusted user input is directly concatenated into a database query without parameterization.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>The Query:</strong> <code>SELECT * FROM users WHERE user = '$input';</code></li>
+                        <li><strong>The Payload:</strong> <code>admin' OR '1'='1</code></li>
+                        <li><strong>The Result:</strong> <code>SELECT * FROM users WHERE user = 'admin' OR '1'='1';</code></li>
+                        <li>Since <code>1=1</code> is always true, the database ignores the password requirement and logs the attacker in as the first user in the table (usually the admin).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Cross-Site Scripting (XSS)" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Cross-Site Scripting (XSS)</h2>
+                <p>Injecting malicious JavaScript into a webpage viewed by other users.</p>
+                <ul>
+                    <li><strong>Reflected XSS:</strong> The payload is in the URL (e.g., a search parameter). The attacker must trick the victim into clicking the link.</li>
+                    <li><strong>Stored XSS:</strong> The payload is saved in the database (e.g., a forum comment). Anyone who views the page is automatically exploited.</li>
+                    <li><strong>Impact:</strong> Stealing Session Cookies (Session Hijacking), forcing the user to perform actions, or keylogging the page.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Client-side controls (like greyed-out buttons or hidden fields) provide exactly zero security. They exist only for UI/UX.</p>
+                <div class="highlight">
+                    We will use Burp Suite to manipulate an HTTP request and bypass a client-side purchasing restriction.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Proxy Manipulation" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 1: Intercepting Proxy Manipulation</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You are testing an e-commerce application. You click "Buy" on a laptop. The resulting POST request looks like this:</p>
+                    <pre><code>POST /cart/checkout HTTP/1.1
+Host: shop.local
+Cookie: session=xyz123
+
+item_id=94&quantity=1&price=1500.00</code></pre>
+                    <ol>
+                        <li>Identify the vulnerability in this architecture. Why should the server never trust the <code>price</code> parameter?</li>
+                        <li>Write the exact modified POST request you would forward via Burp Suite to purchase the laptop for $1.</li>
+                        <li>Explain how the developer should rewrite the backend logic to remediate this flaw.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Logic Flaws" class="center" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 2: Logic & Architecture Flaws</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Broken Access Control" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Broken Access Control</h2>
+                <p>Currently the #1 vulnerability on the OWASP Top 10.</p>
+                <ul>
+                    <li>The application authenticates the user, but fails to check if the user is <em>authorized</em> to perform the requested action.</li>
+                    <li><strong>Horizontal Privilege Escalation:</strong> User A accessing User B's data (same privilege tier).</li>
+                    <li><strong>Vertical Privilege Escalation:</strong> A standard user accessing administrative functions (e.g., forcefully browsing to <code>/admin/delete_users.php</code>).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="IDOR" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Insecure Direct Object Reference (IDOR)</h2>
+                <p>A specific type of Broken Access Control regarding database identifiers.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>A user accesses their invoice via: <code>/download.php?invoice_id=405</code></li>
+                        <li>The server checks if the user is logged in, but fails to check if <code>invoice_id=405</code> actually <em>belongs</em> to them.</li>
+                        <li>The attacker changes the URL to <code>invoice_id=406</code> and downloads another customer's invoice.</li>
+                        <li><strong>Mitigation:</strong> Use non-sequential UUIDs (e.g., <code>?invoice=550e8400-e29b-41d4-a716</code>) and enforce strict ownership checks on the backend.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="SSRF" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Server-Side Request Forgery (SSRF)</h2>
+                <p>Tricking the web server into making HTTP requests on the attacker's behalf.</p>
+                <ul>
+                    <li>Often found in features like "Import Profile Picture from URL."</li>
+                    <li>Instead of giving the server an image URL, the attacker provides an internal network address (e.g., <code>http://169.254.169.254/latest/meta-data/</code> - the AWS metadata endpoint).</li>
+                    <li>The web server fetches the URL and returns the contents to the attacker. Because the request comes from the server itself, it bypasses internal firewalls.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>APIs are particularly vulnerable to IDOR because developers often assume they will only be interacted with by the official frontend client, forgetting that attackers can query APIs directly.</p>
+                <div class="highlight">
+                    We will analyze and exploit a vulnerable REST API endpoint.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Exploiting IDOR" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 2: Exploiting IDOR in APIs</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You intercept traffic from a mobile banking app. When viewing your own profile, the app sends a GET request to: <code>/api/v1/user/account_details/10455</code>.</p>
+                    <ol>
+                        <li>Define the exact steps you would take to prove this endpoint is vulnerable to IDOR. (Assume you only have one test account).</li>
+                        <li>If the endpoint <em>is</em> vulnerable, how could you automate the extraction of all 10,000 user accounts using Burp Suite Intruder?</li>
+                        <li>Write the conceptual backend pseudo-code required to patch this vulnerability.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://owasp.org/Top10/" target="_blank" style="color: #64ffda;">OWASP Top 10 Framework</a>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Never trust the client. Any data originating from the browser can and will be modified.</li>
+                    <li>Logic flaws (like IDOR) cannot be detected by automated scanners. They require human intuition to exploit.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Wireless & Mobile Security (WiFi & Device Exploitation)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

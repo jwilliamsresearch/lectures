@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 9: Wireless & Mobile</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Wireless &amp; Mobile</span>
+    <span class="jw-count">9 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session8/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session10/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 9: Wireless & Mobile Security</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct IEEE 802.11 wireless standards and vulnerabilities.</li>
+                    <li>Utilize the Aircrack-ng suite for packet capture and deauthentication.</li>
+                    <li>Execute offline dictionary attacks against WPA2 handshakes.</li>
+                    <li>Compare iOS and Android sandboxing and permission models.</li>
+                    <li>Perform static analysis on decompiled APKs to extract hardcoded secrets.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Wireless Security (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>WEP, WPA, and WPA2 Vulnerabilities</li>
+                    <li>Deauthentication & Handshake Capturing</li>
+                    <li><strong>Task 1: WPA2 Handshake Cracking</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Mobile Application Security (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>OS Sandboxing Architectures</li>
+                    <li>Static Analysis & Reverse Engineering (APKTool)</li>
+                    <li><strong>Task 2: APK Static Analysis</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Wireless Security" class="center" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 1: Wireless Security</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Wireless Standards" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Evolution of Wireless Security</h2>
+                <p>Wireless networks project data through walls, eliminating physical boundaries.</p>
+                <ul>
+                    <li><strong>WEP (Wired Equivalent Privacy):</strong> Fatally flawed. Uses RC4 with weak Initialization Vectors (IVs). Can be cracked in seconds simply by collecting enough packets.</li>
+                    <li><strong>WPA2-PSK:</strong> The current standard. Uses AES encryption. Not mathematically broken, but vulnerable to offline dictionary attacks if the pre-shared key (password) is weak.</li>
+                    <li><strong>WPA3:</strong> Introduces SAE (Simultaneous Authentication of Equals) to prevent offline dictionary attacks, making passwords much harder to brute-force.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="The 4-Way Handshake" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>The WPA2 4-Way Handshake</h2>
+                <p>When a client connects to a WPA2 network, it performs a 4-way handshake with the Access Point (AP) to establish encryption keys.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>Crucially, the actual password is <em>never sent</em> over the air.</li>
+                        <li>Instead, cryptographic hashes derived from the password are exchanged.</li>
+                        <li>If an attacker captures this handshake, they can take it offline. They guess a password, perform the mathematical derivation, and see if the resulting hash matches the captured handshake.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Deauthentication Attacks" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Deauthentication Attacks</h2>
+                <p>How do you capture a handshake if everyone is already connected?</p>
+                <ul>
+                    <li>The 802.11 protocol allows an AP to tell a client to disconnect (Deauth frame).</li>
+                    <li>Because these management frames are <strong>unencrypted</strong> in WPA2, an attacker can spoof the MAC address of the AP and send a Deauth frame to a client.</li>
+                    <li>The client disconnects. A moment later, it auto-reconnects, performing the 4-way handshake again.</li>
+                    <li>The attacker, listening in monitor mode with <code>airodump-ng</code>, captures the handshake.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.aircrack-ng.org/doku.php" target="_blank" style="color: #64ffda;">Aircrack-ng Documentation</a>
+                </div>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Capturing the handshake is the easy part. Cracking it requires massive computational power (GPUs) and excellent wordlists.</p>
+                <div class="highlight">
+                    We will simulate the process of cracking a captured WPA2 handshake using Hashcat.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: WPA2 Cracking" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 1: WPA2 Handshake Cracking</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You have captured a handshake and converted it to the required format: <code>target_network.hc22000</code>. You have the `rockyou.txt` wordlist.</p>
+                    <ol>
+                        <li>Write the Hashcat command to crack this file utilizing a straight dictionary attack (Mode 22000).</li>
+                        <li>Assume the password is "P@ssw0rd123". Explain why this password might not be in the standard `rockyou.txt` file, and describe how you would use Hashcat "Rules" to mutate the wordlist to find it.</li>
+                        <li>Discuss why enterprise environments use WPA2-Enterprise (802.1X/RADIUS) instead of Pre-Shared Keys (PSK).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Mobile App Security" class="center" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 2: Mobile Application Security</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Mobile Sandboxing" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>OS Sandboxing Architectures</h2>
+                <p>Mobile OSs (iOS/Android) are fundamentally more secure than Desktop OSs due to Sandboxing.</p>
+                <ul>
+                    <li>Each app runs in its own isolated environment. App A cannot read the memory or file system of App B without explicit permission.</li>
+                    <li><strong>Jailbreaking/Rooting:</strong> Defeating this sandbox model to gain root access. Essential for deep mobile pentesting, but disastrous for user security.</li>
+                    <li>Because the OS is secure, attackers focus on vulnerabilities within the <em>applications themselves</em>.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Static vs Dynamic Analysis" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Static vs Dynamic Analysis</h2>
+                <p>Two primary methods for testing mobile apps.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Static Analysis:</strong> Analyzing the code without running it. Decompiling an APK to read the source code, searching for hardcoded credentials, insecure crypto, and hidden API endpoints.</li>
+                        <li><strong>Dynamic Analysis:</strong> Running the app on a device or emulator and intercepting its network traffic using a proxy (Burp Suite). Identical to Web App testing.</li>
+                    </ul>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://owasp.org/www-project-mobile-security-testing-guide/" target="_blank" style="color: #64ffda;">OWASP Mobile Security Testing Guide (MSTG)</a>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Reverse Engineering" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Reverse Engineering Android</h2>
+                <p>Android applications (.apk) are essentially zip files containing compiled Java code (Dalvik bytecode) and resources.</p>
+                <ul>
+                    <li><strong>APKTool:</strong> Reverses the compiled resources (like `AndroidManifest.xml` and `strings.xml`) back to readable formats.</li>
+                    <li><strong>Jadx:</strong> Decompiles the `.dex` bytecode directly back into highly readable Java source code.</li>
+                    <li>Developers often falsely believe compiled code is "hidden," leading them to hardcode AWS keys or database passwords directly into the app.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Hardcoded secrets are a massive problem in mobile development. An attacker can extract them in minutes.</p>
+                <div class="highlight">
+                    We will simulate the static analysis of a decompiled Android application to find leaked credentials.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: APK Static Analysis" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 2: APK Static Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You have run <code>apktool d target_app.apk</code> resulting in a folder structure. </p>
+                    <ol>
+                        <li>Write the Linux command (using <code>grep</code> or <code>find</code>) to recursively search the decompiled <code>/res/values/strings.xml</code> file for strings containing "API", "KEY", or "SECRET".</li>
+                        <li>You find an AWS Access Key. What is the immediate impact? (Hint: The app accesses an S3 bucket).</li>
+                        <li>Explain how the developer should properly manage API keys in a mobile application architecture without hardcoding them into the client.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_3.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>WPA2 networks are only as strong as the password chosen. Complex passwords render offline cracking computationally impossible.</li>
+                    <li>A mobile app is essentially public source code. Never trust the client with sensitive logic or secrets.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Cloud & IoT Security (Modern Architectures)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

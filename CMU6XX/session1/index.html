@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 1: Intro to InfoSec & Governance</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Intro to InfoSec &amp; Governance</span>
+    <span class="jw-count">1 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <span class="jw-nav-btn is-off" aria-hidden="true"><span>←</span>Prev<span></span></span>
+    <a class="jw-nav-btn" href="../session2/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 1: Methodologies & Frameworks</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Differentiate between Ethical Hacking, Penetration Testing, and Vulnerability Assessments.</li>
+                    <li>Deconstruct the Penetration Testing Execution Standard (PTES).</li>
+                    <li>Define Rules of Engagement (RoE) and operational scope.</li>
+                    <li>Understand the legal boundaries established by the Computer Misuse Act 1990.</li>
+                    <li>Evaluate vulnerabilities using the Common Vulnerability Scoring System (CVSS).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: The Anatomy of a Pentest (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Ethical vs Malicious Hacking</li>
+                    <li>The PTES Methodology</li>
+                    <li><strong>Task 1: Scoping a Penetration Test</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Governance & Reporting (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Legal Frameworks & Ethics</li>
+                    <li>Bug Bounties & CVSS Scoring</li>
+                    <li><strong>Task 2: Bug Bounty Triage Simulation</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: The Anatomy of a Pentest" class="center" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 1: The Anatomy of a Pentest</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Terminology" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Clarifying Terminology</h2>
+                <p>Not all security assessments are created equal.</p>
+                <ul>
+                    <li><strong>Vulnerability Assessment:</strong> Automated scanning (e.g., Nessus) to find known flaws. Broad coverage, low depth. Yields a massive list of unverified issues.</li>
+                    <li><strong>Penetration Testing:</strong> Exploiting vulnerabilities to prove business impact. "Can you actually access the database?" High depth, verified flaws.</li>
+                    <li><strong>Red Teaming:</strong> A full-scope, stealthy simulation of an APT to test the organization's Detection and Response capabilities (Blue Team). Highly targeted.</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://www.pentest-standard.org/index.php/Main_Page" target="_blank" style="color: #64ffda;">Penetration Testing Execution Standard (PTES)</a>
+                </div>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="The PTES Methodology" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>The PTES Methodology</h2>
+                <p>Professional hacking is highly structured. The PTES phases are:</p>
+                <div class="task-box">
+                    <ol>
+                        <li>Pre-engagement Interactions (Scoping, RoE)</li>
+                        <li>Intelligence Gathering (Reconnaissance)</li>
+                        <li>Threat Modeling</li>
+                        <li>Vulnerability Analysis</li>
+                        <li>Exploitation</li>
+                        <li>Post Exploitation (Pivoting, Persistence)</li>
+                        <li>Reporting (The most critical phase)</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://www.pentest-standard.org/index.php/Main_Page" target="_blank" style="color: #64ffda;">Penetration Testing Execution Standard (PTES)</a>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Rules of Engagement" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Rules of Engagement (RoE)</h2>
+                <p>The contract that keeps you out of prison.</p>
+                <ul>
+                    <li><strong>Scope Limits:</strong> Exactly which IPs, domains, and applications are permitted to be tested. Out-of-scope means strictly off-limits.</li>
+                    <li><strong>Permitted Techniques:</strong> Are Denial of Service (DoS) attacks allowed? Is Social Engineering allowed?</li>
+                    <li><strong>Timeframes:</strong> Testing may only be permitted between 12:00 AM and 4:00 AM to avoid business disruption.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>A disastrous penetration test occurs when a hacker brings down a production server because they misunderstood the scope.</p>
+                <div class="highlight">
+                    We will analyze a client's Request for Proposal (RFP) to extract the operational boundaries of the engagement.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Scoping a Penetration Test" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 1: Scoping a Penetration Test</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>A regional bank has requested a penetration test against their main web application: <code>app.bank.local</code>.</p>
+                    <ol>
+                        <li>Draft a formal Rules of Engagement (RoE) document based on the provided RFP scenario.</li>
+                        <li>Identify the primary "Out of Scope" targets implicitly mentioned in the RFP (e.g., third-party payment gateways).</li>
+                        <li>Define an emergency "Stop-Test" procedure. What exact technical parameters dictate an immediate halt to exploitation?</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="http://www.pentest-standard.org/index.php/Main_Page" target="_blank" style="color: #64ffda;">Penetration Testing Execution Standard (PTES)</a>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Governance & Reporting" class="center" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 2: Governance & Reporting</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="The Law" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>The Law: Computer Misuse Act 1990</h2>
+                <p>In the UK, hacking is governed by the CMA. The primary offenses are:</p>
+                <ul>
+                    <li><strong>Section 1:</strong> Unauthorized access to computer material. (Even a port scan can theoretically violate this if deemed "unauthorized").</li>
+                    <li><strong>Section 2:</strong> Unauthorized access with intent to commit a further offense.</li>
+                    <li><strong>Section 3:</strong> Unauthorized acts with intent to impair, or with recklessness as to impairing, the operation of a computer.</li>
+                </ul>
+                <div class="highlight">
+                    "Ethical" hacking requires explicit, written authorization. Verbal permission is insufficient.
+                </div>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Bug Bounties" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Bug Bounties & Responsible Disclosure</h2>
+                <p>Crowdsourced security testing platforms (HackerOne, Bugcrowd).</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Safe Harbor:</strong> Companies publicly state they will not pursue legal action against researchers who find flaws, provided they stay within the defined scope.</li>
+                        <li><strong>Bounty Economics:</strong> Rewards range from $50 (XSS on a minor domain) to $1,000,000+ (Zero-click RCE on iOS).</li>
+                        <li><strong>The Challenge:</strong> Duplicate reports and triage fatigue. Analysts must filter out automated scanner spam from genuine vulnerabilities.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="CVSS Scoring" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>CVSS Scoring</h2>
+                <p>The Common Vulnerability Scoring System (CVSS) is the industry standard for assessing the severity of a security vulnerability.</p>
+                <ul>
+                    <li><strong>Base Metrics:</strong> Attack Vector (Network vs Local), Complexity, Privileges Required.</li>
+                    <li><strong>Impact Metrics:</strong> Confidentiality, Integrity, Availability (CIA).</li>
+                    <li><strong>Scores:</strong> Range from 0.0 to 10.0. A score of 9.0+ is considered Critical and often triggers an immediate SLA response.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Security teams are inundated with vulnerability reports. The ability to rapidly triage and accurately score a vulnerability is a critical skill.</p>
+                <div class="highlight">
+                    We will act as the internal security team triaging incoming Bug Bounty submissions.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Bug Bounty Triage" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 2: Bug Bounty Triage Simulation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You have received two vulnerability reports from external researchers.</p>
+                    <ol>
+                        <li><strong>Report A:</strong> A Reflected XSS vulnerability on a marketing landing page requiring user interaction.</li>
+                        <li><strong>Report B:</strong> An unauthenticated Remote Code Execution (RCE) flaw in an internal, non-internet-facing HR database.</li>
+                        <li>Use the online CVSS v3.1 calculator to generate a severity score vector for both reports.</li>
+                        <li>Draft a professional response to "Researcher A" explaining why their payout is significantly lower than "Researcher B", despite XSS being more common.</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.first.org/cvss/calculator/3.1" target="_blank" style="color: #64ffda;">FIRST CVSS v3.1 Calculator</a>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_1.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Ethical hacking is defined entirely by authorization and scope. Technical prowess without legal permission is a crime.</li>
+                    <li>The CVSS framework provides a standardized language for discussing risk severity.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Reconnaissance & Footprinting (OSINT & Active Discovery)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

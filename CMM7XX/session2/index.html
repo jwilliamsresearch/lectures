@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM7XX - Session 2: Introduction to Cryptography</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM7XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Introduction to Cryptography</span>
+    <span class="jw-count">2 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session1/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session3/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <div class="module-code">CMM7XX</div>
+                <h1>Introduction to Cryptography</h1>
+                <h2>Session 2: Security Mechanisms</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Apply Shannon's properties of Confusion and Diffusion to modern ciphers.</li>
+                    <li>Understand the implications of Kerckhoffs's Principle in cryptographic engineering.</li>
+                    <li>Analyze standard cryptanalysis attack models (CPA, CCA).</li>
+                    <li>Master mathematical foundations: Modular Arithmetic and Prime Number Theory.</li>
+                    <li>Distinguish between PRNGs, CSPRNGs, and the role of entropy in key generation.</li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Principles & Attack Models (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Shannon's Confusion & Diffusion</li>
+                    <li>Kerckhoffs's Principle & Attack Models</li>
+                    <li><strong>Task 1: Cryptanalysis Simulation</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Mathematics & Entropy (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Modular Arithmetic & Prime Theory</li>
+                    <li>Entropy, PRNGs, and CSPRNGs</li>
+                    <li><strong>Task 2: Entropy and Randomness Audit</strong></li>
+                </ul>
+                
+        
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Mathematics & Entropy" class="center" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 2: Mathematics & Entropy</h2>
+                <h3>Duration: 1.5 Hours</h3>
+                
+        
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Entropy and Randomness" data-background-image="/CMM7XX/images/cyber_bg_2.png" data-background-opacity="0.08">
+                <h2>Entropy and Randomness</h2>
+                <p>A cipher is only as strong as the randomness of its key.</p>
+                <ul>
+                    <li><strong>PRNG (Pseudo-Random Number Generator):</strong> Deterministic algorithms. Predictable. Fine for simulations, catastrophic for cryptography.</li>
+                    <li><strong>CSPRNG (Cryptographically Secure PRNG):</strong> Possesses the Next-Bit Test property. Unpredictable even if internal state is partially known.</li>
+                </ul>
+                
+        
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

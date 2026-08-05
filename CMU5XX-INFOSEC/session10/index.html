@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 10: Security Plans</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Security Plans</span>
+    <span class="jw-count">10 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session9/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session11/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 10: Developing Security Plans</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Deconstruct the anatomy of a System Security Plan (SSP).</li>
+                    <li>Define clear authorization boundaries for IT systems.</li>
+                    <li>Apply standard data categorization frameworks (e.g., FIPS 199) to system data.</li>
+                    <li>Select and tailor Security Control Baselines to mitigate specific risks.</li>
+                    <li>Manage remediation efforts using a Plan of Action and Milestones (POA&M).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: The System Security Plan (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>What is an SSP?</li>
+                    <li>Defining the Authorization Boundary</li>
+                    <li><strong>Task 1: Drafting an SSP Boundary</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Controls and Remediation (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Control Baselines and Tailoring</li>
+                    <li>The Plan of Action and Milestones (POA&M)</li>
+                    <li><strong>Task 2: Managing a POA&M</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: The System Security Plan" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 1: The System Security Plan</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="What is an SSP?" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>The System Security Plan (SSP)</h2>
+                <p>The foundational document for securing any complex IT environment.</p>
+                <ul>
+                    <li>An SSP is a living document that describes the system, its operational environment, and the security controls implemented (or planned) to protect it.</li>
+                    <li><strong>Audience:</strong> Auditors, System Owners, and Authorizing Officials.</li>
+                    <li>Without an SSP, a security audit is impossible, because the auditor has no baseline of what the system *should* look like.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="The Authorization Boundary" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Defining the Boundary</h2>
+                <p>You cannot secure the entire internet. You must draw a line.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>The <strong>Authorization Boundary</strong> explicitly defines exactly what hardware, software, and data are covered by the SSP, and what is considered an "External System."</li>
+                        <li>If a web server is inside the boundary, you must patch it. If the payment gateway is outside the boundary (e.g., Stripe), you don't patch it, but you must secure the *connection* to it.</li>
+                        <li>Poor boundary definition leads to "Scope Creep" and failed audits.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Data Categorization" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Categorization (FIPS 199)</h2>
+                <p>How do we know how much security to apply?</p>
+                <ul>
+                    <li>Before selecting controls, we must rate the potential impact (Low, Moderate, High) if the system's Confidentiality, Integrity, or Availability is breached.</li>
+                    <li><strong>High Impact:</strong> The loss of CIA would have a *severe or catastrophic* adverse effect on organizational operations, assets, or individuals.</li>
+                    <li>The highest rating among the three (C, I, A) becomes the overall System Security Category, driving the control baseline.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Drawing the Authorization Boundary is often a political negotiation. Business owners want a small boundary to reduce audit costs; security wants a large boundary to ensure oversight.</p>
+                <div class="highlight">
+                    We will define the boundary for a cloud-hosted e-commerce platform.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Boundary Definition" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 1: Drafting an SSP Boundary</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Your company is launching a new "Customer Loyalty Portal." It consists of a Web Frontend hosted on AWS EC2, a Backend Database on AWS RDS, and relies on an external API (Twilio) to send SMS verification codes to users.</p>
+                    <ol>
+                        <li>Define the Authorization Boundary. Explicitly list the components that are INSIDE the boundary.</li>
+                        <li>Is the Twilio SMS service inside or outside the boundary? Explain your reasoning.</li>
+                        <li>How does the classification of the Twilio service change the way you write the Security Controls regarding "Authentication"?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Controls and Remediation" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Part 2: Controls and Remediation</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Security Control Baselines" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Security Control Baselines</h2>
+                <p>You don't need to invent security rules from scratch.</p>
+                <ul>
+                    <li>Organizations use standard catalogs (like NIST SP 800-53 or ISO 27002) which contain hundreds of pre-written controls.</li>
+                    <li>If a system is categorized as "Moderate" impact, the framework provides a "Moderate Baseline"—a recommended starting list of ~150 controls.</li>
+                    <li><strong>Tailoring:</strong> You don't have to use every baseline control. If a control requires biometric scanners, but your system is entirely in the cloud, you <em>tailor</em> the baseline by documenting that the control is "Not Applicable."</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="The POA&M" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>The Plan of Action and Milestones (POA&M)</h2>
+                <p>No system is perfectly secure. The POA&M is how you manage the flaws.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>When an audit reveals that a required control (e.g., "All admin access requires MFA") is currently failing, it is added to the POA&M.</li>
+                        <li>A POA&M entry is a formal contract between Security and IT stating: <em>"We acknowledge this vulnerability. Here is our exact plan, budget, and timeline (milestones) to fix it by December 1st."</em></li>
+                        <li>Authorizing Officials will allow a system with known flaws to operate, <strong>only if</strong> those flaws are actively tracked on a POA&M.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Continuous Monitoring" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Continuous Monitoring</h2>
+                <p>The SSP is not a "write it once and forget it" document.</p>
+                <ul>
+                    <li>Systems change constantly. New features are added, new threats emerge.</li>
+                    <li><strong>Continuous Monitoring (ConMon):</strong> A strategy to automatically assess a subset of security controls every month, rather than doing a massive manual audit once every three years.</li>
+                    <li>If a major change occurs (e.g., migrating the database from AWS to Azure), the SSP must be immediately updated and the system re-authorized.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Managing a POA&M requires balancing security risk against resource availability. You cannot fix everything immediately.</p>
+                <div class="highlight">
+                    We will prioritize a list of audit findings and construct a remediation plan.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Managing a POA&M" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Task 2: Managing a POA&M</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>An audit of your "Moderate" system revealed three failed controls:</p>
+                    <ul>
+                        <li><strong>Finding A:</strong> The guest Wi-Fi in the lobby uses a weak password. (Cost to fix: £0, Time: 1 hour).</li>
+                        <li><strong>Finding B:</strong> The primary database containing PII is not encrypted at rest. (Cost: £50k, Time: 3 months).</li>
+                        <li><strong>Finding C:</strong> Employees have not completed their annual awareness training. (Cost: £5k, Time: 1 month).</li>
+                    </ul>
+                    <ol>
+                        <li>Prioritize these three findings in order of remediation urgency. Justify your order based on Risk (Impact x Likelihood).</li>
+                        <li>Draft the POA&M entry for <strong>Finding B</strong>. Include a clear mitigation strategy, required resources, and three specific milestones.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_1.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>An SSP defines the reality of your security posture. It forces management to formally accept or remediate known risks.</li>
+                    <li>The POA&M is the engine of continuous improvement. It turns audit failures into actionable project plans.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Incident Response & Business Continuity (Disaster Recovery)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

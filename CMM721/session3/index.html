@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM721 - Session 3: CSS3 & Responsive Design</title>
+
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM721</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">CSS3 &amp; Responsive Design</span>
+    <span class="jw-count">3 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session2/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session4/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
+                <h1>CSS3 & Responsive Design</h1>
+                <h2>Session 3</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Apply CSS3 layout techniques including Flexbox and Grid</li>
+                    <li>Create responsive designs that work across all devices</li>
+                    <li>Use CSS media queries effectively</li>
+                    <li>Implement mobile-first development approach</li>
+                    <li>Apply CSS frameworks and follow best practices</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="CSS3 Fundamentals">
+                <h2>CSS3 Fundamentals</h2>
+                <h3>CSS Box Model:</h3>
+                <ul>
+                    <li><strong>Content:</strong> The actual content of the element</li>
+                    <li><strong>Padding:</strong> Space between content and border</li>
+                    <li><strong>Border:</strong> Line around padding and content</li>
+                    <li><strong>Margin:</strong> Space outside the border</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-css">.box {
+width: 200px;
+height: 100px;
+padding: 20px;
+border: 2px solid #333;
+margin: 10px;
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="CSS Box Model in Detail">
+                <h2>CSS Box Model in Detail</h2>
+                <div class="code-example">
+                    <pre><code class="language-css">/* Box Model Properties */
+.element {
+width: 300px;        /* Content width */
+height: 200px;       /* Content height */
+padding: 20px;       /* Space inside border */
+border: 5px solid #000;  /* Border around padding */
+margin: 15px;        /* Space outside border */
+box-sizing: border-box;  /* Includes padding/border in dimensions */
+}</code></pre>
+                </div>
+                <ul>
+                    <li><strong>box-sizing: content-box:</strong> Default (width/height = content only)</li>
+                    <li><strong>box-sizing: border-box:</strong> Recommended (width/height includes padding/border)</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Flexbox Layout System">
+                <h2>Flexbox Layout System</h2>
+                <div class="highlight">
+                    <strong>Flexible Box Layout</strong> - One-dimensional layout system
+                </div>
+                <h3>Container Properties:</h3>
+                <ul>
+                    <li><strong>display: flex:</strong> Creates a flex container</li>
+                    <li><strong>flex-direction:</strong> row | row-reverse | column | column-reverse</li>
+                    <li><strong>justify-content:</strong> Aligns items along main axis</li>
+                    <li><strong>align-items:</strong> Aligns items along cross axis</li>
+                </ul>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">.container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="CSS Grid Layout">
+                <h2>CSS Grid Layout</h2>
+                <div class="highlight">
+                    <strong>Grid Layout</strong> - Two-dimensional layout system
+                </div>
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li><strong>Grid Container:</strong> Element with display: grid</li>
+                    <li><strong>Grid Items:</strong> Direct children of grid container</li>
+                    <li><strong>Grid Lines:</strong> Horizontal and vertical lines that create grid</li>
+                    <li><strong>Grid Tracks:</strong> Spaces between grid lines</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Media Queries">
+                <h2>Media Queries</h2>
+                <div class="code-example">
+                    <pre><code class="language-css">/* Mobile First Approach */
+.container {
+width: 100%;
+padding: 15px;
+}
+/* Tablet */
+@media (min-width: 768px) {
+.container {
+max-width: 750px;
+margin: 0 auto;
+}
+}
+/* Desktop */
+@media (min-width: 1024px) {
+.container {
+max-width: 1000px;
+}
+}</code></pre>
+                </div>
+                <h3>Common Breakpoints:</h3>
+                <ul>
+                    <li><strong>Mobile:</strong> 320px - 767px</li>
+                    <li><strong>Tablet:</strong> 768px - 1023px</li>
+                    <li><strong>Desktop:</strong> 1024px+</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Responsive Design Principles">
+                <h2>Responsive Design Principles</h2>
+                <h3>Mobile-First Approach:</h3>
+                <ol>
+                    <li>Start with mobile design (base styles)</li>
+                    <li>Use min-width media queries to enhance for larger screens</li>
+                    <li>Progressive enhancement for better devices</li>
+                    <li>Touch-friendly interface elements</li>
+                </ol>
+                <h3>Key Considerations:</h3>
+                <ul>
+                    <li>Flexible grid systems</li>
+                    <li>Scalable images and media</li>
+                    <li>Readable typography at all sizes</li>
+                    <li>Intuitive navigation patterns</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Viewport Meta Tag">
+                <h2>Viewport Meta Tag</h2>
+                <div class="highlight">
+                    <strong>Essential for Responsive Design</strong>
+                </div>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+                </div>
+                <ul>
+                    <li><strong>width=device-width:</strong> Sets viewport width to device width</li>
+                    <li><strong>initial-scale=1.0:</strong> Sets initial zoom level to 100%</li>
+                    <li><strong>Prevents:</strong> Mobile browsers from scaling pages incorrectly</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Task 1: Responsive Layout Creation">
+                <h2>Task 1: Responsive Layout Creation</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a responsive layout using CSS Grid and Flexbox</p>
+
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create HTML structure with semantic elements</li>
+                        <li>Implement CSS Grid for overall layout</li>
+                        <li>Use Flexbox for component alignment</li>
+                        <li>Add media queries for different screen sizes</li>
+                        <li>Ensure mobile-first approach</li>
+                        <li>Test responsiveness across different devices</li>
+                    </ol>
+
+                    <h3>Deliverables:</h3>
+                    <ul>
+                        <li>Responsive HTML/CSS code</li>
+                        <li>Screenshots of different breakpoints</li>
+                        <li>Brief explanation of responsive decisions</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="CSS Frameworks">
+                <h2>CSS Frameworks</h2>
+                <h3>Popular Options:</h3>
+                <ul>
+                    <li><strong>Bootstrap:</strong> Most popular CSS framework</li>
+                    <li><strong>Foundation:</strong> Advanced responsive framework</li>
+                    <li><strong>Bulma:</strong> Modern CSS framework based on Flexbox</li>
+                    <li><strong>Tailwind CSS:</strong> Utility-first CSS framework</li>
+                </ul>
+                <h3>When to Use:</h3>
+                <ul>
+                    <li>Prototyping and rapid development</li>
+                    <li>Consistent design systems</li>
+                    <li>Responsive components out of the box</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Bootstrap Grid System">
+                <h2>Bootstrap Grid System</h2>
+                <div class="code-example">
+                    <pre><code class="language-html">&lt;div class="container"&gt;
+&lt;div class="row"&gt;
+&lt;div class="col-md-6"&gt;Half width on medium+&lt;/div&gt;
+&lt;div class="col-md-6"&gt;Half width on medium+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+                <ul>
+                    <li><strong>12-column grid system</strong></li>
+                    <li><strong>Responsive breakpoints:</strong> xs, sm, md, lg, xl</li>
+                    <li><strong>Mobile-first approach</strong></li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Task 2: Cross-Device Testing">
+                <h2>Task 2: Cross-Device Testing</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Test responsive design across different devices and browsers</p>
+
+                    <h3>Testing Methods:</h3>
+                    <ol>
+                        <li>Use browser developer tools device simulation</li>
+                        <li>Test on actual mobile devices</li>
+                        <li>Check different browsers (Chrome, Firefox, Safari, Edge)</li>
+                        <li>Verify touch interactions work properly</li>
+                        <li>Test with different orientations (portrait/landscape)</li>
+                    </ol>
+
+                    <h3>Tools:</h3>
+                    <ul>
+                        <li>Browser DevTools</li>
+                        <li>Responsive Design Mode</li>
+                        <li>Online testing tools (BrowserStack)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Performance Considerations">
+                <h2>Performance Considerations</h2>
+                <h3>CSS Performance Tips:</h3>
+                <ul>
+                    <li>Minimize CSS specificity conflicts</li>
+                    <li>Use efficient selectors</li>
+                    <li>Avoid deep nesting when possible</li>
+                    <li>Optimize media queries</li>
+                    <li>Consider critical CSS for above-the-fold content</li>
+                </ul>
+                <h3>Responsive Images:</h3>
+                <ul>
+                    <li>Use srcset and sizes attributes</li>
+                    <li>Implement lazy loading</li>
+                    <li>Consider WebP format for better compression</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="Accessibility in Layout">
+                <h2>Accessibility in Layout</h2>
+                <h3>Important Considerations:</h3>
+                <ul>
+                    <li>Maintain logical reading order</li>
+                    <li>Ensure sufficient color contrast (4.5:1 minimum)</li>
+                    <li>Provide focus indicators for keyboard navigation</li>
+                    <li>Use relative units (em, rem) for scalability</li>
+                    <li>Test with screen readers</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Remember:</strong> Good responsive design is also accessible design!
+                </div>
+            </section>
+
+            <section data-slide-title="Next Session: JavaScript Fundamentals">
+                <h2>Next Session: JavaScript Fundamentals</h2>
+                <ul>
+                    <li>JavaScript basics and data types</li>
+                    <li>DOM manipulation and event handling</li>
+                    <li>ES6+ features and best practices</li>
+                    <li>Debugging techniques</li>
+                    <li>Browser developer tools</li>
+                </ul>
+                <p>Prepare by reviewing JavaScript fundamentals and practicing basic scripting.</p>
+            </section>
+
+            <section data-slide-title="Questions & Discussion" class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> Available for consultation</p>
+                <p>Thank you for your attention!</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script><script src="/chrome.js"></script>
+</body>
+
+</html>

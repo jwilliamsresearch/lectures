@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 2: Reconnaissance & Footprinting</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Reconnaissance &amp; Footprinting</span>
+    <span class="jw-count">2 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session1/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session3/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 2: Reconnaissance & Footprinting</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Differentiate between Passive and Active Reconnaissance.</li>
+                    <li>Utilize Open Source Intelligence (OSINT) to map an organization's public footprint.</li>
+                    <li>Understand the architecture of the Domain Name System (DNS) for footprinting.</li>
+                    <li>Analyze HTTP headers and server responses for active discovery.</li>
+                    <li>Identify Subdomain Takeover vulnerabilities based on dangling DNS records.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: Passive Reconnaissance & OSINT (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Open Source Intelligence (OSINT)</li>
+                    <li>DNS Footprinting & Shodan</li>
+                    <li><strong>Task 1: Advanced OSINT Profiling</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Active Discovery & Subdomains (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Active Reconnaissance (HTTP Headers, Banners)</li>
+                    <li>Subdomain Enumeration</li>
+                    <li><strong>Task 2: Subdomain Takeover Analysis</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: Passive Reconnaissance" class="center" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 1: Passive Reconnaissance & OSINT</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Passive vs Active" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Passive vs Active Reconnaissance</h2>
+                <p>The first phase of a pentest is information gathering.</p>
+                <ul>
+                    <li><strong>Passive Reconnaissance:</strong> Gathering data without ever interacting directly with the target's infrastructure. The target has no logs indicating you are researching them. (e.g., Google Dorking, WHOIS records).</li>
+                    <li><strong>Active Reconnaissance:</strong> Sending direct requests to the target's servers. Creates noise and log entries. (e.g., Port scanning, Banner grabbing).</li>
+                </ul>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://osintframework.com/" target="_blank" style="color: #64ffda;">OSINT Framework</a>
+                </div>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Open Source Intelligence" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Open Source Intelligence (OSINT)</h2>
+                <p>Exploiting publicly available information to profile the target.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Employee Profiling:</strong> LinkedIn provides exact job titles and technology stacks (e.g., "DevOps Engineer managing Kubernetes"). Useful for spear-phishing.</li>
+                        <li><strong>Google Dorks:</strong> Advanced search operators (e.g., <code>site:target.com filetype:pdf "confidential"</code>) to uncover indexed files that shouldn't be public.</li>
+                        <li><strong>Shodan:</strong> The "search engine for hackers." Scans the entire IPv4 space and indexes open ports, banners, and vulnerable IoT devices.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="DNS Footprinting" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>DNS Footprinting</h2>
+                <p>The Domain Name System (DNS) leaks massive amounts of organizational data.</p>
+                <ul>
+                    <li><strong>WHOIS:</strong> Reveals domain registrars and historical administrative contacts.</li>
+                    <li><strong>DNS Records:</strong>
+                        <ul>
+                            <li><code>A</code> / <code>AAAA</code>: IPv4/IPv6 addresses.</li>
+                            <li><code>MX</code>: Mail Exchanger. Reveals the email provider (e.g., Google Workspace vs O365).</li>
+                            <li><code>TXT</code>: Often contains SPF/DMARC records or verification strings for third-party services.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Before launching a single exploit, an attacker builds a comprehensive profile of the target entirely through public records.</p>
+                <div class="highlight">
+                    We will utilize OSINT techniques to map the infrastructure of a mock target.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Advanced OSINT" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 1: Advanced OSINT Profiling</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>Using purely passive techniques (your browser and terminal, strictly no port scanners):</p>
+                    <ol>
+                        <li>Access the mock target website provided on Moodle (e.g., <code>target.local</code>).</li>
+                        <li>Use <code>nslookup</code> or <code>dig</code> to query the MX and TXT records for the mock domain. Identify their simulated email provider.</li>
+                        <li>Construct a <strong>Google Dork</strong> designed to find exposed <code>.env</code> files or database backups, and discuss how attackers use them theoretically.</li>
+                        <li>Access the simulated Shodan environment on Moodle to search for unauthenticated instances within the lab network. Discuss the ethical implications of using real-world OSINT engines.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Active Discovery" class="center" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Part 2: Active Discovery & Subdomains</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Active Reconnaissance" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Active Reconnaissance</h2>
+                <p>Engaging directly with the target to map the attack surface.</p>
+                <ul>
+                    <li><strong>Banner Grabbing:</strong> Connecting to an open port (e.g., Telnet, Netcat) to capture the service banner, revealing the exact software version (e.g., <code>Apache/2.4.41 (Ubuntu)</code>).</li>
+                    <li><strong>HTTP Header Analysis:</strong> Inspecting response headers via <code>curl -I</code> to identify missing security headers (e.g., <code>Strict-Transport-Security</code>) or backend frameworks (e.g., <code>X-Powered-By: PHP/7.4</code>).</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Subdomain Enumeration" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Subdomain Enumeration</h2>
+                <p>The main website (www) is heavily fortified. Attackers look for forgotten development environments (e.g., <code>dev.target.com</code>, <code>staging.target.com</code>).</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Brute Forcing:</strong> Using tools like <code>Amass</code> or <code>gobuster</code> to rapidly resolve thousands of common subdomain names against a target DNS server.</li>
+                        <li><strong>Certificate Transparency (CT) Logs:</strong> Every SSL certificate issued is recorded in a public CT log. Searching these logs (e.g., via <code>crt.sh</code>) instantly reveals all subdomains with valid TLS certificates without sending a single DNS query.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Subdomain Takeovers" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Subdomain Takeovers</h2>
+                <p>A critical vulnerability resulting from poor infrastructure hygiene.</p>
+                <ul>
+                    <li>A company points <code>blog.target.com</code> via a CNAME record to a third-party service like <code>target-blog.github.io</code>.</li>
+                    <li>Later, they delete their GitHub Pages site, but <em>forget to delete the DNS CNAME record</em>.</li>
+                    <li>An attacker creates a new GitHub Pages site claiming the name <code>target-blog</code>.</li>
+                    <li><strong>Result:</strong> The attacker now fully controls the content displayed at <code>blog.target.com</code>. Huge risk for Phishing and Cookie theft.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Subdomain takeovers are notoriously common in large cloud environments where teams spin up and tear down services rapidly without cleaning up DNS.</p>
+                <div class="highlight">
+                    We will analyze a simulated DNS infrastructure to identify a dangling record vulnerable to a takeover.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Subdomain Takeover Analysis" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Task 2: Subdomain Takeover Analysis</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You have enumerated the subdomains of <code>startup.local</code> and discovered the following CNAME records:</p>
+                    <ul>
+                        <li><code>www.startup.local</code> &rarr; <code>startup-main.elasticbeanstalk.com</code> (Resolves, 200 OK)</li>
+                        <li><code>support.startup.local</code> &rarr; <code>startup-help.zendesk.com</code> (Resolves, 404 Not Found)</li>
+                    </ul>
+                    <ol>
+                        <li>Identify the vulnerable record. Explain exactly why the <code>404 Not Found</code> response from the third-party provider is the critical indicator.</li>
+                        <li>Map the exploitation process: How would you prove impact to the client in a pentest report?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_2.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Reconnaissance dictates the success of the engagement. Time spent footprinting saves time spent exploiting.</li>
+                    <li>Infrastructure decay (dangling DNS) is a massive blind spot for modern cloud-native organizations.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Scanning & Enumeration (Network Topology & Services)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU5XX - Session 6: Human Security</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU5XX-INFOSEC</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Human Security</span>
+    <span class="jw-count">6 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session5/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session7/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <div class="module-code">CMU5XX-INFOSEC</div>
+                <h1>Information Security for Industry</h1>
+                <h2>Session 6: Organizational & Human Security</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Differentiate between Malicious and Negligent Insider Threats.</li>
+                    <li>Apply the principles of Least Privilege and Separation of Duties (SoD).</li>
+                    <li>Analyze the psychological factors contributing to security bypasses.</li>
+                    <li>Design effective Security Awareness Training (SAT) programs.</li>
+                    <li>Evaluate the metrics for determining security culture maturity.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: The Insider Threat (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Malicious vs Negligent Actors</li>
+                    <li>Separation of Duties (SoD) & Least Privilege</li>
+                    <li><strong>Task 1: Designing SoD Controls</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Security Culture & Training (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Security Awareness Training (SAT)</li>
+                    <li>Phishing Simulations and Metrics</li>
+                    <li><strong>Task 2: Evaluating SAT Effectiveness</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: The Insider Threat" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 1: The Insider Threat</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="The Enemy Within" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>The Enemy Within</h2>
+                <p>An organization's greatest vulnerability is its own workforce.</p>
+                <ul>
+                    <li><strong>The Malicious Insider:</strong> A disgruntled employee stealing intellectual property to sell to a competitor, or planting logic bombs prior to termination. Hard to detect because they have legitimate access.</li>
+                    <li><strong>The Negligent Insider:</strong> An employee who accidentally emails a spreadsheet of customer PII to the wrong client, or leaves their laptop unlocked at a coffee shop. <em>This accounts for 80% of all insider incidents.</em></li>
+                </ul>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Least Privilege" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Principle of Least Privilege (PoLP)</h2>
+                <p>Users should only have the minimum access necessary to perform their job duties, and only for the duration required.</p>
+                <div class="task-box">
+                    <ul>
+                        <li>If an accountant only needs to read financial reports, they should not have "Write" or "Delete" permissions on the financial database.</li>
+                        <li><strong>The Threat Mitigation:</strong> If the accountant's account is compromised by a hacker, the hacker also only has "Read" access, preventing them from deleting the database.</li>
+                        <li><strong>Privilege Creep:</strong> When an employee changes roles within a company and gains new permissions, but their old permissions are never revoked.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Separation of Duties" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Separation of Duties (SoD)</h2>
+                <p>No single individual should have total control over a critical process.</p>
+                <ul>
+                    <li>Requires collusion (two or more people conspiring together) to commit fraud.</li>
+                    <li><strong>Example:</strong> The person who authorizes a payment cannot be the same person who issues the check.</li>
+                    <li><strong>IT Example:</strong> The developer who writes the code cannot be the person who deploys the code to the live production server. This prevents a rogue developer from inserting a backdoor.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Implementing SoD is a complex organizational challenge because it intentionally introduces friction and slows down business processes.</p>
+                <div class="highlight">
+                    We will design an SoD matrix to prevent financial fraud within a corporate procurement system.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: Designing SoD" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 1: Designing SoD Controls</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>A manufacturing company is restructuring its IT Procurement process after an incident where an IT Manager bought £50,000 of servers from a fake vendor company they owned.</p>
+                    <ol>
+                        <li>Identify the three distinct roles needed to establish Separation of Duties for the procurement lifecycle (from requesting hardware to paying the invoice).</li>
+                        <li>Map out the exact permissions (Create, Read, Approve, Pay) each of the three roles should have within the ERP software.</li>
+                        <li>What technical control could you implement to prevent the roles from bypassing the system (e.g., sharing passwords)?</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Security Culture & Training" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Part 2: Security Culture & Training</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Security Culture" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Building a Security Culture</h2>
+                <p>Culture is what people do when the security team isn't looking.</p>
+                <ul>
+                    <li>If employees view security as the "Department of No" that only slows them down, they will actively find ways to bypass controls (e.g., emailing files to their personal Gmail to work from home).</li>
+                    <li><strong>Psychological Safety:</strong> Employees must feel safe reporting a security mistake. If they are terrified of being fired for clicking a phishing link, they will hide the mistake, turning a minor incident into a massive breach.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Security Awareness Training" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Security Awareness Training (SAT)</h2>
+                <p>Once-a-year, 60-minute PowerPoint presentations do not work.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>Micro-Learning:</strong> Delivering 3-minute, highly targeted training modules monthly.</li>
+                        <li><strong>Role-Based Training:</strong> The HR team needs training on handling fake resumes containing malware. The Development team needs training on secure coding (OWASP). Generic training is ignored.</li>
+                        <li><strong>Phishing Simulations:</strong> Sending fake phishing emails to the company to test awareness.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Simulation Metrics" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Phishing Simulation Metrics</h2>
+                <p>How do we measure success?</p>
+                <ul>
+                    <li><strong>Click Rate:</strong> The percentage of employees who clicked the malicious link. (A common but flawed metric).</li>
+                    <li><strong>Reporting Rate:</strong> The percentage of employees who used the "Report Phishing" button. <em>This is the most important metric.</em> A 5% click rate is fine if accompanied by an 80% reporting rate, as the security team is immediately alerted.</li>
+                    <li><strong>Repeat Offenders:</strong> Employees who fail 3+ simulations require direct intervention and potentially restricted network access.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>Evaluating the ROI of a security awareness program requires analyzing behavioral data, not just completion certificates.</p>
+                <div class="highlight">
+                    We will analyze the results of a corporate phishing simulation and propose strategic interventions.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Evaluating SAT" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Task 2: Evaluating SAT Effectiveness</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You ran a simulated phishing campaign disguised as an "Urgent Payroll Update" across three departments.</p>
+                    <ul>
+                        <li><strong>Engineering:</strong> 15% Click Rate, 85% Reporting Rate.</li>
+                        <li><strong>Sales:</strong> 40% Click Rate, 10% Reporting Rate.</li>
+                        <li><strong>Executive Team:</strong> 25% Click Rate, 0% Reporting Rate.</li>
+                    </ul>
+                    <ol>
+                        <li>Which department poses the highest absolute risk to the organization and why?</li>
+                        <li>Propose a specific, tailored remediation strategy for the Sales department. (Consider their daily workflows and motivations).</li>
+                        <li>How should you handle the Executive Team's failure to report? (Consider organizational politics).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU5XX-INFOSEC/images/corp_bg_3.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Humans are the ultimate attack vector. Technology can only mitigate human error, not eliminate it.</li>
+                    <li>A positive, non-punitive security culture is the most effective defense against the negligent insider threat.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Cyber Security Management Concepts (Metrics & Third-Party Risk)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>

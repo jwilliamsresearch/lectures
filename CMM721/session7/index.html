@@ -1,0 +1,545 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMM721 - Session 7: Django ORM & CRUD</title>
+
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMM721</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">Django ORM &amp; CRUD</span>
+    <span class="jw-count">7 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session6/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session8/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide" data-slide-title="Title Slide">
+                <div class="module-code">CMM721</div>
+                <h1>Django ORM & CRUD</h1>
+                <h2>Session 7</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <section data-slide-title="Learning Objectives">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Create and manage Django models</li>
+                    <li>Understand database migrations</li>
+                    <li>Perform CRUD operations using Django ORM</li>
+                    <li>Work with QuerySets and filtering</li>
+                    <li>Implement model relationships</li>
+                    <li>Use Django Admin interface</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="What is an ORM?">
+                <h2>What is an ORM?</h2>
+                <div class="highlight">
+                    <strong>ORM:</strong> Object-Relational Mapping
+                </div>
+                <ul>
+                    <li><strong>Purpose:</strong> Interact with databases using Python objects</li>
+                    <li><strong>Benefit:</strong> Write Python instead of SQL</li>
+                    <li><strong>Database Agnostic:</strong> Works with SQLite, PostgreSQL, MySQL, etc.</li>
+                </ul>
+                <h3>Without ORM (Raw SQL):</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">cursor.execute("SELECT * FROM users WHERE age &gt; 21")</code></pre>
+                </div>
+                <h3>With ORM:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">User.objects.filter(age__gt=21)</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Creating Django Models">
+                <h2>Creating Django Models</h2>
+                <div class="code-example">
+                    <pre><code class="language-python"># models.py
+from django.db import models
+from django.contrib.auth.models import User
+class Post(models.Model):
+title = models.CharField(max_length=200)
+content = models.TextField()
+author = models.ForeignKey(User, on_delete=models.CASCADE)
+created_at = models.DateTimeField(auto_now_add=True)
+updated_at = models.DateTimeField(auto_now=True)
+published = models.BooleanField(default=False)
+def __str__(self):
+return self.title
+class Meta:
+ordering = ['-created_at']</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Field Types">
+                <h2>Field Types</h2>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># Character/Text fields
+CharField(max_length=100)
+TextField()
+EmailField()
+URLField()
+# Numeric fields
+IntegerField()
+DecimalField(max_digits=10, decimal_places=2)
+FloatField()
+# Date/Time fields
+DateField()
+DateTimeField()
+TimeField()
+# Boolean
+BooleanField(default=False)
+# File fields
+FileField(upload_to='files/')
+ImageField(upload_to='images/')</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="🎯 Database Table Visualization">
+                <h2>🎯 Database Table Visualization</h2>
+                <div class="demo-container">
+                    <h3>Post Model → Database Table</h3>
+                    <table class="db-table">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>title</th>
+                                <th>content</th>
+                                <th>author_id</th>
+                                <th>created_at</th>
+                                <th>published</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Django Tutorial</td>
+                                <td>Learn Django ORM...</td>
+                                <td>1</td>
+                                <td>2024-01-15 10:30</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Python Basics</td>
+                                <td>Introduction to Python...</td>
+                                <td>2</td>
+                                <td>2024-01-16 14:20</td>
+                                <td>✓</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Web Security</td>
+                                <td>Best practices...</td>
+                                <td>1</td>
+                                <td>2024-01-17 09:15</td>
+                                <td>✗</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.9em; color: #666;">Django automatically creates an 'id' primary key field</p>
+                </div>
+            </section>
+
+            <section data-slide-title="Migrations">
+                <h2>Migrations</h2>
+                <h3>Create Migrations:</h3>
+                <div class="code-example">
+                    <pre><code class="language-python"># Create migration files
+python manage.py makemigrations
+# Output:
+# Migrations for 'blog':
+#   blog/migrations/0001_initial.py
+#     - Create model Post
+# Apply migrations
+python manage.py migrate
+# View SQL
+python manage.py sqlmigrate blog 0001
+# Show migration status
+python manage.py showmigrations</code></pre>
+                </div>
+                <div class="highlight">
+                    <strong>Always:</strong> makemigrations → migrate
+                </div>
+            </section>
+
+            <section data-slide-title="CRUD: Create">
+                <h2>CRUD: Create</h2>
+                <h3>Creating Objects:</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># Method 1: Create and save
+post = Post()
+post.title = "My First Post"
+post.content = "Hello World!"
+post.author = request.user
+post.save()
+# Method 2: Create in one line
+post = Post.objects.create(
+title="My First Post",
+content="Hello World!",
+author=request.user
+)
+# Method 3: get_or_create
+post, created = Post.objects.get_or_create(
+title="Unique Title",
+defaults={'content': 'Content', 'author': user}
+)</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="CRUD: Read (Query)">
+                <h2>CRUD: Read (Query)</h2>
+                <div class="code-example">
+                    <pre><code class="language-python"># Get all objects
+posts = Post.objects.all()
+# Get specific object
+post = Post.objects.get(id=1)
+post = Post.objects.get(title="Django Tutorial")
+# Filter objects
+published = Post.objects.filter(published=True)
+recent = Post.objects.filter(created_at__gte='2024-01-01')
+# Exclude
+drafts = Post.objects.exclude(published=True)
+# First/Last
+first_post = Post.objects.first()
+latest = Post.objects.last()
+# Count
+count = Post.objects.count()</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Advanced Queries">
+                <h2>Advanced Queries</h2>
+                <div class="code-example">
+                    <pre><code class="language-python"># Chaining filters
+posts = Post.objects.filter(
+published=True
+).filter(
+created_at__year=2024
+).order_by('-created_at')
+# OR queries
+from django.db.models import Q
+posts = Post.objects.filter(
+Q(title__icontains='django') | Q(content__icontains='django')
+)
+# Lookup types
+Post.objects.filter(title__icontains='python') # Case-insensitive
+Post.objects.filter(title__startswith='Django')
+Post.objects.filter(created_at__year=2024)
+Post.objects.filter(id__in=[1, 2, 3])
+Post.objects.filter(title__isnull=False)</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="CRUD: Update">
+                <h2>CRUD: Update</h2>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># Method 1: Get, modify, save
+post = Post.objects.get(id=1)
+post.title = "Updated Title"
+post.published = True
+post.save()
+# Method 2: Update queryset (bulk update)
+Post.objects.filter(author=user).update(published=True)
+# Update specific fields only
+post = Post.objects.get(id=1)
+post.title = "New Title"
+post.save(update_fields=['title']) # Only update title</code></pre>
+                </div>
+                <div class="highlight">
+                    <strong>Note:</strong> .update() doesn't call save() or send signals
+                </div>
+            </section>
+
+            <section data-slide-title="CRUD: Delete">
+                <h2>CRUD: Delete</h2>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># Delete single object
+post = Post.objects.get(id=1)
+post.delete()
+# Delete multiple objects
+Post.objects.filter(published=False).delete()
+# Delete all (BE CAREFUL!)
+Post.objects.all().delete()</code></pre>
+                </div>
+                <div class="highlight">
+                    <strong>Warning:</strong> Delete operations are irreversible!
+                </div>
+            </section>
+
+            <section data-slide-title="Task 1: Build Blog CRUD">
+                <h2>Task 1: Build Blog CRUD</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Create a fully functional blog with CRUD operations</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Create Post model (title, content, author, created_at, published)</li>
+                        <li>Run migrations</li>
+                        <li>Create views for: list, detail, create, update, delete</li>
+                        <li>Create templates for each view</li>
+                        <li>Implement URL patterns</li>
+                        <li>Test all CRUD operations</li>
+                    </ol>
+                    <h3>Views to Implement:</h3>
+                    <ul>
+                        <li>post_list - Display all posts</li>
+                        <li>post_detail - Show single post</li>
+                        <li>post_create - Form to create post</li>
+                        <li>post_update - Form to edit post</li>
+                        <li>post_delete - Confirm and delete</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="Model Relationships">
+                <h2>Model Relationships</h2>
+                <h3>ForeignKey (Many-to-One):</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext">class Comment(models.Model):
+post = models.ForeignKey(Post, on_delete=models.CASCADE)
+text = models.TextField()
+author = models.ForeignKey(User, on_delete=models.CASCADE)
+# Access
+post.comment_set.all() # All comments for a post
+comment.post # The post this comment belongs to</code></pre>
+                </div>
+                <h3>on_delete Options:</h3>
+                <ul>
+                    <li><strong>CASCADE:</strong> Delete related objects</li>
+                    <li><strong>PROTECT:</strong> Prevent deletion</li>
+                    <li><strong>SET_NULL:</strong> Set to NULL</li>
+                    <li><strong>SET_DEFAULT:</strong> Set to default value</li>
+                </ul>
+            </section>
+
+            <section data-slide-title="🎯 Relationship Visualization">
+                <h2>🎯 Relationship Visualization</h2>
+                <div class="demo-container">
+                    <h3>Blog Database Schema</h3>
+                    <div class="relationship-diagram">
+                        <div class="model-box">
+                            <h4>User</h4>
+                            <div class="model-field">• id (PK)</div>
+                            <div class="model-field">• username</div>
+                            <div class="model-field">• email</div>
+                        </div>
+                        <span style="font-size: 2em; margin: 0 20px;">→</span>
+                        <div class="model-box">
+                            <h4>Post</h4>
+                            <div class="model-field">• id (PK)</div>
+                            <div class="model-field">• title</div>
+                            <div class="model-field">• content</div>
+                            <div class="model-field" style="color: #e74c3c;">• author_id (FK)</div>
+                            <div class="model-field">• created_at</div>
+                        </div>
+                        <span style="font-size: 2em; margin: 0 20px;">→</span>
+                        <div class="model-box">
+                            <h4>Comment</h4>
+                            <div class="model-field">• id (PK)</div>
+                            <div class="model-field" style="color: #e74c3c;">• post_id (FK)</div>
+                            <div class="model-field" style="color: #e74c3c;">• author_id (FK)</div>
+                            <div class="model-field">• text</div>
+                            <div class="model-field">• created_at</div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #666; margin-top: 15px;">
+                        PK = Primary Key | FK = Foreign Key
+                    </p>
+                </div>
+            </section>
+
+            <section data-slide-title="Many-to-Many Relationships">
+                <h2>Many-to-Many Relationships</h2>
+                <div class="code-example">
+                    <pre><code class="language-python">class Tag(models.Model):
+name = models.CharField(max_length=50)
+class Post(models.Model):
+title = models.CharField(max_length=200)
+tags = models.ManyToManyField(Tag)
+# Usage
+post = Post.objects.get(id=1)
+tag = Tag.objects.get(name='Django')
+# Add tag to post
+post.tags.add(tag)
+# Get all tags for a post
+post.tags.all()
+# Get all posts with a tag
+Tag.objects.get(name='Python').post_set.all()
+# Remove tag
+post.tags.remove(tag)</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Django Admin">
+                <h2>Django Admin</h2>
+                <h3>Register Models (admin.py):</h3>
+                <div class="code-example">
+                    <pre><code class="language-python">from django.contrib import admin
+from .models import Post, Comment
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+list_display = ('title', 'author', 'created_at', 'published')
+list_filter = ('published', 'created_at')
+search_fields = ('title', 'content')
+date_hierarchy = 'created_at'
+ordering = ('-created_at',)
+admin.site.register(Comment)</code></pre>
+                </div>
+                <h3>Create Superuser:</h3>
+                <div class="code-example">
+                    <pre><code class="language-python">python manage.py createsuperuser
+# Visit: http://127.0.0.1:8000/admin/</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Task 2: Advanced Blog Features">
+                <h2>Task 2: Advanced Blog Features</h2>
+                <div class="task-box">
+                    <h3>Objective:</h3>
+                    <p>Enhance blog with relationships and admin interface</p>
+                    <h3>Requirements:</h3>
+                    <ol>
+                        <li>Add Comment model with ForeignKey to Post</li>
+                        <li>Add Tag model with ManyToMany to Post</li>
+                        <li>Create views to display comments under posts</li>
+                        <li>Add form to create new comments</li>
+                        <li>Implement tag filtering (show posts by tag)</li>
+                        <li>Configure Django Admin for all models</li>
+                        <li>Customize admin: list_display, search, filters</li>
+                    </ol>
+                    <h3>Bonus:</h3>
+                    <ul>
+                        <li>Add pagination (10 posts per page)</li>
+                        <li>Implement comment count per post</li>
+                        <li>Add "related posts" by shared tags</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section data-slide-title="QuerySet Optimization">
+                <h2>QuerySet Optimization</h2>
+                <h3>select_related (ForeignKey):</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># Without optimization (N+1 queries)
+posts = Post.objects.all()
+for post in posts:
+print(post.author.username) # Database hit each time
+# With select_related (1 query with JOIN)
+posts = Post.objects.select_related('author').all()
+for post in posts:
+print(post.author.username) # No extra queries</code></pre>
+                </div>
+                <h3>prefetch_related (ManyToMany):</h3>
+                <div class="code-example">
+                    <pre><code class="language-plaintext"># Optimize ManyToMany
+posts = Post.objects.prefetch_related('tags').all()
+for post in posts:
+print(post.tags.all()) # Already loaded</code></pre>
+                </div>
+            </section>
+
+            <section data-slide-title="Best Practices">
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>Always use __str__:</strong> Define readable string representation</li>
+                    <li><strong>Indexes:</strong> Add db_index=True for frequently queried fields</li>
+                    <li><strong>Validation:</strong> Use clean() method for custom validation</li>
+                    <li><strong>Migrations:</strong> Review migration files before applying</li>
+                    <li><strong>QuerySet optimization:</strong> Use select_related/prefetch_related</li>
+                    <li><strong>Bulk operations:</strong> Use bulk_create() for multiple inserts</li>
+                    <li><strong>Admin:</strong> Customize admin interface for better usability</li>
+                </ul>
+                <div class="highlight">
+                    <strong>Remember:</strong> QuerySets are lazy - they don't hit database until evaluated
+                </div>
+            </section>
+
+            <section data-slide-title="Next Session: Django REST Framework">
+                <h2>Next Session: Django REST Framework</h2>
+                <ul>
+                    <li>Introduction to REST APIs</li>
+                    <li>Django REST Framework (DRF) basics</li>
+                    <li>Serializers and validation</li>
+                    <li>ViewSets and Routers</li>
+                    <li>Authentication and permissions</li>
+                    <li>API testing with Postman</li>
+                </ul>
+                <p><strong>Preparation:</strong> Install: pip install djangorestframework</p>
+            </section>
+
+            <section data-slide-title="Questions & Discussion" class="center">
+                <h2>Questions & Discussion</h2>
+                <p><strong>Contact:</strong> JWilliams@Staff.newman.ac.uk</p>
+                <p><strong>Office Hours:</strong> By appointment</p>
+                <p><strong>Resources:</strong> Django ORM Docs, QuerySet API Reference</p>
+                <p>Thank you for your attention!</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // Prevent wheel events from changing slides when scrolling
+        Reveal.on('ready', () => {
+            const scrollableElements = document.querySelectorAll('.reveal pre, .reveal .code-example, .reveal .task-box, .reveal .info-box, .reveal .warning-box');
+            
+            scrollableElements.forEach(element => {
+                element.addEventListener('wheel', (e) => {
+                    const atTop = element.scrollTop === 0;
+                    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+                    
+                    if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+        });
+
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'none',
+            backgroundTransition: 'none',
+            center: false,
+            disableLayout: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script><script src="/chrome.js"></script>
+</body>
+
+</html>

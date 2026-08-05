@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMU6XX - Session 5: System Hacking</title>
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="/libs/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/libs/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="/chrome.css">
+</head>
+<body>
+<header class="jw-bar">
+  <a class="jw-brand" href="https://jameswil.com/">
+    <span class="jw-mark">JW</span>
+    <span class="jw-brand-name">J Williams</span>
+  </a>
+  <div class="jw-context">
+    <a class="jw-course" href="../">CMU6XX</a>
+    <span class="jw-sep">/</span>
+    <span class="jw-session">System Hacking</span>
+    <span class="jw-count">5 of 12</span>
+  </div>
+  <nav class="jw-nav" aria-label="Session">
+    <a class="jw-nav-btn" href="../session4/" rel="prev" aria-label="Prev session"><span>←</span>Prev<span></span></a>
+    <a class="jw-nav-btn" href="../session6/" rel="next" aria-label="Next session"><span></span>Next<span>→</span></a>
+  </nav>
+</header>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section class="title-slide" data-slide-title="Title Slide" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <div class="module-code">CMU6XX</div>
+                <h1>Ethical Hacking</h1>
+                <h2>Session 5: System Hacking & Exploitation</h2>
+                <div class="author">
+                    <p><strong>James Williams</strong></p>
+                    <p><a href="mailto:jwilliams@staff.newman.ac.uk">jwilliams@staff.newman.ac.uk</a></p>
+                </div>
+            </section>
+
+            <!-- Slide 2 -->
+            <section data-slide-title="Learning Objectives" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Learning Objectives</h2>
+                <ul>
+                    <li>Master the architecture of the Metasploit Framework.</li>
+                    <li>Differentiate between Staged and Non-Staged payloads.</li>
+                    <li>Compare Bind Shells vs Reverse Shells in heavily firewalled environments.</li>
+                    <li>Execute Linux Privilege Escalation using SUID binaries and capabilities.</li>
+                    <li>Analyze post-exploitation techniques, including hash dumping (Mimikatz) and lateral movement.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section data-slide-title="Seminar Structure" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Seminar Structure (3 Hours)</h2>
+                <div class="highlight">
+                    <strong>Part 1: The Metasploit Framework (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Exploits vs Payloads</li>
+                    <li>Reverse vs Bind Shells</li>
+                    <li><strong>Task 1: MSF Payload Delivery</strong></li>
+                </ul>
+                <div class="highlight">
+                    <strong>Part 2: Privilege Escalation & Post-Exploitation (1.5 hrs)</strong>
+                </div>
+                <ul>
+                    <li>Linux SUIDs & Windows Token Impersonation</li>
+                    <li>Dumping Hashes (Mimikatz)</li>
+                    <li><strong>Task 2: Linux Privilege Escalation (GTFOBins)</strong></li>
+                </ul>
+            </section>
+
+            <!-- PART 1 -->
+            <section data-slide-title="Part 1: The Metasploit Framework" class="center" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Part 1: The Metasploit Framework</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 5 -->
+            <section data-slide-title="Exploits vs Payloads" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Exploits vs Payloads</h2>
+                <p>Metasploit decouples the vulnerability from the action you want to take.</p>
+                <ul>
+                    <li><strong>Exploit:</strong> The code that takes advantage of the vulnerability to gain execution on the target (the "delivery mechanism").</li>
+                    <li><strong>Payload:</strong> The code that actually runs on the target <em>after</em> the exploit succeeds (the "warhead").</li>
+                </ul>
+                <div class="highlight">
+                    You can pair an EternalBlue exploit with a Reverse Shell payload, or a Bind Shell payload, or a payload that simply adds a new user.
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://www.offensive-security.com/metasploit-unleashed/" target="_blank" style="color: #64ffda;">Metasploit Unleashed Course</a>
+                </div>
+            </section>
+
+            <!-- Slide 6 -->
+            <section data-slide-title="Bind vs Reverse Shells" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Bind vs Reverse Shells</h2>
+                <div class="task-box">
+                    <h3>Bind Shell</h3>
+                    <p>The payload opens a port on the target machine (e.g., Port 4444) and listens. The attacker connects <em>to</em> the target.</p>
+                    <p><em>Problem:</em> Almost always blocked by the target's inbound firewall.</p>
+                    <h3>Reverse Shell</h3>
+                    <p>The payload connects <em>back</em> to the attacker's machine (which is listening). </p>
+                    <p><em>Advantage:</em> Bypasses inbound firewalls because the connection originates from inside the target network (outbound traffic is often unrestricted).</p>
+                </div>
+            </section>
+
+            <!-- Slide 7 -->
+            <section data-slide-title="Staged vs Non-Staged" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Staged vs Non-Staged Payloads</h2>
+                <p>Memory corruption exploits (like buffer overflows) often have very limited space for shellcode (e.g., 200 bytes).</p>
+                <ul>
+                    <li><strong>Non-Staged (Inline):</strong> The entire payload (e.g., <code>windows/shell_reverse_tcp</code>) is sent at once. Highly reliable, but often too large to fit in memory.</li>
+                    <li><strong>Staged:</strong> The exploit sends a tiny piece of code (the "Stager"). The Stager connects back to the attacker, allocates more memory, and downloads the rest of the payload (the "Stage", e.g., Meterpreter). Syntax: <code>windows/meterpreter/reverse_tcp</code>.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section data-slide-title="Introduction to Task 1" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 1</h2>
+                <p>Catching a reverse shell requires careful coordination of LHOST (Local Host) and LPORT (Local Port) settings.</p>
+                <div class="highlight">
+                    We will configure a Metasploit multi-handler to catch a staged callback from a compromised Windows machine.
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section data-slide-title="Task 1: MSF Payload Delivery" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Task 1: MSF Payload Delivery</h2>
+                <div class="task-box">
+                    <h3>Timing: 45 minutes</h3>
+                    <p>You have used <code>msfvenom</code> to generate a malicious executable (<code>windows/meterpreter/reverse_tcp</code>) pointing back to your Kali IP (10.0.0.10) on Port 4444.</p>
+                    <ol>
+                        <li>Write the exact <code>msfconsole</code> commands to start a listener (<code>exploit/multi/handler</code>) to catch this specific payload.</li>
+                        <li>The target clicks the executable, and you receive a Meterpreter session. Write the Meterpreter commands to:
+                            <ul>
+                                <li>Check what user you are running as.</li>
+                                <li>Dump the system password hashes.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Slide 10 -->
+            <section data-slide-title="Break" class="center" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>15 Minute Break</h2>
+                <p>Please return promptly for Part 2.</p>
+            </section>
+
+            <!-- PART 2 -->
+            <section data-slide-title="Part 2: Privilege Escalation" class="center" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Part 2: Privilege Escalation & Post-Exploitation</h2>
+                <h3>Duration: 1.5 Hours</h3>
+            </section>
+
+            <!-- Slide 12 -->
+            <section data-slide-title="Privilege Escalation" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Privilege Escalation</h2>
+                <p>Initial exploitation usually grants access as a low-privileged user (e.g., <code>www-data</code>). The next goal is becoming <code>root</code> or <code>SYSTEM</code>.</p>
+                <ul>
+                    <li><strong>Kernel Exploits:</strong> Exploiting a flaw in the OS kernel directly (e.g., Dirty COW). High risk of crashing the server.</li>
+                    <li><strong>Misconfigurations:</strong> The preferred method.
+                        <ul>
+                            <li>Windows: Unquoted Service Paths, Token Impersonation (PrintSpoofer).</li>
+                            <li>Linux: SUID Binaries, excessive <code>sudo</code> permissions, Cron jobs running as root.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 13 -->
+            <section data-slide-title="Hash Dumping & Mimikatz" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Post-Exploitation: Credential Harvesting</h2>
+                <p>Once you have SYSTEM, you want to move laterally across the network.</p>
+                <div class="task-box">
+                    <ul>
+                        <li><strong>SAM Database:</strong> Extracting NTLM password hashes from the Windows registry. Requires offline cracking (Hashcat/John).</li>
+                        <li><strong>Mimikatz:</strong> A legendary post-exploitation tool that interacts with the Windows LSASS process to extract passwords in <em>cleartext</em> directly from memory.</li>
+                        <li><strong>Pass-the-Hash (PtH):</strong> Using the dumped NTLM hash to authenticate to other Windows machines <em>without ever cracking the password</em>.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 14 -->
+            <section data-slide-title="Linux SUID Binaries" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Linux SUID Binaries</h2>
+                <p>SUID (Set Owner User ID up on execution) is a special file permission in Linux.</p>
+                <ul>
+                    <li>When a file with SUID is executed, it runs with the privileges of the file <em>owner</em> (usually root), regardless of who executes it.</li>
+                    <li>Required for commands like <code>passwd</code> (so normal users can change their password).</li>
+                    <li><strong>The Vulnerability:</strong> If an admin accidentally sets the SUID bit on a binary that can execute system commands (like <code>vim</code>, <code>find</code>, or <code>python</code>), any user can use it to spawn a root shell.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 15 -->
+            <section data-slide-title="Introduction to Task 2" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Introduction to Task 2</h2>
+                <p>GTFOBins is a curated list of Unix binaries that can be used to bypass local security restrictions in misconfigured systems.</p>
+                <div class="highlight">
+                    We will exploit a misconfigured SUID binary to escalate from a low-privileged user to root.
+                </div>
+            </section>
+
+            <!-- Slide 16 -->
+            <section data-slide-title="Task 2: Linux Privilege Escalation" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Task 2: Linux Privilege Escalation</h2>
+                <div class="task-box">
+                    <h3>Timing: 50 minutes</h3>
+                    <p>You have a reverse shell as user <code>www-data</code>. You run <code>find / -perm -u=s -type f 2>/dev/null</code> and discover that <code>/usr/bin/find</code> has the SUID bit set.</p>
+                    <ol>
+                        <li>Access the GTFOBins website and search for the <code>find</code> binary.</li>
+                        <li>Identify the exact command syntax required to abuse the SUID permission on <code>find</code> to spawn an interactive root shell.</li>
+                        <li>Explain <em>why</em> this works (referencing the <code>-exec</code> flag).</li>
+                    </ol>
+                </div>
+                <div class="reference" style="font-size: 0.55em; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.5rem; text-align: left; opacity: 0.8;">
+                    <strong>Practical Resource:</strong> <a href="https://gtfobins.github.io/" target="_blank" style="color: #64ffda;">GTFOBins (Unix Privilege Escalation)</a>
+                </div>
+            </section>
+
+            <!-- Slide 17 -->
+            <section data-slide-title="Summary and Next Steps" class="center" data-background-image="/CMU6XX/images/eh_bg_5.png" data-background-opacity="0.08">
+                <h2>Summary & Next Steps</h2>
+                <ul>
+                    <li>Gaining initial access is only step one. Privilege escalation and lateral movement are where the real damage is done.</li>
+                    <li>Misconfigurations (SUID, bad GPOs) are far more common and reliable vectors for escalation than zero-day kernel exploits.</li>
+                </ul>
+                <div class="highlight" style="margin-top: 2rem;">
+                    <strong>Next Week:</strong> Sniffing & MITM Attacks (Intercepting Data)
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/libs/reveal.js/dist/reveal.js"></script>
+    <script src="/libs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="/libs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="/libs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, slideNumber: true, transition: 'none', backgroundTransition: 'none',
+            center: false, disableLayout: true, plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+<script src="/chrome.js"></script>
+</body>
+</html>
