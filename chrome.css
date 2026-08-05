@@ -1,0 +1,124 @@
+/* =========================================================================
+   Persistent site header and session navigation for lecture decks.
+   Sits above reveal.js and matches jameswil.com.
+   ========================================================================= */
+
+:root {
+  --jw-bar-h: 38px;
+  --jw-bg: #0a0a0a;
+  --jw-fg: #f2f2f2;
+  --jw-muted: #8e8e8e;
+  --jw-line: #262626;
+}
+
+/* Reserve the bar's height so slide content never sits underneath it. */
+html body .reveal-viewport {
+  padding-top: var(--jw-bar-h);
+  box-sizing: border-box;
+}
+
+.jw-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--jw-bar-h);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-inline: 0.75rem;
+  background: var(--jw-bg);
+  color: var(--jw-fg);
+  border-bottom: 1px solid var(--jw-line);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  user-select: none;
+}
+
+.jw-bar a { text-decoration: none; color: inherit; }
+
+.jw-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  transition: opacity 160ms ease;
+}
+.jw-brand:hover { opacity: 0.75; }
+.jw-mark {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  background: var(--jw-fg);
+  color: var(--jw-bg);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.jw-brand-name { font-weight: 500; letter-spacing: -0.01em; }
+
+.jw-context {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  margin-right: auto;
+  color: var(--jw-muted);
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  font-size: 11px;
+}
+.jw-course { color: var(--jw-fg); }
+.jw-course:hover { text-decoration: underline; text-underline-offset: 3px; }
+.jw-sep { opacity: 0.4; }
+.jw-session {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.jw-count {
+  flex: none;
+  padding: 2px 6px;
+  border: 1px solid var(--jw-line);
+  color: var(--jw-muted);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.jw-nav { display: flex; gap: 0.4rem; flex: none; }
+.jw-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 5px 10px;
+  border: 1px solid var(--jw-line);
+  color: var(--jw-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.jw-nav-btn:hover { color: var(--jw-fg); border-color: var(--jw-fg); }
+.jw-nav-btn.is-off { opacity: 0.3; }
+
+/* Reveal draws its own controls bottom right; nothing to avoid up here, but
+   the progress bar sits at the top in some themes. Keep it below the bar. */
+.reveal .progress { z-index: 99; }
+
+/* Presenting should be uninterrupted: the bar hides in fullscreen and can be
+   toggled with the H key. */
+.jw-bar.is-hidden { display: none; }
+html.jw-bare .reveal-viewport { padding-top: 0; }
+
+@media (max-width: 40rem) {
+  .jw-brand-name,
+  .jw-count { display: none; }
+  .jw-context { font-size: 10px; }
+  .jw-nav-btn { padding: 5px 8px; }
+}
+
+@media print {
+  .jw-bar { display: none; }
+  html body .reveal-viewport { padding-top: 0; }
+}
